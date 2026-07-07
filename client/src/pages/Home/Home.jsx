@@ -1,7 +1,11 @@
+import MainLayout from "../../layouts/MainLayout";
+
 export default function Home() {
     return (
-        <div className="text-4xl font-bold text-center mt-20">
-            Book My Local Service
-        </div>
+        <MainLayout>
+            <div className="text-5xl font-bold text-center py-20">
+                Book My Local Service
+            </div>
+        </MainLayout>
     );
 }
