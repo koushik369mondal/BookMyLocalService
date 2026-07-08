@@ -19,7 +19,7 @@ export default function Logo({ size = 40, showText = true }) {
     <div className="flex items-center gap-2 select-none">
       <img
         src={logoSrc}
-        alt="ZiuroWorkers logo"
+        alt="BookMyLocalService logo"
         style={{ height: size, width: "auto" }}
         className="object-contain"
       />
@@ -29,8 +29,7 @@ export default function Logo({ size = 40, showText = true }) {
           but they are hidden by default for the new branding assets. */}
       {showText && (
         <span className="text-xl  tracking-tight hidden md:block">
-          <span className="text-blue-600">Ziuro</span>
-          <span className="text-orange-500">Workers</span>
+          <span className="text-blue-600">BookMyLocalService</span>
         </span>
       )}
     </div>
