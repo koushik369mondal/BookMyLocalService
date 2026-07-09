@@ -22,6 +22,7 @@ import ManageUsers from "../pages/Dashboard/ManageUsers";
 import ManageProviders from "../pages/Dashboard/ManageProviders";
 import Payments from "../pages/Dashboard/Payments";
 import Reports from "../pages/Dashboard/Reports";
+import Analytics from "../pages/Dashboard/Analytics";
 import NotFound from "../pages/NotFound/NotFound";
 
 export default function AppRoutes() {
@@ -49,6 +50,7 @@ export default function AppRoutes() {
             <Route path="/admin/providers" element={<ManageProviders />} />
             <Route path="/admin/payments" element={<Payments />} />
             <Route path="/admin/reports" element={<Reports />} />
+            <Route path="/admin/analytics" element={<Analytics />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );
