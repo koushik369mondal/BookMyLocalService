@@ -340,6 +340,146 @@ async function main() {
     }
   }
 
+  // 3. Seed Default Customer
+  let customer = await prisma.user.findUnique({
+    where: { email: "customer@example.com" }
+  });
+
+  if (!customer) {
+    customer = await prisma.user.create({
+      data: {
+        fullName: "Test Customer",
+        email: "customer@example.com",
+        phone: "999-888-7777",
+        password: hashedPassword,
+        role: "CUSTOMER",
+        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80",
+        isVerified: true
+      }
+    });
+    console.log("Created test customer: customer@example.com");
+  } else {
+    console.log("Test customer already exists");
+  }
+
+  // 4. Seed Bookings
+  const seedBookings = [
+    {
+      id: "BMLS-28491",
+      serviceSlug: "deep-home-cleaning-service",
+      providerName: "Sarah Jenkins",
+      plan: "Deep Clean Premium",
+      date: "2026-07-15",
+      time: "09:30 AM",
+      price: 55.00,
+      status: "upcoming",
+      paymentStatus: "paid",
+      paymentMethod: "card"
+    },
+    {
+      id: "BMLS-19402",
+      serviceSlug: "expert-plumbing-leak-repair",
+      providerName: "David Miller",
+      plan: "Standard Clog/Repair",
+      date: "2026-07-03",
+      time: "02:00 PM",
+      price: 75.00,
+      status: "completed",
+      paymentStatus: "paid",
+      paymentMethod: "card"
+    },
+    {
+      id: "BMLS-10943",
+      serviceSlug: "licensed-smart-home-wiring",
+      providerName: "Marcus Vance",
+      plan: "Smart Device Install",
+      date: "2026-06-25",
+      time: "11:30 AM",
+      price: 95.00,
+      status: "cancelled",
+      paymentStatus: "refunded",
+      paymentMethod: "upi"
+    },
+    {
+      id: "BMLS-88392",
+      serviceSlug: "eco-friendly-house-cleaning",
+      providerName: "Jessica Alba",
+      plan: "Express Dust & Wipe",
+      date: "2026-06-18",
+      time: "08:00 AM",
+      price: 38.00,
+      status: "completed",
+      paymentStatus: "paid",
+      paymentMethod: "cash"
+    },
+    {
+      id: "BMLS-58392",
+      serviceSlug: "premium-lawn-care-landscaping",
+      providerName: "Emily Taylor",
+      plan: "Lawn & Shrub Maintenance",
+      date: "2026-07-20",
+      time: "04:30 PM",
+      price: 60.00,
+      status: "upcoming",
+      paymentStatus: "paid",
+      paymentMethod: "wallet"
+    }
+  ];
+
+  for (const b of seedBookings) {
+    const existingBooking = await prisma.booking.findUnique({
+      where: { id: b.id }
+    });
+
+    if (!existingBooking) {
+      const service = await prisma.service.findUnique({
+        where: { slug: b.serviceSlug }
+      });
+      const providerId = providerMap[b.providerName];
+
+      if (!service || !providerId) {
+        console.error(`Cannot seed booking ${b.id}: service or provider not found.`);
+        continue;
+      }
+
+      const basePrice = b.price;
+      const platformFee = 4.99;
+      const tax = Math.round(basePrice * 0.085 * 100) / 100;
+      const discount = 0.0;
+      const total = Math.round((basePrice + platformFee + tax - discount) * 100) / 100;
+
+      await prisma.booking.create({
+        data: {
+          id: b.id,
+          customerId: customer.id,
+          serviceId: service.id,
+          providerId,
+          plan: b.plan,
+          date: b.date,
+          time: b.time,
+          price: basePrice,
+          platformFee,
+          tax,
+          discount,
+          total,
+          status: b.status,
+          paymentStatus: b.paymentStatus,
+          paymentMethod: b.paymentMethod,
+          billingName: "Test Customer",
+          billingEmail: "customer@example.com",
+          billingPhone: "999-888-7777",
+          street: "123 Main St",
+          city: "New York",
+          state: "NY",
+          zipCode: "10001"
+        }
+      });
+      console.log(`Created seeded booking: ${b.id}`);
+    } else {
+      console.log(`Seeded booking already exists: ${b.id}`);
+    }
+  }
+
   console.log("✅ Seeding finished successfully.");
 }
 

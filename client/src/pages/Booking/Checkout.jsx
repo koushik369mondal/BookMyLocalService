@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import MainLayout from "../../layouts/MainLayout";
+import { checkoutService } from "../../services/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,226 +34,6 @@ import {
   DollarSign,
   AlertCircle
 } from "lucide-react";
-
-// Predefined services dataset matching the rest of the application
-const initialServices = [
-  {
-    id: 1,
-    name: "Deep Home Cleaning Service",
-    category: "Home Cleaning",
-    providerName: "Sarah Jenkins",
-    providerImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Brooklyn, NY",
-    rating: 4.9,
-    reviewsCount: 142,
-    price: 35,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
-    description: "Complete top-to-bottom cleaning of all rooms including dusting, vacuuming, kitchen sanitization, and window washing.",
-    availability: "today",
-    popularity: 98,
-    dateAdded: "2026-07-01",
-    badge: "Top Rated"
-  },
-  {
-    id: 2,
-    name: "Expert Plumbing & Leak Repair",
-    category: "Plumbing",
-    providerName: "David Miller",
-    providerImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Queens, NY",
-    rating: 4.8,
-    reviewsCount: 98,
-    price: 50,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
-    description: "Resolving leakages, clogged drains, toilet repairs, pipe installations, and hot water heater repair with guarantee.",
-    availability: "this-week",
-    popularity: 85,
-    dateAdded: "2026-06-28",
-    badge: "Verified"
-  },
-  {
-    id: 3,
-    name: "Licensed Smart Home Wiring",
-    category: "Electrical",
-    providerName: "Marcus Vance",
-    providerImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Manhattan, NY",
-    rating: 4.9,
-    reviewsCount: 115,
-    price: 65,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80",
-    description: "Installation of smart lighting panels, smart thermostats, EV charger setups, and general home electrical upgrades.",
-    availability: "today",
-    popularity: 92,
-    dateAdded: "2026-07-05",
-    badge: "Top Rated"
-  },
-  {
-    id: 4,
-    name: "Local Office & Home Moving Pro",
-    category: "Moving & Packing",
-    providerName: "Robert Garcia",
-    providerImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Brooklyn, NY",
-    rating: 4.7,
-    reviewsCount: 78,
-    price: 80,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80",
-    description: "Reliable packing, secure loading, transit, and careful unloading services with optional premium protective wrapping.",
-    availability: "weekend",
-    popularity: 74,
-    dateAdded: "2026-06-20",
-    badge: ""
-  },
-  {
-    id: 5,
-    name: "Premium Lawn Care & Landscaping",
-    category: "Lawn & Garden",
-    providerName: "Emily Taylor",
-    providerImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Staten Island, NY",
-    rating: 4.6,
-    reviewsCount: 45,
-    price: 40,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1558905619-1715497e68c6?auto=format&fit=crop&w=600&q=80",
-    description: "Lawn mowing, branch pruning, landscape designing, fertilization, weed prevention, and sod installation.",
-    availability: "this-week",
-    popularity: 60,
-    dateAdded: "2026-07-03",
-    badge: "New"
-  },
-  {
-    id: 6,
-    name: "Swedish Massage & Reflexology",
-    category: "Wellness & Personal",
-    providerName: "Chloe Bennett",
-    providerImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Manhattan, NY",
-    rating: 4.9,
-    reviewsCount: 89,
-    price: 90,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80",
-    description: "Relaxing Swedish massage, warm oil aromatherapy, deep tissue therapy, and reflexology sessions at your location.",
-    availability: "weekend",
-    popularity: 88,
-    dateAdded: "2026-06-30",
-    badge: "Top Rated"
-  },
-  {
-    id: 7,
-    name: "Eco-Friendly House Cleaning",
-    category: "Home Cleaning",
-    providerName: "Jessica Alba",
-    providerImage: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Manhattan, NY",
-    rating: 4.8,
-    reviewsCount: 62,
-    price: 38,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80",
-    description: "Eco-friendly cleaning with organic, biodegradable solutions safe for children, seniors, and domestic pets.",
-    availability: "this-week",
-    popularity: 72,
-    dateAdded: "2026-07-02",
-    badge: "Eco Friendly"
-  },
-  {
-    id: 8,
-    name: "Emergency 24/7 Plumber Pro",
-    category: "Plumbing",
-    providerName: "Thomas Wright",
-    providerImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Bronx, NY",
-    rating: 4.5,
-    reviewsCount: 34,
-    price: 70,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1607472586893-edb5caba0c55?auto=format&fit=crop&w=600&q=80",
-    description: "Sewer backups, frozen pipes, sudden boiler issues, and major pipe leaks. Prompt response in under 60 minutes.",
-    availability: "today",
-    popularity: 68,
-    dateAdded: "2026-07-06",
-    badge: "Emergency"
-  },
-  {
-    id: 9,
-    name: "Commercial Electrical Service",
-    category: "Electrical",
-    providerName: "Alan Turing",
-    providerImage: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Queens, NY",
-    rating: 4.7,
-    reviewsCount: 51,
-    price: 75,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?auto=format&fit=crop&w=600&q=80",
-    description: "Wiring layout designs, commercial building power distribution systems, inspections, and high-voltage repairs.",
-    availability: "this-week",
-    popularity: 58,
-    dateAdded: "2026-06-15",
-    badge: ""
-  },
-  {
-    id: 10,
-    name: "Interstate Moving Solutions",
-    category: "Moving & Packing",
-    providerName: "Swift Transports",
-    providerImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Bronx, NY",
-    rating: 4.9,
-    reviewsCount: 104,
-    price: 120,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1520038410233-7141be7e6f97?auto=format&fit=crop&w=600&q=80",
-    description: "Full interstate moves, specialized furniture protection, vehicle transportation, and secured warehouse storage.",
-    availability: "weekend",
-    popularity: 90,
-    dateAdded: "2026-07-04",
-    badge: "Top Rated"
-  },
-  {
-    id: 11,
-    name: "Hedge Trimming & Tree Removal",
-    category: "Lawn & Garden",
-    providerName: "Gary Woods",
-    providerImage: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Staten Island, NY",
-    rating: 4.8,
-    reviewsCount: 82,
-    price: 55,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
-    description: "Vetted arborists offering tree felling, hedge maintenance, root removal, and green garden cleanup.",
-    availability: "weekend",
-    popularity: 76,
-    dateAdded: "2026-06-22",
-    badge: "Verified"
-  },
-  {
-    id: 12,
-    name: "1-on-1 Personal Fitness Coaching",
-    category: "Wellness & Personal",
-    providerName: "Alex Mercer",
-    providerImage: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Brooklyn, NY",
-    rating: 4.9,
-    reviewsCount: 73,
-    price: 60,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80",
-    description: "Customized workout blueprints, strength training, core stability improvement, and custom nutritional programs.",
-    availability: "today",
-    popularity: 81,
-    dateAdded: "2026-07-07",
-    badge: "New"
-  }
-];
 
 // Zod Checkout validation schema with conditional card values
 const checkoutSchema = z.object({
@@ -305,13 +86,13 @@ export default function Checkout() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // Booking details from URL query
-  const serviceId = parseInt(searchParams.get("serviceId")) || 1;
-  const provider = initialServices.find(s => s.id === serviceId) || initialServices[0];
-  const selectedPlanName = searchParams.get("plan") || "Standard Package";
-  const selectedPrice = parseFloat(searchParams.get("price")) || provider.price;
-  const selectedDate = searchParams.get("date") || new Date().toISOString().split("T")[0];
-  const selectedTime = searchParams.get("time") || "10:30 AM";
+  // Booking ID from query params
+  const bookingId = searchParams.get("bookingId");
+
+  // Booking state loaded from database
+  const [booking, setBooking] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
   // Coupon / Promo code state
   const [promoInput, setPromoInput] = useState("");
@@ -352,12 +133,65 @@ export default function Checkout() {
   const selectedPaymentMethod = watch("paymentMethod");
   const acceptTermsValue = watch("acceptTerms");
 
-  // Calculate pricing breakdown
-  const serviceFee = selectedPrice;
-  const platformFee = 4.99;
+  // Load checkout details on mount
+  useEffect(() => {
+    const fetchCheckout = async () => {
+      if (!bookingId) {
+        setError("Invalid checkout URL: booking ID is missing.");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await checkoutService.getCheckoutDetails(bookingId);
+        if (response.success && response.data) {
+          setBooking(response.data);
+          
+          // Pre-populate customer details in the checkout form
+          const b = response.data;
+          if (b.customer) {
+            setValue("fullName", b.billingName || b.customer.fullName || "");
+            setValue("email", b.billingEmail || b.customer.email || "");
+            setValue("phone", b.billingPhone || b.customer.phone || "");
+          }
+          if (b.street) setValue("street", b.street);
+          if (b.city) setValue("city", b.city);
+          if (b.state) setValue("state", b.state);
+          if (b.zipCode) setValue("zipCode", b.zipCode);
+          if (b.paymentMethod) setValue("paymentMethod", b.paymentMethod);
+          if (b.discount) setAppliedDiscount(b.discount);
+        } else {
+          setError(response.message || "Failed to load checkout details.");
+        }
+      } catch (err) {
+        console.error("Fetch checkout error:", err);
+        setError(err.response?.data?.message || "Failed to load checkout details.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCheckout();
+  }, [bookingId, setValue]);
+
+  // Pricing calculations
+  const serviceFee = booking ? booking.price : 0;
+  const platformFee = booking ? booking.platformFee : 4.99;
   const discountVal = appliedDiscount;
-  const taxVal = Math.round(serviceFee * 0.085 * 100) / 100; // 8.5%
+  const taxVal = booking ? booking.tax : 0;
   const grandTotal = Math.max(0, Math.round((serviceFee + platformFee + taxVal - discountVal) * 100) / 100);
+
+  const selectedDate = booking ? booking.date : "";
+  const selectedTime = booking ? booking.time : "";
+  const selectedPlanName = booking ? booking.plan : "";
+
+  const provider = booking ? {
+    providerImage: booking.provider?.avatar || "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
+    providerName: booking.provider?.fullName || "",
+    category: booking.service?.category || "",
+    name: booking.service?.title || "",
+    image: booking.service?.imageUrl || ""
+  } : {};
 
   // Auto scroll to top
   useEffect(() => {
@@ -384,23 +218,74 @@ export default function Checkout() {
     setSubmitError("");
     setSubmitSuccess(false);
 
-    // Simulate payment authorization gateway check
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      // 1. Submit billing/address details
+      await checkoutService.submitCheckout({
+        bookingId,
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        street: data.street,
+        city: data.city,
+        state: data.state,
+        zipCode: data.zipCode,
+        paymentMethod: data.paymentMethod,
+        discount: appliedDiscount
+      });
 
-    // Simulated error triggers for manual testing
-    if (data.fullName.toLowerCase().includes("error") || data.cardNumber?.includes("0000")) {
-      setSubmitError("Transaction declined. Please verify your payment credentials and try again.");
+      // 2. Submit payment authorization
+      const paymentResponse = await checkoutService.processPayment({
+        bookingId,
+        paymentMethod: data.paymentMethod,
+        cardNumber: data.cardNumber,
+        cardExpiry: data.cardExpiry,
+        cardCvc: data.cardCvc
+      });
+
+      if (paymentResponse.success) {
+        setSubmitSuccess(true);
+        setIsSubmitting(false);
+        
+        // Navigate to booking dashboard or success confirmation page after 2 seconds
+        setTimeout(() => {
+          navigate("/customer/dashboard");
+        }, 2000);
+      } else {
+        setSubmitError(paymentResponse.message || "Transaction declined.");
+        setIsSubmitting(false);
+      }
+    } catch (err) {
+      console.error("Checkout process error:", err);
+      setSubmitError(err.response?.data?.message || "Transaction declined. Please verify your payment credentials and try again.");
       setIsSubmitting(false);
-    } else {
-      setSubmitSuccess(true);
-      setIsSubmitting(false);
-      
-      // Navigate to booking dashboard or success confirmation page after 2 seconds
-      setTimeout(() => {
-        navigate("/customer/dashboard");
-      }, 2000);
     }
   };
+
+  if (isLoading) {
+    return (
+      <MainLayout>
+        <div className="max-w-7xl mx-auto px-4 py-20 text-center space-y-4">
+          <Loader2 className="h-10 w-10 animate-spin text-blue-600 mx-auto" />
+          <p className="text-slate-500 font-bold text-sm">Loading checkout details...</p>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (error || !booking) {
+    return (
+      <MainLayout>
+        <div className="max-w-xl mx-auto my-16 p-8 bg-white border border-slate-100 rounded-3xl shadow-md text-center space-y-4">
+          <AlertCircle className="h-12 w-12 text-rose-500 mx-auto" />
+          <h2 className="text-lg font-black text-slate-900">Checkout Error</h2>
+          <p className="text-xs text-slate-500">{error || "We couldn't retrieve the checkout details for this booking."}</p>
+          <Button onClick={() => navigate("/services")} className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs h-9.5 px-6 font-bold mt-2">
+            Back to Services
+          </Button>
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>

@@ -41,7 +41,7 @@ import {
   ChevronRight,
   ZoomIn
 } from "lucide-react";
-import { servicesService } from "../../services/api";
+import { servicesService, bookingsService } from "../../services/api";
 import NotFound from "../NotFound/NotFound";
 
 // Helper to generate dynamic content based on category
@@ -346,7 +346,7 @@ export default function ServiceDetails() {
     "Evening": ["05:30 PM", "07:00 PM"]
   };
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     let error = false;
     if (!selectedDate) {
       setDateAlert(true);
@@ -364,10 +364,36 @@ export default function ServiceDetails() {
 
     if (error) return;
 
-    // Navigate to booking page with selected query parameters
+    // Check if user is logged in
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to continue booking this service.");
+      navigate(`/login?redirect=/services/${id}`);
+      return;
+    }
+
+    // Get selected plan details
     const planName = provider.plans[activePlanIdx].name;
     const planPrice = provider.plans[activePlanIdx].price;
-    navigate(`/booking?serviceId=${provider.id}&plan=${encodeURIComponent(planName)}&price=${planPrice}&date=${selectedDate}&time=${encodeURIComponent(selectedTimeSlot)}`);
+
+    try {
+      const response = await bookingsService.createBooking({
+        serviceId: provider.id,
+        plan: planName,
+        date: selectedDate,
+        time: selectedTimeSlot,
+        price: planPrice
+      });
+
+      if (response.success && response.data) {
+        navigate(`/checkout?bookingId=${response.data.id}`);
+      } else {
+        alert(response.message || "Failed to initiate booking.");
+      }
+    } catch (err) {
+      console.error("Booking initiation error:", err);
+      alert(err.response?.data?.message || "Failed to initiate booking. Please try again.");
+    }
   };
 
   const handleContactSubmit = (e) => {

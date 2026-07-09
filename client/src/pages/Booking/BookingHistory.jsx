@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
+import { bookingsService } from "../../services/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -39,94 +40,11 @@ import {
   Check
 } from "lucide-react";
 
-// Mock booking history database
-const initialBookings = [
-  {
-    id: "BMLS-28491",
-    serviceId: 1,
-    providerName: "Sarah Jenkins",
-    providerImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
-    serviceName: "Deep Home Cleaning Service",
-    category: "Home Cleaning",
-    date: "2026-07-15",
-    time: "09:30 AM",
-    location: "Brooklyn, NY",
-    price: 55.00,
-    plan: "Deep Clean Premium",
-    paymentMethod: "card",
-    status: "upcoming",
-    dateAdded: "2026-07-08"
-  },
-  {
-    id: "BMLS-19402",
-    serviceId: 2,
-    providerName: "David Miller",
-    providerImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
-    serviceName: "Expert Plumbing & Leak Repair",
-    category: "Plumbing",
-    date: "2026-07-03",
-    time: "02:00 PM",
-    location: "Queens, NY",
-    price: 75.00,
-    plan: "Standard Clog/Repair",
-    paymentMethod: "card",
-    status: "completed",
-    dateAdded: "2026-07-02"
-  },
-  {
-    id: "BMLS-10943",
-    serviceId: 3,
-    providerName: "Marcus Vance",
-    providerImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
-    serviceName: "Licensed Smart Home Wiring",
-    category: "Electrical",
-    date: "2026-06-25",
-    time: "11:30 AM",
-    location: "Manhattan, NY",
-    price: 95.00,
-    plan: "Smart Device Install",
-    paymentMethod: "upi",
-    status: "cancelled",
-    dateAdded: "2026-06-20"
-  },
-  {
-    id: "BMLS-88392",
-    serviceId: 7,
-    providerName: "Jessica Alba",
-    providerImage: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&h=150&q=80",
-    serviceName: "Eco-Friendly House Cleaning",
-    category: "Home Cleaning",
-    date: "2026-06-18",
-    time: "08:00 AM",
-    location: "Manhattan, NY",
-    price: 38.00,
-    plan: "Express Dust & Wipe",
-    paymentMethod: "cash",
-    status: "completed",
-    dateAdded: "2026-06-17"
-  },
-  {
-    id: "BMLS-58392",
-    serviceId: 5,
-    providerName: "Emily Taylor",
-    providerImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
-    serviceName: "Premium Lawn Care & Landscaping",
-    category: "Lawn & Garden",
-    date: "2026-07-20",
-    time: "04:30 PM",
-    location: "Staten Island, NY",
-    price: 60.00,
-    plan: "Lawn & Shrub Maintenance",
-    paymentMethod: "wallet",
-    status: "upcoming",
-    dateAdded: "2026-07-09"
-  }
-];
-
 export default function BookingHistory() {
   const navigate = useNavigate();
-  const [bookings, setBookings] = useState(initialBookings);
+  const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
   // Filter & Search states
   const [searchQuery, setSearchQuery] = useState("");
@@ -143,14 +61,56 @@ export default function BookingHistory() {
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 4;
 
+  // Fetch bookings on mount
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const response = await bookingsService.getBookings();
+        if (response.success && response.data) {
+          const mapped = response.data.map(b => ({
+            id: b.id,
+            serviceId: b.serviceId,
+            providerName: b.provider?.fullName || "",
+            providerImage: b.provider?.avatar || "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
+            serviceName: b.service?.title || "",
+            category: b.service?.category || "",
+            date: b.date,
+            time: b.time,
+            location: b.provider?.location || b.street || "",
+            price: b.price,
+            plan: b.plan,
+            platformFee: b.platformFee,
+            tax: b.tax,
+            discount: b.discount,
+            total: b.total,
+            paymentMethod: b.paymentMethod || "card",
+            status: b.status,
+            dateAdded: b.createdAt ? new Date(b.createdAt).toISOString().split("T")[0] : ""
+          }));
+          setBookings(mapped);
+        } else {
+          setError(response.message || "Failed to load bookings.");
+        }
+      } catch (err) {
+        console.error("Fetch bookings error:", err);
+        setError(err.response?.data?.message || "Failed to load bookings.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBookings();
+  }, []);
+
   // Loading skeleton simulator on filter changes
   useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 650);
-
-    return () => clearTimeout(timer);
+    if (!isLoading) {
+      setIsLoading(true);
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 400);
+      return () => clearTimeout(timer);
+    }
   }, [activeStatusTab, sortBy]);
 
   // Dynamic arrival window compute helper
@@ -185,20 +145,33 @@ export default function BookingHistory() {
     setIsCancelConfirmOpen(true);
   };
 
-  const executeCancelBooking = () => {
+  const executeCancelBooking = async () => {
     if (!cancelTargetBooking) return;
     
-    // Update booking status in local state array
-    const updated = bookings.map(b => {
-      if (b.id === cancelTargetBooking.id) {
-        return { ...b, status: "cancelled" };
-      }
-      return b;
-    });
+    try {
+      const response = await bookingsService.updateBooking(cancelTargetBooking.id, {
+        status: "cancelled",
+        paymentStatus: "refunded"
+      });
 
-    setBookings(updated);
-    setIsCancelConfirmOpen(false);
-    setCancelTargetBooking(null);
+      if (response.success) {
+        const updated = bookings.map(b => {
+          if (b.id === cancelTargetBooking.id) {
+            return { ...b, status: "cancelled" };
+          }
+          return b;
+        });
+
+        setBookings(updated);
+        setIsCancelConfirmOpen(false);
+        setCancelTargetBooking(null);
+      } else {
+        alert(response.message || "Failed to cancel booking.");
+      }
+    } catch (err) {
+      console.error("Cancel booking error:", err);
+      alert(err.response?.data?.message || "Failed to cancel booking. Please try again.");
+    }
   };
 
   const handlePrintInvoice = (booking) => {
@@ -449,7 +422,15 @@ export default function BookingHistory() {
             {/* RIGHT COLUMN: BOOKINGS HISTORY CARDS GRID */}
             <main className="lg:col-span-9 space-y-6">
               
-              {isLoading ? (
+              {error ? (
+                <div className="flex items-start gap-2.5 p-4 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-2xl animate-fade-in shadow-2xs">
+                  <AlertCircle className="h-5 w-5 shrink-0 text-rose-600" />
+                  <div>
+                    <span className="font-bold block">Error loading bookings</span>
+                    <span className="text-[11px] text-rose-600/90">{error}</span>
+                  </div>
+                </div>
+              ) : isLoading ? (
                 /* LOADING SKELETON GHOST CARDS */
                 <div className="space-y-4">
                   {[...Array(3)].map((_, i) => (
@@ -749,18 +730,24 @@ export default function BookingHistory() {
                   </div>
                   <div className="flex justify-between">
                     <span>Platform Service Fee:</span>
-                    <span>$4.99</span>
+                    <span>${selectedBooking.platformFee.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>State Taxes (8.5%):</span>
-                    <span>${(selectedBooking.price * 0.085).toFixed(2)}</span>
+                    <span>${selectedBooking.tax.toFixed(2)}</span>
                   </div>
+                  {selectedBooking.discount > 0 && (
+                    <div className="flex justify-between text-emerald-600">
+                      <span>Coupon Discount:</span>
+                      <span>-${selectedBooking.discount.toFixed(2)}</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-2 flex justify-between items-baseline">
                   <span className="text-xs font-extrabold text-slate-800">Total Charged:</span>
                   <span className="text-base font-black text-slate-900">
-                    ${(selectedBooking.price + 4.99 + (selectedBooking.price * 0.085)).toFixed(2)}
+                    ${selectedBooking.total.toFixed(2)}
                   </span>
                 </div>
               </div>

@@ -840,7 +840,7 @@ export default function Services() {
                               <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Starting from</span>
                               <span className="font-extrabold text-gray-950 text-base">${service.price}<span className="text-gray-400 text-xs font-semibold">{service.priceType}</span></span>
                             </div>
-                            <NavLink to={`/booking?serviceId=${service.id}`}>
+                            <NavLink to={`/services/${service.id}`}>
                               <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl h-9 px-4 font-bold shadow-xs">
                                 Book Now
                               </Button>

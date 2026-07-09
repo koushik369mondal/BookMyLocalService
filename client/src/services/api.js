@@ -138,3 +138,47 @@ export const servicesService = {
         return response.data;
     }
 };
+
+export const bookingsService = {
+    getBookings: async () => {
+        const response = await api.get("/bookings");
+        return response.data;
+    },
+
+    getBookingById: async (id) => {
+        const response = await api.get(`/bookings/${id}`);
+        return response.data;
+    },
+
+    createBooking: async (bookingData) => {
+        const response = await api.post("/bookings", bookingData);
+        return response.data;
+    },
+
+    updateBooking: async (id, bookingData) => {
+        const response = await api.put(`/bookings/${id}`, bookingData);
+        return response.data;
+    },
+
+    deleteBooking: async (id) => {
+        const response = await api.delete(`/bookings/${id}`);
+        return response.data;
+    }
+};
+
+export const checkoutService = {
+    getCheckoutDetails: async (bookingId) => {
+        const response = await api.get(`/checkout/${bookingId}`);
+        return response.data;
+    },
+
+    submitCheckout: async (checkoutData) => {
+        const response = await api.post("/checkout", checkoutData);
+        return response.data;
+    },
+
+    processPayment: async (paymentData) => {
+        const response = await api.post("/payment", paymentData);
+        return response.data;
+    }
+};
