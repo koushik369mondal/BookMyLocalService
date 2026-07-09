@@ -41,226 +41,8 @@ import {
   ChevronRight,
   ZoomIn
 } from "lucide-react";
-
-// Predefined services dataset matching the main Listings page
-const initialServices = [
-  {
-    id: 1,
-    name: "Deep Home Cleaning Service",
-    category: "Home Cleaning",
-    providerName: "Sarah Jenkins",
-    providerImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Brooklyn, NY",
-    rating: 4.9,
-    reviewsCount: 142,
-    price: 35,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
-    description: "Complete top-to-bottom cleaning of all rooms including dusting, vacuuming, kitchen sanitization, and window washing.",
-    availability: "today",
-    popularity: 98,
-    dateAdded: "2026-07-01",
-    badge: "Top Rated"
-  },
-  {
-    id: 2,
-    name: "Expert Plumbing & Leak Repair",
-    category: "Plumbing",
-    providerName: "David Miller",
-    providerImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Queens, NY",
-    rating: 4.8,
-    reviewsCount: 98,
-    price: 50,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
-    description: "Resolving leakages, clogged drains, toilet repairs, pipe installations, and hot water heater repair with guarantee.",
-    availability: "this-week",
-    popularity: 85,
-    dateAdded: "2026-06-28",
-    badge: "Verified"
-  },
-  {
-    id: 3,
-    name: "Licensed Smart Home Wiring",
-    category: "Electrical",
-    providerName: "Marcus Vance",
-    providerImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Manhattan, NY",
-    rating: 4.9,
-    reviewsCount: 115,
-    price: 65,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80",
-    description: "Installation of smart lighting panels, smart thermostats, EV charger setups, and general home electrical upgrades.",
-    availability: "today",
-    popularity: 92,
-    dateAdded: "2026-07-05",
-    badge: "Top Rated"
-  },
-  {
-    id: 4,
-    name: "Local Office & Home Moving Pro",
-    category: "Moving & Packing",
-    providerName: "Robert Garcia",
-    providerImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Brooklyn, NY",
-    rating: 4.7,
-    reviewsCount: 78,
-    price: 80,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80",
-    description: "Reliable packing, secure loading, transit, and careful unloading services with optional premium protective wrapping.",
-    availability: "weekend",
-    popularity: 74,
-    dateAdded: "2026-06-20",
-    badge: ""
-  },
-  {
-    id: 5,
-    name: "Premium Lawn Care & Landscaping",
-    category: "Lawn & Garden",
-    providerName: "Emily Taylor",
-    providerImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Staten Island, NY",
-    rating: 4.6,
-    reviewsCount: 45,
-    price: 40,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1558905619-1715497e68c6?auto=format&fit=crop&w=600&q=80",
-    description: "Lawn mowing, branch pruning, landscape designing, fertilization, weed prevention, and sod installation.",
-    availability: "this-week",
-    popularity: 60,
-    dateAdded: "2026-07-03",
-    badge: "New"
-  },
-  {
-    id: 6,
-    name: "Swedish Massage & Reflexology",
-    category: "Wellness & Personal",
-    providerName: "Chloe Bennett",
-    providerImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Manhattan, NY",
-    rating: 4.9,
-    reviewsCount: 89,
-    price: 90,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80",
-    description: "Relaxing Swedish massage, warm oil aromatherapy, deep tissue therapy, and reflexology sessions at your location.",
-    availability: "weekend",
-    popularity: 88,
-    dateAdded: "2026-06-30",
-    badge: "Top Rated"
-  },
-  {
-    id: 7,
-    name: "Eco-Friendly House Cleaning",
-    category: "Home Cleaning",
-    providerName: "Jessica Alba",
-    providerImage: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Manhattan, NY",
-    rating: 4.8,
-    reviewsCount: 62,
-    price: 38,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80",
-    description: "Eco-friendly cleaning with organic, biodegradable solutions safe for children, seniors, and domestic pets.",
-    availability: "this-week",
-    popularity: 72,
-    dateAdded: "2026-07-02",
-    badge: "Eco Friendly"
-  },
-  {
-    id: 8,
-    name: "Emergency 24/7 Plumber Pro",
-    category: "Plumbing",
-    providerName: "Thomas Wright",
-    providerImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Bronx, NY",
-    rating: 4.5,
-    reviewsCount: 34,
-    price: 70,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1607472586893-edb5caba0c55?auto=format&fit=crop&w=600&q=80",
-    description: "Sewer backups, frozen pipes, sudden boiler issues, and major pipe leaks. Prompt response in under 60 minutes.",
-    availability: "today",
-    popularity: 68,
-    dateAdded: "2026-07-06",
-    badge: "Emergency"
-  },
-  {
-    id: 9,
-    name: "Commercial Electrical Service",
-    category: "Electrical",
-    providerName: "Alan Turing",
-    providerImage: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Queens, NY",
-    rating: 4.7,
-    reviewsCount: 51,
-    price: 75,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?auto=format&fit=crop&w=600&q=80",
-    description: "Wiring layout designs, commercial building power distribution systems, inspections, and high-voltage repairs.",
-    availability: "this-week",
-    popularity: 58,
-    dateAdded: "2026-06-15",
-    badge: ""
-  },
-  {
-    id: 10,
-    name: "Interstate Moving Solutions",
-    category: "Moving & Packing",
-    providerName: "Swift Transports",
-    providerImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Bronx, NY",
-    rating: 4.9,
-    reviewsCount: 104,
-    price: 120,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1520038410233-7141be7e6f97?auto=format&fit=crop&w=600&q=80",
-    description: "Full interstate moves, specialized furniture protection, vehicle transportation, and secured warehouse storage.",
-    availability: "weekend",
-    popularity: 90,
-    dateAdded: "2026-07-04",
-    badge: "Top Rated"
-  },
-  {
-    id: 11,
-    name: "Hedge Trimming & Tree Removal",
-    category: "Lawn & Garden",
-    providerName: "Gary Woods",
-    providerImage: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Staten Island, NY",
-    rating: 4.8,
-    reviewsCount: 82,
-    price: 55,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
-    description: "Vetted arborists offering tree felling, hedge maintenance, root removal, and green garden cleanup.",
-    availability: "weekend",
-    popularity: 76,
-    dateAdded: "2026-06-22",
-    badge: "Verified"
-  },
-  {
-    id: 12,
-    name: "1-on-1 Personal Fitness Coaching",
-    category: "Wellness & Personal",
-    providerName: "Alex Mercer",
-    providerImage: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Brooklyn, NY",
-    rating: 4.9,
-    reviewsCount: 73,
-    price: 60,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80",
-    description: "Customized workout blueprints, strength training, core stability improvement, and custom nutritional programs.",
-    availability: "today",
-    popularity: 81,
-    dateAdded: "2026-07-07",
-    badge: "New"
-  }
-];
+import { servicesService } from "../../services/api";
+import NotFound from "../NotFound/NotFound";
 
 // Helper to generate dynamic content based on category
 const getProviderSkills = (category) => {
@@ -419,19 +201,31 @@ const getProviderReviews = (id, providerName) => {
   ];
 };
 
-const getProviderDetails = (id) => {
-  const serviceId = parseInt(id) || 1;
-  const baseService = initialServices.find(s => s.id === serviceId) || initialServices[0];
-  
-  const skillsData = getProviderSkills(baseService.category);
-  const plans = getProviderPlans(baseService.category, baseService.price);
-  const gallery = getProviderGallery(baseService.category);
-  const reviews = getProviderReviews(serviceId, baseService.providerName);
+const buildServiceDetails = (service) => {
+  const skillsData = getProviderSkills(service.category);
+  const plans = getProviderPlans(service.category, service.price);
+  const gallery = getProviderGallery(service.category);
+  const reviews = getProviderReviews(service.id, service.provider?.fullName);
+
+  const experience = service.id.length % 3 === 0 ? "9+ Years" : (service.id.length % 2 === 0 ? "7+ Years" : "5+ Years");
 
   return {
-    ...baseService,
-    experience: serviceId % 3 === 0 ? "9+ Years" : (serviceId % 2 === 0 ? "7+ Years" : "5+ Years"),
-    about: `Hi! I'm ${baseService.providerName}, a professional specialist offering top-tier ${baseService.category} services. With years of hands-on experience and a reputation for client satisfaction, I work hard to deliver exceptional results tailored to your specific requirements. I am fully licensed, background checked, and dedicated to safety, promptness, and quality.`,
+    id: service.id,
+    name: service.title,
+    category: service.category,
+    providerName: service.provider?.fullName || "Verified Provider",
+    providerImage: service.provider?.avatar || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80",
+    location: service.location,
+    rating: service.rating,
+    reviewsCount: service.reviewCount,
+    price: service.price,
+    priceType: service.priceType,
+    image: service.imageUrl,
+    description: service.description,
+    availability: service.availability,
+    badge: service.badge,
+    experience,
+    about: `Hi! I'm ${service.provider?.fullName || "your service provider"}, a professional specialist offering top-tier ${service.category} services. With years of hands-on experience and a reputation for client satisfaction, I work hard to deliver exceptional results tailored to your specific requirements. I am fully licensed, background checked, and dedicated to safety, promptness, and quality.`,
     ...skillsData,
     gallery,
     plans,
@@ -443,9 +237,11 @@ export default function ServiceDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   
-  // Loading simulator
+  // Loading states
   const [isLoading, setIsLoading] = useState(true);
   const [provider, setProvider] = useState(null);
+  const [services, setServices] = useState([]);
+  const [isNotFound, setIsNotFound] = useState(false);
   
   // Details states
   const [activePlanIdx, setActivePlanIdx] = useState(1); // Default to Standard package (idx 1)
@@ -467,24 +263,60 @@ export default function ServiceDetails() {
   const [isSendingContact, setIsSendingContact] = useState(false);
   const [contactSentSuccess, setContactSentSuccess] = useState(false);
 
-  // Auto-scroll to top on ID change
+  // Load service details from database
   useEffect(() => {
     window.scrollTo(0, 0);
     setIsLoading(true);
-    // Simulate loading delay for skeleton view
-    const timer = setTimeout(() => {
-      const details = getProviderDetails(id);
-      setProvider(details);
-      setIsLoading(false);
-      
-      // Reset booking selections
-      setSelectedDate("");
-      setSelectedTimeSlot("");
-      setDateAlert(false);
-      setTimeAlert(false);
-    }, 850);
+    setIsNotFound(false);
 
-    return () => clearTimeout(timer);
+    const loadServiceData = async () => {
+      try {
+        const response = await servicesService.getServiceById(id);
+        if (response.success && response.data) {
+          const details = buildServiceDetails(response.data);
+          setProvider(details);
+          
+          // Load other services for the similar services section
+          const allRes = await servicesService.getServices();
+          if (allRes.success) {
+            const mappedAll = allRes.data.map(service => ({
+              id: service.id,
+              name: service.title,
+              category: service.category,
+              providerName: service.provider?.fullName || "Verified Provider",
+              providerImage: service.provider?.avatar || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80",
+              location: service.location,
+              rating: service.rating,
+              reviewsCount: service.reviewCount,
+              price: service.price,
+              priceType: service.priceType,
+              image: service.imageUrl,
+              description: service.description,
+              availability: service.availability,
+              popularity: service.reviewCount,
+              dateAdded: service.createdAt,
+              badge: service.badge
+            }));
+            setServices(mappedAll);
+          }
+        } else {
+          setIsNotFound(true);
+        }
+      } catch (err) {
+        console.error("Failed to load service details:", err);
+        setIsNotFound(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadServiceData();
+    
+    // Reset booking selections
+    setSelectedDate("");
+    setSelectedTimeSlot("");
+    setDateAlert(false);
+    setTimeAlert(false);
   }, [id]);
 
   // Generate next 7 days list dynamically
@@ -565,12 +397,12 @@ export default function ServiceDetails() {
   // Find similar providers in the same category
   const similarProviders = React.useMemo(() => {
     if (!provider) return [];
-    const sameCat = initialServices.filter(s => s.category === provider.category && s.id !== provider.id);
+    const sameCat = services.filter(s => s.category === provider.category && s.id !== provider.id);
     if (sameCat.length > 0) return sameCat.slice(0, 3);
     
     // Fallback to top rated ones if none in same category
-    return initialServices.filter(s => s.id !== provider.id).slice(0, 3);
-  }, [provider]);
+    return services.filter(s => s.id !== provider.id).slice(0, 3);
+  }, [provider, services]);
 
   // Filter reviews
   const filteredReviews = React.useMemo(() => {
@@ -578,6 +410,10 @@ export default function ServiceDetails() {
     if (reviewsFilter === "all") return provider.reviews;
     return provider.reviews.filter(r => r.rating === parseInt(reviewsFilter));
   }, [provider, reviewsFilter]);
+
+  if (isNotFound) {
+    return <NotFound />;
+  }
 
   if (isLoading || !provider) {
     return (

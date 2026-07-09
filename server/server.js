@@ -1,3 +1,4 @@
+// Trigger restart to load regenerated Prisma client
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();

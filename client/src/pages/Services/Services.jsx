@@ -26,6 +26,7 @@ import {
   Sparkles,
   Info
 } from "lucide-react";
+import { servicesService } from "../../services/api";
 
 // Predefined categories matching the Home page aesthetics
 const categories = [
@@ -35,226 +36,6 @@ const categories = [
   { name: "Moving & Packing", icon: Truck, count: "60+ Providers", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
   { name: "Lawn & Garden", icon: Flower2, count: "75+ Providers", color: "bg-lime-50 text-lime-600 border-lime-100" },
   { name: "Wellness & Personal", icon: Heart, count: "110+ Providers", color: "bg-rose-50 text-rose-600 border-rose-100" },
-];
-
-// Rich dummy services dataset
-const initialServices = [
-  {
-    id: 1,
-    name: "Deep Home Cleaning Service",
-    category: "Home Cleaning",
-    providerName: "Sarah Jenkins",
-    providerImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Brooklyn, NY",
-    rating: 4.9,
-    reviewsCount: 142,
-    price: 35,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
-    description: "Complete top-to-bottom cleaning of all rooms including dusting, vacuuming, kitchen sanitization, and window washing.",
-    availability: "today",
-    popularity: 98,
-    dateAdded: "2026-07-01",
-    badge: "Top Rated"
-  },
-  {
-    id: 2,
-    name: "Expert Plumbing & Leak Repair",
-    category: "Plumbing",
-    providerName: "David Miller",
-    providerImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Queens, NY",
-    rating: 4.8,
-    reviewsCount: 98,
-    price: 50,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
-    description: "Resolving leakages, clogged drains, toilet repairs, pipe installations, and hot water heater repair with guarantee.",
-    availability: "this-week",
-    popularity: 85,
-    dateAdded: "2026-06-28",
-    badge: "Verified"
-  },
-  {
-    id: 3,
-    name: "Licensed Smart Home Wiring",
-    category: "Electrical",
-    providerName: "Marcus Vance",
-    providerImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Manhattan, NY",
-    rating: 4.9,
-    reviewsCount: 115,
-    price: 65,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80",
-    description: "Installation of smart lighting panels, smart thermostats, EV charger setups, and general home electrical upgrades.",
-    availability: "today",
-    popularity: 92,
-    dateAdded: "2026-07-05",
-    badge: "Top Rated"
-  },
-  {
-    id: 4,
-    name: "Local Office & Home Moving Pro",
-    category: "Moving & Packing",
-    providerName: "Robert Garcia",
-    providerImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Brooklyn, NY",
-    rating: 4.7,
-    reviewsCount: 78,
-    price: 80,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80",
-    description: "Reliable packing, secure loading, transit, and careful unloading services with optional premium protective wrapping.",
-    availability: "weekend",
-    popularity: 74,
-    dateAdded: "2026-06-20",
-    badge: ""
-  },
-  {
-    id: 5,
-    name: "Premium Lawn Care & Landscaping",
-    category: "Lawn & Garden",
-    providerName: "Emily Taylor",
-    providerImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Staten Island, NY",
-    rating: 4.6,
-    reviewsCount: 45,
-    price: 40,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1558905619-1715497e68c6?auto=format&fit=crop&w=600&q=80",
-    description: "Lawn mowing, branch pruning, landscape designing, fertilization, weed prevention, and sod installation.",
-    availability: "this-week",
-    popularity: 60,
-    dateAdded: "2026-07-03",
-    badge: "New"
-  },
-  {
-    id: 6,
-    name: "Swedish Massage & Reflexology",
-    category: "Wellness & Personal",
-    providerName: "Chloe Bennett",
-    providerImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Manhattan, NY",
-    rating: 4.9,
-    reviewsCount: 89,
-    price: 90,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80",
-    description: "Relaxing Swedish massage, warm oil aromatherapy, deep tissue therapy, and reflexology sessions at your location.",
-    availability: "weekend",
-    popularity: 88,
-    dateAdded: "2026-06-30",
-    badge: "Top Rated"
-  },
-  {
-    id: 7,
-    name: "Eco-Friendly House Cleaning",
-    category: "Home Cleaning",
-    providerName: "Jessica Alba",
-    providerImage: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Manhattan, NY",
-    rating: 4.8,
-    reviewsCount: 62,
-    price: 38,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80",
-    description: "Eco-friendly cleaning with organic, biodegradable solutions safe for children, seniors, and domestic pets.",
-    availability: "this-week",
-    popularity: 72,
-    dateAdded: "2026-07-02",
-    badge: "Eco Friendly"
-  },
-  {
-    id: 8,
-    name: "Emergency 24/7 Plumber Pro",
-    category: "Plumbing",
-    providerName: "Thomas Wright",
-    providerImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Bronx, NY",
-    rating: 4.5,
-    reviewsCount: 34,
-    price: 70,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1607472586893-edb5caba0c55?auto=format&fit=crop&w=600&q=80",
-    description: "Sewer backups, frozen pipes, sudden boiler issues, and major pipe leaks. Prompt response in under 60 minutes.",
-    availability: "today",
-    popularity: 68,
-    dateAdded: "2026-07-06",
-    badge: "Emergency"
-  },
-  {
-    id: 9,
-    name: "Commercial Electrical Service",
-    category: "Electrical",
-    providerName: "Alan Turing",
-    providerImage: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Queens, NY",
-    rating: 4.7,
-    reviewsCount: 51,
-    price: 75,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?auto=format&fit=crop&w=600&q=80",
-    description: "Wiring layout designs, commercial building power distribution systems, inspections, and high-voltage repairs.",
-    availability: "this-week",
-    popularity: 58,
-    dateAdded: "2026-06-15",
-    badge: ""
-  },
-  {
-    id: 10,
-    name: "Interstate Moving Solutions",
-    category: "Moving & Packing",
-    providerName: "Swift Transports",
-    providerImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Bronx, NY",
-    rating: 4.9,
-    reviewsCount: 104,
-    price: 120,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1520038410233-7141be7e6f97?auto=format&fit=crop&w=600&q=80",
-    description: "Full interstate moves, specialized furniture protection, vehicle transportation, and secured warehouse storage.",
-    availability: "weekend",
-    popularity: 90,
-    dateAdded: "2026-07-04",
-    badge: "Top Rated"
-  },
-  {
-    id: 11,
-    name: "Hedge Trimming & Tree Removal",
-    category: "Lawn & Garden",
-    providerName: "Gary Woods",
-    providerImage: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Staten Island, NY",
-    rating: 4.8,
-    reviewsCount: 82,
-    price: 55,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
-    description: "Vetted arborists offering tree felling, hedge maintenance, root removal, and green garden cleanup.",
-    availability: "weekend",
-    popularity: 76,
-    dateAdded: "2026-06-22",
-    badge: "Verified"
-  },
-  {
-    id: 12,
-    name: "1-on-1 Personal Fitness Coaching",
-    category: "Wellness & Personal",
-    providerName: "Alex Mercer",
-    providerImage: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Brooklyn, NY",
-    rating: 4.9,
-    reviewsCount: 73,
-    price: 60,
-    priceType: "/hr",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80",
-    description: "Customized workout blueprints, strength training, core stability improvement, and custom nutritional programs.",
-    availability: "today",
-    popularity: 81,
-    dateAdded: "2026-07-07",
-    badge: "New"
-  }
 ];
 
 // Locations list
@@ -296,6 +77,8 @@ export default function Services() {
   const initialLocation = searchParams.get("location") || "all";
 
   // State Management
+  const [services, setServices] = React.useState([]);
+  const [error, setError] = React.useState(null);
   const [searchQuery, setSearchQuery] = React.useState(initialSearch);
   const [selectedLocation, setSelectedLocation] = React.useState(initialLocation);
   const [selectedCategories, setSelectedCategories] = React.useState(
@@ -320,7 +103,47 @@ export default function Services() {
 
   // Mobile Filters Drawer
   const [isMobileFilterOpen, setIsMobileFilterOpen] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  // Fetch Services from Database via API
+  React.useEffect(() => {
+    const fetchServices = async () => {
+      setError(null);
+      try {
+        const response = await servicesService.getServices();
+        if (response.success) {
+          const mappedData = response.data.map(service => ({
+            id: service.id,
+            name: service.title,
+            category: service.category,
+            providerName: service.provider?.fullName || "Verified Provider",
+            providerImage: service.provider?.avatar || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80",
+            location: service.location,
+            rating: service.rating,
+            reviewsCount: service.reviewCount,
+            price: service.price,
+            priceType: service.priceType,
+            image: service.imageUrl,
+            description: service.description,
+            availability: service.availability,
+            popularity: service.reviewCount,
+            dateAdded: service.createdAt,
+            badge: service.badge
+          }));
+          setServices(mappedData);
+        } else {
+          throw new Error(response.message || "Failed to load services");
+        }
+      } catch (err) {
+        console.error("Fetch services error:", err);
+        setError(err.message || "Failed to fetch services from the database.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   // Synchronize state from URL search params on mount/update
   React.useEffect(() => {
@@ -416,7 +239,7 @@ export default function Services() {
   ]);
 
   // Filtering Logic
-  const filteredServices = initialServices.filter((service) => {
+  const filteredServices = services.filter((service) => {
     // 1. Text Search Query
     if (searchQuery.trim() !== "") {
       const q = searchQuery.toLowerCase();
@@ -746,7 +569,7 @@ export default function Services() {
                       </span>
                       {opt.value > 0 && (
                         <span className="text-[10px] text-gray-400 font-normal">
-                          ({initialServices.filter((s) => s.rating >= opt.value).length})
+                          ({services.filter((s) => s.rating >= opt.value).length})
                         </span>
                       )}
                     </button>
@@ -894,7 +717,20 @@ export default function Services() {
               )}
 
               {/* SERVICES LISTINGS GRID (WITH SKELETON LOADING EFFECTS) */}
-              {isLoading ? (
+              {error ? (
+                <div className="bg-white border border-gray-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto mt-8 shadow-xs">
+                  <div className="p-4 bg-red-50 text-red-600 rounded-full border border-red-100">
+                    <ShieldAlert className="h-8 w-8 text-red-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mt-2">Failed to Load Services</h3>
+                  <p className="text-sm text-gray-500 max-w-sm">
+                    {error}
+                  </p>
+                  <Button onClick={() => window.location.reload()} className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl mt-2 font-semibold">
+                    Retry
+                  </Button>
+                </div>
+              ) : isLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[...Array(6)].map((_, i) => (
                     <Card key={i} className="overflow-hidden p-0 py-0 gap-0 border border-gray-150 flex flex-col h-full bg-white rounded-2xl">
@@ -1258,7 +1094,7 @@ export default function Services() {
                       </span>
                       {opt.value > 0 && (
                         <span className="text-[10px] text-gray-400 font-normal">
-                          ({initialServices.filter((s) => s.rating >= opt.value).length})
+                          ({services.filter((s) => s.rating >= opt.value).length})
                         </span>
                       )}
                     </button>
