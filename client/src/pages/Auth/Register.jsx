@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import MainLayout from "../../layouts/MainLayout";
+import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -100,24 +101,24 @@ export default function Register() {
   const selectedRole = watch("role");
   const acceptTermsValue = watch("acceptTerms");
 
+  const { register: registerAuth } = useAuth();
+
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     setErrorMsg("");
     setSuccessMsg("");
 
-    // Simulate API registration call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // Allow testing simulated failures if name includes "error" or email contains "error"
-    if (data.email.toLowerCase().includes("error") || data.fullName.toLowerCase().includes("error")) {
-      setErrorMsg("Email address is already registered or invalid registration data.");
-      setIsSubmitting(false);
-    } else {
-      setSuccessMsg("Account created successfully! Redirecting to login...");
+    try {
+      await registerAuth(data.fullName, data.email, data.phone, data.password, data.role);
+      setSuccessMsg("Account created successfully! Logging you in...");
       setIsSubmitting(false);
       setTimeout(() => {
-        navigate("/login");
+        navigate("/");
       }, 1200);
+    } catch (err) {
+      console.error("Register page error:", err);
+      setErrorMsg(err.message || "Registration failed. Email or phone number might already be registered.");
+      setIsSubmitting(false);
     }
   };
 

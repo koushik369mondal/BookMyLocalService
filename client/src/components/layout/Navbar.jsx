@@ -1,9 +1,21 @@
-import { NavLink } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bell, Search, Menu } from "lucide-react";
+import { 
+  Bell, 
+  Search, 
+  Menu, 
+  LogOut, 
+  User, 
+  Calendar, 
+  Settings, 
+  LayoutDashboard, 
+  ChevronDown 
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "../../context/AuthContext";
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -15,6 +27,27 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    setShowDropdown(false);
+    navigate("/");
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur-md shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
@@ -67,17 +100,83 @@ export default function Navbar() {
             <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
           </Button>
 
-          {/* Login and Sign Up */}
-          <NavLink to="/login">
-            <Button variant="ghost" size="sm" className="text-gray-700 hover:text-blue-600 text-xs">
-              Login
-            </Button>
-          </NavLink>
-          <NavLink to="/register">
-            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 text-xs transition-transform hover:scale-[1.02]">
-              Sign Up
-            </Button>
-          </NavLink>
+          {user ? (
+            /* Logged In Dropdown */
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setShowDropdown(!showDropdown)}
+                className="flex items-center gap-1.5 focus:outline-none hover:opacity-80 transition-opacity"
+              >
+                <div className="h-8.5 w-8.5 rounded-full overflow-hidden border border-gray-200 bg-gray-150 flex items-center justify-center font-bold text-xs text-blue-600">
+                  {user.avatar ? (
+                    <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
+                  ) : (
+                    user.fullName[0].toUpperCase()
+                  )}
+                </div>
+                <ChevronDown className="h-3.5 w-3.5 text-gray-500" />
+              </button>
+
+              {showDropdown && (
+                <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-100 rounded-2xl shadow-xl py-2 z-50 animate-fade-in font-medium text-xs text-gray-705">
+                  <div className="px-4 py-2 border-b border-gray-50 text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                    Hi, {user.fullName.split(" ")[0]}
+                  </div>
+                  <NavLink
+                    to="/profile"
+                    onClick={() => setShowDropdown(false)}
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                  >
+                    <User className="h-4 w-4" /> My Profile
+                  </NavLink>
+                  <NavLink
+                    to="/bookings"
+                    onClick={() => setShowDropdown(false)}
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                  >
+                    <Calendar className="h-4 w-4" /> Booking History
+                  </NavLink>
+                  {(user.role === "PROVIDER" || user.role === "ADMIN") && (
+                    <NavLink
+                      to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"}
+                      onClick={() => setShowDropdown(false)}
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                    >
+                      <LayoutDashboard className="h-4 w-4" /> Dashboard
+                    </NavLink>
+                  )}
+                  <NavLink
+                    to="/profile"
+                    onClick={() => setShowDropdown(false)}
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                  >
+                    <Settings className="h-4 w-4" /> Settings
+                  </NavLink>
+                  <hr className="my-1.5 border-gray-50" />
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-rose-50 text-rose-600 transition-colors text-left"
+                  >
+                    <LogOut className="h-4 w-4" /> Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            /* Login and Sign Up */
+            <>
+              <NavLink to="/login">
+                <Button variant="ghost" size="sm" className="text-gray-700 hover:text-blue-600 text-xs">
+                  Login
+                </Button>
+              </NavLink>
+              <NavLink to="/register">
+                <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 text-xs transition-transform hover:scale-[1.02]">
+                  Sign Up
+                </Button>
+              </NavLink>
+            </>
+          )}
         </div>
 
         {/* Mobile Navigation controls */}
@@ -88,11 +187,11 @@ export default function Navbar() {
             <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full border border-white"></span>
           </Button>
 
-          {/* Mobile Hamburger Drawer using Dialog styled as Sheet */}
+          {/* Mobile Hamburger Drawer */}
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full hover:bg-gray-100 h-9 w-9">
-                <Menu className="h-6 w-6 text-gray-700" />
+                <Menu className="h-6 w-6 text-gray-707" />
               </Button>
             </DialogTrigger>
             
@@ -140,22 +239,67 @@ export default function Navbar() {
                 ))}
               </nav>
 
-              {/* Mobile Action Buttons */}
-              <div className="border-t pt-4 flex flex-col gap-3">
-                <DialogClose asChild>
-                  <NavLink to="/login" className="w-full">
-                    <Button variant="outline" className="w-full rounded-full h-10">
-                      Login
-                    </Button>
-                  </NavLink>
-                </DialogClose>
-                <DialogClose asChild>
-                  <NavLink to="/register" className="w-full">
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full h-10">
-                      Sign Up
-                    </Button>
-                  </NavLink>
-                </DialogClose>
+              {/* Mobile Action Buttons / Profile */}
+              <div className="border-t pt-4 flex flex-col gap-2 shrink-0">
+                {user ? (
+                  <>
+                    <div className="flex items-center gap-3 px-3 py-2 border-b pb-4 mb-2">
+                      <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center font-bold text-sm text-blue-600 shrink-0">
+                        {user.avatar ? (
+                          <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
+                        ) : (
+                          user.fullName[0].toUpperCase()
+                        )}
+                      </div>
+                      <div>
+                        <span className="block text-sm font-bold text-gray-800 leading-tight">{user.fullName}</span>
+                        <span className="text-[10px] text-gray-400 capitalize block mt-0.5">{user.role.toLowerCase()} Account</span>
+                      </div>
+                    </div>
+                    <DialogClose asChild>
+                      <NavLink to="/profile" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-blue-600 rounded-lg">
+                        <User className="h-4.5 w-4.5" /> My Profile
+                      </NavLink>
+                    </DialogClose>
+                    <DialogClose asChild>
+                      <NavLink to="/bookings" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-blue-600 rounded-lg">
+                        <Calendar className="h-4.5 w-4.5" /> Booking History
+                      </NavLink>
+                    </DialogClose>
+                    {(user.role === "PROVIDER" || user.role === "ADMIN") && (
+                      <DialogClose asChild>
+                        <NavLink to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"} className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-blue-600 rounded-lg">
+                          <LayoutDashboard className="h-4.5 w-4.5" /> Dashboard
+                        </NavLink>
+                      </DialogClose>
+                    )}
+                    <DialogClose asChild>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-rose-600 hover:bg-rose-50 rounded-lg text-left mt-2 font-bold"
+                      >
+                        <LogOut className="h-4.5 w-4.5" /> Logout
+                      </button>
+                    </DialogClose>
+                  </>
+                ) : (
+                  <>
+                    <DialogClose asChild>
+                      <NavLink to="/login" className="w-full">
+                        <Button variant="outline" className="w-full rounded-full h-10">
+                          Login
+                        </Button>
+                      </NavLink>
+                    </DialogClose>
+                    <DialogClose asChild>
+                      <NavLink to="/register" className="w-full">
+                        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full h-10">
+                          Sign Up
+                        </Button>
+                      </NavLink>
+                    </DialogClose>
+                  </>
+                )}
               </div>
 
             </DialogContent>

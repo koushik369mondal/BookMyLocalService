@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import MainLayout from "../../layouts/MainLayout";
+import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -81,25 +82,24 @@ export default function Login() {
 
   const rememberMeValue = watch("rememberMe");
 
+  const { login } = useAuth();
+
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     setErrorMsg("");
     setSuccessMsg("");
 
-    // Simulate API request authentication call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // Simple check to allow manual testing of errors (e.g. typing "error" or password "error123")
-    if (data.emailOrPhone.toLowerCase().includes("error") || data.password === "error123") {
-      setErrorMsg("Incorrect email/phone or password. Please verify and try again.");
-      setIsSubmitting(false);
-    } else {
+    try {
+      await login(data.emailOrPhone, data.password);
       setSuccessMsg("Success! Login authorized. Redirecting to dashboard...");
       setIsSubmitting(false);
-      // Redirect to home/dashboard page after 1.2s success visibility
       setTimeout(() => {
         navigate("/");
       }, 1200);
+    } catch (err) {
+      console.error("Login page error:", err);
+      setErrorMsg(err.message || "Incorrect email/phone or password. Please verify and try again.");
+      setIsSubmitting(false);
     }
   };
 
