@@ -20,6 +20,8 @@ import Subscription from "../pages/Dashboard/Subscription";
 import AdminDashboard from "../pages/Dashboard/AdminDashboard";
 import ManageUsers from "../pages/Dashboard/ManageUsers";
 import ManageProviders from "../pages/Dashboard/ManageProviders";
+import Payments from "../pages/Dashboard/Payments";
+import Reports from "../pages/Dashboard/Reports";
 import NotFound from "../pages/NotFound/NotFound";
 
 export default function AppRoutes() {
@@ -45,6 +47,8 @@ export default function AppRoutes() {
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/users" element={<ManageUsers />} />
             <Route path="/admin/providers" element={<ManageProviders />} />
+            <Route path="/admin/payments" element={<Payments />} />
+            <Route path="/admin/reports" element={<Reports />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );
