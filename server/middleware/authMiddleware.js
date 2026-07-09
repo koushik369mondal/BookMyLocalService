@@ -20,6 +20,10 @@ const protect = async (req, res, next) => {
                     role: true,
                     avatar: true,
                     isVerified: true,
+                    address: true,
+                    city: true,
+                    state: true,
+                    zipCode: true,
                     createdAt: true
                 }
             });

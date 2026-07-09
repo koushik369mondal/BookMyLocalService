@@ -4,13 +4,21 @@ import { authService } from "../services/api";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => {
+        const savedUser = localStorage.getItem("user");
+        try {
+            return savedUser ? JSON.parse(savedUser) : null;
+        } catch {
+            return null;
+        }
+    });
     const [loading, setLoading] = useState(true);
 
     const loadUser = async () => {
         const token = localStorage.getItem("token");
         if (!token) {
             setUser(null);
+            localStorage.removeItem("user");
             setLoading(false);
             return;
         }
@@ -19,13 +27,16 @@ export const AuthProvider = ({ children }) => {
             const data = await authService.getMe();
             if (data.success) {
                 setUser(data.user);
+                localStorage.setItem("user", JSON.stringify(data.user));
             } else {
                 localStorage.removeItem("token");
+                localStorage.removeItem("user");
                 setUser(null);
             }
         } catch (error) {
             console.error("Error loading user session:", error);
             localStorage.removeItem("token");
+            localStorage.removeItem("user");
             setUser(null);
         } finally {
             setLoading(false);
@@ -42,6 +53,7 @@ export const AuthProvider = ({ children }) => {
             const data = await authService.login({ identifier, password });
             if (data.success) {
                 localStorage.setItem("token", data.token);
+                localStorage.setItem("user", JSON.stringify(data.user));
                 setUser(data.user);
                 return data;
             }
@@ -57,6 +69,7 @@ export const AuthProvider = ({ children }) => {
             const data = await authService.register({ fullName, email, phone, password, role });
             if (data.success) {
                 localStorage.setItem("token", data.token);
+                localStorage.setItem("user", JSON.stringify(data.user));
                 setUser(data.user);
                 return data;
             }
@@ -68,6 +81,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         setUser(null);
     };
 

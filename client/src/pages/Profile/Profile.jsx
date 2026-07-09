@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import MainLayout from "../../layouts/MainLayout";
+import { useAuth } from "../../context/AuthContext";
+import { authService } from "../../services/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
+import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { 
   User, 
   Mail, 
@@ -36,7 +39,9 @@ import {
   Star,
   Check,
   ChevronRight,
-  ShieldCheck
+  ChevronDown,
+  ShieldCheck,
+  AlertCircle
 } from "lucide-react";
 
 // Schema for updating user details
@@ -46,10 +51,10 @@ const profileSchema = z.object({
   phone: z.string().min(1, { message: "Phone number is required" }).regex(/^\+?1?\s*\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/, {
     message: "Please enter a valid 10-digit phone number"
   }),
-  street: z.string().min(5, { message: "Street Address must be at least 5 characters" }),
-  city: z.string().min(2, { message: "City is required" }),
-  state: z.string().min(2, { message: "State is required" }),
-  zipCode: z.string().regex(/^\d{5}$/, { message: "ZIP Code must be a 5-digit number" })
+  address: z.string().optional().or(z.literal("")),
+  city: z.string().optional().or(z.literal("")),
+  state: z.string().optional().or(z.literal("")),
+  zipCode: z.string().optional().or(z.literal(""))
 });
 
 // Schema for changing password
@@ -62,62 +67,40 @@ const passwordSchema = z.object({
   path: ["confirmPassword"]
 });
 
-// Mock Initial Saved Addresses
-const initialAddresses = [
-  { id: 1, label: "Home", street: "123 Main St, Apt 4B", city: "Brooklyn", state: "NY", zipCode: "11201" },
-  { id: 2, label: "Office", street: "500 Madison Ave, Floor 12", city: "Manhattan", state: "NY", zipCode: "10022" }
-];
-
 // Mock Recent Bookings list
 const recentBookings = [
   { id: "BMLS-28491", providerName: "Sarah Jenkins", serviceName: "Deep Home Cleaning Service", date: "2026-07-15", time: "09:30 AM", price: 55.00, status: "upcoming" },
   { id: "BMLS-19402", providerName: "David Miller", serviceName: "Expert Plumbing & Leak Repair", date: "2026-07-03", time: "02:00 PM", price: 75.00, status: "completed" }
 ];
 
-// Mock Favorite Providers list
-const favoriteProviders = [
-  {
-    id: 1,
-    providerName: "Sarah Jenkins",
-    providerImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
-    category: "Home Cleaning",
-    rating: 4.9,
-    reviewsCount: 142,
-    location: "Brooklyn, NY",
-    price: 35
-  },
-  {
-    id: 3,
-    providerName: "Marcus Vance",
-    providerImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
-    category: "Electrical",
-    rating: 4.9,
-    reviewsCount: 115,
-    location: "Manhattan, NY",
-    price: 65
-  }
-];
+// Helper to calculate profile completion dynamically using actual database values
+const getProfileCompletion = (user) => {
+  if (!user) return { percent: 0, missing: [] };
+  const fields = [
+    { key: "avatar", label: "Profile Photo" },
+    { key: "fullName", label: "Full Name" },
+    { key: "email", label: "Email" },
+    { key: "phone", label: "Phone" },
+    { key: "address", label: "Address" },
+    { key: "city", label: "City" },
+    { key: "state", label: "State" },
+    { key: "zipCode", label: "ZIP Code" }
+  ];
+  const filled = fields.filter(f => user[f.key] && user[f.key].trim?.() !== "");
+  const missing = fields.filter(f => !user[f.key] || user[f.key].trim?.() === "");
+  const percent = Math.round((filled.length / fields.length) * 100);
+  return { percent, missing };
+};
 
 export default function Profile() {
   const navigate = useNavigate();
+  const { user, loading: authLoading, logout, reloadUser } = useAuth();
+  const fileInputRef = useRef(null);
 
   // Active section tab state
   const [activeTab, setActiveTab] = useState("details");
 
-  // Mock Profile photo state
-  const [profileImage, setProfileImage] = useState("https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80");
-  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
-
-  // Address lists state
-  const [addresses, setAddresses] = useState(initialAddresses);
-  const [isAddAddressOpen, setIsAddAddressOpen] = useState(false);
-  const [newAddressLabel, setNewAddressLabel] = useState("Home");
-  const [newAddressStreet, setNewAddressStreet] = useState("");
-  const [newAddressCity, setNewAddressCity] = useState("");
-  const [newAddressState, setNewAddressState] = useState("");
-  const [newAddressZip, setNewAddressZip] = useState("");
-
-  // Settings states
+  // Settings states (local preferences)
   const [emailNotifs, setEmailNotifs] = useState(true);
   const [smsNotifs, setSmsNotifs] = useState(true);
   const [promoEmails, setPromoEmails] = useState(false);
@@ -129,22 +112,33 @@ export default function Profile() {
   const [errorMsg, setErrorMsg] = useState("");
   const [isSavingDetails, setIsSavingDetails] = useState(false);
   const [isChangingPass, setIsChangingPass] = useState(false);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+
+  // Saved Addresses (local state)
+  const [addresses, setAddresses] = useState([]);
+  const [isAddAddressOpen, setIsAddAddressOpen] = useState(false);
+  const [newAddressLabel, setNewAddressLabel] = useState("Home");
+  const [newAddressStreet, setNewAddressStreet] = useState("");
+  const [newAddressCity, setNewAddressCity] = useState("");
+  const [newAddressState, setNewAddressState] = useState("");
+  const [newAddressZip, setNewAddressZip] = useState("");
 
   // Zod forms binding
   const {
     register: regProfile,
     handleSubmit: handleProfileSubmit,
+    reset: resetProfileForm,
     formState: { errors: profileErrors }
   } = useForm({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      fullName: "Chloe Bennett",
-      email: "chloe.bennett@example.com",
-      phone: "555-019-2834",
-      street: "789 Pine Street, Apt 1C",
-      city: "Brooklyn",
-      state: "NY",
-      zipCode: "11201"
+      fullName: "",
+      email: "",
+      phone: "",
+      address: "",
+      city: "",
+      state: "",
+      zipCode: ""
     }
   });
 
@@ -162,53 +156,134 @@ export default function Profile() {
     }
   });
 
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate("/login");
+    }
+  }, [authLoading, user, navigate]);
+
+  // Populate form with real user data when user loads
+  useEffect(() => {
+    if (user) {
+      resetProfileForm({
+        fullName: user.fullName || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        address: user.address || "",
+        city: user.city || "",
+        state: user.state || "",
+        zipCode: user.zipCode || ""
+      });
+    }
+  }, [user, resetProfileForm]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Update profile image simulation
-  const handlePhotoUpload = () => {
-    setIsUploadingPhoto(true);
-    setTimeout(() => {
-      // Choose a different mock profile pic
-      setProfileImage("https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80");
-      setIsUploadingPhoto(false);
-      setSuccessMsg("Profile picture updated successfully!");
-      setTimeout(() => setSuccessMsg(""), 2000);
-    }, 1200);
-  };
-
+  // Save profile to backend
   const onProfileSave = async (data) => {
     setIsSavingDetails(true);
     setSuccessMsg("");
     setErrorMsg("");
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSavingDetails(false);
-    setSuccessMsg("Account profile details updated successfully!");
-    setTimeout(() => setSuccessMsg(""), 2500);
+    try {
+      await authService.updateProfile({
+        fullName: data.fullName,
+        phone: data.phone,
+        address: data.address,
+        city: data.city,
+        state: data.state,
+        zipCode: data.zipCode
+      });
+      await reloadUser();
+      setSuccessMsg("Profile updated successfully!");
+      setTimeout(() => setSuccessMsg(""), 3000);
+    } catch (err) {
+      setErrorMsg(err.message || "Failed to update profile");
+      setTimeout(() => setErrorMsg(""), 4000);
+    } finally {
+      setIsSavingDetails(false);
+    }
   };
 
+  // Change password via backend
   const onPasswordChange = async (data) => {
     setIsChangingPass(true);
     setSuccessMsg("");
     setErrorMsg("");
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsChangingPass(false);
-    
-    if (data.currentPassword !== "current123") {
-      setErrorMsg("Incorrect current password. Please try again.");
-    } else {
+    try {
+      await authService.changePassword({
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword
+      });
       setSuccessMsg("Password changed successfully!");
       resetPasswordForm();
-      setTimeout(() => setSuccessMsg(""), 2500);
+      setTimeout(() => setSuccessMsg(""), 3000);
+    } catch (err) {
+      setErrorMsg(err.message || "Failed to change password");
+      setTimeout(() => setErrorMsg(""), 4000);
+    } finally {
+      setIsChangingPass(false);
     }
   };
 
-  // Saved addresses actions
+  // Profile Picture Upload trigger
+  const handlePhotoClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  // Handle image upload to backend (which uploads to Cloudinary)
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate size (5 MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setErrorMsg("File size exceeds 5MB limit.");
+      return;
+    }
+
+    // Validate type
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      setErrorMsg("Invalid file type. Only JPG, JPEG, PNG, and WebP are allowed.");
+      return;
+    }
+
+    setIsUploadingPhoto(true);
+    setSuccessMsg("");
+    setErrorMsg("");
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    try {
+      const res = await authService.uploadAvatar(formData);
+      if (res.success) {
+        setSuccessMsg("Profile picture updated successfully!");
+        await reloadUser();
+      } else {
+        setErrorMsg(res.message || "Failed to upload profile picture.");
+      }
+    } catch (err) {
+      console.error("Avatar upload failed:", err);
+      setErrorMsg(err.message || "Failed to upload profile picture.");
+    } finally {
+      setIsUploadingPhoto(false);
+      setTimeout(() => {
+        setSuccessMsg("");
+        setErrorMsg("");
+      }, 3000);
+    }
+  };
+
+  // Saved addresses actions (local only)
   const handleAddAddress = (e) => {
     e.preventDefault();
     if (!newAddressStreet || !newAddressCity || !newAddressState || !newAddressZip) return;
-
     const newAddr = {
       id: Date.now(),
       label: newAddressLabel,
@@ -217,11 +292,8 @@ export default function Profile() {
       state: newAddressState,
       zipCode: newAddressZip
     };
-
     setAddresses([...addresses, newAddr]);
     setIsAddAddressOpen(false);
-
-    // Reset inputs
     setNewAddressStreet("");
     setNewAddressCity("");
     setNewAddressState("");
@@ -233,17 +305,37 @@ export default function Profile() {
   };
 
   const handleLogout = () => {
-    // Clear storage and redirect to login/home
-    setSuccessMsg("Logging out... Redirecting.");
-    setTimeout(() => {
-      navigate("/login");
-    }, 1200);
+    logout();
+    navigate("/");
   };
+
+  // Show loading while auth is resolving
+  if (authLoading || !user) {
+    return (
+      <MainLayout>
+        <div className="min-h-screen flex items-center justify-center bg-slate-50/50">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        </div>
+      </MainLayout>
+    );
+  }
+
+  const { percent: completionPercent, missing: missingFields } = getProfileCompletion(user);
+  const initials = user.fullName ? user.fullName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) : "?";
 
   return (
     <MainLayout>
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
+        {/* Hidden File Picker Input */}
+        <input 
+          type="file" 
+          ref={fileInputRef} 
+          accept="image/png, image/jpeg, image/jpg, image/webp" 
+          onChange={handleFileChange} 
+          className="hidden" 
+        />
+
         {/* BANNER HEADER */}
         <section className="bg-gradient-to-r from-blue-600 via-indigo-650 to-indigo-750 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
@@ -255,7 +347,30 @@ export default function Profile() {
 
         {/* CONTAINER */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          
+
+          {/* COMPLETE YOUR PROFILE BANNER */}
+          {completionPercent < 100 && (
+            <Card className="border border-amber-200 bg-amber-50/80 shadow-2xs rounded-2xl p-5 mb-8 animate-fade-in">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 bg-amber-100 text-amber-600 rounded-xl shrink-0 mt-0.5">
+                    <AlertCircle className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-extrabold text-slate-900">Complete Your Profile</h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Fill in the missing fields to unlock the full experience: {missingFields.map(f => f.label).join(", ")}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <span className="text-xs font-black text-amber-700">{completionPercent}%</span>
+                  <Progress value={completionPercent} className="w-28 h-2 rounded-full bg-amber-200 [&>div]:bg-amber-500" />
+                </div>
+              </div>
+            </Card>
+          )}
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* LEFT MENU SIDEBAR */}
@@ -264,17 +379,17 @@ export default function Profile() {
               {/* Photo Display Card */}
               <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 text-center">
                 <CardContent className="p-0 flex flex-col items-center gap-4">
-                  {/* Avatar wrapper */}
-                  <div className="relative group">
+                  <div className="relative group cursor-pointer" onClick={handlePhotoClick}>
                     <Avatar className="w-24 h-24 border-4 border-slate-100 shadow-md rounded-full overflow-hidden shrink-0">
-                      <AvatarImage src={profileImage} className="object-cover w-full h-full" />
-                      <AvatarFallback className="text-2xl font-bold bg-indigo-50 text-indigo-700">CB</AvatarFallback>
+                      {user.avatar ? (
+                        <AvatarImage src={user.avatar} className="object-cover w-full h-full" />
+                      ) : null}
+                      <AvatarFallback className="text-2xl font-bold bg-indigo-50 text-indigo-700">{initials}</AvatarFallback>
                     </Avatar>
                     
                     {/* Camera upload overlay trigger */}
                     <button 
                       type="button"
-                      onClick={handlePhotoUpload}
                       disabled={isUploadingPhoto}
                       className="absolute inset-0 bg-slate-950/60 text-white rounded-full flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
                     >
@@ -290,8 +405,32 @@ export default function Profile() {
                   </div>
 
                   <div>
-                    <h3 className="font-extrabold text-slate-900 text-base leading-snug">Chloe Bennett</h3>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wide">Client Account</span>
+                    <h3 className="font-extrabold text-slate-900 text-base leading-snug">{user.fullName}</h3>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wide block mb-2.5">{user.role} Account</span>
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      size="xs" 
+                      onClick={handlePhotoClick}
+                      disabled={isUploadingPhoto}
+                      className="rounded-lg border-slate-200 text-[10px] font-semibold h-7 px-2.5 hover:bg-slate-50"
+                    >
+                      {isUploadingPhoto ? (
+                        <>
+                          <Loader2 className="h-3 w-3 animate-spin mr-1" />
+                          Uploading...
+                        </>
+                      ) : (
+                        <>
+                          <Camera className="h-3.5 w-3.5 mr-1" />
+                          Upload Photo
+                        </>
+                      )}
+                    </Button>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-semibold">
+                    <Mail className="h-3 w-3" /> {user.email}
                   </div>
                 </CardContent>
               </Card>
@@ -303,9 +442,8 @@ export default function Profile() {
                     { id: "details", label: "Personal Information", icon: User },
                     { id: "addresses", label: "Saved Locations", icon: MapPin },
                     { id: "settings", label: "Preferences & Toggles", icon: Bell },
-                    { id: "security", label: "Security & Keys", icon: Lock },
-                    { id: "bookings", label: "Recent Bookings", icon: Calendar },
-                    { id: "favorites", label: "Saved Favorites", icon: Heart }
+                    { id: "security", label: "Security & Password", icon: Lock },
+                    { id: "bookings", label: "Recent Bookings", icon: Calendar }
                   ].map((menu) => {
                     const isActive = activeTab === menu.id;
                     return (
@@ -381,6 +519,7 @@ export default function Profile() {
                         <Label htmlFor="fullName" className="text-xs font-bold text-slate-700">Full Name</Label>
                         <Input
                           id="fullName"
+                          placeholder="Enter your full name"
                           className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
                           disabled={isSavingDetails}
                           {...regProfile("fullName")}
@@ -395,17 +534,18 @@ export default function Profile() {
                           <Input
                             id="email"
                             type="email"
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
-                            disabled={isSavingDetails}
+                            className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-slate-50 cursor-not-allowed"
+                            disabled
                             {...regProfile("email")}
                           />
-                          {profileErrors.email && <p className="text-[10px] text-rose-600 font-bold mt-1">{profileErrors.email.message}</p>}
+                          <p className="text-[9px] text-slate-400 font-medium">Email cannot be changed</p>
                         </div>
 
                         <div className="space-y-1.5">
                           <Label htmlFor="phone" className="text-xs font-bold text-slate-700">Phone Number</Label>
                           <Input
                             id="phone"
+                            placeholder="Enter your phone number"
                             className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("phone")}
@@ -414,16 +554,16 @@ export default function Profile() {
                         </div>
                       </div>
 
-                      {/* Street Address */}
+                      {/* Address */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="street" className="text-xs font-bold text-slate-700">Primary Street Address</Label>
+                        <Label htmlFor="address" className="text-xs font-bold text-slate-700">Primary Street Address</Label>
                         <Input
-                          id="street"
+                          id="address"
+                          placeholder="e.g. 789 Pine Street, Apt 1C"
                           className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
                           disabled={isSavingDetails}
-                          {...regProfile("street")}
+                          {...regProfile("address")}
                         />
-                        {profileErrors.street && <p className="text-[10px] text-rose-600 font-bold mt-1">{profileErrors.street.message}</p>}
                       </div>
 
                       {/* City State Zip */}
@@ -432,33 +572,33 @@ export default function Profile() {
                           <Label htmlFor="city" className="text-xs font-bold text-slate-700">City</Label>
                           <Input
                             id="city"
+                            placeholder="e.g. Brooklyn"
                             className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("city")}
                           />
-                          {profileErrors.city && <p className="text-[10px] text-rose-600 font-bold mt-1">{profileErrors.city.message}</p>}
                         </div>
 
                         <div className="space-y-1.5">
                           <Label htmlFor="state" className="text-xs font-bold text-slate-700">State</Label>
                           <Input
                             id="state"
+                            placeholder="e.g. NY"
                             className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("state")}
                           />
-                          {profileErrors.state && <p className="text-[10px] text-rose-600 font-bold mt-1">{profileErrors.state.message}</p>}
                         </div>
 
                         <div className="space-y-1.5">
                           <Label htmlFor="zipCode" className="text-xs font-bold text-slate-700">ZIP Code</Label>
                           <Input
                             id="zipCode"
+                            placeholder="e.g. 11201"
                             className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("zipCode")}
                           />
-                          {profileErrors.zipCode && <p className="text-[10px] text-rose-600 font-bold mt-1">{profileErrors.zipCode.message}</p>}
                         </div>
                       </div>
 
@@ -510,29 +650,37 @@ export default function Profile() {
                   </CardHeader>
 
                   <CardContent className="p-0 pt-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {addresses.map(addr => (
-                        <div key={addr.id} className="border border-slate-150 p-4.5 rounded-2xl bg-white relative flex flex-col justify-between hover:border-slate-250 transition-colors shadow-2xs">
-                          <div>
-                            <span className="inline-flex items-center text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 rounded-lg py-0.5 px-2 mb-2">
-                              {addr.label}
-                            </span>
-                            <span className="block text-xs font-bold text-slate-800">{addr.street}</span>
-                            <span className="block text-[11px] text-slate-500 mt-0.5">{addr.city}, {addr.state} {addr.zipCode}</span>
-                          </div>
+                    {addresses.length === 0 ? (
+                      <div className="text-center py-12">
+                        <MapPin className="h-10 w-10 text-slate-200 mx-auto mb-3" />
+                        <p className="text-sm font-bold text-slate-400">No saved addresses yet</p>
+                        <p className="text-xs text-slate-350 mt-1">Add your first address for faster booking</p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {addresses.map(addr => (
+                          <div key={addr.id} className="border border-slate-150 p-4.5 rounded-2xl bg-white relative flex flex-col justify-between hover:border-slate-250 transition-colors shadow-2xs">
+                            <div>
+                              <span className="inline-flex items-center text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 rounded-lg py-0.5 px-2 mb-2">
+                                {addr.label}
+                              </span>
+                              <span className="block text-xs font-bold text-slate-800">{addr.street}</span>
+                              <span className="block text-[11px] text-slate-500 mt-0.5">{addr.city}, {addr.state} {addr.zipCode}</span>
+                            </div>
 
-                          <div className="border-t border-slate-50 pt-3 mt-4.5 flex justify-end">
-                            <button
-                              type="button"
-                              onClick={() => handleDeleteAddress(addr.id)}
-                              className="text-rose-500 hover:text-rose-700 text-xs font-bold flex items-center gap-1.5 transition-colors"
-                            >
-                              <Trash2 className="h-4 w-4" /> Remove
-                            </button>
+                            <div className="border-t border-slate-50 pt-3 mt-4.5 flex justify-end">
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteAddress(addr.id)}
+                                className="text-rose-500 hover:text-rose-700 text-xs font-bold flex items-center gap-1.5 transition-colors"
+                              >
+                                <Trash2 className="h-4 w-4" /> Remove
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               )}
@@ -635,7 +783,7 @@ export default function Profile() {
                 </Card>
               )}
 
-              {/* PANEL 4: SECURITY & KEYS */}
+              {/* PANEL 4: SECURITY & PASSWORD */}
               {activeTab === "security" && (
                 <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
                   <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
@@ -643,7 +791,7 @@ export default function Profile() {
                       <Lock className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-slate-900">Security & Keys</CardTitle>
+                      <CardTitle className="text-base font-extrabold text-slate-900">Security & Password</CardTitle>
                       <CardDescription className="text-xs">Update your credentials password to secure access</CardDescription>
                     </div>
                   </CardHeader>
@@ -662,7 +810,6 @@ export default function Profile() {
                           {...regPassword("currentPassword")}
                         />
                         {passwordErrors.currentPassword && <p className="text-[10px] text-rose-600 font-bold mt-1">{passwordErrors.currentPassword.message}</p>}
-                        <span className="text-[9px] text-slate-400 font-semibold block">Enter <span className="font-bold text-slate-500">current123</span> to simulate successful current password validations.</span>
                       </div>
 
                       {/* New Pass */}
@@ -760,52 +907,6 @@ export default function Profile() {
                         </div>
                       </div>
                     ))}
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* PANEL 6: FAVORITE PROVIDERS */}
-              {activeTab === "favorites" && (
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
-                  <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
-                      <Heart className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-base font-extrabold text-slate-900">Favorite Providers</CardTitle>
-                      <CardDescription className="text-xs">Your preferred service specialists for quick booking access</CardDescription>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="p-0 pt-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {favoriteProviders.map(fav => (
-                        <Card key={fav.id} className="group overflow-hidden border border-slate-100 hover:border-slate-250 shadow-2xs hover:shadow-xs transition-all duration-300 bg-white flex flex-col h-full rounded-2xl">
-                          <div className="p-4 flex items-start gap-3">
-                            <Avatar className="w-10 h-10 border border-slate-100 overflow-hidden bg-white shrink-0">
-                              <AvatarImage src={fav.providerImage} className="object-cover" />
-                              <AvatarFallback>{fav.providerName[0]}</AvatarFallback>
-                            </Avatar>
-                            <div className="space-y-0.5 flex-1 min-w-0">
-                              <Badge variant="secondary" className="bg-slate-100 hover:bg-slate-200 text-slate-650 font-bold rounded-lg text-[9px] py-0 px-2 uppercase">
-                                {fav.category}
-                              </Badge>
-                              <h4 className="font-extrabold text-slate-900 text-xs truncate mt-1">{fav.providerName}</h4>
-                              <div className="flex items-center gap-1 text-[10px] text-slate-450 font-medium">
-                                <MapPin className="h-3 w-3" /> {fav.location}
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="p-4 pt-0 mt-auto border-t border-slate-50 flex items-center justify-between bg-slate-50/50">
-                            <span className="text-[10px] font-bold text-slate-500">Starting: <span className="font-black text-slate-805">${fav.price}/hr</span></span>
-                            <Link to={`/services/${fav.id}`}>
-                              <Button size="xs" className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-7 text-[9px] font-bold shadow-2xs">Book Pro</Button>
-                            </Link>
-                          </div>
-                        </Card>
-                      ))}
-                    </div>
                   </CardContent>
                 </Card>
               )}
