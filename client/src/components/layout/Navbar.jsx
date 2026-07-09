@@ -86,7 +86,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-3 shrink-0">
           {/* Desktop Search Bar */}
           <div className="relative w-48 lg:w-56">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-secondary" />
             <Input
               type="search"
               placeholder="Search services..."
