@@ -16,6 +16,7 @@ import ProviderDashboard from "../pages/Dashboard/ProviderDashboard";
 import Availability from "../pages/Dashboard/Availability";
 import Earnings from "../pages/Dashboard/Earnings";
 import Reviews from "../pages/Dashboard/Reviews";
+import Subscription from "../pages/Dashboard/Subscription";
 import AdminDashboard from "../pages/Dashboard/AdminDashboard";
 import NotFound from "../pages/NotFound/NotFound";
 
@@ -38,6 +39,7 @@ export default function AppRoutes() {
             <Route path="/provider/availability" element={<Availability />} />
             <Route path="/provider/earnings" element={<Earnings />} />
             <Route path="/provider/reviews" element={<Reviews />} />
+            <Route path="/provider/subscription" element={<Subscription />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
