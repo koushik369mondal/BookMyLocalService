@@ -242,7 +242,7 @@ export default function Availability() {
     return (
       <div className="border border-slate-100 p-4.5 rounded-2xl bg-white shadow-2xs">
         <span className="text-xs font-bold text-slate-800 block mb-3 flex items-center gap-1">
-          <CalendarIcon className="h-4 w-4 text-blue-600" /> Visual Month View (July 2026)
+          <CalendarIcon className="h-4 w-4 text-primary" /> Visual Month View (July 2026)
         </span>
         
         <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-wide">
@@ -290,19 +290,19 @@ export default function Availability() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-blue-600 via-indigo-650 to-indigo-750 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Availability & Scheduling</h1>
-              <p className="text-blue-100 text-xs sm:text-sm font-medium">Configure daily operational hours, add custom break windows, or block vacation days</p>
+              <p className="text-slate-300 text-xs sm:text-sm font-medium">Configure daily operational hours, add custom break windows, or block vacation days</p>
             </div>
             
             {/* Quick dashboard back button */}
             <Link to="/provider/dashboard">
               <Button size="sm" className="bg-white/10 hover:bg-white/15 border border-white/5 rounded-full text-white text-xs font-bold px-5 h-9.5 backdrop-blur-xs">
-                <ArrowLeft className="h-4 w-4 text-blue-205 mr-1" />
+                <ArrowLeft className="h-4 w-4 text-white/60 mr-1" />
                 Back to Dashboard
               </Button>
             </Link>
@@ -333,7 +333,7 @@ export default function Availability() {
               
               <Card className="border border-slate-100 shadow-md bg-white rounded-2xl p-6">
                 <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+                  <div className="p-2 bg-primary/5 text-primary rounded-xl">
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
@@ -465,7 +465,7 @@ export default function Availability() {
                   type="button"
                   onClick={handleSaveSchedule}
                   disabled={isSaving}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs h-10 px-6 rounded-xl shadow-md flex items-center justify-center gap-1.5"
+                  className="bg-primary hover:bg-primary text-white font-bold text-xs h-10 px-6 rounded-xl shadow-md flex items-center justify-center gap-1.5"
                 >
                   {isSaving ? (
                     <>
@@ -501,7 +501,7 @@ export default function Availability() {
                       type="date"
                       value={newBlockDate}
                       onChange={(e) => setNewBlockDate(e.target.value)}
-                      className="h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                      className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                       disabled={isSaving}
                       required
                     />
@@ -514,7 +514,7 @@ export default function Availability() {
                       placeholder="e.g. Summer Vacation, Doctor Visit"
                       value={newBlockReason}
                       onChange={(e) => setNewBlockReason(e.target.value)}
-                      className="h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                      className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                       disabled={isSaving}
                       required
                     />

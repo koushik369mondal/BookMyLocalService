@@ -127,7 +127,7 @@ export default function Login() {
         <div className="max-w-5xl w-full bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] transition-all duration-300 hover:shadow-2xl">
           
           {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-blue-600 via-indigo-650 to-indigo-800 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+          <div className="lg:col-span-5 bg-gradient-to-br from-primary via-secondary to-primary p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
             
             {/* Mesh shapes and overlays */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
@@ -139,14 +139,14 @@ export default function Login() {
 
             {/* Testimonials or Stats Info Block */}
             <div className="relative z-10 space-y-6 my-auto pt-10">
-              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-blue-100 border border-white/5 backdrop-blur-xs">
+              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-slate-300 border border-white/5 backdrop-blur-xs">
                 <Sparkles className="h-3.5 w-3.5 text-amber-300" />
                 Vetted Local Pros
               </span>
               <h2 className="text-3xl font-black leading-tight tracking-tight">
                 Find and Book Service Experts Near You.
               </h2>
-              <p className="text-blue-100 text-sm leading-relaxed">
+              <p className="text-slate-300 text-sm leading-relaxed">
                 Connect with verified local cleaners, plumbers, electricians, and personal coaches. Manage schedules, messaging, and secured checkout all in one place.
               </p>
 
@@ -157,7 +157,7 @@ export default function Login() {
                   "Secure & Encrypted Booking Checkout",
                   "Clear, Upfront Pricing Tiers"
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-blue-55">
+                  <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-slate-300">
                     <ShieldCheck className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
                     <span>{item}</span>
                   </div>
@@ -167,7 +167,7 @@ export default function Login() {
 
             {/* Quote footer card */}
             <div className="relative z-10 bg-white/10 border border-white/5 rounded-2xl p-4.5 backdrop-blur-xs">
-              <p className="text-xs italic text-blue-100/90 leading-relaxed">
+              <p className="text-xs italic text-slate-300 leading-relaxed">
                 "Finding a smart home electrician used to take hours. On BookMyLocalService, I matched and scheduled Marcus in under 5 minutes!"
               </p>
               <div className="flex items-center gap-2 mt-3">
@@ -176,7 +176,7 @@ export default function Login() {
                 </div>
                 <div>
                   <span className="block text-[11px] font-bold">Helena Rostova</span>
-                  <span className="text-[9px] text-blue-200">Verified Customer</span>
+                  <span className="text-[9px] text-white/60">Verified Customer</span>
                 </div>
               </div>
             </div>
@@ -224,7 +224,7 @@ export default function Login() {
                   <Input
                     id="emailOrPhone"
                     placeholder="name@example.com or 10-digit number"
-                    className={`pl-10 h-11 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-xs bg-white ${
+                    className={`pl-10 h-11 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
                       errors.emailOrPhone ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
                     }`}
                     disabled={isSubmitting}
@@ -245,7 +245,7 @@ export default function Login() {
                   <Label htmlFor="password" className="text-xs font-bold text-slate-700">Password</Label>
                   <Link 
                     to="/forgot-password" 
-                    className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors hover:underline"
+                    className="text-xs font-semibold text-primary hover:text-accent transition-colors hover:underline"
                   >
                     Forgot password?
                   </Link>
@@ -258,7 +258,7 @@ export default function Login() {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter password (min 6 characters)"
-                    className={`pl-10 pr-10 h-11 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-xs bg-white ${
+                    className={`pl-10 pr-10 h-11 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
                       errors.password ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
                     }`}
                     disabled={isSubmitting}
@@ -302,7 +302,7 @@ export default function Login() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-primary hover:bg-secondary text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -312,7 +312,7 @@ export default function Login() {
                 ) : (
                   <>
                     Log In
-                    <ArrowRight className="h-4 w-4 text-blue-200" />
+                    <ArrowRight className="h-4 w-4 text-white/60" />
                   </>
                 )}
               </Button>
@@ -357,7 +357,7 @@ export default function Login() {
               Don't have an account yet?{" "}
               <Link 
                 to="/register" 
-                className="text-blue-600 hover:text-blue-700 transition-colors font-bold hover:underline"
+                className="text-primary hover:text-accent transition-colors font-bold hover:underline"
               >
                 Create client account
               </Link>

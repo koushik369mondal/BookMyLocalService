@@ -243,19 +243,19 @@ export default function ManageUsers() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-blue-600 via-indigo-650 to-indigo-750 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Manage Platform Users</h1>
-              <p className="text-blue-100 text-xs sm:text-sm font-medium">Audit profiles, modify roles, block accounts, or export databases</p>
+              <p className="text-slate-300 text-xs sm:text-sm font-medium">Audit profiles, modify roles, block accounts, or export databases</p>
             </div>
             
             {/* Quick dashboard back button */}
             <Link to="/admin/dashboard">
               <Button size="sm" className="bg-white/10 hover:bg-white/15 border border-white/5 rounded-full text-white text-xs font-bold px-5 h-9.5 backdrop-blur-xs">
-                <ArrowLeft className="h-4 w-4 text-blue-200 mr-1" />
+                <ArrowLeft className="h-4 w-4 text-white/60 mr-1" />
                 Back to Dashboard
               </Button>
             </Link>
@@ -282,7 +282,7 @@ export default function ManageUsers() {
             </div>
 
             <div className="text-center space-y-1 py-1 border-l border-slate-100">
-              <span className="block text-2xl font-black text-blue-650">+{stats.newCount}</span>
+              <span className="block text-2xl font-black text-primary">+{stats.newCount}</span>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">New Today</span>
             </div>
 
@@ -299,7 +299,7 @@ export default function ManageUsers() {
               {/* Search */}
               <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
                 <span className="text-xs font-bold text-slate-800 block mb-2.5 flex items-center gap-1.5">
-                  <Search className="h-4 w-4 text-blue-600" /> Search Users
+                  <Search className="h-4 w-4 text-primary" /> Search Users
                 </span>
                 <div className="relative">
                   <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-400">
@@ -309,7 +309,7 @@ export default function ManageUsers() {
                     placeholder="Search name, phone..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                   />
                 </div>
               </Card>
@@ -321,7 +321,7 @@ export default function ManageUsers() {
                   <select
                     value={roleFilter}
                     onChange={(e) => setRoleFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Roles</option>
                     <option value="customer">Customers</option>
@@ -340,7 +340,7 @@ export default function ManageUsers() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Statuses</option>
                     <option value="active">Active only</option>
@@ -359,7 +359,7 @@ export default function ManageUsers() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="date-desc">Join Date: Newest First</option>
                     <option value="date-asc">Join Date: Oldest First</option>
@@ -381,7 +381,7 @@ export default function ManageUsers() {
               {selectedUserIds.length > 0 && (
                 <div className="p-4 bg-slate-900 border border-slate-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
                   <span className="text-xs font-extrabold flex items-center gap-2">
-                    <SlidersHorizontal className="h-4.5 w-4.5 text-blue-400" />
+                    <SlidersHorizontal className="h-4.5 w-4.5 text-secondary" />
                     {selectedUserIds.length} Users Selected
                   </span>
                   
@@ -428,7 +428,7 @@ export default function ManageUsers() {
               ) : paginatedUsers.length === 0 ? (
                 /* EMPTY STATE BOARD */
                 <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-blue-50 text-blue-600 rounded-full border border-blue-100">
+                  <div className="p-4 bg-primary/5 text-primary rounded-full border border-primary/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mt-2">No Users Found</h3>
@@ -463,7 +463,7 @@ export default function ManageUsers() {
                         {paginatedUsers.map(user => {
                           const isSelected = selectedUserIds.includes(user.id);
                           return (
-                            <tr key={user.id} className={`hover:bg-slate-50/50 transition-colors ${isSelected ? "bg-blue-50/10" : ""}`}>
+                            <tr key={user.id} className={`hover:bg-slate-50/50 transition-colors ${isSelected ? "bg-primary/5/10" : ""}`}>
                               <td className="py-3 px-1 shrink-0 w-8">
                                 <Checkbox 
                                   checked={isSelected}
@@ -569,7 +569,7 @@ export default function ManageUsers() {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
                                 currentPage === pageNum
-                                  ? "bg-blue-600 text-white shadow-md shadow-blue-100"
+                                  ? "bg-primary text-white shadow-md shadow-primary/15"
                                   : "text-slate-650 hover:bg-slate-105"
                               }`}
                             >
@@ -660,7 +660,7 @@ export default function ManageUsers() {
           <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
             <DialogHeader>
               <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <Edit3 className="h-5 w-5 text-blue-600" />
+                <Edit3 className="h-5 w-5 text-primary" />
                 Modify User Details
               </DialogTitle>
               <DialogDescription className="text-xs text-slate-400 pt-0.5">
@@ -676,7 +676,7 @@ export default function ManageUsers() {
                   id="editName"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -689,7 +689,7 @@ export default function ManageUsers() {
                   type="email"
                   value={editEmail}
                   onChange={(e) => setEditEmail(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -701,7 +701,7 @@ export default function ManageUsers() {
                   id="editPhone"
                   value={editPhone}
                   onChange={(e) => setEditPhone(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -715,7 +715,7 @@ export default function ManageUsers() {
                       id="editRole"
                       value={editRole}
                       onChange={(e) => setEditRole(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="customer">Customer</option>
                       <option value="provider">Provider</option>
@@ -731,7 +731,7 @@ export default function ManageUsers() {
                       id="editStatus"
                       value={editStatus}
                       onChange={(e) => setEditStatus(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="active">Active</option>
                       <option value="blocked">Blocked</option>
@@ -752,7 +752,7 @@ export default function ManageUsers() {
                 </Button>
                 <Button 
                   type="submit" 
-                  className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                  className="rounded-xl bg-primary hover:bg-primary text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
                 >
                   Save Changes
                 </Button>

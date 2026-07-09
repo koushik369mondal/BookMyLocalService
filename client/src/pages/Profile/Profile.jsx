@@ -314,7 +314,7 @@ export default function Profile() {
     return (
       <MainLayout>
         <div className="min-h-screen flex items-center justify-center bg-slate-50/50">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       </MainLayout>
     );
@@ -337,11 +337,11 @@ export default function Profile() {
         />
 
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-blue-600 via-indigo-650 to-indigo-750 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Account Settings</h1>
-            <p className="text-blue-100 text-xs sm:text-sm mt-1.5 font-medium">Configure preferences, details, password keys, and delivery locations</p>
+            <p className="text-slate-300 text-xs sm:text-sm mt-1.5 font-medium">Configure preferences, details, password keys, and delivery locations</p>
           </div>
         </section>
 
@@ -384,7 +384,7 @@ export default function Profile() {
                       {user.avatar ? (
                         <AvatarImage src={user.avatar} className="object-cover w-full h-full" />
                       ) : null}
-                      <AvatarFallback className="text-2xl font-bold bg-indigo-50 text-indigo-700">{initials}</AvatarFallback>
+                      <AvatarFallback className="text-2xl font-bold bg-primary/10 text-primary">{initials}</AvatarFallback>
                     </Avatar>
                     
                     {/* Camera upload overlay trigger */}
@@ -457,11 +457,11 @@ export default function Profile() {
                         }}
                         className={`flex items-center gap-3 text-xs font-semibold px-4 py-3 rounded-xl transition-all ${
                           isActive 
-                            ? "bg-blue-50 text-blue-600 font-extrabold"
+                            ? "bg-primary/5 text-primary border-primary/20 font-extrabold"
                             : "bg-white text-slate-600 hover:bg-slate-50"
                         }`}
                       >
-                        <menu.icon className={`h-4.5 w-4.5 ${isActive ? "text-blue-600" : "text-slate-400"}`} />
+                        <menu.icon className={`h-4.5 w-4.5 ${isActive ? "text-primary" : "text-slate-400"}`} />
                         {menu.label}
                       </button>
                     );
@@ -503,7 +503,7 @@ export default function Profile() {
               {activeTab === "details" && (
                 <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
                   <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+                    <div className="p-2 bg-primary/5 text-primary rounded-xl">
                       <User className="h-5 w-5" />
                     </div>
                     <div>
@@ -520,7 +520,7 @@ export default function Profile() {
                         <Input
                           id="fullName"
                           placeholder="Enter your full name"
-                          className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                          className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                           disabled={isSavingDetails}
                           {...regProfile("fullName")}
                         />
@@ -534,7 +534,7 @@ export default function Profile() {
                           <Input
                             id="email"
                             type="email"
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-slate-50 cursor-not-allowed"
+                            className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-slate-50 cursor-not-allowed"
                             disabled
                             {...regProfile("email")}
                           />
@@ -546,7 +546,7 @@ export default function Profile() {
                           <Input
                             id="phone"
                             placeholder="Enter your phone number"
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                            className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("phone")}
                           />
@@ -560,7 +560,7 @@ export default function Profile() {
                         <Input
                           id="address"
                           placeholder="e.g. 789 Pine Street, Apt 1C"
-                          className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                          className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                           disabled={isSavingDetails}
                           {...regProfile("address")}
                         />
@@ -573,7 +573,7 @@ export default function Profile() {
                           <Input
                             id="city"
                             placeholder="e.g. Brooklyn"
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                            className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("city")}
                           />
@@ -584,7 +584,7 @@ export default function Profile() {
                           <Input
                             id="state"
                             placeholder="e.g. NY"
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                            className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("state")}
                           />
@@ -595,7 +595,7 @@ export default function Profile() {
                           <Input
                             id="zipCode"
                             placeholder="e.g. 11201"
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                            className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("zipCode")}
                           />
@@ -606,7 +606,7 @@ export default function Profile() {
                         <Button
                           type="submit"
                           disabled={isSavingDetails}
-                          className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
+                          className="bg-primary hover:bg-secondary text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
                         >
                           {isSavingDetails ? (
                             <>
@@ -631,7 +631,7 @@ export default function Profile() {
                 <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
                   <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between flex-wrap gap-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                      <div className="p-2 bg-primary/5 text-primary rounded-xl">
                         <MapPin className="h-5 w-5" />
                       </div>
                       <div>
@@ -661,7 +661,7 @@ export default function Profile() {
                         {addresses.map(addr => (
                           <div key={addr.id} className="border border-slate-150 p-4.5 rounded-2xl bg-white relative flex flex-col justify-between hover:border-slate-250 transition-colors shadow-2xs">
                             <div>
-                              <span className="inline-flex items-center text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 rounded-lg py-0.5 px-2 mb-2">
+                              <span className="inline-flex items-center text-[10px] font-bold text-primary bg-primary/5 border border-primary/10 rounded-lg py-0.5 px-2 mb-2">
                                 {addr.label}
                               </span>
                               <span className="block text-xs font-bold text-slate-800">{addr.street}</span>
@@ -689,7 +689,7 @@ export default function Profile() {
               {activeTab === "settings" && (
                 <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
                   <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                    <div className="p-2 bg-primary/5 text-primary rounded-xl">
                       <Bell className="h-5 w-5" />
                     </div>
                     <div>
@@ -765,7 +765,7 @@ export default function Profile() {
                           <select
                             value={appLanguage}
                             onChange={(e) => setAppLanguage(e.target.value)}
-                            className="w-full h-9 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                            className="w-full h-9 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                           >
                             <option value="en">English (US)</option>
                             <option value="es">Español (ES)</option>
@@ -787,7 +787,7 @@ export default function Profile() {
               {activeTab === "security" && (
                 <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
                   <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                    <div className="p-2 bg-primary/5 text-primary rounded-xl">
                       <Lock className="h-5 w-5" />
                     </div>
                     <div>
@@ -805,7 +805,7 @@ export default function Profile() {
                           id="currentPassword"
                           type="password"
                           placeholder="••••••••"
-                          className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                          className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                           disabled={isChangingPass}
                           {...regPassword("currentPassword")}
                         />
@@ -819,7 +819,7 @@ export default function Profile() {
                           id="newPassword"
                           type="password"
                           placeholder="Min 6 characters"
-                          className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                          className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                           disabled={isChangingPass}
                           {...regPassword("newPassword")}
                         />
@@ -833,7 +833,7 @@ export default function Profile() {
                           id="confirmPassword"
                           type="password"
                           placeholder="Confirm new password"
-                          className="h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                          className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                           disabled={isChangingPass}
                           {...regPassword("confirmPassword")}
                         />
@@ -844,7 +844,7 @@ export default function Profile() {
                         <Button
                           type="submit"
                           disabled={isChangingPass}
-                          className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
+                          className="bg-primary hover:bg-secondary text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
                         >
                           {isChangingPass ? (
                             <>
@@ -869,7 +869,7 @@ export default function Profile() {
                 <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
                   <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between flex-wrap gap-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                      <div className="p-2 bg-primary/5 text-primary rounded-xl">
                         <Calendar className="h-5 w-5" />
                       </div>
                       <div>
@@ -924,7 +924,7 @@ export default function Profile() {
         <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
           <DialogHeader>
             <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-              <MapPin className="h-5 w-5 text-blue-600" />
+              <MapPin className="h-5 w-5 text-primary" />
               Add Saved Address
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-400 pt-0.5">
@@ -944,7 +944,7 @@ export default function Profile() {
                     onClick={() => setNewAddressLabel(lbl)}
                     className={`rounded-lg text-xs font-bold transition-all ${
                       newAddressLabel === lbl
-                        ? "bg-white text-blue-600 shadow-2xs border border-slate-100"
+                        ? "bg-white text-primary shadow-2xs border border-slate-100"
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
@@ -962,7 +962,7 @@ export default function Profile() {
                 placeholder="e.g. 500 Madison Avenue, Floor 12"
                 value={newAddressStreet}
                 onChange={(e) => setNewAddressStreet(e.target.value)}
-                className="h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                 required
               />
             </div>
@@ -976,7 +976,7 @@ export default function Profile() {
                   placeholder="Manhattan"
                   value={newAddressCity}
                   onChange={(e) => setNewAddressCity(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -987,7 +987,7 @@ export default function Profile() {
                   placeholder="NY"
                   value={newAddressState}
                   onChange={(e) => setNewAddressState(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white text-center"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white text-center"
                   required
                 />
               </div>
@@ -999,7 +999,7 @@ export default function Profile() {
                   maxLength={5}
                   value={newAddressZip}
                   onChange={(e) => setNewAddressZip(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white text-center"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white text-center"
                   required
                 />
               </div>
@@ -1016,7 +1016,7 @@ export default function Profile() {
               </Button>
               <Button 
                 type="submit" 
-                className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                className="rounded-xl bg-primary hover:bg-secondary text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
               >
                 Save Location
               </Button>

@@ -68,7 +68,7 @@ export default function ForgotPassword() {
         <div className="max-w-5xl w-full bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[500px] transition-all duration-300 hover:shadow-2xl">
           
           {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-indigo-700 via-indigo-650 to-blue-700 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+          <div className="lg:col-span-5 bg-gradient-to-br from-primary via-secondary to-primary p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
             
             {/* Mesh shapes and overlays */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
@@ -80,14 +80,14 @@ export default function ForgotPassword() {
 
             {/* Testimonials or Stats Info Block */}
             <div className="relative z-10 space-y-6 my-auto pt-10">
-              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-blue-100 border border-white/5 backdrop-blur-xs">
+              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-slate-300 border border-white/5 backdrop-blur-xs">
                 <KeyRound className="h-3.5 w-3.5 text-amber-300 animate-pulse" />
                 Account Security
               </span>
               <h2 className="text-3xl font-black leading-tight tracking-tight">
                 Forgot Your Password?
               </h2>
-              <p className="text-blue-100 text-sm leading-relaxed">
+              <p className="text-slate-300 text-sm leading-relaxed">
                 No worries! Simply enter your registered email address, and our secure authentication server will generate and send a temporary recovery link.
               </p>
 
@@ -98,7 +98,7 @@ export default function ForgotPassword() {
                   "Password Strength Helper Rules",
                   "24/7 Support for Account Retrieval"
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-blue-55">
+                  <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-slate-300">
                     <ShieldCheck className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
                     <span>{item}</span>
                   </div>
@@ -108,7 +108,7 @@ export default function ForgotPassword() {
 
             {/* Support footer card */}
             <div className="relative z-10 bg-white/10 border border-white/5 rounded-2xl p-4 backdrop-blur-xs">
-              <p className="text-[11px] text-blue-100/90 leading-relaxed">
+              <p className="text-[11px] text-slate-300 leading-relaxed">
                 If you no longer have access to this email account, please contact our support desk directly at <span className="underline font-bold text-white">support@bookmylocalservice.com</span> to verify your identity manually.
               </p>
             </div>
@@ -158,7 +158,7 @@ export default function ForgotPassword() {
                     id="email"
                     type="email"
                     placeholder="e.g. name@example.com"
-                    className={`pl-10 h-11 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-xs bg-white ${
+                    className={`pl-10 h-11 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
                       errors.email ? "border-rose-350 focus:ring-rose-500 focus:border-rose-550" : ""
                     }`}
                     disabled={isSubmitting}
@@ -177,7 +177,7 @@ export default function ForgotPassword() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-primary hover:bg-secondary text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -196,7 +196,7 @@ export default function ForgotPassword() {
             <div className="mt-8 text-center text-xs font-semibold">
               <Link 
                 to="/login" 
-                className="inline-flex items-center gap-1.5 text-blue-650 hover:text-blue-750 font-bold transition-all hover:-translate-x-0.5"
+                className="inline-flex items-center gap-1.5 text-primary hover:text-primary font-bold transition-all hover:-translate-x-0.5"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Return to Sign In

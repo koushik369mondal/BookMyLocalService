@@ -161,19 +161,19 @@ export default function Subscription() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-blue-600 via-indigo-650 to-indigo-750 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Billing & Subscriptions</h1>
-              <p className="text-blue-100 text-xs sm:text-sm font-medium">Verify your active plan tier, pricing schedules, features, or print invoices</p>
+              <p className="text-slate-300 text-xs sm:text-sm font-medium">Verify your active plan tier, pricing schedules, features, or print invoices</p>
             </div>
             
             {/* Quick dashboard back button */}
             <Link to="/provider/dashboard">
               <Button size="sm" className="bg-white/10 hover:bg-white/15 border border-white/5 rounded-full text-white text-xs font-bold px-5 h-9.5 backdrop-blur-xs">
-                <ArrowLeft className="h-4 w-4 text-blue-200 mr-1" />
+                <ArrowLeft className="h-4 w-4 text-white/60 mr-1" />
                 Back to Dashboard
               </Button>
             </Link>
@@ -195,7 +195,7 @@ export default function Subscription() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-blue-50 text-blue-650 rounded-2xl shrink-0 mt-0.5">
+                <div className="p-3 bg-primary/5 text-primary rounded-2xl shrink-0 mt-0.5">
                   <CreditCard className="h-7 w-7" />
                 </div>
                 <div>
@@ -232,7 +232,7 @@ export default function Subscription() {
                 {activePlan === "none" && (
                   <Button 
                     onClick={() => triggerPlanChange("pro")}
-                    className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold h-10 text-xs rounded-xl shadow-md"
+                    className="w-full md:w-auto bg-primary hover:bg-primary text-white font-bold h-10 text-xs rounded-xl shadow-md"
                   >
                     Re-Activate Pro Plan
                   </Button>
@@ -254,7 +254,7 @@ export default function Subscription() {
                   onClick={() => setBillingCycle("monthly")}
                   className={`flex-1 rounded-lg text-xs font-bold transition-all ${
                     billingCycle === "monthly"
-                      ? "bg-white text-blue-650 shadow-2xs border border-slate-100"
+                      ? "bg-white text-primary shadow-2xs border border-slate-100"
                       : "text-slate-500 hover:text-slate-700"
                   }`}
                 >
@@ -265,7 +265,7 @@ export default function Subscription() {
                   onClick={() => setBillingCycle("yearly")}
                   className={`flex-1 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 ${
                     billingCycle === "yearly"
-                      ? "bg-white text-blue-650 shadow-2xs border border-slate-100"
+                      ? "bg-white text-primary shadow-2xs border border-slate-100"
                       : "text-slate-500 hover:text-slate-700"
                   }`}
                 >
@@ -281,7 +281,7 @@ export default function Subscription() {
               {/* BASIC PLAN */}
               <Card className={`border rounded-3xl p-6 relative flex flex-col justify-between ${
                 activePlan === "basic" 
-                  ? "bg-white border-blue-500 shadow-lg ring-1 ring-blue-500" 
+                  ? "bg-white border-primary shadow-lg ring-1 ring-primary" 
                   : "bg-white border-slate-150 hover:border-slate-300 shadow-xs transition-all"
               }`}>
                 <div className="space-y-4">
@@ -332,17 +332,17 @@ export default function Subscription() {
               {/* PRO PLAN (RECOMMENDED) */}
               <Card className={`border rounded-3xl p-6 relative flex flex-col justify-between overflow-hidden ${
                 activePlan === "pro" 
-                  ? "bg-white border-blue-500 shadow-lg ring-1 ring-blue-500" 
+                  ? "bg-white border-primary shadow-lg ring-1 ring-primary" 
                   : "bg-white border-slate-200 hover:border-slate-350 shadow-md transition-all"
               }`}>
                 {/* Popular Badge */}
-                <div className="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-black tracking-wider uppercase px-4 py-1.5 rounded-bl-2xl">
+                <div className="absolute top-0 right-0 bg-primary text-white text-[9px] font-black tracking-wider uppercase px-4 py-1.5 rounded-bl-2xl">
                   Popular
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <span className="text-[10px] font-extrabold text-blue-500 uppercase tracking-wider block">Scale</span>
+                    <span className="text-[10px] font-extrabold text-primary uppercase tracking-wider block">Scale</span>
                     <h3 className="text-lg font-black text-slate-900 mt-1">Pro Plan</h3>
                   </div>
 
@@ -379,7 +379,7 @@ export default function Subscription() {
                   <Button
                     onClick={() => triggerPlanChange("pro")}
                     disabled={activePlan === "pro"}
-                    className="w-full h-10 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-xs"
+                    className="w-full h-10 bg-primary hover:bg-primary text-white font-bold text-xs rounded-xl shadow-xs"
                   >
                     {activePlan === "pro" ? "Active Plan" : (activePlan === "basic" ? "Upgrade to Pro" : "Downgrade to Pro")}
                   </Button>
@@ -389,7 +389,7 @@ export default function Subscription() {
               {/* PREMIUM PLAN */}
               <Card className={`border rounded-3xl p-6 relative flex flex-col justify-between ${
                 activePlan === "premium" 
-                  ? "bg-white border-blue-500 shadow-lg ring-1 ring-blue-500" 
+                  ? "bg-white border-primary shadow-lg ring-1 ring-primary" 
                   : "bg-white border-slate-150 hover:border-slate-350 shadow-xs transition-all"
               }`}>
                 <div className="space-y-4">
@@ -453,7 +453,7 @@ export default function Subscription() {
                   <tr className="border-b border-slate-100 text-slate-450 font-bold text-[9px] uppercase tracking-wider">
                     <th className="py-2.5">Core Features</th>
                     <th className="py-2.5">Basic Plan</th>
-                    <th className="py-2.5 text-blue-650">Pro Plan</th>
+                    <th className="py-2.5 text-primary">Pro Plan</th>
                     <th className="py-2.5">Premium Plan</th>
                   </tr>
                 </thead>
@@ -467,7 +467,7 @@ export default function Subscription() {
                           : row.basic
                         }
                       </td>
-                      <td className="py-3.5 text-blue-650">
+                      <td className="py-3.5 text-primary">
                         {typeof row.pro === "boolean" 
                           ? (row.pro ? <Check className="h-4 w-4 text-emerald-500" /> : <X className="h-4 w-4 text-slate-300" />)
                           : row.pro
@@ -526,7 +526,7 @@ export default function Subscription() {
                         className="w-full flex items-center justify-between p-3.5 text-left font-extrabold text-xs text-slate-800 hover:text-slate-900 transition-colors bg-slate-50/50"
                       >
                         <span className="flex items-center gap-2">
-                          <HelpCircle className="h-4.5 w-4.5 text-blue-600" />
+                          <HelpCircle className="h-4.5 w-4.5 text-primary" />
                           {faq.q}
                         </span>
                         <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
@@ -553,7 +553,7 @@ export default function Subscription() {
         <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
           <DialogHeader>
             <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-blue-600" />
+              <Sparkles className="h-5 w-5 text-primary" />
               Confirm Plan Switch
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-400 pt-0.5">
@@ -574,7 +574,7 @@ export default function Subscription() {
               </div>
               <div className="flex justify-between items-center text-xs font-bold border-t border-slate-150 pt-2 mt-1">
                 <span className="text-slate-550">Rate Charged:</span>
-                <span className="text-blue-750 text-sm font-black">${getPlanPrice(selectedPlanToChange)}/mo</span>
+                <span className="text-primary text-sm font-black">${getPlanPrice(selectedPlanToChange)}/mo</span>
               </div>
             </div>
           )}
@@ -592,7 +592,7 @@ export default function Subscription() {
               type="button" 
               onClick={executePlanChange}
               disabled={isActionLoading}
-              className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
+              className="rounded-xl bg-primary hover:bg-primary text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
             >
               {isActionLoading ? (
                 <>

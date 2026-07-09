@@ -28,8 +28,8 @@ export default function Logo({ size = 40, showText = true }) {
           The spans below can be toggled if custom text is still needed,
           but they are hidden by default for the new branding assets. */}
       {showText && (
-        <span className="text-xl  tracking-tight hidden md:block">
-          <span className="text-blue-600">BookMyLocalService</span>
+        <span className="text-xl tracking-tight hidden md:block font-bold text-inherit">
+          BookMyLocal<span className="text-accent">Service</span>
         </span>
       )}
     </div>

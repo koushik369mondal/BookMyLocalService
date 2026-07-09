@@ -49,7 +49,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur-md shadow-xs">
+    <header className="sticky top-0 z-50 w-full border-b border-primary/20 bg-primary/95 backdrop-blur-md shadow-xs text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         
         {/* Brand / Logo */}
@@ -59,7 +59,7 @@ export default function Navbar() {
             alt="BookMyLocalService Logo" 
             className="h-9 w-auto object-contain transition-transform group-hover:scale-105 duration-300"
           />
-          <span className="font-extrabold text-xl tracking-tight text-blue-600 group-hover:text-blue-700 transition-colors">
+          <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-accent transition-colors">
             BookMyLocalService
           </span>
         </NavLink>
@@ -71,10 +71,10 @@ export default function Navbar() {
               key={link.path}
               to={link.path}
               className={({ isActive }) => cn(
-                "text-sm font-medium transition-all relative py-1 hover:text-blue-600",
+                "text-sm font-medium transition-all relative py-1 text-slate-300 hover:text-accent",
                 isActive 
-                  ? "text-blue-600 font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-blue-600 after:rounded-full" 
-                  : "text-gray-600"
+                  ? "text-accent font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-accent after:rounded-full" 
+                  : "text-slate-300"
               )}
             >
               {link.name}
@@ -95,9 +95,9 @@ export default function Navbar() {
           </div>
 
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative hover:bg-gray-100 rounded-full h-9 w-9">
-            <Bell className="h-5 w-5 text-gray-600" />
-            <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
+          <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white rounded-full h-9 w-9">
+            <Bell className="h-5 w-5 text-slate-300" />
+            <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-accent rounded-full border border-primary animate-pulse"></span>
           </Button>
 
           {user ? (
@@ -107,7 +107,7 @@ export default function Navbar() {
                 onClick={() => setShowDropdown(!showDropdown)}
                 className="flex items-center gap-1.5 focus:outline-none hover:opacity-80 transition-opacity"
               >
-                <div className="h-8.5 w-8.5 rounded-full overflow-hidden border border-gray-200 bg-gray-150 flex items-center justify-center font-bold text-xs text-blue-600">
+                <div className="h-8.5 w-8.5 rounded-full overflow-hidden border border-white/20 bg-accent/10 flex items-center justify-center font-bold text-xs text-accent">
                   {user.avatar ? (
                     <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
                   ) : (
@@ -118,21 +118,21 @@ export default function Navbar() {
               </button>
 
               {showDropdown && (
-                <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-100 rounded-2xl shadow-xl py-2 z-50 animate-fade-in font-medium text-xs text-gray-705">
-                  <div className="px-4 py-2 border-b border-gray-50 text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                <div className="absolute right-0 mt-2 w-52 bg-white border border-border rounded-2xl shadow-xl py-2 z-50 animate-fade-in font-medium text-xs text-text">
+                  <div className="px-4 py-2 border-b border-border text-[10px] text-secondary font-bold uppercase tracking-wider">
                     Hi, {user.fullName.split(" ")[0]}
                   </div>
                   <NavLink
                     to="/profile"
                     onClick={() => setShowDropdown(false)}
-                    className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-background hover:text-accent transition-colors"
                   >
                     <User className="h-4 w-4" /> My Profile
                   </NavLink>
                   <NavLink
                     to="/bookings"
                     onClick={() => setShowDropdown(false)}
-                    className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-background hover:text-accent transition-colors"
                   >
                     <Calendar className="h-4 w-4" /> Booking History
                   </NavLink>
@@ -140,7 +140,7 @@ export default function Navbar() {
                     <NavLink
                       to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"}
                       onClick={() => setShowDropdown(false)}
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 hover:bg-background hover:text-accent transition-colors"
                     >
                       <LayoutDashboard className="h-4 w-4" /> Dashboard
                     </NavLink>
@@ -148,7 +148,7 @@ export default function Navbar() {
                   <NavLink
                     to="/profile"
                     onClick={() => setShowDropdown(false)}
-                    className="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-background hover:text-accent transition-colors"
                   >
                     <Settings className="h-4 w-4" /> Settings
                   </NavLink>
@@ -166,12 +166,12 @@ export default function Navbar() {
             /* Login and Sign Up */
             <>
               <NavLink to="/login">
-                <Button variant="ghost" size="sm" className="text-gray-700 hover:text-blue-600 text-xs">
+                <Button variant="ghost" size="sm" className="text-slate-300 hover:text-accent hover:bg-white/10 text-xs">
                   Login
                 </Button>
               </NavLink>
               <NavLink to="/register">
-                <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 text-xs transition-transform hover:scale-[1.02]">
+                <Button size="sm" className="bg-accent hover:bg-accent/90 text-primary font-bold rounded-full px-4 text-xs transition-transform hover:scale-[1.02]">
                   Sign Up
                 </Button>
               </NavLink>
@@ -182,16 +182,16 @@ export default function Navbar() {
         {/* Mobile Navigation controls */}
         <div className="flex md:hidden items-center gap-2">
           {/* Mobile Notifications */}
-          <Button variant="ghost" size="icon" className="relative hover:bg-gray-100 rounded-full h-9 w-9">
-            <Bell className="h-5 w-5 text-gray-600" />
-            <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full border border-white"></span>
+          <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white rounded-full h-9 w-9">
+            <Bell className="h-5 w-5 text-slate-300" />
+            <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-accent rounded-full border border-primary"></span>
           </Button>
 
           {/* Mobile Hamburger Drawer */}
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-gray-100 h-9 w-9">
-                <Menu className="h-6 w-6 text-gray-707" />
+              <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10 h-9 w-9">
+                <Menu className="h-6 w-6 text-white" />
               </Button>
             </DialogTrigger>
             
@@ -204,7 +204,7 @@ export default function Navbar() {
                     alt="BookMyLocalService Logo" 
                     className="h-8 w-auto object-contain"
                   />
-                  <span className="font-bold text-lg text-blue-600">
+                  <span className="font-bold text-lg text-primary">
                     BookMyLocal
                   </span>
                 </DialogTitle>
@@ -229,8 +229,8 @@ export default function Navbar() {
                       className={({ isActive }) => cn(
                         "text-base font-medium py-2.5 px-3 rounded-lg transition-colors",
                         isActive 
-                          ? "bg-blue-50 text-blue-600 font-semibold" 
-                          : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                          ? "bg-background text-accent font-semibold" 
+                          : "text-secondary hover:bg-background hover:text-primary"
                       )}
                     >
                       {link.name}
@@ -244,7 +244,7 @@ export default function Navbar() {
                 {user ? (
                   <>
                     <div className="flex items-center gap-3 px-3 py-2 border-b pb-4 mb-2">
-                      <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center font-bold text-sm text-blue-600 shrink-0">
+                      <div className="h-10 w-10 rounded-full overflow-hidden border border-border bg-background flex items-center justify-center font-bold text-sm text-primary shrink-0">
                         {user.avatar ? (
                           <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
                         ) : (
@@ -252,23 +252,23 @@ export default function Navbar() {
                         )}
                       </div>
                       <div>
-                        <span className="block text-sm font-bold text-gray-800 leading-tight">{user.fullName}</span>
-                        <span className="text-[10px] text-gray-400 capitalize block mt-0.5">{user.role.toLowerCase()} Account</span>
+                        <span className="block text-sm font-bold text-text leading-tight">{user.fullName}</span>
+                        <span className="text-[10px] text-secondary capitalize block mt-0.5">{user.role.toLowerCase()} Account</span>
                       </div>
                     </div>
                     <DialogClose asChild>
-                      <NavLink to="/profile" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-blue-600 rounded-lg">
+                      <NavLink to="/profile" className="flex items-center gap-2 px-3 py-2 text-sm text-secondary hover:bg-background hover:text-accent rounded-lg">
                         <User className="h-4.5 w-4.5" /> My Profile
                       </NavLink>
                     </DialogClose>
                     <DialogClose asChild>
-                      <NavLink to="/bookings" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-blue-600 rounded-lg">
+                      <NavLink to="/bookings" className="flex items-center gap-2 px-3 py-2 text-sm text-secondary hover:bg-background hover:text-accent rounded-lg">
                         <Calendar className="h-4.5 w-4.5" /> Booking History
                       </NavLink>
                     </DialogClose>
                     {(user.role === "PROVIDER" || user.role === "ADMIN") && (
                       <DialogClose asChild>
-                        <NavLink to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"} className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-blue-600 rounded-lg">
+                        <NavLink to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"} className="flex items-center gap-2 px-3 py-2 text-sm text-secondary hover:bg-background hover:text-accent rounded-lg">
                           <LayoutDashboard className="h-4.5 w-4.5" /> Dashboard
                         </NavLink>
                       </DialogClose>
@@ -293,7 +293,7 @@ export default function Navbar() {
                     </DialogClose>
                     <DialogClose asChild>
                       <NavLink to="/register" className="w-full">
-                        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full h-10">
+                        <Button className="w-full bg-accent hover:bg-accent/90 text-primary font-bold rounded-full h-10">
                           Sign Up
                         </Button>
                       </NavLink>

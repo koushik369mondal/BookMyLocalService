@@ -1,1 +1,118 @@
 @import "tailwindcss";
+
+:root {
+  --background: #F8FAFC;
+  --foreground: #111827;
+  
+  --card: #FFFFFF;
+  --card-foreground: #111827;
+  
+  --popover: #FFFFFF;
+  --popover-foreground: #111827;
+  
+  --primary: #0F172A;
+  --primary-foreground: #FFFFFF;
+  
+  --secondary: #334155;
+  --secondary-foreground: #FFFFFF;
+  
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  
+  --accent: #F59E0B;
+  --accent-foreground: #FFFFFF;
+  
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #0F172A;
+  
+  --success: #059669;
+  --success-foreground: #FFFFFF;
+  
+  --radius: 0.75rem;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  
+  /* Fallback mapping of standard colors to ensure no hardcoded blue/purple color escapes */
+  --color-blue-50: #F8FAFC;
+  --color-blue-100: #E2E8F0;
+  --color-blue-200: #CBD5E1;
+  --color-blue-300: #94A3B8;
+  --color-blue-400: #64748B;
+  --color-blue-500: #334155;
+  --color-blue-600: #0F172A;
+  --color-blue-700: #334155;
+  --color-blue-800: #0F172A;
+  --color-blue-900: #0F172A;
+  --color-blue-950: #0F172A;
+
+  --color-indigo-50: #F8FAFC;
+  --color-indigo-100: #E2E8F0;
+  --color-indigo-200: #CBD5E1;
+  --color-indigo-300: #94A3B8;
+  --color-indigo-400: #64748B;
+  --color-indigo-500: #334155;
+  --color-indigo-600: #0F172A;
+  --color-indigo-700: #334155;
+  --color-indigo-800: #0F172A;
+  --color-indigo-900: #0F172A;
+  --color-indigo-950: #0F172A;
+
+  --color-purple-50: #F8FAFC;
+  --color-purple-100: #E2E8F0;
+  --color-purple-200: #CBD5E1;
+  --color-purple-300: #94A3B8;
+  --color-purple-400: #64748B;
+  --color-purple-500: #334155;
+  --color-purple-600: #0F172A;
+  --color-purple-700: #334155;
+  --color-purple-800: #0F172A;
+  --color-purple-900: #0F172A;
+  --color-purple-950: #0F172A;
+
+  --color-violet-50: #F8FAFC;
+  --color-violet-100: #E2E8F0;
+  --color-violet-200: #CBD5E1;
+  --color-violet-300: #94A3B8;
+  --color-violet-400: #64748B;
+  --color-violet-500: #334155;
+  --color-violet-600: #0F172A;
+  --color-violet-700: #334155;
+  --color-violet-800: #0F172A;
+  --color-violet-900: #0F172A;
+  --color-violet-950: #0F172A;
+}

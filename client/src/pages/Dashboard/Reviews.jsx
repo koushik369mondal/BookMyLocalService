@@ -180,19 +180,19 @@ export default function Reviews() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-blue-600 via-indigo-650 to-indigo-750 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Customer Feedbacks</h1>
-              <p className="text-blue-100 text-xs sm:text-sm font-medium">Verify ratings breakdown and reply to client testimonials</p>
+              <p className="text-slate-300 text-xs sm:text-sm font-medium">Verify ratings breakdown and reply to client testimonials</p>
             </div>
             
             {/* Quick dashboard back button */}
             <Link to="/provider/dashboard">
               <Button size="sm" className="bg-white/10 hover:bg-white/15 border border-white/5 rounded-full text-white text-xs font-bold px-5 h-9.5 backdrop-blur-xs">
-                <ArrowLeft className="h-4 w-4 text-blue-200 mr-1" />
+                <ArrowLeft className="h-4 w-4 text-white/60 mr-1" />
                 Back to Dashboard
               </Button>
             </Link>
@@ -220,7 +220,7 @@ export default function Reviews() {
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Reviews</span>
                 <span className="text-xl sm:text-2xl font-black text-slate-900">{totalCount}</span>
               </div>
-              <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl shrink-0">
+              <div className="p-3 bg-primary/5 text-primary rounded-2xl shrink-0">
                 <MessageSquare className="h-6 w-6" />
               </div>
             </Card>
@@ -231,7 +231,7 @@ export default function Reviews() {
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Response Rate</span>
                 <span className="text-xl sm:text-2xl font-black text-slate-900">{responseRate}%</span>
               </div>
-              <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl shrink-0">
+              <div className="p-3 bg-primary/5 text-primary rounded-2xl shrink-0">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
             </Card>
@@ -294,7 +294,7 @@ export default function Reviews() {
                       placeholder="Type keyword..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-blue-500 rounded-xl text-xs bg-white"
+                      className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                     />
                   </div>
                 </div>
@@ -307,7 +307,7 @@ export default function Reviews() {
                       id="starFilter"
                       value={starFilter}
                       onChange={(e) => setStarFilter(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="all">All Stars</option>
                       <option value="5">5 Stars only</option>
@@ -328,7 +328,7 @@ export default function Reviews() {
                       id="sortBy"
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="newest">Newest First</option>
                       <option value="highest">Highest Rating</option>
@@ -366,7 +366,7 @@ export default function Reviews() {
               ) : filteredReviews.length === 0 ? (
                 /* EMPTY STATE DISPLAY */
                 <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-blue-50 text-blue-600 rounded-full border border-blue-100">
+                  <div className="p-4 bg-primary/5 text-primary rounded-full border border-primary/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mt-2">No Reviews Found</h3>
@@ -422,9 +422,9 @@ export default function Reviews() {
                       {/* Provider Reply block */}
                       {rev.reply ? (
                         /* ACTIVE REPLY BOX */
-                        <div className="p-4 bg-blue-50/30 border border-blue-100 rounded-xl space-y-2.5 animate-fade-in relative">
+                        <div className="p-4 bg-primary/5 border border-primary/10 rounded-xl space-y-2.5 animate-fade-in relative">
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-extrabold text-blue-600 bg-blue-50 border border-blue-100 rounded-lg py-0.5 px-2.5 uppercase flex items-center gap-1">
+                            <span className="text-[10px] font-extrabold text-primary bg-primary/5 border border-primary/10 rounded-lg py-0.5 px-2.5 uppercase flex items-center gap-1">
                               <CornerDownRight className="h-3.5 w-3.5" />
                               Your Reply
                             </span>
@@ -466,7 +466,7 @@ export default function Reviews() {
                                 <Button 
                                   size="xs"
                                   onClick={() => handleSaveEdit(rev.id)}
-                                  className="h-7 text-[9px] font-bold bg-blue-600 text-white hover:bg-blue-700"
+                                  className="h-7 text-[9px] font-bold bg-primary text-white hover:bg-primary"
                                 >
                                   Save Reply
                                 </Button>
@@ -487,7 +487,7 @@ export default function Reviews() {
                               placeholder="e.g. Thanks for the feedback! Glad to assist."
                               value={replyInputs[rev.id] || ""}
                               onChange={(e) => setReplyInputs(prev => ({ ...prev, [rev.id]: e.target.value }))}
-                              className="h-9 border-slate-200 focus:ring-1 focus:ring-blue-500 rounded-xl text-xs bg-white flex-1"
+                              className="h-9 border-slate-200 focus:ring-1 focus:ring-primary rounded-xl text-xs bg-white flex-1"
                             />
                             <Button
                               onClick={() => handleAddReplySubmit(rev.id)}

@@ -146,7 +146,7 @@ export default function Register() {
         <div className="max-w-5xl w-full bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[650px] transition-all duration-300 hover:shadow-2xl">
           
           {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-indigo-600 via-indigo-650 to-blue-800 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+          <div className="lg:col-span-5 bg-gradient-to-br from-primary via-secondary to-primary p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
             
             {/* Mesh shapes and overlays */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
@@ -158,7 +158,7 @@ export default function Register() {
 
             {/* Benefit statements block matching the active role tab */}
             <div className="relative z-10 space-y-6 my-auto pt-8">
-              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-blue-100 border border-white/5 backdrop-blur-xs">
+              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-slate-300 border border-white/5 backdrop-blur-xs">
                 <Sparkles className="h-3.5 w-3.5 text-amber-300" />
                 Join the Platform
               </span>
@@ -168,7 +168,7 @@ export default function Register() {
                   <h2 className="text-3xl font-black leading-tight tracking-tight">
                     Get Things Done with Vetted Experts.
                   </h2>
-                  <p className="text-blue-100 text-sm leading-relaxed">
+                  <p className="text-slate-300 text-sm leading-relaxed">
                     Create a free account to compare reviews, book appointments instantly, and manage transactions securely.
                   </p>
                   
@@ -178,7 +178,7 @@ export default function Register() {
                       "Verified Service Guarantee",
                       "Easy Booking Calendar & Schedule Slots"
                     ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-blue-55">
+                      <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-slate-300">
                         <UserCheck className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
                         <span>{item}</span>
                       </div>
@@ -190,7 +190,7 @@ export default function Register() {
                   <h2 className="text-3xl font-black leading-tight tracking-tight">
                     Grow Your Service Business.
                   </h2>
-                  <p className="text-blue-100 text-sm leading-relaxed">
+                  <p className="text-slate-300 text-sm leading-relaxed">
                     Register as a service provider to list your specialties, accept online bookings, structure pricing tiers, and find local customers.
                   </p>
 
@@ -200,7 +200,7 @@ export default function Register() {
                       "Keep 100% of Your Standard Rates",
                       "Interactive Provider Dashboard Included"
                     ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-blue-55">
+                      <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-slate-300">
                         <Briefcase className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
                         <span>{item}</span>
                       </div>
@@ -212,8 +212,8 @@ export default function Register() {
 
             {/* Footer note */}
             <div className="relative z-10 bg-white/10 border border-white/5 rounded-2xl p-4 backdrop-blur-xs">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-200 block mb-1">Identity Safety</span>
-              <p className="text-[11px] text-blue-100/90 leading-relaxed">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-white/60 block mb-1">Identity Safety</span>
+              <p className="text-[11px] text-slate-300 leading-relaxed">
                 All data transfers are protected under 256-bit encryption protocols. We never share your personal information with unverified third parties.
               </p>
             </div>
@@ -261,7 +261,7 @@ export default function Register() {
                     disabled={isSubmitting}
                     className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                       selectedRole === "customer"
-                        ? "bg-white text-blue-600 shadow-xs border border-slate-100"
+                        ? "bg-white text-primary shadow-xs border border-slate-100"
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
@@ -274,7 +274,7 @@ export default function Register() {
                     disabled={isSubmitting}
                     className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                       selectedRole === "provider"
-                        ? "bg-white text-blue-600 shadow-xs border border-slate-100"
+                        ? "bg-white text-primary shadow-xs border border-slate-100"
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
@@ -294,7 +294,7 @@ export default function Register() {
                   <Input
                     id="fullName"
                     placeholder="e.g. Amanda Watson"
-                    className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-xs bg-white ${
+                    className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
                       errors.fullName ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
                     }`}
                     disabled={isSubmitting}
@@ -323,7 +323,7 @@ export default function Register() {
                       id="email"
                       type="email"
                       placeholder="name@example.com"
-                      className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-xs bg-white ${
+                      className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
                         errors.email ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
                       }`}
                       disabled={isSubmitting}
@@ -348,7 +348,7 @@ export default function Register() {
                     <Input
                       id="phone"
                       placeholder="123-456-7890"
-                      className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-xs bg-white ${
+                      className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
                         errors.phone ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
                       }`}
                       disabled={isSubmitting}
@@ -379,7 +379,7 @@ export default function Register() {
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Min 6 characters"
-                      className={`pl-10 pr-10 h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-xs bg-white ${
+                      className={`pl-10 pr-10 h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
                         errors.password ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
                       }`}
                       disabled={isSubmitting}
@@ -413,7 +413,7 @@ export default function Register() {
                       id="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm password"
-                      className={`pl-10 pr-10 h-10 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-xs bg-white ${
+                      className={`pl-10 pr-10 h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
                         errors.confirmPassword ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
                       }`}
                       disabled={isSubmitting}
@@ -453,8 +453,8 @@ export default function Register() {
                     className="text-xs font-semibold text-slate-550 leading-relaxed cursor-pointer select-none"
                   >
                     I agree to the BookMyLocalService{" "}
-                    <Link to="/terms" className="text-blue-600 hover:text-blue-700 hover:underline">Terms of Service</Link> and{" "}
-                    <Link to="/privacy" className="text-blue-600 hover:text-blue-700 hover:underline">Privacy Policy</Link>.
+                    <Link to="/terms" className="text-primary hover:text-accent hover:underline">Terms of Service</Link> and{" "}
+                    <Link to="/privacy" className="text-primary hover:text-accent hover:underline">Privacy Policy</Link>.
                   </label>
                 </div>
                 {errors.acceptTerms && (
@@ -469,7 +469,7 @@ export default function Register() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-primary hover:bg-secondary text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -479,7 +479,7 @@ export default function Register() {
                 ) : (
                   <>
                     Create Account
-                    <ArrowRight className="h-4 w-4 text-blue-200" />
+                    <ArrowRight className="h-4 w-4 text-white/60" />
                   </>
                 )}
               </Button>
@@ -524,7 +524,7 @@ export default function Register() {
               Already have an account?{" "}
               <Link 
                 to="/login" 
-                className="text-blue-600 hover:text-blue-700 transition-colors font-bold hover:underline"
+                className="text-primary hover:text-accent transition-colors font-bold hover:underline"
               >
                 Sign In
               </Link>

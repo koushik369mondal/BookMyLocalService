@@ -117,7 +117,7 @@ export default function AdminDashboard() {
       case "pending":
         return <Badge className="bg-amber-500 hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Pending</Badge>;
       case "confirmed":
-        return <Badge className="bg-blue-500 hover:bg-blue-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
+        return <Badge className="bg-primary/50 hover:bg-primary border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
       default:
         return <Badge className="bg-emerald-500 hover:bg-emerald-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Completed</Badge>;
     }
@@ -128,18 +128,18 @@ export default function AdminDashboard() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-blue-600 via-indigo-650 to-indigo-750 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">System Administration</h1>
-              <p className="text-blue-100 text-xs sm:text-sm font-medium">Moderate platform registrations, monitor servers, and audit user dispatch bookings</p>
+              <p className="text-slate-300 text-xs sm:text-sm font-medium">Moderate platform registrations, monitor servers, and audit user dispatch bookings</p>
             </div>
             
             {/* Quick Actions Panel */}
             <div className="flex items-center gap-3 flex-wrap">
-              <Button size="sm" className="bg-white text-blue-650 hover:bg-slate-50 rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1">
+              <Button size="sm" className="bg-white text-primary hover:bg-slate-50 rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1">
                 <Settings className="h-4 w-4" /> Manage System
               </Button>
             </div>
@@ -156,7 +156,7 @@ export default function AdminDashboard() {
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Users</span>
                 <span className="text-xl sm:text-2xl font-black text-slate-900">4,250</span>
               </div>
-              <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl shrink-0">
+              <div className="p-3 bg-primary/5 text-primary rounded-2xl shrink-0">
                 <Users className="h-6 w-6" />
               </div>
             </Card>
@@ -167,7 +167,7 @@ export default function AdminDashboard() {
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Providers</span>
                 <span className="text-xl sm:text-2xl font-black text-slate-900">380</span>
               </div>
-              <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl shrink-0">
+              <div className="p-3 bg-primary/5 text-primary rounded-2xl shrink-0">
                 <Briefcase className="h-6 w-6" />
               </div>
             </Card>
@@ -216,7 +216,7 @@ export default function AdminDashboard() {
               <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
                 <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+                    <div className="p-2 bg-primary/5 text-primary rounded-xl">
                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
@@ -232,7 +232,7 @@ export default function AdminDashboard() {
                       onClick={() => setChartView("users")}
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                         chartView === "users"
-                          ? "bg-white text-blue-650 shadow-2xs border border-slate-100"
+                          ? "bg-white text-primary shadow-2xs border border-slate-100"
                           : "text-slate-500 hover:text-slate-700"
                       }`}
                     >
@@ -243,7 +243,7 @@ export default function AdminDashboard() {
                       onClick={() => setChartView("bookings")}
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                         chartView === "bookings"
-                          ? "bg-white text-blue-650 shadow-2xs border border-slate-100"
+                          ? "bg-white text-primary shadow-2xs border border-slate-100"
                           : "text-slate-500 hover:text-slate-700"
                       }`}
                     >
@@ -255,7 +255,7 @@ export default function AdminDashboard() {
                 <CardContent className="p-0 pt-6">
                   {isLoading ? (
                     <div className="h-[150px] flex items-center justify-center">
-                      <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
                     </div>
                   ) : (
                     /* SVG bar layout */
@@ -282,7 +282,7 @@ export default function AdminDashboard() {
                                   height={barHeight}
                                   rx="4"
                                   fill="#3b82f6"
-                                  className="transition-colors hover:fill-indigo-650"
+                                  className="transition-colors hover:fill-secondary"
                                 />
 
                                 <text
@@ -351,7 +351,7 @@ export default function AdminDashboard() {
                             <Button
                               size="xs"
                               onClick={() => handleApprovalAction(app.id, "approve")}
-                              className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-7 rounded-lg text-[9px] py-0 px-2.5 shadow-2xs"
+                              className="bg-primary hover:bg-primary text-white font-bold h-7 rounded-lg text-[9px] py-0 px-2.5 shadow-2xs"
                             >
                               Approve Pro
                             </Button>
@@ -414,10 +414,10 @@ export default function AdminDashboard() {
                     <div key={n.id} className={`p-3.5 border rounded-xl flex items-start gap-2.5 ${
                       n.type === "warning"
                         ? "bg-rose-50/50 border-rose-100 text-rose-800"
-                        : "bg-blue-50/50 border-blue-100 text-blue-800"
+                        : "bg-primary/5 border-primary/10 text-primary"
                     }`}>
                       <AlertCircle className={`h-4.5 w-4.5 shrink-0 mt-0.5 ${
-                        n.type === "warning" ? "text-rose-600" : "text-blue-600"
+                        n.type === "warning" ? "text-rose-600" : "text-primary"
                       }`} />
                       <span className="text-[11px] font-semibold leading-normal">{n.text}</span>
                     </div>
@@ -470,7 +470,7 @@ export default function AdminDashboard() {
                       <span className="text-slate-500">Image Storage Capacity</span>
                       <span className="text-slate-700">42% Used</span>
                     </div>
-                    <Progress value={42} className="h-1.5 bg-slate-100 [&>div]:bg-blue-600" />
+                    <Progress value={42} className="h-1.5 bg-slate-100 [&>div]:bg-primary" />
                   </div>
 
                   {/* Mail */}
