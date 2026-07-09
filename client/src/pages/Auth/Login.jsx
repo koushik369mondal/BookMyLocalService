@@ -1,5 +1,373 @@
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import MainLayout from "../../layouts/MainLayout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import Logo from "@/components/ui/logo";
+import { 
+  Eye, 
+  EyeOff, 
+  Mail, 
+  Lock, 
+  ArrowRight, 
+  ShieldAlert, 
+  CheckCircle2, 
+  Loader2,
+  Phone,
+  Sparkles,
+  ShieldCheck,
+  CheckCircle
+} from "lucide-react";
+
+// Custom high-fidelity brand SVGs to bypass missing Lucide brand icons in old builds
+const GoogleIcon = (props) => (
+  <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+  </svg>
+);
+
+const GitHubIcon = (props) => (
+  <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="currentColor" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.577.688.479C19.138 20.164 22 16.418 22 12c0-5.523-4.527-10-10-10z" />
+  </svg>
+);
+
+// Schema allowing either a valid email address OR a 10-digit phone number
+const loginSchema = z.object({
+  emailOrPhone: z.string()
+    .min(1, { message: "Email or phone number is required" })
+    .refine((val) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      // Validates typical 10-digit formats like 1234567890, 123-456-7890, (123) 456-7890
+      const phoneRegex = /^\+?1?\s*\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+      return emailRegex.test(val) || phoneRegex.test(val);
+    }, {
+      message: "Please enter a valid email address or 10-digit phone number"
+    }),
+  password: z.string()
+    .min(6, { message: "Password must be at least 6 characters" }),
+  rememberMe: z.boolean().default(false)
+});
+
 export default function Login() {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
-    return <h1>Login Page</h1>;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors }
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      emailOrPhone: "",
+      password: "",
+      rememberMe: false
+    }
+  });
 
+  const rememberMeValue = watch("rememberMe");
+
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+
+    // Simulate API request authentication call
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    // Simple check to allow manual testing of errors (e.g. typing "error" or password "error123")
+    if (data.emailOrPhone.toLowerCase().includes("error") || data.password === "error123") {
+      setErrorMsg("Incorrect email/phone or password. Please verify and try again.");
+      setIsSubmitting(false);
+    } else {
+      setSuccessMsg("Success! Login authorized. Redirecting to dashboard...");
+      setIsSubmitting(false);
+      // Redirect to home/dashboard page after 1.2s success visibility
+      setTimeout(() => {
+        navigate("/");
+      }, 1200);
+    }
+  };
+
+  const handleSocialSignIn = (provider) => {
+    setIsSubmitting(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+    
+    // Simulate social auth oauth popup redirect
+    setTimeout(() => {
+      setSuccessMsg(`Signing in with ${provider}... Please wait.`);
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setSuccessMsg("");
+        navigate("/");
+      }, 1500);
+    }, 800);
+  };
+
+  return (
+    <MainLayout>
+      <div className="min-h-[85vh] bg-slate-50/50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
+        
+        {/* Container box */}
+        <div className="max-w-5xl w-full bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] transition-all duration-300 hover:shadow-2xl">
+          
+          {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
+          <div className="lg:col-span-5 bg-gradient-to-br from-blue-600 via-indigo-650 to-indigo-800 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+            
+            {/* Mesh shapes and overlays */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
+            <div className="absolute -top-32 -left-32 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
+            
+            <div className="relative z-10 shrink-0">
+              <Logo size={36} showText={true} />
+            </div>
+
+            {/* Testimonials or Stats Info Block */}
+            <div className="relative z-10 space-y-6 my-auto pt-10">
+              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-blue-100 border border-white/5 backdrop-blur-xs">
+                <Sparkles className="h-3.5 w-3.5 text-amber-300" />
+                Vetted Local Pros
+              </span>
+              <h2 className="text-3xl font-black leading-tight tracking-tight">
+                Find and Book Service Experts Near You.
+              </h2>
+              <p className="text-blue-100 text-sm leading-relaxed">
+                Connect with verified local cleaners, plumbers, electricians, and personal coaches. Manage schedules, messaging, and secured checkout all in one place.
+              </p>
+
+              {/* Verified Features list */}
+              <div className="space-y-3.5 pt-4">
+                {[
+                  "100% Background Checked Specialists",
+                  "Secure & Encrypted Booking Checkout",
+                  "Clear, Upfront Pricing Tiers"
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-blue-55">
+                    <ShieldCheck className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Quote footer card */}
+            <div className="relative z-10 bg-white/10 border border-white/5 rounded-2xl p-4.5 backdrop-blur-xs">
+              <p className="text-xs italic text-blue-100/90 leading-relaxed">
+                "Finding a smart home electrician used to take hours. On BookMyLocalService, I matched and scheduled Marcus in under 5 minutes!"
+              </p>
+              <div className="flex items-center gap-2 mt-3">
+                <div className="w-6 h-6 rounded-full bg-slate-200 overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=40&h=40&q=80" alt="Client User" className="w-full h-full object-cover" />
+                </div>
+                <div>
+                  <span className="block text-[11px] font-bold">Helena Rostova</span>
+                  <span className="text-[9px] text-blue-200">Verified Customer</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* RIGHT PANEL: AUTHENTICATION FORM CARD */}
+          <div className="lg:col-span-7 p-8 sm:p-12 md:p-14 flex flex-col justify-center bg-white relative">
+            
+            {/* Platform branding on mobile */}
+            <div className="lg:hidden mb-6 flex justify-center">
+              <Logo size={32} showText={true} />
+            </div>
+
+            <div className="space-y-2 mb-8 text-center lg:text-left">
+              <h1 className="text-2xl font-black text-slate-900 tracking-tight">Welcome back!</h1>
+              <p className="text-sm text-slate-450 font-medium">Enter your credentials to access your account</p>
+            </div>
+
+            {/* Success and Error Banners */}
+            {errorMsg && (
+              <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
+                <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
+                <span>{errorMsg}</span>
+              </div>
+            )}
+
+            {successMsg && (
+              <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
+                <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
+                <span>{successMsg}</span>
+              </div>
+            )}
+
+            {/* FORM */}
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5.5">
+              
+              {/* Email / Phone Field */}
+              <div className="space-y-1.5">
+                <Label htmlFor="emailOrPhone" className="text-xs font-bold text-slate-700">Email Address or Phone Number</Label>
+                <div className="relative">
+                  <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-slate-400">
+                    <Mail className="h-4 w-4" />
+                  </span>
+                  <Input
+                    id="emailOrPhone"
+                    placeholder="name@example.com or 10-digit number"
+                    className={`pl-10 h-11 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-xs bg-white ${
+                      errors.emailOrPhone ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
+                    }`}
+                    disabled={isSubmitting}
+                    {...register("emailOrPhone")}
+                  />
+                </div>
+                {errors.emailOrPhone && (
+                  <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
+                    <ShieldAlert className="h-3 w-3" />
+                    {errors.emailOrPhone.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Password Field */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center">
+                  <Label htmlFor="password" className="text-xs font-bold text-slate-700">Password</Label>
+                  <Link 
+                    to="/forgot-password" 
+                    className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors hover:underline"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+                <div className="relative">
+                  <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-slate-400">
+                    <Lock className="h-4 w-4" />
+                  </span>
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter password (min 6 characters)"
+                    className={`pl-10 pr-10 h-11 border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-xs bg-white ${
+                      errors.password ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
+                    }`}
+                    disabled={isSubmitting}
+                    {...register("password")}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    disabled={isSubmitting}
+                    className="absolute right-3.5 top-[50%] translate-y-[-50%] text-slate-400 hover:text-slate-650 transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
+                    <ShieldAlert className="h-3 w-3" />
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Remember Me Checkbox */}
+              <div className="flex items-center space-x-2 pb-1">
+                <Checkbox 
+                  id="rememberMe" 
+                  checked={rememberMeValue}
+                  onCheckedChange={(checked) => setValue("rememberMe", checked === true)}
+                  disabled={isSubmitting}
+                  className="rounded-md border-slate-300 bg-white"
+                />
+                <label
+                  htmlFor="rememberMe"
+                  className="text-xs font-semibold text-slate-600 cursor-pointer select-none"
+                >
+                  Remember my credentials on this device
+                </label>
+              </div>
+
+              {/* Login Button */}
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin text-white" />
+                    Authenticating credentials...
+                  </>
+                ) : (
+                  <>
+                    Log In
+                    <ArrowRight className="h-4 w-4 text-blue-200" />
+                  </>
+                )}
+              </Button>
+            </form>
+
+            {/* OR Continue With Divider */}
+            <div className="relative my-7 shrink-0">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-100"></div>
+              </div>
+              <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider text-slate-400">
+                <span className="bg-white px-3.5">or continue with</span>
+              </div>
+            </div>
+
+            {/* Social Oauth Buttons */}
+            <div className="grid grid-cols-2 gap-4 shrink-0">
+              <Button
+                type="button"
+                variant="outline"
+                disabled={isSubmitting}
+                onClick={() => handleSocialSignIn("Google")}
+                className="border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
+              >
+                <GoogleIcon className="h-4 w-4" />
+                Google
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                disabled={isSubmitting}
+                onClick={() => handleSocialSignIn("GitHub")}
+                className="border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
+              >
+                <GitHubIcon className="h-4 w-4 text-slate-900" />
+                GitHub
+              </Button>
+            </div>
+
+            {/* Sign Up Link */}
+            <div className="mt-8 text-center text-xs font-semibold text-slate-500">
+              Don't have an account yet?{" "}
+              <Link 
+                to="/register" 
+                className="text-blue-600 hover:text-blue-700 transition-colors font-bold hover:underline"
+              >
+                Create client account
+              </Link>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </MainLayout>
+  );
 }
