@@ -7,6 +7,8 @@ import Services from "../pages/Services/Services";
 import ServiceDetails from "../pages/Services/ServiceDetails";
 import Booking from "../pages/Booking/Booking";
 import Checkout from "../pages/Booking/Checkout";
+import BookingSuccess from "../pages/Booking/BookingSuccess";
+import BookingHistory from "../pages/Booking/BookingHistory";
 import Profile from "../pages/Profile/Profile";
 import CustomerDashboard from "../pages/Dashboard/CustomerDashboard";
 import ProviderDashboard from "../pages/Dashboard/ProviderDashboard";
@@ -23,6 +25,8 @@ export default function AppRoutes() {
             <Route path="/services/:id" element={<ServiceDetails />} />
             <Route path="/booking" element={<Booking />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/booking/success" element={<BookingSuccess />} />
+            <Route path="/bookings" element={<BookingHistory />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/customer/dashboard" element={<CustomerDashboard />} />
             <Route path="/provider/dashboard" element={<ProviderDashboard />} />
