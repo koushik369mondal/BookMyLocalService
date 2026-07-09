@@ -13,6 +13,8 @@ import Profile from "../pages/Profile/Profile";
 import EditProfile from "../pages/Profile/EditProfile";
 import CustomerDashboard from "../pages/Dashboard/CustomerDashboard";
 import ProviderDashboard from "../pages/Dashboard/ProviderDashboard";
+import Availability from "../pages/Dashboard/Availability";
+import Earnings from "../pages/Dashboard/Earnings";
 import AdminDashboard from "../pages/Dashboard/AdminDashboard";
 import NotFound from "../pages/NotFound/NotFound";
 
@@ -32,6 +34,8 @@ export default function AppRoutes() {
             <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/customer/dashboard" element={<CustomerDashboard />} />
             <Route path="/provider/dashboard" element={<ProviderDashboard />} />
+            <Route path="/provider/availability" element={<Availability />} />
+            <Route path="/provider/earnings" element={<Earnings />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
