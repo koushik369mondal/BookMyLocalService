@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const prisma = require("../../config/prisma");
+const { sendOtpEmail } = require("../../services/emailService");
 
 const generateToken = (id, role) => {
     return jwt.sign(
@@ -249,10 +250,206 @@ const changePassword = async (req, res) => {
     }
 };
 
+// @desc    Send OTP to user email
+// @route   POST /api/auth/send-otp
+// @access  Public
+const sendOtp = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ success: false, message: "Please provide an email address" });
+        }
+
+        const normalizedEmail = email.toLowerCase().trim();
+
+        // Check if user exists
+        const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+        if (!user) {
+            return res.status(404).json({ success: false, message: "Account not found." });
+        }
+
+        // Rate limiting check: check if the previous OTP was sent within the last 60 seconds
+        if (user.otpExpiresAt) {
+            const timeUntilExpiry = user.otpExpiresAt.getTime() - Date.now();
+            const timeSinceLastSent = (5 * 60 * 1000) - timeUntilExpiry;
+            if (timeSinceLastSent > 0 && timeSinceLastSent < 60 * 1000) {
+                const secondsToWait = Math.ceil((60 * 1000 - timeSinceLastSent) / 1000);
+                return res.status(429).json({
+                    success: false,
+                    message: `Please wait ${secondsToWait} seconds before requesting a new OTP.`
+                });
+            }
+        }
+
+        // Generate 6-digit OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+        // Hash the OTP
+        const salt = await bcrypt.genSalt(10);
+        const otpHash = await bcrypt.hash(otp, salt);
+        const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
+
+        // Save to DB
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                otpHash,
+                otpExpiresAt,
+                otpAttempts: 0
+            }
+        });
+
+        // Send email
+        await sendOtpEmail(normalizedEmail, otp);
+
+        return res.status(200).json({
+            success: true,
+            message: "OTP sent successfully"
+        });
+    } catch (error) {
+        console.error("SendOtp error:", error);
+        return res.status(500).json({ success: false, message: "Server error sending OTP", error: error.message });
+    }
+};
+
+// @desc    Verify OTP code
+// @route   POST /api/auth/verify-otp
+// @access  Public
+const verifyOtp = async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+
+        if (!email || !otp) {
+            return res.status(400).json({ success: false, message: "Please provide email and OTP code" });
+        }
+
+        const normalizedEmail = email.toLowerCase().trim();
+
+        // Find user
+        const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+        if (!user) {
+            return res.status(404).json({ success: false, message: "Account not found." });
+        }
+
+        // Check if OTP was sent
+        if (!user.otpHash || !user.otpExpiresAt) {
+            return res.status(400).json({ success: false, message: "No pending verification found. Please request a new OTP." });
+        }
+
+        // Check attempts
+        if (user.otpAttempts >= 5) {
+            // Invalidate OTP
+            await prisma.user.update({
+                where: { id: user.id },
+                data: {
+                    otpHash: null,
+                    otpExpiresAt: null,
+                    otpAttempts: 0
+                }
+            });
+            return res.status(400).json({ success: false, message: "Too many incorrect attempts. Please request a new OTP." });
+        }
+
+        // Check expiration
+        if (user.otpExpiresAt.getTime() < Date.now()) {
+            // Invalidate OTP
+            await prisma.user.update({
+                where: { id: user.id },
+                data: {
+                    otpHash: null,
+                    otpExpiresAt: null,
+                    otpAttempts: 0
+                }
+            });
+            return res.status(400).json({ success: false, message: "OTP has expired. Please request a new one." });
+        }
+
+        // Verify match
+        const isMatch = await bcrypt.compare(otp, user.otpHash);
+        if (!isMatch) {
+            const updatedAttempts = user.otpAttempts + 1;
+            
+            if (updatedAttempts >= 5) {
+                // Invalidate OTP
+                await prisma.user.update({
+                    where: { id: user.id },
+                    data: {
+                        otpHash: null,
+                        otpExpiresAt: null,
+                        otpAttempts: 0
+                    }
+                });
+                return res.status(400).json({ success: false, message: "Too many incorrect attempts. Please request a new OTP." });
+            }
+
+            // Update attempts count
+            await prisma.user.update({
+                where: { id: user.id },
+                data: { otpAttempts: updatedAttempts }
+            });
+
+            const remaining = 5 - updatedAttempts;
+            return res.status(400).json({ 
+                success: false, 
+                message: `Invalid verification code. ${remaining} attempts remaining.` 
+            });
+        }
+
+        // Success - Clear OTP fields and generate token
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                otpHash: null,
+                otpExpiresAt: null,
+                otpAttempts: 0
+            }
+        });
+
+        const token = generateToken(user.id, user.role);
+        
+        // Remove sensitive fields
+        const safeUser = {
+            id: user.id,
+            fullName: user.fullName,
+            email: user.email,
+            phone: user.phone,
+            role: user.role,
+            avatar: user.avatar,
+            isVerified: user.isVerified,
+            address: user.address,
+            city: user.city,
+            state: user.state,
+            zipCode: user.zipCode,
+            createdAt: user.createdAt
+        };
+
+        return res.status(200).json({
+            success: true,
+            message: "Login successful",
+            token,
+            user: safeUser
+        });
+    } catch (error) {
+        console.error("VerifyOtp error:", error);
+        return res.status(500).json({ success: false, message: "Server error verifying OTP", error: error.message });
+    }
+};
+
+// @desc    Resend OTP to user email
+// @route   POST /api/auth/resend-otp
+// @access  Public
+const resendOtp = async (req, res) => {
+    return sendOtp(req, res);
+};
+
 module.exports = {
     register,
     login,
     getMe,
     updateProfile,
-    changePassword
+    changePassword,
+    sendOtp,
+    verifyOtp,
+    resendOtp
 };

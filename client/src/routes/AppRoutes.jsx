@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "../pages/Home/Home";
 import Login from "../pages/Auth/Login";
+import VerifyOtp from "../pages/Auth/VerifyOtp";
 import Register from "../pages/Auth/Register";
 import Services from "../pages/Services/Services";
 import ServiceDetails from "../pages/Services/ServiceDetails";
@@ -30,6 +31,7 @@ export default function AppRoutes() {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/verify-otp" element={<VerifyOtp />} />
             <Route path="/register" element={<Register />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetails />} />

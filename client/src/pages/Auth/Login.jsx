@@ -41,26 +41,15 @@ const GitHubIcon = (props) => (
   </svg>
 );
 
-// Schema allowing either a valid email address OR a 10-digit phone number
+// Schema for validating email address
 const loginSchema = z.object({
-  emailOrPhone: z.string()
-    .min(1, { message: "Email or phone number is required" })
-    .refine((val) => {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      // Validates typical 10-digit formats like 1234567890, 123-456-7890, (123) 456-7890
-      const phoneRegex = /^\+?1?\s*\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
-      return emailRegex.test(val) || phoneRegex.test(val);
-    }, {
-      message: "Please enter a valid email address or 10-digit phone number"
-    }),
-  password: z.string()
-    .min(6, { message: "Password must be at least 6 characters" }),
-  rememberMe: z.boolean().default(false)
+  email: z.string()
+    .min(1, { message: "Email address is required" })
+    .email({ message: "Please enter a valid email address" })
 });
 
 export default function Login() {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
@@ -68,21 +57,15 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors }
   } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      emailOrPhone: "",
-      password: "",
-      rememberMe: false
+      email: ""
     }
   });
 
-  const rememberMeValue = watch("rememberMe");
-
-  const { login } = useAuth();
+  const { sendOtp } = useAuth();
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -90,15 +73,15 @@ export default function Login() {
     setSuccessMsg("");
 
     try {
-      await login(data.emailOrPhone, data.password);
-      setSuccessMsg("Success! Login authorized. Redirecting to dashboard...");
+      await sendOtp(data.email);
+      setSuccessMsg("Verification code sent! Redirecting to OTP validation page...");
       setIsSubmitting(false);
       setTimeout(() => {
-        navigate("/");
+        navigate("/verify-otp", { state: { email: data.email } });
       }, 1200);
     } catch (err) {
       console.error("Login page error:", err);
-      setErrorMsg(err.message || "Incorrect email/phone or password. Please verify and try again.");
+      setErrorMsg(err.message || "Failed to send OTP. Please check the email and try again.");
       setIsSubmitting(false);
     }
   };
@@ -214,88 +197,30 @@ export default function Login() {
             {/* FORM */}
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5.5">
               
-              {/* Email / Phone Field */}
+              {/* Email Field */}
               <div className="space-y-1.5">
-                <Label htmlFor="emailOrPhone" className="text-xs font-bold text-slate-700">Email Address or Phone Number</Label>
+                <Label htmlFor="email" className="text-xs font-bold text-slate-700">Email Address</Label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-slate-400">
                     <Mail className="h-4 w-4" />
                   </span>
                   <Input
-                    id="emailOrPhone"
-                    placeholder="name@example.com or 10-digit number"
+                    id="email"
+                    type="email"
+                    placeholder="name@example.com"
                     className={`pl-10 h-11 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
-                      errors.emailOrPhone ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
+                      errors.email ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
                     }`}
                     disabled={isSubmitting}
-                    {...register("emailOrPhone")}
+                    {...register("email")}
                   />
                 </div>
-                {errors.emailOrPhone && (
+                {errors.email && (
                   <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
                     <ShieldAlert className="h-3 w-3" />
-                    {errors.emailOrPhone.message}
+                    {errors.email.message}
                   </p>
                 )}
-              </div>
-
-              {/* Password Field */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between items-center">
-                  <Label htmlFor="password" className="text-xs font-bold text-slate-700">Password</Label>
-                  <Link 
-                    to="/forgot-password" 
-                    className="text-xs font-semibold text-primary hover:text-accent transition-colors hover:underline"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-slate-400">
-                    <Lock className="h-4 w-4" />
-                  </span>
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter password (min 6 characters)"
-                    className={`pl-10 pr-10 h-11 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
-                      errors.password ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
-                    }`}
-                    disabled={isSubmitting}
-                    {...register("password")}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    disabled={isSubmitting}
-                    className="absolute right-3.5 top-[50%] translate-y-[-50%] text-slate-400 hover:text-slate-650 transition-colors"
-                  >
-                    {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
-                  </button>
-                </div>
-                {errors.password && (
-                  <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
-                    <ShieldAlert className="h-3 w-3" />
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Remember Me Checkbox */}
-              <div className="flex items-center space-x-2 pb-1">
-                <Checkbox 
-                  id="rememberMe" 
-                  checked={rememberMeValue}
-                  onCheckedChange={(checked) => setValue("rememberMe", checked === true)}
-                  disabled={isSubmitting}
-                  className="rounded-md border-slate-300 bg-white"
-                />
-                <label
-                  htmlFor="rememberMe"
-                  className="text-xs font-semibold text-slate-600 cursor-pointer select-none"
-                >
-                  Remember my credentials on this device
-                </label>
               </div>
 
               {/* Login Button */}
@@ -307,11 +232,11 @@ export default function Login() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin text-white" />
-                    Authenticating credentials...
+                    Sending verification code...
                   </>
                 ) : (
                   <>
-                    Log In
+                    Send OTP Verification
                     <ArrowRight className="h-4 w-4 text-white/60" />
                   </>
                 )}

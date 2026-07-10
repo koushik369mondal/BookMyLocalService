@@ -50,6 +50,39 @@ export const authService = {
         return data;
     },
 
+    sendOtp: async (email) => {
+        const response = await fetch(`${API_URL}/auth/send-otp`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Failed to send OTP");
+        return data;
+    },
+
+    verifyOtp: async (email, otp) => {
+        const response = await fetch(`${API_URL}/auth/verify-otp`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, otp })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "OTP verification failed");
+        return data;
+    },
+
+    resendOtp: async (email) => {
+        const response = await fetch(`${API_URL}/auth/resend-otp`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Failed to resend OTP");
+        return data;
+    },
+
     getMe: async () => {
         const response = await fetch(`${API_URL}/auth/me`, {
             method: "GET",
