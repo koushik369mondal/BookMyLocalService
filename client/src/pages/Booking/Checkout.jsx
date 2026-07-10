@@ -45,7 +45,7 @@ const checkoutSchema = z.object({
   street: z.string().min(5, { message: "Street Address must be at least 5 characters" }),
   city: z.string().min(2, { message: "City is required" }),
   state: z.string().min(2, { message: "State is required" }),
-  zipCode: z.string().regex(/^\d{5}$/, { message: "ZIP Code must be a 5-digit number" }),
+  zipCode: z.string().regex(/^\d{6}$/, { message: "PIN code must be 6 digits" }),
   paymentMethod: z.enum(["upi", "card", "netbanking", "wallet", "cash"], {
     errorMap: () => ({ message: "Please select a payment method" })
   }),
@@ -460,8 +460,8 @@ export default function Checkout() {
                         <Label htmlFor="zipCode" className="text-xs font-bold text-slate-700">ZIP Code</Label>
                         <Input
                           id="zipCode"
-                          placeholder="11201"
-                          maxLength={5}
+                          placeholder="400001"
+                          maxLength={6}
                           className={`h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
                             errors.zipCode ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}

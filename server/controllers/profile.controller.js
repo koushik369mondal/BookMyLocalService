@@ -48,7 +48,13 @@ const updateProfile = async (req, res) => {
         if (address !== undefined) updateData.address = address.trim();
         if (city !== undefined) updateData.city = city.trim();
         if (state !== undefined) updateData.state = state.trim();
-        if (zipCode !== undefined) updateData.zipCode = zipCode.trim();
+        if (zipCode !== undefined) {
+            const trimmedZip = zipCode.trim();
+            if (trimmedZip !== "" && !/^\d{6}$/.test(trimmedZip)) {
+                return res.status(400).json({ success: false, message: "PIN code must be 6 digits" });
+            }
+            updateData.zipCode = trimmedZip;
+        }
 
         const updatedUser = await prisma.user.update({
             where: { id: req.user.id },

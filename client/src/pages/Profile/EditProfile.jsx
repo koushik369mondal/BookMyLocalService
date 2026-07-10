@@ -35,7 +35,9 @@ const editProfileSchema = z.object({
   address: z.string().optional().or(z.literal("")),
   city: z.string().optional().or(z.literal("")),
   state: z.string().optional().or(z.literal("")),
-  zipCode: z.string().optional().or(z.literal(""))
+  zipCode: z.string().optional().or(z.literal("")).refine(val => !val || /^\d{6}$/.test(val), {
+    message: "PIN code must be 6 digits"
+  })
 });
 
 export default function EditProfile() {
@@ -341,12 +343,13 @@ export default function EditProfile() {
                       <Label htmlFor="zipCode" className="text-xs font-bold text-slate-700">ZIP Code</Label>
                       <Input
                         id="zipCode"
-                        placeholder="11201"
-                        maxLength={5}
+                        placeholder="400001"
+                        maxLength={6}
                         className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white text-center"
                         disabled={isSubmitting}
                         {...register("zipCode")}
                       />
+                      {errors.zipCode && <p className="text-[10px] text-rose-600 font-bold mt-1">{errors.zipCode.message}</p>}
                     </div>
                   </div>
 

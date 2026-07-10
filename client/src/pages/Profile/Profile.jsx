@@ -54,7 +54,9 @@ const profileSchema = z.object({
   address: z.string().optional().or(z.literal("")),
   city: z.string().optional().or(z.literal("")),
   state: z.string().optional().or(z.literal("")),
-  zipCode: z.string().optional().or(z.literal(""))
+  zipCode: z.string().optional().or(z.literal("")).refine(val => !val || /^\d{6}$/.test(val), {
+    message: "PIN code must be 6 digits"
+  })
 });
 
 // Schema for changing password
@@ -284,6 +286,7 @@ export default function Profile() {
   const handleAddAddress = (e) => {
     e.preventDefault();
     if (!newAddressStreet || !newAddressCity || !newAddressState || !newAddressZip) return;
+    if (!/^\d{6}$/.test(newAddressZip)) return;
     const newAddr = {
       id: Date.now(),
       label: newAddressLabel,
@@ -594,11 +597,13 @@ export default function Profile() {
                           <Label htmlFor="zipCode" className="text-xs font-bold text-slate-700">ZIP Code</Label>
                           <Input
                             id="zipCode"
-                            placeholder="e.g. 11201"
+                            placeholder="e.g. 400001"
+                            maxLength={6}
                             className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("zipCode")}
                           />
+                          {profileErrors.zipCode && <p className="text-[10px] text-rose-600 font-bold mt-1">{profileErrors.zipCode.message}</p>}
                         </div>
                       </div>
 
@@ -995,8 +1000,10 @@ export default function Profile() {
                 <Label htmlFor="newZip" className="text-xs font-bold text-slate-700">ZIP Code</Label>
                 <Input
                   id="newZip"
-                  placeholder="10022"
-                  maxLength={5}
+                  placeholder="400001"
+                  maxLength={6}
+                  pattern="\d{6}"
+                  title="PIN code must be 6 digits"
                   value={newAddressZip}
                   onChange={(e) => setNewAddressZip(e.target.value)}
                   className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white text-center"

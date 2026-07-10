@@ -50,6 +50,13 @@ const submitCheckout = async (req, res) => {
       });
     }
 
+    if (!/^\d{6}$/.test(zipCode)) {
+      return res.status(400).json({
+        success: false,
+        message: "PIN code must be 6 digits"
+      });
+    }
+
     const booking = await bookingService.getBookingById(bookingId);
     if (!booking) {
       return res.status(404).json({

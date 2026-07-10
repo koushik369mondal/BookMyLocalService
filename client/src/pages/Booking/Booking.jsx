@@ -228,9 +228,9 @@ export default function Booking() {
     if (!formData.city.trim()) errors.city = "City is required";
     if (!formData.state.trim()) errors.state = "State is required";
     if (!formData.zipCode.trim()) {
-      errors.zipCode = "ZIP code is required";
-    } else if (!/^\d{5}$/.test(formData.zipCode)) {
-      errors.zipCode = "ZIP code must be 5 digits";
+      errors.zipCode = "PIN code is required";
+    } else if (!/^\d{6}$/.test(formData.zipCode)) {
+      errors.zipCode = "PIN code must be 6 digits";
     }
     return errors;
   };
@@ -683,7 +683,8 @@ export default function Booking() {
                         type="text"
                         value={formData.zipCode}
                         onChange={handleInputChange}
-                        placeholder="e.g. 11201"
+                        placeholder="e.g. 400001"
+                        maxLength={6}
                         className={`h-10 rounded-xl border-slate-200 focus-visible:ring-primary ${formErrors.zipCode ? "border-rose-350" : ""}`}
                       />
                       {formErrors.zipCode && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.zipCode}</p>}
