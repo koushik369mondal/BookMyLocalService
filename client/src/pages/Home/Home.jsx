@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import {
   ArrowRight,
   Quote
 } from "lucide-react";
+import { servicesService } from "../../services/api";
 
 // Category list
 const categories = [
@@ -102,7 +104,7 @@ const features = [
     title: "Happiness Guarantee",
     description: "Not satisfied with the service? We work with you to make it right, backed by our booking support team.",
     icon: Smile,
-    color: "bg-emerald-50 text-emerald-600 border-emerald-100"
+    color: "bg-emerald-50 text-emerald-600 border-emerald-105"
   },
   {
     title: "Instant Booking",
@@ -138,6 +140,40 @@ const testimonials = [
 ];
 
 export default function Home() {
+  const [dbServices, setDbServices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await servicesService.getServices();
+        if (response.success && response.data) {
+          setDbServices(response.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch services in Home component:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
+
+  // Map database services if available, fallback to mock providers
+  const displayProviders = dbServices.length > 0 
+    ? dbServices.slice(0, 3).map(service => ({
+        id: service.id,
+        name: service.provider?.fullName || "Verified Provider",
+        service: service.category || service.title,
+        rating: service.rating,
+        reviews: service.reviewCount,
+        location: service.location,
+        price: `$${service.price}${service.priceType}`,
+        image: service.imageUrl,
+        badge: service.badge
+      }))
+    : providers;
+
   return (
     <MainLayout>
       <div className="bg-slate-50 min-h-screen">
@@ -273,7 +309,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {providers.map((provider, idx) => (
+            {displayProviders.map((provider, idx) => (
               <Card key={idx} className="overflow-hidden p-0 py-0 gap-0 hover:shadow-lg transition-all duration-300 border border-border flex flex-col h-full bg-card">
                 <div className="relative">
                   <img src={provider.image} alt={provider.name} className="h-48 w-full object-cover" />
@@ -300,7 +336,7 @@ export default function Home() {
                     </div>
                     <span className="font-bold text-text text-sm">{provider.price}</span>
                   </div>
-                  <NavLink to="/booking" className="w-full">
+                  <NavLink to={provider.id ? `/booking?serviceId=${provider.id}` : "/booking"} className="w-full">
                     <Button className="w-full bg-primary hover:bg-secondary text-white rounded-xl h-10 mt-1 shadow-xs">
                       Book Now
                     </Button>

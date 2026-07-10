@@ -34,19 +34,21 @@ const buttonVariants = cva(
 const Button = forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
 
-  let classes = buttonVariants({ variant, size, className });
+  let variantClasses = buttonVariants({ variant, size });
 
   if (className) {
     if (className.includes("bg-")) {
-      classes = classes.replace(/\bbg-primary\b/g, "");
+      variantClasses = variantClasses.replace(/\bbg-primary\b/g, "");
     }
     if (className.includes("text-") && !className.includes("text-primary-foreground")) {
-      classes = classes.replace(/\btext-primary-foreground\b/g, "");
+      variantClasses = variantClasses.replace(/\btext-primary-foreground\b/g, "");
     }
     if (className.includes("hover:bg-")) {
-      classes = classes.replace(/\bhover:bg-primary\/90\b/g, "");
+      variantClasses = variantClasses.replace(/\bhover:bg-primary\/90\b/g, "");
     }
   }
+
+  const classes = cn(variantClasses, className);
 
   return (
     <Comp
