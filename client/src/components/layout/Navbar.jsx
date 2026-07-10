@@ -84,13 +84,12 @@ export default function Navbar() {
 
         {/* Right Actions */}
         <div className="hidden md:flex items-center gap-3 shrink-0">
-          {/* Desktop Search Bar */}
           <div className="relative w-48 lg:w-56">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-secondary" />
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-[#334155]" />
             <Input
               type="search"
               placeholder="Search services..."
-              className="pl-9 h-9 w-full bg-gray-50 border-gray-200 focus:bg-white rounded-full text-xs"
+              className="pl-9 h-9 w-full bg-[#FFFFFF] border-[#E2E8F0] text-[#111827] placeholder:text-[#64748B] focus:bg-[#FFFFFF] focus:border-[#0F172A] focus-visible:ring-[#0F172A]/50 focus-visible:border-[#0F172A] rounded-full text-xs dark:bg-[#FFFFFF] dark:text-[#111827] dark:placeholder:text-[#64748B] dark:border-[#E2E8F0]"
             />
           </div>
 
