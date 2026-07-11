@@ -590,13 +590,13 @@ export default function ProviderDashboard() {
 
       {/* ADD SERVICE DIALOG FORM */}
       <Dialog open={isAddServiceOpen} onOpenChange={setIsAddServiceOpen}>
-        <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
+        <DialogContent className="max-w-md bg-white border border-slate-200 dark:bg-slate-950 dark:border-slate-800 rounded-2xl shadow-xl p-6">
           <DialogHeader>
-            <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-              <Plus className="h-5 w-5 text-primary" />
+            <DialogTitle className="text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+              <Plus className="h-5 w-5 text-slate-900 dark:text-white" />
               Add Catalog Service
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-400 pt-0.5">
+            <DialogDescription className="text-xs text-slate-500 dark:text-slate-400 pt-0.5">
               Insert pricing and descriptions to update your public provider listings
             </DialogDescription>
           </DialogHeader>
@@ -604,26 +604,26 @@ export default function ProviderDashboard() {
           <form onSubmit={handleAddService} className="space-y-4 pt-3">
             {/* Service Name */}
             <div className="space-y-1.5">
-              <Label htmlFor="svcName" className="text-xs font-bold text-slate-700">Service Title</Label>
+              <Label htmlFor="svcName" className="text-xs font-bold text-slate-700 dark:text-slate-300">Service Title</Label>
               <Input
                 id="svcName"
                 placeholder="e.g. Premium Bathroom Sanitization"
                 value={newServiceName}
                 onChange={(e) => setNewServiceName(e.target.value)}
-                className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                className="h-10 border-slate-200 focus-visible:ring-2 focus-visible:ring-slate-950/20 focus-visible:border-slate-950 rounded-xl text-xs bg-white text-slate-900 placeholder:text-slate-400 shadow-2xs"
                 required
               />
             </div>
 
             {/* Category Select */}
             <div className="space-y-1.5">
-              <Label htmlFor="svcCategory" className="text-xs font-bold text-slate-700">Category Group</Label>
+              <Label htmlFor="svcCategory" className="text-xs font-bold text-slate-700 dark:text-slate-300">Category Group</Label>
               <div className="relative">
                 <select
                   id="svcCategory"
                   value={newServiceCategory}
                   onChange={(e) => setNewServiceCategory(e.target.value)}
-                  className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                  className="w-full h-10 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-950/20 focus:border-slate-950 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                 >
                   <option value="Home Cleaning">Home Cleaning</option>
                   <option value="Plumbing">Plumbing</option>
@@ -639,14 +639,14 @@ export default function ProviderDashboard() {
 
             {/* Price */}
             <div className="space-y-1.5">
-              <Label htmlFor="svcPrice" className="text-xs font-bold text-slate-700">Price Rate ($/hr)</Label>
+              <Label htmlFor="svcPrice" className="text-xs font-bold text-slate-700 dark:text-slate-300">Price Rate ($/hr)</Label>
               <Input
                 id="svcPrice"
                 type="number"
                 placeholder="e.g. 40"
                 value={newServicePrice}
                 onChange={(e) => setNewServicePrice(e.target.value)}
-                className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                className="h-10 border-slate-200 focus-visible:ring-2 focus-visible:ring-slate-950/20 focus-visible:border-slate-950 rounded-xl text-xs bg-white text-slate-900 placeholder:text-slate-400 shadow-2xs"
                 required
               />
             </div>
@@ -656,13 +656,13 @@ export default function ProviderDashboard() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setIsAddServiceOpen(false)}
-                className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
+                className="rounded-xl border-slate-200 text-xs h-10 px-6 w-full sm:w-auto hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-700"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit" 
-                className="rounded-xl bg-primary hover:bg-primary text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                className="rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs h-10 px-6 w-full sm:w-auto transition-all shadow-md dark:bg-slate-50 dark:text-slate-950 dark:hover:bg-slate-200"
               >
                 Add Service
               </Button>
