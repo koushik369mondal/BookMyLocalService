@@ -262,7 +262,7 @@ export default function ManageProviders() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -301,7 +301,7 @@ export default function ManageProviders() {
             </div>
 
             <div className="text-center space-y-1 py-1 border-l border-slate-100">
-              <span className="block text-2xl font-black text-rose-650">{stats.suspended}</span>
+              <span className="block text-2xl font-black text-rose-600">{stats.suspended}</span>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Suspended Accounts</span>
             </div>
 
@@ -318,7 +318,7 @@ export default function ManageProviders() {
               {/* Search */}
               <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
                 <span className="text-xs font-bold text-slate-800 block mb-2.5 flex items-center gap-1.5">
-                  <Search className="h-4 w-4 text-primary" /> Search Specialists
+                  <Search className="h-4 w-4 text-slate-900" /> Search Specialists
                 </span>
                 <div className="relative">
                   <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-400">
@@ -328,7 +328,7 @@ export default function ManageProviders() {
                     placeholder="Search name, category..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                   />
                 </div>
               </Card>
@@ -340,7 +340,7 @@ export default function ManageProviders() {
                   <select
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Categories</option>
                     <option value="Home Cleaning">Home Cleaning</option>
@@ -362,7 +362,7 @@ export default function ManageProviders() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Statuses</option>
                     <option value="verified">Verified</option>
@@ -382,7 +382,7 @@ export default function ManageProviders() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="bookings-desc">Bookings: High to Low</option>
                     <option value="rating-desc">Rating: Highest First</option>
@@ -404,7 +404,7 @@ export default function ManageProviders() {
               {selectedIds.length > 0 && (
                 <div className="p-4 bg-slate-900 border border-slate-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
                   <span className="text-xs font-extrabold flex items-center gap-2">
-                    <Briefcase className="h-4.5 w-4.5 text-secondary" />
+                    <Briefcase className="h-4.5 w-4.5 text-slate-700" />
                     {selectedIds.length} Providers Selected
                   </span>
                   
@@ -451,7 +451,7 @@ export default function ManageProviders() {
               ) : paginatedProviders.length === 0 ? (
                 /* EMPTY STATE BOARD */
                 <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-primary/5 text-primary rounded-full border border-primary/10">
+                  <div className="p-4 bg-slate-900/5 text-slate-900 rounded-full border border-slate-900/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mt-2">No Providers Found</h3>
@@ -471,7 +471,7 @@ export default function ManageProviders() {
                               id="selectAll"
                               checked={selectedIds.length === filteredProviders.length && filteredProviders.length > 0}
                               onCheckedChange={handleSelectAll}
-                              className="rounded border-slate-350"
+                              className="rounded border-slate-400"
                             />
                           </th>
                           <th className="py-2.5">Provider</th>
@@ -487,12 +487,12 @@ export default function ManageProviders() {
                         {paginatedProviders.map(prov => {
                           const isSelected = selectedIds.includes(prov.id);
                           return (
-                            <tr key={prov.id} className={`hover:bg-slate-50/50 transition-colors ${isSelected ? "bg-primary/5/10" : ""}`}>
+                            <tr key={prov.id} className={`hover:bg-slate-50/50 transition-colors ${isSelected ? "bg-slate-900/5/10" : ""}`}>
                               <td className="py-3 px-1 shrink-0 w-8">
                                 <Checkbox 
                                   checked={isSelected}
                                   onCheckedChange={(checked) => handleSelectRow(prov.id, checked === true)}
-                                  className="rounded border-slate-350"
+                                  className="rounded border-slate-400"
                                 />
                               </td>
                               <td className="py-3">
@@ -553,7 +553,7 @@ export default function ManageProviders() {
                                       onClick={() => handleConfirmAction("suspend", prov)}
                                       className={`h-7 text-[9px] font-bold rounded-lg border bg-white ${
                                         prov.status === "suspended" 
-                                          ? "border-emerald-250 hover:bg-emerald-50 text-emerald-600"
+                                          ? "border-emerald-300 hover:bg-emerald-50 text-emerald-600"
                                           : "border-amber-200 hover:bg-amber-50 text-amber-600"
                                       }`}
                                     >
@@ -586,7 +586,7 @@ export default function ManageProviders() {
                         size="sm"
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                        className="rounded-xl border-slate-200 text-slate-650 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 h-9 font-semibold text-xs"
                       >
                         <ChevronLeft className="h-4 w-4 mr-1.5" />
                         Previous
@@ -602,8 +602,8 @@ export default function ManageProviders() {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
                                 currentPage === pageNum
-                                  ? "bg-primary text-white shadow-md shadow-primary/15"
-                                  : "text-slate-650 hover:bg-slate-105"
+                                  ? "bg-slate-900 text-white shadow-md shadow-slate-900/15"
+                                  : "text-slate-600 hover:bg-slate-100"
                               }`}
                             >
                               {pageNum}
@@ -617,7 +617,7 @@ export default function ManageProviders() {
                         size="sm"
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                        className="rounded-xl border-slate-200 text-slate-650 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 h-9 font-semibold text-xs"
                       >
                         Next
                         <ChevronRight className="h-4 w-4 ml-1.5" />
@@ -701,7 +701,7 @@ export default function ManageProviders() {
           <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
             <DialogHeader>
               <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <Edit3 className="h-5 w-5 text-primary" />
+                <Edit3 className="h-5 w-5 text-slate-900" />
                 Modify Specialist Details
               </DialogTitle>
               <DialogDescription className="text-xs text-slate-400 pt-0.5">
@@ -717,7 +717,7 @@ export default function ManageProviders() {
                   id="editName"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -729,7 +729,7 @@ export default function ManageProviders() {
                   id="editService"
                   value={editServiceName}
                   onChange={(e) => setEditServiceName(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -741,7 +741,7 @@ export default function ManageProviders() {
                   id="editLocation"
                   value={editLocation}
                   onChange={(e) => setEditLocation(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -755,7 +755,7 @@ export default function ManageProviders() {
                       id="editCategory"
                       value={editCategory}
                       onChange={(e) => setEditCategory(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="Home Cleaning">Home Cleaning</option>
                       <option value="Plumbing">Plumbing</option>
@@ -774,7 +774,7 @@ export default function ManageProviders() {
                       id="editStatus"
                       value={editStatus}
                       onChange={(e) => setEditStatus(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="verified">Verified</option>
                       <option value="pending">Pending</option>
@@ -796,7 +796,7 @@ export default function ManageProviders() {
                 </Button>
                 <Button 
                   type="submit" 
-                  className="rounded-xl bg-primary hover:bg-primary text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                  className="rounded-xl bg-slate-900 hover:bg-slate-900 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
                 >
                   Save Changes
                 </Button>

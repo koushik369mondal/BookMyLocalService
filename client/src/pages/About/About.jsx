@@ -32,26 +32,26 @@ export default function About() {
 
         {/* HERO SECTION */}
         <section className="relative overflow-hidden py-20 lg:py-28 bg-white border-b border-slate-200">
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
-          <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/5 to-transparent pointer-events-none"></div>
+          <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-slate-900/5 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
               {/* Text column */}
               <div className="lg:col-span-7 flex flex-col items-start text-left gap-6">
-                <span className="inline-flex items-center gap-1.5 bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full border border-accent/20">
-                  <Star className="h-3.5 w-3.5 fill-accent text-accent animate-pulse" />
+                <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-500 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">
+                  <Star className="h-3.5 w-3.5 fill-accent text-amber-500 animate-pulse" />
                   Trusted Local Service Marketplace
                 </span>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
                   About <br />
-                  <span className="text-primary font-black">BookMyLocal</span>
-                  <span className="text-accent font-black">Service</span>
+                  <span className="text-slate-900 font-black">BookMyLocal</span>
+                  <span className="text-amber-500 font-black">Service</span>
                 </h1>
 
-                <p className="text-lg sm:text-xl font-bold text-gray-800 border-l-4 border-accent pl-4 leading-relaxed">
+                <p className="text-lg sm:text-xl font-bold text-gray-800 border-l-4 border-amber-500 pl-4 leading-relaxed">
                   Connecting People With Trusted Local Professionals
                 </p>
 
@@ -61,7 +61,7 @@ export default function About() {
 
                 <div className="flex flex-wrap gap-4 pt-2 w-full sm:w-auto">
                   <NavLink to="/services" className="w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto h-12 bg-primary hover:bg-secondary text-white rounded-xl px-8 font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                    <Button className="w-full sm:w-auto h-12 bg-slate-900 hover:bg-slate-700 text-white rounded-xl px-8 font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
                       Browse Services
                       <ArrowRight className="h-4 w-4" />
                     </Button>
@@ -76,7 +76,7 @@ export default function About() {
 
               {/* Illustration / Photo Column */}
               <div className="lg:col-span-5 relative">
-                <div className="absolute -inset-4 bg-accent/5 rounded-3xl blur-2xl opacity-50 -rotate-2"></div>
+                <div className="absolute -inset-4 bg-amber-500/5 rounded-3xl blur-2xl opacity-50 -rotate-2"></div>
                 <div className="relative border border-slate-200 rounded-3xl overflow-hidden bg-white shadow-xl aspect-4/3 sm:aspect-video lg:aspect-square">
                   <img
                     src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
@@ -110,7 +110,7 @@ export default function About() {
 
               {/* Image Left */}
               <div className="lg:col-span-6 relative order-last lg:order-first">
-                <div className="absolute -inset-4 bg-primary/5 rounded-3xl blur-2xl opacity-40 rotate-1"></div>
+                <div className="absolute -inset-4 bg-slate-900/5 rounded-3xl blur-2xl opacity-40 rotate-1"></div>
                 <div className="relative border border-slate-200 rounded-3xl overflow-hidden shadow-lg aspect-4/3 sm:aspect-video lg:aspect-4/3 bg-slate-100">
                   <img
                     src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80"
@@ -124,7 +124,7 @@ export default function About() {
               {/* Story Right */}
               <div className="lg:col-span-6 flex flex-col gap-6">
                 <div className="space-y-2">
-                  <span className="text-xs font-bold text-accent uppercase tracking-widest">Platform Genesis</span>
+                  <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Platform Genesis</span>
                   <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">Our Story</h2>
                 </div>
                 <p className="text-base text-gray-500 leading-relaxed">
@@ -153,7 +153,7 @@ export default function About() {
         <section className="py-20 bg-slate-50 border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col gap-3">
-              <span className="text-xs font-bold text-accent uppercase tracking-widest">Purpose Driven</span>
+              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Purpose Driven</span>
               <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">Our Foundation</h2>
               <p className="text-gray-500">The core values and goals that guide our marketplace operations daily.</p>
             </div>
@@ -162,7 +162,7 @@ export default function About() {
               {/* Mission Card */}
               <Card className="group border border-gray-100 bg-white rounded-2xl p-6 hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between h-full">
                 <div className="space-y-4">
-                  <div className="p-3 bg-primary/5 text-primary rounded-2xl border border-primary/10 w-fit">
+                  <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl border border-slate-900/10 w-fit">
                     <Award className="h-6 w-6" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Our Mission</h3>
@@ -175,7 +175,7 @@ export default function About() {
               {/* Vision Card */}
               <Card className="group border border-gray-100 bg-white rounded-2xl p-6 hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between h-full">
                 <div className="space-y-4">
-                  <div className="p-3 bg-accent/10 text-accent rounded-2xl border border-accent/20 w-fit">
+                  <div className="p-3 bg-amber-500/10 text-amber-500 rounded-2xl border border-amber-500/20 w-fit">
                     <Eye className="h-6 w-6" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Our Vision</h3>
@@ -220,14 +220,14 @@ export default function About() {
         <section className="py-20 bg-white border-b border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col gap-3">
-              <span className="text-xs font-bold text-accent uppercase tracking-widest">Features</span>
+              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Features</span>
               <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">Why Choose BookMyLocalService</h2>
               <p className="text-gray-500">We make booking quality home and personal services safe, secure, and hassle-free.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
-                { title: "Verified Professionals", description: "Every service provider is background-checked and identity-verified to ensure absolute safety and quality.", icon: ShieldCheck, color: "bg-primary/5 text-primary border-primary/10" },
+                { title: "Verified Professionals", description: "Every service provider is background-checked and identity-verified to ensure absolute safety and quality.", icon: ShieldCheck, color: "bg-slate-900/5 text-slate-900 border-slate-900/10" },
                 { title: "Secure Bookings", description: "Easily schedule, coordinate, and pay for all services directly through our secure platform.", icon: Lock, color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
                 { title: "Transparent Pricing", description: "No hidden charges or surprise costs. See clear hourly or flat rates up front before you book.", icon: DollarSign, color: "bg-amber-50 text-amber-600 border-amber-100" },
                 { title: "Fast Service", description: "Book instant same-day service or schedule weeks ahead. We respect your busy schedule.", icon: Clock, color: "bg-pink-50 text-pink-600 border-pink-100" },
@@ -263,7 +263,7 @@ export default function About() {
                 { count: "98%", label: "Customer Satisfaction" }
               ].map((stat, i) => (
                 <div key={i} className="space-y-2 group">
-                  <span className="block text-3xl sm:text-4xl lg:text-5xl font-black text-accent group-hover:scale-105 transition-transform duration-300">{stat.count}</span>
+                  <span className="block text-3xl sm:text-4xl lg:text-5xl font-black text-amber-500 group-hover:scale-105 transition-transform duration-300">{stat.count}</span>
                   <span className="block text-xs sm:text-sm text-slate-400 font-bold uppercase tracking-wider">{stat.label}</span>
                 </div>
               ))}
@@ -275,7 +275,7 @@ export default function About() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-20 flex flex-col gap-3">
-              <span className="text-xs font-bold text-accent uppercase tracking-widest">Process Flow</span>
+              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Process Flow</span>
               <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">How It Works</h2>
               <p className="text-gray-500">Book local experts in 4 simple, stress-free steps.</p>
             </div>
@@ -292,7 +292,7 @@ export default function About() {
                   { step: "04", title: "Get Work Done", desc: "Your pro arrives fully equipped to complete the job to your high standards." }
                 ].map((item, idx) => (
                   <div key={idx} className="bg-white border border-gray-100 p-6 rounded-2xl flex flex-col gap-4 text-center items-center shadow-2xs hover:shadow-md transition-shadow group">
-                    <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black text-sm group-hover:bg-accent transition-colors">
+                    <div className="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-sm group-hover:bg-amber-500 transition-colors">
                       {item.step}
                     </div>
                     <h3 className="font-bold text-base text-gray-900">{item.title}</h3>
@@ -310,7 +310,7 @@ export default function About() {
         <section className="py-20 bg-slate-50 border-t border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col gap-3">
-              <span className="text-xs font-bold text-accent uppercase tracking-widest">Our Capabilities</span>
+              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Our Capabilities</span>
               <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">Platform Strengths</h2>
               <p className="text-gray-500">Engineered to bring security, velocity, and quality to local commerce.</p>
             </div>
@@ -350,7 +350,7 @@ export default function About() {
                 const Icon = badge.icon;
                 return (
                   <div key={idx} className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider text-slate-500 hover:text-slate-700 transition-colors cursor-default">
-                    <Icon className="h-4.5 w-4.5 text-accent" />
+                    <Icon className="h-4.5 w-4.5 text-amber-500" />
                     <span>{badge.label}</span>
                   </div>
                 );
@@ -371,7 +371,7 @@ export default function About() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2 max-w-sm mx-auto sm:max-w-none">
               <NavLink to="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-12 bg-accent hover:bg-amber-600 text-primary font-bold rounded-xl px-8 shadow-md">
+                <Button className="w-full sm:w-auto h-12 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-xl px-8 shadow-md">
                   Browse Services
                 </Button>
               </NavLink>

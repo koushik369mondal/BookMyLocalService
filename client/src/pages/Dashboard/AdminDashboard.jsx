@@ -117,7 +117,7 @@ export default function AdminDashboard() {
       case "pending":
         return <Badge className="bg-amber-500 hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Pending</Badge>;
       case "confirmed":
-        return <Badge className="bg-primary/50 hover:bg-primary border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
+        return <Badge className="bg-slate-900/50 hover:bg-slate-900 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
       default:
         return <Badge className="bg-emerald-500 hover:bg-emerald-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Completed</Badge>;
     }
@@ -128,7 +128,7 @@ export default function AdminDashboard() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -139,7 +139,7 @@ export default function AdminDashboard() {
             
             {/* Quick Actions Panel */}
             <div className="flex items-center gap-3 flex-wrap">
-              <Button size="sm" className="bg-white text-primary hover:bg-slate-50 rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1">
+              <Button size="sm" className="bg-white text-slate-900 hover:bg-slate-50 rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1">
                 <Settings className="h-4 w-4" /> Manage System
               </Button>
             </div>
@@ -156,7 +156,7 @@ export default function AdminDashboard() {
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Users</span>
                 <span className="text-xl sm:text-2xl font-black text-slate-900">4,250</span>
               </div>
-              <div className="p-3 bg-primary/5 text-primary rounded-2xl shrink-0">
+              <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl shrink-0">
                 <Users className="h-6 w-6" />
               </div>
             </Card>
@@ -167,7 +167,7 @@ export default function AdminDashboard() {
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Providers</span>
                 <span className="text-xl sm:text-2xl font-black text-slate-900">380</span>
               </div>
-              <div className="p-3 bg-primary/5 text-primary rounded-2xl shrink-0">
+              <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl shrink-0">
                 <Briefcase className="h-6 w-6" />
               </div>
             </Card>
@@ -216,7 +216,7 @@ export default function AdminDashboard() {
               <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
                 <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 bg-primary/5 text-primary rounded-xl">
+                    <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
@@ -232,7 +232,7 @@ export default function AdminDashboard() {
                       onClick={() => setChartView("users")}
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                         chartView === "users"
-                          ? "bg-white text-primary shadow-2xs border border-slate-100"
+                          ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                           : "text-slate-500 hover:text-slate-700"
                       }`}
                     >
@@ -243,7 +243,7 @@ export default function AdminDashboard() {
                       onClick={() => setChartView("bookings")}
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                         chartView === "bookings"
-                          ? "bg-white text-primary shadow-2xs border border-slate-100"
+                          ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                           : "text-slate-500 hover:text-slate-700"
                       }`}
                     >
@@ -255,7 +255,7 @@ export default function AdminDashboard() {
                 <CardContent className="p-0 pt-6">
                   {isLoading ? (
                     <div className="h-[150px] flex items-center justify-center">
-                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                      <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
                     </div>
                   ) : (
                     /* SVG bar layout */
@@ -331,7 +331,7 @@ export default function AdminDashboard() {
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {approvals.map(app => (
-                        <div key={app.id} className="border border-slate-150 p-4 rounded-2xl bg-white flex flex-col justify-between hover:border-slate-250 transition-colors shadow-2xs">
+                        <div key={app.id} className="border border-slate-200 p-4 rounded-2xl bg-white flex flex-col justify-between hover:border-slate-300 transition-colors shadow-2xs">
                           <div>
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">{app.category}</span>
                             <h4 className="font-extrabold text-slate-900 text-sm mt-1">{app.name}</h4>
@@ -351,7 +351,7 @@ export default function AdminDashboard() {
                             <Button
                               size="xs"
                               onClick={() => handleApprovalAction(app.id, "approve")}
-                              className="bg-primary hover:bg-primary text-white font-bold h-7 rounded-lg text-[9px] py-0 px-2.5 shadow-2xs"
+                              className="bg-slate-900 hover:bg-slate-900 text-white font-bold h-7 rounded-lg text-[9px] py-0 px-2.5 shadow-2xs"
                             >
                               Approve Pro
                             </Button>
@@ -414,10 +414,10 @@ export default function AdminDashboard() {
                     <div key={n.id} className={`p-3.5 border rounded-xl flex items-start gap-2.5 ${
                       n.type === "warning"
                         ? "bg-rose-50/50 border-rose-100 text-rose-800"
-                        : "bg-primary/5 border-primary/10 text-primary"
+                        : "bg-slate-900/5 border-slate-900/10 text-slate-900"
                     }`}>
                       <AlertCircle className={`h-4.5 w-4.5 shrink-0 mt-0.5 ${
-                        n.type === "warning" ? "text-rose-600" : "text-primary"
+                        n.type === "warning" ? "text-rose-600" : "text-slate-900"
                       }`} />
                       <span className="text-[11px] font-semibold leading-normal">{n.text}</span>
                     </div>
@@ -433,7 +433,7 @@ export default function AdminDashboard() {
                   {recentUsers.map((u, i) => (
                     <div key={i} className="flex items-center justify-between gap-3 p-1.5 hover:bg-slate-50 rounded-xl transition-colors">
                       <div className="flex items-center gap-3">
-                        <Avatar className="w-9 h-9 border border-slate-100 overflow-hidden shrink-0 bg-slate-50 text-slate-650 flex items-center justify-center font-bold text-xs">
+                        <Avatar className="w-9 h-9 border border-slate-100 overflow-hidden shrink-0 bg-slate-50 text-slate-600 flex items-center justify-center font-bold text-xs">
                           {u.name[0]}
                         </Avatar>
                         <div>
@@ -441,7 +441,7 @@ export default function AdminDashboard() {
                           <span className="text-[9px] text-slate-400 font-semibold block mt-0.5">{u.email}</span>
                         </div>
                       </div>
-                      <Badge variant="secondary" className="bg-slate-100 text-slate-650 font-bold rounded-lg text-[8px] py-0 px-2 uppercase leading-none">
+                      <Badge variant="secondary" className="bg-slate-100 text-slate-600 font-bold rounded-lg text-[8px] py-0 px-2 uppercase leading-none">
                         {u.role}
                       </Badge>
                     </div>
@@ -470,7 +470,7 @@ export default function AdminDashboard() {
                       <span className="text-slate-500">Image Storage Capacity</span>
                       <span className="text-slate-700">42% Used</span>
                     </div>
-                    <Progress value={42} className="h-1.5 bg-slate-100 [&>div]:bg-primary" />
+                    <Progress value={42} className="h-1.5 bg-slate-100 [&>div]:bg-slate-900" />
                   </div>
 
                   {/* Mail */}

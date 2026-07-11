@@ -111,7 +111,7 @@ export default function Login() {
         <div className="max-w-5xl w-full bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] transition-all duration-300 hover:shadow-2xl">
 
           {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-primary via-secondary to-primary p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+          <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 via-slate-700 to-slate-900 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
 
             {/* Mesh shapes and overlays */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
@@ -191,7 +191,7 @@ export default function Login() {
                   <Button
                     type="button"
                     onClick={() => navigate("/register", { state: { email: watch("email") } })}
-                    className="self-start mt-1 h-8 bg-rose-600 hover:bg-rose-750 text-white font-extrabold text-[11px] rounded-lg px-4 flex items-center gap-1 shadow-sm transition-all"
+                    className="self-start mt-1 h-8 bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-[11px] rounded-lg px-4 flex items-center gap-1 shadow-sm transition-all"
                   >
                     Create Account
                     <ArrowRight className="h-3 w-3 text-white" />
@@ -221,7 +221,7 @@ export default function Login() {
                     id="email"
                     type="email"
                     placeholder="name@example.com"
-                    className={`pl-10 h-11 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${errors.email ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
+                    className={`pl-10 h-11 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${errors.email ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
                       }`}
                     disabled={isSubmitting}
                     {...register("email")}
@@ -239,7 +239,7 @@ export default function Login() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 bg-primary hover:bg-secondary text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-slate-900 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -294,7 +294,7 @@ export default function Login() {
               Don't have an account yet?{" "}
               <Link
                 to="/register"
-                className="text-primary hover:text-accent transition-colors font-bold hover:underline"
+                className="text-slate-900 hover:text-amber-500 transition-colors font-bold hover:underline"
               >
                 Create client account
               </Link>

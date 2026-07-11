@@ -152,7 +152,7 @@ export default function BookingSuccess() {
           {/* CONFIRMATION HERO BLOCK */}
           <div className="text-center space-y-4 print:space-y-2">
             {/* Animated Ring Checkmark */}
-            <div className="w-16 h-16 bg-emerald-50 text-emerald-500 border border-emerald-150 rounded-full flex items-center justify-center mx-auto shadow-xs animate-bounce print:w-12 print:h-12 print:animate-none">
+            <div className="w-16 h-16 bg-emerald-50 text-emerald-500 border border-emerald-200 rounded-full flex items-center justify-center mx-auto shadow-xs animate-bounce print:w-12 print:h-12 print:animate-none">
               <Check className="h-8 w-8 print:h-6 print:w-6" />
             </div>
             
@@ -168,7 +168,7 @@ export default function BookingSuccess() {
           </div>
 
           {/* MAIN CONFIRMATION CARD */}
-          <Card className="border border-slate-150 shadow-md bg-white rounded-2xl overflow-hidden print:border-slate-200 print:shadow-none">
+          <Card className="border border-slate-200 shadow-md bg-white rounded-2xl overflow-hidden print:border-slate-200 print:shadow-none">
             
             {/* Header booking ID banner */}
             <div className="bg-slate-900 text-white py-3.5 px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 print:bg-slate-100 print:text-slate-900 print:border-b print:border-slate-200">
@@ -192,7 +192,7 @@ export default function BookingSuccess() {
                 <div className="flex items-center gap-4 p-4 bg-slate-50 border border-slate-100 rounded-2xl print:bg-white print:border-slate-200">
                   <Avatar className="w-14 h-14 rounded-full overflow-hidden shrink-0 border border-white shadow-2xs">
                     <AvatarImage src={provider.providerImage} className="object-cover" />
-                    <AvatarFallback className="text-lg font-bold bg-primary/10 text-primary">{provider.providerName[0]}</AvatarFallback>
+                    <AvatarFallback className="text-lg font-bold bg-slate-900/10 text-slate-900">{provider.providerName[0]}</AvatarFallback>
                   </Avatar>
                   <div>
                     <Badge variant="secondary" className="bg-white border-slate-200 text-slate-700 font-bold rounded-lg text-[9px] uppercase py-0.5 px-2">
@@ -209,7 +209,7 @@ export default function BookingSuccess() {
                 
                 {/* Date */}
                 <div className="flex items-start gap-3 p-4 bg-slate-50/50 border border-slate-100 rounded-2xl print:bg-white print:border-slate-200">
-                  <div className="p-2 bg-primary/5 text-primary rounded-xl shrink-0 mt-0.5">
+                  <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl shrink-0 mt-0.5">
                     <Calendar className="h-4.5 w-4.5" />
                   </div>
                   <div>
@@ -220,7 +220,7 @@ export default function BookingSuccess() {
 
                 {/* Time */}
                 <div className="flex items-start gap-3 p-4 bg-slate-50/50 border border-slate-100 rounded-2xl print:bg-white print:border-slate-200">
-                  <div className="p-2 bg-primary/5 text-primary rounded-xl shrink-0 mt-0.5">
+                  <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl shrink-0 mt-0.5">
                     <Clock className="h-4.5 w-4.5" />
                   </div>
                   <div>
@@ -254,11 +254,11 @@ export default function BookingSuccess() {
               </div>
 
               {/* ARRIVAL NOTICE INFORMATION */}
-              <div className="p-4.5 bg-primary/5 border border-primary/10 text-primary rounded-2xl flex items-start gap-3 print:hidden">
-                <Info className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <div className="p-4.5 bg-slate-900/5 border border-slate-900/10 text-slate-900 rounded-2xl flex items-start gap-3 print:hidden">
+                <Info className="h-5 w-5 text-slate-900 shrink-0 mt-0.5" />
                 <div className="space-y-1">
                   <h4 className="font-bold text-xs">Estimated Arrival Notification</h4>
-                  <p className="text-[11px] text-secondary leading-relaxed">
+                  <p className="text-[11px] text-slate-700 leading-relaxed">
                     Specialist {provider.providerName} will arrive within the estimated window of {getArrivalWindow(selectedTime)}. Please ensure the service area is accessible. You can coordinate details directly in the dashboard.
                   </p>
                 </div>
@@ -277,7 +277,7 @@ export default function BookingSuccess() {
             
             {/* Back Home */}
             <NavLink to="/" className="w-full sm:w-auto order-3 sm:order-1">
-              <Button variant="outline" className="w-full border-slate-200 hover:bg-slate-50 text-slate-650 font-bold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5">
+              <Button variant="outline" className="w-full border-slate-200 hover:bg-slate-50 text-slate-600 font-bold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5">
                 <Home className="h-4 w-4" />
                 Return to Home
               </Button>
@@ -288,14 +288,14 @@ export default function BookingSuccess() {
               <Button 
                 onClick={handlePrint}
                 variant="outline" 
-                className="w-full sm:w-auto border-slate-200 hover:bg-slate-50 text-slate-650 font-bold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5"
+                className="w-full sm:w-auto border-slate-200 hover:bg-slate-50 text-slate-600 font-bold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5"
               >
                 <Printer className="h-4 w-4" />
                 Print Invoice
               </Button>
               
               <NavLink to="/customer/dashboard" className="w-full sm:w-auto">
-                <Button className="w-full bg-primary hover:bg-secondary text-white font-extrabold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5 shadow-md">
+                <Button className="w-full bg-slate-900 hover:bg-slate-700 text-white font-extrabold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5 shadow-md">
                   View Bookings Dashboard
                   <ChevronRight className="h-4 w-4 text-white/60" />
                 </Button>

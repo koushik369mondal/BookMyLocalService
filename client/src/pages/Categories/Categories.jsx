@@ -48,7 +48,7 @@ const getCategoryColors = (category) => {
     case "Home Cleaning":
       return "bg-pink-50 text-pink-600 border-pink-100";
     case "Plumbing":
-      return "bg-primary/5 text-primary border-primary/10";
+      return "bg-slate-900/5 text-slate-900 border-slate-900/10";
     case "Electrical":
       return "bg-amber-50 text-amber-600 border-amber-100";
     case "Moving & Packing":
@@ -106,29 +106,29 @@ export default function Categories() {
       <div className="bg-slate-50 min-h-screen">
 
         {/* HERO SECTION - Mirrored from Services.jsx */}
-        <section className="relative overflow-hidden py-16 lg:py-20 bg-background border-b border-border">
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
+        <section className="relative overflow-hidden py-16 lg:py-20 bg-slate-50 border-b border-slate-200">
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/5 to-transparent pointer-events-none"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center gap-6">
-            <span className="inline-flex items-center gap-1.5 bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full border border-accent/20">
-              <Sparkles className="h-3.5 w-3.5 fill-accent text-accent" /> Verified Local Specialists
+            <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-500 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">
+              <Sparkles className="h-3.5 w-3.5 fill-accent text-amber-500" /> Verified Local Specialists
             </span>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-text leading-tight max-w-3xl">
-              Browse <span className="text-accent">Service Categories</span>
+            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight max-w-3xl">
+              Browse <span className="text-amber-500">Service Categories</span>
             </h1>
-            <p className="text-base sm:text-lg text-secondary max-w-2xl">
+            <p className="text-base sm:text-lg text-slate-700 max-w-2xl">
               Find trusted professionals for every household and business need. Compare rates, reviews, and book instantly.
             </p>
 
             {/* HERO SEARCH BAR - Styled like Services search */}
             <div className="w-full max-w-md flex items-center mt-2">
               <div className="relative w-full">
-                <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-secondary" />
+                <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-700" />
                 <Input
                   placeholder="Search categories..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 h-11 border-border focus-visible:ring-primary rounded-xl bg-white text-xs text-slate-800 shadow-xs"
+                  className="pl-10 h-11 border-slate-200 focus-visible:ring-slate-900 rounded-xl bg-white text-xs text-slate-800 shadow-xs"
                 />
               </div>
             </div>
@@ -174,7 +174,7 @@ export default function Categories() {
               <p className="text-sm text-gray-500 max-w-sm">
                 {error}
               </p>
-              <Button onClick={fetchCategories} className="bg-primary hover:bg-secondary text-white rounded-xl mt-2 font-semibold">
+              <Button onClick={fetchCategories} className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl mt-2 font-semibold">
                 Retry
               </Button>
             </div>
@@ -215,7 +215,7 @@ export default function Categories() {
 
                       {/* Badge / icon header */}
                       <div className="flex items-center gap-1.5">
-                        <span className="p-1 bg-primary/5 text-primary rounded-md">
+                        <span className="p-1 bg-slate-900/5 text-slate-900 rounded-md">
                           <IconComponent className="h-3.5 w-3.5" />
                         </span>
                         <span className="text-gray-400 text-xs font-semibold">Service Directory</span>
@@ -223,7 +223,7 @@ export default function Categories() {
 
                       {/* Title and description */}
                       <div>
-                        <h3 className="font-bold text-slate-900 text-base leading-snug group-hover:text-accent transition-colors line-clamp-1">
+                        <h3 className="font-bold text-slate-900 text-base leading-snug group-hover:text-amber-500 transition-colors line-clamp-1">
                           {category.name}
                         </h3>
                         <p className="text-xs text-gray-500 leading-relaxed mt-1.5 line-clamp-2">
@@ -253,7 +253,7 @@ export default function Categories() {
                         <Button
                           onClick={() => handleExplore(category.name)}
                           size="sm"
-                          className="bg-primary hover:bg-secondary text-white rounded-xl h-9 px-4 font-bold shadow-xs flex items-center gap-1 group-hover:scale-[1.01] transition-transform"
+                          className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl h-9 px-4 font-bold shadow-xs flex items-center gap-1 group-hover:scale-[1.01] transition-transform"
                         >
                           Explore Services
                           <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -270,14 +270,14 @@ export default function Categories() {
           {/* EMPTY SEARCH STATE - Styled precisely like Services.jsx */}
           {!loading && !error && filteredCategories.length === 0 && (
             <div className="bg-white border border-gray-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto mt-8 shadow-xs">
-              <div className="p-4 bg-primary/5 text-primary rounded-full border border-primary/10">
+              <div className="p-4 bg-slate-900/5 text-slate-900 rounded-full border border-slate-900/10">
                 <Info className="h-8 w-8" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mt-2">No Categories Found</h3>
               <p className="text-sm text-gray-500 max-w-sm">
                 We couldn't find any category matching "{searchQuery}". Try typing another service name or clearing the search.
               </p>
-              <Button onClick={() => setSearchQuery("")} className="bg-primary hover:bg-secondary text-white rounded-xl mt-2 font-semibold">
+              <Button onClick={() => setSearchQuery("")} className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl mt-2 font-semibold">
                 Clear Search
               </Button>
             </div>

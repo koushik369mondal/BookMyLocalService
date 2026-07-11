@@ -30,7 +30,7 @@ const getCategoryStyles = (category) => {
     case "Home Cleaning":
       return "bg-pink-50 text-pink-600 border-pink-100";
     case "Plumbing":
-      return "bg-primary/5 text-primary border-primary/10";
+      return "bg-slate-900/5 text-slate-900 border-slate-900/10";
     case "Electrical":
       return "bg-amber-50 text-amber-600 border-amber-100";
     case "Moving & Packing":
@@ -320,8 +320,8 @@ export default function Booking() {
       <MainLayout>
         <div className="bg-slate-50 min-h-screen py-12 flex justify-center items-center">
           <div className="flex flex-col items-center gap-4">
-            <Loader2 className="h-10 w-10 text-primary animate-spin" />
-            <p className="text-sm font-semibold text-secondary">Loading service details...</p>
+            <Loader2 className="h-10 w-10 text-slate-900 animate-spin" />
+            <p className="text-sm font-semibold text-slate-700">Loading service details...</p>
           </div>
         </div>
       </MainLayout>
@@ -332,7 +332,7 @@ export default function Booking() {
     return (
       <MainLayout>
         <div className="bg-slate-50 min-h-screen py-16 flex items-center justify-center px-4">
-          <Card className="max-w-md w-full border border-border text-center shadow-lg p-8">
+          <Card className="max-w-md w-full border border-slate-200 text-center shadow-lg p-8">
             <CardHeader className="pb-4">
               <div className="mx-auto w-12 h-12 rounded-full bg-rose-50 border border-rose-100 flex items-center justify-center mb-2">
                 <AlertCircle className="h-6 w-6 text-rose-500" />
@@ -344,11 +344,11 @@ export default function Booking() {
             </CardHeader>
             <CardContent className="pt-4 flex flex-col gap-3">
               <Link to="/services">
-                <Button className="w-full bg-primary hover:bg-secondary text-white rounded-xl h-11 font-bold shadow-xs">
+                <Button className="w-full bg-slate-900 hover:bg-slate-700 text-white rounded-xl h-11 font-bold shadow-xs">
                   Browse Services
                 </Button>
               </Link>
-              <Link to="/" className="text-xs text-slate-400 hover:text-primary font-semibold transition-colors">
+              <Link to="/" className="text-xs text-slate-400 hover:text-slate-900 font-semibold transition-colors">
                 Back to Home Page
               </Link>
             </CardContent>
@@ -365,7 +365,7 @@ export default function Booking() {
           
           {/* Header breadcrumb bar */}
           <div className="mb-8">
-            <Link to={`/services/${service.id}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-secondary hover:text-primary transition-all">
+            <Link to={`/services/${service.id}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-slate-900 transition-all">
               <ArrowLeft className="h-4 w-4" /> Back to Details
             </Link>
             <h1 className="text-3xl font-black text-slate-900 tracking-tight mt-2">Schedule Your Booking</h1>
@@ -378,7 +378,7 @@ export default function Booking() {
             <div className="lg:col-span-8 space-y-8">
               
               {/* SERVICE CARD & PROVIDER COMPACT BOX */}
-              <Card className="border border-slate-150 overflow-hidden shadow-sm bg-white p-0 gap-0">
+              <Card className="border border-slate-200 overflow-hidden shadow-sm bg-white p-0 gap-0">
                 <div className="flex flex-col sm:flex-row gap-5 p-5">
                   <img
                     src={service.imageUrl}
@@ -392,7 +392,7 @@ export default function Booking() {
                           {service.category}
                         </span>
                         {service.badge && (
-                          <span className="text-[10px] bg-accent text-primary font-bold px-2 py-0.5 rounded-full">
+                          <span className="text-[10px] bg-amber-500 text-slate-900 font-bold px-2 py-0.5 rounded-full">
                             {service.badge}
                           </span>
                         )}
@@ -430,10 +430,10 @@ export default function Booking() {
               </Card>
 
               {/* PLAN / PACKAGE SELECTION TABS */}
-              <Card className="border border-slate-150 shadow-sm bg-white">
+              <Card className="border border-slate-200 shadow-sm bg-white">
                 <CardHeader className="p-5 pb-3">
                   <CardTitle className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                    <ShieldCheck className="h-4.5 w-4.5 text-primary" /> Choose Service Tier
+                    <ShieldCheck className="h-4.5 w-4.5 text-slate-900" /> Choose Service Tier
                   </CardTitle>
                   <CardDescription className="text-xs text-slate-455">Select a pricing plan matching your work requirements.</CardDescription>
                 </CardHeader>
@@ -444,7 +444,7 @@ export default function Booking() {
                         <TabsTrigger
                           key={idx}
                           value={idx.toString()}
-                          className="rounded-lg font-bold text-xs data-[state=active]:bg-white data-[state=active]:text-primary transition-all cursor-pointer"
+                          className="rounded-lg font-bold text-xs data-[state=active]:bg-white data-[state=active]:text-slate-900 transition-all cursor-pointer"
                         >
                           {plan.name}
                         </TabsTrigger>
@@ -479,10 +479,10 @@ export default function Booking() {
               </Card>
 
               {/* DATE & TIME PICKER */}
-              <Card className="border border-slate-150 shadow-sm bg-white">
+              <Card className="border border-slate-200 shadow-sm bg-white">
                 <CardHeader className="p-5 pb-3">
                   <CardTitle className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                    <Calendar className="h-4.5 w-4.5 text-primary" /> Select Schedule Date & Time
+                    <Calendar className="h-4.5 w-4.5 text-slate-900" /> Select Schedule Date & Time
                   </CardTitle>
                   <CardDescription className="text-xs text-slate-455">Choose a convenient date and arrival window for your service dispatch.</CardDescription>
                 </CardHeader>
@@ -493,7 +493,7 @@ export default function Booking() {
                     <div className="flex justify-between items-center">
                       <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider block">Available Days</span>
                       {selectedDate && (
-                        <span className="text-[10px] font-bold text-primary bg-primary/5 px-2.5 py-0.5 rounded-full border border-primary/10">
+                        <span className="text-[10px] font-bold text-slate-900 bg-slate-900/5 px-2.5 py-0.5 rounded-full border border-slate-900/10">
                           {selectedDate}
                         </span>
                       )}
@@ -511,7 +511,7 @@ export default function Booking() {
                             }}
                             className={`flex flex-col items-center justify-center p-3 border rounded-2xl min-w-[62px] snap-center transition-all cursor-pointer ${
                               isSelected
-                                ? "bg-primary border-primary text-white shadow-md shadow-primary/20"
+                                ? "bg-slate-900 border-slate-900 text-white shadow-md shadow-slate-900/20"
                                 : "bg-white border-slate-200 text-slate-655 hover:bg-slate-50 hover:border-slate-300"
                             }`}
                           >
@@ -551,7 +551,7 @@ export default function Booking() {
                                   }}
                                   className={`py-2 text-xs font-bold text-center border rounded-xl transition-all cursor-pointer ${
                                     isSelected
-                                      ? "bg-primary border-primary text-white shadow-xs"
+                                      ? "bg-slate-900 border-slate-900 text-white shadow-xs"
                                       : "bg-white border-slate-200 text-slate-655 hover:bg-slate-50 hover:border-slate-300"
                                   }`}
                                 >
@@ -575,10 +575,10 @@ export default function Booking() {
               </Card>
 
               {/* CUSTOMER DETAILS FORM */}
-              <Card className="border border-slate-150 shadow-sm bg-white">
+              <Card className="border border-slate-200 shadow-sm bg-white">
                 <CardHeader className="p-5 pb-3">
                   <CardTitle className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                    <User className="h-4.5 w-4.5 text-primary" /> Service Address & Customer Details
+                    <User className="h-4.5 w-4.5 text-slate-900" /> Service Address & Customer Details
                   </CardTitle>
                   <CardDescription className="text-xs text-slate-455">Please fill in where the service professional should be dispatched.</CardDescription>
                 </CardHeader>
@@ -595,7 +595,7 @@ export default function Booking() {
                         value={formData.fullName}
                         onChange={handleInputChange}
                         placeholder="e.g. Sarah Connor"
-                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-primary ${formErrors.fullName ? "border-rose-350" : ""}`}
+                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-slate-900 ${formErrors.fullName ? "border-rose-400" : ""}`}
                       />
                       {formErrors.fullName && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.fullName}</p>}
                     </div>
@@ -609,7 +609,7 @@ export default function Booking() {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="e.g. name@example.com"
-                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-primary ${formErrors.email ? "border-rose-350" : ""}`}
+                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-slate-900 ${formErrors.email ? "border-rose-400" : ""}`}
                       />
                       {formErrors.email && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.email}</p>}
                     </div>
@@ -625,7 +625,7 @@ export default function Booking() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         placeholder="e.g. 555-555-5555"
-                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-primary ${formErrors.phone ? "border-rose-350" : ""}`}
+                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-slate-900 ${formErrors.phone ? "border-rose-400" : ""}`}
                       />
                       {formErrors.phone && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.phone}</p>}
                     </div>
@@ -639,7 +639,7 @@ export default function Booking() {
                         value={formData.street}
                         onChange={handleInputChange}
                         placeholder="e.g. 123 Main St, Apt 4B"
-                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-primary ${formErrors.street ? "border-rose-350" : ""}`}
+                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-slate-900 ${formErrors.street ? "border-rose-400" : ""}`}
                       />
                       {formErrors.street && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.street}</p>}
                     </div>
@@ -656,7 +656,7 @@ export default function Booking() {
                         value={formData.city}
                         onChange={handleInputChange}
                         placeholder="e.g. Brooklyn"
-                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-primary ${formErrors.city ? "border-rose-350" : ""}`}
+                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-slate-900 ${formErrors.city ? "border-rose-400" : ""}`}
                       />
                       {formErrors.city && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.city}</p>}
                     </div>
@@ -670,7 +670,7 @@ export default function Booking() {
                         value={formData.state}
                         onChange={handleInputChange}
                         placeholder="e.g. NY"
-                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-primary ${formErrors.state ? "border-rose-350" : ""}`}
+                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-slate-900 ${formErrors.state ? "border-rose-400" : ""}`}
                       />
                       {formErrors.state && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.state}</p>}
                     </div>
@@ -685,7 +685,7 @@ export default function Booking() {
                         onChange={handleInputChange}
                         placeholder="e.g. 400001"
                         maxLength={6}
-                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-primary ${formErrors.zipCode ? "border-rose-350" : ""}`}
+                        className={`h-10 rounded-xl border-slate-200 focus-visible:ring-slate-900 ${formErrors.zipCode ? "border-rose-400" : ""}`}
                       />
                       {formErrors.zipCode && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.zipCode}</p>}
                     </div>
@@ -699,7 +699,7 @@ export default function Booking() {
             {/* RIGHT COLUMN: BOOKING SUMMARY SIDEBAR (STICKY) */}
             <div className="lg:col-span-4 lg:sticky lg:top-6 space-y-6">
               
-              <Card className="border border-slate-150 shadow-md bg-white">
+              <Card className="border border-slate-200 shadow-md bg-white">
                 <CardHeader className="p-5 pb-3 border-b border-slate-50 bg-slate-50/50">
                   <CardTitle className="text-sm font-bold text-slate-800">Booking Summary</CardTitle>
                 </CardHeader>
@@ -720,7 +720,7 @@ export default function Booking() {
 
                     <div className="flex justify-between items-center">
                       <span className="text-slate-450 font-medium">Selected Plan</span>
-                      <span className="font-bold text-primary bg-slate-100 px-2 py-0.5 rounded-md">{selectedPlan?.name || "Standard"}</span>
+                      <span className="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded-md">{selectedPlan?.name || "Standard"}</span>
                     </div>
 
                     <div className="flex justify-between items-center border-t border-slate-100 pt-3">
@@ -740,7 +740,7 @@ export default function Booking() {
                   </div>
 
                   {/* Price breakdown */}
-                  <div className="border-t border-slate-150 pt-4 space-y-2.5">
+                  <div className="border-t border-slate-200 pt-4 space-y-2.5">
                     <span className="text-[10px] font-extrabold text-slate-450 uppercase tracking-wider block">Price Breakdown</span>
                     
                     <div className="flex justify-between text-xs">
@@ -758,15 +758,15 @@ export default function Booking() {
                       <span className="font-bold text-slate-800">${tax.toFixed(2)}</span>
                     </div>
 
-                    <div className="flex justify-between text-sm border-t border-slate-150 pt-3 mt-1.5">
+                    <div className="flex justify-between text-sm border-t border-slate-200 pt-3 mt-1.5">
                       <span className="font-extrabold text-slate-900">Total Amount</span>
-                      <span className="font-black text-primary text-base">${total.toFixed(2)}</span>
+                      <span className="font-black text-slate-900 text-base">${total.toFixed(2)}</span>
                     </div>
                   </div>
 
                   {/* Guarantee banner */}
                   <div className="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5 flex items-start gap-2.5">
-                    <ShieldCheck className="h-4.5 w-4.5 text-emerald-650 shrink-0 mt-0.5" />
+                    <ShieldCheck className="h-4.5 w-4.5 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
                       <span className="text-[10.5px] font-black text-emerald-800 block leading-tight">Happiness Guarantee Active</span>
                       <p className="text-[9.5px] text-emerald-600 leading-tight mt-0.5">Your satisfaction is backed by our customer support. Secure payment authorization holds apply.</p>
@@ -777,7 +777,7 @@ export default function Booking() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-primary hover:bg-secondary text-white rounded-xl h-11 font-bold shadow-md cursor-pointer flex items-center justify-center gap-1.5 transition-all active:scale-[0.99] disabled:opacity-50"
+                    className="w-full bg-slate-900 hover:bg-slate-700 text-white rounded-xl h-11 font-bold shadow-md cursor-pointer flex items-center justify-center gap-1.5 transition-all active:scale-[0.99] disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>

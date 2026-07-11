@@ -149,7 +149,7 @@ export default function Analytics() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -178,7 +178,7 @@ export default function Analytics() {
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Revenue</span>
                 <span className="text-xl sm:text-2xl font-black text-slate-900">$42,850</span>
               </div>
-              <div className="p-2.5 bg-emerald-50 text-emerald-650 rounded-xl shrink-0">
+              <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl shrink-0">
                 <DollarSign className="h-5 w-5" />
               </div>
             </Card>
@@ -189,7 +189,7 @@ export default function Analytics() {
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Bookings</span>
                 <span className="text-xl sm:text-2xl font-black text-slate-900">1,840</span>
               </div>
-              <div className="p-2.5 bg-primary/5 text-primary rounded-xl shrink-0">
+              <div className="p-2.5 bg-slate-900/5 text-slate-900 rounded-xl shrink-0">
                 <Activity className="h-5 w-5" />
               </div>
             </Card>
@@ -200,7 +200,7 @@ export default function Analytics() {
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Users</span>
                 <span className="text-xl sm:text-2xl font-black text-slate-900">4,250</span>
               </div>
-              <div className="p-2.5 bg-primary/5 text-primary rounded-xl shrink-0">
+              <div className="p-2.5 bg-slate-900/5 text-slate-900 rounded-xl shrink-0">
                 <Users className="h-5 w-5" />
               </div>
             </Card>
@@ -220,9 +220,9 @@ export default function Analytics() {
             <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform col-span-2 md:col-span-1">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Growth Rate</span>
-                <span className="text-xl sm:text-2xl font-black text-primary">+15.4%</span>
+                <span className="text-xl sm:text-2xl font-black text-slate-900">+15.4%</span>
               </div>
-              <div className="p-2.5 bg-primary/5 text-primary rounded-xl shrink-0">
+              <div className="p-2.5 bg-slate-900/5 text-slate-900 rounded-xl shrink-0">
                 <TrendingUp className="h-5 w-5" />
               </div>
             </Card>
@@ -252,7 +252,7 @@ export default function Analytics() {
                   type="date"
                   value={dateFrom}
                   onChange={(e) => setDateFrom(e.target.value)}
-                  className="h-9 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white cursor-pointer"
+                  className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white cursor-pointer"
                 />
               </div>
 
@@ -263,7 +263,7 @@ export default function Analytics() {
                   type="date"
                   value={dateTo}
                   onChange={(e) => setDateTo(e.target.value)}
-                  className="h-9 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white cursor-pointer"
+                  className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white cursor-pointer"
                 />
               </div>
 
@@ -274,7 +274,7 @@ export default function Analytics() {
                     id="categoryFilter"
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Categories</option>
                     <option value="Home Cleaning">Home Cleaning</option>
@@ -292,7 +292,7 @@ export default function Analytics() {
                     id="locationFilter"
                     value={locationFilter}
                     onChange={(e) => setLocationFilter(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Boroughs</option>
                     <option value="Brooklyn">Brooklyn</option>
@@ -342,7 +342,7 @@ export default function Analytics() {
                     onClick={() => setMetricTab("revenue")}
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "revenue"
-                        ? "bg-white text-primary shadow-2xs border border-slate-100"
+                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
@@ -353,7 +353,7 @@ export default function Analytics() {
                     onClick={() => setMetricTab("bookings")}
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "bookings"
-                        ? "bg-white text-primary shadow-2xs border border-slate-100"
+                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
@@ -364,7 +364,7 @@ export default function Analytics() {
                     onClick={() => setMetricTab("users")}
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "users"
-                        ? "bg-white text-primary shadow-2xs border border-slate-100"
+                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
@@ -375,7 +375,7 @@ export default function Analytics() {
                     onClick={() => setMetricTab("providers")}
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "providers"
-                        ? "bg-white text-primary shadow-2xs border border-slate-100"
+                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
@@ -386,7 +386,7 @@ export default function Analytics() {
 
               <CardContent className="p-0 pt-6 flex-1 flex items-center justify-center min-h-[170px]">
                 {isLoading ? (
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                  <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
                 ) : (
                   <div className="w-full overflow-x-auto">
                     <div className="min-w-[480px] h-[160px] relative">
@@ -472,7 +472,7 @@ export default function Analytics() {
                       <span className="text-slate-700">{cat.name}</span>
                       <span className="text-slate-450">{cat.share}%</span>
                     </div>
-                    <Progress value={cat.share} className="h-2 rounded-full bg-slate-100 [&>div]:bg-secondary" />
+                    <Progress value={cat.share} className="h-2 rounded-full bg-slate-100 [&>div]:bg-slate-700" />
                   </div>
                 ))}
               </div>
@@ -489,7 +489,7 @@ export default function Analytics() {
               
               <div className="space-y-4">
                 {topPerformers.map(prov => (
-                  <div key={prov.id} className="p-3 border border-slate-150 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-slate-250 transition-colors">
+                  <div key={prov.id} className="p-3 border border-slate-200 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-slate-300 transition-colors">
                     <div className="flex items-center gap-3">
                       <Avatar className="w-9 h-9 border border-slate-100 overflow-hidden shrink-0">
                         <AvatarImage src={prov.avatar} className="object-cover" />
@@ -521,7 +521,7 @@ export default function Analytics() {
                       <span className="text-slate-700">{cat.borough}</span>
                       <span className="text-slate-450 font-semibold">{cat.count} jobs ({cat.percentage}%)</span>
                     </div>
-                    <Progress value={cat.percentage} className="h-2 rounded-full bg-slate-100 [&>div]:bg-primary" />
+                    <Progress value={cat.percentage} className="h-2 rounded-full bg-slate-100 [&>div]:bg-slate-900" />
                   </div>
                 ))}
               </div>
@@ -531,12 +531,12 @@ export default function Analytics() {
             <Card className="lg:col-span-4 border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
               <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">Activity Timeline Logs</span>
               
-              <div className="relative pl-4 border-l border-slate-150 space-y-5 pt-1.5 ml-1 text-xs">
+              <div className="relative pl-4 border-l border-slate-200 space-y-5 pt-1.5 ml-1 text-xs">
                 {activityLogs.map(log => (
                   <div key={log.id} className="relative group animate-fade-in">
                     
                     {/* Ring dot indicator */}
-                    <span className="absolute -left-[20.5px] top-1 h-3.5 w-3.5 rounded-full border border-white bg-primary ring-2 ring-primary/10 shrink-0"></span>
+                    <span className="absolute -left-[20.5px] top-1 h-3.5 w-3.5 rounded-full border border-white bg-slate-900 ring-2 ring-slate-900/10 shrink-0"></span>
                     
                     <div className="space-y-0.5">
                       <span className="text-[10px] text-slate-400 font-bold block">{log.time}</span>

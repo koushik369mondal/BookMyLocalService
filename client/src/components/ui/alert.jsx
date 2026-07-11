@@ -3,13 +3,13 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-slate-900",
   {
     variants: {
       variant: {
-        default: "bg-background text-foreground",
+        default: "bg-slate-50 text-slate-900",
         destructive:
-          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+          "border-red-500/50 text-red-500 dark:border-red-500 [&>svg]:text-red-500",
         success:
           "border-green-500/50 text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/20",
       },

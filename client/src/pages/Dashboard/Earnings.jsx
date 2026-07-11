@@ -207,7 +207,7 @@ export default function Earnings() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -233,8 +233,8 @@ export default function Earnings() {
               </Button>
               
               <Link to="/provider/dashboard">
-                <Button size="sm" className="bg-white text-primary hover:bg-slate-50 rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1.5">
-                  <ArrowLeft className="h-4 w-4 text-primary" />
+                <Button size="sm" className="bg-white text-slate-900 hover:bg-slate-50 rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1.5">
+                  <ArrowLeft className="h-4 w-4 text-slate-900" />
                   Dashboard
                 </Button>
               </Link>
@@ -261,9 +261,9 @@ export default function Earnings() {
             <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Cleared Balance</span>
-                <span className="text-xl sm:text-2xl font-black text-primary">${withdrawableBalance.toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-black text-slate-900">${withdrawableBalance.toFixed(2)}</span>
               </div>
-              <div className="p-3 bg-primary/5 text-primary rounded-2xl shrink-0">
+              <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl shrink-0">
                 <ShieldCheck className="h-6 w-6" />
               </div>
             </Card>
@@ -280,11 +280,11 @@ export default function Earnings() {
             </Card>
 
             {/* Withdraw Action Card */}
-            <Card className="border border-primary/10 shadow-md bg-primary/5 p-5 flex flex-col justify-center gap-2 rounded-2xl">
-              <span className="text-[10px] font-extrabold text-primary uppercase tracking-wider">Authorize Transfer</span>
+            <Card className="border border-slate-900/10 shadow-md bg-slate-900/5 p-5 flex flex-col justify-center gap-2 rounded-2xl">
+              <span className="text-[10px] font-extrabold text-slate-900 uppercase tracking-wider">Authorize Transfer</span>
               <Button 
                 onClick={() => setIsWithdrawOpen(true)}
-                className="w-full h-9.5 bg-primary hover:bg-primary text-white font-extrabold text-xs rounded-xl shadow-xs"
+                className="w-full h-9.5 bg-slate-900 hover:bg-slate-900 text-white font-extrabold text-xs rounded-xl shadow-xs"
               >
                 Withdraw Cleared Funds
               </Button>
@@ -312,7 +312,7 @@ export default function Earnings() {
               <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
                 <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 bg-primary/5 text-primary rounded-xl">
+                    <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
@@ -328,7 +328,7 @@ export default function Earnings() {
                       onClick={() => setChartView("daily")}
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                         chartView === "daily"
-                          ? "bg-white text-primary shadow-2xs border border-slate-100"
+                          ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                           : "text-slate-500 hover:text-slate-700"
                       }`}
                     >
@@ -339,7 +339,7 @@ export default function Earnings() {
                       onClick={() => setChartView("monthly")}
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                         chartView === "monthly"
-                          ? "bg-white text-primary shadow-2xs border border-slate-100"
+                          ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                           : "text-slate-500 hover:text-slate-700"
                       }`}
                     >
@@ -351,7 +351,7 @@ export default function Earnings() {
                 <CardContent className="p-0 pt-6">
                   {isLoading ? (
                     <div className="h-[150px] flex items-center justify-center">
-                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                      <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
                     </div>
                   ) : (
                     /* SVG Bars chart */
@@ -433,7 +433,7 @@ export default function Earnings() {
                         onClick={() => setStatusFilter(tab.id)}
                         className={`rounded-lg text-[10px] font-bold px-3.5 py-1.5 transition-all ${
                           statusFilter === tab.id
-                            ? "bg-white text-primary shadow-2xs border border-slate-100"
+                            ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                             : "text-slate-500 hover:text-slate-700"
                         }`}
                       >
@@ -446,7 +446,7 @@ export default function Earnings() {
                 <CardContent className="p-0 pt-6 space-y-4">
                   
                   {/* SEARCH AND DATE RANGES */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-slate-50/50 p-4 border border-slate-150 rounded-2xl">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-slate-50/50 p-4 border border-slate-200 rounded-2xl">
                     <div className="space-y-1.5">
                       <Label htmlFor="searchQuery" className="text-[10px] font-bold text-slate-700">Search</Label>
                       <Input
@@ -454,7 +454,7 @@ export default function Earnings() {
                         placeholder="TXN ID, name..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                        className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                       />
                     </div>
                     
@@ -465,7 +465,7 @@ export default function Earnings() {
                         type="date"
                         value={dateFrom}
                         onChange={(e) => setDateFrom(e.target.value)}
-                        className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                        className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                       />
                     </div>
 
@@ -476,7 +476,7 @@ export default function Earnings() {
                         type="date"
                         value={dateTo}
                         onChange={(e) => setDateTo(e.target.value)}
-                        className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                        className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                       />
                     </div>
                   </div>
@@ -533,7 +533,7 @@ export default function Earnings() {
                 
                 <div className="space-y-3">
                   {payouts.map(p => (
-                    <div key={p.id} className="p-3.5 border border-slate-150 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-slate-250 transition-colors">
+                    <div key={p.id} className="p-3.5 border border-slate-200 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-slate-300 transition-colors">
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-1.5">
                           <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Ref: {p.id}</span>
@@ -552,7 +552,7 @@ export default function Earnings() {
               {/* SECURITY ASSURANCES CARD */}
               <Card className="border border-slate-100 shadow-2xs bg-white rounded-2xl p-5 space-y-4">
                 <div className="flex items-start gap-3 text-slate-700">
-                  <div className="p-2 bg-primary/5 text-primary rounded-xl shrink-0 mt-0.5">
+                  <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl shrink-0 mt-0.5">
                     <Lock className="h-4.5 w-4.5" />
                   </div>
                   <div className="space-y-1">
@@ -576,7 +576,7 @@ export default function Earnings() {
         <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
           <DialogHeader>
             <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-              <CreditCard className="h-5 w-5 text-primary" />
+              <CreditCard className="h-5 w-5 text-slate-900" />
               Withdraw Cleared Balance
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-400 pt-0.5">
@@ -587,9 +587,9 @@ export default function Earnings() {
           <form onSubmit={handleWithdrawSubmit} className="space-y-4 pt-3">
             
             {/* Display Withdrawable Balance */}
-            <div className="p-3 bg-primary/5 border border-primary/10 rounded-xl flex justify-between items-center text-xs">
-              <span className="font-bold text-primary">Withdrawable Balance:</span>
-              <span className="font-black text-primary text-sm">${withdrawableBalance.toFixed(2)}</span>
+            <div className="p-3 bg-slate-900/5 border border-slate-900/10 rounded-xl flex justify-between items-center text-xs">
+              <span className="font-bold text-slate-900">Withdrawable Balance:</span>
+              <span className="font-black text-slate-900 text-sm">${withdrawableBalance.toFixed(2)}</span>
             </div>
 
             {withdrawError && (
@@ -602,13 +602,13 @@ export default function Earnings() {
             {/* Withdrawal Method */}
             <div className="space-y-1.5">
               <Label className="text-xs font-bold text-slate-700">Transfer Endpoint</Label>
-              <div className="grid grid-cols-2 bg-slate-50 border border-slate-150 p-1 rounded-xl h-10">
+              <div className="grid grid-cols-2 bg-slate-50 border border-slate-200 p-1 rounded-xl h-10">
                 <button
                   type="button"
                   onClick={() => setWithdrawMethod("bank")}
                   className={`rounded-lg text-xs font-bold transition-all ${
                     withdrawMethod === "bank"
-                      ? "bg-white text-primary shadow-2xs border border-slate-100"
+                      ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                       : "text-slate-500 hover:text-slate-700"
                   }`}
                 >
@@ -619,7 +619,7 @@ export default function Earnings() {
                   onClick={() => setWithdrawMethod("upi")}
                   className={`rounded-lg text-xs font-bold transition-all ${
                     withdrawMethod === "upi"
-                      ? "bg-white text-primary shadow-2xs border border-slate-100"
+                      ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
                       : "text-slate-500 hover:text-slate-700"
                   }`}
                 >
@@ -637,7 +637,7 @@ export default function Earnings() {
                 placeholder="e.g. 200"
                 value={withdrawAmount}
                 onChange={(e) => setWithdrawAmount(e.target.value)}
-                className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                 required
               />
             </div>
@@ -654,7 +654,7 @@ export default function Earnings() {
               <Button 
                 type="submit" 
                 disabled={isWithdrawing}
-                className="rounded-xl bg-primary hover:bg-primary text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5 shadow-md"
+                className="rounded-xl bg-slate-900 hover:bg-slate-900 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5 shadow-md"
               >
                 {isWithdrawing ? (
                   <>

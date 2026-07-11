@@ -242,7 +242,7 @@ export default function Availability() {
     return (
       <div className="border border-slate-100 p-4.5 rounded-2xl bg-white shadow-2xs">
         <span className="text-xs font-bold text-slate-800 block mb-3 flex items-center gap-1">
-          <CalendarIcon className="h-4 w-4 text-primary" /> Visual Month View (July 2026)
+          <CalendarIcon className="h-4 w-4 text-slate-900" /> Visual Month View (July 2026)
         </span>
         
         <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-wide">
@@ -290,7 +290,7 @@ export default function Availability() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -333,7 +333,7 @@ export default function Availability() {
               
               <Card className="border border-slate-100 shadow-md bg-white rounded-2xl p-6">
                 <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-primary/5 text-primary rounded-xl">
+                  <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
@@ -394,7 +394,7 @@ export default function Availability() {
                                     <ChevronDown className="h-3 w-3 absolute right-0 top-[50%] translate-y-[-50%] pointer-events-none text-slate-400" />
                                   </div>
 
-                                  <span className="text-slate-350">to</span>
+                                  <span className="text-slate-400">to</span>
 
                                   {/* End Time Option select */}
                                   <div className="relative">
@@ -437,7 +437,7 @@ export default function Availability() {
                             variant="outline"
                             onClick={() => handleAddSlot(day)}
                             disabled={isSaving}
-                            className="border-slate-200 hover:bg-slate-50 text-slate-650 font-bold h-8 rounded-lg text-[9px] uppercase tracking-wide flex items-center gap-1 shrink-0 ml-auto"
+                            className="border-slate-200 hover:bg-slate-50 text-slate-600 font-bold h-8 rounded-lg text-[9px] uppercase tracking-wide flex items-center gap-1 shrink-0 ml-auto"
                           >
                             <Plus className="h-3.5 w-3.5" /> Add Slot
                           </Button>
@@ -456,7 +456,7 @@ export default function Availability() {
                   variant="outline"
                   onClick={handleResetSchedule}
                   disabled={isSaving}
-                  className="border-slate-200 hover:bg-slate-50 text-slate-650 font-bold text-xs h-10 px-5 rounded-xl transition-all"
+                  className="border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs h-10 px-5 rounded-xl transition-all"
                 >
                   <RotateCcw className="h-4 w-4 mr-1" /> Reset Defaults
                 </Button>
@@ -465,7 +465,7 @@ export default function Availability() {
                   type="button"
                   onClick={handleSaveSchedule}
                   disabled={isSaving}
-                  className="bg-primary hover:bg-primary text-white font-bold text-xs h-10 px-6 rounded-xl shadow-md flex items-center justify-center gap-1.5"
+                  className="bg-slate-900 hover:bg-slate-900 text-white font-bold text-xs h-10 px-6 rounded-xl shadow-md flex items-center justify-center gap-1.5"
                 >
                   {isSaving ? (
                     <>
@@ -501,7 +501,7 @@ export default function Availability() {
                       type="date"
                       value={newBlockDate}
                       onChange={(e) => setNewBlockDate(e.target.value)}
-                      className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                      className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                       disabled={isSaving}
                       required
                     />
@@ -514,7 +514,7 @@ export default function Availability() {
                       placeholder="e.g. Summer Vacation, Doctor Visit"
                       value={newBlockReason}
                       onChange={(e) => setNewBlockReason(e.target.value)}
-                      className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                      className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                       disabled={isSaving}
                       required
                     />
@@ -539,7 +539,7 @@ export default function Availability() {
                 ) : (
                   <div className="space-y-2.5">
                     {blockedDates.map(b => (
-                      <div key={b.id} className="flex items-center justify-between p-3 border border-slate-150 rounded-xl bg-white shadow-2xs group hover:border-slate-250 transition-colors">
+                      <div key={b.id} className="flex items-center justify-between p-3 border border-slate-200 rounded-xl bg-white shadow-2xs group hover:border-slate-300 transition-colors">
                         <div>
                           <span className="text-[9px] font-bold text-slate-450 block">{b.date}</span>
                           <h5 className="font-extrabold text-slate-800 text-xs mt-0.5">{b.reason}</h5>

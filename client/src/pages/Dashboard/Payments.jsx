@@ -200,7 +200,7 @@ export default function Payments() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -239,7 +239,7 @@ export default function Payments() {
             </div>
 
             <div className="text-center space-y-1 py-1 border-l border-slate-100">
-              <span className="block text-2xl font-black text-rose-650">${stats.refunded.toLocaleString()}</span>
+              <span className="block text-2xl font-black text-rose-600">${stats.refunded.toLocaleString()}</span>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Refunded Volume</span>
             </div>
 
@@ -256,7 +256,7 @@ export default function Payments() {
               {/* Search */}
               <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
                 <span className="text-xs font-bold text-slate-800 block mb-2.5 flex items-center gap-1.5">
-                  <Search className="h-4 w-4 text-primary" /> Search Payments
+                  <Search className="h-4 w-4 text-slate-900" /> Search Payments
                 </span>
                 <div className="relative">
                   <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-400">
@@ -266,7 +266,7 @@ export default function Payments() {
                     placeholder="TXN ID, Booking ID..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                   />
                 </div>
               </Card>
@@ -278,7 +278,7 @@ export default function Payments() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Statuses</option>
                     <option value="completed">Paid</option>
@@ -298,7 +298,7 @@ export default function Payments() {
                   <select
                     value={methodFilter}
                     onChange={(e) => setMethodFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Methods</option>
                     <option value="Credit Card">Credit Card</option>
@@ -315,7 +315,7 @@ export default function Payments() {
               {/* Dates */}
               <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs space-y-3.5">
                 <span className="text-xs font-bold text-slate-800 block border-b border-slate-50 pb-1 flex items-center gap-1">
-                  <Calendar className="h-4 w-4 text-primary" /> Date Range
+                  <Calendar className="h-4 w-4 text-slate-900" /> Date Range
                 </span>
                 
                 <div className="space-y-1">
@@ -325,7 +325,7 @@ export default function Payments() {
                     type="date"
                     value={dateFrom}
                     onChange={(e) => setDateFrom(e.target.value)}
-                    className="h-9 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white cursor-pointer"
+                    className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white cursor-pointer"
                   />
                 </div>
 
@@ -336,7 +336,7 @@ export default function Payments() {
                     type="date"
                     value={dateTo}
                     onChange={(e) => setDateTo(e.target.value)}
-                    className="h-9 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white cursor-pointer"
+                    className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white cursor-pointer"
                   />
                 </div>
               </Card>
@@ -348,7 +348,7 @@ export default function Payments() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="date-desc">Date: Newest First</option>
                     <option value="date-asc">Date: Oldest First</option>
@@ -388,7 +388,7 @@ export default function Payments() {
               ) : paginatedTxns.length === 0 ? (
                 /* EMPTY STATE BOARD */
                 <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-primary/5 text-primary rounded-full border border-primary/10">
+                  <div className="p-4 bg-slate-900/5 text-slate-900 rounded-full border border-slate-900/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mt-2">No Transactions Found</h3>
@@ -417,7 +417,7 @@ export default function Payments() {
                         {paginatedTxns.map(txn => (
                           <tr key={txn.id} className="hover:bg-slate-50/50 transition-colors">
                             <td className="py-3 px-1 font-bold text-slate-450">{txn.id}</td>
-                            <td className="py-3 font-semibold text-slate-650">{txn.bookingId}</td>
+                            <td className="py-3 font-semibold text-slate-600">{txn.bookingId}</td>
                             <td className="py-3">
                               <span className="block text-slate-800 font-bold">Client: {txn.customer}</span>
                               <span className="text-[10px] text-slate-450 font-semibold block mt-0.5">Pro: {txn.provider}</span>
@@ -482,7 +482,7 @@ export default function Payments() {
                         size="sm"
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                        className="rounded-xl border-slate-200 text-slate-650 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 h-9 font-semibold text-xs"
                       >
                         <ChevronLeft className="h-4 w-4 mr-1.5" />
                         Previous
@@ -498,8 +498,8 @@ export default function Payments() {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
                                 currentPage === pageNum
-                                  ? "bg-primary text-white shadow-md shadow-primary/15"
-                                  : "text-slate-655 hover:bg-slate-105"
+                                  ? "bg-slate-900 text-white shadow-md shadow-slate-900/15"
+                                  : "text-slate-600 hover:bg-slate-100"
                               }`}
                             >
                               {pageNum}
@@ -547,7 +547,7 @@ export default function Payments() {
               </div>
               <div className="flex justify-between border-b border-slate-50 pb-2">
                 <span>Booking Reference:</span>
-                <span className="text-primary font-bold">{viewingTxn.bookingId}</span>
+                <span className="text-slate-900 font-bold">{viewingTxn.bookingId}</span>
               </div>
               <div className="flex justify-between border-b border-slate-50 pb-2">
                 <span>Client (Customer):</span>
@@ -610,7 +610,7 @@ export default function Payments() {
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Target Details</span>
               <span className="text-slate-800 block">Transaction ID: {confirmTarget.txn.id}</span>
               <span className="text-slate-500 block">Client: {confirmTarget.txn.customer}</span>
-              <span className="text-slate-900 block border-t border-slate-150 pt-1.5 mt-1 text-sm font-black">Settlement: ${confirmTarget.txn.amount.toFixed(2)}</span>
+              <span className="text-slate-900 block border-t border-slate-200 pt-1.5 mt-1 text-sm font-black">Settlement: ${confirmTarget.txn.amount.toFixed(2)}</span>
             </div>
 
             <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2.5">

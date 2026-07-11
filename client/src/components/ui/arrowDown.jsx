@@ -13,11 +13,11 @@ export default function ScrollDownButton() {
       <button
         onClick={scrollToNext}
         className="group flex items-center justify-center w-12 h-12 rounded-full 
-                   border border-primary/30 bg-background/70 backdrop-blur-md
-                   shadow-lg hover:shadow-primary/30 
+                   border border-slate-900/30 bg-slate-50/70 backdrop-blur-md
+                   shadow-lg hover:shadow-slate-900/30 
                    transition-all duration-300 hover:scale-110"
       >
-        <ArrowDown className="h-5 w-5 text-primary animate-bounce group-hover:animate-none" />
+        <ArrowDown className="h-5 w-5 text-slate-900 animate-bounce group-hover:animate-none" />
       </button>
     </div>
   );

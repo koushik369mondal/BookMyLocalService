@@ -145,7 +145,7 @@ export default function Register() {
         <div className="max-w-5xl w-full bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[650px] transition-all duration-300 hover:shadow-2xl">
 
           {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-primary via-secondary to-primary p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+          <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 via-slate-700 to-slate-900 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
 
             {/* Mesh shapes and overlays */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
@@ -253,13 +253,13 @@ export default function Register() {
               {/* Role Switcher Tabs */}
               <div className="space-y-1.5">
                 <Label className="text-xs font-bold text-slate-700">I want to register as a:</Label>
-                <div className="grid grid-cols-2 bg-slate-50 border border-slate-150 p-1.5 rounded-xl h-12">
+                <div className="grid grid-cols-2 bg-slate-50 border border-slate-200 p-1.5 rounded-xl h-12">
                   <button
                     type="button"
                     onClick={() => setValue("role", "customer")}
                     disabled={isSubmitting}
                     className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedRole === "customer"
-                        ? "bg-white text-primary shadow-xs border border-slate-100"
+                        ? "bg-white text-slate-900 shadow-xs border border-slate-100"
                         : "text-slate-500 hover:text-slate-700"
                       }`}
                   >
@@ -271,7 +271,7 @@ export default function Register() {
                     onClick={() => setValue("role", "provider")}
                     disabled={isSubmitting}
                     className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedRole === "provider"
-                        ? "bg-white text-primary shadow-xs border border-slate-100"
+                        ? "bg-white text-slate-900 shadow-xs border border-slate-100"
                         : "text-slate-500 hover:text-slate-700"
                       }`}
                   >
@@ -291,7 +291,7 @@ export default function Register() {
                   <Input
                     id="fullName"
                     placeholder="e.g. Amanda Watson"
-                    className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${errors.fullName ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
+                    className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${errors.fullName ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
                       }`}
                     disabled={isSubmitting}
                     {...register("fullName")}
@@ -319,7 +319,7 @@ export default function Register() {
                       id="email"
                       type="email"
                       placeholder="name@example.com"
-                      className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${errors.email ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
+                      className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${errors.email ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
                         }`}
                       disabled={isSubmitting}
                       {...register("email")}
@@ -343,7 +343,7 @@ export default function Register() {
                     <Input
                       id="phone"
                       placeholder="123-456-7890"
-                      className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${errors.phone ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
+                      className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${errors.phone ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
                         }`}
                       disabled={isSubmitting}
                       {...register("phone")}
@@ -374,8 +374,8 @@ export default function Register() {
                     className="text-xs font-semibold text-slate-550 leading-relaxed cursor-pointer select-none"
                   >
                     I agree to the BookMyLocalService{" "}
-                    <Link to="/terms" className="text-primary hover:text-accent hover:underline">Terms of Service</Link> and{" "}
-                    <Link to="/privacy" className="text-primary hover:text-accent hover:underline">Privacy Policy</Link>.
+                    <Link to="/terms" className="text-slate-900 hover:text-amber-500 hover:underline">Terms of Service</Link> and{" "}
+                    <Link to="/privacy" className="text-slate-900 hover:text-amber-500 hover:underline">Privacy Policy</Link>.
                   </label>
                 </div>
                 {errors.acceptTerms && (
@@ -390,7 +390,7 @@ export default function Register() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 bg-primary hover:bg-secondary text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-slate-900 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -445,7 +445,7 @@ export default function Register() {
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-primary hover:text-accent transition-colors font-bold hover:underline"
+                className="text-slate-900 hover:text-amber-500 transition-colors font-bold hover:underline"
               >
                 Sign In
               </Link>

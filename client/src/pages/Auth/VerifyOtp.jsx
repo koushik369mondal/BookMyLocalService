@@ -167,7 +167,7 @@ export default function VerifyOtp() {
         <div className="max-w-5xl w-full bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] transition-all duration-300 hover:shadow-2xl">
 
           {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-primary via-secondary to-primary p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+          <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 via-slate-700 to-slate-900 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
 
             {/* Mesh shapes and overlays */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
@@ -257,7 +257,7 @@ export default function VerifyOtp() {
                       onKeyDown={(e) => handleKeyDown(e, index)}
                       onPaste={handlePaste}
                       value={data}
-                      className="w-12 h-14 text-center text-xl font-bold border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all shadow-sm"
+                      className="w-12 h-14 text-center text-xl font-bold border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all shadow-sm"
                       disabled={isSubmitting || isResending}
                     />
                   ))}
@@ -272,7 +272,7 @@ export default function VerifyOtp() {
               <Button
                 type="submit"
                 disabled={isSubmitting || isResending || otp.join("").length !== 6}
-                className="w-full h-11 bg-primary hover:bg-secondary text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-slate-900 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -305,7 +305,7 @@ export default function VerifyOtp() {
                 variant="outline"
                 onClick={handleResend}
                 disabled={!canResend || isResending || isSubmitting}
-                className={`h-9 font-extrabold text-xs rounded-xl flex items-center gap-1.5 shadow-2xs border-slate-200 bg-white ${canResend ? "text-primary hover:bg-slate-50 cursor-pointer" : "text-slate-400"
+                className={`h-9 font-extrabold text-xs rounded-xl flex items-center gap-1.5 shadow-2xs border-slate-200 bg-white ${canResend ? "text-slate-900 hover:bg-slate-50 cursor-pointer" : "text-slate-400"
                   }`}
               >
                 {isResending ? (
@@ -327,7 +327,7 @@ export default function VerifyOtp() {
               <button
                 type="button"
                 onClick={() => navigate("/login")}
-                className="text-primary hover:text-accent transition-colors font-bold hover:underline"
+                className="text-slate-900 hover:text-amber-500 transition-colors font-bold hover:underline"
               >
                 Back to email entry
               </button>

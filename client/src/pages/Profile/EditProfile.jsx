@@ -169,7 +169,7 @@ export default function EditProfile() {
     return (
       <MainLayout>
         <div className="min-h-screen flex items-center justify-center bg-slate-50/50">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
         </div>
       </MainLayout>
     );
@@ -218,7 +218,7 @@ export default function EditProfile() {
 
           <Card className="border border-slate-100 shadow-md bg-white rounded-3xl overflow-hidden">
             
-            <div className="bg-gradient-to-r from-primary via-secondary to-primary text-white p-6 sm:p-8 relative overflow-hidden">
+            <div className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white p-6 sm:p-8 relative overflow-hidden">
               <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
               <div className="relative z-10">
                 <CardTitle className="text-xl sm:text-2xl font-black">Edit Account Profile</CardTitle>
@@ -235,7 +235,7 @@ export default function EditProfile() {
                     {user.avatar ? (
                       <AvatarImage src={user.avatar} className="object-cover w-full h-full" />
                     ) : null}
-                    <AvatarFallback className="text-xl font-bold bg-primary/10 text-primary">{initials}</AvatarFallback>
+                    <AvatarFallback className="text-xl font-bold bg-slate-900/10 text-slate-900">{initials}</AvatarFallback>
                   </Avatar>
                   <div className="absolute inset-0 bg-slate-950/60 text-white rounded-full flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <Camera className="h-4.5 w-4.5" />
@@ -253,7 +253,7 @@ export default function EditProfile() {
                       onClick={handlePhotoClick}
                       disabled={isUploadingPhoto}
                       size="xs" 
-                      className="bg-primary hover:bg-secondary text-white rounded-xl text-[10px] font-bold h-8 px-4"
+                      className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl text-[10px] font-bold h-8 px-4"
                     >
                       {isUploadingPhoto ? "Uploading..." : "Upload New Image"}
                     </Button>
@@ -270,7 +270,7 @@ export default function EditProfile() {
                     <Input
                       id="fullName"
                       placeholder="Chloe Bennett"
-                      className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                      className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                       disabled={isSubmitting}
                       {...register("fullName")}
                     />
@@ -282,7 +282,7 @@ export default function EditProfile() {
                     <Input
                       id="email"
                       type="email"
-                      className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-slate-50 cursor-not-allowed"
+                      className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-slate-50 cursor-not-allowed"
                       disabled
                       {...register("email")}
                     />
@@ -293,7 +293,7 @@ export default function EditProfile() {
                     <Input
                       id="phone"
                       placeholder="555-019-2834"
-                      className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                      className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                       disabled={isSubmitting}
                       {...register("phone")}
                     />
@@ -310,7 +310,7 @@ export default function EditProfile() {
                     <Input
                       id="address"
                       placeholder="789 Pine Street, Apt 1C"
-                      className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                      className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                       disabled={isSubmitting}
                       {...register("address")}
                     />
@@ -322,7 +322,7 @@ export default function EditProfile() {
                       <Input
                         id="city"
                         placeholder="Brooklyn"
-                        className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                        className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                         disabled={isSubmitting}
                         {...register("city")}
                       />
@@ -333,7 +333,7 @@ export default function EditProfile() {
                       <Input
                         id="state"
                         placeholder="NY"
-                        className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white text-center"
+                        className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white text-center"
                         disabled={isSubmitting}
                         {...register("state")}
                       />
@@ -345,7 +345,7 @@ export default function EditProfile() {
                         id="zipCode"
                         placeholder="400001"
                         maxLength={6}
-                        className="h-10 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white text-center"
+                        className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white text-center"
                         disabled={isSubmitting}
                         {...register("zipCode")}
                       />
@@ -367,7 +367,7 @@ export default function EditProfile() {
                   <Button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="bg-primary hover:bg-secondary text-white font-bold text-xs h-10 px-8 rounded-xl shadow-xs"
+                    className="bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs h-10 px-8 rounded-xl shadow-xs"
                   >
                     {isSubmitting ? "Saving Changes..." : "Save Changes"}
                   </Button>

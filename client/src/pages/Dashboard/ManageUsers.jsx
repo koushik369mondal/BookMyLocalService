@@ -243,7 +243,7 @@ export default function ManageUsers() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -277,12 +277,12 @@ export default function ManageUsers() {
             </div>
 
             <div className="text-center space-y-1 py-1 border-l border-slate-100">
-              <span className="block text-2xl font-black text-rose-650">{stats.blocked}</span>
+              <span className="block text-2xl font-black text-rose-600">{stats.blocked}</span>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Blocked Users</span>
             </div>
 
             <div className="text-center space-y-1 py-1 border-l border-slate-100">
-              <span className="block text-2xl font-black text-primary">+{stats.newCount}</span>
+              <span className="block text-2xl font-black text-slate-900">+{stats.newCount}</span>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">New Today</span>
             </div>
 
@@ -299,7 +299,7 @@ export default function ManageUsers() {
               {/* Search */}
               <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
                 <span className="text-xs font-bold text-slate-800 block mb-2.5 flex items-center gap-1.5">
-                  <Search className="h-4 w-4 text-primary" /> Search Users
+                  <Search className="h-4 w-4 text-slate-900" /> Search Users
                 </span>
                 <div className="relative">
                   <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-400">
@@ -309,7 +309,7 @@ export default function ManageUsers() {
                     placeholder="Search name, phone..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                   />
                 </div>
               </Card>
@@ -321,7 +321,7 @@ export default function ManageUsers() {
                   <select
                     value={roleFilter}
                     onChange={(e) => setRoleFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Roles</option>
                     <option value="customer">Customers</option>
@@ -340,7 +340,7 @@ export default function ManageUsers() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Statuses</option>
                     <option value="active">Active only</option>
@@ -359,7 +359,7 @@ export default function ManageUsers() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="date-desc">Join Date: Newest First</option>
                     <option value="date-asc">Join Date: Oldest First</option>
@@ -381,7 +381,7 @@ export default function ManageUsers() {
               {selectedUserIds.length > 0 && (
                 <div className="p-4 bg-slate-900 border border-slate-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
                   <span className="text-xs font-extrabold flex items-center gap-2">
-                    <SlidersHorizontal className="h-4.5 w-4.5 text-secondary" />
+                    <SlidersHorizontal className="h-4.5 w-4.5 text-slate-700" />
                     {selectedUserIds.length} Users Selected
                   </span>
                   
@@ -428,7 +428,7 @@ export default function ManageUsers() {
               ) : paginatedUsers.length === 0 ? (
                 /* EMPTY STATE BOARD */
                 <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-primary/5 text-primary rounded-full border border-primary/10">
+                  <div className="p-4 bg-slate-900/5 text-slate-900 rounded-full border border-slate-900/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mt-2">No Users Found</h3>
@@ -448,7 +448,7 @@ export default function ManageUsers() {
                               id="selectAll"
                               checked={selectedUserIds.length === filteredUsers.length && filteredUsers.length > 0}
                               onCheckedChange={handleSelectAll}
-                              className="rounded border-slate-350"
+                              className="rounded border-slate-400"
                             />
                           </th>
                           <th className="py-2.5">User</th>
@@ -463,12 +463,12 @@ export default function ManageUsers() {
                         {paginatedUsers.map(user => {
                           const isSelected = selectedUserIds.includes(user.id);
                           return (
-                            <tr key={user.id} className={`hover:bg-slate-50/50 transition-colors ${isSelected ? "bg-primary/5/10" : ""}`}>
+                            <tr key={user.id} className={`hover:bg-slate-50/50 transition-colors ${isSelected ? "bg-slate-900/5/10" : ""}`}>
                               <td className="py-3 px-1 shrink-0 w-8">
                                 <Checkbox 
                                   checked={isSelected}
                                   onCheckedChange={(checked) => handleSelectRow(user.id, checked === true)}
-                                  className="rounded border-slate-350"
+                                  className="rounded border-slate-400"
                                 />
                               </td>
                               <td className="py-3">
@@ -522,7 +522,7 @@ export default function ManageUsers() {
                                     onClick={() => handleConfirmAction("block", user)}
                                     className={`h-7 text-[9px] font-bold rounded-lg border bg-white ${
                                       user.status === "blocked" 
-                                        ? "border-emerald-250 hover:bg-emerald-50 text-emerald-600"
+                                        ? "border-emerald-300 hover:bg-emerald-50 text-emerald-600"
                                         : "border-amber-200 hover:bg-amber-50 text-amber-600"
                                     }`}
                                   >
@@ -553,7 +553,7 @@ export default function ManageUsers() {
                         size="sm"
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                        className="rounded-xl border-slate-200 text-slate-650 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 h-9 font-semibold text-xs"
                       >
                         <ChevronLeft className="h-4 w-4 mr-1.5" />
                         Previous
@@ -569,8 +569,8 @@ export default function ManageUsers() {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
                                 currentPage === pageNum
-                                  ? "bg-primary text-white shadow-md shadow-primary/15"
-                                  : "text-slate-650 hover:bg-slate-105"
+                                  ? "bg-slate-900 text-white shadow-md shadow-slate-900/15"
+                                  : "text-slate-600 hover:bg-slate-100"
                               }`}
                             >
                               {pageNum}
@@ -584,7 +584,7 @@ export default function ManageUsers() {
                         size="sm"
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                        className="rounded-xl border-slate-200 text-slate-650 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 h-9 font-semibold text-xs"
                       >
                         Next
                         <ChevronRight className="h-4 w-4 ml-1.5" />
@@ -660,7 +660,7 @@ export default function ManageUsers() {
           <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
             <DialogHeader>
               <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <Edit3 className="h-5 w-5 text-primary" />
+                <Edit3 className="h-5 w-5 text-slate-900" />
                 Modify User Details
               </DialogTitle>
               <DialogDescription className="text-xs text-slate-400 pt-0.5">
@@ -676,7 +676,7 @@ export default function ManageUsers() {
                   id="editName"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -689,7 +689,7 @@ export default function ManageUsers() {
                   type="email"
                   value={editEmail}
                   onChange={(e) => setEditEmail(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -701,7 +701,7 @@ export default function ManageUsers() {
                   id="editPhone"
                   value={editPhone}
                   onChange={(e) => setEditPhone(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -715,7 +715,7 @@ export default function ManageUsers() {
                       id="editRole"
                       value={editRole}
                       onChange={(e) => setEditRole(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="customer">Customer</option>
                       <option value="provider">Provider</option>
@@ -731,7 +731,7 @@ export default function ManageUsers() {
                       id="editStatus"
                       value={editStatus}
                       onChange={(e) => setEditStatus(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="active">Active</option>
                       <option value="blocked">Blocked</option>
@@ -752,7 +752,7 @@ export default function ManageUsers() {
                 </Button>
                 <Button 
                   type="submit" 
-                  className="rounded-xl bg-primary hover:bg-primary text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                  className="rounded-xl bg-slate-900 hover:bg-slate-900 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
                 >
                   Save Changes
                 </Button>

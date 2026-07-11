@@ -9,9 +9,9 @@ function Toaster(props) {
       theme={theme}
       className="toaster group"
       style={{
-        '--normal-bg': 'var(--popover)',
-        '--normal-text': 'var(--popover-foreground)',
-        '--normal-border': 'var(--border)',
+        '--normal-bg': '#FFFFFF',
+        '--normal-text': '#111827',
+        '--normal-border': '#E2E8F0',
       }}
       {...props}
     />

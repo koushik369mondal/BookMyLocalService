@@ -89,14 +89,14 @@ export default function Contact() {
         
         {/* HERO SECTION - Mirrored from Services.jsx */}
         <section className="relative overflow-hidden py-16 lg:py-20 bg-white border-b border-slate-200">
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/5 to-transparent pointer-events-none"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center gap-6">
-            <span className="inline-flex items-center gap-1.5 bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full border border-accent/20">
-              <Sparkles className="h-3.5 w-3.5 fill-accent text-accent" /> We're Here to Help
+            <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-500 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">
+              <Sparkles className="h-3.5 w-3.5 fill-accent text-amber-500" /> We're Here to Help
             </span>
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 leading-tight max-w-3xl">
-              Get in <span className="text-accent">Touch</span>
+              Get in <span className="text-amber-500">Touch</span>
             </h1>
             <p className="text-base sm:text-lg text-slate-500 max-w-2xl">
               Have questions about booking a service, listing your business as a provider, or need technical assistance? Drop us a message, and our support team will help you out.
@@ -109,7 +109,7 @@ export default function Contact() {
           {/* CONTACT INFO GRID - Styled exactly like Services.jsx cards */}
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: "Office Address", detail: "123 Business Hub, Sector 62, Noida, UP, India", icon: MapPin, color: "bg-primary/5 text-primary border-primary/10" },
+              { title: "Office Address", detail: "123 Business Hub, Sector 62, Noida, UP, India", icon: MapPin, color: "bg-slate-900/5 text-slate-900 border-slate-900/10" },
               { title: "Phone Number", detail: "+91 120 456 7890\n+91 98765 43210", icon: Phone, color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
               { title: "Email Address", detail: "support@bookmylocal.com\ninfo@bookmylocal.com", icon: Mail, color: "bg-amber-50 text-amber-600 border-amber-100" },
               { title: "Business Hours", detail: "Mon - Sat: 9:00 AM - 6:00 PM\nSunday: Closed", icon: Clock, color: "bg-pink-50 text-pink-600 border-pink-100" }
@@ -123,7 +123,7 @@ export default function Contact() {
                   <div className={`p-3 rounded-full border self-start ${card.color} mb-4`}>
                     <IconComp className="h-5 w-5" />
                   </div>
-                  <h3 className="font-bold text-slate-900 text-lg leading-snug group-hover:text-accent transition-colors">
+                  <h3 className="font-bold text-slate-900 text-lg leading-snug group-hover:text-amber-500 transition-colors">
                     {card.title}
                   </h3>
                   <p className="text-xs text-slate-500 leading-relaxed mt-2 whitespace-pre-line flex-1">
@@ -141,7 +141,7 @@ export default function Contact() {
             <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-xs flex flex-col justify-between h-full">
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-2.5 mb-2">
-                  <div className="p-2 bg-primary/5 text-primary rounded-xl">
+                  <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
                     <MessageSquare className="h-5 w-5" />
                   </div>
                   <div>
@@ -176,7 +176,7 @@ export default function Contact() {
                         placeholder="John Doe"
                         value={formData.name}
                         onChange={handleInputChange}
-                        className="h-10 border-slate-200 focus-visible:ring-primary rounded-xl text-xs bg-white text-slate-800"
+                        className="h-10 border-slate-200 focus-visible:ring-slate-900 rounded-xl text-xs bg-white text-slate-800"
                         required
                       />
                     </div>
@@ -190,7 +190,7 @@ export default function Contact() {
                         placeholder="john@example.com"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="h-10 border-slate-200 focus-visible:ring-primary rounded-xl text-xs bg-white text-slate-800"
+                        className="h-10 border-slate-200 focus-visible:ring-slate-900 rounded-xl text-xs bg-white text-slate-800"
                         required
                       />
                     </div>
@@ -206,7 +206,7 @@ export default function Contact() {
                         placeholder="Optional"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="h-10 border-slate-200 focus-visible:ring-primary rounded-xl text-xs bg-white text-slate-800"
+                        className="h-10 border-slate-200 focus-visible:ring-slate-900 rounded-xl text-xs bg-white text-slate-800"
                       />
                     </div>
 
@@ -219,7 +219,7 @@ export default function Contact() {
                         placeholder="Booking Inquiries / Partnerships"
                         value={formData.subject}
                         onChange={handleInputChange}
-                        className="h-10 border-slate-200 focus-visible:ring-primary rounded-xl text-xs bg-white text-slate-800"
+                        className="h-10 border-slate-200 focus-visible:ring-slate-900 rounded-xl text-xs bg-white text-slate-800"
                         required
                       />
                     </div>
@@ -234,7 +234,7 @@ export default function Contact() {
                       placeholder="Tell us what you need assistance with..."
                       value={formData.message}
                       onChange={handleInputChange}
-                      className="w-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary p-3.5 rounded-xl text-xs bg-white text-slate-800"
+                      className="w-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 p-3.5 rounded-xl text-xs bg-white text-slate-800"
                       required
                     ></textarea>
                   </div>
@@ -242,7 +242,7 @@ export default function Contact() {
                   <Button 
                     type="submit" 
                     disabled={loading}
-                    className="w-full h-11 bg-primary hover:bg-secondary text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2"
+                    className="w-full h-11 bg-slate-900 hover:bg-slate-700 text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <>
@@ -277,9 +277,9 @@ export default function Contact() {
               {/* Pinned map marker */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 z-10 select-none">
                 <div className="relative">
-                  <div className="w-8 h-8 rounded-full bg-primary/25 absolute -inset-2 animate-ping"></div>
-                  <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center border border-white shadow-md relative z-10">
-                    <MapPin className="h-4 w-4 text-accent fill-accent" />
+                  <div className="w-8 h-8 rounded-full bg-slate-900/25 absolute -inset-2 animate-ping"></div>
+                  <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center border border-white shadow-md relative z-10">
+                    <MapPin className="h-4 w-4 text-amber-500 fill-accent" />
                   </div>
                 </div>
                 <span className="bg-[#0F172A] text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-lg border border-white/10 uppercase tracking-wide whitespace-nowrap">
@@ -289,7 +289,7 @@ export default function Contact() {
 
               {/* Headquarters Pinned Info Badge - Inside map container with margin */}
               <div className="relative z-20 m-4 p-4 bg-white/95 backdrop-blur-xs rounded-xl border border-gray-100 shadow-lg mt-auto">
-                <span className="block text-[9px] text-accent font-black uppercase tracking-widest leading-none">Headquarters</span>
+                <span className="block text-[9px] text-amber-500 font-black uppercase tracking-widest leading-none">Headquarters</span>
                 <h4 className="font-extrabold text-slate-900 text-sm mt-1">BookMyLocalService Pvt Ltd</h4>
                 <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
                   Noida Sector 62 Business Hub, Uttar Pradesh, 201301
@@ -303,7 +303,7 @@ export default function Contact() {
           {/* FAQ PREVIEW ACCORDION */}
           <section className="bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-xs space-y-8">
             <div className="text-center max-w-2xl mx-auto space-y-2.5">
-              <span className="text-xs font-bold text-accent uppercase tracking-widest">FAQ</span>
+              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">FAQ</span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Frequently Asked Questions</h2>
               <p className="text-sm text-slate-500">Quick answers to common questions about booking services and provider onboarding.</p>
             </div>
@@ -322,7 +322,7 @@ export default function Contact() {
                     >
                       <span>{faq.q}</span>
                       {isOpen ? (
-                        <Minus className="h-4.5 w-4.5 text-accent shrink-0" />
+                        <Minus className="h-4.5 w-4.5 text-amber-500 shrink-0" />
                       ) : (
                         <Plus className="h-4.5 w-4.5 text-slate-400 shrink-0" />
                       )}
@@ -348,12 +348,12 @@ export default function Contact() {
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
               Need Immediate Assistance?
             </h2>
-            <p className="text-slate-350 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
               Our support team is ready to help you. Send a message, schedule a booking, or reach out to verify provider registration.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2 max-w-sm mx-auto sm:max-w-none">
               <NavLink to="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-12 bg-accent hover:bg-amber-600 text-primary font-bold rounded-xl px-8 shadow-md">
+                <Button className="w-full sm:w-auto h-12 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-xl px-8 shadow-md">
                   Browse Services
                 </Button>
               </NavLink>

@@ -525,7 +525,7 @@ export default function ServiceDetails() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
 
         {/* PROFILE HEADER HERO BANNER */}
-        <section className="relative overflow-hidden bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 sm:py-16">
+        <section className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 sm:py-16">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_50%)] pointer-events-none"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -541,7 +541,7 @@ export default function ServiceDetails() {
                 <div className="relative">
                   <Avatar className="w-24 h-24 sm:w-28 sm:h-28 border-4 border-white/90 shadow-xl rounded-full overflow-hidden bg-white shrink-0">
                     <AvatarImage src={provider.providerImage} className="object-cover w-full h-full" alt={provider.providerName} />
-                    <AvatarFallback className="text-xl font-bold bg-primary/10 text-primary">{provider.providerName[0]}</AvatarFallback>
+                    <AvatarFallback className="text-xl font-bold bg-slate-900/10 text-slate-900">{provider.providerName[0]}</AvatarFallback>
                   </Avatar>
 
                   {/* Verified Badge */}
@@ -608,7 +608,7 @@ export default function ServiceDetails() {
               {/* SECTION 3: ABOUT */}
               <Card className="border border-slate-100 shadow-2xs hover:shadow-xs transition-shadow duration-300 bg-white p-6 rounded-2xl">
                 <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-primary/5 text-primary rounded-xl">
+                  <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
                     <ShieldCheck className="h-5 w-5" />
                   </div>
                   <div>
@@ -640,7 +640,7 @@ export default function ServiceDetails() {
               {/* SECTION 4: SKILLS & CERTIFICATIONS */}
               <Card className="border border-slate-100 shadow-2xs hover:shadow-xs transition-shadow duration-300 bg-white p-6 rounded-2xl">
                 <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-primary/5 text-primary rounded-xl">
+                  <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
                     <Award className="h-5 w-5" />
                   </div>
                   <div>
@@ -654,8 +654,8 @@ export default function ServiceDetails() {
                     <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2.5">Specialized Skills</span>
                     <div className="flex flex-wrap gap-2">
                       {provider.skills.map((skill, index) => (
-                        <Badge key={index} variant="secondary" className="bg-slate-100 hover:bg-slate-150 text-slate-700 font-semibold px-3 py-1 text-xs rounded-lg border-0">
-                          <Check className="h-3 w-3 text-primary mr-1.5" />
+                        <Badge key={index} variant="secondary" className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1 text-xs rounded-lg border-0">
+                          <Check className="h-3 w-3 text-slate-900 mr-1.5" />
                           {skill}
                         </Badge>
                       ))}
@@ -667,10 +667,10 @@ export default function ServiceDetails() {
                     <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2.5">Verified Certifications</span>
                     <div className="space-y-2">
                       {provider.certifications.map((cert, index) => (
-                        <div key={index} className="flex items-center gap-2.5 text-sm text-slate-650 bg-slate-50/50 p-2.5 border border-slate-100 rounded-xl">
+                        <div key={index} className="flex items-center gap-2.5 text-sm text-slate-600 bg-slate-50/50 p-2.5 border border-slate-100 rounded-xl">
                           <CheckCircle2 className="h-4.5 w-4.5 text-emerald-500 shrink-0" />
                           <span className="font-semibold text-slate-800">{cert}</span>
-                          <span className="text-[10px] bg-emerald-55 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-100 font-bold uppercase ml-auto">Verified</span>
+                          <span className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-100 font-bold uppercase ml-auto">Verified</span>
                         </div>
                       ))}
                     </div>
@@ -695,14 +695,14 @@ export default function ServiceDetails() {
                       <div
                         key={index}
                         onClick={() => setZoomImage(photo)}
-                        className="group relative h-28 md:h-32 rounded-xl overflow-hidden cursor-zoom-in border border-slate-150 bg-slate-50 shadow-2xs"
+                        className="group relative h-28 md:h-32 rounded-xl overflow-hidden cursor-zoom-in border border-slate-200 bg-slate-50 shadow-2xs"
                       >
                         <img
                           src={photo.url}
                           alt={photo.caption}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                           <ZoomIn className="h-6 w-6 text-white" />
                         </div>
                         <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-1.5 text-center text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity truncate">
@@ -744,7 +744,7 @@ export default function ServiceDetails() {
                       <span className="block text-4xl font-black text-slate-900">{avgRating}</span>
                       <div className="flex justify-center gap-0.5">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`h-4.5 w-4.5 ${i < Math.floor(avgRating) ? 'fill-amber-400 text-amber-400' : 'text-slate-350'}`} />
+                          <Star key={i} className={`h-4.5 w-4.5 ${i < Math.floor(avgRating) ? 'fill-amber-400 text-amber-400' : 'text-slate-400'}`} />
                         ))}
                       </div>
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Overall Rating</span>
@@ -754,7 +754,7 @@ export default function ServiceDetails() {
                     <div className="md:col-span-2 space-y-1.5">
                       {[5, 4, 3, 2, 1].map((stars) => (
                         <div key={stars} className="flex items-center gap-2">
-                          <span className="text-xs font-bold text-slate-505 w-3">{stars}</span>
+                          <span className="text-xs font-bold text-slate-500 w-3">{stars}</span>
                           <Star className="h-3 w-3 fill-slate-400 text-slate-400 shrink-0" />
                           <Progress value={ratingPercentages[stars]} className="h-1.5 flex-1 bg-slate-200" />
                           <span className="text-xs font-semibold text-slate-400 w-8 text-right">{ratingPercentages[stars]}%</span>
@@ -767,7 +767,7 @@ export default function ServiceDetails() {
                   {filteredReviews.length === 0 ? (
                     <div className="text-center py-8 bg-slate-50/50 rounded-xl border border-slate-100">
                       <AlertCircle className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-                      <p className="text-sm font-semibold text-slate-505">No reviews found matching selection.</p>
+                      <p className="text-sm font-semibold text-slate-500">No reviews found matching selection.</p>
                     </div>
                   ) : (
                     <div className="space-y-6">
@@ -775,7 +775,7 @@ export default function ServiceDetails() {
                         <div key={rev.id} className="border-b border-slate-50 pb-6 last:border-0 last:pb-0">
                           <div className="flex items-start justify-between flex-wrap gap-2 mb-2">
                             <div className="flex items-center gap-3">
-                              <Avatar className="h-10 w-10 border border-slate-100 bg-primary/5 text-primary">
+                              <Avatar className="h-10 w-10 border border-slate-100 bg-slate-900/5 text-slate-900">
                                 {rev.avatar && <AvatarImage src={rev.avatar} className="object-cover" />}
                                 <AvatarFallback className="font-bold text-xs">{rev.name[0]}</AvatarFallback>
                               </Avatar>
@@ -795,7 +795,7 @@ export default function ServiceDetails() {
                             {rev.comment}
                           </p>
 
-                          <button className="flex items-center gap-1.5 text-slate-400 hover:text-accent text-xs font-bold transition-colors">
+                          <button className="flex items-center gap-1.5 text-slate-400 hover:text-amber-500 text-xs font-bold transition-colors">
                             <ThumbsUp className="h-3.5 w-3.5" />
                             Helpful (3)
                           </button>
@@ -826,7 +826,7 @@ export default function ServiceDetails() {
                       {/* Image cover */}
                       <div className="relative h-32 w-full overflow-hidden shrink-0">
                         <img src={sim.image} alt={sim.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                        <span className="absolute top-2 left-2 bg-accent text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
+                        <span className="absolute top-2 left-2 bg-amber-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
                           {sim.rating} <Star className="h-2.5 w-2.5 fill-white text-white inline ml-0.5" />
                         </span>
                       </div>
@@ -834,7 +834,7 @@ export default function ServiceDetails() {
                       {/* Content */}
                       <div className="p-4 flex flex-col justify-between flex-1 gap-3">
                         <div>
-                          <h3 className="font-bold text-slate-955 text-sm line-clamp-1 group-hover:text-accent transition-colors">
+                          <h3 className="font-bold text-slate-950 text-sm line-clamp-1 group-hover:text-amber-500 transition-colors">
                             <NavLink to={`/services/${sim.id}`} onClick={() => window.scrollTo(0, 0)}>
                               {sim.name}
                             </NavLink>
@@ -868,20 +868,20 @@ export default function ServiceDetails() {
               <div className="lg:sticky lg:top-24 space-y-6">
 
                 {/* PRICING & BOOKING WIDGET */}
-                <Card className="border border-slate-150 shadow-md bg-white overflow-hidden rounded-2xl relative">
+                <Card className="border border-slate-200 shadow-md bg-white overflow-hidden rounded-2xl relative">
 
                   {/* Banner tag overlay */}
                   <div className="bg-slate-900 text-white py-3 px-5 flex items-center justify-between shrink-0">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Available Pricing</span>
-                    <span className="text-[11px] font-extrabold text-primary flex items-center gap-1">
-                      <ShieldCheck className="h-3.5 w-3.5 text-secondary" /> Verified Rates
+                    <span className="text-[11px] font-extrabold text-white flex items-center gap-1">
+                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 fill-emerald-400/10" /> Verified Rates
                     </span>
                   </div>
 
                   {/* Tabs select packages */}
                   <Tabs value={activePlanIdx.toString()} onValueChange={(val) => setActivePlanIdx(parseInt(val))} className="w-full">
                     <div className="px-5 pt-5 pb-3">
-                      <TabsList className="grid grid-cols-3 bg-slate-50 border border-slate-150 p-1 rounded-xl h-10 shrink-0">
+                      <TabsList className="grid grid-cols-3 bg-slate-50 border border-slate-200 p-1 rounded-xl h-10 shrink-0">
                         <TabsTrigger value="0" className="rounded-lg text-xs font-bold py-1.5">Basic</TabsTrigger>
                         <TabsTrigger value="1" className="rounded-lg text-xs font-bold py-1.5">Standard</TabsTrigger>
                         <TabsTrigger value="2" className="rounded-lg text-xs font-bold py-1.5">Premium</TabsTrigger>
@@ -897,7 +897,7 @@ export default function ServiceDetails() {
                               <span className="text-xl font-black text-slate-900">${plan.price}<span className="text-slate-400 font-semibold text-xs">{provider.priceType}</span></span>
                             </div>
 
-                            <p className="text-slate-505 text-xs leading-relaxed">
+                            <p className="text-slate-500 text-xs leading-relaxed">
                               {plan.description}
                             </p>
 
@@ -921,10 +921,10 @@ export default function ServiceDetails() {
                     {/* Date select title */}
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                        <Calendar className="h-4 w-4 text-primary" /> Select Date
+                        <Calendar className="h-4 w-4 text-slate-900" /> Select Date
                       </span>
                       {selectedDate && (
-                        <span className="text-[11px] font-bold text-primary bg-primary/5 px-2.5 py-0.5 rounded-full border border-primary/10">
+                        <span className="text-[11px] font-bold text-slate-900 bg-slate-900/5 px-2.5 py-0.5 rounded-full border border-slate-900/10">
                           Selected
                         </span>
                       )}
@@ -943,8 +943,8 @@ export default function ServiceDetails() {
                               setDateAlert(false);
                             }}
                             className={`flex flex-col items-center justify-center p-2.5 border rounded-xl min-w-[54px] snap-center transition-all ${isSelected
-                                ? "bg-primary border-primary text-white shadow-md shadow-primary/20"
-                                : "bg-white border-slate-200 text-slate-650 hover:bg-slate-50 hover:border-slate-300"
+                                ? "bg-slate-900 border-slate-900 text-white shadow-md shadow-slate-900/20"
+                                : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300"
                               }`}
                           >
                             <span className="text-[9px] font-bold uppercase tracking-wider opacity-80">{d.dayName}</span>
@@ -966,7 +966,7 @@ export default function ServiceDetails() {
                     {/* Time slots scheduler select */}
                     <div className="space-y-3 pt-2">
                       <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                        <Clock className="h-4 w-4 text-primary" /> Select Time Slot
+                        <Clock className="h-4 w-4 text-slate-900" /> Select Time Slot
                       </span>
 
                       {/* Time slot grids grouped */}
@@ -986,8 +986,8 @@ export default function ServiceDetails() {
                                       setTimeAlert(false);
                                     }}
                                     className={`py-1.5 text-[11px] font-bold text-center border rounded-lg transition-all ${isSelected
-                                        ? "bg-primary border-primary text-white shadow-xs"
-                                        : "bg-white border-slate-200 text-slate-650 hover:bg-slate-50 hover:border-slate-350"
+                                        ? "bg-slate-900 border-slate-900 text-white shadow-xs"
+                                        : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-400"
                                       }`}
                                   >
                                     {slot}
@@ -1014,7 +1014,7 @@ export default function ServiceDetails() {
                   <div className="p-5 bg-slate-50 space-y-3 shrink-0">
                     <Button
                       onClick={handleBooking}
-                      className="w-full bg-primary hover:bg-secondary text-white font-extrabold py-5 rounded-xl flex items-center justify-center gap-2 text-sm shadow-md transition-all hover:scale-[1.01]"
+                      className="w-full bg-slate-900 hover:bg-slate-700 text-white font-extrabold py-5 rounded-xl flex items-center justify-center gap-2 text-sm shadow-md transition-all hover:scale-[1.01]"
                     >
                       <CalendarCheck className="h-4.5 w-4.5" />
                       Book Appointment Now
@@ -1023,7 +1023,7 @@ export default function ServiceDetails() {
                     <Button
                       variant="outline"
                       onClick={() => setIsContactOpen(true)}
-                      className="w-full border-slate-200 bg-white text-slate-650 hover:bg-slate-100 hover:text-slate-800 font-bold py-5 rounded-xl flex items-center justify-center gap-2 text-xs"
+                      className="w-full border-slate-200 bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-800 font-bold py-5 rounded-xl flex items-center justify-center gap-2 text-xs"
                     >
                       <Mail className="h-4 w-4 text-slate-450" />
                       Contact {provider.providerName}
@@ -1040,7 +1040,7 @@ export default function ServiceDetails() {
 
                 {/* HELP CARD */}
                 <Card className="border border-slate-100 bg-white p-5 rounded-2xl flex items-start gap-3">
-                  <div className="p-2 bg-primary/5 text-primary rounded-xl shrink-0">
+                  <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl shrink-0">
                     <AlertCircle className="h-5 w-5" />
                   </div>
                   <div className="space-y-1">
@@ -1078,7 +1078,7 @@ export default function ServiceDetails() {
         <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
           <DialogHeader>
             <DialogTitle className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-              <Mail className="h-5 w-5 text-primary" />
+              <Mail className="h-5 w-5 text-slate-900" />
               Contact Provider
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-400 pt-0.5">
@@ -1105,7 +1105,7 @@ export default function ServiceDetails() {
                   value={contactName}
                   onChange={(e) => setContactName(e.target.value)}
                   placeholder="e.g. Amanda Cole"
-                  className="rounded-xl border-slate-200 text-xs h-9.5 focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+                  className="rounded-xl border-slate-200 text-xs h-9.5 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-white"
                   required
                 />
               </div>
@@ -1118,7 +1118,7 @@ export default function ServiceDetails() {
                   value={contactEmail}
                   onChange={(e) => setContactEmail(e.target.value)}
                   placeholder="e.g. amanda@example.com"
-                  className="rounded-xl border-slate-200 text-xs h-9.5 focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+                  className="rounded-xl border-slate-200 text-xs h-9.5 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-white"
                   required
                 />
               </div>
@@ -1130,7 +1130,7 @@ export default function ServiceDetails() {
                   value={contactSubject}
                   onChange={(e) => setContactSubject(e.target.value)}
                   placeholder="e.g. Custom scheduling inquiry"
-                  className="rounded-xl border-slate-200 text-xs h-9.5 focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+                  className="rounded-xl border-slate-200 text-xs h-9.5 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-white"
                 />
               </div>
 
@@ -1142,7 +1142,7 @@ export default function ServiceDetails() {
                   onChange={(e) => setContactMessage(e.target.value)}
                   placeholder="Type details regarding the scope of work you need completed..."
                   rows={4}
-                  className="rounded-xl border-slate-200 text-xs focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+                  className="rounded-xl border-slate-200 text-xs focus:ring-2 focus:ring-slate-900 focus:border-slate-900 bg-white"
                   required
                 />
               </div>
@@ -1160,7 +1160,7 @@ export default function ServiceDetails() {
                 <Button
                   type="submit"
                   disabled={isSendingContact}
-                  className="rounded-xl bg-primary hover:bg-secondary text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
+                  className="rounded-xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
                 >
                   {isSendingContact ? (
                     <>

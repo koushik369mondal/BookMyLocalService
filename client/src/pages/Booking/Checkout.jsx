@@ -265,7 +265,7 @@ export default function Checkout() {
     return (
       <MainLayout>
         <div className="max-w-7xl mx-auto px-4 py-20 text-center space-y-4">
-          <Loader2 className="h-10 w-10 animate-spin text-primary mx-auto" />
+          <Loader2 className="h-10 w-10 animate-spin text-slate-900 mx-auto" />
           <p className="text-slate-500 font-bold text-sm">Loading checkout details...</p>
         </div>
       </MainLayout>
@@ -279,7 +279,7 @@ export default function Checkout() {
           <AlertCircle className="h-12 w-12 text-rose-500 mx-auto" />
           <h2 className="text-lg font-black text-slate-900">Checkout Error</h2>
           <p className="text-xs text-slate-500">{error || "We couldn't retrieve the checkout details for this booking."}</p>
-          <Button onClick={() => navigate("/services")} className="bg-primary hover:bg-secondary text-white rounded-xl text-xs h-9.5 px-6 font-bold mt-2">
+          <Button onClick={() => navigate("/services")} className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl text-xs h-9.5 px-6 font-bold mt-2">
             Back to Services
           </Button>
         </div>
@@ -292,7 +292,7 @@ export default function Checkout() {
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* TOP PATH BANNER */}
-        <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-10 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-10 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <button 
@@ -336,7 +336,7 @@ export default function Checkout() {
                 {/* STEP 1: CUSTOMER DETAILS */}
                 <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
                   <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-primary/5 text-primary rounded-xl">
+                    <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
                       <User className="h-5 w-5" />
                     </div>
                     <div>
@@ -352,7 +352,7 @@ export default function Checkout() {
                       <Input
                         id="fullName"
                         placeholder="Amanda Watson"
-                        className={`h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
+                        className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
                           errors.fullName ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                         }`}
                         disabled={isSubmitting}
@@ -369,7 +369,7 @@ export default function Checkout() {
                           id="email"
                           type="email"
                           placeholder="amanda@example.com"
-                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
+                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
                             errors.email ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}
                           disabled={isSubmitting}
@@ -384,7 +384,7 @@ export default function Checkout() {
                         <Input
                           id="phone"
                           placeholder="123-456-7890"
-                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
+                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
                             errors.phone ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}
                           disabled={isSubmitting}
@@ -399,7 +399,7 @@ export default function Checkout() {
                 {/* STEP 2: BILLING ADDRESS */}
                 <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
                   <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-primary/5 text-primary rounded-xl">
+                    <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
                       <Building className="h-5 w-5" />
                     </div>
                     <div>
@@ -415,7 +415,7 @@ export default function Checkout() {
                       <Input
                         id="street"
                         placeholder="123 Main St, Apt 4B"
-                        className={`h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
+                        className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
                           errors.street ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                         }`}
                         disabled={isSubmitting}
@@ -431,7 +431,7 @@ export default function Checkout() {
                         <Input
                           id="city"
                           placeholder="Brooklyn"
-                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
+                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
                             errors.city ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}
                           disabled={isSubmitting}
@@ -446,7 +446,7 @@ export default function Checkout() {
                         <Input
                           id="state"
                           placeholder="NY"
-                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
+                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
                             errors.state ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}
                           disabled={isSubmitting}
@@ -462,7 +462,7 @@ export default function Checkout() {
                           id="zipCode"
                           placeholder="400001"
                           maxLength={6}
-                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
+                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
                             errors.zipCode ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}
                           disabled={isSubmitting}
@@ -506,7 +506,7 @@ export default function Checkout() {
                             className={`flex flex-col items-center justify-center p-3.5 border rounded-xl gap-2 transition-all ${
                               isSelected 
                                 ? "bg-emerald-50 border-emerald-500 text-emerald-700 shadow-2xs font-extrabold"
-                                : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-350"
+                                : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-400"
                             }`}
                           >
                             <opt.icon className={`h-5 w-5 ${isSelected ? "text-emerald-600" : "text-slate-450"}`} />
@@ -532,7 +532,7 @@ export default function Checkout() {
                               id="cardNumber"
                               placeholder="1234 5678 1234 5678"
                               maxLength={19}
-                              className="pl-9 h-9 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                              className="pl-9 h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                               disabled={isSubmitting}
                               {...register("cardNumber")}
                             />
@@ -548,7 +548,7 @@ export default function Checkout() {
                               id="cardExpiry"
                               placeholder="MM/YY"
                               maxLength={5}
-                              className="h-9 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white text-center"
+                              className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white text-center"
                               disabled={isSubmitting}
                               {...register("cardExpiry")}
                             />
@@ -561,7 +561,7 @@ export default function Checkout() {
                               type="password"
                               placeholder="123"
                               maxLength={4}
-                              className="h-9 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white text-center"
+                              className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white text-center"
                               disabled={isSubmitting}
                               {...register("cardCvc")}
                             />
@@ -635,7 +635,7 @@ export default function Checkout() {
                         <AvatarFallback>{provider.providerName[0]}</AvatarFallback>
                       </Avatar>
                       <div>
-                        <span className="text-[10px] font-bold text-accent bg-accent/10 px-2.5 py-0.5 rounded-full border border-accent/20 tracking-wide uppercase">
+                        <span className="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20 tracking-wide uppercase">
                           {provider.category}
                         </span>
                         <h4 className="font-extrabold text-slate-900 text-sm mt-1">{provider.providerName}</h4>
@@ -645,14 +645,14 @@ export default function Checkout() {
 
                     <div className="grid grid-cols-2 gap-3.5">
                       <div className="flex items-center gap-2 p-3 bg-slate-50/50 border border-slate-100 rounded-xl text-slate-700">
-                        <Calendar className="h-4.5 w-4.5 text-secondary shrink-0" />
+                        <Calendar className="h-4.5 w-4.5 text-slate-700 shrink-0" />
                         <div className="flex flex-col">
                           <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Date</span>
                           <span className="text-xs font-bold">{selectedDate}</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-2 p-3 bg-slate-50/50 border border-slate-100 rounded-xl text-slate-700">
-                        <Clock className="h-4.5 w-4.5 text-secondary shrink-0" />
+                        <Clock className="h-4.5 w-4.5 text-slate-700 shrink-0" />
                         <div className="flex flex-col">
                           <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Time</span>
                           <span className="text-xs font-bold">{selectedTime}</span>
@@ -681,7 +681,7 @@ export default function Checkout() {
                           placeholder="Enter Promo Code"
                           value={promoInput}
                           onChange={(e) => setPromoInput(e.target.value)}
-                          className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-primary rounded-xl text-xs bg-white"
+                          className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                           disabled={isSubmitting}
                         />
                       </div>
@@ -696,7 +696,7 @@ export default function Checkout() {
                     </div>
 
                     {promoSuccessMsg && (
-                      <p className="text-[11px] text-emerald-650 font-bold mt-2 flex items-center gap-1">
+                      <p className="text-[11px] text-emerald-600 font-bold mt-2 flex items-center gap-1">
                         <Check className="h-3.5 w-3.5 text-emerald-500" /> {promoSuccessMsg}
                       </p>
                     )}
@@ -714,7 +714,7 @@ export default function Checkout() {
                   </Card>
 
                   {/* ORDER INVOICE SUMMARY CARD */}
-                  <Card className="border border-slate-150 shadow-md rounded-2xl bg-white overflow-hidden">
+                  <Card className="border border-slate-200 shadow-md rounded-2xl bg-white overflow-hidden">
                     <div className="bg-slate-900 text-white py-3.5 px-5 flex items-center justify-between shrink-0">
                       <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Order Invoice</span>
                       <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 py-0.5 px-2.5 rounded-full border border-emerald-500/20">Final Amount</span>
@@ -737,7 +737,7 @@ export default function Checkout() {
                       </div>
 
                       {appliedDiscount > 0 && (
-                        <div className="flex justify-between text-xs text-emerald-650 font-extrabold bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
+                        <div className="flex justify-between text-xs text-emerald-600 font-extrabold bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
                           <span className="flex items-center gap-1"><Percent className="h-3.5 w-3.5" /> Coupon Discount:</span>
                           <span>-${discountVal.toFixed(2)}</span>
                         </div>
@@ -752,7 +752,7 @@ export default function Checkout() {
                         <Button
                           type="submit"
                           disabled={isSubmitting}
-                          className="w-full h-11 bg-primary hover:bg-secondary text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                          className="w-full h-11 bg-slate-900 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
                         >
                           {isSubmitting ? (
                             <>
