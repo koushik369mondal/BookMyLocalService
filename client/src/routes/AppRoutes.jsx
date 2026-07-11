@@ -25,6 +25,8 @@ import Payments from "../pages/Dashboard/Payments";
 import Reports from "../pages/Dashboard/Reports";
 import Analytics from "../pages/Dashboard/Analytics";
 import Categories from "../pages/Categories/Categories";
+import About from "../pages/About/About";
+import Contact from "../pages/Contact/Contact";
 import NotFound from "../pages/NotFound/NotFound";
 
 export default function AppRoutes() {
@@ -35,6 +37,8 @@ export default function AppRoutes() {
             <Route path="/verify-otp" element={<VerifyOtp />} />
             <Route path="/register" element={<Register />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetails />} />
             <Route path="/booking" element={<Booking />} />

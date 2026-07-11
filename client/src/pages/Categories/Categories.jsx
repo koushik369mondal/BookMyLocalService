@@ -142,7 +142,7 @@ export default function Categories() {
           {loading && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
-                <Card key={i} className="overflow-hidden p-0 py-0 gap-0 border border-gray-150 flex flex-col h-full bg-white rounded-2xl">
+                <Card key={i} className="overflow-hidden p-0 py-0 gap-0 border border-gray-100 flex flex-col h-full bg-white rounded-2xl">
                   <Skeleton className="h-48 w-full rounded-t-2xl rounded-b-none" />
                   <div className="p-5 flex flex-col gap-3 flex-1">
                     <Skeleton className="h-4 w-16" />
@@ -223,7 +223,7 @@ export default function Categories() {
 
                       {/* Title and description */}
                       <div>
-                        <h3 className="font-bold text-gray-955 text-base leading-snug group-hover:text-accent transition-colors line-clamp-1">
+                        <h3 className="font-bold text-slate-900 text-base leading-snug group-hover:text-accent transition-colors line-clamp-1">
                           {category.name}
                         </h3>
                         <p className="text-xs text-gray-500 leading-relaxed mt-1.5 line-clamp-2">
@@ -248,7 +248,7 @@ export default function Categories() {
                       <div className="flex items-center justify-between border-t border-gray-50 pt-3 mt-1">
                         <div className="flex flex-col">
                           <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Access level</span>
-                          <span className="font-extrabold text-gray-955 text-sm">Instant Book</span>
+                          <span className="font-extrabold text-slate-900 text-sm">Instant Book</span>
                         </div>
                         <Button 
                           onClick={() => handleExplore(category.name)} 
