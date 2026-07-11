@@ -20,8 +20,10 @@ export default function VerifyOtp() {
   const location = useLocation();
   const { verifyOtp, resendOtp } = useAuth();
   
-  // Retrieve email passed from Login page
+  // Retrieve email, flow, and registration data passed from parent pages
   const email = location.state?.email || "";
+  const flow = location.state?.flow || "login";
+  const registerData = location.state?.registerData || null;
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -124,9 +126,9 @@ export default function VerifyOtp() {
 
     setIsSubmitting(true);
     try {
-      const response = await verifyOtp(email, otpString);
+      const response = await verifyOtp(email, otpString, flow);
       if (response.success) {
-        toast.success("Logged in successfully!");
+        toast.success(flow === "register" ? "Account created and logged in successfully!" : "Logged in successfully!");
         navigate("/");
       }
     } catch (err) {
@@ -142,7 +144,7 @@ export default function VerifyOtp() {
 
     setIsResending(true);
     try {
-      const response = await resendOtp(email);
+      const response = await resendOtp(email, flow, registerData);
       if (response.success) {
         toast.success("A new verification code has been sent to your email.");
         setTimer(60); // Reset timer
@@ -230,7 +232,7 @@ export default function VerifyOtp() {
             </div>
 
             <div className="space-y-2 mb-8 text-center lg:text-left">
-              <h1 className="text-2xl font-black text-slate-900 tracking-tight">Verify Your Account</h1>
+              <h1 className="text-2xl font-black text-slate-900 tracking-tight">Verify your Email</h1>
               <p className="text-sm text-slate-500 font-medium">
                 We sent a 6-digit verification code to <strong className="text-slate-800">{email}</strong>.
               </p>

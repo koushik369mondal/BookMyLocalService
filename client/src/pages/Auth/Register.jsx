@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -11,10 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import Logo from "@/components/ui/logo";
 import { 
-  Eye, 
-  EyeOff, 
   Mail, 
-  Lock, 
   ArrowRight, 
   ShieldAlert, 
   CheckCircle2, 
@@ -40,19 +37,12 @@ const registerSchema = z.object({
     .regex(/^\+?1?\s*\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/, {
       message: "Please enter a valid 10-digit phone number"
     }),
-  password: z.string()
-    .min(6, { message: "Password must be at least 6 characters" }),
-  confirmPassword: z.string()
-    .min(1, { message: "Please confirm your password" }),
   role: z.enum(["customer", "provider"], {
     errorMap: () => ({ message: "Please select a role" })
   }),
   acceptTerms: z.boolean().refine(val => val === true, {
     message: "You must accept the terms and conditions"
   })
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"]
 });
 
 // Custom high-fidelity brand SVGs for social options
@@ -73,8 +63,7 @@ const GitHubIcon = (props) => (
 
 export default function Register() {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const location = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
@@ -89,10 +78,8 @@ export default function Register() {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       fullName: "",
-      email: "",
+      email: location.state?.email || "",
       phone: "",
-      password: "",
-      confirmPassword: "",
       role: "customer",
       acceptTerms: false
     }
@@ -101,7 +88,7 @@ export default function Register() {
   const selectedRole = watch("role");
   const acceptTermsValue = watch("acceptTerms");
 
-  const { register: registerAuth } = useAuth();
+  const { registerSendOtp } = useAuth();
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -109,11 +96,23 @@ export default function Register() {
     setSuccessMsg("");
 
     try {
-      await registerAuth(data.fullName, data.email, data.phone, data.password, data.role);
-      setSuccessMsg("Account created successfully! Logging you in...");
+      const registerData = {
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        role: data.role
+      };
+      await registerSendOtp(registerData);
+      setSuccessMsg("Verification code sent! Redirecting to OTP validation page...");
       setIsSubmitting(false);
       setTimeout(() => {
-        navigate("/");
+        navigate("/verify-otp", { 
+          state: { 
+            email: data.email, 
+            flow: "register",
+            registerData
+          } 
+        });
       }, 1200);
     } catch (err) {
       console.error("Register page error:", err);
@@ -229,7 +228,7 @@ export default function Register() {
             </div>
 
             <div className="space-y-2 mb-8 text-center lg:text-left">
-              <h1 className="text-2xl font-black text-slate-900 tracking-tight">Create an account</h1>
+              <h1 className="text-2xl font-black text-slate-900 tracking-tight">Create your account using Email OTP</h1>
               <p className="text-sm text-slate-450 font-medium">Join BookMyLocalService to manage your bookings</p>
             </div>
 
@@ -365,79 +364,6 @@ export default function Register() {
 
               </div>
 
-              {/* Grid: Password & Confirm Password */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                {/* Password */}
-                <div className="space-y-1.5">
-                  <Label htmlFor="password" className="text-xs font-bold text-slate-700">Password</Label>
-                  <div className="relative">
-                    <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-slate-400">
-                      <Lock className="h-4 w-4" />
-                    </span>
-                    <Input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Min 6 characters"
-                      className={`pl-10 pr-10 h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
-                        errors.password ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
-                      }`}
-                      disabled={isSubmitting}
-                      {...register("password")}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      disabled={isSubmitting}
-                      className="absolute right-3.5 top-[50%] translate-y-[-50%] text-slate-400 hover:text-slate-650 transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
-                    </button>
-                  </div>
-                  {errors.password && (
-                    <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
-                      <ShieldAlert className="h-3 w-3" />
-                      {errors.password.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Confirm Password */}
-                <div className="space-y-1.5">
-                  <Label htmlFor="confirmPassword" className="text-xs font-bold text-slate-700">Confirm Password</Label>
-                  <div className="relative">
-                    <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-slate-400">
-                      <Lock className="h-4 w-4" />
-                    </span>
-                    <Input
-                      id="confirmPassword"
-                      type={showConfirmPassword ? "text" : "password"}
-                      placeholder="Confirm password"
-                      className={`pl-10 pr-10 h-10 border-slate-200 focus:ring-2 focus:ring-primary focus:border-primary rounded-xl text-xs bg-white ${
-                        errors.confirmPassword ? "border-rose-350 focus:ring-rose-500 focus:border-rose-500" : ""
-                      }`}
-                      disabled={isSubmitting}
-                      {...register("confirmPassword")}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      disabled={isSubmitting}
-                      className="absolute right-3.5 top-[50%] translate-y-[-50%] text-slate-400 hover:text-slate-650 transition-colors"
-                    >
-                      {showConfirmPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
-                    </button>
-                  </div>
-                  {errors.confirmPassword && (
-                    <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
-                      <ShieldAlert className="h-3 w-3" />
-                      {errors.confirmPassword.message}
-                    </p>
-                  )}
-                </div>
-
-              </div>
-
               {/* Accept Terms Checkbox */}
               <div className="space-y-1.5 pt-1">
                 <div className="flex items-start space-x-2.5">
@@ -474,11 +400,11 @@ export default function Register() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin text-white" />
-                    Creating professional account...
+                    Sending verification code...
                   </>
                 ) : (
                   <>
-                    Create Account
+                    Continue with Email OTP
                     <ArrowRight className="h-4 w-4 text-white/60" />
                   </>
                 )}

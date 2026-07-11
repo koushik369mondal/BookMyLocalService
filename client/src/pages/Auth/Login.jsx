@@ -57,6 +57,7 @@ export default function Login() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors }
   } = useForm({
     resolver: zodResolver(loginSchema),
@@ -65,7 +66,7 @@ export default function Login() {
     }
   });
 
-  const { sendOtp } = useAuth();
+  const { loginSendOtp } = useAuth();
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -73,11 +74,11 @@ export default function Login() {
     setSuccessMsg("");
 
     try {
-      await sendOtp(data.email);
+      await loginSendOtp(data.email);
       setSuccessMsg("Verification code sent! Redirecting to OTP validation page...");
       setIsSubmitting(false);
       setTimeout(() => {
-        navigate("/verify-otp", { state: { email: data.email } });
+        navigate("/verify-otp", { state: { email: data.email, flow: "login" } });
       }, 1200);
     } catch (err) {
       console.error("Login page error:", err);
@@ -175,15 +176,27 @@ export default function Login() {
             </div>
 
             <div className="space-y-2 mb-8 text-center lg:text-left">
-              <h1 className="text-2xl font-black text-slate-900 tracking-tight">Welcome back!</h1>
-              <p className="text-sm text-slate-450 font-medium">Enter your credentials to access your account</p>
+              <h1 className="text-2xl font-black text-slate-900 tracking-tight">Login securely with Email OTP</h1>
+              <p className="text-sm text-slate-450 font-medium">Enter your email to receive a secure login code</p>
             </div>
 
             {/* Success and Error Banners */}
             {errorMsg && (
-              <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-                <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
-                <span>{errorMsg}</span>
+              <div className="mb-6 flex flex-col gap-3 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
+                <div className="flex items-start gap-2.5">
+                  <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
+                  <span>{errorMsg}</span>
+                </div>
+                {errorMsg.toLowerCase().includes("no account found") && (
+                  <Button
+                    type="button"
+                    onClick={() => navigate("/register", { state: { email: watch("email") } })}
+                    className="self-start mt-1 h-8 bg-rose-600 hover:bg-rose-750 text-white font-extrabold text-[11px] rounded-lg px-4 flex items-center gap-1 shadow-sm transition-all"
+                  >
+                    Create Account
+                    <ArrowRight className="h-3 w-3 text-white" />
+                  </Button>
+                )}
               </div>
             )}
 
@@ -236,7 +249,7 @@ export default function Login() {
                   </>
                 ) : (
                   <>
-                    Send OTP Verification
+                    Send Login OTP
                     <ArrowRight className="h-4 w-4 text-white/60" />
                   </>
                 )}

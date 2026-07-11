@@ -50,19 +50,19 @@ export const authService = {
         return data;
     },
 
-    sendOtp: async (email) => {
-        const response = await fetch(`${API_URL}/auth/send-otp`, {
+    registerSendOtp: async (userData) => {
+        const response = await fetch(`${API_URL}/auth/register/send-otp`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email })
+            body: JSON.stringify(userData)
         });
         const data = await response.json();
-        if (!response.ok) throw new Error(data.message || "Failed to send OTP");
+        if (!response.ok) throw new Error(data.message || "Failed to send registration OTP");
         return data;
     },
 
-    verifyOtp: async (email, otp) => {
-        const response = await fetch(`${API_URL}/auth/verify-otp`, {
+    registerVerifyOtp: async (email, otp) => {
+        const response = await fetch(`${API_URL}/auth/register/verify-otp`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, otp })
@@ -72,14 +72,25 @@ export const authService = {
         return data;
     },
 
-    resendOtp: async (email) => {
-        const response = await fetch(`${API_URL}/auth/resend-otp`, {
+    loginSendOtp: async (email) => {
+        const response = await fetch(`${API_URL}/auth/login/send-otp`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email })
         });
         const data = await response.json();
-        if (!response.ok) throw new Error(data.message || "Failed to resend OTP");
+        if (!response.ok) throw new Error(data.message || "Failed to send login OTP");
+        return data;
+    },
+
+    loginVerifyOtp: async (email, otp) => {
+        const response = await fetch(`${API_URL}/auth/login/verify-otp`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, otp })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "OTP verification failed");
         return data;
     },
 

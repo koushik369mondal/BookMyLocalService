@@ -63,20 +63,32 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const sendOtp = async (email) => {
+    const registerSendOtp = async (userData) => {
         setLoading(true);
         try {
-            const data = await authService.sendOtp(email);
+            const data = await authService.registerSendOtp(userData);
             return data;
         } finally {
             setLoading(false);
         }
     };
 
-    const verifyOtp = async (email, otp) => {
+    const loginSendOtp = async (email) => {
         setLoading(true);
         try {
-            const data = await authService.verifyOtp(email, otp);
+            const data = await authService.loginSendOtp(email);
+            return data;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const verifyOtp = async (email, otp, flow) => {
+        setLoading(true);
+        try {
+            const data = flow === "register"
+                ? await authService.registerVerifyOtp(email, otp)
+                : await authService.loginVerifyOtp(email, otp);
             if (data.success) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("user", JSON.stringify(data.user));
@@ -89,10 +101,12 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const resendOtp = async (email) => {
+    const resendOtp = async (email, flow, registerData) => {
         setLoading(true);
         try {
-            const data = await authService.resendOtp(email);
+            const data = flow === "register"
+                ? await authService.registerSendOtp(registerData)
+                : await authService.loginSendOtp(email);
             return data;
         } finally {
             setLoading(false);
@@ -122,7 +136,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, register, logout, reloadUser: loadUser, sendOtp, verifyOtp, resendOtp }}>
+        <AuthContext.Provider value={{ user, loading, login, register, logout, reloadUser: loadUser, registerSendOtp, loginSendOtp, verifyOtp, resendOtp }}>
             {children}
         </AuthContext.Provider>
     );
