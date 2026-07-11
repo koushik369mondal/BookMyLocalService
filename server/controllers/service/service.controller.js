@@ -236,11 +236,32 @@ const deleteService = async (req, res) => {
   }
 };
 
+/**
+ * Get distinct categories with details
+ */
+const getServiceCategories = async (req, res) => {
+  try {
+    const categories = await serviceService.getServiceCategories();
+    return res.status(200).json({
+      success: true,
+      count: categories.length,
+      data: categories
+    });
+  } catch (error) {
+    console.error("Error in getServiceCategories controller:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to fetch categories."
+    });
+  }
+};
+
 module.exports = {
   getAllServices,
   getServiceById,
   getServiceBySlug,
   createService,
   updateService,
-  deleteService
+  deleteService,
+  getServiceCategories
 };

@@ -6,13 +6,15 @@ const {
   getServiceBySlug,
   createService,
   updateService,
-  deleteService
+  deleteService,
+  getServiceCategories
 } = require("../../controllers/service/service.controller");
 const { protect, authorize } = require("../../middleware/authMiddleware");
 const upload = require("../../middleware/uploadMiddleware");
 
 // Public routes
 router.get("/", getAllServices);
+router.get("/categories", getServiceCategories);
 router.get("/:id", getServiceById);
 router.get("/slug/:slug", getServiceBySlug);
 

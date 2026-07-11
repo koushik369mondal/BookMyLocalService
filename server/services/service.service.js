@@ -349,11 +349,78 @@ const deleteService = async (id) => {
   });
 };
 
+/**
+ * Get distinct categories with service & provider counts
+ */
+const getServiceCategories = async () => {
+  const services = await prisma.service.findMany({
+    include: {
+      provider: {
+        select: {
+          id: true,
+          isVerified: true
+        }
+      }
+    }
+  });
+
+  const categoryMap = {};
+
+  services.forEach(service => {
+    const cat = service.category;
+    if (!categoryMap[cat]) {
+      categoryMap[cat] = {
+        name: cat,
+        serviceCount: 0,
+        providerIds: new Set(),
+        imageUrl: service.imageUrl
+      };
+    }
+    
+    categoryMap[cat].serviceCount += 1;
+    if (service.provider && service.provider.isVerified) {
+      categoryMap[cat].providerIds.add(service.provider.id);
+    }
+  });
+
+  const descriptions = {
+    "Home Cleaning": "Professional cleaning services for a spotless, healthy home environment.",
+    "Plumbing": "Reliable leakage repairs, pipe fitting, and sudden clog removals by vetted plumbers.",
+    "Electrical": "Certified electricians for smart home automation, wiring installation, and upgrades.",
+    "Moving & Packing": "Secure wrapping, loading, and transit services for stress-free relocations.",
+    "Lawn & Garden": "Expert landscaping, grass mowing, and garden upkeep by professional arborists.",
+    "Wellness & Personal": "Revitalizing massages, personalized fitness plans, and well-being programs."
+  };
+
+  const images = {
+    "Home Cleaning": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
+    "Plumbing": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
+    "Electrical": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80",
+    "Moving & Packing": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80",
+    "Lawn & Garden": "https://images.unsplash.com/photo-1558905619-1715497e68c6?auto=format&fit=crop&w=600&q=80",
+    "Wellness & Personal": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80"
+  };
+
+  const categories = Object.keys(categoryMap).map(name => {
+    const data = categoryMap[name];
+    return {
+      name,
+      description: descriptions[name] || `Explore top-rated services for ${name} category.`,
+      imageUrl: images[name] || data.imageUrl,
+      serviceCount: data.serviceCount,
+      providerCount: data.providerIds.size
+    };
+  });
+
+  return categories;
+};
+
 module.exports = {
   getAllServices,
   getServiceById,
   getServiceBySlug,
   createService,
   updateService,
-  deleteService
+  deleteService,
+  getServiceCategories
 };

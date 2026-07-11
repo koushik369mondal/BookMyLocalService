@@ -24,6 +24,7 @@ import ManageProviders from "../pages/Dashboard/ManageProviders";
 import Payments from "../pages/Dashboard/Payments";
 import Reports from "../pages/Dashboard/Reports";
 import Analytics from "../pages/Dashboard/Analytics";
+import Categories from "../pages/Categories/Categories";
 import NotFound from "../pages/NotFound/NotFound";
 
 export default function AppRoutes() {
@@ -33,6 +34,7 @@ export default function AppRoutes() {
             <Route path="/login" element={<Login />} />
             <Route path="/verify-otp" element={<VerifyOtp />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/categories" element={<Categories />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetails />} />
             <Route path="/booking" element={<Booking />} />
