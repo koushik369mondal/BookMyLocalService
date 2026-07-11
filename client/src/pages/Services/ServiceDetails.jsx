@@ -19,21 +19,21 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { 
-  Star, 
-  MapPin, 
-  ShieldCheck, 
-  Award, 
-  Calendar, 
-  Clock, 
-  MessageSquare, 
-  ArrowLeft, 
-  Image as ImageIcon, 
-  CheckCircle2, 
-  Phone, 
-  Mail, 
-  ThumbsUp, 
-  Sparkles, 
+import {
+  Star,
+  MapPin,
+  ShieldCheck,
+  Award,
+  Calendar,
+  Clock,
+  MessageSquare,
+  ArrowLeft,
+  Image as ImageIcon,
+  CheckCircle2,
+  Phone,
+  Mail,
+  ThumbsUp,
+  Sparkles,
   AlertCircle,
   Check,
   CalendarCheck,
@@ -236,13 +236,13 @@ const buildServiceDetails = (service) => {
 export default function ServiceDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   // Loading states
   const [isLoading, setIsLoading] = useState(true);
   const [provider, setProvider] = useState(null);
   const [services, setServices] = useState([]);
   const [isNotFound, setIsNotFound] = useState(false);
-  
+
   // Details states
   const [activePlanIdx, setActivePlanIdx] = useState(1); // Default to Standard package (idx 1)
   const [selectedDate, setSelectedDate] = useState("");
@@ -275,7 +275,7 @@ export default function ServiceDetails() {
         if (response.success && response.data) {
           const details = buildServiceDetails(response.data);
           setProvider(details);
-          
+
           // Load other services for the similar services section
           const allRes = await servicesService.getServices();
           if (allRes.success) {
@@ -311,7 +311,7 @@ export default function ServiceDetails() {
     };
 
     loadServiceData();
-    
+
     // Reset booking selections
     setSelectedDate("");
     setSelectedTimeSlot("");
@@ -324,7 +324,7 @@ export default function ServiceDetails() {
     const days = [];
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    
+
     const current = new Date();
     for (let i = 0; i < 7; i++) {
       const nextDate = new Date();
@@ -401,12 +401,12 @@ export default function ServiceDetails() {
     if (!contactName || !contactEmail || !contactMessage) return;
 
     setIsSendingContact(true);
-    
+
     // Simulate sending email
     setTimeout(() => {
       setIsSendingContact(false);
       setContactSentSuccess(true);
-      
+
       // Auto close dialog after success message
       setTimeout(() => {
         setIsContactOpen(false);
@@ -425,7 +425,7 @@ export default function ServiceDetails() {
     if (!provider) return [];
     const sameCat = services.filter(s => s.category === provider.category && s.id !== provider.id);
     if (sameCat.length > 0) return sameCat.slice(0, 3);
-    
+
     // Fallback to top rated ones if none in same category
     return services.filter(s => s.id !== provider.id).slice(0, 3);
   }, [provider, services]);
@@ -523,11 +523,11 @@ export default function ServiceDetails() {
   return (
     <MainLayout>
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
-        
+
         {/* PROFILE HEADER HERO BANNER */}
         <section className="relative overflow-hidden bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 sm:py-16">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_50%)] pointer-events-none"></div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Back Button */}
             <NavLink to="/services" className="inline-flex items-center gap-2 text-xs font-semibold text-slate-300 hover:text-white transition-colors mb-6 bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-full backdrop-blur-xs">
@@ -536,14 +536,14 @@ export default function ServiceDetails() {
 
             <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-6">
               <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 sm:gap-6">
-                
+
                 {/* Profile Pic with Badge and Live Indicator */}
                 <div className="relative">
                   <Avatar className="w-24 h-24 sm:w-28 sm:h-28 border-4 border-white/90 shadow-xl rounded-full overflow-hidden bg-white shrink-0">
                     <AvatarImage src={provider.providerImage} className="object-cover w-full h-full" alt={provider.providerName} />
                     <AvatarFallback className="text-xl font-bold bg-primary/10 text-primary">{provider.providerName[0]}</AvatarFallback>
                   </Avatar>
-                  
+
                   {/* Verified Badge */}
                   <span className="absolute -bottom-1 -right-1 bg-green-500 text-white rounded-full p-1.5 shadow-md border-2 border-white" title="Verified Specialist">
                     <ShieldCheck className="h-4 w-4" />
@@ -585,11 +585,10 @@ export default function ServiceDetails() {
               {/* Availability Indicator */}
               <div className="shrink-0 flex flex-col items-center sm:items-end gap-1">
                 <span className="text-[10px] font-bold tracking-wider text-slate-300 uppercase">Availability Status</span>
-                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold ${
-                  provider.availability === "today" 
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold ${provider.availability === "today"
                     ? "bg-emerald-500/15 border-emerald-400/30 text-emerald-300"
                     : "bg-amber-500/15 border-amber-400/30 text-amber-300"
-                }`}>
+                  }`}>
                   <span className={`w-2 h-2 rounded-full ${provider.availability === "today" ? "bg-emerald-400 animate-pulse" : "bg-amber-400"}`}></span>
                   Available {provider.availability === "today" ? "Today" : (provider.availability === "weekend" ? "This Weekend" : "This Week")}
                 </span>
@@ -602,10 +601,10 @@ export default function ServiceDetails() {
         {/* PAGE GRID CONTENT */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
+
             {/* LEFT COLUMN: ABOUT, SKILLS, GALLERY, REVIEWS */}
             <div className="lg:col-span-2 space-y-8">
-              
+
               {/* SECTION 3: ABOUT */}
               <Card className="border border-slate-100 shadow-2xs hover:shadow-xs transition-shadow duration-300 bg-white p-6 rounded-2xl">
                 <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
@@ -693,15 +692,15 @@ export default function ServiceDetails() {
                 <CardContent className="p-0 pt-4">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {provider.gallery.map((photo, index) => (
-                      <div 
-                        key={index} 
+                      <div
+                        key={index}
                         onClick={() => setZoomImage(photo)}
                         className="group relative h-28 md:h-32 rounded-xl overflow-hidden cursor-zoom-in border border-slate-150 bg-slate-50 shadow-2xs"
                       >
-                        <img 
-                          src={photo.url} 
-                          alt={photo.caption} 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                        <img
+                          src={photo.url}
+                          alt={photo.caption}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-slate-955/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                           <ZoomIn className="h-6 w-6 text-white" />
@@ -738,7 +737,7 @@ export default function ServiceDetails() {
                   </Tabs>
                 </CardHeader>
                 <CardContent className="p-0 pt-6">
-                  
+
                   {/* Reviews Summary Stats Card */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center p-5 bg-slate-50 border border-slate-100 rounded-2xl mb-8">
                     <div className="text-center space-y-1">
@@ -823,7 +822,7 @@ export default function ServiceDetails() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {similarProviders.map((sim) => (
                     <Card key={sim.id} className="group overflow-hidden border border-slate-100 hover:border-slate-200 shadow-2xs hover:shadow-xs transition-all duration-300 hover:-translate-y-1 bg-white flex flex-col h-full rounded-xl">
-                      
+
                       {/* Image cover */}
                       <div className="relative h-32 w-full overflow-hidden shrink-0">
                         <img src={sim.image} alt={sim.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -836,7 +835,7 @@ export default function ServiceDetails() {
                       <div className="p-4 flex flex-col justify-between flex-1 gap-3">
                         <div>
                           <h3 className="font-bold text-slate-955 text-sm line-clamp-1 group-hover:text-accent transition-colors">
-                            <NavLink to={`/services/${sim.id}`} onClick={() => window.scrollTo(0,0)}>
+                            <NavLink to={`/services/${sim.id}`} onClick={() => window.scrollTo(0, 0)}>
                               {sim.name}
                             </NavLink>
                           </h3>
@@ -851,7 +850,7 @@ export default function ServiceDetails() {
 
                         <div className="flex items-center justify-between border-t border-slate-50 pt-2.5 mt-auto">
                           <span className="text-xs font-bold text-slate-950">${sim.price}<span className="text-slate-450 font-semibold text-[10px]">{sim.priceType}</span></span>
-                          <NavLink to={`/services/${sim.id}`} onClick={() => window.scrollTo(0,0)}>
+                          <NavLink to={`/services/${sim.id}`} onClick={() => window.scrollTo(0, 0)}>
                             <Button size="xs" variant="outline" className="h-7 text-[10px] font-bold border-slate-200 hover:bg-slate-50 rounded-lg text-slate-600">View Pro</Button>
                           </NavLink>
                         </div>
@@ -867,15 +866,15 @@ export default function ServiceDetails() {
             {/* RIGHT COLUMN: PRICING CARD, DATE/TIME SCHEDULER, CTAS */}
             <div className="lg:col-span-1">
               <div className="lg:sticky lg:top-24 space-y-6">
-                
+
                 {/* PRICING & BOOKING WIDGET */}
                 <Card className="border border-slate-150 shadow-md bg-white overflow-hidden rounded-2xl relative">
-                  
+
                   {/* Banner tag overlay */}
                   <div className="bg-slate-900 text-white py-3 px-5 flex items-center justify-between shrink-0">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Available Pricing</span>
                     <span className="text-[11px] font-extrabold text-primary flex items-center gap-1">
-                      <ShieldCheck className="h-3.5 w-3.5 text-secondary" /> Vetted Rates
+                      <ShieldCheck className="h-3.5 w-3.5 text-secondary" /> Verified Rates
                     </span>
                   </div>
 
@@ -918,7 +917,7 @@ export default function ServiceDetails() {
 
                   {/* CALENDAR & SCHEDULER */}
                   <div className="p-5 border-b border-slate-100 space-y-4">
-                    
+
                     {/* Date select title */}
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
@@ -943,11 +942,10 @@ export default function ServiceDetails() {
                               setSelectedDate(d.dateStr);
                               setDateAlert(false);
                             }}
-                            className={`flex flex-col items-center justify-center p-2.5 border rounded-xl min-w-[54px] snap-center transition-all ${
-                              isSelected 
+                            className={`flex flex-col items-center justify-center p-2.5 border rounded-xl min-w-[54px] snap-center transition-all ${isSelected
                                 ? "bg-primary border-primary text-white shadow-md shadow-primary/20"
                                 : "bg-white border-slate-200 text-slate-650 hover:bg-slate-50 hover:border-slate-300"
-                            }`}
+                              }`}
                           >
                             <span className="text-[9px] font-bold uppercase tracking-wider opacity-80">{d.dayName}</span>
                             <span className="text-sm font-black mt-0.5">{d.dayNum}</span>
@@ -987,11 +985,10 @@ export default function ServiceDetails() {
                                       setSelectedTimeSlot(slot);
                                       setTimeAlert(false);
                                     }}
-                                    className={`py-1.5 text-[11px] font-bold text-center border rounded-lg transition-all ${
-                                      isSelected
+                                    className={`py-1.5 text-[11px] font-bold text-center border rounded-lg transition-all ${isSelected
                                         ? "bg-primary border-primary text-white shadow-xs"
                                         : "bg-white border-slate-200 text-slate-650 hover:bg-slate-50 hover:border-slate-350"
-                                    }`}
+                                      }`}
                                   >
                                     {slot}
                                   </button>
@@ -1015,16 +1012,16 @@ export default function ServiceDetails() {
 
                   {/* ACTION PANEL BUTTONS */}
                   <div className="p-5 bg-slate-50 space-y-3 shrink-0">
-                    <Button 
+                    <Button
                       onClick={handleBooking}
                       className="w-full bg-primary hover:bg-secondary text-white font-extrabold py-5 rounded-xl flex items-center justify-center gap-2 text-sm shadow-md transition-all hover:scale-[1.01]"
                     >
                       <CalendarCheck className="h-4.5 w-4.5" />
                       Book Appointment Now
                     </Button>
-                    
-                    <Button 
-                      variant="outline" 
+
+                    <Button
+                      variant="outline"
                       onClick={() => setIsContactOpen(true)}
                       className="w-full border-slate-200 bg-white text-slate-650 hover:bg-slate-100 hover:text-slate-800 font-bold py-5 rounded-xl flex items-center justify-center gap-2 text-xs"
                     >
@@ -1151,17 +1148,17 @@ export default function ServiceDetails() {
               </div>
 
               <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2.5">
-                <Button 
-                  type="button" 
-                  variant="outline" 
+                <Button
+                  type="button"
+                  variant="outline"
                   onClick={() => setIsContactOpen(false)}
                   disabled={isSendingContact}
                   className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
                 >
                   Cancel
                 </Button>
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={isSendingContact}
                   className="rounded-xl bg-primary hover:bg-secondary text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
                 >

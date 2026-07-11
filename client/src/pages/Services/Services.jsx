@@ -6,17 +6,17 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-  MapPin, 
-  Search, 
-  Paintbrush, 
-  Droplet, 
-  Zap, 
-  Truck, 
-  Flower2, 
-  Heart, 
-  Star, 
-  ShieldAlert, 
+import {
+  MapPin,
+  Search,
+  Paintbrush,
+  Droplet,
+  Zap,
+  Truck,
+  Flower2,
+  Heart,
+  Star,
+  ShieldAlert,
   ArrowRight,
   SlidersHorizontal,
   X,
@@ -84,7 +84,7 @@ export default function Services() {
   const [selectedCategories, setSelectedCategories] = React.useState(
     initialCategory ? [initialCategory] : []
   );
-  
+
   // Hero values to be applied on click/submit
   const [heroSearch, setHeroSearch] = React.useState(initialSearch);
   const [heroLocation, setHeroLocation] = React.useState(initialLocation);
@@ -95,7 +95,7 @@ export default function Services() {
   const [customMaxPrice, setCustomMaxPrice] = React.useState("");
   const [minRating, setMinRating] = React.useState(0);
   const [availability, setAvailability] = React.useState("all");
-  
+
   // Sorting & Pagination
   const [sortBy, setSortBy] = React.useState("popularity");
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -180,7 +180,7 @@ export default function Services() {
     const nextCategories = selectedCategories.includes(catName)
       ? selectedCategories.filter((c) => c !== catName)
       : [...selectedCategories, catName];
-    
+
     setSelectedCategories(nextCategories);
     updateUrlParameters(nextCategories, searchQuery, selectedLocation);
   };
@@ -210,12 +210,12 @@ export default function Services() {
   };
 
   // Count active filters
-  const activeFilterCount = 
-    (searchQuery ? 1 : 0) + 
-    (selectedLocation !== "all" ? 1 : 0) + 
-    (selectedCategories.length) + 
-    (priceRange !== "all" || customMinPrice || customMaxPrice ? 1 : 0) + 
-    (minRating > 0 ? 1 : 0) + 
+  const activeFilterCount =
+    (searchQuery ? 1 : 0) +
+    (selectedLocation !== "all" ? 1 : 0) +
+    (selectedCategories.length) +
+    (priceRange !== "all" || customMinPrice || customMaxPrice ? 1 : 0) +
+    (minRating > 0 ? 1 : 0) +
     (availability !== "all" ? 1 : 0);
 
   // Trigger loading skeleton simulation on filter/sort changes
@@ -320,14 +320,14 @@ export default function Services() {
   return (
     <MainLayout>
       <div className="bg-slate-50 min-h-screen">
-        
+
         {/* HERO SECTION */}
         <section className="relative overflow-hidden py-16 lg:py-20 bg-background border-b border-border">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center gap-6">
             <span className="inline-flex items-center gap-1.5 bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full border border-accent/20">
-              <Sparkles className="h-3.5 w-3.5 fill-accent text-accent" /> Vetted Local Specialists
+              <Sparkles className="h-3.5 w-3.5 fill-accent text-accent" /> Verified Local Specialists
             </span>
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-text leading-tight max-w-3xl">
               Find and Book the Best <span className="text-accent">Local Services</span>
@@ -337,20 +337,20 @@ export default function Services() {
             </p>
 
             {/* HERO SEARCH BAR */}
-            <form 
+            <form
               onSubmit={handleHeroSearchSubmit}
               className="bg-white p-3 sm:p-4 rounded-2xl shadow-xl border border-border w-full max-w-3xl flex flex-col md:flex-row gap-3 items-center mt-4"
             >
               <div className="relative w-full md:flex-1">
                 <Search className="absolute left-3.5 top-3 h-5 w-5 text-secondary" />
-                <Input 
-                  placeholder="What service do you need?" 
+                <Input
+                  placeholder="What service do you need?"
                   value={heroSearch}
                   onChange={(e) => setHeroSearch(e.target.value)}
-                  className="pl-11 h-11 border-border focus-visible:ring-primary rounded-xl bg-white text-sm" 
+                  className="pl-11 h-11 border-border focus-visible:ring-primary rounded-xl bg-white text-sm"
                 />
               </div>
-              
+
               <div className="relative w-full md:w-60">
                 <MapPin className="absolute left-3.5 top-3 h-5 w-5 text-secondary" />
                 <select
@@ -370,7 +370,7 @@ export default function Services() {
                   </svg>
                 </div>
               </div>
-              
+
               <Button type="submit" className="w-full md:w-auto h-11 bg-primary hover:bg-secondary text-white rounded-xl px-8 shadow-sm transition-all font-semibold">
                 Search
               </Button>
@@ -379,7 +379,7 @@ export default function Services() {
         </section>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          
+
           {/* SERVICE CATEGORIES WITH ICONS */}
           <div className="mb-12">
             <div className="flex flex-col sm:flex-row justify-between items-baseline mb-6 gap-2">
@@ -388,7 +388,7 @@ export default function Services() {
                 <p className="text-xs text-gray-400 mt-0.5">Quickly narrow down service categories instantly</p>
               </div>
               {selectedCategories.length > 0 && (
-                <button 
+                <button
                   onClick={() => setSelectedCategories([])}
                   className="text-xs font-semibold text-primary hover:text-accent hover:underline flex items-center gap-1"
                 >
@@ -396,7 +396,7 @@ export default function Services() {
                 </button>
               )}
             </div>
-            
+
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {categories.map((cat, idx) => {
                 const IconComp = cat.icon;
@@ -406,17 +406,15 @@ export default function Services() {
                     key={idx}
                     type="button"
                     onClick={() => toggleCategory(cat.name)}
-                    className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 ${
-                      isSelected
+                    className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 ${isSelected
                         ? "bg-primary text-white border-primary shadow-md shadow-primary/20 -translate-y-0.5"
                         : "bg-white text-gray-900 border-gray-100 hover:shadow-md hover:-translate-y-0.5"
-                    }`}
+                      }`}
                   >
-                    <div className={`p-2.5 rounded-full mb-3 transition-colors ${
-                      isSelected 
-                        ? "bg-secondary text-white" 
+                    <div className={`p-2.5 rounded-full mb-3 transition-colors ${isSelected
+                        ? "bg-secondary text-white"
                         : cat.color
-                    }`}>
+                      }`}>
                       <IconComp className="h-5 w-5" />
                     </div>
                     <span className="text-xs font-bold">{cat.name}</span>
@@ -430,13 +428,13 @@ export default function Services() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
-            
+
             {/* DESKTOP SIDEBAR FILTERS */}
             <aside className="hidden lg:flex flex-col gap-6 bg-white p-6 rounded-2xl border border-gray-100 shadow-xs">
               <div className="flex items-center justify-between border-b border-gray-50 pb-4">
                 <span className="font-bold text-gray-950 text-base">Filters</span>
                 {activeFilterCount > 0 && (
-                  <button 
+                  <button
                     onClick={handleClearFilters}
                     className="text-xs text-primary hover:text-accent font-semibold transition-colors"
                   >
@@ -512,7 +510,7 @@ export default function Services() {
                     </label>
                   ))}
                 </div>
-                
+
                 {/* Custom price inputs */}
                 <div className="pt-2">
                   <span className="text-[11px] font-semibold text-gray-400">Custom Range ($)</span>
@@ -557,11 +555,10 @@ export default function Services() {
                       key={opt.value}
                       type="button"
                       onClick={() => setMinRating(opt.value)}
-                      className={`flex items-center justify-between text-left px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${
-                        minRating === opt.value
+                      className={`flex items-center justify-between text-left px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${minRating === opt.value
                           ? "bg-primary/5 text-primary border-primary/20"
                           : "bg-white text-gray-600 border-gray-100 hover:bg-gray-50"
-                      }`}
+                        }`}
                     >
                       <span className="flex items-center gap-1">
                         {opt.value > 0 && <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />}
@@ -606,10 +603,10 @@ export default function Services() {
 
             {/* MAIN LISTINGS PANEL */}
             <main className="lg:col-span-3">
-              
+
               {/* SORT & SEARCH ACTIONS HEADER */}
               <div className="bg-white p-4 rounded-2xl border border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 shadow-2xs">
-                
+
                 {/* Mobile Filter Button */}
                 <button
                   type="button"
@@ -664,7 +661,7 @@ export default function Services() {
               {activeFilterCount > 0 && (
                 <div className="flex flex-wrap items-center gap-2 mb-6">
                   <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Active:</span>
-                  
+
                   {searchQuery && (
                     <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-slate-100 hover:bg-slate-200">
                       Search: {searchQuery}
@@ -707,7 +704,7 @@ export default function Services() {
                     </Badge>
                   )}
 
-                  <button 
+                  <button
                     onClick={handleClearFilters}
                     className="text-xs font-semibold text-primary hover:text-accent ml-2"
                   >
@@ -772,19 +769,19 @@ export default function Services() {
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {paginatedServices.map((service) => (
-                      <Card 
-                        key={service.id} 
+                      <Card
+                        key={service.id}
                         className="group overflow-hidden p-0 py-0 gap-0 hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 border border-gray-100 flex flex-col h-full bg-white rounded-2xl relative"
                       >
-                        
+
                         {/* Service Photo */}
                         <div className="relative h-48 w-full overflow-hidden">
-                          <img 
-                            src={service.image} 
-                            alt={service.name} 
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                          <img
+                            src={service.image}
+                            alt={service.name}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
-                          
+
                           {/* Badge tag like "Top Rated" */}
                           {service.badge && (
                             <span className="absolute top-3 left-3 bg-accent text-primary text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-xs uppercase tracking-wider">
@@ -800,7 +797,7 @@ export default function Services() {
 
                         {/* Card Contents */}
                         <div className="p-5 flex flex-col gap-3 flex-1">
-                          
+
                           {/* Rating and reviews */}
                           <div className="flex items-center gap-1">
                             <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
@@ -821,13 +818,13 @@ export default function Services() {
 
                           {/* Provider and Location Details */}
                           <div className="flex items-center gap-2 mt-auto border-t border-gray-50 pt-3.5">
-                            <img 
-                              src={service.providerImage} 
-                              alt={service.providerName} 
+                            <img
+                              src={service.providerImage}
+                              alt={service.providerName}
                               className="h-6 w-6 rounded-full object-cover border border-gray-150"
                             />
                             <span className="text-xs font-bold text-gray-700">{service.providerName}</span>
-                            
+
                             <div className="flex items-center gap-0.5 text-xs text-gray-400 ml-auto font-medium">
                               <MapPin className="h-3 w-3 text-gray-400" />
                               <span>{service.location}</span>
@@ -865,7 +862,7 @@ export default function Services() {
                         <ChevronLeft className="h-4 w-4 mr-1.5" />
                         Previous
                       </Button>
-                      
+
                       <div className="flex items-center gap-1.5">
                         {[...Array(totalPages)].map((_, idx) => {
                           const pageNum = idx + 1;
@@ -874,11 +871,10 @@ export default function Services() {
                               key={pageNum}
                               type="button"
                               onClick={() => setCurrentPage(pageNum)}
-                              className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
-                                currentPage === pageNum
+                              className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${currentPage === pageNum
                                   ? "bg-primary text-white shadow-md shadow-primary/20"
                                   : "text-gray-600 hover:bg-slate-100 hover:text-gray-900"
-                              }`}
+                                }`}
                             >
                               {pageNum}
                             </button>
@@ -909,7 +905,7 @@ export default function Services() {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl text-white py-12 px-6 sm:px-12 md:py-16 md:px-20 text-center relative overflow-hidden shadow-xl border border-white/10">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_45%)] pointer-events-none"></div>
-            
+
             <div className="relative z-10 max-w-3xl mx-auto flex flex-col gap-6 items-center">
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
                 Grow Your Service Business with Us
@@ -917,7 +913,7 @@ export default function Services() {
               <p className="text-slate-300 text-base md:text-lg max-w-2xl">
                 Are you a local service specialist? Register as a provider on BookMyLocalService to discover new clients, coordinate schedules, and build your local reputation.
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mt-3">
                 <NavLink to="/provider/dashboard">
                   <Button size="lg" className="bg-accent hover:bg-accent/90 text-primary rounded-full font-bold shadow-md px-8 h-12 transition-transform hover:scale-[1.02]">
@@ -938,11 +934,11 @@ export default function Services() {
         {isMobileFilterOpen && (
           <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
             {/* Backdrop overlay */}
-            <div 
-              className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity" 
+            <div
+              className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
               onClick={() => setIsMobileFilterOpen(false)}
             ></div>
-            
+
             {/* Drawer Panel */}
             <div className="fixed top-0 bottom-0 left-0 z-50 w-full max-w-xs bg-white p-6 shadow-2xl flex flex-col gap-6 overflow-y-auto">
               <div className="flex items-center justify-between border-b border-gray-100 pb-4">
@@ -958,8 +954,8 @@ export default function Services() {
 
               {/* Reset button inside mobile filters */}
               {activeFilterCount > 0 && (
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="sm"
                   onClick={() => {
                     handleClearFilters();
@@ -1082,11 +1078,10 @@ export default function Services() {
                       key={opt.value}
                       type="button"
                       onClick={() => setMinRating(opt.value)}
-                      className={`flex items-center justify-between text-left px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${
-                        minRating === opt.value
+                      className={`flex items-center justify-between text-left px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${minRating === opt.value
                           ? "bg-primary/5 text-primary border-primary/20"
                           : "bg-white text-gray-600 border-gray-100 hover:bg-gray-50"
-                      }`}
+                        }`}
                     >
                       <span className="flex items-center gap-1">
                         {opt.value > 0 && <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />}

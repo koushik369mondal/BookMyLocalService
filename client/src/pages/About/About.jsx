@@ -3,20 +3,20 @@ import { NavLink } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Star, 
-  Sparkles, 
-  ShieldCheck, 
-  DollarSign, 
-  Clock, 
-  Users, 
-  ArrowRight, 
-  Award, 
-  Eye, 
-  Heart, 
-  Search, 
-  CheckCircle2, 
-  Lock, 
+import {
+  Star,
+  Sparkles,
+  ShieldCheck,
+  DollarSign,
+  Clock,
+  Users,
+  ArrowRight,
+  Award,
+  Eye,
+  Heart,
+  Search,
+  CheckCircle2,
+  Lock,
   HelpCircle,
   TrendingUp,
   Sliders,
@@ -29,36 +29,36 @@ export default function About() {
   return (
     <MainLayout>
       <div className="bg-slate-50 min-h-screen font-sans antialiased text-slate-800">
-        
+
         {/* HERO SECTION */}
         <section className="relative overflow-hidden py-20 lg:py-28 bg-white border-b border-slate-200">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
           <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-              
+
               {/* Text column */}
               <div className="lg:col-span-7 flex flex-col items-start text-left gap-6">
                 <span className="inline-flex items-center gap-1.5 bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full border border-accent/20">
                   <Star className="h-3.5 w-3.5 fill-accent text-accent animate-pulse" />
                   Trusted Local Service Marketplace
                 </span>
-                
+
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
                   About <br />
                   <span className="text-primary font-black">BookMyLocal</span>
                   <span className="text-accent font-black">Service</span>
                 </h1>
-                
+
                 <p className="text-lg sm:text-xl font-bold text-gray-800 border-l-4 border-accent pl-4 leading-relaxed">
                   Connecting People With Trusted Local Professionals
                 </p>
-                
+
                 <p className="text-base text-gray-500 leading-relaxed max-w-xl">
                   BookMyLocalService is India's premier neighborhood marketplace designed to help customers easily discover, compare, and instantly book verified local service providers. At the same time, we empower independent skilled professionals by providing them the tools and visibility they need to grow their businesses.
                 </p>
-                
+
                 <div className="flex flex-wrap gap-4 pt-2 w-full sm:w-auto">
                   <NavLink to="/services" className="w-full sm:w-auto">
                     <Button className="w-full sm:w-auto h-12 bg-primary hover:bg-secondary text-white rounded-xl px-8 font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
@@ -78,14 +78,14 @@ export default function About() {
               <div className="lg:col-span-5 relative">
                 <div className="absolute -inset-4 bg-accent/5 rounded-3xl blur-2xl opacity-50 -rotate-2"></div>
                 <div className="relative border border-slate-200 rounded-3xl overflow-hidden bg-white shadow-xl aspect-4/3 sm:aspect-video lg:aspect-square">
-                  <img 
-                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" 
-                    alt="Premium Home Interior" 
-                    className="w-full h-full object-cover" 
+                  <img
+                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+                    alt="Premium Home Interior"
+                    className="w-full h-full object-cover"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"></div>
-                  
+
                   {/* Floating Micro-Badge */}
                   <div className="absolute bottom-5 left-5 bg-white/95 backdrop-blur-xs p-3.5 rounded-2xl border border-gray-100 shadow-lg flex items-center gap-3">
                     <div className="p-2 bg-emerald-50 rounded-xl text-emerald-600">
@@ -93,7 +93,7 @@ export default function About() {
                     </div>
                     <div>
                       <span className="block text-[10px] text-slate-500 font-bold uppercase tracking-wider">Background Checks</span>
-                      <span className="text-xs font-extrabold text-gray-800">100% Vetted Pros</span>
+                      <span className="text-xs font-extrabold text-gray-800">100% Verified Pros</span>
                     </div>
                   </div>
                 </div>
@@ -107,14 +107,14 @@ export default function About() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-              
+
               {/* Image Left */}
               <div className="lg:col-span-6 relative order-last lg:order-first">
                 <div className="absolute -inset-4 bg-primary/5 rounded-3xl blur-2xl opacity-40 rotate-1"></div>
                 <div className="relative border border-slate-200 rounded-3xl overflow-hidden shadow-lg aspect-4/3 sm:aspect-video lg:aspect-4/3 bg-slate-100">
-                  <img 
-                    src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80" 
-                    alt="Service Provider Meeting Customer" 
+                  <img
+                    src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80"
+                    alt="Service Provider Meeting Customer"
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
@@ -136,7 +136,7 @@ export default function About() {
                 <div className="grid grid-cols-2 gap-6 pt-4 border-t border-gray-50">
                   <div>
                     <h4 className="font-extrabold text-gray-900 text-lg">No Gimmicks</h4>
-                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">Only direct bookings with vetted local pros</p>
+                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">Only direct bookings with Verified local pros</p>
                   </div>
                   <div>
                     <h4 className="font-extrabold text-gray-900 text-lg">Clear Pricing</h4>

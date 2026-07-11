@@ -251,7 +251,7 @@ const servicesData = [
     price: 55.0,
     priceType: "/hr",
     imageUrl: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
-    description: "Vetted arborists offering tree felling, hedge maintenance, root removal, and green garden cleanup.",
+    description: "Verified arborists offering tree felling, hedge maintenance, root removal, and green garden cleanup.",
     availability: "weekend",
     badge: "Verified"
   },
@@ -274,7 +274,7 @@ const servicesData = [
 
 async function main() {
   console.log("🌱 Start seeding...");
-  
+
   const hashedPassword = await bcrypt.hash("Password123", 10);
 
   // 1. Seed Providers
@@ -300,7 +300,7 @@ async function main() {
     } else {
       console.log(`Provider already exists: ${prov.fullName}`);
     }
-    
+
     providerMap[prov.fullName] = user.id;
   }
 

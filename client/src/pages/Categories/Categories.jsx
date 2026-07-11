@@ -5,18 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-  Paintbrush, 
-  Droplet, 
-  Zap, 
-  Truck, 
-  Flower2, 
-  Heart, 
-  Search, 
-  Briefcase, 
-  RefreshCw, 
-  Users, 
-  Layers, 
+import {
+  Paintbrush,
+  Droplet,
+  Zap,
+  Truck,
+  Flower2,
+  Heart,
+  Search,
+  Briefcase,
+  RefreshCw,
+  Users,
+  Layers,
   Sparkles,
   ArrowRight,
   ShieldAlert,
@@ -104,14 +104,14 @@ export default function Categories() {
   return (
     <MainLayout>
       <div className="bg-slate-50 min-h-screen">
-        
+
         {/* HERO SECTION - Mirrored from Services.jsx */}
         <section className="relative overflow-hidden py-16 lg:py-20 bg-background border-b border-border">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none"></div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center gap-6">
             <span className="inline-flex items-center gap-1.5 bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full border border-accent/20">
-              <Sparkles className="h-3.5 w-3.5 fill-accent text-accent" /> Vetted Local Specialists
+              <Sparkles className="h-3.5 w-3.5 fill-accent text-accent" /> Verified Local Specialists
             </span>
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-text leading-tight max-w-3xl">
               Browse <span className="text-accent">Service Categories</span>
@@ -124,11 +124,11 @@ export default function Categories() {
             <div className="w-full max-w-md flex items-center mt-2">
               <div className="relative w-full">
                 <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-secondary" />
-                <Input 
-                  placeholder="Search categories..." 
+                <Input
+                  placeholder="Search categories..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 h-11 border-border focus-visible:ring-primary rounded-xl bg-white text-xs text-slate-800 shadow-xs" 
+                  className="pl-10 h-11 border-border focus-visible:ring-primary rounded-xl bg-white text-xs text-slate-800 shadow-xs"
                 />
               </div>
             </div>
@@ -137,7 +137,7 @@ export default function Categories() {
 
         {/* LISTINGS CONTAINER */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          
+
           {/* LOADING SKELETON - Styled precisely like Services.jsx */}
           {loading && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -188,22 +188,22 @@ export default function Categories() {
                 const categoryColorStyles = getCategoryColors(category.name);
 
                 return (
-                  <Card 
-                    key={category.name} 
+                  <Card
+                    key={category.name}
                     className="group overflow-hidden p-0 py-0 gap-0 hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 border border-gray-100 flex flex-col h-full bg-white rounded-2xl relative"
                   >
                     {/* Category Photo Container */}
                     <div className="relative h-48 w-full overflow-hidden">
-                      <img 
-                        src={category.imageUrl || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80"} 
-                        alt={category.name} 
+                      <img
+                        src={category.imageUrl || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80"}
+                        alt={category.name}
                         onError={(e) => {
                           e.target.onerror = null;
                           e.target.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
                         }}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      
+
                       {/* Floating Category Badge Overlay */}
                       <span className={`absolute bottom-3 right-3 text-[10px] font-extrabold px-2.5 py-1 rounded-full border shadow-xs ${categoryColorStyles}`}>
                         {category.name}
@@ -212,7 +212,7 @@ export default function Categories() {
 
                     {/* Card Contents */}
                     <div className="p-5 flex flex-col gap-3 flex-1">
-                      
+
                       {/* Badge / icon header */}
                       <div className="flex items-center gap-1.5">
                         <span className="p-1 bg-primary/5 text-primary rounded-md">
@@ -237,7 +237,7 @@ export default function Categories() {
                           <Layers className="h-3.5 w-3.5 text-gray-400" />
                           <span>{category.serviceCount} Services</span>
                         </div>
-                        
+
                         <div className="flex items-center gap-1 text-xs text-gray-400 ml-auto font-medium">
                           <Users className="h-3.5 w-3.5 text-gray-400" />
                           <span className="font-bold text-gray-700">{category.providerCount} Providers</span>
@@ -250,9 +250,9 @@ export default function Categories() {
                           <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Access level</span>
                           <span className="font-extrabold text-slate-900 text-sm">Instant Book</span>
                         </div>
-                        <Button 
-                          onClick={() => handleExplore(category.name)} 
-                          size="sm" 
+                        <Button
+                          onClick={() => handleExplore(category.name)}
+                          size="sm"
                           className="bg-primary hover:bg-secondary text-white rounded-xl h-9 px-4 font-bold shadow-xs flex items-center gap-1 group-hover:scale-[1.01] transition-transform"
                         >
                           Explore Services

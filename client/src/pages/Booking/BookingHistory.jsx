@@ -16,18 +16,18 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { 
-  Search, 
-  Calendar, 
-  Clock, 
-  User, 
-  MapPin, 
-  CreditCard, 
-  Printer, 
-  RotateCcw, 
-  XCircle, 
-  TrendingUp, 
-  CheckCircle2, 
+import {
+  Search,
+  Calendar,
+  Clock,
+  User,
+  MapPin,
+  CreditCard,
+  Printer,
+  RotateCcw,
+  XCircle,
+  TrendingUp,
+  CheckCircle2,
   SlidersHorizontal,
   ChevronLeft,
   ChevronRight,
@@ -120,12 +120,12 @@ export default function BookingHistory() {
     let hrs = parseInt(match[1]);
     let mins = parseInt(match[2]);
     const meridiem = match[3].toUpperCase();
-    
+
     mins += 30;
     let endHrs = hrs;
     let endMins = mins;
     let endMeridiem = meridiem;
-    
+
     if (endMins >= 60) {
       endMins -= 60;
       endHrs += 1;
@@ -147,7 +147,7 @@ export default function BookingHistory() {
 
   const executeCancelBooking = async () => {
     if (!cancelTargetBooking) return;
-    
+
     try {
       const response = await bookingsService.updateBooking(cancelTargetBooking.id, {
         status: "cancelled",
@@ -228,8 +228,8 @@ export default function BookingHistory() {
     // Search query matching
     if (searchQuery.trim() !== "") {
       const q = searchQuery.toLowerCase();
-      result = result.filter(b => 
-        b.providerName.toLowerCase().includes(q) || 
+      result = result.filter(b =>
+        b.providerName.toLowerCase().includes(q) ||
         b.serviceName.toLowerCase().includes(q) ||
         b.id.toLowerCase().includes(q)
       );
@@ -287,17 +287,17 @@ export default function BookingHistory() {
   return (
     <MainLayout>
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
-        
+
         {/* BANNER HEADER */}
         <section className="bg-gradient-to-r from-primary via-secondary to-primary text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Your Booking History</h1>
               <p className="text-slate-300 text-xs sm:text-sm font-medium">Monitor appointments, download invoices, cancel upcoming service orders, or book again</p>
             </div>
-            
+
             {/* Quick dashboard back button */}
             <Link to="/customer/dashboard">
               <Button size="sm" className="bg-white/10 hover:bg-white/15 border border-white/5 rounded-full text-white text-xs font-bold px-5 h-9.5 backdrop-blur-xs">
@@ -311,12 +311,12 @@ export default function BookingHistory() {
         {/* STATISTICS PANEL */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-slate-100 p-5 rounded-2xl shadow-md">
-            
+
             <div className="text-center space-y-1 py-1">
               <span className="block text-2xl font-black text-slate-900">{stats.total}</span>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Bookings</span>
             </div>
-            
+
             <div className="text-center space-y-1 py-1 border-l border-slate-100">
               <span className="block text-2xl font-black text-primary">{stats.upcoming}</span>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Active Upcoming</span>
@@ -338,10 +338,10 @@ export default function BookingHistory() {
         {/* BOOKINGS LISTINGS CONTAINER */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
+
             {/* LEFT ACTIONS CONTROLS: FILTERS, SEARCH AND SORT */}
             <div className="lg:col-span-3 space-y-5 shrink-0">
-              
+
               {/* Search filter */}
               <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
                 <span className="text-xs font-bold text-slate-800 block mb-2.5 flex items-center gap-1.5">
@@ -351,7 +351,7 @@ export default function BookingHistory() {
                   <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-400">
                     <Search className="h-4 w-4" />
                   </span>
-                  <Input 
+                  <Input
                     placeholder="Search provider, ID..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -379,16 +379,14 @@ export default function BookingHistory() {
                         setActiveStatusTab(opt.id);
                         setCurrentPage(1);
                       }}
-                      className={`flex items-center justify-between text-left px-3.5 py-2.5 rounded-xl border text-xs font-semibold transition-all ${
-                        activeStatusTab === opt.id
+                      className={`flex items-center justify-between text-left px-3.5 py-2.5 rounded-xl border text-xs font-semibold transition-all ${activeStatusTab === opt.id
                           ? "bg-primary/5 text-primary border-primary/20 font-extrabold"
                           : "bg-white text-slate-600 border-slate-100 hover:bg-slate-50"
-                      }`}
+                        }`}
                     >
                       <span>{opt.label}</span>
-                      <span className={`text-[10px] py-0.5 px-2 rounded-full font-bold ${
-                        activeStatusTab === opt.id ? "bg-primary/10 text-primary" : "bg-slate-100 text-slate-400"
-                      }`}>
+                      <span className={`text-[10px] py-0.5 px-2 rounded-full font-bold ${activeStatusTab === opt.id ? "bg-primary/10 text-primary" : "bg-slate-100 text-slate-400"
+                        }`}>
                         {opt.count}
                       </span>
                     </button>
@@ -421,7 +419,7 @@ export default function BookingHistory() {
 
             {/* RIGHT COLUMN: BOOKINGS HISTORY CARDS GRID */}
             <main className="lg:col-span-9 space-y-6">
-              
+
               {error ? (
                 <div className="flex items-start gap-2.5 p-4 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-2xl animate-fade-in shadow-2xs">
                   <AlertCircle className="h-5 w-5 shrink-0 text-rose-600" />
@@ -450,7 +448,7 @@ export default function BookingHistory() {
                 </div>
               ) : paginatedBookings.length === 0 ? (
                 /* EMPTY STATE DISPLAY */
-                 <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
+                <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
                   <div className="p-4 bg-primary/5 text-primary rounded-full border border-primary/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
@@ -470,11 +468,11 @@ export default function BookingHistory() {
                 <>
                   <div className="space-y-4">
                     {paginatedBookings.map((b) => (
-                      <Card 
-                        key={b.id} 
+                      <Card
+                        key={b.id}
                         className="group overflow-hidden border border-slate-100 hover:border-slate-200 bg-white p-5 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 transition-all duration-300 hover:shadow-md"
                       >
-                        
+
                         {/* Left Details block */}
                         <div className="flex items-center gap-4.5 w-full md:w-auto">
                           {/* Provider Image */}
@@ -482,18 +480,18 @@ export default function BookingHistory() {
                             <AvatarImage src={b.providerImage} className="object-cover w-full h-full" alt={b.providerName} />
                             <AvatarFallback>{b.providerName[0]}</AvatarFallback>
                           </Avatar>
-                          
+
                           {/* Info descriptions */}
                           <div className="space-y-1 flex-1">
                             <div className="flex flex-wrap items-center gap-2">
                               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">#{b.id}</span>
                               {getStatusBadge(b.status)}
                             </div>
-                            
+
                             <h3 className="font-extrabold text-slate-950 text-sm leading-snug group-hover:text-accent transition-colors">
                               {b.serviceName}
                             </h3>
-                            
+
                             <div className="flex flex-wrap items-center gap-y-1 gap-x-3.5 text-slate-500 text-[11px] font-medium">
                               <span className="text-slate-800 font-bold">{b.providerName}</span>
                               <span className="w-1 h-1 rounded-full bg-slate-300"></span>
@@ -512,7 +510,7 @@ export default function BookingHistory() {
 
                         {/* Right Actions & Pricing Column */}
                         <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center w-full md:w-auto gap-4 md:gap-3 border-t border-slate-50 md:border-0 pt-4.5 md:pt-0 shrink-0">
-                          
+
                           {/* Price Tag */}
                           <div className="flex flex-col md:text-right">
                             <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Amount Paid</span>
@@ -521,19 +519,19 @@ export default function BookingHistory() {
 
                           {/* CTA button layouts */}
                           <div className="flex items-center gap-2">
-                            <Button 
-                              size="xs" 
-                              variant="outline" 
+                            <Button
+                              size="xs"
+                              variant="outline"
                               onClick={() => handleOpenDetails(b)}
                               className="h-8 text-[10px] font-bold border-slate-200 hover:bg-slate-50 rounded-lg text-slate-650"
                             >
                               View Invoice
                             </Button>
-                            
+
                             {b.status === "upcoming" ? (
-                              <Button 
-                                size="xs" 
-                                variant="outline" 
+                              <Button
+                                size="xs"
+                                variant="outline"
                                 onClick={() => handleCancelBooking(b)}
                                 className="h-8 text-[10px] font-bold border-rose-200 bg-white hover:bg-rose-50 text-rose-600 rounded-lg"
                               >
@@ -541,8 +539,8 @@ export default function BookingHistory() {
                               </Button>
                             ) : (
                               <Link to={`/services/${b.serviceId}`}>
-                                <Button 
-                                  size="xs" 
+                                <Button
+                                  size="xs"
                                   className="h-8 text-[10px] font-bold bg-primary hover:bg-secondary text-white rounded-lg flex items-center gap-1"
                                 >
                                   <RotateCcw className="h-3 w-3" />
@@ -571,7 +569,7 @@ export default function BookingHistory() {
                         <ChevronLeft className="h-4 w-4 mr-1.5" />
                         Previous
                       </Button>
-                      
+
                       <div className="flex items-center gap-1.5">
                         {[...Array(totalPages)].map((_, idx) => {
                           const pageNum = idx + 1;
@@ -580,11 +578,10 @@ export default function BookingHistory() {
                               key={pageNum}
                               type="button"
                               onClick={() => setCurrentPage(pageNum)}
-                              className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
-                                currentPage === pageNum
+                              className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${currentPage === pageNum
                                   ? "bg-primary text-white shadow-md shadow-primary/20"
                                   : "text-slate-600 hover:bg-slate-100"
-                              }`}
+                                }`}
                             >
                               {pageNum}
                             </button>
@@ -647,16 +644,16 @@ export default function BookingHistory() {
           )}
 
           <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2">
-            <Button 
-              type="button" 
-              variant="outline" 
+            <Button
+              type="button"
+              variant="outline"
               onClick={() => setIsCancelConfirmOpen(false)}
               className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
             >
               Close
             </Button>
-            <Button 
-              type="button" 
+            <Button
+              type="button"
               onClick={executeCancelBooking}
               className="rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
             >
@@ -670,7 +667,7 @@ export default function BookingHistory() {
       <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
         {selectedBooking && (
           <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-0 overflow-hidden">
-            
+
             {/* Header booking ID banner */}
             <div className="bg-slate-900 text-white py-4 px-6 flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -680,12 +677,12 @@ export default function BookingHistory() {
                 </span>
               </div>
               <span className="text-xs font-extrabold text-accent flex items-center gap-1">
-                <ShieldCheck className="h-4 w-4" /> Vetted Invoice
+                <ShieldCheck className="h-4 w-4" /> Verified Invoice
               </span>
             </div>
 
             <div className="p-6 space-y-6">
-              
+
               {/* Provider Info */}
               <div className="flex items-center gap-3.5 p-3.5 bg-slate-50 border border-slate-100 rounded-2xl">
                 <Avatar className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-white shadow-2xs">
@@ -722,7 +719,7 @@ export default function BookingHistory() {
               {/* Inclusions breakdown */}
               <div className="space-y-2">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Billing Breakdown</span>
-                
+
                 <div className="space-y-2 border-b border-slate-100 pb-3 text-xs text-slate-550 font-semibold">
                   <div className="flex justify-between">
                     <span>Service Package ({selectedBooking.plan}):</span>
@@ -764,17 +761,17 @@ export default function BookingHistory() {
             </div>
 
             <DialogFooter className="p-6 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row gap-2">
-              <Button 
-                type="button" 
+              <Button
+                type="button"
                 onClick={() => handlePrintInvoice(selectedBooking)}
                 className="rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs h-9.5 w-full sm:w-auto flex items-center justify-center gap-1.5"
               >
                 <Printer className="h-4 w-4" />
                 Print Invoice
               </Button>
-              <Button 
-                type="button" 
-                variant="outline" 
+              <Button
+                type="button"
+                variant="outline"
                 onClick={() => setIsDetailsOpen(false)}
                 className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
               >

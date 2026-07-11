@@ -160,7 +160,7 @@ const sendOtpEmail = async (email, otp) => {
                 </div>
                 <div class="footer">
                     <p><strong>BookMyLocalService</strong></p>
-                    <p>Find and Book Vetted Local Service Specialists</p>
+                    <p>Find and Book Verified Local Service Specialists</p>
                     <p>&copy; 2026 BookMyLocalService. All rights reserved.</p>
                 </div>
             </div>
@@ -175,13 +175,13 @@ const sendOtpEmail = async (email, otp) => {
         return info;
     } catch (sendError) {
         console.error("[SMTP] Failed to send OTP Email. Complete Nodemailer Error:", sendError);
-        
+
         if (sendError.code === 'EAUTH') {
             console.error("[SMTP Error Explanation] EAUTH: Gmail SMTP authentication failed. Check that EMAIL_USER matches your Gmail address and EMAIL_PASS is a valid 16-character App Password (not your regular account password). App Passwords require 2-Step Verification to be enabled on your Google Account.");
         } else {
             console.error("[SMTP Error Explanation] An unexpected SMTP error occurred. Please verify your internet connection, port, and security settings.");
         }
-        
+
         throw sendError;
     }
 };

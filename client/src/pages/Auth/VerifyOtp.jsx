@@ -5,9 +5,9 @@ import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/ui/logo";
 import { toast } from "react-hot-toast";
-import { 
-  ArrowRight, 
-  ShieldAlert, 
+import {
+  ArrowRight,
+  ShieldAlert,
   Loader2,
   Sparkles,
   ShieldCheck,
@@ -19,7 +19,7 @@ export default function VerifyOtp() {
   const navigate = useNavigate();
   const location = useLocation();
   const { verifyOtp, resendOtp } = useAuth();
-  
+
   // Retrieve email, flow, and registration data passed from parent pages
   const email = location.state?.email || "";
   const flow = location.state?.flow || "login";
@@ -28,7 +28,7 @@ export default function VerifyOtp() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResending, setIsResending] = useState(false);
-  
+
   // Timer states (60 seconds countdown)
   const [timer, setTimer] = useState(60);
   const [canResend, setCanResend] = useState(false);
@@ -98,7 +98,7 @@ export default function VerifyOtp() {
   const handlePaste = (e) => {
     e.preventDefault();
     const pasteData = e.clipboardData.getData("text").trim().replace(/[^0-9]/g, "");
-    
+
     if (pasteData.length === 6) {
       const pasteOtp = pasteData.split("");
       setOtp(pasteOtp);
@@ -162,17 +162,17 @@ export default function VerifyOtp() {
   return (
     <MainLayout>
       <div className="min-h-[85vh] bg-slate-50/50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
-        
+
         {/* Container box */}
         <div className="max-w-5xl w-full bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] transition-all duration-300 hover:shadow-2xl">
-          
+
           {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
           <div className="lg:col-span-5 bg-gradient-to-br from-primary via-secondary to-primary p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
-            
+
             {/* Mesh shapes and overlays */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
             <div className="absolute -top-32 -left-32 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
-            
+
             <div className="relative z-10 shrink-0">
               <Logo size={36} showText={true} />
             </div>
@@ -181,7 +181,7 @@ export default function VerifyOtp() {
             <div className="relative z-10 space-y-6 my-auto pt-10">
               <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-slate-300 border border-white/5 backdrop-blur-xs">
                 <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-                Vetted Local Pros
+                Verified Local Pros
               </span>
               <h2 className="text-3xl font-black leading-tight tracking-tight">
                 Secure & Fast Access.
@@ -225,7 +225,7 @@ export default function VerifyOtp() {
 
           {/* RIGHT PANEL: AUTHENTICATION FORM CARD */}
           <div className="lg:col-span-7 p-8 sm:p-12 md:p-14 flex flex-col justify-center bg-white relative">
-            
+
             {/* Platform branding on mobile */}
             <div className="lg:hidden mb-6 flex justify-center">
               <Logo size={32} showText={true} />
@@ -244,7 +244,7 @@ export default function VerifyOtp() {
                 <label className="text-xs font-bold text-slate-700 block text-center lg:text-left">
                   Enter 6-Digit OTP Code
                 </label>
-                
+
                 {/* 6 Digit Inputs */}
                 <div className="flex justify-between gap-2 max-w-sm mx-auto lg:mx-0">
                   {otp.map((data, index) => (
@@ -262,7 +262,7 @@ export default function VerifyOtp() {
                     />
                   ))}
                 </div>
-                
+
                 <p className="text-[11px] text-slate-450 text-center lg:text-left">
                   The code will expire in <span className="font-semibold text-slate-700">5 minutes</span>.
                 </p>
@@ -299,15 +299,14 @@ export default function VerifyOtp() {
                   <span className="text-[10px] text-slate-450 font-medium">Check your spam folder or try again.</span>
                 </div>
               </div>
-              
+
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleResend}
                 disabled={!canResend || isResending || isSubmitting}
-                className={`h-9 font-extrabold text-xs rounded-xl flex items-center gap-1.5 shadow-2xs border-slate-200 bg-white ${
-                  canResend ? "text-primary hover:bg-slate-50 cursor-pointer" : "text-slate-400"
-                }`}
+                className={`h-9 font-extrabold text-xs rounded-xl flex items-center gap-1.5 shadow-2xs border-slate-200 bg-white ${canResend ? "text-primary hover:bg-slate-50 cursor-pointer" : "text-slate-400"
+                  }`}
               >
                 {isResending ? (
                   <>

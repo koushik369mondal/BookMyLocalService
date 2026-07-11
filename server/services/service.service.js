@@ -376,7 +376,7 @@ const getServiceCategories = async () => {
         imageUrl: service.imageUrl
       };
     }
-    
+
     categoryMap[cat].serviceCount += 1;
     if (service.provider && service.provider.isVerified) {
       categoryMap[cat].providerIds.add(service.provider.id);
@@ -385,7 +385,7 @@ const getServiceCategories = async () => {
 
   const descriptions = {
     "Home Cleaning": "Professional cleaning services for a spotless, healthy home environment.",
-    "Plumbing": "Reliable leakage repairs, pipe fitting, and sudden clog removals by vetted plumbers.",
+    "Plumbing": "Reliable leakage repairs, pipe fitting, and sudden clog removals by Verified plumbers.",
     "Electrical": "Certified electricians for smart home automation, wiring installation, and upgrades.",
     "Moving & Packing": "Secure wrapping, loading, and transit services for stress-free relocations.",
     "Lawn & Garden": "Expert landscaping, grass mowing, and garden upkeep by professional arborists.",

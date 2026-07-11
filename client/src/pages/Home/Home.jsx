@@ -4,20 +4,20 @@ import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  MapPin, 
-  Search, 
-  Paintbrush, 
-  Droplet, 
-  Zap, 
-  Truck, 
-  Flower2, 
-  Heart, 
-  Star, 
-  ShieldAlert, 
-  CircleDollarSign, 
-  Smile, 
-  CalendarCheck, 
+import {
+  MapPin,
+  Search,
+  Paintbrush,
+  Droplet,
+  Zap,
+  Truck,
+  Flower2,
+  Heart,
+  Star,
+  ShieldAlert,
+  CircleDollarSign,
+  Smile,
+  CalendarCheck,
   ArrowRight,
   Quote
 } from "lucide-react";
@@ -77,7 +77,7 @@ const steps = [
   {
     step: "02",
     title: "Choose Your Pro",
-    description: "Compare vetted providers based on verified reviews, transparent pricing, and scheduling."
+    description: "Compare Verified providers based on verified reviews, transparent pricing, and scheduling."
   },
   {
     step: "03",
@@ -89,7 +89,7 @@ const steps = [
 // Why choose us features
 const features = [
   {
-    title: "Vetted Professionals",
+    title: "Verified Professionals",
     description: "Every service provider is background-checked and identity-verified to ensure absolute safety and quality.",
     icon: ShieldAlert,
     color: "bg-primary/5 text-primary border-primary/10"
@@ -160,41 +160,41 @@ export default function Home() {
   }, []);
 
   // Map database services if available, fallback to mock providers
-  const displayProviders = dbServices.length > 0 
+  const displayProviders = dbServices.length > 0
     ? dbServices.slice(0, 3).map(service => ({
-        id: service.id,
-        name: service.provider?.fullName || "Verified Provider",
-        service: service.category || service.title,
-        rating: service.rating,
-        reviews: service.reviewCount,
-        location: service.location,
-        price: `$${service.price}${service.priceType}`,
-        image: service.imageUrl,
-        badge: service.badge
-      }))
+      id: service.id,
+      name: service.provider?.fullName || "Verified Provider",
+      service: service.category || service.title,
+      rating: service.rating,
+      reviews: service.reviewCount,
+      location: service.location,
+      price: `$${service.price}${service.priceType}`,
+      image: service.imageUrl,
+      badge: service.badge
+    }))
     : providers;
 
   return (
     <MainLayout>
       <div className="bg-slate-50 min-h-screen">
-        
+
         {/* HERO SECTION */}
         <section className="relative overflow-hidden py-16 lg:py-24 bg-background">
           <div className="absolute inset-0 bg-linear-to-b from-primary/5 to-transparent pointer-events-none"></div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-              
+
               {/* Left Column (Hero Copy) */}
               <div className="lg:col-span-7 flex flex-col gap-6 text-center lg:text-left">
                 <span className="inline-flex items-center gap-1.5 self-center lg:self-start bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full border border-accent/20">
-                  <Star className="h-3 w-3 fill-accent text-accent" /> Vetted Local Professionals
+                  <Star className="h-3 w-3 fill-accent text-accent" /> Verified Local Professionals
                 </span>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-text leading-tight">
                   Your Trusted Partner for <span className="text-accent">Local Services</span>
                 </h1>
                 <p className="text-lg text-secondary max-w-2xl mx-auto lg:mx-0">
-                  Book home cleaning, plumbing, electrical tasks, and more instantly. Enjoy vetted local experts and clear upfront pricing.
+                  Book home cleaning, plumbing, electrical tasks, and more instantly. Enjoy Verified local experts and clear upfront pricing.
                 </p>
 
                 {/* Hero CTA buttons */}
@@ -231,9 +231,9 @@ export default function Home() {
               {/* Right Column (Hero Graphic) */}
               <div className="lg:col-span-5 relative flex justify-center">
                 <div className="absolute -inset-4 bg-primary/10 rounded-full filter blur-2xl opacity-50 scale-95 animate-pulse pointer-events-none"></div>
-                <img 
-                  src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80" 
-                  alt="Cleaning Service Professional" 
+                <img
+                  src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80"
+                  alt="Cleaning Service Professional"
                   className="rounded-3xl shadow-2xl w-full max-w-md object-cover aspect-4/3 relative z-10 border-4 border-white"
                 />
               </div>
@@ -246,15 +246,15 @@ export default function Home() {
         <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12 flex flex-col gap-3">
             <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">Explore Popular Categories</h2>
-            <p className="text-gray-500">Find vetted professionals for your exact local service requirements.</p>
+            <p className="text-gray-500">Find Verified professionals for your exact local service requirements.</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
             {categories.map((cat, idx) => {
               const IconComp = cat.icon;
               return (
-                <Card 
-                  key={idx} 
+                <Card
+                  key={idx}
                   className="hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-gray-100 bg-white p-0 py-0 gap-0 flex flex-col items-center justify-center text-center group h-48"
                 >
                   <CardContent className="p-6 flex flex-col items-center gap-4">
@@ -391,12 +391,12 @@ export default function Home() {
                   <p className="text-sm text-gray-600 leading-relaxed italic">
                     "{test.quote}"
                   </p>
-                  
+
                   {/* Testimonial Author details */}
                   <div className="flex items-center gap-3 border-t border-gray-50 pt-4 mt-auto">
-                    <img 
-                      src={test.avatar} 
-                      alt={test.author} 
+                    <img
+                      src={test.avatar}
+                      alt={test.author}
                       className="h-10 w-10 rounded-full object-cover border border-gray-150"
                     />
                     <div>
