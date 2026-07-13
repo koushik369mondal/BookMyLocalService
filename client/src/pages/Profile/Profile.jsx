@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import MainLayout from "../../layouts/MainLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 import { useAuth } from "../../context/AuthContext";
 import { authService } from "../../services/api";
 import { Button } from "@/components/ui/button";
@@ -98,9 +98,18 @@ export default function Profile() {
   const navigate = useNavigate();
   const { user, loading: authLoading, logout, reloadUser } = useAuth();
   const fileInputRef = useRef(null);
+  const location = useLocation();
 
   // Active section tab state
   const [activeTab, setActiveTab] = useState("details");
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get("tab");
+    if (tab && ["details", "addresses", "settings", "security", "bookings"].includes(tab)) {
+      setActiveTab(tab);
+    }
+  }, [location]);
 
   // Settings states (local preferences)
   const [emailNotifs, setEmailNotifs] = useState(true);
@@ -315,11 +324,11 @@ export default function Profile() {
   // Show loading while auth is resolving
   if (authLoading || !user) {
     return (
-      <MainLayout>
-        <div className="min-h-screen flex items-center justify-center bg-slate-50/50">
+      <DashboardLayout>
+        <div className="min-h-[50vh] flex items-center justify-center bg-slate-50/50">
           <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
         </div>
-      </MainLayout>
+      </DashboardLayout>
     );
   }
 
@@ -327,7 +336,7 @@ export default function Profile() {
   const initials = user.fullName ? user.fullName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) : "?";
 
   return (
-    <MainLayout>
+    <DashboardLayout>
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* Hidden File Picker Input */}
@@ -435,51 +444,6 @@ export default function Profile() {
                   <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-semibold">
                     <Mail className="h-3 w-3" /> {user.email}
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Menu Navigation Card */}
-              <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-4.5">
-                <CardContent className="p-0 flex flex-col gap-1.5">
-                  {[
-                    { id: "details", label: "Personal Information", icon: User },
-                    { id: "addresses", label: "Saved Locations", icon: MapPin },
-                    { id: "settings", label: "Preferences & Toggles", icon: Bell },
-                    { id: "security", label: "Security & Password", icon: Lock },
-                    { id: "bookings", label: "Recent Bookings", icon: Calendar }
-                  ].map((menu) => {
-                    const isActive = activeTab === menu.id;
-                    return (
-                      <button
-                        key={menu.id}
-                        type="button"
-                        onClick={() => {
-                          setActiveTab(menu.id);
-                          setSuccessMsg("");
-                          setErrorMsg("");
-                        }}
-                        className={`flex items-center gap-3 text-xs font-semibold px-4 py-3 rounded-xl transition-all ${
-                          isActive 
-                            ? "bg-slate-900/5 text-slate-900 border-slate-900/20 font-extrabold"
-                            : "bg-white text-slate-600 hover:bg-slate-50"
-                        }`}
-                      >
-                        <menu.icon className={`h-4.5 w-4.5 ${isActive ? "text-slate-900" : "text-slate-400"}`} />
-                        {menu.label}
-                      </button>
-                    );
-                  })}
-
-                  <hr className="border-slate-100 my-1.5" />
-
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="flex items-center gap-3 text-xs font-bold px-4 py-3 text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
-                  >
-                    <LogOut className="h-4.5 w-4.5" />
-                    Sign Out Account
-                  </button>
                 </CardContent>
               </Card>
 
@@ -1032,6 +996,6 @@ export default function Profile() {
         </DialogContent>
       </Dialog>
 
-    </MainLayout>
+    </DashboardLayout>
   );
 }

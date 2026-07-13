@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MainLayout from "../../layouts/MainLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -157,7 +157,7 @@ export default function Subscription() {
   ];
 
   return (
-    <MainLayout>
+    <DashboardLayout>
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
@@ -664,7 +664,7 @@ export default function Subscription() {
         </DialogContent>
       </Dialog>
 
-    </MainLayout>
+    </DashboardLayout>
   );
 }
 

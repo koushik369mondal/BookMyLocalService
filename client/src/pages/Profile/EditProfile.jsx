@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import MainLayout from "../../layouts/MainLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 import { useAuth } from "../../context/AuthContext";
 import { authService } from "../../services/api";
 import { Button } from "@/components/ui/button";
@@ -167,18 +167,18 @@ export default function EditProfile() {
 
   if (authLoading || !user) {
     return (
-      <MainLayout>
-        <div className="min-h-screen flex items-center justify-center bg-slate-50/50">
+      <DashboardLayout>
+        <div className="min-h-[50vh] flex items-center justify-center bg-slate-50/50">
           <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
         </div>
-      </MainLayout>
+      </DashboardLayout>
     );
   }
 
   const initials = user.fullName ? user.fullName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) : "?";
 
   return (
-    <MainLayout>
+    <DashboardLayout>
       <div className="bg-slate-50/50 min-h-screen py-12 px-4 sm:px-6 lg:px-8 font-sans">
         
         {/* Hidden File Picker Input */}
@@ -380,6 +380,6 @@ export default function EditProfile() {
 
         </div>
       </div>
-    </MainLayout>
+    </DashboardLayout>
   );
 }

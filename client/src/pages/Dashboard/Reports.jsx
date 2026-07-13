@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MainLayout from "../../layouts/MainLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -129,7 +129,7 @@ export default function Reports() {
   const barWidth = 30;
 
   return (
-    <MainLayout>
+    <DashboardLayout>
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
@@ -523,6 +523,6 @@ export default function Reports() {
         </div>
       </div>
 
-    </MainLayout>
+    </DashboardLayout>
   );
 }

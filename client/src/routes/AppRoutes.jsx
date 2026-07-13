@@ -12,18 +12,26 @@ import BookingSuccess from "../pages/Booking/BookingSuccess";
 import BookingHistory from "../pages/Booking/BookingHistory";
 import Profile from "../pages/Profile/Profile";
 import EditProfile from "../pages/Profile/EditProfile";
+import Favorites from "../pages/Profile/Favorites";
+import Notifications from "../pages/Profile/Notifications";
+import PaymentMethods from "../pages/Profile/PaymentMethods";
 import CustomerDashboard from "../pages/Dashboard/CustomerDashboard";
 import ProviderDashboard from "../pages/Dashboard/ProviderDashboard";
+import ProviderJobs from "../pages/Dashboard/ProviderJobs";
 import Availability from "../pages/Dashboard/Availability";
 import Earnings from "../pages/Dashboard/Earnings";
 import Reviews from "../pages/Dashboard/Reviews";
 import Subscription from "../pages/Dashboard/Subscription";
+import ProviderSettings from "../pages/Dashboard/ProviderSettings";
 import AdminDashboard from "../pages/Dashboard/AdminDashboard";
 import ManageUsers from "../pages/Dashboard/ManageUsers";
 import ManageProviders from "../pages/Dashboard/ManageProviders";
+import AdminBookings from "../pages/Dashboard/AdminBookings";
 import Payments from "../pages/Dashboard/Payments";
 import Reports from "../pages/Dashboard/Reports";
 import Analytics from "../pages/Dashboard/Analytics";
+import AdminServices from "../pages/Dashboard/AdminServices";
+import AdminSettings from "../pages/Dashboard/AdminSettings";
 import Categories from "../pages/Categories/Categories";
 import About from "../pages/About/About";
 import Contact from "../pages/Contact/Contact";
@@ -47,18 +55,26 @@ export default function AppRoutes() {
             <Route path="/bookings" element={<BookingHistory />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/edit" element={<EditProfile />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/payment-methods" element={<PaymentMethods />} />
             <Route path="/customer/dashboard" element={<CustomerDashboard />} />
             <Route path="/provider/dashboard" element={<ProviderDashboard />} />
+            <Route path="/provider/jobs" element={<ProviderJobs />} />
             <Route path="/provider/availability" element={<Availability />} />
             <Route path="/provider/earnings" element={<Earnings />} />
             <Route path="/provider/reviews" element={<Reviews />} />
             <Route path="/provider/subscription" element={<Subscription />} />
+            <Route path="/provider/settings" element={<ProviderSettings />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/users" element={<ManageUsers />} />
             <Route path="/admin/providers" element={<ManageProviders />} />
+            <Route path="/admin/bookings" element={<AdminBookings />} />
             <Route path="/admin/payments" element={<Payments />} />
             <Route path="/admin/reports" element={<Reports />} />
             <Route path="/admin/analytics" element={<Analytics />} />
+            <Route path="/admin/services" element={<AdminServices />} />
+            <Route path="/admin/settings" element={<AdminSettings />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );

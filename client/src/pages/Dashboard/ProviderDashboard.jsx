@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MainLayout from "../../layouts/MainLayout";
+import DashboardLayout from "../../layouts/DashboardLayout";
+import DashboardCards from "../../components/navigation/DashboardCards";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -162,7 +163,7 @@ export default function ProviderDashboard() {
   };
 
   return (
-    <MainLayout>
+    <DashboardLayout>
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
         
         {/* TOP PATH BANNER */}
@@ -242,6 +243,14 @@ export default function ProviderDashboard() {
             </Card>
 
           </div>
+        </section>
+
+        {/* QUICK ACTIONS CARDS */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">
+            Quick Actions
+          </h3>
+          <DashboardCards role="PROVIDER" />
         </section>
 
         {/* DETAILS GRID LAYOUT */}
@@ -671,7 +680,7 @@ export default function ProviderDashboard() {
         </DialogContent>
       </Dialog>
 
-    </MainLayout>
+    </DashboardLayout>
   );
 }
 
