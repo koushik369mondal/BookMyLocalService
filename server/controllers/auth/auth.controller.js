@@ -375,7 +375,7 @@ const verifyOtp = async (req, res) => {
         const isMatch = await bcrypt.compare(otp, user.otpHash);
         if (!isMatch) {
             const updatedAttempts = user.otpAttempts + 1;
-            
+
             if (updatedAttempts >= 5) {
                 // Invalidate OTP
                 await prisma.user.update({
@@ -396,9 +396,9 @@ const verifyOtp = async (req, res) => {
             });
 
             const remaining = 5 - updatedAttempts;
-            return res.status(400).json({ 
-                success: false, 
-                message: `Invalid verification code. ${remaining} attempts remaining.` 
+            return res.status(400).json({
+                success: false,
+                message: `Invalid verification code. ${remaining} attempts remaining.`
             });
         }
 
@@ -413,7 +413,7 @@ const verifyOtp = async (req, res) => {
         });
 
         const token = generateToken(user.id, user.role);
-        
+
         // Remove sensitive fields
         const safeUser = {
             id: user.id,
@@ -466,18 +466,18 @@ const registerSendOtp = async (req, res) => {
         // Check if verified email exists
         const existingEmailUser = await prisma.user.findUnique({ where: { email: normalizedEmail } });
         if (existingEmailUser && existingEmailUser.isVerified) {
-            return res.status(400).json({ 
-                success: false, 
-                message: "An account with this email already exists. Please log in." 
+            return res.status(400).json({
+                success: false,
+                message: "An account with this email already exists. Please log in."
             });
         }
 
         // Check if verified phone exists
         const existingPhoneUser = await prisma.user.findUnique({ where: { phone: normalizedPhone } });
         if (existingPhoneUser && existingPhoneUser.isVerified) {
-            return res.status(400).json({ 
-                success: false, 
-                message: "A user with this phone number already exists." 
+            return res.status(400).json({
+                success: false,
+                message: "A user with this phone number already exists."
             });
         }
 
@@ -498,7 +498,7 @@ const registerSendOtp = async (req, res) => {
         if (existingEmailUser && !existingEmailUser.isVerified) {
             await prisma.user.delete({ where: { id: existingEmailUser.id } });
         }
-        
+
         const duplicatePhoneUser = await prisma.user.findUnique({ where: { phone: normalizedPhone } });
         if (duplicatePhoneUser && !duplicatePhoneUser.isVerified) {
             await prisma.user.delete({ where: { id: duplicatePhoneUser.id } });
@@ -587,7 +587,7 @@ const registerVerifyOtp = async (req, res) => {
         const isMatch = await bcrypt.compare(otp, user.otpHash);
         if (!isMatch) {
             const updatedAttempts = user.otpAttempts + 1;
-            
+
             if (updatedAttempts >= 5) {
                 await prisma.user.delete({ where: { id: user.id } }); // Clear unverified user
                 return res.status(400).json({ success: false, message: "Too many incorrect attempts. Please start registration again." });
@@ -600,9 +600,9 @@ const registerVerifyOtp = async (req, res) => {
             });
 
             const remaining = 5 - updatedAttempts;
-            return res.status(400).json({ 
-                success: false, 
-                message: `Invalid verification code. ${remaining} attempts remaining.` 
+            return res.status(400).json({
+                success: false,
+                message: `Invalid verification code. ${remaining} attempts remaining.`
             });
         }
 
@@ -751,7 +751,7 @@ const loginVerifyOtp = async (req, res) => {
         const isMatch = await bcrypt.compare(otp, user.otpHash);
         if (!isMatch) {
             const updatedAttempts = user.otpAttempts + 1;
-            
+
             if (updatedAttempts >= 5) {
                 // Invalidate OTP
                 await prisma.user.update({
@@ -772,9 +772,9 @@ const loginVerifyOtp = async (req, res) => {
             });
 
             const remaining = 5 - updatedAttempts;
-            return res.status(400).json({ 
-                success: false, 
-                message: `Invalid verification code. ${remaining} attempts remaining.` 
+            return res.status(400).json({
+                success: false,
+                message: `Invalid verification code. ${remaining} attempts remaining.`
             });
         }
 
@@ -789,7 +789,7 @@ const loginVerifyOtp = async (req, res) => {
         });
 
         const token = generateToken(user.id, user.role);
-        
+
         // Remove sensitive fields
         const safeUser = {
             id: user.id,
