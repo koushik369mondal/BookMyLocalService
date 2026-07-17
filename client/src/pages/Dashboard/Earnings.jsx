@@ -14,18 +14,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { 
-  TrendingUp, 
-  DollarSign, 
-  Calendar, 
-  Clock, 
-  ArrowUpRight, 
-  Download, 
-  CreditCard, 
-  Printer, 
-  Loader2, 
-  ShieldCheck, 
-  CheckCircle2, 
+import {
+  TrendingUp,
+  DollarSign,
+  Calendar,
+  Clock,
+  ArrowUpRight,
+  Download,
+  CreditCard,
+  Printer,
+  Loader2,
+  ShieldCheck,
+  CheckCircle2,
   SlidersHorizontal,
   ChevronLeft,
   ChevronRight,
@@ -171,7 +171,7 @@ export default function Earnings() {
   const filteredTransactions = React.useMemo(() => {
     return transactions.filter(txn => {
       // Search matching
-      const matchesSearch = 
+      const matchesSearch =
         txn.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         txn.serviceName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         txn.id.toLowerCase().includes(searchQuery.toLowerCase());
@@ -197,7 +197,7 @@ export default function Earnings() {
   const maxVal = Math.max(...activeChartData.map(d => d.amount));
   const chartHeight = 130;
   const chartWidth = 500;
-  
+
   // Custom styled SVG bars coordinates
   const barWidth = 30;
   const spacing = (chartWidth - 40) / activeChartData.length;
@@ -205,23 +205,23 @@ export default function Earnings() {
   return (
     <DashboardLayout>
       <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
-        
+
         {/* BANNER HEADER */}
         <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Earnings & Settlements</h1>
               <p className="text-slate-300 text-xs sm:text-sm font-medium">Verify payout logs, trace transaction references, or withdraw cleared funds</p>
             </div>
-            
+
             {/* Quick dashboard back button */}
             <div className="flex items-center gap-3.5 flex-wrap">
-              <Button 
+              <Button
                 onClick={handleDownloadReport}
                 disabled={isDownloading}
-                size="sm" 
+                size="sm"
                 className="bg-white/10 hover:bg-white/15 border border-white/5 rounded-full text-white text-xs font-bold px-5 h-9.5 backdrop-blur-xs flex items-center gap-1.5"
               >
                 {isDownloading ? (
@@ -231,7 +231,7 @@ export default function Earnings() {
                 )}
                 Download Report
               </Button>
-              
+
               <Link to="/provider/dashboard">
                 <Button size="sm" className="bg-white text-slate-900 hover:bg-slate-50 rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1.5">
                   <ArrowLeft className="h-4 w-4 text-slate-900" />
@@ -245,7 +245,7 @@ export default function Earnings() {
         {/* OVERVIEW STATS PANEL */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            
+
             {/* Total Balance */}
             <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
@@ -282,7 +282,7 @@ export default function Earnings() {
             {/* Withdraw Action Card */}
             <Card className="border border-slate-900/10 shadow-md bg-slate-900/5 p-5 flex flex-col justify-center gap-2 rounded-2xl">
               <span className="text-[10px] font-extrabold text-slate-900 uppercase tracking-wider">Authorize Transfer</span>
-              <Button 
+              <Button
                 onClick={() => setIsWithdrawOpen(true)}
                 className="w-full h-9.5 bg-slate-900 hover:bg-slate-900 text-white font-extrabold text-xs rounded-xl shadow-xs"
               >
@@ -295,7 +295,7 @@ export default function Earnings() {
 
         {/* DETAILS GRID LAYOUT */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          
+
           {successMsg && (
             <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
               <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
@@ -304,10 +304,10 @@ export default function Earnings() {
           )}
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
+
             {/* LEFT COLUMN: PAYOUT CHART & TRANSACTIONS */}
             <div className="lg:col-span-8 space-y-6">
-              
+
               {/* ANALYTICS CHART */}
               <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
                 <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between flex-wrap gap-4">
@@ -326,22 +326,20 @@ export default function Earnings() {
                     <button
                       type="button"
                       onClick={() => setChartView("daily")}
-                      className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
-                        chartView === "daily"
-                          ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                          : "text-slate-500 hover:text-slate-700"
-                      }`}
+                      className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${chartView === "daily"
+                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
+                        : "text-slate-500 hover:text-slate-700"
+                        }`}
                     >
                       Daily
                     </button>
                     <button
                       type="button"
                       onClick={() => setChartView("monthly")}
-                      className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
-                        chartView === "monthly"
-                          ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                          : "text-slate-500 hover:text-slate-700"
-                      }`}
+                      className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${chartView === "monthly"
+                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
+                        : "text-slate-500 hover:text-slate-700"
+                        }`}
                     >
                       Monthly
                     </button>
@@ -358,7 +356,7 @@ export default function Earnings() {
                     <div className="w-full overflow-x-auto pb-2">
                       <div className="min-w-[400px] h-[160px] relative">
                         <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-full overflow-visible">
-                          
+
                           {/* Grids */}
                           <line x1="20" y1="20" x2="480" y2="20" stroke="#f1f5f9" strokeWidth="1" />
                           <line x1="20" y1="65" x2="480" y2="65" stroke="#f1f5f9" strokeWidth="1" />
@@ -419,7 +417,7 @@ export default function Earnings() {
                     <CardTitle className="text-base font-extrabold text-slate-900">Transaction History</CardTitle>
                     <CardDescription className="text-xs">Settle logs and verification audits</CardDescription>
                   </div>
-                  
+
                   {/* Status buttons */}
                   <div className="flex bg-slate-100/70 border border-slate-200 p-0.5 rounded-xl h-9 shrink-0">
                     {[
@@ -431,11 +429,10 @@ export default function Earnings() {
                         key={tab.id}
                         type="button"
                         onClick={() => setStatusFilter(tab.id)}
-                        className={`rounded-lg text-[10px] font-bold px-3.5 py-1.5 transition-all ${
-                          statusFilter === tab.id
-                            ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                            : "text-slate-500 hover:text-slate-700"
-                        }`}
+                        className={`rounded-lg text-[10px] font-bold px-3.5 py-1.5 transition-all ${statusFilter === tab.id
+                          ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
+                          : "text-slate-500 hover:text-slate-700"
+                          }`}
                       >
                         {tab.label}
                       </button>
@@ -444,7 +441,7 @@ export default function Earnings() {
                 </CardHeader>
 
                 <CardContent className="p-0 pt-6 space-y-4">
-                  
+
                   {/* SEARCH AND DATE RANGES */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-slate-50/50 p-4 border border-slate-200 rounded-2xl">
                     <div className="space-y-1.5">
@@ -457,7 +454,7 @@ export default function Earnings() {
                         className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
                       />
                     </div>
-                    
+
                     <div className="space-y-1.5">
                       <Label htmlFor="dateFrom" className="text-[10px] font-bold text-slate-700">From Date</Label>
                       <Input
@@ -526,11 +523,11 @@ export default function Earnings() {
 
             {/* RIGHT COLUMN: PAYOUTS HISTORIES */}
             <div className="lg:col-span-4 space-y-6">
-              
+
               {/* PAYOUT BANK ARCHIVES */}
               <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
                 <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2">Payout History</span>
-                
+
                 <div className="space-y-3">
                   {payouts.map(p => (
                     <div key={p.id} className="p-3.5 border border-slate-200 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-slate-300 transition-colors">
@@ -575,8 +572,8 @@ export default function Earnings() {
       <Dialog open={isWithdrawOpen} onOpenChange={setIsWithdrawOpen}>
         <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
           <DialogHeader>
-            <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-              <CreditCard className="h-5 w-5 text-slate-900" />
+            <DialogTitle className="text-base font-extrabold text-white flex items-center gap-2">
+              <CreditCard className="h-5 w-5 text-white" />
               Withdraw Cleared Balance
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-400 pt-0.5">
@@ -585,11 +582,11 @@ export default function Earnings() {
           </DialogHeader>
 
           <form onSubmit={handleWithdrawSubmit} className="space-y-4 pt-3">
-            
+
             {/* Display Withdrawable Balance */}
             <div className="p-3 bg-slate-900/5 border border-slate-900/10 rounded-xl flex justify-between items-center text-xs">
-              <span className="font-bold text-slate-900">Withdrawable Balance:</span>
-              <span className="font-black text-slate-900 text-sm">${withdrawableBalance.toFixed(2)}</span>
+              <span className="font-bold text-white">Withdrawable Balance:</span>
+              <span className="font-black text-white text-sm">${withdrawableBalance.toFixed(2)}</span>
             </div>
 
             {withdrawError && (
@@ -601,27 +598,25 @@ export default function Earnings() {
 
             {/* Withdrawal Method */}
             <div className="space-y-1.5">
-              <Label className="text-xs font-bold text-slate-700">Transfer Endpoint</Label>
+              <Label className="text-xs font-bold text-white">Transfer Endpoint</Label>
               <div className="grid grid-cols-2 bg-slate-50 border border-slate-200 p-1 rounded-xl h-10">
                 <button
                   type="button"
                   onClick={() => setWithdrawMethod("bank")}
-                  className={`rounded-lg text-xs font-bold transition-all ${
-                    withdrawMethod === "bank"
-                      ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                      : "text-slate-500 hover:text-slate-700"
-                  }`}
+                  className={`rounded-lg text-xs font-bold transition-all ${withdrawMethod === "bank"
+                    ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
+                    : "text-slate-500 hover:text-slate-700"
+                    }`}
                 >
                   Chase Bank
                 </button>
                 <button
                   type="button"
                   onClick={() => setWithdrawMethod("upi")}
-                  className={`rounded-lg text-xs font-bold transition-all ${
-                    withdrawMethod === "upi"
-                      ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                      : "text-slate-500 hover:text-slate-700"
-                  }`}
+                  className={`rounded-lg text-xs font-bold transition-all ${withdrawMethod === "upi"
+                    ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
+                    : "text-slate-500 hover:text-slate-700"
+                    }`}
                 >
                   UPI Paytm / GPay
                 </button>
@@ -630,7 +625,7 @@ export default function Earnings() {
 
             {/* Amount input */}
             <div className="space-y-1.5">
-              <Label htmlFor="amount" className="text-xs font-bold text-slate-700">Withdraw Amount ($)</Label>
+              <Label htmlFor="amount" className="text-xs font-bold text-white">Withdraw Amount ($)</Label>
               <Input
                 id="amount"
                 type="number"
@@ -643,16 +638,16 @@ export default function Earnings() {
             </div>
 
             <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2.5">
-              <Button 
-                type="button" 
-                variant="outline" 
+              <Button
+                type="button"
+                variant="outline"
                 onClick={() => setIsWithdrawOpen(false)}
                 className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
               >
                 Cancel
               </Button>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isWithdrawing}
                 className="rounded-xl bg-slate-900 hover:bg-slate-900 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5 shadow-md"
               >
