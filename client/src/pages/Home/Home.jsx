@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,6 +22,7 @@ import {
   ArrowRight,
   Quote
 } from "lucide-react";
+import { ServiceCard } from "@/components/ui/ServiceCard";
 import { servicesService } from "../../services/api";
 
 // Category list
@@ -179,63 +181,78 @@ export default function Home() {
       <div className="bg-slate-50 min-h-screen">
 
         {/* HERO SECTION */}
-        <section className="relative overflow-hidden py-16 lg:py-24 bg-slate-50">
+        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-28 bg-slate-50">
           <div className="absolute inset-0 bg-linear-to-b from-slate-900/5 to-transparent pointer-events-none"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
 
               {/* Left Column (Hero Copy) */}
-              <div className="lg:col-span-7 flex flex-col gap-6 text-center lg:text-left">
-                <span className="inline-flex items-center gap-1.5 self-center lg:self-start bg-amber-500/10 text-amber-500 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">
-                  <Star className="h-3 w-3 fill-accent text-amber-500" /> Verified Local Professionals
+              <div className="lg:col-span-7 flex flex-col gap-6 sm:gap-8 text-center lg:text-left">
+                <span className="inline-flex items-center gap-2 self-center lg:self-start bg-amber-500/10 text-amber-600 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full border border-amber-500/25 shadow-xs transition-transform hover:scale-105 duration-200">
+                  <Star className="h-3.5 w-3.5 fill-accent text-amber-500" /> Verified Local Professionals
                 </span>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                  Your Trusted Partner for <span className="text-amber-500">Local Services</span>
+                
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-[64px] font-black tracking-tight text-slate-900 leading-[1.15] lg:leading-[1.12]">
+                  Your Trusted Partner for <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 bg-clip-text text-transparent">Local Services</span>
                 </h1>
-                <p className="text-lg text-slate-700 max-w-2xl mx-auto lg:mx-0">
+                
+                <p className="text-lg sm:text-xl text-slate-600 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                   Book home cleaning, plumbing, electrical tasks, and more instantly. Enjoy Verified local experts and clear upfront pricing.
                 </p>
 
                 {/* Hero CTA buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center mt-2">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-1 sm:pt-2">
                   <NavLink to="/services" className="w-full sm:w-auto">
-                    <Button size="lg" className="w-full sm:w-auto bg-slate-900 hover:bg-slate-700 text-white rounded-full font-semibold shadow-md px-8 h-12 transition-transform hover:scale-[1.02]">
+                    <Button size="lg" className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold shadow-md hover:shadow-lg hover:shadow-slate-900/15 px-8 h-12 sm:h-[48px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
                       Book a Service
                     </Button>
                   </NavLink>
                   <NavLink to="/provider/dashboard" className="w-full sm:w-auto">
-                    <Button size="lg" variant="outline" className="w-full sm:w-auto border-slate-200 hover:bg-white hover:text-slate-900 rounded-full font-semibold px-8 h-12">
+                    <Button size="lg" variant="outline" className="w-full sm:w-auto border-slate-200 hover:border-slate-300 hover:bg-white hover:text-slate-900 text-slate-700 font-semibold rounded-xl px-8 h-12 sm:h-[48px] shadow-xs hover:shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
                       Become a Provider
                     </Button>
                   </NavLink>
                 </div>
 
                 {/* SEARCH SECTION */}
-                <div className="bg-white p-4 sm:p-5 rounded-2xl shadow-xl border border-slate-200 max-w-2xl mt-6 flex flex-col sm:flex-row gap-4 items-center">
+                <div className="bg-white p-3.5 sm:p-4 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 max-w-2xl lg:max-w-3xl mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-3.5 items-center w-full">
                   <div className="relative w-full flex-1">
-                    <MapPin className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-700" />
-                    <Input placeholder="Your location..." className="pl-10 h-11 border-slate-200 focus-visible:ring-slate-900 rounded-xl bg-white" />
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400 pointer-events-none" />
+                    <Input 
+                      placeholder="Your location..." 
+                      className="pl-11 h-14 bg-slate-50/80 border-slate-200/80 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:border-amber-500 rounded-2xl text-sm font-medium text-slate-900 placeholder:text-slate-400 transition-all duration-200" 
+                    />
                   </div>
-                  <div className="relative w-full flex-grow-[1.5]">
-                    <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-700" />
-                    <Input placeholder="What service do you need?" className="pl-10 h-11 border-slate-200 focus-visible:ring-slate-900 rounded-xl bg-white" />
+                  <div className="relative w-full flex-grow-[1.4]">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400 pointer-events-none" />
+                    <Input 
+                      placeholder="What service do you need?" 
+                      className="pl-11 h-14 bg-slate-50/80 border-slate-200/80 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:border-amber-500 rounded-2xl text-sm font-medium text-slate-900 placeholder:text-slate-400 transition-all duration-200" 
+                    />
                   </div>
-                  <Button className="w-full sm:w-auto h-11 bg-slate-900 hover:bg-slate-700 text-white rounded-xl px-8 shadow-xs transition-all">
-                    Search
+                  <Button className="w-full sm:w-auto h-14 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-2xl px-8 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-base shrink-0">
+                    <Search className="h-4.5 w-4.5" />
+                    <span>Search</span>
                   </Button>
                 </div>
 
               </div>
 
-              {/* Right Column (Hero Graphic) */}
-              <div className="lg:col-span-5 relative flex justify-center">
-                <div className="absolute -inset-4 bg-slate-900/10 rounded-full filter blur-2xl opacity-50 scale-95 animate-pulse pointer-events-none"></div>
-                <img
-                  src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80"
-                  alt="Cleaning Service Professional"
-                  className="rounded-3xl shadow-2xl w-full max-w-md object-cover aspect-4/3 relative z-10 border-4 border-white"
-                />
+              {/* Right Column (Hero Graphic with Framer Motion) */}
+              <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
+                <div className="absolute -inset-4 bg-slate-900/10 rounded-full filter blur-2xl opacity-60 scale-95 animate-pulse pointer-events-none"></div>
+                <motion.div
+                  animate={{ y: [0, -12, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative z-10 w-full flex justify-center lg:justify-end"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80"
+                    alt="Cleaning Service Professional"
+                    className="rounded-3xl shadow-xl w-full max-w-lg lg:max-w-xl object-cover aspect-4/3 border-4 border-white"
+                  />
+                </motion.div>
               </div>
 
             </div>
@@ -310,39 +327,25 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {displayProviders.map((provider, idx) => (
-              <Card key={idx} className="overflow-hidden p-0 py-0 gap-0 hover:shadow-lg transition-all duration-300 border border-slate-200 flex flex-col h-full bg-white">
-                <div className="relative">
-                  <img src={provider.image} alt={provider.name} className="h-48 w-full object-cover" />
-                  {provider.badge && (
-                    <span className="absolute top-3 left-3 bg-amber-500 text-slate-900 text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
-                      {provider.badge}
-                    </span>
-                  )}
-                </div>
-                <div className="p-5 flex flex-col gap-4 flex-1">
-                  <div>
-                    <h4 className="text-xs font-semibold uppercase tracking-wider text-amber-500">{provider.service}</h4>
-                    <h3 className="font-bold text-slate-900 text-lg mt-1">{provider.name}</h3>
-                  </div>
-                  <div className="flex items-center gap-1.5 text-sm text-slate-700">
-                    <MapPin className="h-4 w-4 text-slate-700" />
-                    <span>{provider.location}</span>
-                  </div>
-                  <div className="flex items-center justify-between border-t border-slate-200 pt-4 mt-auto">
-                    <div className="flex items-center gap-1">
-                      <Star className="h-4 w-4 fill-accent text-amber-500" />
-                      <span className="font-bold text-slate-900 text-sm">{provider.rating}</span>
-                      <span className="text-slate-700 text-xs">({provider.reviews})</span>
-                    </div>
-                    <span className="font-bold text-slate-900 text-sm">{provider.price}</span>
-                  </div>
-                  <NavLink to={provider.id ? `/booking?serviceId=${provider.id}` : "/booking"} className="w-full">
-                    <Button className="w-full bg-slate-900 hover:bg-slate-700 text-white rounded-xl h-10 mt-1 shadow-xs">
-                      Book Now
-                    </Button>
-                  </NavLink>
-                </div>
-              </Card>
+              <ServiceCard 
+                key={provider.id || idx} 
+                service={{
+                  id: provider.id,
+                  name: provider.service || provider.name,
+                  category: provider.service || "Local Service",
+                  providerName: provider.name,
+                  providerImage: provider.image,
+                  location: provider.location,
+                  rating: provider.rating,
+                  reviewsCount: provider.reviews,
+                  price: parseFloat(String(provider.price).replace(/[^0-9.]/g, '')) || 35,
+                  priceType: String(provider.price).includes("/hr") ? "/hr" : "/service",
+                  image: provider.image,
+                  badge: provider.badge
+                }}
+                ctaText="Book Now"
+                ctaLink={provider.id ? `/booking?serviceId=${provider.id}` : "/booking"}
+              />
             ))}
           </div>
         </section>

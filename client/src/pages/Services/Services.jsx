@@ -26,6 +26,7 @@ import {
   Sparkles,
   Info
 } from "lucide-react";
+import { ServiceCard, ServiceCardSkeleton } from "@/components/ui/ServiceCard";
 import { servicesService } from "../../services/api";
 
 // Predefined categories matching the Home page aesthetics
@@ -730,24 +731,7 @@ export default function Services() {
               ) : isLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[...Array(6)].map((_, i) => (
-                    <Card key={i} className="overflow-hidden p-0 py-0 gap-0 border border-gray-150 flex flex-col h-full bg-white rounded-2xl">
-                      <Skeleton className="h-48 w-full rounded-t-2xl rounded-b-none" />
-                      <div className="p-5 flex flex-col gap-3 flex-1">
-                        <Skeleton className="h-4 w-16" />
-                        <Skeleton className="h-6 w-3/4" />
-                        <Skeleton className="h-4 w-full" />
-                        <Skeleton className="h-4 w-5/6" />
-                        <div className="flex items-center gap-2 mt-auto border-t border-gray-50 pt-3">
-                          <Skeleton className="h-6 w-6 rounded-full" />
-                          <Skeleton className="h-4 w-20" />
-                          <Skeleton className="h-4 w-24 ml-auto" />
-                        </div>
-                        <div className="flex items-center justify-between border-t border-gray-50 pt-3">
-                          <Skeleton className="h-5 w-16" />
-                          <Skeleton className="h-9 w-24 rounded-xl" />
-                        </div>
-                      </div>
-                    </Card>
+                    <ServiceCardSkeleton key={i} />
                   ))}
                 </div>
               ) : sortedServices.length === 0 ? (
@@ -769,83 +753,12 @@ export default function Services() {
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {paginatedServices.map((service) => (
-                      <Card
+                      <ServiceCard
                         key={service.id}
-                        className="group overflow-hidden p-0 py-0 gap-0 hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 border border-gray-100 flex flex-col h-full bg-white rounded-2xl relative"
-                      >
-
-                        {/* Service Photo */}
-                        <div className="relative h-48 w-full overflow-hidden">
-                          <img
-                            src={service.image}
-                            alt={service.name}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
-
-                          {/* Badge tag like "Top Rated" */}
-                          {service.badge && (
-                            <span className="absolute top-3 left-3 bg-amber-500 text-slate-900 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-xs uppercase tracking-wider">
-                              {service.badge}
-                            </span>
-                          )}
-
-                          {/* Category Badge overlay on image */}
-                          <span className={`absolute bottom-3 right-3 text-[10px] font-extrabold px-2.5 py-1 rounded-full border shadow-xs ${getCategoryStyles(service.category)}`}>
-                            {service.category}
-                          </span>
-                        </div>
-
-                        {/* Card Contents */}
-                        <div className="p-5 flex flex-col gap-3 flex-1">
-
-                          {/* Rating and reviews */}
-                          <div className="flex items-center gap-1">
-                            <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-                            <span className="font-extrabold text-gray-900 text-sm">{service.rating}</span>
-                            <span className="text-gray-400 text-xs font-semibold">({service.reviewsCount} reviews)</span>
-                          </div>
-
-                          <div>
-                            <h3 className="font-bold text-slate-900 text-base leading-snug group-hover:text-amber-500 transition-colors line-clamp-1">
-                              <NavLink to={`/services/${service.id}`}>
-                                {service.name}
-                              </NavLink>
-                            </h3>
-                            <p className="text-xs text-gray-500 leading-relaxed mt-1.5 line-clamp-2">
-                              {service.description}
-                            </p>
-                          </div>
-
-                          {/* Provider and Location Details */}
-                          <div className="flex items-center gap-2 mt-auto border-t border-gray-50 pt-3.5">
-                            <img
-                              src={service.providerImage}
-                              alt={service.providerName}
-                              className="h-6 w-6 rounded-full object-cover border border-gray-150"
-                            />
-                            <span className="text-xs font-bold text-gray-700">{service.providerName}</span>
-
-                            <div className="flex items-center gap-0.5 text-xs text-gray-400 ml-auto font-medium">
-                              <MapPin className="h-3 w-3 text-gray-400" />
-                              <span>{service.location}</span>
-                            </div>
-                          </div>
-
-                          {/* Price Tag & CTA Book Button */}
-                          <div className="flex items-center justify-between border-t border-gray-50 pt-3 mt-1">
-                            <div className="flex flex-col">
-                              <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Starting from</span>
-                              <span className="font-extrabold text-gray-950 text-base">${service.price}<span className="text-gray-400 text-xs font-semibold">{service.priceType}</span></span>
-                            </div>
-                            <NavLink to={`/services/${service.id}`}>
-                              <Button size="sm" className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl h-9 px-4 font-bold shadow-xs">
-                                Book Now
-                              </Button>
-                            </NavLink>
-                          </div>
-                        </div>
-
-                      </Card>
+                        service={service}
+                        ctaText="Book Now"
+                        ctaLink={`/services/${service.id}`}
+                      />
                     ))}
                   </div>
 
