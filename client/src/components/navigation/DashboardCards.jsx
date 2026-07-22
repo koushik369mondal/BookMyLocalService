@@ -48,7 +48,7 @@ export default function DashboardCards({ role }) {
       description: "View your pending bookings, job boards, and weekly trends.",
       path: "/provider/dashboard",
       icon: LayoutDashboard,
-      color: "text-slate-650 bg-slate-100/50 border-slate-200",
+      color: "text-slate-700 bg-slate-100/80 border-slate-200",
     },
   ];
 
@@ -65,7 +65,7 @@ export default function DashboardCards({ role }) {
       description: "Track your active, past, or cancelled dispatch bookings.",
       path: "/bookings",
       icon: Calendar,
-      color: "text-sky-650 bg-sky-50 border-sky-100",
+      color: "text-sky-600 bg-sky-50 border-sky-100",
     },
     {
       title: "My Favorites",
@@ -93,35 +93,35 @@ export default function DashboardCards({ role }) {
   const cards = role === "PROVIDER" ? providerCards : customerCards;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 my-6 font-sans">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-4 font-sans">
       {cards.map((card, idx) => {
         const Icon = card.icon;
         return (
           <Link
             key={idx}
             to={card.path}
-            className="group flex flex-col justify-between border border-slate-200 p-5 rounded-2xl bg-white hover:border-slate-350 hover:shadow-md transition-all duration-300 relative overflow-hidden"
+            className="group flex flex-col justify-between border border-slate-200/90 p-5 rounded-2xl bg-white hover:border-slate-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden h-full"
           >
             {/* Ambient hover effect */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.08),transparent_50%)] transition-opacity duration-300"></div>
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.08),transparent_50%)] transition-opacity duration-300 pointer-events-none"></div>
 
             <div className="relative z-10 space-y-3">
-              <div className={`p-3 rounded-xl border w-fit shrink-0 ${card.color}`}>
+              <div className={`p-3 rounded-xl border w-fit shrink-0 transition-transform group-hover:scale-105 duration-300 ${card.color}`}>
                 <Icon className="h-5 w-5" />
               </div>
               <div className="space-y-1">
-                <h4 className="font-extrabold text-slate-900 text-sm leading-tight group-hover:text-amber-550 transition-colors">
+                <h4 className="font-extrabold text-slate-900 text-sm leading-tight group-hover:text-amber-600 transition-colors">
                   {card.title}
                 </h4>
-                <p className="text-[11px] text-slate-450 leading-relaxed font-medium">
+                <p className="text-xs text-slate-500 leading-relaxed font-normal">
                   {card.description}
                 </p>
               </div>
             </div>
 
-            <div className="border-t border-slate-50 pt-3 mt-4 flex items-center justify-between relative z-10 text-[10px] font-bold text-slate-400 group-hover:text-slate-700 transition-colors">
-              <span>Go to Page</span>
-              <ArrowUpRight className="h-4 w-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <div className="border-t border-slate-100 pt-3 mt-4 flex items-center justify-between relative z-10 text-xs font-bold text-slate-400 group-hover:text-slate-900 transition-colors">
+              <span>Access Action</span>
+              <ArrowUpRight className="h-4 w-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 text-slate-400 group-hover:text-amber-500" />
             </div>
           </Link>
         );
