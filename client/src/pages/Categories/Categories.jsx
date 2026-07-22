@@ -22,7 +22,9 @@ import {
   ShieldAlert,
   Info
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { servicesService } from "../../services/api";
+import { fadeInUp, staggerContainer } from "@/utils/motion";
 
 const getCategoryIcon = (categoryName) => {
   switch (categoryName) {
@@ -182,89 +184,95 @@ export default function Categories() {
 
           {/* DYNAMIC CATEGORIES GRID */}
           {!loading && !error && filteredCategories.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <motion.div 
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer(0.06)}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
               {filteredCategories.map((category) => {
                 const IconComponent = getCategoryIcon(category.name);
                 const categoryColorStyles = getCategoryColors(category.name);
 
                 return (
-                  <Card
-                    key={category.name}
-                    className="group overflow-hidden p-0 py-0 gap-0 hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 border border-gray-100 flex flex-col h-full bg-white rounded-2xl relative"
-                  >
-                    {/* Category Photo Container */}
-                    <div className="relative h-48 w-full overflow-hidden">
-                      <img
-                        src={category.imageUrl || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80"}
-                        alt={category.name}
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
-                        }}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                  <motion.div key={category.name} variants={fadeInUp}>
+                    <Card
+                      className="group overflow-hidden p-0 py-0 gap-0 hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 border border-gray-100 flex flex-col h-full bg-white rounded-2xl relative"
+                    >
+                      {/* Category Photo Container */}
+                      <div className="relative h-48 w-full overflow-hidden">
+                        <img
+                          src={category.imageUrl || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80"}
+                          alt={category.name}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
+                          }}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
 
-                      {/* Floating Category Badge Overlay */}
-                      <span className={`absolute bottom-3 right-3 text-[10px] font-extrabold px-2.5 py-1 rounded-full border shadow-xs ${categoryColorStyles}`}>
-                        {category.name}
-                      </span>
-                    </div>
-
-                    {/* Card Contents */}
-                    <div className="p-5 flex flex-col gap-3 flex-1">
-
-                      {/* Badge / icon header */}
-                      <div className="flex items-center gap-1.5">
-                        <span className="p-1 bg-slate-900/5 text-slate-900 rounded-md">
-                          <IconComponent className="h-3.5 w-3.5" />
-                        </span>
-                        <span className="text-gray-400 text-xs font-semibold">Service Directory</span>
-                      </div>
-
-                      {/* Title and description */}
-                      <div>
-                        <h3 className="font-bold text-slate-900 text-base leading-snug group-hover:text-amber-500 transition-colors line-clamp-1">
+                        {/* Floating Category Badge Overlay */}
+                        <span className={`absolute bottom-3 right-3 text-[10px] font-extrabold px-2.5 py-1 rounded-full border shadow-xs ${categoryColorStyles}`}>
                           {category.name}
-                        </h3>
-                        <p className="text-xs text-gray-500 leading-relaxed mt-1.5 line-clamp-2">
-                          {category.description}
-                        </p>
+                        </span>
                       </div>
 
-                      {/* Category Counts & Stats */}
-                      <div className="flex items-center gap-2 mt-auto border-t border-gray-50 pt-3.5">
-                        <div className="flex items-center gap-1 text-xs font-bold text-gray-700">
-                          <Layers className="h-3.5 w-3.5 text-gray-400" />
-                          <span>{category.serviceCount} Services</span>
+                      {/* Card Contents */}
+                      <div className="p-5 flex flex-col gap-3 flex-1">
+
+                        {/* Badge / icon header */}
+                        <div className="flex items-center gap-1.5">
+                          <span className="p-1 bg-slate-900/5 text-slate-900 rounded-md">
+                            <IconComponent className="h-3.5 w-3.5" />
+                          </span>
+                          <span className="text-gray-400 text-xs font-semibold">Service Directory</span>
                         </div>
 
-                        <div className="flex items-center gap-1 text-xs text-gray-400 ml-auto font-medium">
-                          <Users className="h-3.5 w-3.5 text-gray-400" />
-                          <span className="font-bold text-gray-700">{category.providerCount} Providers</span>
+                        {/* Title and description */}
+                        <div>
+                          <h3 className="font-bold text-slate-900 text-base leading-snug group-hover:text-amber-500 transition-colors line-clamp-1">
+                            {category.name}
+                          </h3>
+                          <p className="text-xs text-gray-500 leading-relaxed mt-1.5 line-clamp-2">
+                            {category.description}
+                          </p>
+                        </div>
+
+                        {/* Category Counts & Stats */}
+                        <div className="flex items-center gap-2 mt-auto border-t border-gray-50 pt-3.5">
+                          <div className="flex items-center gap-1 text-xs font-bold text-gray-700">
+                            <Layers className="h-3.5 w-3.5 text-gray-400" />
+                            <span>{category.serviceCount} Services</span>
+                          </div>
+
+                          <div className="flex items-center gap-1 text-xs text-gray-400 ml-auto font-medium">
+                            <Users className="h-3.5 w-3.5 text-gray-400" />
+                            <span className="font-bold text-gray-700">{category.providerCount} Providers</span>
+                          </div>
+                        </div>
+
+                        {/* Instant Book tag & Explore Action Button */}
+                        <div className="flex items-center justify-between border-t border-gray-50 pt-3 mt-1">
+                          <div className="flex flex-col">
+                            <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Access level</span>
+                            <span className="font-extrabold text-slate-900 text-sm">Instant Book</span>
+                          </div>
+                          <Button
+                            onClick={() => handleExplore(category.name)}
+                            size="sm"
+                            className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl h-9 px-4 font-bold shadow-xs flex items-center gap-1 group-hover:scale-[1.01] transition-transform"
+                          >
+                            Explore Services
+                            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                          </Button>
                         </div>
                       </div>
 
-                      {/* Instant Book tag & Explore Action Button */}
-                      <div className="flex items-center justify-between border-t border-gray-50 pt-3 mt-1">
-                        <div className="flex flex-col">
-                          <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Access level</span>
-                          <span className="font-extrabold text-slate-900 text-sm">Instant Book</span>
-                        </div>
-                        <Button
-                          onClick={() => handleExplore(category.name)}
-                          size="sm"
-                          className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl h-9 px-4 font-bold shadow-xs flex items-center gap-1 group-hover:scale-[1.01] transition-transform"
-                        >
-                          Explore Services
-                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                        </Button>
-                      </div>
-                    </div>
-
-                  </Card>
+                    </Card>
+                  </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
           )}
 
           {/* EMPTY SEARCH STATE - Styled precisely like Services.jsx */}

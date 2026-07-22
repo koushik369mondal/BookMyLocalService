@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { 
@@ -9,6 +10,7 @@ import {
   Zap, 
   ArrowRight
 } from "lucide-react";
+import { prefersReducedMotion } from "@/utils/motion";
 
 export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   if (!service) return null;
@@ -39,7 +41,11 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   const destination = ctaLink || (id ? `/booking?serviceId=${id}` : "/booking");
 
   return (
-    <div className="group overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full relative">
+    <motion.div 
+      whileHover={prefersReducedMotion ? {} : { y: -6 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="group overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col h-full relative"
+    >
       
       {/* Image Thumbnail Header */}
       <div className="relative aspect-16/9 w-full overflow-hidden bg-slate-100 shrink-0">
@@ -128,7 +134,7 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
         </div>
 
       </div>
-    </div>
+    </motion.div>
   );
 }
 

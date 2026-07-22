@@ -26,8 +26,10 @@ import {
   Sparkles,
   Info
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { ServiceCard, ServiceCardSkeleton } from "@/components/ui/ServiceCard";
 import { servicesService } from "../../services/api";
+import { fadeInUp, staggerContainer } from "@/utils/motion";
 
 // Predefined categories matching the Home page aesthetics
 const categories = [
@@ -751,16 +753,22 @@ export default function Services() {
               ) : (
                 /* ACTUAL CARDS LISTINGS GRID */
                 <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <motion.div 
+                    initial="hidden"
+                    animate="visible"
+                    variants={staggerContainer(0.06)}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                  >
                     {paginatedServices.map((service) => (
-                      <ServiceCard
-                        key={service.id}
-                        service={service}
-                        ctaText="Book Now"
-                        ctaLink={`/services/${service.id}`}
-                      />
+                      <motion.div key={service.id} variants={fadeInUp}>
+                        <ServiceCard
+                          service={service}
+                          ctaText="Book Now"
+                          ctaLink={`/services/${service.id}`}
+                        />
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
 
                   {/* COMPACT INTERACTIVE PAGINATION PANEL */}
                   {totalPages > 1 && (

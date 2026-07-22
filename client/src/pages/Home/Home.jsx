@@ -24,6 +24,12 @@ import {
 } from "lucide-react";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { servicesService } from "../../services/api";
+import { 
+  fadeInUp, 
+  staggerContainer, 
+  buttonMotionProps, 
+  floatMotionProps 
+} from "@/utils/motion";
 
 // Category list
 const categories = [
@@ -188,21 +194,28 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
 
               {/* Left Column (Hero Copy) */}
-              <div className="lg:col-span-7 flex flex-col gap-6 sm:gap-8 text-center lg:text-left">
-                <span className="inline-flex items-center gap-2 self-center lg:self-start bg-amber-500/10 text-amber-600 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full border border-amber-500/25 shadow-xs transition-transform hover:scale-105 duration-200">
-                  <Star className="h-3.5 w-3.5 fill-accent text-amber-500" /> Verified Local Professionals
-                </span>
+              <motion.div 
+                initial="hidden"
+                animate="visible"
+                variants={staggerContainer(0.1, 0.05)}
+                className="lg:col-span-7 flex flex-col gap-6 sm:gap-8 text-center lg:text-left"
+              >
+                <motion.div variants={fadeInUp}>
+                  <span className="inline-flex items-center gap-2 self-center lg:self-start bg-amber-500/10 text-amber-600 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full border border-amber-500/25 shadow-xs transition-transform hover:scale-105 duration-200">
+                    <Star className="h-3.5 w-3.5 fill-accent text-amber-500" /> Verified Local Professionals
+                  </span>
+                </motion.div>
                 
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-[64px] font-black tracking-tight text-slate-900 leading-[1.15] lg:leading-[1.12]">
+                <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl lg:text-6xl xl:text-[64px] font-black tracking-tight text-slate-900 leading-[1.15] lg:leading-[1.12]">
                   Your Trusted Partner for <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 bg-clip-text text-transparent">Local Services</span>
-                </h1>
+                </motion.h1>
                 
-                <p className="text-lg sm:text-xl text-slate-600 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                <motion.p variants={fadeInUp} className="text-lg sm:text-xl text-slate-600 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                   Book home cleaning, plumbing, electrical tasks, and more instantly. Enjoy Verified local experts and clear upfront pricing.
-                </p>
+                </motion.p>
 
                 {/* Hero CTA buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-1 sm:pt-2">
+                <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-1 sm:pt-2">
                   <NavLink to="/services" className="w-full sm:w-auto">
                     <Button size="lg" className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold shadow-md hover:shadow-lg hover:shadow-slate-900/15 px-8 h-12 sm:h-[48px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
                       Book a Service
@@ -213,10 +226,10 @@ export default function Home() {
                       Become a Provider
                     </Button>
                   </NavLink>
-                </div>
+                </motion.div>
 
                 {/* SEARCH SECTION */}
-                <div className="bg-white p-3.5 sm:p-4 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 max-w-2xl lg:max-w-3xl mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-3.5 items-center w-full">
+                <motion.div variants={fadeInUp} className="bg-white p-3.5 sm:p-4 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 max-w-2xl lg:max-w-3xl mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-3.5 items-center w-full">
                   <div className="relative w-full flex-1">
                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400 pointer-events-none" />
                     <Input 
@@ -235,9 +248,9 @@ export default function Home() {
                     <Search className="h-4.5 w-4.5" />
                     <span>Search</span>
                   </Button>
-                </div>
+                </motion.div>
 
-              </div>
+              </motion.div>
 
               {/* Right Column (Hero Graphic with Framer Motion) */}
               <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
@@ -260,34 +273,41 @@ export default function Home() {
         </section>
 
         {/* POPULAR CATEGORIES SECTION */}
-        <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12 flex flex-col gap-3">
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={staggerContainer(0.08)}
+          className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
+          <motion.div variants={fadeInUp} className="text-center max-w-3xl mx-auto mb-12 flex flex-col gap-3">
             <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">Explore Popular Categories</h2>
             <p className="text-gray-500">Find Verified professionals for your exact local service requirements.</p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
+          <motion.div variants={staggerContainer(0.06)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
             {categories.map((cat, idx) => {
               const IconComp = cat.icon;
               return (
-                <Card
-                  key={idx}
-                  className="hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-gray-100 bg-white p-0 py-0 gap-0 flex flex-col items-center justify-center text-center group h-48"
-                >
-                  <CardContent className="p-6 flex flex-col items-center gap-4">
-                    <div className={`p-3 rounded-full border ${cat.color} group-hover:scale-110 transition-transform duration-300`}>
-                      <IconComp className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-gray-950 text-sm">{cat.name}</h3>
-                      <p className="text-xs text-gray-400 mt-1">{cat.count}</p>
-                    </div>
-                  </CardContent>
-                </Card>
+                <motion.div key={idx} variants={fadeInUp}>
+                  <Card
+                    className="hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-gray-100 bg-white p-0 py-0 gap-0 flex flex-col items-center justify-center text-center group h-48"
+                  >
+                    <CardContent className="p-6 flex flex-col items-center gap-4">
+                      <div className={`p-3 rounded-full border ${cat.color} group-hover:scale-110 transition-transform duration-300`}>
+                        <IconComp className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-950 text-sm">{cat.name}</h3>
+                        <p className="text-xs text-gray-400 mt-1">{cat.count}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               );
             })}
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
 
         {/* HOW IT WORKS SECTION */}
         <section className="py-16 md:py-20 bg-linear-to-b from-white to-slate-50 border-y border-gray-150">
