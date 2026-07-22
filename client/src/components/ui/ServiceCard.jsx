@@ -79,18 +79,18 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
       <div className="p-5 flex flex-col gap-3 flex-1">
         
         {/* Title */}
-        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors duration-200 line-clamp-1 leading-snug">
+        <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors duration-200 line-clamp-1 leading-tight">
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-xs sm:text-sm text-slate-600 line-clamp-2 leading-relaxed font-normal">
+        <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed font-normal">
           {description}
         </p>
 
         {/* Metadata Bar (Location & Rating) */}
         <div className="flex items-center justify-between gap-2 text-xs text-slate-500 mt-0.5">
-          <div className="flex items-center gap-1 truncate text-slate-500 font-medium">
+          <div className="flex items-center gap-1.5 truncate text-slate-500 font-medium">
             <MapPin className="h-3.5 w-3.5 text-slate-400 shrink-0" />
             <span className="truncate">{location}</span>
           </div>
@@ -105,7 +105,7 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
         </div>
 
         {/* Provider Profile Snippet & Verified Badge */}
-        <div className="flex items-center gap-2 pt-2 border-t border-slate-100 mt-1">
+        <div className="flex items-center gap-2 pt-2.5 border-t border-slate-100 mt-1">
           <img
             src={providerAvatar}
             alt={providerName}
@@ -120,13 +120,13 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
           <div className="flex flex-col">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Price</span>
             <div className="flex items-baseline gap-0.5">
-              <span className="text-lg sm:text-xl font-extrabold text-slate-900">${price}</span>
+              <span className="text-xl font-bold text-slate-900">${price}</span>
               <span className="text-xs font-medium text-slate-500">{priceType}</span>
             </div>
           </div>
 
           <NavLink to={destination} className="shrink-0">
-            <Button className="h-[44px] px-4.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-xs hover:shadow-md transition-all duration-200 active:scale-95 flex items-center gap-1.5">
+            <Button className="h-[44px] px-4.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-sm shadow-xs hover:shadow-md transition-all duration-200 active:scale-95 flex items-center gap-1.5">
               <span>{ctaText}</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 duration-200" />
             </Button>

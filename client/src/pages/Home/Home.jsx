@@ -280,9 +280,9 @@ export default function Home() {
           variants={staggerContainer(0.08)}
           className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
-          <motion.div variants={fadeInUp} className="text-center max-w-3xl mx-auto mb-12 flex flex-col gap-3">
-            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">Explore Popular Categories</h2>
-            <p className="text-gray-500">Find Verified professionals for your exact local service requirements.</p>
+          <motion.div variants={fadeInUp} className="text-center max-w-3xl mx-auto mb-12 flex flex-col gap-2.5">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">Explore Popular Categories</h2>
+            <p className="text-base text-slate-600 font-normal leading-relaxed">Find Verified professionals for your exact local service requirements.</p>
           </motion.div>
 
           <motion.div variants={staggerContainer(0.06)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
@@ -336,9 +336,9 @@ export default function Home() {
         {/* FEATURED PROVIDERS SECTION */}
         <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12">
-            <div className="flex flex-col gap-2 text-center sm:text-left">
-              <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">Featured Service Providers</h2>
-              <p className="text-gray-500">Top-rated and verified local specialists in your neighbourhood.</p>
+            <div className="flex flex-col gap-1.5 text-center sm:text-left">
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">Featured Service Providers</h2>
+              <p className="text-base text-slate-600 font-normal leading-relaxed">Top-rated and verified local specialists in your neighbourhood.</p>
             </div>
             <NavLink to="/services" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-amber-500 transition-colors">
               View All Providers <ArrowRight className="h-4 w-4" />

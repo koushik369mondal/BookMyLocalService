@@ -332,10 +332,10 @@ export default function Services() {
             <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-500 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">
               <Sparkles className="h-3.5 w-3.5 fill-accent text-amber-500" /> Verified Local Specialists
             </span>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight max-w-3xl">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-tight max-w-3xl">
               Find and Book the Best <span className="text-amber-500">Local Services</span>
             </h1>
-            <p className="text-base sm:text-lg text-slate-700 max-w-2xl">
+            <p className="text-base text-slate-600 font-normal leading-relaxed max-w-2xl">
               Instantly match with verified professionals in your neighborhood. Compare reviews, pricing, and book your service online with peace of mind.
             </p>
 
