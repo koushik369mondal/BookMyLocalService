@@ -49,32 +49,32 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-900/20 bg-slate-900/95 backdrop-blur-md shadow-xs text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-slate-900/90 backdrop-blur-md shadow-lg shadow-slate-950/20 text-white transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[72px] flex items-center justify-between gap-4 lg:gap-6">
         
         {/* Brand / Logo */}
-        <NavLink to="/" className="flex items-center gap-2 group shrink-0">
+        <NavLink to="/" className="flex items-center gap-3 group shrink-0 py-1">
           <img 
             src="/logo.png" 
             alt="BookMyLocalService Logo" 
-            className="h-9 w-auto object-contain transition-transform group-hover:scale-105 duration-300"
+            className="h-10 lg:h-11 w-auto object-contain transition-transform group-hover:scale-105 duration-300"
           />
-          <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-amber-500 transition-colors">
-            BookMyLocalService
+          <span className="font-extrabold text-xl lg:text-2xl tracking-tight text-white group-hover:text-amber-400 transition-colors duration-200">
+            BookMyLocal<span className="text-amber-500">Service</span>
           </span>
         </NavLink>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 xl:gap-8">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               className={({ isActive }) => cn(
-                "text-sm font-medium transition-all relative py-1 text-slate-300 hover:text-amber-500 whitespace-nowrap",
+                "text-sm font-semibold transition-all duration-200 relative py-1.5 whitespace-nowrap",
                 isActive 
-                  ? "text-amber-500 font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-amber-500 after:rounded-full" 
-                  : "text-slate-300"
+                  ? "text-amber-400 font-bold after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-amber-400 after:rounded-full" 
+                  : "text-slate-300 hover:text-amber-400"
               )}
             >
               {link.name}
@@ -83,20 +83,25 @@ export default function Navbar() {
         </nav>
 
         {/* Right Actions */}
-        <div className="hidden md:flex items-center gap-3 shrink-0">
-          <div className="relative w-48 lg:w-56">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-[#334155]" />
+        <div className="hidden md:flex items-center gap-3 lg:gap-4 shrink-0">
+          {/* Search Input */}
+          <div className="relative w-44 lg:w-60">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
             <Input
               type="search"
               placeholder="Search services..."
-              className="pl-9 h-9 w-full bg-[#FFFFFF] border-[#E2E8F0] text-[#111827] placeholder:text-[#64748B] focus:bg-[#FFFFFF] focus:border-[#0F172A] focus-visible:ring-[#0F172A]/50 focus-visible:border-[#0F172A] rounded-full text-xs dark:bg-[#FFFFFF] dark:text-[#111827] dark:placeholder:text-[#64748B] dark:border-[#E2E8F0]"
+              className="pl-10 pr-4 h-[44px] lg:h-[48px] w-full bg-slate-800/80 border border-slate-700/60 text-slate-100 placeholder:text-slate-400 focus:bg-slate-900 focus:border-amber-500 focus-visible:ring-2 focus-visible:ring-amber-500/25 shadow-inner rounded-xl text-xs lg:text-sm transition-all duration-200"
             />
           </div>
 
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white rounded-full h-9 w-9">
-            <Bell className="h-5 w-5 text-slate-300" />
-            <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-amber-500 rounded-full border border-slate-900 animate-pulse"></span>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="relative hover:bg-slate-800 text-slate-300 hover:text-white rounded-xl h-[44px] w-[44px] lg:h-[48px] lg:w-[48px] transition-all duration-200 shrink-0"
+          >
+            <Bell className="h-5 w-5 text-slate-300 group-hover:text-amber-400 transition-colors" />
+            <span className="absolute top-2.5 right-2.5 h-2 w-2 bg-amber-500 rounded-full border border-slate-900 animate-pulse"></span>
           </Button>
 
           {user ? (
@@ -104,57 +109,57 @@ export default function Navbar() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setShowDropdown(!showDropdown)}
-                className="flex items-center gap-1.5 focus:outline-none hover:opacity-80 transition-opacity"
+                className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-800/80 focus:outline-none transition-all duration-200 border border-transparent hover:border-slate-700/60"
               >
-                <div className="h-8.5 w-8.5 rounded-full overflow-hidden border border-white/20 bg-amber-500/10 flex items-center justify-center font-bold text-xs text-amber-500">
+                <div className="h-9 w-9 lg:h-10 lg:w-10 rounded-xl overflow-hidden border border-amber-500/30 bg-amber-500/10 flex items-center justify-center font-bold text-xs lg:text-sm text-amber-400 shadow-sm shrink-0">
                   {user.avatar ? (
                     <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
                   ) : (
                     user.fullName[0].toUpperCase()
                   )}
                 </div>
-                <ChevronDown className="h-3.5 w-3.5 text-gray-500" />
+                <ChevronDown className="h-4 w-4 text-slate-400 transition-transform duration-200" />
               </button>
 
               {showDropdown && (
-                <div className="absolute right-0 mt-2 w-52 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-50 animate-fade-in font-medium text-xs text-slate-900">
-                  <div className="px-4 py-2 border-b border-slate-200 text-[10px] text-slate-700 font-bold uppercase tracking-wider">
-                    Hi, {user.fullName.split(" ")[0]}
+                <div className="absolute right-0 mt-2 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl shadow-black/40 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200 font-medium text-xs text-slate-200">
+                  <div className="px-4 py-2.5 border-b border-slate-800 text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
+                    Signed in as <span className="text-white font-bold block normal-case text-sm truncate mt-0.5">{user.fullName}</span>
                   </div>
                   <NavLink
                     to="/profile"
                     onClick={() => setShowDropdown(false)}
-                    className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 hover:text-amber-500 transition-colors"
+                    className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-slate-800 hover:text-amber-400 transition-colors duration-150"
                   >
-                    <User className="h-4 w-4" /> My Profile
+                    <User className="h-4 w-4 text-slate-400" /> My Profile
                   </NavLink>
                   <NavLink
                     to="/bookings"
                     onClick={() => setShowDropdown(false)}
-                    className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 hover:text-amber-500 transition-colors"
+                    className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-slate-800 hover:text-amber-400 transition-colors duration-150"
                   >
-                    <Calendar className="h-4 w-4" /> Booking History
+                    <Calendar className="h-4 w-4 text-slate-400" /> Booking History
                   </NavLink>
                   {(user.role === "PROVIDER" || user.role === "ADMIN") && (
                     <NavLink
                       to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"}
                       onClick={() => setShowDropdown(false)}
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 hover:text-amber-500 transition-colors"
+                      className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-slate-800 hover:text-amber-400 transition-colors duration-150"
                     >
-                      <LayoutDashboard className="h-4 w-4" /> Dashboard
+                      <LayoutDashboard className="h-4 w-4 text-slate-400" /> Dashboard
                     </NavLink>
                   )}
                   <NavLink
                     to="/profile"
                     onClick={() => setShowDropdown(false)}
-                    className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 hover:text-amber-500 transition-colors"
+                    className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-slate-800 hover:text-amber-400 transition-colors duration-150"
                   >
-                    <Settings className="h-4 w-4" /> Settings
+                    <Settings className="h-4 w-4 text-slate-400" /> Settings
                   </NavLink>
-                  <hr className="my-1.5 border-gray-50" />
+                  <hr className="my-1.5 border-slate-800" />
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2 px-4 py-2 hover:bg-rose-50 text-rose-600 transition-colors text-left"
+                    className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-rose-500/10 text-rose-400 hover:text-rose-300 transition-colors duration-150 text-left font-semibold"
                   >
                     <LogOut className="h-4 w-4" /> Logout
                   </button>
@@ -163,73 +168,80 @@ export default function Navbar() {
             </div>
           ) : (
             /* Login and Sign Up */
-            <>
+            <div className="flex items-center gap-2.5">
               <NavLink to="/login">
-                <Button variant="ghost" size="sm" className="text-slate-300 hover:text-amber-500 hover:bg-white/10 text-xs">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-slate-200 hover:text-amber-400 hover:bg-slate-800 h-[44px] px-4 rounded-xl text-sm font-semibold transition-all duration-200"
+                >
                   Login
                 </Button>
               </NavLink>
               <NavLink to="/register">
-                <Button size="sm" className="bg-amber-500 hover:bg-amber-500/90 text-slate-900 font-bold rounded-full px-4 text-xs transition-transform hover:scale-[1.02]">
+                <Button 
+                  size="sm" 
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold h-[44px] px-5 rounded-xl text-sm transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98]"
+                >
                   Sign Up
                 </Button>
               </NavLink>
-            </>
+            </div>
           )}
         </div>
 
         {/* Mobile Navigation controls */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2">
           {/* Mobile Notifications */}
-          <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white rounded-full h-9 w-9">
+          <Button variant="ghost" size="icon" className="relative hover:bg-slate-800 text-slate-300 rounded-xl h-10 w-10 transition-colors">
             <Bell className="h-5 w-5 text-slate-300" />
-            <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-amber-500 rounded-full border border-slate-900"></span>
+            <span className="absolute top-2 right-2 h-2 w-2 bg-amber-500 rounded-full border border-slate-900"></span>
           </Button>
 
           {/* Mobile Hamburger Drawer */}
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10 h-9 w-9">
+              <Button variant="ghost" size="icon" className="rounded-xl hover:bg-slate-800 h-10 w-10 transition-colors">
                 <Menu className="h-6 w-6 text-white" />
               </Button>
             </DialogTrigger>
             
-            <DialogContent className="fixed right-0 top-0 bottom-0 left-auto h-full w-80 max-w-[85vw] translate-x-0 translate-y-0 rounded-none border-y-0 border-r-0 border-l border-gray-100 p-6 bg-white shadow-2xl flex flex-col gap-6 z-50 transition-all duration-300">
+            <DialogContent className="fixed right-0 top-0 bottom-0 left-auto h-full w-80 max-w-[85vw] translate-x-0 translate-y-0 rounded-none border-y-0 border-r-0 border-l border-slate-800 p-6 bg-slate-900 shadow-2xl flex flex-col gap-6 z-50 transition-all duration-300 text-white">
               
-              <DialogHeader className="flex flex-row items-center justify-between border-b pb-4">
-                <DialogTitle className="flex items-center gap-2">
+              <DialogHeader className="flex flex-row items-center justify-between border-b border-slate-800 pb-4">
+                <DialogTitle className="flex items-center gap-2.5">
                   <img 
                     src="/logo.png" 
                     alt="BookMyLocalService Logo" 
                     className="h-8 w-auto object-contain"
                   />
-                  <span className="font-bold text-lg text-slate-900">
-                    BookMyLocal
+                  <span className="font-extrabold text-lg text-white">
+                    BookMyLocal<span className="text-amber-500">Service</span>
                   </span>
                 </DialogTitle>
               </DialogHeader>
 
               {/* Mobile Search */}
               <div className="relative w-full">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
                 <Input
                   type="search"
                   placeholder="Search services..."
-                  className="pl-9 h-10 w-full bg-gray-50 border-gray-200 rounded-full text-sm"
+                  className="pl-10 h-11 w-full bg-slate-800 border-slate-700 text-slate-100 placeholder:text-slate-400 focus:border-amber-500 rounded-xl text-sm"
                 />
               </div>
 
               {/* Mobile Menu Links */}
-              <nav className="flex flex-col gap-3 py-2 flex-1 overflow-y-auto">
+              <nav className="flex flex-col gap-2 py-2 flex-1 overflow-y-auto">
                 {navLinks.map((link) => (
                   <DialogClose asChild key={link.path}>
                     <NavLink
                       to={link.path}
                       className={({ isActive }) => cn(
-                        "text-base font-medium py-2.5 px-3 rounded-lg transition-colors",
+                        "text-base font-semibold py-2.5 px-3.5 rounded-xl transition-all duration-200",
                         isActive 
-                          ? "bg-slate-50 text-amber-500 font-semibold" 
-                          : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+                          ? "bg-amber-500/10 text-amber-400 font-bold" 
+                          : "text-slate-300 hover:bg-slate-800 hover:text-white"
                       )}
                     >
                       {link.name}
@@ -239,11 +251,11 @@ export default function Navbar() {
               </nav>
 
               {/* Mobile Action Buttons / Profile */}
-              <div className="border-t pt-4 flex flex-col gap-2 shrink-0">
+              <div className="border-t border-slate-800 pt-4 flex flex-col gap-2 shrink-0">
                 {user ? (
                   <>
-                    <div className="flex items-center gap-3 px-3 py-2 border-b pb-4 mb-2">
-                      <div className="h-10 w-10 rounded-full overflow-hidden border border-slate-200 bg-slate-50 flex items-center justify-center font-bold text-sm text-slate-900 shrink-0">
+                    <div className="flex items-center gap-3 px-3 py-2 border-b border-slate-800 pb-4 mb-2">
+                      <div className="h-10 w-10 rounded-xl overflow-hidden border border-amber-500/30 bg-amber-500/10 flex items-center justify-center font-bold text-sm text-amber-400 shrink-0">
                         {user.avatar ? (
                           <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
                         ) : (
@@ -251,23 +263,23 @@ export default function Navbar() {
                         )}
                       </div>
                       <div>
-                        <span className="block text-sm font-bold text-slate-900 leading-tight">{user.fullName}</span>
-                        <span className="text-[10px] text-slate-700 capitalize block mt-0.5">{user.role.toLowerCase()} Account</span>
+                        <span className="block text-sm font-bold text-white leading-tight">{user.fullName}</span>
+                        <span className="text-xs text-amber-400 capitalize block mt-0.5 font-medium">{user.role.toLowerCase()} Account</span>
                       </div>
                     </div>
                     <DialogClose asChild>
-                      <NavLink to="/profile" className="flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-amber-500 rounded-lg">
+                      <NavLink to="/profile" className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-amber-400 rounded-xl transition-colors">
                         <User className="h-4.5 w-4.5" /> My Profile
                       </NavLink>
                     </DialogClose>
                     <DialogClose asChild>
-                      <NavLink to="/bookings" className="flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-amber-500 rounded-lg">
+                      <NavLink to="/bookings" className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-amber-400 rounded-xl transition-colors">
                         <Calendar className="h-4.5 w-4.5" /> Booking History
                       </NavLink>
                     </DialogClose>
                     {(user.role === "PROVIDER" || user.role === "ADMIN") && (
                       <DialogClose asChild>
-                        <NavLink to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"} className="flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-amber-500 rounded-lg">
+                        <NavLink to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"} className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-amber-400 rounded-xl transition-colors">
                           <LayoutDashboard className="h-4.5 w-4.5" /> Dashboard
                         </NavLink>
                       </DialogClose>
@@ -275,7 +287,7 @@ export default function Navbar() {
                     <DialogClose asChild>
                       <button
                         onClick={handleLogout}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-rose-600 hover:bg-rose-50 rounded-lg text-left mt-2 font-bold"
+                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-rose-400 hover:bg-rose-500/10 rounded-xl text-left mt-2 font-bold transition-colors"
                       >
                         <LogOut className="h-4.5 w-4.5" /> Logout
                       </button>
@@ -285,14 +297,14 @@ export default function Navbar() {
                   <>
                     <DialogClose asChild>
                       <NavLink to="/login" className="w-full">
-                        <Button variant="outline" className="w-full rounded-full h-10">
+                        <Button variant="outline" className="w-full border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-xl h-11 text-sm font-semibold">
                           Login
                         </Button>
                       </NavLink>
                     </DialogClose>
                     <DialogClose asChild>
                       <NavLink to="/register" className="w-full">
-                        <Button className="w-full bg-amber-500 hover:bg-amber-500/90 text-slate-900 font-bold rounded-full h-10">
+                        <Button className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl h-11 text-sm">
                           Sign Up
                         </Button>
                       </NavLink>
