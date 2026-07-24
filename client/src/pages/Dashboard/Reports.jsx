@@ -130,16 +130,16 @@ export default function Reports() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Reports & Analytics</h1>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium">Verify system transaction graphs, top performing specialists, and export records</p>
+              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Verify system transaction graphs, top performing specialists, and export records</p>
             </div>
             
             {/* Quick Actions Panel */}
@@ -152,7 +152,7 @@ export default function Reports() {
                 <Printer className="h-4 w-4" /> Print Reports
               </Button>
               <Link to="/admin/dashboard">
-                <Button size="sm" className="bg-white text-slate-900 hover:bg-slate-50 border border-slate-100 rounded-full text-xs font-bold px-4 h-9.5 shadow-md flex items-center gap-1">
+                <Button size="sm" className="bg-white text-[#1F1D1A] hover:bg-[#FAF6F0] border border-[#5A5146]/15 rounded-full text-xs font-bold px-4 h-9.5 shadow-md flex items-center gap-1">
                   <ArrowLeft className="h-4 w-4 mr-0.5" /> Back to Dashboard
                 </Button>
               </Link>
@@ -165,10 +165,10 @@ export default function Reports() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             
             {/* Total Revenue */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Revenue</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">$42,850 <span className="text-[10px] text-slate-400 font-semibold">USD</span></span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Revenue</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">$42,850 <span className="text-[10px] text-[#7A7266] font-semibold">USD</span></span>
               </div>
               <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl shrink-0">
                 <DollarSign className="h-6 w-6" />
@@ -176,34 +176,34 @@ export default function Reports() {
             </Card>
 
             {/* Total Bookings */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Bookings</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">1,840</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Bookings</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">1,840</span>
               </div>
-              <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl shrink-0">
+              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <Layers className="h-6 w-6" />
               </div>
             </Card>
 
             {/* Active Users */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Active Users</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">4,250</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Active Users</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">4,250</span>
               </div>
-              <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl shrink-0">
+              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <Users className="h-6 w-6" />
               </div>
             </Card>
 
             {/* Active Providers */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Active Specialists</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">380</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Active Specialists</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">380</span>
               </div>
-              <div className="p-3 bg-amber-50 text-amber-500 rounded-2xl shrink-0">
+              <div className="p-3 bg-amber-50 text-[#C9A46A] rounded-2xl shrink-0">
                 <Briefcase className="h-6 w-6" />
               </div>
             </Card>
@@ -222,56 +222,56 @@ export default function Reports() {
           )}
 
           {/* EXPORTS & FILTERS CONTROL CARD */}
-          <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-6 print:hidden">
+          <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-6 print:hidden">
             
             {/* Filters */}
             <div className="flex flex-wrap items-center gap-4 flex-1">
               <div className="flex flex-col gap-1.5 shrink-0">
-                <Label htmlFor="reportType" className="text-[10px] font-bold text-slate-400 uppercase">Report Type</Label>
+                <Label htmlFor="reportType" className="text-[10px] font-bold text-[#7A7266] uppercase">Report Type</Label>
                 <div className="relative">
                   <select
                     id="reportType"
                     value={reportType}
                     onChange={(e) => setReportType(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="revenue">Financial Revenue Report</option>
                     <option value="bookings">Volume Bookings Report</option>
                     <option value="growth">Account Registrations Growth</option>
                   </select>
-                  <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-slate-400" />
+                  <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
                 </div>
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="dateFrom" className="text-[10px] font-bold text-slate-400 uppercase">From Date</Label>
+                <Label htmlFor="dateFrom" className="text-[10px] font-bold text-[#7A7266] uppercase">From Date</Label>
                 <Input 
                   id="dateFrom"
                   type="date"
                   value={dateFrom}
                   onChange={(e) => setDateFrom(e.target.value)}
-                  className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white cursor-pointer"
+                  className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white cursor-pointer"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="dateTo" className="text-[10px] font-bold text-slate-400 uppercase">To Date</Label>
+                <Label htmlFor="dateTo" className="text-[10px] font-bold text-[#7A7266] uppercase">To Date</Label>
                 <Input 
                   id="dateTo"
                   type="date"
                   value={dateTo}
                   onChange={(e) => setDateTo(e.target.value)}
-                  className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white cursor-pointer"
+                  className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white cursor-pointer"
                 />
               </div>
             </div>
 
             {/* Export buttons */}
-            <div className="flex items-center gap-2 shrink-0 border-t border-slate-100 lg:border-0 pt-4 lg:pt-0">
+            <div className="flex items-center gap-2 shrink-0 border-t border-[#5A5146]/15 lg:border-0 pt-4 lg:pt-0">
               <Button
                 size="sm"
                 onClick={() => handleExport("PDF")}
-                className="bg-slate-900 hover:bg-black text-white rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
+                className="bg-[#B2563B] hover:bg-black text-white rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
               >
                 <FileText className="h-4 w-4" /> PDF Report
               </Button>
@@ -286,7 +286,7 @@ export default function Reports() {
                 size="sm"
                 onClick={() => handleExport("CSV")}
                 variant="outline"
-                className="border-slate-200 text-slate-655 hover:bg-slate-50 rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
+                className="border-[#5A5146]/20 text-slate-655 hover:bg-[#FAF6F0] rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
               >
                 <Download className="h-4 w-4" /> CSV Export
               </Button>
@@ -298,22 +298,22 @@ export default function Reports() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Swappable SVG Growth Chart */}
-            <Card className="lg:col-span-8 border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 flex flex-col justify-between">
-              <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between">
+            <Card className="lg:col-span-8 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 flex flex-col justify-between">
+              <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between">
                 <div>
-                  <CardTitle className="text-base font-extrabold text-slate-900 capitalize">
+                  <CardTitle className="text-base font-extrabold text-[#1F1D1A] capitalize">
                     {reportType === "revenue" ? "Revenue Growth (Daily)" : (reportType === "bookings" ? "Volume Booking Orders" : "User Registrations Ledger")}
                   </CardTitle>
                   <CardDescription className="text-xs">Visual analytics mapping current cycle parameters</CardDescription>
                 </div>
-                <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl shrink-0">
+                <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0">
                   <TrendingUp className="h-5 w-5" />
                 </div>
               </CardHeader>
 
               <CardContent className="p-0 pt-6 flex-1 flex items-center justify-center min-h-[160px]">
                 {isLoading ? (
-                  <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
+                  <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
                 ) : (
                   <div className="w-full overflow-x-auto">
                     <div className="min-w-[480px] h-[160px] relative">
@@ -342,8 +342,8 @@ export default function Reports() {
                                   fill="#4f46e5"
                                   className="hover:fill-secondary transition-colors cursor-pointer"
                                 />
-                                <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" className="text-[9px] font-black fill-slate-800">{d.val}</text>
-                                <text x={x + barWidth / 2} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-bold fill-slate-450">{d.label}</text>
+                                <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" className="text-[9px] font-black fill-violet-900">{d.val}</text>
+                                <text x={x + barWidth / 2} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-bold fill-stone-500">{d.label}</text>
                               </g>
                             );
                           })
@@ -371,10 +371,10 @@ export default function Reports() {
                               return (
                                 <g key={d.label}>
                                   <circle cx={x} cy={y} r="5" fill="#2563eb" stroke="#ffffff" strokeWidth="2" className="cursor-pointer" />
-                                  <text x={x} y={y - 10} textAnchor="middle" className="text-[9px] font-black fill-slate-800">
+                                  <text x={x} y={y - 10} textAnchor="middle" className="text-[9px] font-black fill-violet-900">
                                     {reportType === "revenue" ? `$${d.val}` : d.val}
                                   </text>
-                                  <text x={x} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-bold fill-slate-450">{d.label}</text>
+                                  <text x={x} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-bold fill-stone-500">{d.label}</text>
                                 </g>
                               );
                             })}
@@ -389,17 +389,17 @@ export default function Reports() {
             </Card>
 
             {/* Category Share Distribution breakdown */}
-            <Card className="lg:col-span-4 border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
-              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5 mb-4">Category Shares</span>
+            <Card className="lg:col-span-4 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
+              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5 mb-4">Category Shares</span>
               
               <div className="space-y-4 pt-1.5">
                 {categoryShare.map(cat => (
                   <div key={cat.name} className="space-y-1.5">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-slate-700">{cat.name}</span>
-                      <span className="text-slate-450 font-semibold">{cat.count} jobs ({cat.share}%)</span>
+                      <span className="text-[#B2563B]">{cat.name}</span>
+                      <span className="text-[#7A7266] font-semibold">{cat.count} jobs ({cat.share}%)</span>
                     </div>
-                    <Progress value={cat.share} className="h-2 rounded-full bg-slate-100 [&>div]:bg-slate-700" />
+                    <Progress value={cat.share} className="h-2 rounded-full bg-[#F0E7D5] [&>div]:bg-[#7C8A6B]" />
                   </div>
                 ))}
               </div>
@@ -411,28 +411,28 @@ export default function Reports() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Top Specialists Grid */}
-            <Card className="lg:col-span-5 border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">Top Performing Specialists</span>
+            <Card className="lg:col-span-5 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Top Performing Specialists</span>
               
               <div className="space-y-4">
                 {topProviders.map(prov => (
-                  <div key={prov.id} className="p-3 border border-slate-200 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-slate-300 transition-colors">
+                  <div key={prov.id} className="p-3 border border-[#5A5146]/20 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-stone-300 transition-colors">
                     <div className="flex items-center gap-3">
-                      <Avatar className="w-10 h-10 border border-slate-100 overflow-hidden shrink-0">
+                      <Avatar className="w-10 h-10 border border-[#5A5146]/15 overflow-hidden shrink-0">
                         <AvatarImage src={prov.avatar} className="object-cover" />
                         <AvatarFallback>{prov.name[0]}</AvatarFallback>
                       </Avatar>
                       <div>
-                        <span className="block text-xs font-bold text-slate-800">{prov.name}</span>
-                        <span className="text-[10px] text-slate-450 font-bold block mt-0.5">{prov.service}</span>
-                        <span className="text-[10px] text-amber-500 font-bold flex items-center gap-0.5 mt-1.5">
-                          <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" /> {prov.rating}
+                        <span className="block text-xs font-bold text-[#1F1D1A]">{prov.name}</span>
+                        <span className="text-[10px] text-[#7A7266] font-bold block mt-0.5">{prov.service}</span>
+                        <span className="text-[10px] text-[#C9A46A] font-bold flex items-center gap-0.5 mt-1.5">
+                          <Star className="h-3.5 w-3.5 fill-amber-400 text-[#C9A46A]" /> {prov.rating}
                         </span>
                       </div>
                     </div>
 
                     <div className="text-right space-y-1 shrink-0">
-                      <span className="text-xs font-extrabold text-slate-700 block">{prov.bookings} jobs</span>
+                      <span className="text-xs font-extrabold text-[#B2563B] block">{prov.bookings} jobs</span>
                       <span className="text-[11px] text-emerald-600 font-black block">${prov.revenue.toLocaleString()}</span>
                     </div>
                   </div>
@@ -441,13 +441,13 @@ export default function Reports() {
             </Card>
 
             {/* Most Booked Services listing */}
-            <Card className="lg:col-span-7 border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">Most Booked Services</span>
+            <Card className="lg:col-span-7 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Most Booked Services</span>
               
               <div className="overflow-x-auto">
                 <table className="w-full text-xs text-left">
                   <thead>
-                    <tr className="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider text-[9px] pb-2">
+                    <tr className="border-b border-[#5A5146]/15 text-[#7A7266] font-bold uppercase tracking-wider text-[9px] pb-2">
                       <th className="py-2.5 px-1">Service Title</th>
                       <th className="py-2.5">Category</th>
                       <th className="py-2.5">Avg Rate</th>
@@ -455,23 +455,23 @@ export default function Reports() {
                       <th className="py-2.5 text-right">Revenue</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-50 font-semibold text-slate-700">
-                    <tr className="hover:bg-slate-50/50 transition-colors">
-                      <td className="py-3 px-1 font-bold text-slate-900">Deep Home Cleaning Service</td>
+                  <tbody className="divide-y divide-stone-50 font-semibold text-[#B2563B]">
+                    <tr className="hover:bg-[#FAF6F0] transition-colors">
+                      <td className="py-3 px-1 font-bold text-[#1F1D1A]">Deep Home Cleaning Service</td>
                       <td className="py-3">Cleaning</td>
                       <td className="py-3">$55.00</td>
                       <td className="py-3">700</td>
                       <td className="py-3 text-right text-emerald-600 font-bold">$38,500.00</td>
                     </tr>
-                    <tr className="hover:bg-slate-50/50 transition-colors">
-                      <td className="py-3 px-1 font-bold text-slate-900">Licensed Smart Home Wiring</td>
+                    <tr className="hover:bg-[#FAF6F0] transition-colors">
+                      <td className="py-3 px-1 font-bold text-[#1F1D1A]">Licensed Smart Home Wiring</td>
                       <td className="py-3">Electrical</td>
                       <td className="py-3">$115.00</td>
                       <td className="py-3">330</td>
                       <td className="py-3 text-right text-emerald-600 font-bold">$37,950.00</td>
                     </tr>
-                    <tr className="hover:bg-slate-50/50 transition-colors">
-                      <td className="py-3 px-1 font-bold text-slate-900">Expert Plumbing & Leak Repair</td>
+                    <tr className="hover:bg-[#FAF6F0] transition-colors">
+                      <td className="py-3 px-1 font-bold text-[#1F1D1A]">Expert Plumbing & Leak Repair</td>
                       <td className="py-3">Plumbing</td>
                       <td className="py-3">$98.00</td>
                       <td className="py-3">405</td>
@@ -485,13 +485,13 @@ export default function Reports() {
           </div>
 
           {/* RECENT AUDIT TRANSACTIONS TABLE */}
-          <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
-            <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5 mb-4">Recent Audit Transactions</span>
+          <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
+            <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5 mb-4">Recent Audit Transactions</span>
             
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left">
                 <thead>
-                  <tr className="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider text-[9px] pb-2">
+                  <tr className="border-b border-[#5A5146]/15 text-[#7A7266] font-bold uppercase tracking-wider text-[9px] pb-2">
                     <th className="py-2.5 px-1">Ref Transaction ID</th>
                     <th className="py-2.5">Customer Name</th>
                     <th className="py-2.5">Provider Name</th>
@@ -500,14 +500,14 @@ export default function Reports() {
                     <th className="py-2.5 text-right">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-50 font-semibold text-slate-700">
+                <tbody className="divide-y divide-stone-50 font-semibold text-[#B2563B]">
                   {recentTransactions.map(txn => (
-                    <tr key={txn.id} className="hover:bg-slate-50/50 transition-colors">
-                      <td className="py-3 px-1 font-bold text-slate-450">{txn.id}</td>
-                      <td className="py-3 font-bold text-slate-800">{txn.customer}</td>
+                    <tr key={txn.id} className="hover:bg-[#FAF6F0] transition-colors">
+                      <td className="py-3 px-1 font-bold text-[#7A7266]">{txn.id}</td>
+                      <td className="py-3 font-bold text-[#1F1D1A]">{txn.customer}</td>
                       <td className="py-3">{txn.provider}</td>
                       <td className="py-3">{txn.date}</td>
-                      <td className="py-3 font-black text-slate-950">${txn.amount.toFixed(2)}</td>
+                      <td className="py-3 font-black text-[#1F1D1A]">${txn.amount.toFixed(2)}</td>
                       <td className="py-3 text-right">
                         <Badge variant={txn.status === "completed" ? "success" : "warning"} className="capitalize font-bold rounded-lg text-[9px] py-0.5 px-2.5 border-0">
                           {txn.status}

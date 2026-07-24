@@ -158,16 +158,16 @@ export default function Subscription() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
 
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Billing & Subscriptions</h1>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium">Verify your active plan tier, pricing schedules, features, or print invoices</p>
+              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Verify your active plan tier, pricing schedules, features, or print invoices</p>
             </div>
 
             {/* Quick dashboard back button */}
@@ -191,17 +191,17 @@ export default function Subscription() {
           )}
 
           {/* ACTIVE PLAN TIER CARD OVERVIEW */}
-          <Card className="border border-slate-100 shadow-md bg-white rounded-2xl p-6">
+          <Card className="border border-[#5A5146]/15 shadow-md bg-white rounded-2xl p-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
 
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl shrink-0 mt-0.5">
+                <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0 mt-0.5">
                   <CreditCard className="h-7 w-7" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">Active Plan Tier</span>
+                  <span className="text-[10px] font-extrabold text-[#7A7266] uppercase tracking-wider block">Active Plan Tier</span>
                   <div className="flex items-center gap-2 mt-1">
-                    <h2 className="text-xl font-black text-slate-900 capitalize">
+                    <h2 className="text-xl font-black text-[#1F1D1A] capitalize">
                       {activePlan === "none" ? "No Active Subscription" : `${activePlan} Plan`}
                     </h2>
                     {activePlan !== "none" && (
@@ -210,7 +210,7 @@ export default function Subscription() {
                       </Badge>
                     )}
                   </div>
-                  <p className="text-xs text-slate-450 mt-1.5 font-medium leading-relaxed">
+                  <p className="text-xs text-[#7A7266] mt-1.5 font-medium leading-relaxed">
                     {activePlan === "none"
                       ? "Your subscription is cancelled. Access to premium dispatcher listings expires soon."
                       : `Your plan renews automatically on ${renewalDate} at $${getPlanPrice(activePlan)}/${billingCycle === "monthly" ? "month" : "month billed annually"}.`
@@ -219,7 +219,7 @@ export default function Subscription() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 w-full md:w-auto shrink-0 border-t border-slate-100 md:border-0 pt-4 md:pt-0">
+              <div className="flex items-center gap-3 w-full md:w-auto shrink-0 border-t border-[#5A5146]/15 md:border-0 pt-4 md:pt-0">
                 {activePlan !== "none" && activePlan !== "basic" && (
                   <Button
                     onClick={() => setIsCancelDialogOpen(true)}
@@ -232,7 +232,7 @@ export default function Subscription() {
                 {activePlan === "none" && (
                   <Button
                     onClick={() => triggerPlanChange("pro")}
-                    className="w-full md:w-auto bg-slate-900 hover:bg-slate-900 text-white font-bold h-10 text-xs rounded-xl shadow-md"
+                    className="w-full md:w-auto bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold h-10 text-xs rounded-xl shadow-md"
                   >
                     Re-Activate Pro Plan
                   </Button>
@@ -247,14 +247,14 @@ export default function Subscription() {
 
             {/* Monthly/Yearly toggle */}
             <div className="flex flex-col items-center gap-3">
-              <span className="text-xs font-bold text-slate-500">Choose your billing cycle</span>
-              <div className="flex bg-slate-100 border border-slate-200 p-0.5 rounded-xl h-10 w-60">
+              <span className="text-xs font-bold text-[#7A7266]">Choose your billing cycle</span>
+              <div className="flex bg-[#F0E7D5] border border-[#5A5146]/20 p-0.5 rounded-xl h-10 w-60">
                 <button
                   type="button"
                   onClick={() => setBillingCycle("monthly")}
                   className={`flex-1 rounded-lg text-xs font-bold transition-all ${billingCycle === "monthly"
-                    ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                    : "text-slate-500 hover:text-slate-700"
+                    ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
+                    : "text-[#7A7266] hover:text-[#B2563B]"
                     }`}
                 >
                   Monthly
@@ -263,8 +263,8 @@ export default function Subscription() {
                   type="button"
                   onClick={() => setBillingCycle("yearly")}
                   className={`flex-1 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 ${billingCycle === "yearly"
-                    ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                    : "text-slate-500 hover:text-slate-700"
+                    ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
+                    : "text-[#7A7266] hover:text-[#B2563B]"
                     }`}
                 >
                   Yearly
@@ -278,25 +278,25 @@ export default function Subscription() {
 
               {/* BASIC PLAN */}
               <Card className={`border rounded-3xl p-6 relative flex flex-col justify-between ${activePlan === "basic"
-                ? "bg-white border-slate-900 shadow-lg ring-1 ring-slate-900"
-                : "bg-white border-slate-200 hover:border-slate-300 shadow-xs transition-all"
+                ? "bg-white border-violet-950 shadow-lg ring-1 ring-violet-950"
+                : "bg-white border-[#5A5146]/20 hover:border-stone-300 shadow-xs transition-all"
                 }`}>
                 <div className="space-y-4">
                   <div>
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">Standard</span>
-                    <h3 className="text-lg font-black text-slate-900 mt-1">Basic Plan</h3>
+                    <span className="text-[10px] font-extrabold text-[#7A7266] uppercase tracking-wider block">Standard</span>
+                    <h3 className="text-lg font-black text-[#1F1D1A] mt-1">Basic Plan</h3>
                   </div>
 
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-slate-950">$0</span>
-                    <span className="text-xs text-slate-400 font-bold">/month</span>
+                    <span className="text-3xl font-black text-[#1F1D1A]">$0</span>
+                    <span className="text-xs text-[#7A7266] font-bold">/month</span>
                   </div>
 
-                  <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  <p className="text-xs text-[#7A7266] leading-relaxed font-medium">
                     Perfect for new providers getting started locally.
                   </p>
 
-                  <hr className="border-slate-100" />
+                  <hr className="border-[#5A5146]/15" />
 
                   {/* Highlights */}
                   <div className="space-y-2.5">
@@ -306,7 +306,7 @@ export default function Subscription() {
                       "Standard Search Results placement",
                       "Email support logs"
                     ].map((feat, i) => (
-                      <div key={i} className="flex items-center gap-2.5 text-xs text-slate-600 font-medium">
+                      <div key={i} className="flex items-center gap-2.5 text-xs text-[#5A5146] font-medium">
                         <Check className="h-4 w-4 text-emerald-500 shrink-0" />
                         <span>{feat}</span>
                       </div>
@@ -314,12 +314,12 @@ export default function Subscription() {
                   </div>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-slate-50">
+                <div className="pt-6 mt-6 border-t border-stone-50">
                   <Button
                     onClick={() => triggerPlanChange("basic")}
                     disabled={activePlan === "basic"}
                     variant={activePlan === "basic" ? "default" : "outline"}
-                    className="w-full h-10 font-bold text-xs rounded-xl border-slate-200 hover:bg-slate-50"
+                    className="w-full h-10 font-bold text-xs rounded-xl border-[#5A5146]/20 hover:bg-[#FAF6F0]"
                   >
                     {activePlan === "basic" ? "Active Plan" : "Downgrade to Basic"}
                   </Button>
@@ -328,30 +328,30 @@ export default function Subscription() {
 
               {/* PRO PLAN (RECOMMENDED) */}
               <Card className={`border rounded-3xl p-6 relative flex flex-col justify-between overflow-hidden ${activePlan === "pro"
-                ? "bg-white border-slate-900 shadow-lg ring-1 ring-slate-900"
-                : "bg-white border-slate-200 hover:border-slate-400 shadow-md transition-all"
+                ? "bg-white border-violet-950 shadow-lg ring-1 ring-violet-950"
+                : "bg-white border-[#5A5146]/20 hover:border-stone-400 shadow-md transition-all"
                 }`}>
                 {/* Popular Badge */}
-                <div className="absolute top-0 right-0 bg-slate-900 text-white text-[9px] font-black tracking-wider uppercase px-4 py-1.5 rounded-bl-2xl">
+                <div className="absolute top-0 right-0 bg-[#B2563B] text-white text-[9px] font-black tracking-wider uppercase px-4 py-1.5 rounded-bl-2xl">
                   Popular
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <span className="text-[10px] font-extrabold text-slate-900 uppercase tracking-wider block">Scale</span>
-                    <h3 className="text-lg font-black text-slate-900 mt-1">Pro Plan</h3>
+                    <span className="text-[10px] font-extrabold text-[#1F1D1A] uppercase tracking-wider block">Scale</span>
+                    <h3 className="text-lg font-black text-[#1F1D1A] mt-1">Pro Plan</h3>
                   </div>
 
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-slate-950">${getPlanPrice("pro")}</span>
-                    <span className="text-xs text-slate-400 font-bold">/month</span>
+                    <span className="text-3xl font-black text-[#1F1D1A]">${getPlanPrice("pro")}</span>
+                    <span className="text-xs text-[#7A7266] font-bold">/month</span>
                   </div>
 
-                  <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  <p className="text-xs text-[#7A7266] leading-relaxed font-medium">
                     Boost listing exposures and eliminate commission handling rates.
                   </p>
 
-                  <hr className="border-slate-100" />
+                  <hr className="border-[#5A5146]/15" />
 
                   {/* Highlights */}
                   <div className="space-y-2.5">
@@ -363,7 +363,7 @@ export default function Subscription() {
                       "Customer analytics logs",
                       "Priority Email/Chat support"
                     ].map((feat, i) => (
-                      <div key={i} className="flex items-center gap-2.5 text-xs text-slate-600 font-medium">
+                      <div key={i} className="flex items-center gap-2.5 text-xs text-[#5A5146] font-medium">
                         <Check className="h-4 w-4 text-emerald-500 shrink-0" />
                         <span>{feat}</span>
                       </div>
@@ -371,11 +371,11 @@ export default function Subscription() {
                   </div>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-slate-50">
+                <div className="pt-6 mt-6 border-t border-stone-50">
                   <Button
                     onClick={() => triggerPlanChange("pro")}
                     disabled={activePlan === "pro"}
-                    className="w-full h-10 bg-slate-900 hover:bg-slate-900 text-white font-bold text-xs rounded-xl shadow-xs"
+                    className="w-full h-10 bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs rounded-xl shadow-xs"
                   >
                     {activePlan === "pro" ? "Active Plan" : (activePlan === "basic" ? "Upgrade to Pro" : "Downgrade to Pro")}
                   </Button>
@@ -384,25 +384,25 @@ export default function Subscription() {
 
               {/* PREMIUM PLAN */}
               <Card className={`border rounded-3xl p-6 relative flex flex-col justify-between ${activePlan === "premium"
-                ? "bg-white border-slate-900 shadow-lg ring-1 ring-slate-900"
-                : "bg-white border-slate-200 hover:border-slate-400 shadow-xs transition-all"
+                ? "bg-white border-violet-950 shadow-lg ring-1 ring-violet-950"
+                : "bg-white border-[#5A5146]/20 hover:border-stone-400 shadow-xs transition-all"
                 }`}>
                 <div className="space-y-4">
                   <div>
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">Enterprise</span>
-                    <h3 className="text-lg font-black text-slate-900 mt-1">Premium Plan</h3>
+                    <span className="text-[10px] font-extrabold text-[#7A7266] uppercase tracking-wider block">Enterprise</span>
+                    <h3 className="text-lg font-black text-[#1F1D1A] mt-1">Premium Plan</h3>
                   </div>
 
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-slate-950">${getPlanPrice("premium")}</span>
-                    <span className="text-xs text-slate-400 font-bold">/month</span>
+                    <span className="text-3xl font-black text-[#1F1D1A]">${getPlanPrice("premium")}</span>
+                    <span className="text-xs text-[#7A7266] font-bold">/month</span>
                   </div>
 
-                  <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  <p className="text-xs text-[#7A7266] leading-relaxed font-medium">
                     Maximum exposure with custom promotion overlays.
                   </p>
 
-                  <hr className="border-slate-100" />
+                  <hr className="border-[#5A5146]/15" />
 
                   {/* Highlights */}
                   <div className="space-y-2.5">
@@ -414,7 +414,7 @@ export default function Subscription() {
                       "Custom promotion banners active",
                       "Dedicated Support Manager"
                     ].map((feat, i) => (
-                      <div key={i} className="flex items-center gap-2.5 text-xs text-slate-600 font-medium">
+                      <div key={i} className="flex items-center gap-2.5 text-xs text-[#5A5146] font-medium">
                         <Check className="h-4 w-4 text-emerald-500 shrink-0" />
                         <span>{feat}</span>
                       </div>
@@ -422,12 +422,12 @@ export default function Subscription() {
                   </div>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-slate-50">
+                <div className="pt-6 mt-6 border-t border-stone-50">
                   <Button
                     onClick={() => triggerPlanChange("premium")}
                     disabled={activePlan === "premium"}
                     variant={activePlan === "premium" ? "default" : "outline"}
-                    className="w-full h-10 font-bold text-xs rounded-xl border-slate-200 hover:bg-slate-50"
+                    className="w-full h-10 font-bold text-xs rounded-xl border-[#5A5146]/20 hover:bg-[#FAF6F0]"
                   >
                     {activePlan === "premium" ? "Active Plan" : "Upgrade to Premium"}
                   </Button>
@@ -439,38 +439,38 @@ export default function Subscription() {
           </div>
 
           {/* FEATURE COMPARISON MATRIX TABLE */}
-          <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 overflow-hidden">
-            <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">Features Comparison Matrix</span>
+          <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 overflow-hidden">
+            <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Features Comparison Matrix</span>
 
             <div className="overflow-x-auto pt-4">
               <table className="w-full text-xs text-left">
                 <thead>
-                  <tr className="border-b border-slate-100 text-slate-450 font-bold text-[9px] uppercase tracking-wider">
+                  <tr className="border-b border-[#5A5146]/15 text-[#7A7266] font-bold text-[9px] uppercase tracking-wider">
                     <th className="py-2.5">Core Features</th>
                     <th className="py-2.5">Basic Plan</th>
-                    <th className="py-2.5 text-slate-900">Pro Plan</th>
+                    <th className="py-2.5 text-[#1F1D1A]">Pro Plan</th>
                     <th className="py-2.5">Premium Plan</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-50 font-semibold text-slate-700">
+                <tbody className="divide-y divide-stone-50 font-semibold text-[#B2563B]">
                   {featuresMatrix.map((row, idx) => (
-                    <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
-                      <td className="py-3.5 font-bold text-slate-800">{row.label}</td>
+                    <tr key={idx} className="hover:bg-[#FAF6F0] transition-colors">
+                      <td className="py-3.5 font-bold text-[#1F1D1A]">{row.label}</td>
                       <td className="py-3.5">
                         {typeof row.basic === "boolean"
-                          ? (row.basic ? <Check className="h-4 w-4 text-emerald-500" /> : <X className="h-4 w-4 text-slate-300" />)
+                          ? (row.basic ? <Check className="h-4 w-4 text-emerald-500" /> : <X className="h-4 w-4 text-[#7A7266]" />)
                           : row.basic
                         }
                       </td>
-                      <td className="py-3.5 text-slate-900">
+                      <td className="py-3.5 text-[#1F1D1A]">
                         {typeof row.pro === "boolean"
-                          ? (row.pro ? <Check className="h-4 w-4 text-emerald-500" /> : <X className="h-4 w-4 text-slate-300" />)
+                          ? (row.pro ? <Check className="h-4 w-4 text-emerald-500" /> : <X className="h-4 w-4 text-[#7A7266]" />)
                           : row.pro
                         }
                       </td>
                       <td className="py-3.5">
                         {typeof row.premium === "boolean"
-                          ? (row.premium ? <Check className="h-4 w-4 text-emerald-500" /> : <X className="h-4 w-4 text-slate-300" />)
+                          ? (row.premium ? <Check className="h-4 w-4 text-emerald-500" /> : <X className="h-4 w-4 text-[#7A7266]" />)
                           : row.premium
                         }
                       </td>
@@ -485,50 +485,50 @@ export default function Subscription() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
             {/* PAYMENT INVOICES */}
-            <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">Billing History</span>
+            <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Billing History</span>
 
               <div className="space-y-3">
                 {invoices.map(inv => (
-                  <div key={inv.id} className="p-3.5 border border-slate-200 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-slate-300 transition-colors">
+                  <div key={inv.id} className="p-3.5 border border-[#5A5146]/20 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-stone-300 transition-colors">
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Ref ID: {inv.id}</span>
+                        <span className="text-[9px] font-bold text-[#7A7266] uppercase tracking-wider">Ref ID: {inv.id}</span>
                         <Badge variant="success" className="bg-emerald-500 border-0 text-white font-bold rounded-lg text-[8px] py-0 px-1 leading-none uppercase">Settled</Badge>
                       </div>
-                      <h5 className="font-extrabold text-slate-800 text-xs mt-1 truncate max-w-[200px]">{inv.plan}</h5>
-                      <span className="text-[9px] text-slate-400 font-semibold block">{inv.date}</span>
+                      <h5 className="font-extrabold text-[#1F1D1A] text-xs mt-1 truncate max-w-[200px]">{inv.plan}</h5>
+                      <span className="text-[9px] text-[#7A7266] font-semibold block">{inv.date}</span>
                     </div>
 
-                    <span className="font-black text-slate-950 text-sm shrink-0">${inv.amount.toFixed(2)}</span>
+                    <span className="font-black text-[#1F1D1A] text-sm shrink-0">${inv.amount.toFixed(2)}</span>
                   </div>
                 ))}
               </div>
             </Card>
 
             {/* FAQS SECTION */}
-            <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">Frequently Asked Questions</span>
+            <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Frequently Asked Questions</span>
 
               <div className="space-y-3.5">
                 {faqs.map((faq, idx) => {
                   const isOpen = openFaqIdx === idx;
                   return (
-                    <div key={idx} className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-2xs">
+                    <div key={idx} className="border border-[#5A5146]/20 rounded-xl overflow-hidden bg-white shadow-2xs">
                       <button
                         type="button"
                         onClick={() => setOpenFaqIdx(isOpen ? null : idx)}
-                        className="w-full flex items-center justify-between p-3.5 text-left font-extrabold text-xs text-slate-800 hover:text-slate-900 transition-colors bg-slate-50/50"
+                        className="w-full flex items-center justify-between p-3.5 text-left font-extrabold text-xs text-[#1F1D1A] hover:text-[#1F1D1A] transition-colors bg-[#FAF6F0]"
                       >
                         <span className="flex items-center gap-2">
-                          <HelpCircle className="h-4.5 w-4.5 text-slate-900" />
+                          <HelpCircle className="h-4.5 w-4.5 text-[#1F1D1A]" />
                           {faq.q}
                         </span>
-                        <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                        <ChevronDown className={`h-4 w-4 text-[#7A7266] transition-transform ${isOpen ? "rotate-180" : ""}`} />
                       </button>
 
                       {isOpen && (
-                        <p className="p-4 border-t border-slate-100 text-xs text-slate-500 leading-relaxed font-semibold bg-white animate-fade-in">
+                        <p className="p-4 border-t border-[#5A5146]/15 text-xs text-[#7A7266] leading-relaxed font-semibold bg-white animate-fade-in">
                           {faq.a}
                         </p>
                       )}
@@ -545,31 +545,31 @@ export default function Subscription() {
 
       {/* DIALOG 1: PLAN UPGRADE/DOWNGRADE CONFIRMATION */}
       <Dialog open={isPlanDialogOpen} onOpenChange={setIsPlanDialogOpen}>
-        <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
+        <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
           <DialogHeader>
             <DialogTitle className="text-base font-extrabold text-white flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-white" />
               Confirm Plan Switch
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-400 pt-0.5">
+            <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
               Confirm your switch to the selected billing tier
             </DialogDescription>
           </DialogHeader>
 
           {selectedPlanToChange && (
-            <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl space-y-2">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Change Details</span>
+            <div className="p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl space-y-2">
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wide">Change Details</span>
               <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-slate-500">New Target Plan:</span>
-                <span className="text-slate-800 uppercase">{selectedPlanToChange} Plan</span>
+                <span className="text-[#7A7266]">New Target Plan:</span>
+                <span className="text-[#1F1D1A] uppercase">{selectedPlanToChange} Plan</span>
               </div>
               <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-slate-500">Billing Cycle:</span>
-                <span className="text-slate-800 uppercase">{billingCycle}</span>
+                <span className="text-[#7A7266]">Billing Cycle:</span>
+                <span className="text-[#1F1D1A] uppercase">{billingCycle}</span>
               </div>
-              <div className="flex justify-between items-center text-xs font-bold border-t border-slate-200 pt-2 mt-1">
+              <div className="flex justify-between items-center text-xs font-bold border-t border-[#5A5146]/20 pt-2 mt-1">
                 <span className="text-slate-550">Rate Charged:</span>
-                <span className="text-slate-900 text-sm font-black">${getPlanPrice(selectedPlanToChange)}/mo</span>
+                <span className="text-[#1F1D1A] text-sm font-black">${getPlanPrice(selectedPlanToChange)}/mo</span>
               </div>
             </div>
           )}
@@ -579,7 +579,7 @@ export default function Subscription() {
               type="button"
               variant="outline"
               onClick={() => setIsPlanDialogOpen(false)}
-              className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
+              className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 w-full sm:w-auto"
             >
               Cancel
             </Button>
@@ -587,7 +587,7 @@ export default function Subscription() {
               type="button"
               onClick={executePlanChange}
               disabled={isActionLoading}
-              className="rounded-xl bg-slate-900 hover:bg-slate-900 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
+              className="rounded-xl bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
             >
               {isActionLoading ? (
                 <>
@@ -606,13 +606,13 @@ export default function Subscription() {
 
       {/* DIALOG 2: CANCELLATION WARNING DIALOG */}
       <Dialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
-        <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
+        <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
           <DialogHeader>
-            <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+            <DialogTitle className="text-base font-extrabold text-[#1F1D1A] flex items-center gap-2">
               <AlertCircle className="h-5 w-5 text-rose-600 animate-pulse" />
               Cancel Active Subscription
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-400 pt-0.5">
+            <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
               Confirming cancellation will downgrade your account at the end of the active billing cycle.
             </DialogDescription>
           </DialogHeader>
@@ -634,7 +634,7 @@ export default function Subscription() {
               type="button"
               variant="outline"
               onClick={() => setIsCancelDialogOpen(false)}
-              className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
+              className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 w-full sm:w-auto"
             >
               Close Dialog
             </Button>

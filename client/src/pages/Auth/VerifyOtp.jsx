@@ -161,13 +161,13 @@ export default function VerifyOtp() {
 
   return (
     <MainLayout>
-      <div className="min-h-[85vh] bg-slate-50/50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="min-h-[85vh] bg-[#FAF6F0] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
 
         {/* Container box */}
-        <div className="max-w-5xl w-full bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] transition-all duration-300 hover:shadow-2xl">
+        <div className="max-w-5xl w-full bg-white rounded-3xl border border-[#5A5146]/15 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] transition-all duration-300 hover:shadow-2xl">
 
           {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 via-slate-700 to-slate-900 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+          <div className="lg:col-span-5 bg-gradient-to-br from-violet-950 via-violet-800 to-violet-950 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
 
             {/* Mesh shapes and overlays */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
@@ -179,14 +179,14 @@ export default function VerifyOtp() {
 
             {/* Stats Info Block */}
             <div className="relative z-10 space-y-6 my-auto pt-10">
-              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-slate-300 border border-white/5 backdrop-blur-xs">
+              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-[#7A7266] border border-white/5 backdrop-blur-xs">
                 <Sparkles className="h-3.5 w-3.5 text-amber-300" />
                 Verified Local Pros
               </span>
               <h2 className="text-3xl font-black leading-tight tracking-tight">
                 Secure & Fast Access.
               </h2>
-              <p className="text-slate-300 text-sm leading-relaxed">
+              <p className="text-[#7A7266] text-sm leading-relaxed">
                 Connect with verified local cleaners, plumbers, electricians, and personal coaches. Manage schedules, messaging, and secured checkout all in one place.
               </p>
 
@@ -197,7 +197,7 @@ export default function VerifyOtp() {
                   "Secure & Encrypted Booking Checkout",
                   "Clear, Upfront Pricing Tiers"
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-slate-300">
+                  <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-[#7A7266]">
                     <ShieldCheck className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
                     <span>{item}</span>
                   </div>
@@ -207,11 +207,11 @@ export default function VerifyOtp() {
 
             {/* Quote footer card */}
             <div className="relative z-10 bg-white/10 border border-white/5 rounded-2xl p-4.5 backdrop-blur-xs">
-              <p className="text-xs italic text-slate-300 leading-relaxed">
+              <p className="text-xs italic text-[#7A7266] leading-relaxed">
                 "Finding a smart home electrician used to take hours. On BookMyLocalService, I matched and scheduled Marcus in under 5 minutes!"
               </p>
               <div className="flex items-center gap-2 mt-3">
-                <div className="w-6 h-6 rounded-full bg-slate-200 overflow-hidden">
+                <div className="w-6 h-6 rounded-full bg-[#E8DCC3] overflow-hidden">
                   <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=40&h=40&q=80" alt="Client User" className="w-full h-full object-cover" />
                 </div>
                 <div>
@@ -232,16 +232,16 @@ export default function VerifyOtp() {
             </div>
 
             <div className="space-y-2 mb-8 text-center lg:text-left">
-              <h1 className="text-2xl font-black text-slate-900 tracking-tight">Verify your Email</h1>
-              <p className="text-sm text-slate-500 font-medium">
-                We sent a 6-digit verification code to <strong className="text-slate-800">{email}</strong>.
+              <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Verify your Email</h1>
+              <p className="text-sm text-[#7A7266] font-medium">
+                We sent a 6-digit verification code to <strong className="text-[#1F1D1A]">{email}</strong>.
               </p>
             </div>
 
             {/* OTP VERIFICATION FORM */}
             <form onSubmit={handleVerify} className="space-y-6">
               <div className="space-y-3">
-                <label className="text-xs font-bold text-slate-700 block text-center lg:text-left">
+                <label className="text-xs font-bold text-[#B2563B] block text-center lg:text-left">
                   Enter 6-Digit OTP Code
                 </label>
 
@@ -257,14 +257,14 @@ export default function VerifyOtp() {
                       onKeyDown={(e) => handleKeyDown(e, index)}
                       onPaste={handlePaste}
                       value={data}
-                      className="w-12 h-14 text-center text-xl font-bold border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-slate-900 focus:border-slate-900 outline-none transition-all shadow-sm"
+                      className="w-12 h-14 text-center text-xl font-bold border border-[#5A5146]/20 rounded-xl bg-white focus:ring-2 focus:ring-violet-950 focus:border-violet-950 outline-none transition-all shadow-sm"
                       disabled={isSubmitting || isResending}
                     />
                   ))}
                 </div>
 
-                <p className="text-[11px] text-slate-450 text-center lg:text-left">
-                  The code will expire in <span className="font-semibold text-slate-700">5 minutes</span>.
+                <p className="text-[11px] text-[#7A7266] text-center lg:text-left">
+                  The code will expire in <span className="font-semibold text-[#B2563B]">5 minutes</span>.
                 </p>
               </div>
 
@@ -272,7 +272,7 @@ export default function VerifyOtp() {
               <Button
                 type="submit"
                 disabled={isSubmitting || isResending || otp.join("").length !== 6}
-                className="w-full h-11 bg-slate-900 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -289,14 +289,14 @@ export default function VerifyOtp() {
             </form>
 
             {/* RESEND SECTION */}
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4.5 bg-slate-50 border border-slate-100 rounded-2xl">
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4.5 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl">
               <div className="flex items-center gap-3">
-                <span className="p-2 bg-white rounded-xl shadow-2xs text-slate-400">
+                <span className="p-2 bg-white rounded-xl shadow-2xs text-[#7A7266]">
                   <Mail className="h-4.5 w-4.5" />
                 </span>
                 <div>
-                  <span className="block text-xs font-bold text-slate-700">Didn't receive the email?</span>
-                  <span className="text-[10px] text-slate-450 font-medium">Check your spam folder or try again.</span>
+                  <span className="block text-xs font-bold text-[#B2563B]">Didn't receive the email?</span>
+                  <span className="text-[10px] text-[#7A7266] font-medium">Check your spam folder or try again.</span>
                 </div>
               </div>
 
@@ -305,7 +305,7 @@ export default function VerifyOtp() {
                 variant="outline"
                 onClick={handleResend}
                 disabled={!canResend || isResending || isSubmitting}
-                className={`h-9 font-extrabold text-xs rounded-xl flex items-center gap-1.5 shadow-2xs border-slate-200 bg-white ${canResend ? "text-slate-900 hover:bg-slate-50 cursor-pointer" : "text-slate-400"
+                className={`h-9 font-extrabold text-xs rounded-xl flex items-center gap-1.5 shadow-2xs border-[#5A5146]/20 bg-white ${canResend ? "text-[#1F1D1A] hover:bg-[#FAF6F0] cursor-pointer" : "text-[#7A7266]"
                   }`}
               >
                 {isResending ? (
@@ -323,11 +323,11 @@ export default function VerifyOtp() {
             </div>
 
             {/* Back to Login Link */}
-            <div className="mt-8 text-center text-xs font-semibold text-slate-500">
+            <div className="mt-8 text-center text-xs font-semibold text-[#7A7266]">
               <button
                 type="button"
                 onClick={() => navigate("/login")}
-                className="text-slate-900 hover:text-amber-500 transition-colors font-bold hover:underline"
+                className="text-[#1F1D1A] hover:text-[#C9A46A] transition-colors font-bold hover:underline"
               >
                 Back to email entry
               </button>

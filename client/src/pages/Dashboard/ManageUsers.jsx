@@ -240,16 +240,16 @@ export default function ManageUsers() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Manage Platform Users</h1>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium">Audit profiles, modify roles, block accounts, or export databases</p>
+              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Audit profiles, modify roles, block accounts, or export databases</p>
             </div>
             
             {/* Quick dashboard back button */}
@@ -264,26 +264,26 @@ export default function ManageUsers() {
 
         {/* STATISTICS OVERVIEW CARDS */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-slate-100 p-5 rounded-2xl shadow-md">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-[#5A5146]/15 p-5 rounded-2xl shadow-md">
             
             <div className="text-center space-y-1 py-1">
-              <span className="block text-2xl font-black text-slate-900">{stats.total}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Users</span>
+              <span className="block text-2xl font-black text-[#1F1D1A]">{stats.total}</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Users</span>
             </div>
             
-            <div className="text-center space-y-1 py-1 border-l border-slate-100">
+            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
               <span className="block text-2xl font-black text-emerald-600">{stats.active}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Active Users</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Active Users</span>
             </div>
 
-            <div className="text-center space-y-1 py-1 border-l border-slate-100">
+            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
               <span className="block text-2xl font-black text-rose-600">{stats.blocked}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Blocked Users</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Blocked Users</span>
             </div>
 
-            <div className="text-center space-y-1 py-1 border-l border-slate-100">
-              <span className="block text-2xl font-black text-slate-900">+{stats.newCount}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">New Today</span>
+            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
+              <span className="block text-2xl font-black text-[#1F1D1A]">+{stats.newCount}</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">New Today</span>
             </div>
 
           </div>
@@ -297,76 +297,76 @@ export default function ManageUsers() {
             <div className="lg:col-span-3 space-y-5 shrink-0">
               
               {/* Search */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5 flex items-center gap-1.5">
-                  <Search className="h-4 w-4 text-slate-900" /> Search Users
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5 flex items-center gap-1.5">
+                  <Search className="h-4 w-4 text-[#1F1D1A]" /> Search Users
                 </span>
                 <div className="relative">
-                  <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-400">
+                  <span className="absolute left-3 top-[50%] translate-y-[-50%] text-[#7A7266]">
                     <Search className="h-4 w-4" />
                   </span>
                   <Input 
                     placeholder="Search name, phone..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                    className="pl-9 h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                   />
                 </div>
               </Card>
 
               {/* Roles */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5">Filter by Role</span>
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5">Filter by Role</span>
                 <div className="relative">
                   <select
                     value={roleFilter}
                     onChange={(e) => setRoleFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Roles</option>
                     <option value="customer">Customers</option>
                     <option value="provider">Service Providers</option>
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                     <ChevronDown className="h-4 w-4 opacity-60" />
                   </div>
                 </div>
               </Card>
 
               {/* Status */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5">Filter by Status</span>
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5">Filter by Status</span>
                 <div className="relative">
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Statuses</option>
                     <option value="active">Active only</option>
                     <option value="blocked">Blocked only</option>
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                     <ChevronDown className="h-4 w-4 opacity-60" />
                   </div>
                 </div>
               </Card>
 
               {/* Sort */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5">Sort Options</span>
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5">Sort Options</span>
                 <div className="relative">
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="date-desc">Join Date: Newest First</option>
                     <option value="date-asc">Join Date: Oldest First</option>
                     <option value="name-asc">Name: A to Z</option>
                     <option value="name-desc">Name: Z to A</option>
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                     <ChevronDown className="h-4 w-4 opacity-60" />
                   </div>
                 </div>
@@ -379,9 +379,9 @@ export default function ManageUsers() {
               
               {/* BULK ACTIONS HEADER PANEL */}
               {selectedUserIds.length > 0 && (
-                <div className="p-4 bg-slate-900 border border-slate-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
+                <div className="p-4 bg-[#B2563B] border border-violet-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
                   <span className="text-xs font-extrabold flex items-center gap-2">
-                    <SlidersHorizontal className="h-4.5 w-4.5 text-slate-700" />
+                    <SlidersHorizontal className="h-4.5 w-4.5 text-[#B2563B]" />
                     {selectedUserIds.length} Users Selected
                   </span>
                   
@@ -415,40 +415,40 @@ export default function ManageUsers() {
                 /* SKELTON LOADING BOARD */
                 <div className="space-y-4">
                   {[...Array(4)].map((_, i) => (
-                    <Card key={i} className="border border-slate-100 bg-white p-5 rounded-2xl animate-pulse flex items-center gap-4">
+                    <Card key={i} className="border border-[#5A5146]/15 bg-white p-5 rounded-2xl animate-pulse flex items-center gap-4">
                       <Skeleton className="w-5 h-5 rounded" />
-                      <Skeleton className="w-10 h-10 rounded-full bg-slate-200" />
+                      <Skeleton className="w-10 h-10 rounded-full bg-[#E8DCC3]" />
                       <div className="space-y-2 flex-1">
-                        <Skeleton className="h-4 bg-slate-200 w-1/4 rounded" />
-                        <Skeleton className="h-3.5 bg-slate-200 w-1/3 rounded" />
+                        <Skeleton className="h-4 bg-[#E8DCC3] w-1/4 rounded" />
+                        <Skeleton className="h-3.5 bg-[#E8DCC3] w-1/3 rounded" />
                       </div>
                     </Card>
                   ))}
                 </div>
               ) : paginatedUsers.length === 0 ? (
                 /* EMPTY STATE BOARD */
-                <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-slate-900/5 text-slate-900 rounded-full border border-slate-900/10">
+                <div className="bg-white border border-[#5A5146]/15 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
+                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mt-2">No Users Found</h3>
-                  <p className="text-xs text-slate-450 max-w-sm leading-relaxed">
+                  <h3 className="text-xl font-bold text-[#1F1D1A] mt-2">No Users Found</h3>
+                  <p className="text-xs text-[#7A7266] max-w-sm leading-relaxed">
                     We couldn't find any user profiles matching your selected criteria. Clear search queries.
                   </p>
                 </div>
               ) : (
                 /* USERS MATRIX TABLE */
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 overflow-hidden">
+                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-xs text-left">
                       <thead>
-                        <tr className="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider text-[9px] pb-2">
+                        <tr className="border-b border-[#5A5146]/15 text-[#7A7266] font-bold uppercase tracking-wider text-[9px] pb-2">
                           <th className="py-2.5 px-1 shrink-0 w-8">
                             <Checkbox 
                               id="selectAll"
                               checked={selectedUserIds.length === filteredUsers.length && filteredUsers.length > 0}
                               onCheckedChange={handleSelectAll}
-                              className="rounded border-slate-400"
+                              className="rounded border-stone-400"
                             />
                           </th>
                           <th className="py-2.5">User</th>
@@ -459,36 +459,36 @@ export default function ManageUsers() {
                           <th className="py-2.5 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-50 font-medium text-slate-700">
+                      <tbody className="divide-y divide-stone-50 font-medium text-[#B2563B]">
                         {paginatedUsers.map(user => {
                           const isSelected = selectedUserIds.includes(user.id);
                           return (
-                            <tr key={user.id} className={`hover:bg-slate-50/50 transition-colors ${isSelected ? "bg-slate-900/5/10" : ""}`}>
+                            <tr key={user.id} className={`hover:bg-[#FAF6F0] transition-colors ${isSelected ? "bg-[#B2563B]/5/10" : ""}`}>
                               <td className="py-3 px-1 shrink-0 w-8">
                                 <Checkbox 
                                   checked={isSelected}
                                   onCheckedChange={(checked) => handleSelectRow(user.id, checked === true)}
-                                  className="rounded border-slate-400"
+                                  className="rounded border-stone-400"
                                 />
                               </td>
                               <td className="py-3">
                                 <div className="flex items-center gap-3">
-                                  <Avatar className="w-9 h-9 border border-slate-100 overflow-hidden shrink-0">
+                                  <Avatar className="w-9 h-9 border border-[#5A5146]/15 overflow-hidden shrink-0">
                                     <AvatarImage src={user.avatar} className="object-cover" />
                                     <AvatarFallback>{user.name[0]}</AvatarFallback>
                                   </Avatar>
                                   <div>
-                                    <span className="block text-slate-800 font-bold">{user.name}</span>
-                                    <span className="text-[9px] text-slate-450 font-bold">UID: {user.id}</span>
+                                    <span className="block text-[#1F1D1A] font-bold">{user.name}</span>
+                                    <span className="text-[9px] text-[#7A7266] font-bold">UID: {user.id}</span>
                                   </div>
                                 </div>
                               </td>
                               <td className="py-3">
-                                <span className="block text-slate-600">{user.email}</span>
-                                <span className="text-[10px] text-slate-450 font-semibold">{user.phone}</span>
+                                <span className="block text-[#5A5146]">{user.email}</span>
+                                <span className="text-[10px] text-[#7A7266] font-semibold">{user.phone}</span>
                               </td>
                               <td className="py-3">
-                                <Badge variant="secondary" className="capitalize rounded-lg text-[9px] font-bold py-0.5 px-2.5 border-slate-200">
+                                <Badge variant="secondary" className="capitalize rounded-lg text-[9px] font-bold py-0.5 px-2.5 border-[#5A5146]/20">
                                   {user.role}
                                 </Badge>
                               </td>
@@ -497,14 +497,14 @@ export default function ManageUsers() {
                                   {user.status}
                                 </Badge>
                               </td>
-                              <td className="py-3 text-slate-500 font-semibold">{user.date}</td>
+                              <td className="py-3 text-[#7A7266] font-semibold">{user.date}</td>
                               <td className="py-3 text-right">
                                 <div className="flex justify-end gap-1.5">
                                   <Button
                                     size="xs"
                                     variant="outline"
                                     onClick={() => handleOpenView(user)}
-                                    className="h-7 text-[9px] font-bold border-slate-200 hover:bg-slate-50 bg-white"
+                                    className="h-7 text-[9px] font-bold border-[#5A5146]/20 hover:bg-[#FAF6F0] bg-white"
                                   >
                                     <Eye className="h-3 w-3" />
                                   </Button>
@@ -512,7 +512,7 @@ export default function ManageUsers() {
                                     size="xs"
                                     variant="outline"
                                     onClick={() => handleOpenEdit(user)}
-                                    className="h-7 text-[9px] font-bold border-slate-200 hover:bg-slate-50 bg-white"
+                                    className="h-7 text-[9px] font-bold border-[#5A5146]/20 hover:bg-[#FAF6F0] bg-white"
                                   >
                                     <Edit3 className="h-3 w-3" />
                                   </Button>
@@ -523,7 +523,7 @@ export default function ManageUsers() {
                                     className={`h-7 text-[9px] font-bold rounded-lg border bg-white ${
                                       user.status === "blocked" 
                                         ? "border-emerald-300 hover:bg-emerald-50 text-emerald-600"
-                                        : "border-amber-200 hover:bg-amber-50 text-amber-600"
+                                        : "border-[#C9A46A]/40 hover:bg-amber-50 text-[#B2563B]"
                                     }`}
                                   >
                                     {user.status === "blocked" ? "Unblock" : "Block"}
@@ -547,13 +547,13 @@ export default function ManageUsers() {
 
                   {/* PAGINATION */}
                   {totalPages > 1 && (
-                    <div className="flex items-center justify-between border-t border-slate-100 pt-5 mt-4">
+                    <div className="flex items-center justify-between border-t border-[#5A5146]/15 pt-5 mt-4">
                       <Button
                         variant="outline"
                         size="sm"
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                        className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] h-9 font-semibold text-xs"
                       >
                         <ChevronLeft className="h-4 w-4 mr-1.5" />
                         Previous
@@ -569,8 +569,8 @@ export default function ManageUsers() {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
                                 currentPage === pageNum
-                                  ? "bg-slate-900 text-white shadow-md shadow-slate-900/15"
-                                  : "text-slate-600 hover:bg-slate-100"
+                                  ? "bg-[#B2563B] text-white shadow-md shadow-2xs"
+                                  : "text-[#5A5146] hover:bg-[#F0E7D5]"
                               }`}
                             >
                               {pageNum}
@@ -584,7 +584,7 @@ export default function ManageUsers() {
                         size="sm"
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                        className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] h-9 font-semibold text-xs"
                       >
                         Next
                         <ChevronRight className="h-4 w-4 ml-1.5" />
@@ -605,47 +605,47 @@ export default function ManageUsers() {
       {/* DIALOG 1: VIEW DETAILS MODAL */}
       <Dialog open={isViewOpen} onOpenChange={setIsViewOpen}>
         {viewingUser && (
-          <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
-            <DialogHeader className="border-b border-slate-50 pb-4">
-              <DialogTitle className="text-base font-extrabold text-slate-900">User Audit Profile</DialogTitle>
+          <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
+            <DialogHeader className="border-b border-stone-50 pb-4">
+              <DialogTitle className="text-base font-extrabold text-[#1F1D1A]">User Audit Profile</DialogTitle>
               <DialogDescription className="text-xs">System logs reference audit</DialogDescription>
             </DialogHeader>
 
             <div className="flex items-center gap-4 py-4">
-              <Avatar className="w-16 h-16 border border-slate-100 overflow-hidden shrink-0">
+              <Avatar className="w-16 h-16 border border-[#5A5146]/15 overflow-hidden shrink-0">
                 <AvatarImage src={viewingUser.avatar} className="object-cover" />
                 <AvatarFallback>{viewingUser.name[0]}</AvatarFallback>
               </Avatar>
               <div>
-                <h4 className="font-extrabold text-slate-900 text-base">{viewingUser.name}</h4>
-                <span className="text-[10px] text-slate-450 font-bold block mt-0.5">UID: {viewingUser.id}</span>
+                <h4 className="font-extrabold text-[#1F1D1A] text-base">{viewingUser.name}</h4>
+                <span className="text-[10px] text-[#7A7266] font-bold block mt-0.5">UID: {viewingUser.id}</span>
                 <div className="flex items-center gap-2 mt-2 flex-wrap">
-                  <Badge variant="secondary" className="capitalize text-[8px] px-2 border-slate-200 font-extrabold">{viewingUser.role}</Badge>
+                  <Badge variant="secondary" className="capitalize text-[8px] px-2 border-[#5A5146]/20 font-extrabold">{viewingUser.role}</Badge>
                   <Badge variant={viewingUser.status === "active" ? "success" : "destructive"} className="capitalize text-[8px] px-2 font-extrabold border-0">{viewingUser.status}</Badge>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-2 text-xs border-t border-slate-100 pt-4 font-semibold text-slate-550">
+            <div className="space-y-2 text-xs border-t border-[#5A5146]/15 pt-4 font-semibold text-slate-550">
               <div className="flex justify-between">
                 <span>Email Address:</span>
-                <span className="text-slate-800">{viewingUser.email}</span>
+                <span className="text-[#1F1D1A]">{viewingUser.email}</span>
               </div>
               <div className="flex justify-between">
                 <span>Phone Contact:</span>
-                <span className="text-slate-800">{viewingUser.phone}</span>
+                <span className="text-[#1F1D1A]">{viewingUser.phone}</span>
               </div>
               <div className="flex justify-between">
                 <span>Registration Date:</span>
-                <span className="text-slate-800">{viewingUser.date}</span>
+                <span className="text-[#1F1D1A]">{viewingUser.date}</span>
               </div>
             </div>
 
-            <DialogFooter className="pt-4 border-t border-slate-50">
+            <DialogFooter className="pt-4 border-t border-stone-50">
               <Button
                 type="button"
                 onClick={() => setIsViewOpen(false)}
-                className="rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
+                className="rounded-xl bg-[#B2563B] hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
               >
                 Close View
               </Button>
@@ -657,13 +657,13 @@ export default function ManageUsers() {
       {/* DIALOG 2: EDIT USER DETAILS FORM */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
         {editingUser && (
-          <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
+          <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
             <DialogHeader>
-              <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <Edit3 className="h-5 w-5 text-slate-900" />
+              <DialogTitle className="text-base font-extrabold text-[#1F1D1A] flex items-center gap-2">
+                <Edit3 className="h-5 w-5 text-[#1F1D1A]" />
                 Modify User Details
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-400 pt-0.5">
+              <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
                 Edit registration variables on the platform data files
               </DialogDescription>
             </DialogHeader>
@@ -671,37 +671,37 @@ export default function ManageUsers() {
             <form onSubmit={onEditSaveSubmit} className="space-y-4 pt-3">
               {/* Name */}
               <div className="space-y-1.5">
-                <Label htmlFor="editName" className="text-xs font-bold text-slate-700">Full Name</Label>
+                <Label htmlFor="editName" className="text-xs font-bold text-[#B2563B]">Full Name</Label>
                 <Input
                   id="editName"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
 
               {/* Email */}
               <div className="space-y-1.5">
-                <Label htmlFor="editEmail" className="text-xs font-bold text-slate-700">Email Address</Label>
+                <Label htmlFor="editEmail" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
                 <Input
                   id="editEmail"
                   type="email"
                   value={editEmail}
                   onChange={(e) => setEditEmail(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
 
               {/* Phone */}
               <div className="space-y-1.5">
-                <Label htmlFor="editPhone" className="text-xs font-bold text-slate-700">Phone Contact</Label>
+                <Label htmlFor="editPhone" className="text-xs font-bold text-[#B2563B]">Phone Contact</Label>
                 <Input
                   id="editPhone"
                   value={editPhone}
                   onChange={(e) => setEditPhone(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -709,34 +709,34 @@ export default function ManageUsers() {
               {/* Role & Status */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <Label htmlFor="editRole" className="text-xs font-bold text-slate-700">Role</Label>
+                  <Label htmlFor="editRole" className="text-xs font-bold text-[#B2563B]">Role</Label>
                   <div className="relative">
                     <select
                       id="editRole"
                       value={editRole}
                       onChange={(e) => setEditRole(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="customer">Customer</option>
                       <option value="provider">Provider</option>
                     </select>
-                    <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-slate-400" />
+                    <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="editStatus" className="text-xs font-bold text-slate-700">Status</Label>
+                  <Label htmlFor="editStatus" className="text-xs font-bold text-[#B2563B]">Status</Label>
                   <div className="relative">
                     <select
                       id="editStatus"
                       value={editStatus}
                       onChange={(e) => setEditStatus(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="active">Active</option>
                       <option value="blocked">Blocked</option>
                     </select>
-                    <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-slate-400" />
+                    <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
                   </div>
                 </div>
               </div>
@@ -746,13 +746,13 @@ export default function ManageUsers() {
                   type="button" 
                   variant="outline" 
                   onClick={() => setIsEditOpen(false)}
-                  className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
+                  className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 w-full sm:w-auto"
                 >
                   Cancel
                 </Button>
                 <Button 
                   type="submit" 
-                  className="rounded-xl bg-slate-900 hover:bg-slate-900 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                  className="rounded-xl bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
                 >
                   Save Changes
                 </Button>
@@ -765,26 +765,26 @@ export default function ManageUsers() {
       {/* DIALOG 3: BLOCK/DELETE ACTIONS CONFIRMATION */}
       <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
         {confirmTarget && (
-          <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
+          <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
             <DialogHeader>
-              <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+              <DialogTitle className="text-base font-extrabold text-[#1F1D1A] flex items-center gap-2">
                 <ShieldAlert className="h-5 w-5 text-rose-600 animate-pulse" />
                 Confirm Administrative Action
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-400 pt-0.5">
+              <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
                 Are you sure you want to perform this action? Verification requires approval.
               </DialogDescription>
             </DialogHeader>
 
             {confirmTarget.data && (
-              <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Target Details</span>
+              <div className="p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-xs font-bold space-y-1">
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wide">Target Details</span>
                 {confirmTarget.action.startsWith("bulk") ? (
-                  <span className="text-slate-800">{selectedUserIds.length} Selected Users</span>
+                  <span className="text-[#1F1D1A]">{selectedUserIds.length} Selected Users</span>
                 ) : (
                   <>
-                    <span className="text-slate-800 block">Name: {confirmTarget.data.name}</span>
-                    <span className="text-slate-500 block">Email: {confirmTarget.data.email}</span>
+                    <span className="text-[#1F1D1A] block">Name: {confirmTarget.data.name}</span>
+                    <span className="text-[#7A7266] block">Email: {confirmTarget.data.email}</span>
                   </>
                 )}
               </div>
@@ -795,7 +795,7 @@ export default function ManageUsers() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setIsConfirmOpen(false)}
-                className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
+                className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 w-full sm:w-auto"
               >
                 Close Dialog
               </Button>

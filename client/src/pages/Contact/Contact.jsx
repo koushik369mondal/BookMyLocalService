@@ -85,15 +85,15 @@ export default function Contact() {
 
   return (
     <MainLayout>
-      <div className="bg-slate-50 min-h-screen font-sans antialiased text-slate-800">
+      <div className="bg-[#FAF6F0] min-h-screen font-sans antialiased text-[#1F1D1A]">
         
         {/* PAGE HEADER */}
-        <section className="py-12 bg-white border-b border-slate-200">
+        <section className="py-12 bg-white border-b border-[#5A5146]/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-3">
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
-              Get in <span className="text-amber-500">Touch</span>
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#1F1D1A] leading-tight">
+              Get in <span className="text-[#C9A46A]">Touch</span>
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#7A7266] max-w-xl leading-relaxed">
               Have questions about booking a service, provider registration, or need assistance? Drop us a message, and our team will get back to you.
             </p>
           </div>
@@ -104,24 +104,24 @@ export default function Contact() {
           {/* CONTACT INFO GRID */}
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: "Office Address", detail: "123 Business Hub, Sector 62, Noida, UP, India", icon: MapPin, color: "bg-slate-900/5 text-slate-900 border-slate-900/10" },
+              { title: "Office Address", detail: "123 Business Hub, Sector 62, Noida, UP, India", icon: MapPin, color: "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10" },
               { title: "Phone Number", detail: "+91 120 456 7890\n+91 98765 43210", icon: Phone, color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
-              { title: "Email Address", detail: "support@bookmylocal.com\ninfo@bookmylocal.com", icon: Mail, color: "bg-amber-50 text-amber-600 border-amber-100" },
+              { title: "Email Address", detail: "support@bookmylocal.com\ninfo@bookmylocal.com", icon: Mail, color: "bg-amber-50 text-[#B2563B] border-amber-100" },
               { title: "Business Hours", detail: "Mon - Sat: 9:00 AM - 6:00 PM\nSunday: Closed", icon: Clock, color: "bg-pink-50 text-pink-600 border-pink-100" }
             ].map((card, idx) => {
               const IconComp = card.icon;
               return (
                 <Card 
                   key={idx} 
-                  className="p-5 gap-0 border border-slate-200 flex flex-col h-full bg-white rounded-2xl relative"
+                  className="p-5 gap-0 border border-[#5A5146]/20 flex flex-col h-full bg-white rounded-2xl relative"
                 >
                   <div className={`p-2.5 rounded-xl border self-start ${card.color} mb-3`}>
                     <IconComp className="h-4.5 w-4.5" />
                   </div>
-                  <h3 className="font-bold text-slate-900 text-base leading-snug">
+                  <h3 className="font-bold text-[#1F1D1A] text-base leading-snug">
                     {card.title}
                   </h3>
-                  <p className="text-xs text-slate-500 leading-relaxed mt-1.5 whitespace-pre-line flex-1">
+                  <p className="text-xs text-[#7A7266] leading-relaxed mt-1.5 whitespace-pre-line flex-1">
                     {card.detail}
                   </p>
                 </Card>
@@ -136,12 +136,12 @@ export default function Contact() {
             <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-xs flex flex-col justify-between h-full">
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-2.5 mb-2">
-                  <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
+                  <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
                     <MessageSquare className="h-5 w-5" />
                   </div>
                   <div>
-                    <h2 className="font-bold text-xl text-slate-900 leading-none">Send a Message</h2>
-                    <p className="text-xs text-slate-500 mt-1">We typically reply within 2 hours during business hours</p>
+                    <h2 className="font-bold text-xl text-[#1F1D1A] leading-none">Send a Message</h2>
+                    <p className="text-xs text-[#7A7266] mt-1">We typically reply within 2 hours during business hours</p>
                   </div>
                 </div>
 
@@ -163,7 +163,7 @@ export default function Contact() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <label htmlFor="name" className="text-xs font-bold text-slate-600 uppercase tracking-wider">Full Name *</label>
+                      <label htmlFor="name" className="text-xs font-bold text-[#5A5146] uppercase tracking-wider">Full Name *</label>
                       <Input
                         id="name"
                         name="name"
@@ -171,13 +171,13 @@ export default function Contact() {
                         placeholder="John Doe"
                         value={formData.name}
                         onChange={handleInputChange}
-                        className="h-10 border-slate-200 focus-visible:ring-slate-900 rounded-xl text-xs bg-white text-slate-800"
+                        className="h-10 border-[#5A5146]/20 focus-visible:ring-violet-950 rounded-xl text-xs bg-white text-[#1F1D1A]"
                         required
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label htmlFor="email" className="text-xs font-bold text-slate-600 uppercase tracking-wider">Email Address *</label>
+                      <label htmlFor="email" className="text-xs font-bold text-[#5A5146] uppercase tracking-wider">Email Address *</label>
                       <Input
                         id="email"
                         name="email"
@@ -185,7 +185,7 @@ export default function Contact() {
                         placeholder="john@example.com"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="h-10 border-slate-200 focus-visible:ring-slate-900 rounded-xl text-xs bg-white text-slate-800"
+                        className="h-10 border-[#5A5146]/20 focus-visible:ring-violet-950 rounded-xl text-xs bg-white text-[#1F1D1A]"
                         required
                       />
                     </div>
@@ -193,7 +193,7 @@ export default function Contact() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <label htmlFor="phone" className="text-xs font-bold text-slate-600 uppercase tracking-wider">Phone Number</label>
+                      <label htmlFor="phone" className="text-xs font-bold text-[#5A5146] uppercase tracking-wider">Phone Number</label>
                       <Input
                         id="phone"
                         name="phone"
@@ -201,12 +201,12 @@ export default function Contact() {
                         placeholder="Optional"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="h-10 border-slate-200 focus-visible:ring-slate-900 rounded-xl text-xs bg-white text-slate-800"
+                        className="h-10 border-[#5A5146]/20 focus-visible:ring-violet-950 rounded-xl text-xs bg-white text-[#1F1D1A]"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label htmlFor="subject" className="text-xs font-bold text-slate-600 uppercase tracking-wider">Subject *</label>
+                      <label htmlFor="subject" className="text-xs font-bold text-[#5A5146] uppercase tracking-wider">Subject *</label>
                       <Input
                         id="subject"
                         name="subject"
@@ -214,14 +214,14 @@ export default function Contact() {
                         placeholder="Booking Inquiries / Partnerships"
                         value={formData.subject}
                         onChange={handleInputChange}
-                        className="h-10 border-slate-200 focus-visible:ring-slate-900 rounded-xl text-xs bg-white text-slate-800"
+                        className="h-10 border-[#5A5146]/20 focus-visible:ring-violet-950 rounded-xl text-xs bg-white text-[#1F1D1A]"
                         required
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label htmlFor="message" className="text-xs font-bold text-slate-600 uppercase tracking-wider">Message *</label>
+                    <label htmlFor="message" className="text-xs font-bold text-[#5A5146] uppercase tracking-wider">Message *</label>
                     <textarea
                       id="message"
                       name="message"
@@ -229,7 +229,7 @@ export default function Contact() {
                       placeholder="Tell us what you need assistance with..."
                       value={formData.message}
                       onChange={handleInputChange}
-                      className="w-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 p-3.5 rounded-xl text-xs bg-white text-slate-800"
+                      className="w-full border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 p-3.5 rounded-xl text-xs bg-white text-[#1F1D1A]"
                       required
                     ></textarea>
                   </div>
@@ -237,7 +237,7 @@ export default function Contact() {
                   <Button 
                     type="submit" 
                     disabled={loading}
-                    className="w-full h-11 bg-slate-900 hover:bg-slate-700 text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2"
+                    className="w-full h-11 bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <>
@@ -257,7 +257,7 @@ export default function Contact() {
             </div>
 
             {/* Google Map Column - Styled precisely to match Form height */}
-            <div className="lg:col-span-5 relative border border-gray-100 rounded-2xl overflow-hidden bg-slate-100 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full min-h-[450px]">
+            <div className="lg:col-span-5 relative border border-gray-100 rounded-2xl overflow-hidden bg-[#F0E7D5] hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full min-h-[450px]">
               
               {/* Mock Map Vector Grid */}
               <div className="absolute inset-0 bg-[#E5E9F0] pointer-events-none overflow-hidden">
@@ -272,9 +272,9 @@ export default function Contact() {
               {/* Pinned map marker */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 z-10 select-none">
                 <div className="relative">
-                  <div className="w-8 h-8 rounded-full bg-slate-900/25 absolute -inset-2 animate-ping"></div>
-                  <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center border border-white shadow-md relative z-10">
-                    <MapPin className="h-4 w-4 text-amber-500 fill-accent" />
+                  <div className="w-8 h-8 rounded-full bg-[#B2563B]/25 absolute -inset-2 animate-ping"></div>
+                  <div className="w-8 h-8 rounded-full bg-[#B2563B] text-white flex items-center justify-center border border-white shadow-md relative z-10">
+                    <MapPin className="h-4 w-4 text-[#C9A46A] fill-accent" />
                   </div>
                 </div>
                 <span className="bg-[#0F172A] text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-lg border border-white/10 uppercase tracking-wide whitespace-nowrap">
@@ -284,9 +284,9 @@ export default function Contact() {
 
               {/* Headquarters Pinned Info Badge - Inside map container with margin */}
               <div className="relative z-20 m-4 p-4 bg-white/95 backdrop-blur-xs rounded-xl border border-gray-100 shadow-lg mt-auto">
-                <span className="block text-[9px] text-amber-500 font-black uppercase tracking-widest leading-none">Headquarters</span>
-                <h4 className="font-extrabold text-slate-900 text-sm mt-1">BookMyLocalService Pvt Ltd</h4>
-                <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                <span className="block text-[9px] text-[#C9A46A] font-black uppercase tracking-widest leading-none">Headquarters</span>
+                <h4 className="font-extrabold text-[#1F1D1A] text-sm mt-1">BookMyLocalService Pvt Ltd</h4>
+                <p className="text-[11px] text-[#7A7266] mt-1 leading-relaxed">
                   Noida Sector 62 Business Hub, Uttar Pradesh, 201301
                 </p>
               </div>
@@ -298,9 +298,9 @@ export default function Contact() {
           {/* FAQ PREVIEW ACCORDION */}
           <section className="bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-xs space-y-8">
             <div className="text-center max-w-2xl mx-auto space-y-2.5">
-              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">FAQ</span>
+              <span className="text-xs font-bold text-[#C9A46A] uppercase tracking-widest">FAQ</span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Frequently Asked Questions</h2>
-              <p className="text-sm text-slate-500">Quick answers to common questions about booking services and provider onboarding.</p>
+              <p className="text-sm text-[#7A7266]">Quick answers to common questions about booking services and provider onboarding.</p>
             </div>
 
             <div className="max-w-3xl mx-auto space-y-3.5">
@@ -309,21 +309,21 @@ export default function Contact() {
                 return (
                   <div 
                     key={i} 
-                    className="border border-slate-100 rounded-xl overflow-hidden bg-slate-50/50 hover:bg-slate-50 transition-colors"
+                    className="border border-[#5A5146]/15 rounded-xl overflow-hidden bg-[#FAF6F0] hover:bg-[#FAF6F0] transition-colors"
                   >
                     <button
                       onClick={() => toggleFaq(i)}
-                      className="w-full p-4 flex items-center justify-between font-bold text-slate-900 text-sm sm:text-base text-left focus:outline-none cursor-pointer select-none"
+                      className="w-full p-4 flex items-center justify-between font-bold text-[#1F1D1A] text-sm sm:text-base text-left focus:outline-none cursor-pointer select-none"
                     >
                       <span>{faq.q}</span>
                       {isOpen ? (
-                        <Minus className="h-4.5 w-4.5 text-amber-500 shrink-0" />
+                        <Minus className="h-4.5 w-4.5 text-[#C9A46A] shrink-0" />
                       ) : (
-                        <Plus className="h-4.5 w-4.5 text-slate-400 shrink-0" />
+                        <Plus className="h-4.5 w-4.5 text-[#7A7266] shrink-0" />
                       )}
                     </button>
                     {isOpen && (
-                      <div className="px-4 pb-4.5 text-xs sm:text-sm text-slate-500 leading-relaxed border-t border-slate-100/50 pt-2.5 bg-white">
+                      <div className="px-4 pb-4.5 text-xs sm:text-sm text-[#7A7266] leading-relaxed border-t border-[#5A5146]/15/50 pt-2.5 bg-white">
                         {faq.a}
                       </div>
                     )}
@@ -343,12 +343,12 @@ export default function Contact() {
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
               Need Immediate Assistance?
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            <p className="text-[#7A7266] text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
               Our support team is ready to help you. Send a message, schedule a booking, or reach out to verify provider registration.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2 max-w-sm mx-auto sm:max-w-none">
               <NavLink to="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-12 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-xl px-8 shadow-md">
+                <Button className="w-full sm:w-auto h-12 bg-[#B2563B] hover:bg-amber-600 text-[#1F1D1A] font-bold rounded-xl px-8 shadow-md">
                   Browse Services
                 </Button>
               </NavLink>

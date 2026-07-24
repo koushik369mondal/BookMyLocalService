@@ -29,7 +29,7 @@ export default function Logo({ size = 40, showText = true }) {
           but they are hidden by default for the new branding assets. */}
       {showText && (
         <span className="text-xl tracking-tight hidden md:block font-bold text-inherit">
-          BookMyLocal<span className="text-amber-500">Service</span>
+          BookMyLocal<span className="text-[#C9A46A]">Service</span>
         </span>
       )}
     </div>

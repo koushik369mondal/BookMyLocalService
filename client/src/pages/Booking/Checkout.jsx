@@ -265,8 +265,8 @@ export default function Checkout() {
     return (
       <MainLayout>
         <div className="max-w-7xl mx-auto px-4 py-20 text-center space-y-4">
-          <Loader2 className="h-10 w-10 animate-spin text-slate-900 mx-auto" />
-          <p className="text-slate-500 font-bold text-sm">Loading checkout details...</p>
+          <Loader2 className="h-10 w-10 animate-spin text-[#1F1D1A] mx-auto" />
+          <p className="text-[#7A7266] font-bold text-sm">Loading checkout details...</p>
         </div>
       </MainLayout>
     );
@@ -275,11 +275,11 @@ export default function Checkout() {
   if (error || !booking) {
     return (
       <MainLayout>
-        <div className="max-w-xl mx-auto my-16 p-8 bg-white border border-slate-100 rounded-3xl shadow-md text-center space-y-4">
+        <div className="max-w-xl mx-auto my-16 p-8 bg-white border border-[#5A5146]/15 rounded-3xl shadow-md text-center space-y-4">
           <AlertCircle className="h-12 w-12 text-rose-500 mx-auto" />
-          <h2 className="text-lg font-black text-slate-900">Checkout Error</h2>
-          <p className="text-xs text-slate-500">{error || "We couldn't retrieve the checkout details for this booking."}</p>
-          <Button onClick={() => navigate("/services")} className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl text-xs h-9.5 px-6 font-bold mt-2">
+          <h2 className="text-lg font-black text-[#1F1D1A]">Checkout Error</h2>
+          <p className="text-xs text-[#7A7266]">{error || "We couldn't retrieve the checkout details for this booking."}</p>
+          <Button onClick={() => navigate("/services")} className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl text-xs h-9.5 px-6 font-bold mt-2">
             Back to Services
           </Button>
         </div>
@@ -289,26 +289,26 @@ export default function Checkout() {
 
   return (
     <MainLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
         {/* TOP PATH BANNER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-10 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-10 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <button 
               onClick={() => navigate(-1)} 
-              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-300 hover:text-white transition-colors mb-4 bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-full backdrop-blur-xs"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-[#7A7266] hover:text-white transition-colors mb-4 bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-full backdrop-blur-xs"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               Modify Details
             </button>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Checkout Booking Securely</h1>
-            <p className="text-slate-300 text-xs sm:text-sm mt-1.5 font-medium">Verify your booking specifications, credentials, and select payment</p>
+            <p className="text-[#7A7266] text-xs sm:text-sm mt-1.5 font-medium">Verify your booking specifications, credentials, and select payment</p>
           </div>
         </section>
 
         {/* SECURE SUB-BANNER */}
-        <div className="bg-slate-900 text-slate-300 py-3 text-center border-y border-slate-950/20 px-4">
+        <div className="bg-[#B2563B] text-[#7A7266] py-3 text-center border-y border-violet-950/20 px-4">
           <span className="text-[10px] sm:text-xs font-bold tracking-wider uppercase inline-flex items-center gap-1.5">
             <Lock className="h-3.5 w-3.5 text-emerald-400" />
             256-Bit SSL Encryption Payment Protocols Active
@@ -334,13 +334,13 @@ export default function Checkout() {
                 )}
 
                 {/* STEP 1: CUSTOMER DETAILS */}
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
-                  <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
+                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
+                  <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
+                    <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
                       <User className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-slate-900">1. Customer Information</CardTitle>
+                      <CardTitle className="text-base font-extrabold text-[#1F1D1A]">1. Customer Information</CardTitle>
                       <CardDescription className="text-xs">Provide contact details for booking verification</CardDescription>
                     </div>
                   </CardHeader>
@@ -348,11 +348,11 @@ export default function Checkout() {
                   <CardContent className="p-0 pt-5 space-y-4">
                     {/* Full Name */}
                     <div className="space-y-1.5">
-                      <Label htmlFor="fullName" className="text-xs font-bold text-slate-700">Full Name</Label>
+                      <Label htmlFor="fullName" className="text-xs font-bold text-[#B2563B]">Full Name</Label>
                       <Input
                         id="fullName"
                         placeholder="Amanda Watson"
-                        className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
+                        className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
                           errors.fullName ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                         }`}
                         disabled={isSubmitting}
@@ -364,12 +364,12 @@ export default function Checkout() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {/* Email */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="email" className="text-xs font-bold text-slate-700">Email Address</Label>
+                        <Label htmlFor="email" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
                         <Input
                           id="email"
                           type="email"
                           placeholder="amanda@example.com"
-                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
+                          className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
                             errors.email ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}
                           disabled={isSubmitting}
@@ -380,11 +380,11 @@ export default function Checkout() {
 
                       {/* Phone */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="phone" className="text-xs font-bold text-slate-700">Phone Number</Label>
+                        <Label htmlFor="phone" className="text-xs font-bold text-[#B2563B]">Phone Number</Label>
                         <Input
                           id="phone"
                           placeholder="123-456-7890"
-                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
+                          className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
                             errors.phone ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}
                           disabled={isSubmitting}
@@ -397,13 +397,13 @@ export default function Checkout() {
                 </Card>
 
                 {/* STEP 2: BILLING ADDRESS */}
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
-                  <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
+                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
+                  <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
+                    <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
                       <Building className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-slate-900">2. Billing Address</CardTitle>
+                      <CardTitle className="text-base font-extrabold text-[#1F1D1A]">2. Billing Address</CardTitle>
                       <CardDescription className="text-xs">Address connected to invoice calculations</CardDescription>
                     </div>
                   </CardHeader>
@@ -411,11 +411,11 @@ export default function Checkout() {
                   <CardContent className="p-0 pt-5 space-y-4">
                     {/* Street Address */}
                     <div className="space-y-1.5">
-                      <Label htmlFor="street" className="text-xs font-bold text-slate-700">Street Address</Label>
+                      <Label htmlFor="street" className="text-xs font-bold text-[#B2563B]">Street Address</Label>
                       <Input
                         id="street"
                         placeholder="123 Main St, Apt 4B"
-                        className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
+                        className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
                           errors.street ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                         }`}
                         disabled={isSubmitting}
@@ -427,11 +427,11 @@ export default function Checkout() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       {/* City */}
                       <div className="space-y-1.5 sm:col-span-1">
-                        <Label htmlFor="city" className="text-xs font-bold text-slate-700">City</Label>
+                        <Label htmlFor="city" className="text-xs font-bold text-[#B2563B]">City</Label>
                         <Input
                           id="city"
                           placeholder="Brooklyn"
-                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
+                          className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
                             errors.city ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}
                           disabled={isSubmitting}
@@ -442,11 +442,11 @@ export default function Checkout() {
 
                       {/* State */}
                       <div className="space-y-1.5 sm:col-span-1">
-                        <Label htmlFor="state" className="text-xs font-bold text-slate-700">State</Label>
+                        <Label htmlFor="state" className="text-xs font-bold text-[#B2563B]">State</Label>
                         <Input
                           id="state"
                           placeholder="NY"
-                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
+                          className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
                             errors.state ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}
                           disabled={isSubmitting}
@@ -457,12 +457,12 @@ export default function Checkout() {
 
                       {/* ZIP Code */}
                       <div className="space-y-1.5 sm:col-span-1">
-                        <Label htmlFor="zipCode" className="text-xs font-bold text-slate-700">ZIP Code</Label>
+                        <Label htmlFor="zipCode" className="text-xs font-bold text-[#B2563B]">ZIP Code</Label>
                         <Input
                           id="zipCode"
                           placeholder="400001"
                           maxLength={6}
-                          className={`h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${
+                          className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
                             errors.zipCode ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
                           }`}
                           disabled={isSubmitting}
@@ -475,13 +475,13 @@ export default function Checkout() {
                 </Card>
 
                 {/* STEP 3: PAYMENT METHOD */}
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
-                  <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
+                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
+                  <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
                     <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
                       <CreditCard className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-slate-900">3. Select Payment Method</CardTitle>
+                      <CardTitle className="text-base font-extrabold text-[#1F1D1A]">3. Select Payment Method</CardTitle>
                       <CardDescription className="text-xs">Choose how you want to settle the transaction</CardDescription>
                     </div>
                   </CardHeader>
@@ -506,10 +506,10 @@ export default function Checkout() {
                             className={`flex flex-col items-center justify-center p-3.5 border rounded-xl gap-2 transition-all ${
                               isSelected 
                                 ? "bg-emerald-50 border-emerald-500 text-emerald-700 shadow-2xs font-extrabold"
-                                : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-400"
+                                : "bg-white border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] hover:border-stone-400"
                             }`}
                           >
-                            <opt.icon className={`h-5 w-5 ${isSelected ? "text-emerald-600" : "text-slate-450"}`} />
+                            <opt.icon className={`h-5 w-5 ${isSelected ? "text-emerald-600" : "text-[#7A7266]"}`} />
                             <span className="text-[10px] text-center">{opt.label}</span>
                           </button>
                         );
@@ -518,21 +518,21 @@ export default function Checkout() {
 
                     {/* DYNAMIC CARD DETAIL INPUT SUB-FIELDS */}
                     {selectedPaymentMethod === "card" && (
-                      <div className="p-4 bg-slate-50 border border-slate-100 rounded-2xl space-y-3.5 animate-fade-in">
-                        <span className="text-xs font-bold text-slate-800 block">Credit/Debit Card Details</span>
+                      <div className="p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl space-y-3.5 animate-fade-in">
+                        <span className="text-xs font-bold text-[#1F1D1A] block">Credit/Debit Card Details</span>
                         
                         {/* Card number */}
                         <div className="space-y-1.5">
-                          <Label htmlFor="cardNumber" className="text-[11px] font-bold text-slate-700">Card Number</Label>
+                          <Label htmlFor="cardNumber" className="text-[11px] font-bold text-[#B2563B]">Card Number</Label>
                           <div className="relative">
-                            <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-400">
+                            <span className="absolute left-3 top-[50%] translate-y-[-50%] text-[#7A7266]">
                               <CreditCard className="h-4 w-4" />
                             </span>
                             <Input
                               id="cardNumber"
                               placeholder="1234 5678 1234 5678"
                               maxLength={19}
-                              className="pl-9 h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                              className="pl-9 h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                               disabled={isSubmitting}
                               {...register("cardNumber")}
                             />
@@ -543,25 +543,25 @@ export default function Checkout() {
                         {/* Expiry / CVC grid */}
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-1.5">
-                            <Label htmlFor="cardExpiry" className="text-[11px] font-bold text-slate-700">Expiry Date</Label>
+                            <Label htmlFor="cardExpiry" className="text-[11px] font-bold text-[#B2563B]">Expiry Date</Label>
                             <Input
                               id="cardExpiry"
                               placeholder="MM/YY"
                               maxLength={5}
-                              className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white text-center"
+                              className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white text-center"
                               disabled={isSubmitting}
                               {...register("cardExpiry")}
                             />
                             {errors.cardExpiry && <p className="text-[10px] text-rose-600 font-bold mt-0.5">{errors.cardExpiry.message}</p>}
                           </div>
                           <div className="space-y-1.5">
-                            <Label htmlFor="cardCvc" className="text-[11px] font-bold text-slate-700">CVC Code</Label>
+                            <Label htmlFor="cardCvc" className="text-[11px] font-bold text-[#B2563B]">CVC Code</Label>
                             <Input
                               id="cardCvc"
                               type="password"
                               placeholder="123"
                               maxLength={4}
-                              className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white text-center"
+                              className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white text-center"
                               disabled={isSubmitting}
                               {...register("cardCvc")}
                             />
@@ -573,11 +573,11 @@ export default function Checkout() {
 
                     {/* DYNAMIC UPI PAY SUB-DETAILS */}
                     {selectedPaymentMethod === "upi" && (
-                      <div className="p-4 bg-slate-50 border border-slate-100 rounded-2xl text-center space-y-3.5 animate-fade-in flex flex-col items-center">
-                        <QrCode className="h-16 w-16 text-slate-700 border border-slate-200 p-2 bg-white rounded-xl" />
+                      <div className="p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl text-center space-y-3.5 animate-fade-in flex flex-col items-center">
+                        <QrCode className="h-16 w-16 text-[#B2563B] border border-[#5A5146]/20 p-2 bg-white rounded-xl" />
                         <div className="space-y-1">
-                          <span className="text-xs font-bold text-slate-900 block">Scan Dynamic QR Code</span>
-                          <p className="text-[10px] text-slate-400 max-w-xs leading-relaxed">
+                          <span className="text-xs font-bold text-[#1F1D1A] block">Scan Dynamic QR Code</span>
+                          <p className="text-[10px] text-[#7A7266] max-w-xs leading-relaxed">
                             Upon submitting the order, a secure dynamic UPI payment overlay will open to authorize the transaction.
                           </p>
                         </div>
@@ -587,7 +587,7 @@ export default function Checkout() {
                     {/* DYNAMIC CASH PAYMENT SUB-DETAILS */}
                     {selectedPaymentMethod === "cash" && (
                       <div className="p-4 bg-amber-50/50 border border-amber-100 rounded-2xl space-y-2 animate-fade-in flex items-start gap-2.5">
-                        <CheckCircle2 className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-5 w-5 text-[#B2563B] shrink-0 mt-0.5" />
                         <div className="space-y-1">
                           <span className="text-xs font-bold text-amber-800 block">Cash on Service Confirmed</span>
                           <p className="text-[10px] text-amber-700/80 leading-relaxed">
@@ -598,14 +598,14 @@ export default function Checkout() {
                     )}
 
                     {/* TERMS AGREEMENT CHECKBOX */}
-                    <div className="space-y-1.5 border-t border-slate-100 pt-5">
+                    <div className="space-y-1.5 border-t border-[#5A5146]/15 pt-5">
                       <div className="flex items-start space-x-2.5">
                         <Checkbox 
                           id="acceptTerms" 
                           checked={acceptTermsValue}
                           onCheckedChange={(checked) => setValue("acceptTerms", checked === true)}
                           disabled={isSubmitting}
-                          className="rounded-md border-slate-300 bg-white mt-0.5"
+                          className="rounded-md border-stone-300 bg-white mt-0.5"
                         />
                         <label
                           htmlFor="acceptTerms"
@@ -626,62 +626,62 @@ export default function Checkout() {
                 <div className="lg:sticky lg:top-24 space-y-6">
                   
                   {/* BOOKING DETAILS CARD */}
-                  <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
-                    <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block">Booking Details</span>
+                  <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
+                    <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block">Booking Details</span>
                     
-                    <div className="flex items-center gap-3.5 p-3 bg-slate-50 border border-slate-100 rounded-xl">
+                    <div className="flex items-center gap-3.5 p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl">
                       <Avatar className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-white shadow-2xs">
                         <AvatarImage src={provider.providerImage} className="object-cover" />
                         <AvatarFallback>{provider.providerName[0]}</AvatarFallback>
                       </Avatar>
                       <div>
-                        <span className="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20 tracking-wide uppercase">
+                        <span className="text-[10px] font-bold text-[#C9A46A] bg-[#C9A46A]/20 px-2.5 py-0.5 rounded-full border border-amber-500/20 tracking-wide uppercase">
                           {provider.category}
                         </span>
-                        <h4 className="font-extrabold text-slate-900 text-sm mt-1">{provider.providerName}</h4>
-                        <p className="text-[11px] text-slate-400 truncate max-w-[200px]">{provider.name}</p>
+                        <h4 className="font-extrabold text-[#1F1D1A] text-sm mt-1">{provider.providerName}</h4>
+                        <p className="text-[11px] text-[#7A7266] truncate max-w-[200px]">{provider.name}</p>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3.5">
-                      <div className="flex items-center gap-2 p-3 bg-slate-50/50 border border-slate-100 rounded-xl text-slate-700">
-                        <Calendar className="h-4.5 w-4.5 text-slate-700 shrink-0" />
+                      <div className="flex items-center gap-2 p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-[#B2563B]">
+                        <Calendar className="h-4.5 w-4.5 text-[#B2563B] shrink-0" />
                         <div className="flex flex-col">
-                          <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Date</span>
+                          <span className="text-[9px] text-[#7A7266] font-bold uppercase tracking-wider">Date</span>
                           <span className="text-xs font-bold">{selectedDate}</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 p-3 bg-slate-50/50 border border-slate-100 rounded-xl text-slate-700">
-                        <Clock className="h-4.5 w-4.5 text-slate-700 shrink-0" />
+                      <div className="flex items-center gap-2 p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-[#B2563B]">
+                        <Clock className="h-4.5 w-4.5 text-[#B2563B] shrink-0" />
                         <div className="flex flex-col">
-                          <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Time</span>
+                          <span className="text-[9px] text-[#7A7266] font-bold uppercase tracking-wider">Time</span>
                           <span className="text-xs font-bold">{selectedTime}</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-between items-center bg-slate-50/50 p-3 border border-slate-100 rounded-xl">
-                      <span className="text-xs font-bold text-slate-800">Tier Package:</span>
-                      <Badge variant="secondary" className="bg-white border-slate-200 text-slate-700 font-bold rounded-lg text-xs py-0.5 px-2.5">
+                    <div className="flex justify-between items-center bg-[#FAF6F0] p-3 border border-[#5A5146]/15 rounded-xl">
+                      <span className="text-xs font-bold text-[#1F1D1A]">Tier Package:</span>
+                      <Badge variant="secondary" className="bg-white border-[#5A5146]/20 text-[#B2563B] font-bold rounded-lg text-xs py-0.5 px-2.5">
                         {selectedPlanName}
                       </Badge>
                     </div>
                   </Card>
 
                   {/* PROMO / COUPON CODE CARD */}
-                  <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-5">
-                    <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block mb-3.5">Promo / Coupon Code</span>
+                  <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5">
+                    <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block mb-3.5">Promo / Coupon Code</span>
                     
                     <div className="flex gap-2">
                       <div className="relative flex-1">
-                        <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-400">
+                        <span className="absolute left-3 top-[50%] translate-y-[-50%] text-[#7A7266]">
                           <Tag className="h-4 w-4" />
                         </span>
                         <Input
                           placeholder="Enter Promo Code"
                           value={promoInput}
                           onChange={(e) => setPromoInput(e.target.value)}
-                          className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                          className="pl-9 h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                           disabled={isSubmitting}
                         />
                       </div>
@@ -689,7 +689,7 @@ export default function Checkout() {
                         type="button"
                         onClick={handleApplyPromo}
                         disabled={isSubmitting}
-                        className="bg-slate-900 hover:bg-black text-white h-9.5 px-4 font-bold text-xs rounded-xl"
+                        className="bg-[#B2563B] hover:bg-black text-white h-9.5 px-4 font-bold text-xs rounded-xl"
                       >
                         Apply
                       </Button>
@@ -707,16 +707,16 @@ export default function Checkout() {
                       </p>
                     )}
 
-                    <div className="mt-3 text-[10px] text-slate-400 font-semibold flex items-center gap-1">
-                      <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-                      <span>Use coupon <span className="font-bold text-slate-600">LOCAL20</span> to save 20% on booking fees.</span>
+                    <div className="mt-3 text-[10px] text-[#7A7266] font-semibold flex items-center gap-1">
+                      <Sparkles className="h-3.5 w-3.5 text-[#C9A46A]" />
+                      <span>Use coupon <span className="font-bold text-[#5A5146]">LOCAL20</span> to save 20% on booking fees.</span>
                     </div>
                   </Card>
 
                   {/* ORDER INVOICE SUMMARY CARD */}
-                  <Card className="border border-slate-200 shadow-md rounded-2xl bg-white overflow-hidden">
-                    <div className="bg-slate-900 text-white py-3.5 px-5 flex items-center justify-between shrink-0">
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Order Invoice</span>
+                  <Card className="border border-[#5A5146]/20 shadow-md rounded-2xl bg-white overflow-hidden">
+                    <div className="bg-[#B2563B] text-white py-3.5 px-5 flex items-center justify-between shrink-0">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#7A7266]">Order Invoice</span>
                       <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 py-0.5 px-2.5 rounded-full border border-emerald-500/20">Final Amount</span>
                     </div>
 
@@ -743,16 +743,16 @@ export default function Checkout() {
                         </div>
                       )}
 
-                      <div className="border-t border-slate-100 pt-3.5 flex justify-between items-baseline">
-                        <span className="text-sm font-black text-slate-900">Total Amount:</span>
-                        <span className="text-xl font-black text-slate-950">${grandTotal.toFixed(2)}</span>
+                      <div className="border-t border-[#5A5146]/15 pt-3.5 flex justify-between items-baseline">
+                        <span className="text-sm font-black text-[#1F1D1A]">Total Amount:</span>
+                        <span className="text-xl font-black text-[#1F1D1A]">${grandTotal.toFixed(2)}</span>
                       </div>
 
                       <div className="pt-3">
                         <Button
                           type="submit"
                           disabled={isSubmitting}
-                          className="w-full h-11 bg-slate-900 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                          className="w-full h-11 bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
                         >
                           {isSubmitting ? (
                             <>
@@ -769,7 +769,7 @@ export default function Checkout() {
                       </div>
 
                       <div className="text-center pt-2">
-                        <span className="text-[10px] font-bold text-slate-400 flex items-center justify-center gap-1">
+                        <span className="text-[10px] font-bold text-[#7A7266] flex items-center justify-center gap-1">
                           <Lock className="h-3.5 w-3.5 text-emerald-500" /> SSL Insured Checkout Processing
                         </span>
                       </div>
@@ -794,20 +794,20 @@ function successSubmitUI(submitSuccess, provider, date, time, plan, total) {
   if (!submitSuccess) return null;
 
   return (
-    <div className="max-w-xl mx-auto py-12 px-6 bg-white border border-slate-100 rounded-3xl shadow-xl text-center space-y-6 animate-fade-in">
+    <div className="max-w-xl mx-auto py-12 px-6 bg-white border border-[#5A5146]/15 rounded-3xl shadow-xl text-center space-y-6 animate-fade-in">
       <div className="w-16 h-16 bg-emerald-50 text-emerald-500 border border-emerald-100 rounded-full flex items-center justify-center mx-auto shadow-xs animate-bounce">
         <Check className="h-8 w-8" />
       </div>
       
       <div className="space-y-2">
-        <h2 className="text-2xl font-black text-slate-900 tracking-tight">Booking Confirmed!</h2>
-        <p className="text-xs text-slate-450 font-semibold max-w-sm mx-auto leading-relaxed">
+        <h2 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Booking Confirmed!</h2>
+        <p className="text-xs text-[#7A7266] font-semibold max-w-sm mx-auto leading-relaxed">
           Your transaction has been processed securely. A confirmation email invoice was dispatched containing appointment details.
         </p>
       </div>
 
-      <div className="p-4 bg-slate-50 border border-slate-100 rounded-2xl text-left space-y-3.5 max-w-md mx-auto">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Transaction Details</span>
+      <div className="p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl text-left space-y-3.5 max-w-md mx-auto">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A7266] block">Transaction Details</span>
         
         <div className="flex items-center gap-2">
           <Avatar className="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-white shadow-2xs">
@@ -815,24 +815,24 @@ function successSubmitUI(submitSuccess, provider, date, time, plan, total) {
             <AvatarFallback>{provider.providerName[0]}</AvatarFallback>
           </Avatar>
           <div>
-            <span className="text-[11px] font-bold text-slate-800 block">{provider.providerName}</span>
-            <span className="text-[9px] text-slate-400 font-semibold">{provider.category} • {plan}</span>
+            <span className="text-[11px] font-bold text-[#1F1D1A] block">{provider.providerName}</span>
+            <span className="text-[9px] text-[#7A7266] font-semibold">{provider.category} • {plan}</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 border-t border-slate-100 pt-3">
+        <div className="grid grid-cols-2 gap-4 border-t border-[#5A5146]/15 pt-3">
           <div>
-            <span className="text-[9px] text-slate-400 font-bold uppercase block">Date & Time</span>
-            <span className="text-xs font-bold text-slate-700">{date} at {time}</span>
+            <span className="text-[9px] text-[#7A7266] font-bold uppercase block">Date & Time</span>
+            <span className="text-xs font-bold text-[#B2563B]">{date} at {time}</span>
           </div>
           <div>
-            <span className="text-[9px] text-slate-400 font-bold uppercase block">Amount Paid</span>
-            <span className="text-xs font-bold text-slate-700">${total.toFixed(2)}</span>
+            <span className="text-[9px] text-[#7A7266] font-bold uppercase block">Amount Paid</span>
+            <span className="text-xs font-bold text-[#B2563B]">${total.toFixed(2)}</span>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-center gap-2 text-xs font-bold text-slate-400 pt-2.5">
+      <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#7A7266] pt-2.5">
         <Loader2 className="h-4 w-4 animate-spin text-white" />
         <span>Loading Customer Dashboard... Please wait.</span>
       </div>

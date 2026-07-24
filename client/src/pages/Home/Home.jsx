@@ -24,18 +24,18 @@ import {
 } from "lucide-react";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { servicesService } from "../../services/api";
-import { 
-  fadeInUp, 
-  staggerContainer, 
-  buttonMotionProps, 
-  floatMotionProps 
+import {
+  fadeInUp,
+  staggerContainer,
+  buttonMotionProps,
+  floatMotionProps
 } from "@/utils/motion";
 
 // Category list
 const categories = [
   { name: "Home Cleaning", icon: Paintbrush, count: "120+ Providers", color: "bg-pink-50 text-pink-600 border-pink-100" },
-  { name: "Plumbing", icon: Droplet, count: "80+ Providers", color: "bg-slate-900/5 text-slate-900 border-slate-900/10" },
-  { name: "Electrical", icon: Zap, count: "95+ Providers", color: "bg-amber-50 text-amber-600 border-amber-100" },
+  { name: "Plumbing", icon: Droplet, count: "80+ Providers", color: "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10" },
+  { name: "Electrical", icon: Zap, count: "95+ Providers", color: "bg-amber-50 text-[#B2563B] border-amber-100" },
   { name: "Moving & Packing", icon: Truck, count: "60+ Providers", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
   { name: "Lawn & Garden", icon: Flower2, count: "75+ Providers", color: "bg-lime-50 text-lime-600 border-lime-100" },
   { name: "Wellness & Personal", icon: Heart, count: "110+ Providers", color: "bg-rose-50 text-rose-600 border-rose-100" },
@@ -100,13 +100,13 @@ const features = [
     title: "Verified Professionals",
     description: "Every service provider is background-checked and identity-verified to ensure absolute safety and quality.",
     icon: ShieldAlert,
-    color: "bg-slate-900/5 text-slate-900 border-slate-900/10"
+    color: "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10"
   },
   {
     title: "Transparent Pricing",
     description: "No hidden charges or surprise costs. See clear hourly or flat rates up front before you book.",
     icon: CircleDollarSign,
-    color: "bg-amber-50 text-amber-600 border-amber-100"
+    color: "bg-amber-50 text-[#B2563B] border-amber-100"
   },
   {
     title: "Happiness Guarantee",
@@ -184,67 +184,67 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <div className="bg-slate-50 min-h-screen">
+      <div className="bg-[#FAF6F0] min-h-screen">
 
         {/* HERO SECTION */}
-        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-28 bg-slate-50">
-          <div className="absolute inset-0 bg-linear-to-b from-slate-900/5 to-transparent pointer-events-none"></div>
+        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-28 bg-[#FAF6F0]">
+          <div className="absolute inset-0 bg-linear-to-b from-violet-950/5 to-transparent pointer-events-none"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
 
               {/* Left Column (Hero Copy) */}
-              <motion.div 
+              <motion.div
                 initial="hidden"
                 animate="visible"
                 variants={staggerContainer(0.1, 0.05)}
                 className="lg:col-span-7 flex flex-col gap-6 sm:gap-8 text-center lg:text-left"
               >
                 <motion.div variants={fadeInUp}>
-                  <span className="inline-flex items-center gap-2 self-center lg:self-start bg-amber-500/10 text-amber-600 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full border border-amber-500/25 shadow-xs transition-transform hover:scale-105 duration-200">
-                    <Star className="h-3.5 w-3.5 fill-accent text-amber-500" /> Verified Local Professionals
+                  <span className="inline-flex items-center gap-2 self-center lg:self-start bg-[#C9A46A]/20 text-[#B2563B] text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full border border-[#C9A46A]/40 shadow-xs transition-transform hover:scale-105 duration-200">
+                    <Star className="h-3.5 w-3.5 fill-accent text-[#C9A46A]" /> Verified Local Professionals
                   </span>
                 </motion.div>
-                
-                <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl lg:text-6xl xl:text-[64px] font-black tracking-tight text-slate-900 leading-[1.15] lg:leading-[1.12]">
+
+                <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl lg:text-6xl xl:text-[64px] font-black tracking-tight text-[#1F1D1A] leading-[1.15] lg:leading-[1.12]">
                   Your Trusted Partner for <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 bg-clip-text text-transparent">Local Services</span>
                 </motion.h1>
-                
-                <motion.p variants={fadeInUp} className="text-lg sm:text-xl text-slate-600 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+
+                <motion.p variants={fadeInUp} className="text-lg sm:text-xl text-[#5A5146] font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                   Book home cleaning, plumbing, electrical tasks, and more instantly. Enjoy Verified local experts and clear upfront pricing.
                 </motion.p>
 
                 {/* Hero CTA buttons */}
                 <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-1 sm:pt-2">
                   <NavLink to="/services" className="w-full sm:w-auto">
-                    <Button size="lg" className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold shadow-md hover:shadow-lg hover:shadow-slate-900/15 px-8 h-12 sm:h-[48px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
+                    <Button size="lg" className="w-full sm:w-auto bg-[#B2563B] hover:bg-[#b84832] text-white rounded-xl font-semibold shadow-md hover:shadow-lg hover:shadow-2xs px-8 h-12 sm:h-[48px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
                       Book a Service
                     </Button>
                   </NavLink>
                   <NavLink to="/provider/dashboard" className="w-full sm:w-auto">
-                    <Button size="lg" variant="outline" className="w-full sm:w-auto border-slate-200 hover:border-slate-300 hover:bg-white hover:text-slate-900 text-slate-700 font-semibold rounded-xl px-8 h-12 sm:h-[48px] shadow-xs hover:shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
+                    <Button size="lg" variant="outline" className="w-full sm:w-auto border-[#5A5146]/20 hover:border-stone-300 hover:bg-white hover:text-[#1F1D1A] text-[#B2563B] font-semibold rounded-xl px-8 h-12 sm:h-[48px] shadow-xs hover:shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
                       Become a Provider
                     </Button>
                   </NavLink>
                 </motion.div>
 
                 {/* SEARCH SECTION */}
-                <motion.div variants={fadeInUp} className="bg-white p-3.5 sm:p-4 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 max-w-2xl lg:max-w-3xl mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-3.5 items-center w-full">
+                <motion.div variants={fadeInUp} className="bg-white p-3.5 sm:p-4 rounded-2xl shadow-xl shadow-2xs border border-[#5A5146]/20 max-w-2xl lg:max-w-3xl mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-3.5 items-center w-full">
                   <div className="relative w-full flex-1">
-                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400 pointer-events-none" />
-                    <Input 
-                      placeholder="Your location..." 
-                      className="pl-11 h-14 bg-slate-50/80 border-slate-200/80 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:border-amber-500 rounded-2xl text-sm font-medium text-slate-900 placeholder:text-slate-400 transition-all duration-200" 
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-[#7A7266] pointer-events-none" />
+                    <Input
+                      placeholder="Your location..."
+                      className="pl-11 h-14 bg-[#FAF6F0]/80 border-[#5A5146]/20 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:border-amber-500 rounded-2xl text-sm font-medium text-[#1F1D1A] placeholder:text-[#7A7266] transition-all duration-200"
                     />
                   </div>
                   <div className="relative w-full flex-grow-[1.4]">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400 pointer-events-none" />
-                    <Input 
-                      placeholder="What service do you need?" 
-                      className="pl-11 h-14 bg-slate-50/80 border-slate-200/80 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:border-amber-500 rounded-2xl text-sm font-medium text-slate-900 placeholder:text-slate-400 transition-all duration-200" 
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-[#7A7266] pointer-events-none" />
+                    <Input
+                      placeholder="What service do you need?"
+                      className="pl-11 h-14 bg-[#FAF6F0]/80 border-[#5A5146]/20 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:border-amber-500 rounded-2xl text-sm font-medium text-[#1F1D1A] placeholder:text-[#7A7266] transition-all duration-200"
                     />
                   </div>
-                  <Button className="w-full sm:w-auto h-14 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-2xl px-8 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-base shrink-0">
+                  <Button className="w-full sm:w-auto h-14 bg-[#B2563B] hover:bg-[#b84832] text-white font-bold rounded-2xl px-8 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-base shrink-0">
                     <Search className="h-4.5 w-4.5" />
                     <span>Search</span>
                   </Button>
@@ -254,7 +254,7 @@ export default function Home() {
 
               {/* Right Column (Hero Graphic with Framer Motion) */}
               <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
-                <div className="absolute -inset-4 bg-slate-900/10 rounded-full filter blur-2xl opacity-60 scale-95 animate-pulse pointer-events-none"></div>
+                <div className="absolute -inset-4 bg-[#E8DCC3]/40 rounded-full filter blur-2xl opacity-60 scale-95 animate-pulse pointer-events-none"></div>
                 <motion.div
                   animate={{ y: [0, -12, 0] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
@@ -273,7 +273,7 @@ export default function Home() {
         </section>
 
         {/* POPULAR CATEGORIES SECTION */}
-        <motion.section 
+        <motion.section
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
@@ -281,8 +281,8 @@ export default function Home() {
           className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
           <motion.div variants={fadeInUp} className="text-center max-w-3xl mx-auto mb-12 flex flex-col gap-2.5">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">Explore Popular Categories</h2>
-            <p className="text-base text-slate-600 font-normal leading-relaxed">Find Verified professionals for your exact local service requirements.</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1F1D1A] tracking-tight leading-tight">Explore Popular Categories</h2>
+            <p className="text-base text-[#5A5146] font-normal leading-relaxed">Find Verified professionals for your exact local service requirements.</p>
           </motion.div>
 
           <motion.div variants={staggerContainer(0.06)} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
@@ -310,7 +310,7 @@ export default function Home() {
         </motion.section>
 
         {/* HOW IT WORKS SECTION */}
-        <section className="py-16 md:py-20 bg-linear-to-b from-white to-slate-50 border-y border-gray-150">
+        <section className="py-16 md:py-20 bg-linear-to-b from-white to-stone-50 border-y border-gray-150">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col gap-3">
               <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">How It Works</h2>
@@ -320,7 +320,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
               {steps.map((step, idx) => (
                 <div key={idx} className="flex flex-col gap-4 text-center group px-4">
-                  <span className="text-6xl font-extrabold text-slate-200 group-hover:text-amber-500 transition-colors select-none duration-300">
+                  <span className="text-6xl font-extrabold text-stone-200 group-hover:text-[#C9A46A] transition-colors select-none duration-300">
                     {step.step}
                   </span>
                   <h3 className="font-bold text-lg text-gray-900 mt-2">{step.title}</h3>
@@ -337,18 +337,18 @@ export default function Home() {
         <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12">
             <div className="flex flex-col gap-1.5 text-center sm:text-left">
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">Featured Service Providers</h2>
-              <p className="text-base text-slate-600 font-normal leading-relaxed">Top-rated and verified local specialists in your neighbourhood.</p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#1F1D1A] tracking-tight leading-tight">Featured Service Providers</h2>
+              <p className="text-base text-[#5A5146] font-normal leading-relaxed">Top-rated and verified local specialists in your neighbourhood.</p>
             </div>
-            <NavLink to="/services" className="inline-flex items-center gap-1 text-sm font-semibold text-slate-900 hover:text-amber-500 transition-colors">
+            <NavLink to="/services" className="inline-flex items-center gap-1 text-sm font-semibold text-[#1F1D1A] hover:text-[#C9A46A] transition-colors">
               View All Providers <ArrowRight className="h-4 w-4" />
             </NavLink>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {displayProviders.map((provider, idx) => (
-              <ServiceCard 
-                key={provider.id || idx} 
+              <ServiceCard
+                key={provider.id || idx}
                 service={{
                   id: provider.id,
                   name: provider.service || provider.name,
@@ -382,7 +382,7 @@ export default function Home() {
               {features.map((feature, idx) => {
                 const IconComp = feature.icon;
                 return (
-                  <div key={idx} className="flex flex-col gap-4 p-5 rounded-2xl hover:bg-slate-50 transition-colors duration-300 border border-transparent hover:border-gray-100">
+                  <div key={idx} className="flex flex-col gap-4 p-5 rounded-2xl hover:bg-[#FAF6F0] transition-colors duration-300 border border-transparent hover:border-gray-100">
                     <div className={`p-3 rounded-full border self-start ${feature.color}`}>
                       <IconComp className="h-5 w-5" />
                     </div>
@@ -408,7 +408,7 @@ export default function Home() {
             {testimonials.map((test, idx) => (
               <Card key={idx} className="bg-white hover:shadow-md transition-shadow border border-gray-100 flex flex-col p-0 py-0 gap-0 justify-between h-full">
                 <CardContent className="p-6 flex flex-col gap-6">
-                  <div className="text-amber-500">
+                  <div className="text-[#C9A46A]">
                     <Quote className="h-8 w-8 fill-current opacity-20" />
                   </div>
                   <p className="text-sm text-gray-600 leading-relaxed italic">
@@ -428,38 +428,13 @@ export default function Home() {
                     </div>
                     <div className="ml-auto flex gap-0.5">
                       {[...Array(test.rating)].map((_, i) => (
-                        <Star key={i} className="h-3 w-3 fill-amber-400 text-amber-400" />
+                        <Star key={i} className="h-3 w-3 fill-amber-400 text-[#B2563B]" />
                       ))}
                     </div>
                   </div>
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </section>
-
-        {/* CALL TO ACTION SECTION */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-          <div className="bg-gradient-to-r from-slate-900 to-slate-700 rounded-3xl text-white py-12 px-6 sm:px-12 md:py-16 md:px-20 text-center relative overflow-hidden shadow-xl border border-white/10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_45%)] pointer-events-none"></div>
-            <div className="relative z-10 max-w-3xl mx-auto flex flex-col gap-6">
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Ready to get your tasks completed?</h2>
-              <p className="text-slate-300 text-lg md:text-xl">
-                Book professional local services in seconds or sign up as a provider to start growing your local business.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-4">
-                <NavLink to="/services">
-                  <Button size="lg" className="w-full sm:w-auto bg-amber-500 hover:bg-amber-500/90 text-slate-900 font-bold rounded-full shadow-md px-8 h-12 transition-transform hover:scale-[1.02]">
-                    Book a Service
-                  </Button>
-                </NavLink>
-                <NavLink to="/provider/dashboard">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto border-white/40 hover:bg-white/10 text-white rounded-full font-semibold px-8 h-12">
-                    Become a Provider
-                  </Button>
-                </NavLink>
-              </div>
-            </div>
           </div>
         </section>
 

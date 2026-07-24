@@ -34,8 +34,8 @@ import { fadeInUp, staggerContainer } from "@/utils/motion";
 // Predefined categories matching the Home page aesthetics
 const categories = [
   { name: "Home Cleaning", icon: Paintbrush, count: "120+ Providers", color: "bg-pink-50 text-pink-600 border-pink-100" },
-  { name: "Plumbing", icon: Droplet, count: "80+ Providers", color: "bg-slate-900/5 text-slate-900 border-slate-900/10" },
-  { name: "Electrical", icon: Zap, count: "95+ Providers", color: "bg-amber-50 text-amber-600 border-amber-100" },
+  { name: "Plumbing", icon: Droplet, count: "80+ Providers", color: "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10" },
+  { name: "Electrical", icon: Zap, count: "95+ Providers", color: "bg-amber-50 text-[#B2563B] border-amber-100" },
   { name: "Moving & Packing", icon: Truck, count: "60+ Providers", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
   { name: "Lawn & Garden", icon: Flower2, count: "75+ Providers", color: "bg-lime-50 text-lime-600 border-lime-100" },
   { name: "Wellness & Personal", icon: Heart, count: "110+ Providers", color: "bg-rose-50 text-rose-600 border-rose-100" },
@@ -57,9 +57,9 @@ const getCategoryStyles = (category) => {
     case "Home Cleaning":
       return "bg-pink-50 text-pink-600 border-pink-100";
     case "Plumbing":
-      return "bg-slate-900/5 text-slate-900 border-slate-900/10";
+      return "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10";
     case "Electrical":
-      return "bg-amber-50 text-amber-600 border-amber-100";
+      return "bg-amber-50 text-[#B2563B] border-amber-100";
     case "Moving & Packing":
       return "bg-emerald-50 text-emerald-600 border-emerald-100";
     case "Lawn & Garden":
@@ -67,7 +67,7 @@ const getCategoryStyles = (category) => {
     case "Wellness & Personal":
       return "bg-rose-50 text-rose-600 border-rose-100";
     default:
-      return "bg-slate-50 text-slate-600 border-slate-100";
+      return "bg-[#FAF6F0] text-[#5A5146] border-[#5A5146]/15";
   }
 };
 
@@ -322,39 +322,39 @@ export default function Services() {
 
   return (
     <MainLayout>
-      <div className="bg-slate-50 min-h-screen">
+      <div className="bg-[#FAF6F0] min-h-screen">
 
         {/* PAGE HEADER */}
-        <section className="py-12 bg-slate-50 border-b border-slate-200">
+        <section className="py-12 bg-[#FAF6F0] border-b border-[#5A5146]/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-4">
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 leading-tight max-w-3xl">
-              Find and Book <span className="text-amber-500">Local Services</span>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#1F1D1A] leading-tight max-w-3xl">
+              Find and Book <span className="text-[#C9A46A]">Local Services</span>
             </h1>
-            <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed max-w-xl">
+            <p className="text-xs sm:text-sm text-[#5A5146] font-normal leading-relaxed max-w-xl">
               Instantly match with verified professionals in your neighborhood. Compare reviews, pricing, and book your service online.
             </p>
 
             {/* HERO SEARCH BAR */}
             <form
               onSubmit={handleHeroSearchSubmit}
-              className="bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 w-full max-w-3xl flex flex-col md:flex-row gap-2.5 items-center mt-2"
+              className="bg-white p-2.5 sm:p-3 rounded-2xl border border-[#5A5146]/20 w-full max-w-3xl flex flex-col md:flex-row gap-2.5 items-center mt-2"
             >
               <div className="relative w-full md:flex-1">
-                <Search className="absolute left-3.5 top-3 h-5 w-5 text-slate-700" />
+                <Search className="absolute left-3.5 top-3 h-5 w-5 text-[#B2563B]" />
                 <Input
                   placeholder="What service do you need?"
                   value={heroSearch}
                   onChange={(e) => setHeroSearch(e.target.value)}
-                  className="pl-11 h-11 border-slate-200 focus-visible:ring-slate-900 rounded-xl bg-white text-sm"
+                  className="pl-11 h-11 border-[#5A5146]/20 focus-visible:ring-violet-950 rounded-xl bg-white text-sm"
                 />
               </div>
 
               <div className="relative w-full md:w-60">
-                <MapPin className="absolute left-3.5 top-3 h-5 w-5 text-slate-700" />
+                <MapPin className="absolute left-3.5 top-3 h-5 w-5 text-[#B2563B]" />
                 <select
                   value={heroLocation}
                   onChange={(e) => setHeroLocation(e.target.value)}
-                  className="w-full pl-11 pr-4 h-11 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-sm text-gray-705 cursor-pointer appearance-none"
+                  className="w-full pl-11 pr-4 h-11 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-sm text-gray-705 cursor-pointer appearance-none"
                 >
                   {locations.map((loc) => (
                     <option key={loc} value={loc === "All Locations" ? "all" : loc}>
@@ -369,7 +369,7 @@ export default function Services() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full md:w-auto h-11 bg-slate-900 hover:bg-slate-700 text-white rounded-xl px-8 shadow-sm transition-all font-semibold">
+              <Button type="submit" className="w-full md:w-auto h-11 bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl px-8 shadow-sm transition-all font-semibold">
                 Search
               </Button>
             </form>
@@ -388,7 +388,7 @@ export default function Services() {
               {selectedCategories.length > 0 && (
                 <button
                   onClick={() => setSelectedCategories([])}
-                  className="text-xs font-semibold text-slate-900 hover:text-amber-500 hover:underline flex items-center gap-1"
+                  className="text-xs font-semibold text-[#1F1D1A] hover:text-[#C9A46A] hover:underline flex items-center gap-1"
                 >
                   Reset Category
                 </button>
@@ -405,18 +405,18 @@ export default function Services() {
                     type="button"
                     onClick={() => toggleCategory(cat.name)}
                     className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 ${isSelected
-                        ? "bg-slate-900 text-white border-slate-900 shadow-md shadow-slate-900/20 -translate-y-0.5"
-                        : "bg-white text-gray-900 border-gray-100 hover:shadow-md hover:-translate-y-0.5"
+                      ? "bg-[#B2563B] text-white border-violet-950 shadow-md shadow-2xs -translate-y-0.5"
+                      : "bg-white text-gray-900 border-gray-100 hover:shadow-md hover:-translate-y-0.5"
                       }`}
                   >
                     <div className={`p-2.5 rounded-full mb-3 transition-colors ${isSelected
-                        ? "bg-slate-700 text-white"
-                        : cat.color
+                      ? "bg-[#7C8A6B] text-white"
+                      : cat.color
                       }`}>
                       <IconComp className="h-5 w-5" />
                     </div>
                     <span className="text-xs font-bold">{cat.name}</span>
-                    <span className={`text-[10px] mt-1 ${isSelected ? "text-slate-300" : "text-gray-400"}`}>
+                    <span className={`text-[10px] mt-1 ${isSelected ? "text-[#7A7266]" : "text-gray-400"}`}>
                       {cat.count}
                     </span>
                   </button>
@@ -434,7 +434,7 @@ export default function Services() {
                 {activeFilterCount > 0 && (
                   <button
                     onClick={handleClearFilters}
-                    className="text-xs text-slate-900 hover:text-amber-500 font-semibold transition-colors"
+                    className="text-xs text-[#1F1D1A] hover:text-[#C9A46A] font-semibold transition-colors"
                   >
                     Clear All ({activeFilterCount})
                   </button>
@@ -451,7 +451,7 @@ export default function Services() {
                         type="checkbox"
                         checked={selectedCategories.includes(cat.name)}
                         onChange={() => toggleCategory(cat.name)}
-                        className="h-4 w-4 rounded border-gray-300 text-slate-900 focus:ring-slate-900 cursor-pointer"
+                        className="h-4 w-4 rounded border-gray-300 text-[#1F1D1A] focus:ring-violet-950 cursor-pointer"
                       />
                       <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
                         {cat.name}
@@ -470,7 +470,7 @@ export default function Services() {
                     setSelectedLocation(e.target.value);
                     updateUrlParameters(selectedCategories, searchQuery, e.target.value);
                   }}
-                  className="w-full h-10 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-gray-50/50 px-3 text-sm text-gray-700 cursor-pointer"
+                  className="w-full h-10 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-gray-50/50 px-3 text-sm text-gray-700 cursor-pointer"
                 >
                   {locations.map((loc) => (
                     <option key={loc} value={loc === "All Locations" ? "all" : loc}>
@@ -500,7 +500,7 @@ export default function Services() {
                           setCustomMinPrice("");
                           setCustomMaxPrice("");
                         }}
-                        className="h-4 w-4 border-gray-300 text-slate-900 focus:ring-slate-900"
+                        className="h-4 w-4 border-gray-300 text-[#1F1D1A] focus:ring-violet-950"
                       />
                       <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
                         {option.label}
@@ -554,12 +554,12 @@ export default function Services() {
                       type="button"
                       onClick={() => setMinRating(opt.value)}
                       className={`flex items-center justify-between text-left px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${minRating === opt.value
-                          ? "bg-slate-900/5 text-slate-900 border-slate-900/20"
-                          : "bg-white text-gray-600 border-gray-100 hover:bg-gray-50"
+                        ? "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/20"
+                        : "bg-white text-gray-600 border-gray-100 hover:bg-gray-50"
                         }`}
                     >
                       <span className="flex items-center gap-1">
-                        {opt.value > 0 && <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />}
+                        {opt.value > 0 && <Star className="h-3.5 w-3.5 fill-amber-400 text-[#B2563B]" />}
                         {opt.label}
                       </span>
                       {opt.value > 0 && (
@@ -588,7 +588,7 @@ export default function Services() {
                         name="desktopAvailability"
                         checked={availability === option.value}
                         onChange={() => setAvailability(option.value)}
-                        className="h-4 w-4 border-gray-300 text-slate-900 focus:ring-slate-900"
+                        className="h-4 w-4 border-gray-300 text-[#1F1D1A] focus:ring-violet-950"
                       />
                       <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
                         {option.label}
@@ -614,7 +614,7 @@ export default function Services() {
                   <SlidersHorizontal className="h-4 w-4 text-gray-500" />
                   Filters
                   {activeFilterCount > 0 && (
-                    <span className="flex items-center justify-center bg-slate-900 text-white rounded-full text-[10px] w-5 h-5 font-bold">
+                    <span className="flex items-center justify-center bg-[#B2563B] text-white rounded-full text-[10px] w-5 h-5 font-bold">
                       {activeFilterCount}
                     </span>
                   )}
@@ -640,7 +640,7 @@ export default function Services() {
                     <select
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
-                      className="w-full h-9 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-gray-707 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-gray-707 cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="popularity">Popularity</option>
                       <option value="rating">Rating</option>
@@ -661,42 +661,42 @@ export default function Services() {
                   <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Active:</span>
 
                   {searchQuery && (
-                    <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-slate-100 hover:bg-slate-200">
+                    <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-[#F0E7D5] hover:bg-[#E8DCC3]">
                       Search: {searchQuery}
                       <X className="h-3 w-3 cursor-pointer text-gray-500 hover:text-gray-700" onClick={() => { setSearchQuery(""); setHeroSearch(""); }} />
                     </Badge>
                   )}
 
                   {selectedLocation !== "all" && (
-                    <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-slate-100 hover:bg-slate-200">
+                    <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-[#F0E7D5] hover:bg-[#E8DCC3]">
                       Loc: {selectedLocation}
                       <X className="h-3 w-3 cursor-pointer text-gray-500 hover:text-gray-700" onClick={() => { setSelectedLocation("all"); setHeroLocation("all"); }} />
                     </Badge>
                   )}
 
                   {selectedCategories.map(cat => (
-                    <Badge key={cat} variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-slate-100 hover:bg-slate-200">
+                    <Badge key={cat} variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-[#F0E7D5] hover:bg-[#E8DCC3]">
                       {cat}
                       <X className="h-3 w-3 cursor-pointer text-gray-500 hover:text-gray-700" onClick={() => toggleCategory(cat)} />
                     </Badge>
                   ))}
 
                   {(priceRange !== "all" || customMinPrice || customMaxPrice) && (
-                    <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-slate-100 hover:bg-slate-200">
+                    <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-[#F0E7D5] hover:bg-[#E8DCC3]">
                       Price: {priceRange !== "all" ? priceRange : `${customMinPrice || "0"}-${customMaxPrice || "Any"}`}
                       <X className="h-3 w-3 cursor-pointer text-gray-500 hover:text-gray-700" onClick={() => { setPriceRange("all"); setCustomMinPrice(""); setCustomMaxPrice(""); }} />
                     </Badge>
                   )}
 
                   {minRating > 0 && (
-                    <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-slate-100 hover:bg-slate-200">
+                    <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-[#F0E7D5] hover:bg-[#E8DCC3]">
                       Rating: {minRating}+ Stars
                       <X className="h-3 w-3 cursor-pointer text-gray-500 hover:text-gray-700" onClick={() => setMinRating(0)} />
                     </Badge>
                   )}
 
                   {availability !== "all" && (
-                    <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-slate-100 hover:bg-slate-200">
+                    <Badge variant="secondary" className="flex items-center gap-1 text-xs py-1 px-2.5 bg-[#F0E7D5] hover:bg-[#E8DCC3]">
                       Available: {availability}
                       <X className="h-3 w-3 cursor-pointer text-gray-500 hover:text-gray-700" onClick={() => setAvailability("all")} />
                     </Badge>
@@ -704,7 +704,7 @@ export default function Services() {
 
                   <button
                     onClick={handleClearFilters}
-                    className="text-xs font-semibold text-slate-900 hover:text-amber-500 ml-2"
+                    className="text-xs font-semibold text-[#1F1D1A] hover:text-[#C9A46A] ml-2"
                   >
                     Clear All
                   </button>
@@ -721,7 +721,7 @@ export default function Services() {
                   <p className="text-sm text-gray-500 max-w-sm">
                     {error}
                   </p>
-                  <Button onClick={() => window.location.reload()} className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl mt-2 font-semibold">
+                  <Button onClick={() => window.location.reload()} className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-semibold">
                     Retry
                   </Button>
                 </div>
@@ -734,21 +734,21 @@ export default function Services() {
               ) : sortedServices.length === 0 ? (
                 /* NO RESULTS FOUND STATE */
                 <div className="bg-white border border-gray-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto mt-8 shadow-xs">
-                  <div className="p-4 bg-slate-900/5 text-slate-900 rounded-full border border-slate-900/10">
+                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <Info className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mt-2">No Services Found</h3>
                   <p className="text-sm text-gray-500 max-w-sm">
                     We couldn't find any service matching your selection. Try clearing search filters or picking a different category.
                   </p>
-                  <Button onClick={handleClearFilters} className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl mt-2 font-semibold">
+                  <Button onClick={handleClearFilters} className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-semibold">
                     Reset All Filters
                   </Button>
                 </div>
               ) : (
                 /* ACTUAL CARDS LISTINGS GRID */
                 <>
-                  <motion.div 
+                  <motion.div
                     initial="hidden"
                     animate="visible"
                     variants={staggerContainer(0.06)}
@@ -788,8 +788,8 @@ export default function Services() {
                               type="button"
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${currentPage === pageNum
-                                  ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
-                                  : "text-gray-600 hover:bg-slate-100 hover:text-gray-900"
+                                ? "bg-[#B2563B] text-white shadow-md shadow-2xs"
+                                : "text-gray-600 hover:bg-[#F0E7D5] hover:text-gray-900"
                                 }`}
                             >
                               {pageNum}
@@ -816,35 +816,6 @@ export default function Services() {
             </main>
           </div>
         </div>
-
-        {/* CALL TO ACTION SECTION */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="bg-gradient-to-r from-slate-900 to-slate-700 rounded-3xl text-white py-12 px-6 sm:px-12 md:py-16 md:px-20 text-center relative overflow-hidden shadow-xl border border-white/10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_45%)] pointer-events-none"></div>
-
-            <div className="relative z-10 max-w-3xl mx-auto flex flex-col gap-6 items-center">
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-                Grow Your Service Business with Us
-              </h2>
-              <p className="text-slate-300 text-base md:text-lg max-w-2xl">
-                Are you a local service specialist? Register as a provider on BookMyLocalService to discover new clients, coordinate schedules, and build your local reputation.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mt-3">
-                <NavLink to="/provider/dashboard">
-                  <Button size="lg" className="bg-amber-500 hover:bg-amber-500/90 text-slate-900 rounded-full font-bold shadow-md px-8 h-12 transition-transform hover:scale-[1.02]">
-                    Become a Provider
-                  </Button>
-                </NavLink>
-                <NavLink to="/register">
-                  <Button size="lg" variant="outline" className="border-white/40 hover:bg-white/10 text-white rounded-full font-bold px-8 h-12">
-                    Create Client Account
-                  </Button>
-                </NavLink>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* MOBILE SLIDE-OUT DRAWER FILTERS */}
         {isMobileFilterOpen && (
@@ -877,7 +848,7 @@ export default function Services() {
                     handleClearFilters();
                     setIsMobileFilterOpen(false);
                   }}
-                  className="w-full text-xs text-slate-900 font-semibold border-slate-900/20 bg-slate-900/5 hover:bg-slate-900/10"
+                  className="w-full text-xs text-[#1F1D1A] font-semibold border-violet-950/20 bg-[#B2563B]/5 hover:bg-[#E8DCC3]/40"
                 >
                   Reset Active Filters ({activeFilterCount})
                 </Button>
@@ -893,7 +864,7 @@ export default function Services() {
                         type="checkbox"
                         checked={selectedCategories.includes(cat.name)}
                         onChange={() => toggleCategory(cat.name)}
-                        className="h-4 w-4 rounded border-gray-300 text-slate-900 focus:ring-slate-900 cursor-pointer"
+                        className="h-4 w-4 rounded border-gray-300 text-[#1F1D1A] focus:ring-violet-950 cursor-pointer"
                       />
                       <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
                         {cat.name}
@@ -912,7 +883,7 @@ export default function Services() {
                     setSelectedLocation(e.target.value);
                     updateUrlParameters(selectedCategories, searchQuery, e.target.value);
                   }}
-                  className="w-full h-10 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-gray-50/50 px-3 text-sm text-gray-700 cursor-pointer"
+                  className="w-full h-10 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-gray-50/50 px-3 text-sm text-gray-700 cursor-pointer"
                 >
                   {locations.map((loc) => (
                     <option key={loc} value={loc === "All Locations" ? "all" : loc}>
@@ -942,7 +913,7 @@ export default function Services() {
                           setCustomMinPrice("");
                           setCustomMaxPrice("");
                         }}
-                        className="h-4 w-4 border-gray-300 text-slate-900 focus:ring-slate-900"
+                        className="h-4 w-4 border-gray-300 text-[#1F1D1A] focus:ring-violet-950"
                       />
                       <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
                         {option.label}
@@ -995,12 +966,12 @@ export default function Services() {
                       type="button"
                       onClick={() => setMinRating(opt.value)}
                       className={`flex items-center justify-between text-left px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${minRating === opt.value
-                          ? "bg-slate-900/5 text-slate-900 border-slate-900/20"
-                          : "bg-white text-gray-600 border-gray-100 hover:bg-gray-50"
+                        ? "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/20"
+                        : "bg-white text-gray-600 border-gray-100 hover:bg-gray-50"
                         }`}
                     >
                       <span className="flex items-center gap-1">
-                        {opt.value > 0 && <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />}
+                        {opt.value > 0 && <Star className="h-3.5 w-3.5 fill-amber-400 text-[#B2563B]" />}
                         {opt.label}
                       </span>
                       {opt.value > 0 && (
@@ -1029,7 +1000,7 @@ export default function Services() {
                         name="mobileAvailability"
                         checked={availability === option.value}
                         onChange={() => setAvailability(option.value)}
-                        className="h-4 w-4 border-gray-300 text-slate-900 focus:ring-slate-900"
+                        className="h-4 w-4 border-gray-300 text-[#1F1D1A] focus:ring-violet-950"
                       />
                       <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
                         {option.label}
@@ -1042,7 +1013,7 @@ export default function Services() {
               <Button
                 type="button"
                 onClick={() => setIsMobileFilterOpen(false)}
-                className="w-full bg-slate-900 hover:bg-slate-700 text-white rounded-xl font-bold mt-auto h-11"
+                className="w-full bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl font-bold mt-auto h-11"
               >
                 Apply Filters
               </Button>

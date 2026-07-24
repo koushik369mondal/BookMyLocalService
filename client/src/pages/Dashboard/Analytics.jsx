@@ -146,16 +146,16 @@ export default function Analytics() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">System Analytics</h1>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium">Verify system transaction spline logs, category sharing indexes, and demographics</p>
+              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Verify system transaction spline logs, category sharing indexes, and demographics</p>
             </div>
             
             {/* Quick dashboard back button */}
@@ -173,10 +173,10 @@ export default function Analytics() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             
             {/* Total Revenue */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Revenue</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">$42,850</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Revenue</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">$42,850</span>
               </div>
               <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl shrink-0">
                 <DollarSign className="h-5 w-5" />
@@ -184,45 +184,45 @@ export default function Analytics() {
             </Card>
 
             {/* Total Bookings */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Bookings</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">1,840</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Bookings</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">1,840</span>
               </div>
-              <div className="p-2.5 bg-slate-900/5 text-slate-900 rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0">
                 <Activity className="h-5 w-5" />
               </div>
             </Card>
 
             {/* Total Users */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Users</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">4,250</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Users</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">4,250</span>
               </div>
-              <div className="p-2.5 bg-slate-900/5 text-slate-900 rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0">
                 <Users className="h-5 w-5" />
               </div>
             </Card>
 
             {/* Total Providers */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Providers</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">380</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Providers</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">380</span>
               </div>
-              <div className="p-2.5 bg-amber-50 text-amber-500 rounded-xl shrink-0">
+              <div className="p-2.5 bg-amber-50 text-[#C9A46A] rounded-xl shrink-0">
                 <Briefcase className="h-5 w-5" />
               </div>
             </Card>
 
             {/* Growth rate */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform col-span-2 md:col-span-1">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform col-span-2 md:col-span-1">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Growth Rate</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">+15.4%</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Growth Rate</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">+15.4%</span>
               </div>
-              <div className="p-2.5 bg-slate-900/5 text-slate-900 rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0">
                 <TrendingUp className="h-5 w-5" />
               </div>
             </Card>
@@ -241,75 +241,75 @@ export default function Analytics() {
           )}
 
           {/* FILTERS & DOWNLOAD BUTTONS */}
-          <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-6 print:hidden">
+          <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-6 print:hidden">
             
             {/* Filters */}
             <div className="flex flex-wrap items-center gap-4 flex-1">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="dateFrom" className="text-[10px] font-bold text-slate-400 uppercase">From Date</Label>
+                <Label htmlFor="dateFrom" className="text-[10px] font-bold text-[#7A7266] uppercase">From Date</Label>
                 <Input 
                   id="dateFrom"
                   type="date"
                   value={dateFrom}
                   onChange={(e) => setDateFrom(e.target.value)}
-                  className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white cursor-pointer"
+                  className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white cursor-pointer"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="dateTo" className="text-[10px] font-bold text-slate-400 uppercase">To Date</Label>
+                <Label htmlFor="dateTo" className="text-[10px] font-bold text-[#7A7266] uppercase">To Date</Label>
                 <Input 
                   id="dateTo"
                   type="date"
                   value={dateTo}
                   onChange={(e) => setDateTo(e.target.value)}
-                  className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white cursor-pointer"
+                  className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white cursor-pointer"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5 shrink-0">
-                <Label htmlFor="categoryFilter" className="text-[10px] font-bold text-slate-400 uppercase">Category</Label>
+                <Label htmlFor="categoryFilter" className="text-[10px] font-bold text-[#7A7266] uppercase">Category</Label>
                 <div className="relative">
                   <select
                     id="categoryFilter"
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Categories</option>
                     <option value="Home Cleaning">Home Cleaning</option>
                     <option value="Plumbing">Plumbing</option>
                     <option value="Electrical">Electrical</option>
                   </select>
-                  <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-slate-400" />
+                  <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
                 </div>
               </div>
 
               <div className="flex flex-col gap-1.5 shrink-0">
-                <Label htmlFor="locationFilter" className="text-[10px] font-bold text-slate-400 uppercase">Borough</Label>
+                <Label htmlFor="locationFilter" className="text-[10px] font-bold text-[#7A7266] uppercase">Borough</Label>
                 <div className="relative">
                   <select
                     id="locationFilter"
                     value={locationFilter}
                     onChange={(e) => setLocationFilter(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Boroughs</option>
                     <option value="Brooklyn">Brooklyn</option>
                     <option value="Manhattan">Manhattan</option>
                     <option value="Queens">Queens</option>
                   </select>
-                  <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-slate-400" />
+                  <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
                 </div>
               </div>
             </div>
 
             {/* Exports */}
-            <div className="flex items-center gap-2 shrink-0 border-t border-slate-100 lg:border-0 pt-4 lg:pt-0">
+            <div className="flex items-center gap-2 shrink-0 border-t border-[#5A5146]/15 lg:border-0 pt-4 lg:pt-0">
               <Button
                 size="sm"
                 onClick={() => handleExport("PDF")}
-                className="bg-slate-900 hover:bg-black text-white rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
+                className="bg-[#B2563B] hover:bg-black text-white rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
               >
                 <FileText className="h-4 w-4" /> PDF Report
               </Button>
@@ -328,22 +328,22 @@ export default function Analytics() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Swappable analytics growth chart */}
-            <Card className="lg:col-span-8 border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 flex flex-col justify-between">
-              <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <Card className="lg:col-span-8 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 flex flex-col justify-between">
+              <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <CardTitle className="text-base font-extrabold text-slate-900">Statistical Trends Analysis</CardTitle>
+                  <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Statistical Trends Analysis</CardTitle>
                   <CardDescription className="text-xs">Monitor analytical spline lines</CardDescription>
                 </div>
                 
                 {/* Switch Tabs */}
-                <div className="flex bg-slate-100/70 border border-slate-200 p-0.5 rounded-xl h-9 shrink-0 overflow-x-auto max-w-full">
+                <div className="flex bg-[#F0E7D5]/70 border border-[#5A5146]/20 p-0.5 rounded-xl h-9 shrink-0 overflow-x-auto max-w-full">
                   <button
                     type="button"
                     onClick={() => setMetricTab("revenue")}
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "revenue"
-                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                        : "text-slate-500 hover:text-slate-700"
+                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
+                        : "text-[#7A7266] hover:text-[#B2563B]"
                     }`}
                   >
                     Revenue
@@ -353,8 +353,8 @@ export default function Analytics() {
                     onClick={() => setMetricTab("bookings")}
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "bookings"
-                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                        : "text-slate-500 hover:text-slate-700"
+                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
+                        : "text-[#7A7266] hover:text-[#B2563B]"
                     }`}
                   >
                     Bookings
@@ -364,8 +364,8 @@ export default function Analytics() {
                     onClick={() => setMetricTab("users")}
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "users"
-                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                        : "text-slate-500 hover:text-slate-700"
+                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
+                        : "text-[#7A7266] hover:text-[#B2563B]"
                     }`}
                   >
                     User Growth
@@ -375,8 +375,8 @@ export default function Analytics() {
                     onClick={() => setMetricTab("providers")}
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "providers"
-                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                        : "text-slate-500 hover:text-slate-700"
+                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
+                        : "text-[#7A7266] hover:text-[#B2563B]"
                     }`}
                   >
                     Provider Growth
@@ -386,7 +386,7 @@ export default function Analytics() {
 
               <CardContent className="p-0 pt-6 flex-1 flex items-center justify-center min-h-[170px]">
                 {isLoading ? (
-                  <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
+                  <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
                 ) : (
                   <div className="w-full overflow-x-auto">
                     <div className="min-w-[480px] h-[160px] relative">
@@ -415,8 +415,8 @@ export default function Analytics() {
                                   fill="#2563eb"
                                   className="hover:fill-secondary transition-colors cursor-pointer"
                                 />
-                                <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" className="text-[9px] font-black fill-slate-800">{d.val}</text>
-                                <text x={x + barWidth / 2} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-bold fill-slate-450">{d.label}</text>
+                                <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" className="text-[9px] font-black fill-violet-900">{d.val}</text>
+                                <text x={x + barWidth / 2} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-bold fill-stone-500">{d.label}</text>
                               </g>
                             );
                           })
@@ -444,10 +444,10 @@ export default function Analytics() {
                               return (
                                 <g key={d.label}>
                                   <circle cx={x} cy={y} r="5" fill="#6366f1" stroke="#ffffff" strokeWidth="2" className="cursor-pointer" />
-                                  <text x={x} y={y - 10} textAnchor="middle" className="text-[9px] font-black fill-slate-800">
+                                  <text x={x} y={y - 10} textAnchor="middle" className="text-[9px] font-black fill-violet-900">
                                     {metricTab === "revenue" ? `$${d.val}` : d.val}
                                   </text>
-                                  <text x={x} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-bold fill-slate-450">{d.label}</text>
+                                  <text x={x} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-bold fill-stone-500">{d.label}</text>
                                 </g>
                               );
                             })}
@@ -462,17 +462,17 @@ export default function Analytics() {
             </Card>
 
             {/* Category breakdown Share */}
-            <Card className="lg:col-span-4 border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">Category Shares</span>
+            <Card className="lg:col-span-4 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Category Shares</span>
               
               <div className="space-y-4">
                 {categoryShare.map(cat => (
                   <div key={cat.name} className="space-y-1">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-slate-700">{cat.name}</span>
-                      <span className="text-slate-450">{cat.share}%</span>
+                      <span className="text-[#B2563B]">{cat.name}</span>
+                      <span className="text-[#7A7266]">{cat.share}%</span>
                     </div>
-                    <Progress value={cat.share} className="h-2 rounded-full bg-slate-100 [&>div]:bg-slate-700" />
+                    <Progress value={cat.share} className="h-2 rounded-full bg-[#F0E7D5] [&>div]:bg-[#7C8A6B]" />
                   </div>
                 ))}
               </div>
@@ -484,63 +484,63 @@ export default function Analytics() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Top performing specialists */}
-            <Card className="lg:col-span-4 border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">Top Specialists</span>
+            <Card className="lg:col-span-4 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Top Specialists</span>
               
               <div className="space-y-4">
                 {topPerformers.map(prov => (
-                  <div key={prov.id} className="p-3 border border-slate-200 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-slate-300 transition-colors">
+                  <div key={prov.id} className="p-3 border border-[#5A5146]/20 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-stone-300 transition-colors">
                     <div className="flex items-center gap-3">
-                      <Avatar className="w-9 h-9 border border-slate-100 overflow-hidden shrink-0">
+                      <Avatar className="w-9 h-9 border border-[#5A5146]/15 overflow-hidden shrink-0">
                         <AvatarImage src={prov.avatar} className="object-cover" />
                         <AvatarFallback>{prov.name[0]}</AvatarFallback>
                       </Avatar>
                       <div>
-                        <span className="block text-xs font-bold text-slate-800">{prov.name}</span>
-                        <span className="text-[10px] text-slate-450 font-bold block mt-0.5">{prov.service}</span>
-                        <span className="text-[10px] text-amber-500 font-bold flex items-center gap-0.5 mt-1.5">
-                          <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" /> {prov.rating}
+                        <span className="block text-xs font-bold text-[#1F1D1A]">{prov.name}</span>
+                        <span className="text-[10px] text-[#7A7266] font-bold block mt-0.5">{prov.service}</span>
+                        <span className="text-[10px] text-[#C9A46A] font-bold flex items-center gap-0.5 mt-1.5">
+                          <Star className="h-3.5 w-3.5 fill-amber-400 text-[#C9A46A]" /> {prov.rating}
                         </span>
                       </div>
                     </div>
 
-                    <span className="text-xs font-black text-slate-900 shrink-0">{prov.bookings} jobs</span>
+                    <span className="text-xs font-black text-[#1F1D1A] shrink-0">{prov.bookings} jobs</span>
                   </div>
                 ))}
               </div>
             </Card>
 
             {/* Customer Demographics location distribution */}
-            <Card className="lg:col-span-4 border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">Booking Demographics</span>
+            <Card className="lg:col-span-4 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Booking Demographics</span>
               
               <div className="space-y-4">
                 {demographics.map(cat => (
                   <div key={cat.borough} className="space-y-1">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-slate-700">{cat.borough}</span>
-                      <span className="text-slate-450 font-semibold">{cat.count} jobs ({cat.percentage}%)</span>
+                      <span className="text-[#B2563B]">{cat.borough}</span>
+                      <span className="text-[#7A7266] font-semibold">{cat.count} jobs ({cat.percentage}%)</span>
                     </div>
-                    <Progress value={cat.percentage} className="h-2 rounded-full bg-slate-100 [&>div]:bg-slate-900" />
+                    <Progress value={cat.percentage} className="h-2 rounded-full bg-[#F0E7D5] [&>div]:bg-[#B2563B]" />
                   </div>
                 ))}
               </div>
             </Card>
 
             {/* Recent activity timeline */}
-            <Card className="lg:col-span-4 border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">Activity Timeline Logs</span>
+            <Card className="lg:col-span-4 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Activity Timeline Logs</span>
               
-              <div className="relative pl-4 border-l border-slate-200 space-y-5 pt-1.5 ml-1 text-xs">
+              <div className="relative pl-4 border-l border-[#5A5146]/20 space-y-5 pt-1.5 ml-1 text-xs">
                 {activityLogs.map(log => (
                   <div key={log.id} className="relative group animate-fade-in">
                     
                     {/* Ring dot indicator */}
-                    <span className="absolute -left-[20.5px] top-1 h-3.5 w-3.5 rounded-full border border-white bg-slate-900 ring-2 ring-slate-900/10 shrink-0"></span>
+                    <span className="absolute -left-[20.5px] top-1 h-3.5 w-3.5 rounded-full border border-white bg-[#B2563B] ring-2 ring-violet-950/10 shrink-0"></span>
                     
                     <div className="space-y-0.5">
-                      <span className="text-[10px] text-slate-400 font-bold block">{log.time}</span>
-                      <p className="font-bold text-slate-800 leading-relaxed text-[11px]">{log.text}</p>
+                      <span className="text-[10px] text-[#7A7266] font-bold block">{log.time}</span>
+                      <p className="font-bold text-[#1F1D1A] leading-relaxed text-[11px]">{log.text}</p>
                     </div>
                   </div>
                 ))}

@@ -189,7 +189,7 @@ export default function Payments() {
       case "completed":
         return <Badge className="bg-emerald-500 hover:bg-emerald-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Paid</Badge>;
       case "pending":
-        return <Badge className="bg-amber-500 hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
+        return <Badge className="bg-[#B2563B] hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
       default: // refunded
         return <Badge className="bg-rose-500 hover:bg-rose-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Refunded</Badge>;
     }
@@ -197,16 +197,16 @@ export default function Payments() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Payments Ledger</h1>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium">Audit platform transactions, process refunds, verify invoice bills</p>
+              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Audit platform transactions, process refunds, verify invoice bills</p>
             </div>
             
             {/* Quick dashboard back button */}
@@ -221,26 +221,26 @@ export default function Payments() {
 
         {/* STATISTICS OVERVIEW CARDS */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-slate-100 p-5 rounded-2xl shadow-md">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-[#5A5146]/15 p-5 rounded-2xl shadow-md">
             
             <div className="text-center space-y-1 py-1">
-              <span className="block text-2xl font-black text-slate-900">${stats.total.toLocaleString()}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Revenue</span>
+              <span className="block text-2xl font-black text-[#1F1D1A]">${stats.total.toLocaleString()}</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Revenue</span>
             </div>
             
-            <div className="text-center space-y-1 py-1 border-l border-slate-100">
+            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
               <span className="block text-2xl font-black text-emerald-600">${stats.today.toLocaleString()}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Today's Revenue</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Today's Revenue</span>
             </div>
 
-            <div className="text-center space-y-1 py-1 border-l border-slate-100">
-              <span className="block text-2xl font-black text-amber-600">${stats.pending.toLocaleString()}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Pending Escrow</span>
+            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
+              <span className="block text-2xl font-black text-[#B2563B]">${stats.pending.toLocaleString()}</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Pending Escrow</span>
             </div>
 
-            <div className="text-center space-y-1 py-1 border-l border-slate-100">
+            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
               <span className="block text-2xl font-black text-rose-600">${stats.refunded.toLocaleString()}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Refunded Volume</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Refunded Volume</span>
             </div>
 
           </div>
@@ -254,51 +254,51 @@ export default function Payments() {
             <div className="lg:col-span-3 space-y-5 shrink-0">
               
               {/* Search */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5 flex items-center gap-1.5">
-                  <Search className="h-4 w-4 text-slate-900" /> Search Payments
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5 flex items-center gap-1.5">
+                  <Search className="h-4 w-4 text-[#1F1D1A]" /> Search Payments
                 </span>
                 <div className="relative">
-                  <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-400">
+                  <span className="absolute left-3 top-[50%] translate-y-[-50%] text-[#7A7266]">
                     <Search className="h-4 w-4" />
                   </span>
                   <Input 
                     placeholder="TXN ID, Booking ID..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                    className="pl-9 h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                   />
                 </div>
               </Card>
 
               {/* Status */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5">Filter by Status</span>
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5">Filter by Status</span>
                 <div className="relative">
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Statuses</option>
                     <option value="completed">Paid</option>
                     <option value="pending">Pending</option>
                     <option value="refunded">Refunded</option>
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                     <ChevronDown className="h-4 w-4 opacity-60" />
                   </div>
                 </div>
               </Card>
 
               {/* Method */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5">Payment Method</span>
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5">Payment Method</span>
                 <div className="relative">
                   <select
                     value={methodFilter}
                     onChange={(e) => setMethodFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Methods</option>
                     <option value="Credit Card">Credit Card</option>
@@ -306,56 +306,56 @@ export default function Payments() {
                     <option value="Net Banking">Net Banking</option>
                     <option value="Wallet">Wallet</option>
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                     <ChevronDown className="h-4 w-4 opacity-60" />
                   </div>
                 </div>
               </Card>
 
               {/* Dates */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs space-y-3.5">
-                <span className="text-xs font-bold text-slate-800 block border-b border-slate-50 pb-1 flex items-center gap-1">
-                  <Calendar className="h-4 w-4 text-slate-900" /> Date Range
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs space-y-3.5">
+                <span className="text-xs font-bold text-[#1F1D1A] block border-b border-stone-50 pb-1 flex items-center gap-1">
+                  <Calendar className="h-4 w-4 text-[#1F1D1A]" /> Date Range
                 </span>
                 
                 <div className="space-y-1">
-                  <Label htmlFor="dateFrom" className="text-[10px] font-bold text-slate-400 uppercase">From Date</Label>
+                  <Label htmlFor="dateFrom" className="text-[10px] font-bold text-[#7A7266] uppercase">From Date</Label>
                   <Input 
                     id="dateFrom"
                     type="date"
                     value={dateFrom}
                     onChange={(e) => setDateFrom(e.target.value)}
-                    className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white cursor-pointer"
+                    className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white cursor-pointer"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <Label htmlFor="dateTo" className="text-[10px] font-bold text-slate-400 uppercase">To Date</Label>
+                  <Label htmlFor="dateTo" className="text-[10px] font-bold text-[#7A7266] uppercase">To Date</Label>
                   <Input 
                     id="dateTo"
                     type="date"
                     value={dateTo}
                     onChange={(e) => setDateTo(e.target.value)}
-                    className="h-9 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white cursor-pointer"
+                    className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white cursor-pointer"
                   />
                 </div>
               </Card>
 
               {/* Sort Options */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5">Sort Options</span>
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5">Sort Options</span>
                 <div className="relative">
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="date-desc">Date: Newest First</option>
                     <option value="date-asc">Date: Oldest First</option>
                     <option value="amount-desc">Amount: High to Low</option>
                     <option value="amount-asc">Amount: Low to High</option>
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                     <ChevronDown className="h-4 w-4 opacity-60" />
                   </div>
                 </div>
@@ -377,32 +377,32 @@ export default function Payments() {
                 /* LOADING SHIMMER SKELETONS */
                 <div className="space-y-4">
                   {[...Array(4)].map((_, i) => (
-                    <Card key={i} className="border border-slate-100 bg-white p-5 rounded-2xl animate-pulse flex items-center gap-4">
+                    <Card key={i} className="border border-[#5A5146]/15 bg-white p-5 rounded-2xl animate-pulse flex items-center gap-4">
                       <div className="space-y-2 flex-1">
-                        <Skeleton className="h-4 bg-slate-200 w-1/4 rounded" />
-                        <Skeleton className="h-3.5 bg-slate-200 w-1/3 rounded" />
+                        <Skeleton className="h-4 bg-[#E8DCC3] w-1/4 rounded" />
+                        <Skeleton className="h-3.5 bg-[#E8DCC3] w-1/3 rounded" />
                       </div>
                     </Card>
                   ))}
                 </div>
               ) : paginatedTxns.length === 0 ? (
                 /* EMPTY STATE BOARD */
-                <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-slate-900/5 text-slate-900 rounded-full border border-slate-900/10">
+                <div className="bg-white border border-[#5A5146]/15 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
+                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mt-2">No Transactions Found</h3>
-                  <p className="text-xs text-slate-450 max-w-sm leading-relaxed">
+                  <h3 className="text-xl font-bold text-[#1F1D1A] mt-2">No Transactions Found</h3>
+                  <p className="text-xs text-[#7A7266] max-w-sm leading-relaxed">
                     We couldn't find any transaction payments matching your selected criteria. Clear search queries.
                   </p>
                 </div>
               ) : (
                 /* TRANSACTIONS MATRIX TABLE */
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 overflow-hidden">
+                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-xs text-left">
                       <thead>
-                        <tr className="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider text-[9px] pb-2">
+                        <tr className="border-b border-[#5A5146]/15 text-[#7A7266] font-bold uppercase tracking-wider text-[9px] pb-2">
                           <th className="py-2.5 px-1">TXN ID</th>
                           <th className="py-2.5">Booking</th>
                           <th className="py-2.5">Parties</th>
@@ -413,18 +413,18 @@ export default function Payments() {
                           <th className="py-2.5 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-50 font-medium text-slate-700">
+                      <tbody className="divide-y divide-stone-50 font-medium text-[#B2563B]">
                         {paginatedTxns.map(txn => (
-                          <tr key={txn.id} className="hover:bg-slate-50/50 transition-colors">
-                            <td className="py-3 px-1 font-bold text-slate-450">{txn.id}</td>
-                            <td className="py-3 font-semibold text-slate-600">{txn.bookingId}</td>
+                          <tr key={txn.id} className="hover:bg-[#FAF6F0] transition-colors">
+                            <td className="py-3 px-1 font-bold text-[#7A7266]">{txn.id}</td>
+                            <td className="py-3 font-semibold text-[#5A5146]">{txn.bookingId}</td>
                             <td className="py-3">
-                              <span className="block text-slate-800 font-bold">Client: {txn.customer}</span>
-                              <span className="text-[10px] text-slate-450 font-semibold block mt-0.5">Pro: {txn.provider}</span>
+                              <span className="block text-[#1F1D1A] font-bold">Client: {txn.customer}</span>
+                              <span className="text-[10px] text-[#7A7266] font-semibold block mt-0.5">Pro: {txn.provider}</span>
                             </td>
                             <td className="py-3 truncate max-w-[130px]">{txn.service}</td>
-                            <td className="py-3 font-black text-slate-950 text-sm">${txn.amount.toFixed(2)}</td>
-                            <td className="py-3 text-slate-500 font-bold">{txn.method}</td>
+                            <td className="py-3 font-black text-[#1F1D1A] text-sm">${txn.amount.toFixed(2)}</td>
+                            <td className="py-3 text-[#7A7266] font-bold">{txn.method}</td>
                             <td className="py-3">{getStatusBadge(txn.status)}</td>
                             <td className="py-3 text-right">
                               <div className="flex justify-end gap-1.5">
@@ -432,7 +432,7 @@ export default function Payments() {
                                   size="xs"
                                   variant="outline"
                                   onClick={() => handleOpenView(txn)}
-                                  className="h-7 text-[9px] font-bold border-slate-200 hover:bg-slate-50 bg-white"
+                                  className="h-7 text-[9px] font-bold border-[#5A5146]/20 hover:bg-[#FAF6F0] bg-white"
                                 >
                                   View Details
                                 </Button>
@@ -441,7 +441,7 @@ export default function Payments() {
                                   size="xs"
                                   variant="outline"
                                   onClick={() => handleDownloadInvoice(txn.id)}
-                                  className="h-7 text-[9px] font-bold border-slate-200 hover:bg-slate-50 bg-white text-slate-600"
+                                  className="h-7 text-[9px] font-bold border-[#5A5146]/20 hover:bg-[#FAF6F0] bg-white text-[#5A5146]"
                                 >
                                   <Printer className="h-3.5 w-3.5" />
                                 </Button>
@@ -476,13 +476,13 @@ export default function Payments() {
 
                   {/* PAGINATION */}
                   {totalPages > 1 && (
-                    <div className="flex items-center justify-between border-t border-slate-100 pt-5 mt-4">
+                    <div className="flex items-center justify-between border-t border-[#5A5146]/15 pt-5 mt-4">
                       <Button
                         variant="outline"
                         size="sm"
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                        className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] h-9 font-semibold text-xs"
                       >
                         <ChevronLeft className="h-4 w-4 mr-1.5" />
                         Previous
@@ -498,8 +498,8 @@ export default function Payments() {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
                                 currentPage === pageNum
-                                  ? "bg-slate-900 text-white shadow-md shadow-slate-900/15"
-                                  : "text-slate-600 hover:bg-slate-100"
+                                  ? "bg-[#B2563B] text-white shadow-md shadow-2xs"
+                                  : "text-[#5A5146] hover:bg-[#F0E7D5]"
                               }`}
                             >
                               {pageNum}
@@ -513,7 +513,7 @@ export default function Payments() {
                         size="sm"
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                        className="rounded-xl border-slate-200 text-slate-655 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-[#5A5146]/20 text-slate-655 hover:bg-[#FAF6F0] h-9 font-semibold text-xs"
                       >
                         Next
                         <ChevronRight className="h-4 w-4 ml-1.5" />
@@ -534,56 +534,56 @@ export default function Payments() {
       {/* DIALOG 1: VIEW DETAILS MODAL */}
       <Dialog open={isViewOpen} onOpenChange={setIsViewOpen}>
         {viewingTxn && (
-          <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
-            <DialogHeader className="border-b border-slate-50 pb-4">
-              <DialogTitle className="text-base font-extrabold text-slate-900">Transaction Details Summary</DialogTitle>
+          <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
+            <DialogHeader className="border-b border-stone-50 pb-4">
+              <DialogTitle className="text-base font-extrabold text-[#1F1D1A]">Transaction Details Summary</DialogTitle>
               <DialogDescription className="text-xs">Database audit reference log</DialogDescription>
             </DialogHeader>
 
-            <div className="py-4 space-y-3.5 text-xs font-semibold text-slate-600">
-              <div className="flex justify-between border-b border-slate-50 pb-2">
+            <div className="py-4 space-y-3.5 text-xs font-semibold text-[#5A5146]">
+              <div className="flex justify-between border-b border-stone-50 pb-2">
                 <span>Transaction Ref ID:</span>
-                <span className="text-slate-900 font-extrabold">{viewingTxn.id}</span>
+                <span className="text-[#1F1D1A] font-extrabold">{viewingTxn.id}</span>
               </div>
-              <div className="flex justify-between border-b border-slate-50 pb-2">
+              <div className="flex justify-between border-b border-stone-50 pb-2">
                 <span>Booking Reference:</span>
-                <span className="text-slate-900 font-bold">{viewingTxn.bookingId}</span>
+                <span className="text-[#1F1D1A] font-bold">{viewingTxn.bookingId}</span>
               </div>
-              <div className="flex justify-between border-b border-slate-50 pb-2">
+              <div className="flex justify-between border-b border-stone-50 pb-2">
                 <span>Client (Customer):</span>
-                <span className="text-slate-900">{viewingTxn.customer}</span>
+                <span className="text-[#1F1D1A]">{viewingTxn.customer}</span>
               </div>
-              <div className="flex justify-between border-b border-slate-50 pb-2">
+              <div className="flex justify-between border-b border-stone-50 pb-2">
                 <span>Specialist (Provider):</span>
-                <span className="text-slate-900">{viewingTxn.provider}</span>
+                <span className="text-[#1F1D1A]">{viewingTxn.provider}</span>
               </div>
-              <div className="flex justify-between border-b border-slate-50 pb-2">
+              <div className="flex justify-between border-b border-stone-50 pb-2">
                 <span>Service Category:</span>
-                <span className="text-slate-900">{viewingTxn.service}</span>
+                <span className="text-[#1F1D1A]">{viewingTxn.service}</span>
               </div>
-              <div className="flex justify-between border-b border-slate-50 pb-2">
+              <div className="flex justify-between border-b border-stone-50 pb-2">
                 <span>Payment Method:</span>
-                <span className="text-slate-900">{viewingTxn.method}</span>
+                <span className="text-[#1F1D1A]">{viewingTxn.method}</span>
               </div>
-              <div className="flex justify-between border-b border-slate-50 pb-2">
+              <div className="flex justify-between border-b border-stone-50 pb-2">
                 <span>Execution Time:</span>
-                <span className="text-slate-900">{viewingTxn.date}</span>
+                <span className="text-[#1F1D1A]">{viewingTxn.date}</span>
               </div>
-              <div className="flex justify-between border-b border-slate-50 pb-2">
+              <div className="flex justify-between border-b border-stone-50 pb-2">
                 <span>Audit Status:</span>
                 <span>{getStatusBadge(viewingTxn.status)}</span>
               </div>
               <div className="flex justify-between pt-1">
-                <span className="text-sm font-bold text-slate-800">Total Settlement:</span>
-                <span className="text-slate-950 text-base font-black">${viewingTxn.amount.toFixed(2)}</span>
+                <span className="text-sm font-bold text-[#1F1D1A]">Total Settlement:</span>
+                <span className="text-[#1F1D1A] text-base font-black">${viewingTxn.amount.toFixed(2)}</span>
               </div>
             </div>
 
-            <DialogFooter className="pt-4 border-t border-slate-50">
+            <DialogFooter className="pt-4 border-t border-stone-50">
               <Button
                 type="button"
                 onClick={() => setIsViewOpen(false)}
-                className="rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
+                className="rounded-xl bg-[#B2563B] hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
               >
                 Close View
               </Button>
@@ -595,22 +595,22 @@ export default function Payments() {
       {/* DIALOG 2: REFUND / MARK PAID CONFIRMATION WARNING */}
       <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
         {confirmTarget && confirmTarget.txn && (
-          <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
+          <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
             <DialogHeader>
-              <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+              <DialogTitle className="text-base font-extrabold text-[#1F1D1A] flex items-center gap-2">
                 <ShieldAlert className="h-5 w-5 text-rose-600 animate-pulse" />
                 Confirm Settlement Action
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-400 pt-0.5">
+              <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
                 Are you sure you want to perform this transaction adjustment? Verification is required.
               </DialogDescription>
             </DialogHeader>
 
-            <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold space-y-1">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Target Details</span>
-              <span className="text-slate-800 block">Transaction ID: {confirmTarget.txn.id}</span>
-              <span className="text-slate-500 block">Client: {confirmTarget.txn.customer}</span>
-              <span className="text-slate-900 block border-t border-slate-200 pt-1.5 mt-1 text-sm font-black">Settlement: ${confirmTarget.txn.amount.toFixed(2)}</span>
+            <div className="p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-xs font-bold space-y-1">
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wide">Target Details</span>
+              <span className="text-[#1F1D1A] block">Transaction ID: {confirmTarget.txn.id}</span>
+              <span className="text-[#7A7266] block">Client: {confirmTarget.txn.customer}</span>
+              <span className="text-[#1F1D1A] block border-t border-[#5A5146]/20 pt-1.5 mt-1 text-sm font-black">Settlement: ${confirmTarget.txn.amount.toFixed(2)}</span>
             </div>
 
             <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2.5">
@@ -618,7 +618,7 @@ export default function Payments() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setIsConfirmOpen(false)}
-                className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
+                className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 w-full sm:w-auto"
               >
                 Close Dialog
               </Button>

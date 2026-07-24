@@ -28,36 +28,36 @@ import {
 export default function About() {
   return (
     <MainLayout>
-      <div className="bg-slate-50 min-h-screen font-sans antialiased text-slate-800">
+      <div className="bg-[#FAF6F0] min-h-screen font-sans antialiased text-[#1F1D1A]">
 
         {/* PAGE HEADER */}
-        <section className="relative overflow-hidden py-14 lg:py-18 bg-white border-b border-slate-200">
+        <section className="relative overflow-hidden py-14 lg:py-18 bg-white border-b border-[#5A5146]/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
               {/* Text column */}
               <div className="lg:col-span-7 flex flex-col items-start text-left gap-5">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                  About <span className="text-amber-500">BookMyLocalService</span>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#1F1D1A] leading-tight">
+                  About <span className="text-[#C9A46A]">BookMyLocalService</span>
                 </h1>
 
-                <p className="text-base sm:text-lg font-bold text-slate-800 border-l-4 border-amber-500 pl-4 leading-relaxed">
+                <p className="text-base sm:text-lg font-bold text-[#1F1D1A] border-l-4 border-amber-500 pl-4 leading-relaxed">
                   Connecting People With Trusted Local Professionals
                 </p>
 
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl">
+                <p className="text-sm sm:text-base text-[#5A5146] leading-relaxed max-w-xl">
                   BookMyLocalService is a neighborhood marketplace designed to help customers easily discover, compare, and instantly book verified local service providers. At the same time, we empower independent skilled professionals by providing them the tools and visibility they need to grow their businesses.
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-1 w-full sm:w-auto">
                   <NavLink to="/services" className="w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto h-11 bg-slate-900 hover:bg-slate-800 text-white rounded-xl px-7 font-bold transition-all flex items-center justify-center gap-2">
+                    <Button className="w-full sm:w-auto h-11 bg-[#B2563B] hover:bg-[#b84832] text-white rounded-xl px-7 font-bold transition-all flex items-center justify-center gap-2">
                       Browse Services
                       <ArrowRight className="h-4 w-4" />
                     </Button>
                   </NavLink>
                   <NavLink to="/register?role=PROVIDER" className="w-full sm:w-auto">
-                    <Button variant="outline" className="w-full sm:w-auto h-11 border-slate-200 bg-white hover:bg-slate-50 text-slate-800 rounded-xl px-7 font-bold transition-all">
+                    <Button variant="outline" className="w-full sm:w-auto h-11 border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] rounded-xl px-7 font-bold transition-all">
                       Become a Provider
                     </Button>
                   </NavLink>
@@ -66,20 +66,20 @@ export default function About() {
 
               {/* Photo Column */}
               <div className="lg:col-span-5 relative">
-                <div className="relative border border-slate-200 rounded-2xl overflow-hidden bg-white aspect-4/3 sm:aspect-video lg:aspect-square">
+                <div className="relative border border-[#5A5146]/20 rounded-2xl overflow-hidden bg-white aspect-4/3 sm:aspect-video lg:aspect-square">
                   <img
                     src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
                     alt="Premium Home Interior"
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
-                  <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-xs p-3 rounded-xl border border-slate-200 flex items-center gap-2.5">
+                  <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-xs p-3 rounded-xl border border-[#5A5146]/20 flex items-center gap-2.5">
                     <div className="p-1.5 bg-emerald-50 rounded-lg text-emerald-600">
                       <ShieldCheck className="h-4 w-4" />
                     </div>
                     <div>
-                      <span className="block text-[9px] text-slate-500 font-bold uppercase tracking-wider">Background Checks</span>
-                      <span className="text-xs font-extrabold text-slate-800">100% Verified Pros</span>
+                      <span className="block text-[9px] text-[#7A7266] font-bold uppercase tracking-wider">Background Checks</span>
+                      <span className="text-xs font-extrabold text-[#1F1D1A]">100% Verified Pros</span>
                     </div>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ export default function About() {
 
               {/* Image Left */}
               <div className="lg:col-span-6 relative order-last lg:order-first">
-                <div className="relative border border-slate-200 rounded-2xl overflow-hidden aspect-4/3 sm:aspect-video lg:aspect-4/3 bg-slate-100">
+                <div className="relative border border-[#5A5146]/20 rounded-2xl overflow-hidden aspect-4/3 sm:aspect-video lg:aspect-4/3 bg-[#F0E7D5]">
                   <img
                     src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80"
                     alt="Service Provider Meeting Customer"
@@ -109,23 +109,23 @@ export default function About() {
               {/* Story Right */}
               <div className="lg:col-span-6 flex flex-col gap-5">
                 <div className="space-y-1.5">
-                  <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Platform Genesis</span>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Our Story</h2>
+                  <span className="text-xs font-bold text-[#C9A46A] uppercase tracking-widest">Platform Genesis</span>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1F1D1A] tracking-tight">Our Story</h2>
                 </div>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-[#5A5146] leading-relaxed">
                   BookMyLocalService was born out of a simple, everyday struggle: finding reliable, skilled professionals to get work done around the house. Standard directories were flooded with outdated contact details, fake ratings, and pricing ambiguity. We saw an opportunity to bring order to this unstructured marketplace.
                 </p>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-[#5A5146] leading-relaxed">
                   By building a robust infrastructure grounded in strict identity verification, transparency, and consumer protection, we created a destination where customers can browse, review, and book confidently. Today, we're proud to serve thousands of families across the country while providing verified specialists with a steady source of income.
                 </p>
-                <div className="grid grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+                <div className="grid grid-cols-2 gap-6 pt-4 border-t border-[#5A5146]/15">
                   <div>
-                    <h4 className="font-extrabold text-slate-900 text-base">Direct Bookings</h4>
-                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">Direct connection with verified local pros</p>
+                    <h4 className="font-extrabold text-[#1F1D1A] text-base">Direct Bookings</h4>
+                    <p className="text-xs text-[#7A7266] mt-1 leading-relaxed">Direct connection with verified local pros</p>
                   </div>
                   <div>
-                    <h4 className="font-extrabold text-slate-900 text-base">Clear Pricing</h4>
-                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">Upfront flat rates or hourly costs</p>
+                    <h4 className="font-extrabold text-[#1F1D1A] text-base">Clear Pricing</h4>
+                    <p className="text-xs text-[#7A7266] mt-1 leading-relaxed">Upfront flat rates or hourly costs</p>
                   </div>
                 </div>
               </div>
@@ -135,49 +135,49 @@ export default function About() {
         </section>
 
         {/* MISSION, VISION, VALUES */}
-        <section className="py-16 bg-slate-50 border-t border-slate-200">
+        <section className="py-16 bg-[#FAF6F0] border-t border-[#5A5146]/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-12 flex flex-col gap-2">
-              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Purpose Driven</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Our Foundation</h2>
-              <p className="text-xs sm:text-sm text-slate-500">The core values and goals that guide our marketplace operations daily.</p>
+              <span className="text-xs font-bold text-[#C9A46A] uppercase tracking-widest">Purpose Driven</span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1F1D1A] tracking-tight">Our Foundation</h2>
+              <p className="text-xs sm:text-sm text-[#7A7266]">The core values and goals that guide our marketplace operations daily.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Mission Card */}
-              <Card className="border border-slate-200 bg-white rounded-2xl p-6 flex flex-col justify-between h-full">
+              <Card className="border border-[#5A5146]/20 bg-white rounded-2xl p-6 flex flex-col justify-between h-full">
                 <div className="space-y-3">
-                  <div className="p-2.5 bg-slate-900/5 text-slate-900 rounded-xl border border-slate-900/10 w-fit">
+                  <div className="p-2.5 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl border border-violet-950/10 w-fit">
                     <Award className="h-5 w-5" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900">Our Mission</h3>
-                  <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
+                  <h3 className="text-lg font-bold text-[#1F1D1A]">Our Mission</h3>
+                  <p className="text-xs sm:text-sm text-[#7A7266] leading-relaxed">
                     To deliver reliable, high-quality local services to our customers' doorsteps with absolute transparency, safety, and booking convenience.
                   </p>
                 </div>
               </Card>
 
               {/* Vision Card */}
-              <Card className="border border-slate-200 bg-white rounded-2xl p-6 flex flex-col justify-between h-full">
+              <Card className="border border-[#5A5146]/20 bg-white rounded-2xl p-6 flex flex-col justify-between h-full">
                 <div className="space-y-3">
-                  <div className="p-2.5 bg-amber-500/10 text-amber-500 rounded-xl border border-amber-500/20 w-fit">
+                  <div className="p-2.5 bg-[#C9A46A]/20 text-[#C9A46A] rounded-xl border border-amber-500/20 w-fit">
                     <Eye className="h-5 w-5" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900">Our Vision</h3>
-                  <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
+                  <h3 className="text-lg font-bold text-[#1F1D1A]">Our Vision</h3>
+                  <p className="text-xs sm:text-sm text-[#7A7266] leading-relaxed">
                     To become a trusted, secure, and customer-focused local services marketplace for households and commercial businesses.
                   </p>
                 </div>
               </Card>
 
               {/* Values Card */}
-              <Card className="border border-slate-200 bg-white rounded-2xl p-6 flex flex-col justify-between h-full">
+              <Card className="border border-[#5A5146]/20 bg-white rounded-2xl p-6 flex flex-col justify-between h-full">
                 <div className="space-y-3">
                   <div className="p-2.5 bg-rose-50 text-rose-600 rounded-xl border border-rose-100 w-fit">
                     <Heart className="h-5 w-5" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900">Our Core Values</h3>
-                  <ul className="space-y-1.5 text-xs sm:text-sm text-slate-500">
+                  <h3 className="text-lg font-bold text-[#1F1D1A]">Our Core Values</h3>
+                  <ul className="space-y-1.5 text-xs sm:text-sm text-[#7A7266]">
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
                       <strong>Trust:</strong> Verified provider background checks.
@@ -198,31 +198,31 @@ export default function About() {
         </section>
 
         {/* WHY CHOOSE US */}
-        <section className="py-16 bg-white border-t border-slate-200">
+        <section className="py-16 bg-white border-t border-[#5A5146]/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-12 flex flex-col gap-2">
-              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Features</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Why Choose BookMyLocalService</h2>
-              <p className="text-xs sm:text-sm text-slate-500">We make booking quality home and personal services safe, secure, and hassle-free.</p>
+              <span className="text-xs font-bold text-[#C9A46A] uppercase tracking-widest">Features</span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1F1D1A] tracking-tight">Why Choose BookMyLocalService</h2>
+              <p className="text-xs sm:text-sm text-[#7A7266]">We make booking quality home and personal services safe, secure, and hassle-free.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { title: "Verified Professionals", description: "Every service provider is background-checked and identity-verified to ensure absolute safety and quality.", icon: ShieldCheck, color: "bg-slate-900/5 text-slate-900 border-slate-900/10" },
+                { title: "Verified Professionals", description: "Every service provider is background-checked and identity-verified to ensure absolute safety and quality.", icon: ShieldCheck, color: "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10" },
                 { title: "Secure Bookings", description: "Easily schedule, coordinate, and pay for all services directly through our secure platform.", icon: Lock, color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
-                { title: "Transparent Pricing", description: "No hidden charges or surprise costs. See clear hourly or flat rates up front before you book.", icon: DollarSign, color: "bg-amber-50 text-amber-600 border-amber-100" },
+                { title: "Transparent Pricing", description: "No hidden charges or surprise costs. See clear hourly or flat rates up front before you book.", icon: DollarSign, color: "bg-amber-50 text-[#B2563B] border-amber-100" },
                 { title: "Fast Service", description: "Book instant same-day service or schedule weeks ahead. We respect your busy schedule.", icon: Clock, color: "bg-pink-50 text-pink-600 border-pink-100" },
                 { title: "Ratings & Reviews", description: "Read verified feedback from genuine customers to hire the right provider for your project.", icon: Star, color: "bg-rose-50 text-rose-600 border-rose-100" },
                 { title: "24/7 Support", description: "Our dedicated support team is available round the clock to help resolve any booking queries.", icon: HelpCircle, color: "bg-sky-50 text-sky-600 border-sky-100" }
               ].map((feature, idx) => {
                 const IconComp = feature.icon;
                 return (
-                  <div key={idx} className="flex flex-col gap-3 p-5 rounded-2xl border border-slate-200 bg-white">
+                  <div key={idx} className="flex flex-col gap-3 p-5 rounded-2xl border border-[#5A5146]/20 bg-white">
                     <div className={`p-2.5 rounded-xl border self-start ${feature.color}`}>
                       <IconComp className="h-4.5 w-4.5" />
                     </div>
-                    <h3 className="font-bold text-base text-slate-900">{feature.title}</h3>
-                    <p className="text-xs text-slate-500 leading-relaxed">
+                    <h3 className="font-bold text-base text-[#1F1D1A]">{feature.title}</h3>
+                    <p className="text-xs text-[#7A7266] leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -233,12 +233,12 @@ export default function About() {
         </section>
 
         {/* HOW IT WORKS */}
-        <section className="py-16 bg-slate-50 border-t border-slate-200">
+        <section className="py-16 bg-[#FAF6F0] border-t border-[#5A5146]/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-14 flex flex-col gap-2">
-              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">Process Flow</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">How It Works</h2>
-              <p className="text-xs sm:text-sm text-slate-500">Book local experts in 4 simple steps.</p>
+              <span className="text-xs font-bold text-[#C9A46A] uppercase tracking-widest">Process Flow</span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1F1D1A] tracking-tight">How It Works</h2>
+              <p className="text-xs sm:text-sm text-[#7A7266]">Book local experts in 4 simple steps.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -248,12 +248,12 @@ export default function About() {
                 { step: "03", title: "Book Online", desc: "Choose a convenient schedule, provide job details, and book securely." },
                 { step: "04", title: "Get Work Done", desc: "Your pro arrives fully equipped to complete the job to your standards." }
               ].map((item, idx) => (
-                <div key={idx} className="bg-white border border-slate-200 p-5 rounded-2xl flex flex-col gap-3 text-center items-center">
-                  <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs">
+                <div key={idx} className="bg-white border border-[#5A5146]/20 p-5 rounded-2xl flex flex-col gap-3 text-center items-center">
+                  <div className="w-10 h-10 rounded-full bg-[#B2563B] text-white flex items-center justify-center font-black text-xs">
                     {item.step}
                   </div>
-                  <h3 className="font-bold text-sm text-slate-900">{item.title}</h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">
+                  <h3 className="font-bold text-sm text-[#1F1D1A]">{item.title}</h3>
+                  <p className="text-xs text-[#7A7266] leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -269,12 +269,12 @@ export default function About() {
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
               Ready to Book Your Next Service?
             </h2>
-            <p className="text-slate-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            <p className="text-[#7A7266] text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
               Find trusted professionals near you within minutes. Compare profiles, schedules, ratings, and book completely online.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2 max-w-sm mx-auto sm:max-w-none">
               <NavLink to="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-12 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-xl px-8 shadow-md">
+                <Button className="w-full sm:w-auto h-12 bg-[#B2563B] hover:bg-amber-600 text-[#1F1D1A] font-bold rounded-xl px-8 shadow-md">
                   Browse Services
                 </Button>
               </NavLink>

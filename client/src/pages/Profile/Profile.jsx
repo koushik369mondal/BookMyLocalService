@@ -325,8 +325,8 @@ export default function Profile() {
   if (authLoading || !user) {
     return (
       <DashboardLayout>
-        <div className="min-h-[50vh] flex items-center justify-center bg-slate-50/50">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
+        <div className="min-h-[50vh] flex items-center justify-center bg-[#FAF6F0]">
+          <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
         </div>
       </DashboardLayout>
     );
@@ -337,7 +337,7 @@ export default function Profile() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
         {/* Hidden File Picker Input */}
         <input 
@@ -349,10 +349,10 @@ export default function Profile() {
         />
 
         {/* BANNER HEADER */}
-        <section className="bg-slate-900 text-white py-8 border-b border-slate-800">
+        <section className="bg-[#B2563B] text-white py-8 border-b border-violet-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">Account Settings</h1>
-            <p className="text-slate-400 text-xs mt-1">Configure your contact details, password, and preferences</p>
+            <p className="text-[#7A7266] text-xs mt-1">Configure your contact details, password, and preferences</p>
           </div>
         </section>
 
@@ -361,22 +361,22 @@ export default function Profile() {
 
           {/* COMPLETE YOUR PROFILE BANNER */}
           {completionPercent < 100 && (
-            <Card className="border border-amber-200 bg-amber-50/80 rounded-2xl p-4 mb-6">
+            <Card className="border border-[#C9A46A]/40 bg-amber-50/80 rounded-2xl p-4 mb-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-start gap-3">
-                  <div className="p-1.5 bg-amber-100 text-amber-600 rounded-lg shrink-0 mt-0.5">
+                  <div className="p-1.5 bg-amber-100 text-[#B2563B] rounded-lg shrink-0 mt-0.5">
                     <AlertCircle className="h-4.5 w-4.5" />
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold text-slate-900">Complete Your Profile</h3>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
+                    <h3 className="text-xs font-bold text-[#1F1D1A]">Complete Your Profile</h3>
+                    <p className="text-[11px] text-[#7A7266] mt-0.5">
                       Fill in missing fields: {missingFields.map(f => f.label).join(", ")}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2.5 shrink-0">
                   <span className="text-xs font-black text-amber-700">{completionPercent}%</span>
-                  <Progress value={completionPercent} className="w-24 h-1.5 rounded-full bg-amber-200 [&>div]:bg-amber-500" />
+                  <Progress value={completionPercent} className="w-24 h-1.5 rounded-full bg-amber-200 [&>div]:bg-[#B2563B]" />
                 </div>
               </div>
             </Card>
@@ -400,13 +400,13 @@ export default function Profile() {
 
             {/* PANEL 1: ACCOUNT DETAILS */}
             {activeTab === "details" && (
-              <Card className="border border-slate-200 rounded-2xl bg-white p-6">
-              <CardHeader className="p-0 pb-4 border-b border-slate-100 flex flex-row items-center gap-2.5">
-                <div className="p-2 bg-slate-100 text-slate-900 rounded-xl">
+              <Card className="border border-[#5A5146]/20 rounded-2xl bg-white p-6">
+              <CardHeader className="p-0 pb-4 border-b border-[#5A5146]/15 flex flex-row items-center gap-2.5">
+                <div className="p-2 bg-[#F0E7D5] text-[#1F1D1A] rounded-xl">
                   <User className="h-5 w-5" />
                 </div>
                 <div>
-                  <CardTitle className="text-base font-extrabold text-slate-900">Personal Information</CardTitle>
+                  <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Personal Information</CardTitle>
                   <CardDescription className="text-xs">Manage your account profile details and photo</CardDescription>
                 </div>
               </CardHeader>
@@ -414,19 +414,19 @@ export default function Profile() {
               <CardContent className="p-0 pt-5">
                 
                 {/* INTEGRATED AVATAR UPLOAD SECTION */}
-                <div className="flex flex-col sm:flex-row items-center gap-4 pb-5 mb-5 border-b border-slate-100">
+                <div className="flex flex-col sm:flex-row items-center gap-4 pb-5 mb-5 border-b border-[#5A5146]/15">
                   <div className="relative group cursor-pointer" onClick={handlePhotoClick}>
-                    <Avatar className="w-16 h-16 border-2 border-slate-200 rounded-full overflow-hidden shrink-0">
+                    <Avatar className="w-16 h-16 border-2 border-[#5A5146]/20 rounded-full overflow-hidden shrink-0">
                       {user.avatar ? (
                         <AvatarImage src={user.avatar} className="object-cover w-full h-full" />
                       ) : null}
-                      <AvatarFallback className="text-lg font-bold bg-slate-100 text-slate-800">{initials}</AvatarFallback>
+                      <AvatarFallback className="text-lg font-bold bg-[#F0E7D5] text-[#1F1D1A]">{initials}</AvatarFallback>
                     </Avatar>
                     
                     <button 
                       type="button"
                       disabled={isUploadingPhoto}
-                      className="absolute inset-0 bg-slate-950/60 text-white rounded-full flex flex-col items-center justify-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
+                      className="absolute inset-0 bg-[#B2563B]/60 text-white rounded-full flex flex-col items-center justify-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
                     >
                       {isUploadingPhoto ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -437,15 +437,15 @@ export default function Profile() {
                   </div>
 
                   <div className="space-y-1 text-center sm:text-left">
-                    <h4 className="text-xs font-bold text-slate-900">{user.fullName}</h4>
-                    <p className="text-[11px] text-slate-500">{user.role} Account • {user.email}</p>
+                    <h4 className="text-xs font-bold text-[#1F1D1A]">{user.fullName}</h4>
+                    <p className="text-[11px] text-[#7A7266]">{user.role} Account • {user.email}</p>
                     <Button 
                       type="button" 
                       variant="outline" 
                       size="xs" 
                       onClick={handlePhotoClick}
                       disabled={isUploadingPhoto}
-                      className="rounded-lg border-slate-200 text-[10px] font-semibold h-7 px-2.5 mt-1"
+                      className="rounded-lg border-[#5A5146]/20 text-[10px] font-semibold h-7 px-2.5 mt-1"
                     >
                       {isUploadingPhoto ? "Uploading..." : "Change Photo"}
                     </Button>
@@ -454,11 +454,11 @@ export default function Profile() {
                     <form onSubmit={handleProfileSubmit(onProfileSave)} className="space-y-4">
                       {/* Name */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="fullName" className="text-xs font-bold text-slate-700">Full Name</Label>
+                        <Label htmlFor="fullName" className="text-xs font-bold text-[#B2563B]">Full Name</Label>
                         <Input
                           id="fullName"
                           placeholder="Enter your full name"
-                          className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                          className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                           disabled={isSavingDetails}
                           {...regProfile("fullName")}
                         />
@@ -468,23 +468,23 @@ export default function Profile() {
                       {/* Email / Phone grid */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                          <Label htmlFor="email" className="text-xs font-bold text-slate-700">Email Address</Label>
+                          <Label htmlFor="email" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
                           <Input
                             id="email"
                             type="email"
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-slate-50 cursor-not-allowed"
+                            className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-[#FAF6F0] cursor-not-allowed"
                             disabled
                             {...regProfile("email")}
                           />
-                          <p className="text-[9px] text-slate-400 font-medium">Email cannot be changed</p>
+                          <p className="text-[9px] text-[#7A7266] font-medium">Email cannot be changed</p>
                         </div>
 
                         <div className="space-y-1.5">
-                          <Label htmlFor="phone" className="text-xs font-bold text-slate-700">Phone Number</Label>
+                          <Label htmlFor="phone" className="text-xs font-bold text-[#B2563B]">Phone Number</Label>
                           <Input
                             id="phone"
                             placeholder="Enter your phone number"
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                            className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("phone")}
                           />
@@ -494,11 +494,11 @@ export default function Profile() {
 
                       {/* Address */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="address" className="text-xs font-bold text-slate-700">Primary Street Address</Label>
+                        <Label htmlFor="address" className="text-xs font-bold text-[#B2563B]">Primary Street Address</Label>
                         <Input
                           id="address"
                           placeholder="e.g. 789 Pine Street, Apt 1C"
-                          className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                          className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                           disabled={isSavingDetails}
                           {...regProfile("address")}
                         />
@@ -507,34 +507,34 @@ export default function Profile() {
                       {/* City State Zip */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div className="space-y-1.5">
-                          <Label htmlFor="city" className="text-xs font-bold text-slate-700">City</Label>
+                          <Label htmlFor="city" className="text-xs font-bold text-[#B2563B]">City</Label>
                           <Input
                             id="city"
                             placeholder="e.g. Brooklyn"
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                            className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("city")}
                           />
                         </div>
 
                         <div className="space-y-1.5">
-                          <Label htmlFor="state" className="text-xs font-bold text-slate-700">State</Label>
+                          <Label htmlFor="state" className="text-xs font-bold text-[#B2563B]">State</Label>
                           <Input
                             id="state"
                             placeholder="e.g. NY"
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                            className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("state")}
                           />
                         </div>
 
                         <div className="space-y-1.5">
-                          <Label htmlFor="zipCode" className="text-xs font-bold text-slate-700">ZIP Code</Label>
+                          <Label htmlFor="zipCode" className="text-xs font-bold text-[#B2563B]">ZIP Code</Label>
                           <Input
                             id="zipCode"
                             placeholder="e.g. 400001"
                             maxLength={6}
-                            className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                            className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                             disabled={isSavingDetails}
                             {...regProfile("zipCode")}
                           />
@@ -542,11 +542,11 @@ export default function Profile() {
                         </div>
                       </div>
 
-                      <div className="pt-2 border-t border-slate-50 flex justify-end">
+                      <div className="pt-2 border-t border-stone-50 flex justify-end">
                         <Button
                           type="submit"
                           disabled={isSavingDetails}
-                          className="bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
+                          className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
                         >
                           {isSavingDetails ? (
                             <>
@@ -568,14 +568,14 @@ export default function Profile() {
 
               {/* PANEL 2: SAVED LOCATIONS */}
               {activeTab === "addresses" && (
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
-                  <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between flex-wrap gap-4">
+                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
+                  <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between flex-wrap gap-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
+                      <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
                         <MapPin className="h-5 w-5" />
                       </div>
                       <div>
-                        <CardTitle className="text-base font-extrabold text-slate-900">Saved Locations</CardTitle>
+                        <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Saved Locations</CardTitle>
                         <CardDescription className="text-xs">Manage locations for quick booking dispatch</CardDescription>
                       </div>
                     </div>
@@ -583,7 +583,7 @@ export default function Profile() {
                     <Button 
                       onClick={() => setIsAddAddressOpen(true)}
                       size="sm"
-                      className="bg-slate-900 hover:bg-black text-white rounded-xl h-9.5 text-xs font-bold flex items-center gap-1"
+                      className="bg-[#B2563B] hover:bg-black text-white rounded-xl h-9.5 text-xs font-bold flex items-center gap-1"
                     >
                       <Plus className="h-4 w-4" /> Add Address
                     </Button>
@@ -592,23 +592,23 @@ export default function Profile() {
                   <CardContent className="p-0 pt-6">
                     {addresses.length === 0 ? (
                       <div className="text-center py-12">
-                        <MapPin className="h-10 w-10 text-slate-200 mx-auto mb-3" />
-                        <p className="text-sm font-bold text-slate-400">No saved addresses yet</p>
-                        <p className="text-xs text-slate-400 mt-1">Add your first address for faster booking</p>
+                        <MapPin className="h-10 w-10 text-stone-200 mx-auto mb-3" />
+                        <p className="text-sm font-bold text-[#7A7266]">No saved addresses yet</p>
+                        <p className="text-xs text-[#7A7266] mt-1">Add your first address for faster booking</p>
                       </div>
                     ) : (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {addresses.map(addr => (
-                          <div key={addr.id} className="border border-slate-200 p-4.5 rounded-2xl bg-white relative flex flex-col justify-between hover:border-slate-300 transition-colors shadow-2xs">
+                          <div key={addr.id} className="border border-[#5A5146]/20 p-4.5 rounded-2xl bg-white relative flex flex-col justify-between hover:border-stone-300 transition-colors shadow-2xs">
                             <div>
-                              <span className="inline-flex items-center text-[10px] font-bold text-slate-900 bg-slate-900/5 border border-slate-900/10 rounded-lg py-0.5 px-2 mb-2">
+                              <span className="inline-flex items-center text-[10px] font-bold text-[#1F1D1A] bg-[#B2563B]/5 border border-violet-950/10 rounded-lg py-0.5 px-2 mb-2">
                                 {addr.label}
                               </span>
-                              <span className="block text-xs font-bold text-slate-800">{addr.street}</span>
-                              <span className="block text-[11px] text-slate-500 mt-0.5">{addr.city}, {addr.state} {addr.zipCode}</span>
+                              <span className="block text-xs font-bold text-[#1F1D1A]">{addr.street}</span>
+                              <span className="block text-[11px] text-[#7A7266] mt-0.5">{addr.city}, {addr.state} {addr.zipCode}</span>
                             </div>
 
-                            <div className="border-t border-slate-50 pt-3 mt-4.5 flex justify-end">
+                            <div className="border-t border-stone-50 pt-3 mt-4.5 flex justify-end">
                               <button
                                 type="button"
                                 onClick={() => handleDeleteAddress(addr.id)}
@@ -627,13 +627,13 @@ export default function Profile() {
 
               {/* PANEL 3: PREFERENCES & TOGGLES */}
               {activeTab === "settings" && (
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
-                  <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
+                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
+                  <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
+                    <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
                       <Bell className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-slate-900">Preferences & Settings</CardTitle>
+                      <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Preferences & Settings</CardTitle>
                       <CardDescription className="text-xs">Adjust notification preferences, theme rules, and languages</CardDescription>
                     </div>
                   </CardHeader>
@@ -642,44 +642,44 @@ export default function Profile() {
                     
                     {/* Notifications Block */}
                     <div className="space-y-4">
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">Notification Preferences</span>
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#7A7266] block">Notification Preferences</span>
                       
-                      <div className="flex items-center justify-between border border-slate-100 p-3 rounded-2xl bg-white shadow-2xs">
+                      <div className="flex items-center justify-between border border-[#5A5146]/15 p-3 rounded-2xl bg-white shadow-2xs">
                         <div>
-                          <span className="text-xs font-bold text-slate-800 block">Email Alerts</span>
-                          <span className="text-[10px] text-slate-400">Receive receipt invoices and booking logs via email</span>
+                          <span className="text-xs font-bold text-[#1F1D1A] block">Email Alerts</span>
+                          <span className="text-[10px] text-[#7A7266]">Receive receipt invoices and booking logs via email</span>
                         </div>
                         <Switch checked={emailNotifs} onCheckedChange={setEmailNotifs} />
                       </div>
 
-                      <div className="flex items-center justify-between border border-slate-100 p-3 rounded-2xl bg-white shadow-2xs">
+                      <div className="flex items-center justify-between border border-[#5A5146]/15 p-3 rounded-2xl bg-white shadow-2xs">
                         <div>
-                          <span className="text-xs font-bold text-slate-800 block">SMS Updates</span>
-                          <span className="text-[10px] text-slate-400">Receive dispatcher arrival alerts on your mobile phone</span>
+                          <span className="text-xs font-bold text-[#1F1D1A] block">SMS Updates</span>
+                          <span className="text-[10px] text-[#7A7266]">Receive dispatcher arrival alerts on your mobile phone</span>
                         </div>
                         <Switch checked={smsNotifs} onCheckedChange={setSmsNotifs} />
                       </div>
 
-                      <div className="flex items-center justify-between border border-slate-100 p-3 rounded-2xl bg-white shadow-2xs">
+                      <div className="flex items-center justify-between border border-[#5A5146]/15 p-3 rounded-2xl bg-white shadow-2xs">
                         <div>
-                          <span className="text-xs font-bold text-slate-800 block">Promotional Newsletters</span>
-                          <span className="text-[10px] text-slate-400">Receive local coupon discount newsletters</span>
+                          <span className="text-xs font-bold text-[#1F1D1A] block">Promotional Newsletters</span>
+                          <span className="text-[10px] text-[#7A7266]">Receive local coupon discount newsletters</span>
                         </div>
                         <Switch checked={promoEmails} onCheckedChange={setPromoEmails} />
                       </div>
                     </div>
 
                     {/* Dark Mode toggle */}
-                    <div className="space-y-4 border-t border-slate-100 pt-5">
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">Visual Themes</span>
-                      <div className="flex items-center justify-between border border-slate-100 p-3 rounded-2xl bg-white shadow-2xs">
+                    <div className="space-y-4 border-t border-[#5A5146]/15 pt-5">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#7A7266] block">Visual Themes</span>
+                      <div className="flex items-center justify-between border border-[#5A5146]/15 p-3 rounded-2xl bg-white shadow-2xs">
                         <div className="flex items-center gap-2.5">
-                          <div className="p-1.5 bg-slate-100 text-slate-600 rounded-lg">
+                          <div className="p-1.5 bg-[#F0E7D5] text-[#5A5146] rounded-lg">
                             <Moon className="h-4 w-4" />
                           </div>
                           <div>
-                            <span className="text-xs font-bold text-slate-800 block">System Dark Mode</span>
-                            <span className="text-[10px] text-slate-400">Enable high-contrast night styling</span>
+                            <span className="text-xs font-bold text-[#1F1D1A] block">System Dark Mode</span>
+                            <span className="text-[10px] text-[#7A7266]">Enable high-contrast night styling</span>
                           </div>
                         </div>
                         <Switch checked={darkMode} onCheckedChange={setDarkMode} />
@@ -687,17 +687,17 @@ export default function Profile() {
                     </div>
 
                     {/* Languages select */}
-                    <div className="space-y-3.5 border-t border-slate-100 pt-5">
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">Regional Options</span>
+                    <div className="space-y-3.5 border-t border-[#5A5146]/15 pt-5">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#7A7266] block">Regional Options</span>
                       
-                      <div className="flex items-center justify-between flex-wrap gap-4 border border-slate-100 p-3.5 rounded-2xl bg-white shadow-2xs">
+                      <div className="flex items-center justify-between flex-wrap gap-4 border border-[#5A5146]/15 p-3.5 rounded-2xl bg-white shadow-2xs">
                         <div className="flex items-center gap-2.5">
-                          <div className="p-1.5 bg-slate-100 text-slate-600 rounded-lg">
+                          <div className="p-1.5 bg-[#F0E7D5] text-[#5A5146] rounded-lg">
                             <Globe className="h-4 w-4" />
                           </div>
                           <div>
-                            <span className="text-xs font-bold text-slate-800 block">Default Language</span>
-                            <span className="text-[10px] text-slate-400">Configure localized text templates</span>
+                            <span className="text-xs font-bold text-[#1F1D1A] block">Default Language</span>
+                            <span className="text-[10px] text-[#7A7266]">Configure localized text templates</span>
                           </div>
                         </div>
 
@@ -705,14 +705,14 @@ export default function Profile() {
                           <select
                             value={appLanguage}
                             onChange={(e) => setAppLanguage(e.target.value)}
-                            className="w-full h-9 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                            className="w-full h-9 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                           >
                             <option value="en">English (US)</option>
                             <option value="es">Español (ES)</option>
                             <option value="fr">Français (FR)</option>
                             <option value="de">Deutsch (DE)</option>
                           </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                             <ChevronDown className="h-4 w-4 opacity-60" />
                           </div>
                         </div>
@@ -725,13 +725,13 @@ export default function Profile() {
 
               {/* PANEL 4: SECURITY & PASSWORD */}
               {activeTab === "security" && (
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
-                  <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
+                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
+                  <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
+                    <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
                       <Lock className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-slate-900">Security & Password</CardTitle>
+                      <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Security & Password</CardTitle>
                       <CardDescription className="text-xs">Update your credentials password to secure access</CardDescription>
                     </div>
                   </CardHeader>
@@ -740,12 +740,12 @@ export default function Profile() {
                     <form onSubmit={handlePasswordSubmit(onPasswordChange)} className="space-y-4">
                       {/* Current Pass */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="currentPassword" className="text-xs font-bold text-slate-700">Current Password</Label>
+                        <Label htmlFor="currentPassword" className="text-xs font-bold text-[#B2563B]">Current Password</Label>
                         <Input
                           id="currentPassword"
                           type="password"
                           placeholder="••••••••"
-                          className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                          className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                           disabled={isChangingPass}
                           {...regPassword("currentPassword")}
                         />
@@ -754,12 +754,12 @@ export default function Profile() {
 
                       {/* New Pass */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="newPassword" className="text-xs font-bold text-slate-700">New Password</Label>
+                        <Label htmlFor="newPassword" className="text-xs font-bold text-[#B2563B]">New Password</Label>
                         <Input
                           id="newPassword"
                           type="password"
                           placeholder="Min 6 characters"
-                          className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                          className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                           disabled={isChangingPass}
                           {...regPassword("newPassword")}
                         />
@@ -768,23 +768,23 @@ export default function Profile() {
 
                       {/* Confirm New Pass */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="confirmPassword" className="text-xs font-bold text-slate-700">Confirm New Password</Label>
+                        <Label htmlFor="confirmPassword" className="text-xs font-bold text-[#B2563B]">Confirm New Password</Label>
                         <Input
                           id="confirmPassword"
                           type="password"
                           placeholder="Confirm new password"
-                          className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                          className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                           disabled={isChangingPass}
                           {...regPassword("confirmPassword")}
                         />
                         {passwordErrors.confirmPassword && <p className="text-[10px] text-rose-600 font-bold mt-1">{passwordErrors.confirmPassword.message}</p>}
                       </div>
 
-                      <div className="pt-2 border-t border-slate-50 flex justify-end">
+                      <div className="pt-2 border-t border-stone-50 flex justify-end">
                         <Button
                           type="submit"
                           disabled={isChangingPass}
-                          className="bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
+                          className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
                         >
                           {isChangingPass ? (
                             <>
@@ -806,20 +806,20 @@ export default function Profile() {
 
               {/* PANEL 5: RECENT BOOKINGS PREVIEW */}
               {activeTab === "bookings" && (
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
-                  <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between flex-wrap gap-4">
+                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
+                  <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between flex-wrap gap-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
+                      <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
                         <Calendar className="h-5 w-5" />
                       </div>
                       <div>
-                        <CardTitle className="text-base font-extrabold text-slate-900">Recent Appointments</CardTitle>
+                        <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Recent Appointments</CardTitle>
                         <CardDescription className="text-xs">Summary log of booking history requests</CardDescription>
                       </div>
                     </div>
                     
                     <Link to="/bookings">
-                      <Button variant="outline" size="sm" className="rounded-xl border-slate-200 hover:bg-slate-50 h-9.5 text-xs font-bold">
+                      <Button variant="outline" size="sm" className="rounded-xl border-[#5A5146]/20 hover:bg-[#FAF6F0] h-9.5 text-xs font-bold">
                         View Full History
                       </Button>
                     </Link>
@@ -827,22 +827,22 @@ export default function Profile() {
 
                   <CardContent className="p-0 pt-6 space-y-4">
                     {recentBookings.map(b => (
-                      <div key={b.id} className="border border-slate-200 p-4 rounded-xl flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4 bg-white hover:border-slate-200 transition-colors shadow-2xs">
+                      <div key={b.id} className="border border-[#5A5146]/20 p-4 rounded-xl flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4 bg-white hover:border-[#5A5146]/20 transition-colors shadow-2xs">
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="text-[9px] font-bold text-slate-400">#{b.id}</span>
+                            <span className="text-[9px] font-bold text-[#7A7266]">#{b.id}</span>
                             <Badge variant={b.status === "upcoming" ? "default" : "success"} className="rounded-lg text-[9px] font-bold px-2 py-0">
                               {b.status.toUpperCase()}
                             </Badge>
                           </div>
-                          <h4 className="font-extrabold text-slate-800 text-sm mt-1">{b.serviceName}</h4>
-                          <span className="block text-[11px] text-slate-500 font-semibold">{b.providerName} • {b.date} at {b.time}</span>
+                          <h4 className="font-extrabold text-[#1F1D1A] text-sm mt-1">{b.serviceName}</h4>
+                          <span className="block text-[11px] text-[#7A7266] font-semibold">{b.providerName} • {b.date} at {b.time}</span>
                         </div>
 
-                        <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto mt-2 sm:mt-0 border-t border-slate-50 sm:border-0 pt-2 sm:pt-0 shrink-0">
-                          <span className="text-sm font-black text-slate-950">${b.price.toFixed(2)}</span>
+                        <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto mt-2 sm:mt-0 border-t border-stone-50 sm:border-0 pt-2 sm:pt-0 shrink-0">
+                          <span className="text-sm font-black text-[#1F1D1A]">${b.price.toFixed(2)}</span>
                           <Link to="/bookings">
-                            <Button size="xs" variant="outline" className="h-8 text-[10px] font-bold border-slate-200 hover:bg-slate-50 rounded-lg text-slate-600">Details</Button>
+                            <Button size="xs" variant="outline" className="h-8 text-[10px] font-bold border-[#5A5146]/20 hover:bg-[#FAF6F0] rounded-lg text-[#5A5146]">Details</Button>
                           </Link>
                         </div>
                       </div>
@@ -859,13 +859,13 @@ export default function Profile() {
 
       {/* ADD LOCATION DIALOG MODAL */}
       <Dialog open={isAddAddressOpen} onOpenChange={setIsAddAddressOpen}>
-        <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
+        <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
           <DialogHeader>
-            <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-              <MapPin className="h-5 w-5 text-slate-900" />
+            <DialogTitle className="text-base font-extrabold text-[#1F1D1A] flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-[#1F1D1A]" />
               Add Saved Address
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-400 pt-0.5">
+            <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
               Register a location address to quickly select during scheduling checkout
             </DialogDescription>
           </DialogHeader>
@@ -873,8 +873,8 @@ export default function Profile() {
           <form onSubmit={handleAddAddress} className="space-y-4 pt-3">
             {/* Label select */}
             <div className="space-y-1.5">
-              <Label className="text-xs font-bold text-slate-700">Location Label</Label>
-              <div className="grid grid-cols-3 bg-slate-50 border border-slate-200 p-1 rounded-xl h-10">
+              <Label className="text-xs font-bold text-[#B2563B]">Location Label</Label>
+              <div className="grid grid-cols-3 bg-[#FAF6F0] border border-[#5A5146]/20 p-1 rounded-xl h-10">
                 {["Home", "Office", "Other"].map(lbl => (
                   <button
                     key={lbl}
@@ -882,8 +882,8 @@ export default function Profile() {
                     onClick={() => setNewAddressLabel(lbl)}
                     className={`rounded-lg text-xs font-bold transition-all ${
                       newAddressLabel === lbl
-                        ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                        : "text-slate-500 hover:text-slate-700"
+                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
+                        : "text-[#7A7266] hover:text-[#B2563B]"
                     }`}
                   >
                     {lbl}
@@ -894,13 +894,13 @@ export default function Profile() {
 
             {/* Street Address */}
             <div className="space-y-1.5">
-              <Label htmlFor="newStreet" className="text-xs font-bold text-slate-700">Street Address</Label>
+              <Label htmlFor="newStreet" className="text-xs font-bold text-[#B2563B]">Street Address</Label>
               <Input
                 id="newStreet"
                 placeholder="e.g. 500 Madison Avenue, Floor 12"
                 value={newAddressStreet}
                 onChange={(e) => setNewAddressStreet(e.target.value)}
-                className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                 required
               />
             </div>
@@ -908,29 +908,29 @@ export default function Profile() {
             {/* City State Zip */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="newCity" className="text-xs font-bold text-slate-700">City</Label>
+                <Label htmlFor="newCity" className="text-xs font-bold text-[#B2563B]">City</Label>
                 <Input
                   id="newCity"
                   placeholder="Manhattan"
                   value={newAddressCity}
                   onChange={(e) => setNewAddressCity(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="newState" className="text-xs font-bold text-slate-700">State</Label>
+                <Label htmlFor="newState" className="text-xs font-bold text-[#B2563B]">State</Label>
                 <Input
                   id="newState"
                   placeholder="NY"
                   value={newAddressState}
                   onChange={(e) => setNewAddressState(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white text-center"
+                  className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white text-center"
                   required
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="newZip" className="text-xs font-bold text-slate-700">ZIP Code</Label>
+                <Label htmlFor="newZip" className="text-xs font-bold text-[#B2563B]">ZIP Code</Label>
                 <Input
                   id="newZip"
                   placeholder="400001"
@@ -939,7 +939,7 @@ export default function Profile() {
                   title="PIN code must be 6 digits"
                   value={newAddressZip}
                   onChange={(e) => setNewAddressZip(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white text-center"
+                  className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white text-center"
                   required
                 />
               </div>
@@ -950,13 +950,13 @@ export default function Profile() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setIsAddAddressOpen(false)}
-                className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
+                className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 w-full sm:w-auto"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit" 
-                className="rounded-xl bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                className="rounded-xl bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
               >
                 Save Location
               </Button>

@@ -115,9 +115,9 @@ export default function AdminDashboard() {
   const getStatusBadge = (status) => {
     switch (status) {
       case "pending":
-        return <Badge className="bg-amber-500 hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Pending</Badge>;
+        return <Badge className="bg-[#B2563B] hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Pending</Badge>;
       case "confirmed":
-        return <Badge className="bg-slate-900/50 hover:bg-slate-900 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
+        return <Badge className="bg-[#B2563B]/50 hover:bg-[#B2563B] border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
       default:
         return <Badge className="bg-emerald-500 hover:bg-emerald-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Completed</Badge>;
     }
@@ -125,21 +125,21 @@ export default function AdminDashboard() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">System Administration</h1>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium">Moderate platform registrations, monitor servers, and audit user dispatch bookings</p>
+              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Moderate platform registrations, monitor servers, and audit user dispatch bookings</p>
             </div>
             
             {/* Quick Actions Panel */}
             <div className="flex items-center gap-3 flex-wrap">
-              <Button size="sm" className="bg-white text-slate-900 hover:bg-slate-50 rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1">
+              <Button size="sm" className="bg-white text-[#1F1D1A] hover:bg-[#FAF6F0] rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1">
                 <Settings className="h-4 w-4" /> Manage System
               </Button>
             </div>
@@ -151,32 +151,32 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             
             {/* Total Users */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Users</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">4,250</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Users</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">4,250</span>
               </div>
-              <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl shrink-0">
+              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <Users className="h-6 w-6" />
               </div>
             </Card>
 
             {/* Service Providers */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Providers</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">380</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Providers</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">380</span>
               </div>
-              <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl shrink-0">
+              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <Briefcase className="h-6 w-6" />
               </div>
             </Card>
 
             {/* Bookings */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Bookings</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">1,840</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Bookings</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">1,840</span>
               </div>
               <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl shrink-0">
                 <Calendar className="h-6 w-6" />
@@ -184,12 +184,12 @@ export default function AdminDashboard() {
             </Card>
 
             {/* Revenue */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Revenue</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">$42,850</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Revenue</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">$42,850</span>
               </div>
-              <div className="p-3 bg-amber-50 text-amber-500 rounded-2xl shrink-0">
+              <div className="p-3 bg-amber-50 text-[#C9A46A] rounded-2xl shrink-0">
                 <DollarSign className="h-6 w-6" />
               </div>
             </Card>
@@ -213,27 +213,27 @@ export default function AdminDashboard() {
             <div className="lg:col-span-8 space-y-6">
               
               {/* ANALYTICS GROWTH CHART */}
-              <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
-                <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between flex-wrap gap-4">
+              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
+                <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
+                    <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-slate-900">Platform Analytics</CardTitle>
+                      <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Platform Analytics</CardTitle>
                       <CardDescription className="text-xs">Monitor monthly growth statistics</CardDescription>
                     </div>
                   </div>
 
                   {/* Toggle */}
-                  <div className="flex bg-slate-100/70 border border-slate-200 p-0.5 rounded-xl h-9 shrink-0">
+                  <div className="flex bg-[#F0E7D5]/70 border border-[#5A5146]/20 p-0.5 rounded-xl h-9 shrink-0">
                     <button
                       type="button"
                       onClick={() => setChartView("users")}
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                         chartView === "users"
-                          ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                          : "text-slate-500 hover:text-slate-700"
+                          ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
+                          : "text-[#7A7266] hover:text-[#B2563B]"
                       }`}
                     >
                       User Registrations
@@ -243,8 +243,8 @@ export default function AdminDashboard() {
                       onClick={() => setChartView("bookings")}
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                         chartView === "bookings"
-                          ? "bg-white text-slate-900 shadow-2xs border border-slate-100"
-                          : "text-slate-500 hover:text-slate-700"
+                          ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
+                          : "text-[#7A7266] hover:text-[#B2563B]"
                       }`}
                     >
                       Bookings Placed
@@ -255,7 +255,7 @@ export default function AdminDashboard() {
                 <CardContent className="p-0 pt-6">
                   {isLoading ? (
                     <div className="h-[150px] flex items-center justify-center">
-                      <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
+                      <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
                     </div>
                   ) : (
                     /* SVG bar layout */
@@ -289,7 +289,7 @@ export default function AdminDashboard() {
                                   x={x + barWidth / 2}
                                   y={y - 8}
                                   textAnchor="middle"
-                                  className="text-[9px] font-black fill-slate-800"
+                                  className="text-[9px] font-black fill-violet-900"
                                 >
                                   {d.count}
                                 </text>
@@ -298,7 +298,7 @@ export default function AdminDashboard() {
                                   x={x + barWidth / 2}
                                   y={chartHeight - 4}
                                   textAnchor="middle"
-                                  className="text-[9px] font-bold fill-slate-450"
+                                  className="text-[9px] font-bold fill-stone-500"
                                 >
                                   {d.month}
                                 </text>
@@ -314,10 +314,10 @@ export default function AdminDashboard() {
               </Card>
 
               {/* PENDING APPROVAL REQUESTS */}
-              <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
-                <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center justify-between">
+              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
+                <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between">
                   <div>
-                    <CardTitle className="text-base font-extrabold text-slate-900">Provider Approvals Requests</CardTitle>
+                    <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Provider Approvals Requests</CardTitle>
                     <CardDescription className="text-xs">Moderate new specialist registration claims</CardDescription>
                   </div>
                   <Badge variant="secondary" className="bg-amber-50 border border-amber-100 text-amber-700 font-bold rounded-lg text-[10px] py-0.5 px-2">
@@ -327,19 +327,19 @@ export default function AdminDashboard() {
 
                 <CardContent className="p-0 pt-6">
                   {approvals.length === 0 ? (
-                    <p className="text-center text-xs text-slate-400 font-semibold py-6">All provider approvals are processed! Clear slate.</p>
+                    <p className="text-center text-xs text-[#7A7266] font-semibold py-6">All provider approvals are processed! Clear slate.</p>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {approvals.map(app => (
-                        <div key={app.id} className="border border-slate-200 p-4 rounded-2xl bg-white flex flex-col justify-between hover:border-slate-300 transition-colors shadow-2xs">
+                        <div key={app.id} className="border border-[#5A5146]/20 p-4 rounded-2xl bg-white flex flex-col justify-between hover:border-stone-300 transition-colors shadow-2xs">
                           <div>
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">{app.category}</span>
-                            <h4 className="font-extrabold text-slate-900 text-sm mt-1">{app.name}</h4>
-                            <span className="block text-[11px] text-slate-500 font-semibold mt-0.5">{app.serviceName}</span>
-                            <span className="block text-[10px] text-slate-450 font-medium flex items-center gap-0.5 mt-2"><MapPin className="h-3 w-3" /> {app.location}</span>
+                            <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">{app.category}</span>
+                            <h4 className="font-extrabold text-[#1F1D1A] text-sm mt-1">{app.name}</h4>
+                            <span className="block text-[11px] text-[#7A7266] font-semibold mt-0.5">{app.serviceName}</span>
+                            <span className="block text-[10px] text-[#7A7266] font-medium flex items-center gap-0.5 mt-2"><MapPin className="h-3 w-3" /> {app.location}</span>
                           </div>
 
-                          <div className="border-t border-slate-50 pt-3 mt-4 flex justify-end gap-2 shrink-0">
+                          <div className="border-t border-stone-50 pt-3 mt-4 flex justify-end gap-2 shrink-0">
                             <Button
                               size="xs"
                               variant="outline"
@@ -351,7 +351,7 @@ export default function AdminDashboard() {
                             <Button
                               size="xs"
                               onClick={() => handleApprovalAction(app.id, "approve")}
-                              className="bg-slate-900 hover:bg-slate-900 text-white font-bold h-7 rounded-lg text-[9px] py-0 px-2.5 shadow-2xs"
+                              className="bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold h-7 rounded-lg text-[9px] py-0 px-2.5 shadow-2xs"
                             >
                               Approve Pro
                             </Button>
@@ -364,9 +364,9 @@ export default function AdminDashboard() {
               </Card>
 
               {/* RECENT BOOKINGS TABLE */}
-              <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
-                <CardHeader className="p-0 pb-4 border-b border-slate-50">
-                  <CardTitle className="text-base font-extrabold text-slate-900">Recent Global Bookings</CardTitle>
+              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
+                <CardHeader className="p-0 pb-4 border-b border-stone-50">
+                  <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Recent Global Bookings</CardTitle>
                   <CardDescription className="text-xs">Monitor booking orders audit logs</CardDescription>
                 </CardHeader>
 
@@ -374,7 +374,7 @@ export default function AdminDashboard() {
                   <div className="overflow-x-auto">
                     <table className="w-full text-xs text-left">
                       <thead>
-                        <tr className="border-b border-slate-50 text-slate-400 font-bold uppercase tracking-wider text-[9px] pb-2">
+                        <tr className="border-b border-stone-50 text-[#7A7266] font-bold uppercase tracking-wider text-[9px] pb-2">
                           <th className="py-2.5 px-1">Ref ID</th>
                           <th className="py-2.5">Customer</th>
                           <th className="py-2.5">Service</th>
@@ -383,14 +383,14 @@ export default function AdminDashboard() {
                           <th className="py-2.5 text-right">Status</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-50 font-medium text-slate-700">
+                      <tbody className="divide-y divide-stone-50 font-medium text-[#B2563B]">
                         {recentBookings.map(b => (
-                          <tr key={b.id} className="hover:bg-slate-50/50 transition-colors">
-                            <td className="py-3 px-1 font-bold text-slate-450">{b.id}</td>
-                            <td className="py-3 font-bold text-slate-800">{b.customerName}</td>
+                          <tr key={b.id} className="hover:bg-[#FAF6F0] transition-colors">
+                            <td className="py-3 px-1 font-bold text-[#7A7266]">{b.id}</td>
+                            <td className="py-3 font-bold text-[#1F1D1A]">{b.customerName}</td>
                             <td className="py-3 truncate max-w-[130px]">{b.serviceName}</td>
                             <td className="py-3">{b.date}</td>
-                            <td className="py-3 font-black text-slate-900">${b.price.toFixed(2)}</td>
+                            <td className="py-3 font-black text-[#1F1D1A]">${b.price.toFixed(2)}</td>
                             <td className="py-3 text-right">{getStatusBadge(b.status)}</td>
                           </tr>
                         ))}
@@ -406,18 +406,18 @@ export default function AdminDashboard() {
             <div className="lg:col-span-4 space-y-6">
               
               {/* SYSTEM NOTIFICATIONS PANEL */}
-              <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
-                <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">System Alerts</span>
+              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
+                <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">System Alerts</span>
                 
                 <div className="space-y-3">
                   {notifications.map(n => (
                     <div key={n.id} className={`p-3.5 border rounded-xl flex items-start gap-2.5 ${
                       n.type === "warning"
                         ? "bg-rose-50/50 border-rose-100 text-rose-800"
-                        : "bg-slate-900/5 border-slate-900/10 text-slate-900"
+                        : "bg-[#B2563B]/5 border-violet-950/10 text-[#1F1D1A]"
                     }`}>
                       <AlertCircle className={`h-4.5 w-4.5 shrink-0 mt-0.5 ${
-                        n.type === "warning" ? "text-rose-600" : "text-slate-900"
+                        n.type === "warning" ? "text-rose-600" : "text-[#1F1D1A]"
                       }`} />
                       <span className="text-[11px] font-semibold leading-normal">{n.text}</span>
                     </div>
@@ -426,22 +426,22 @@ export default function AdminDashboard() {
               </Card>
 
               {/* RECENT USERS LOG */}
-              <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
-                <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">New Registrations</span>
+              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
+                <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">New Registrations</span>
                 
                 <div className="space-y-3.5">
                   {recentUsers.map((u, i) => (
-                    <div key={i} className="flex items-center justify-between gap-3 p-1.5 hover:bg-slate-50 rounded-xl transition-colors">
+                    <div key={i} className="flex items-center justify-between gap-3 p-1.5 hover:bg-[#FAF6F0] rounded-xl transition-colors">
                       <div className="flex items-center gap-3">
-                        <Avatar className="w-9 h-9 border border-slate-100 overflow-hidden shrink-0 bg-slate-50 text-slate-600 flex items-center justify-center font-bold text-xs">
+                        <Avatar className="w-9 h-9 border border-[#5A5146]/15 overflow-hidden shrink-0 bg-[#FAF6F0] text-[#5A5146] flex items-center justify-center font-bold text-xs">
                           {u.name[0]}
                         </Avatar>
                         <div>
-                          <span className="text-xs font-bold text-slate-800 block leading-tight">{u.name}</span>
-                          <span className="text-[9px] text-slate-400 font-semibold block mt-0.5">{u.email}</span>
+                          <span className="text-xs font-bold text-[#1F1D1A] block leading-tight">{u.name}</span>
+                          <span className="text-[9px] text-[#7A7266] font-semibold block mt-0.5">{u.email}</span>
                         </div>
                       </div>
-                      <Badge variant="secondary" className="bg-slate-100 text-slate-600 font-bold rounded-lg text-[8px] py-0 px-2 uppercase leading-none">
+                      <Badge variant="secondary" className="bg-[#F0E7D5] text-[#5A5146] font-bold rounded-lg text-[8px] py-0 px-2 uppercase leading-none">
                         {u.role}
                       </Badge>
                     </div>
@@ -450,33 +450,33 @@ export default function AdminDashboard() {
               </Card>
 
               {/* SYSTEM STATUS OVERVIEW */}
-              <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
-                <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2.5">System Status Gauges</span>
+              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
+                <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">System Status Gauges</span>
                 
                 <div className="space-y-4 pt-1.5">
                   
                   {/* Database */}
                   <div className="space-y-1.5">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-slate-500">Database API Connection</span>
+                      <span className="text-[#7A7266]">Database API Connection</span>
                       <span className="text-emerald-600">99.9% Online</span>
                     </div>
-                    <Progress value={99.9} className="h-1.5 bg-slate-100 [&>div]:bg-emerald-500" />
+                    <Progress value={99.9} className="h-1.5 bg-[#F0E7D5] [&>div]:bg-emerald-500" />
                   </div>
 
                   {/* Storage */}
                   <div className="space-y-1.5">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-slate-500">Image Storage Capacity</span>
-                      <span className="text-slate-700">42% Used</span>
+                      <span className="text-[#7A7266]">Image Storage Capacity</span>
+                      <span className="text-[#B2563B]">42% Used</span>
                     </div>
-                    <Progress value={42} className="h-1.5 bg-slate-100 [&>div]:bg-slate-900" />
+                    <Progress value={42} className="h-1.5 bg-[#F0E7D5] [&>div]:bg-[#B2563B]" />
                   </div>
 
                   {/* Mail */}
                   <div className="space-y-1.5">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-slate-500">Email SMTP Relay Gateway</span>
+                      <span className="text-[#7A7266]">Email SMTP Relay Gateway</span>
                       <span className="text-emerald-600 font-bold flex items-center gap-0.5"><Check className="h-3.5 w-3.5" /> Operational</span>
                     </div>
                   </div>

@@ -177,16 +177,16 @@ export default function Reviews() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Customer Feedbacks</h1>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium">Verify ratings breakdown and reply to client testimonials</p>
+              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Verify ratings breakdown and reply to client testimonials</p>
             </div>
             
             {/* Quick dashboard back button */}
@@ -204,43 +204,43 @@ export default function Reviews() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             
             {/* Avg Rating */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Average Rating</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">{ratingAvg} <span className="text-xs text-slate-400 font-semibold">/5</span></span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Average Rating</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">{ratingAvg} <span className="text-xs text-[#7A7266] font-semibold">/5</span></span>
               </div>
-              <div className="p-3 bg-amber-50 text-amber-500 rounded-2xl shrink-0">
-                <Star className="h-6 w-6 fill-amber-400 text-amber-500" />
+              <div className="p-3 bg-amber-50 text-[#C9A46A] rounded-2xl shrink-0">
+                <Star className="h-6 w-6 fill-amber-400 text-[#C9A46A]" />
               </div>
             </Card>
 
             {/* Total reviews */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Reviews</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">{totalCount}</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Reviews</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">{totalCount}</span>
               </div>
-              <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl shrink-0">
+              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <MessageSquare className="h-6 w-6" />
               </div>
             </Card>
 
             {/* Response Rate */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Response Rate</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">{responseRate}%</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Response Rate</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">{responseRate}%</span>
               </div>
-              <div className="p-3 bg-slate-900/5 text-slate-900 rounded-2xl shrink-0">
+              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
             </Card>
 
             {/* Recommended Rate */}
-            <Card className="border border-slate-100 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Recommend Rate</span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900">{recommendRate}%</span>
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Recommend Rate</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">{recommendRate}%</span>
               </div>
               <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl shrink-0">
                 <ThumbsUp className="h-6 w-6" />
@@ -258,19 +258,19 @@ export default function Reviews() {
             <div className="lg:col-span-4 space-y-6">
               
               {/* RATINGS DISTRIBUTION CARD */}
-              <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
-                <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2">Rating Distribution</span>
+              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
+                <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2">Rating Distribution</span>
                 
                 <div className="space-y-3">
                   {starsBreakdown.map(item => (
-                    <div key={item.star} className="flex items-center gap-3 text-xs font-bold text-slate-600">
+                    <div key={item.star} className="flex items-center gap-3 text-xs font-bold text-[#5A5146]">
                       <span className="w-8 flex items-center justify-end gap-0.5 shrink-0">
-                        {item.star} <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" />
+                        {item.star} <Star className="h-3.5 w-3.5 fill-amber-400 text-[#C9A46A]" />
                       </span>
                       
-                      <Progress value={item.percentage} className="h-2 flex-1 rounded-full bg-slate-100 [&>div]:bg-amber-500" />
+                      <Progress value={item.percentage} className="h-2 flex-1 rounded-full bg-[#F0E7D5] [&>div]:bg-[#B2563B]" />
                       
-                      <span className="w-10 text-right text-slate-400 font-semibold shrink-0">
+                      <span className="w-10 text-right text-[#7A7266] font-semibold shrink-0">
                         {item.percentage}%
                       </span>
                     </div>
@@ -279,14 +279,14 @@ export default function Reviews() {
               </Card>
 
               {/* FILTERING CONTROLS */}
-              <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
-                <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block mb-2 border-b border-slate-50 pb-2">Search & Filters</span>
+              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
+                <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block mb-2 border-b border-stone-50 pb-2">Search & Filters</span>
                 
                 {/* Search */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="searchQuery" className="text-[10px] font-bold text-slate-700">Search reviews</Label>
+                  <Label htmlFor="searchQuery" className="text-[10px] font-bold text-[#B2563B]">Search reviews</Label>
                   <div className="relative">
-                    <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-450">
+                    <span className="absolute left-3 top-[50%] translate-y-[-50%] text-[#7A7266]">
                       <Search className="h-4 w-4" />
                     </span>
                     <Input
@@ -294,27 +294,27 @@ export default function Reviews() {
                       placeholder="Type keyword..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                      className="pl-9 h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                     />
                   </div>
                 </div>
 
                 {/* Rating filter */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="starFilter" className="text-[10px] font-bold text-slate-700">Star Rating</Label>
+                  <Label htmlFor="starFilter" className="text-[10px] font-bold text-[#B2563B]">Star Rating</Label>
                   <div className="relative">
                     <select
                       id="starFilter"
                       value={starFilter}
                       onChange={(e) => setStarFilter(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="all">All Stars</option>
                       <option value="5">5 Stars only</option>
                       <option value="4">4 Stars only</option>
                       <option value="3">3 Stars only</option>
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                       <ChevronDown className="h-4 w-4 opacity-60" />
                     </div>
                   </div>
@@ -322,19 +322,19 @@ export default function Reviews() {
 
                 {/* Sort */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="sortBy" className="text-[10px] font-bold text-slate-700">Sort By</Label>
+                  <Label htmlFor="sortBy" className="text-[10px] font-bold text-[#B2563B]">Sort By</Label>
                   <div className="relative">
                     <select
                       id="sortBy"
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="newest">Newest First</option>
                       <option value="highest">Highest Rating</option>
                       <option value="lowest">Lowest Rating</option>
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                       <ChevronDown className="h-4 w-4 opacity-60" />
                     </div>
                   </div>
@@ -351,26 +351,26 @@ export default function Reviews() {
                 /* LOADING SHIMMER CARDS */
                 <div className="space-y-4">
                   {[...Array(3)].map((_, i) => (
-                    <Card key={i} className="border border-slate-100 bg-white p-5 rounded-2xl space-y-4 animate-pulse">
+                    <Card key={i} className="border border-[#5A5146]/15 bg-white p-5 rounded-2xl space-y-4 animate-pulse">
                       <div className="flex gap-3">
-                        <Skeleton className="w-10 h-10 rounded-full bg-slate-200" />
+                        <Skeleton className="w-10 h-10 rounded-full bg-[#E8DCC3]" />
                         <div className="space-y-2 flex-1">
-                          <Skeleton className="h-4 bg-slate-200 w-1/4 rounded" />
-                          <Skeleton className="h-3.5 bg-slate-200 w-1/3 rounded" />
+                          <Skeleton className="h-4 bg-[#E8DCC3] w-1/4 rounded" />
+                          <Skeleton className="h-3.5 bg-[#E8DCC3] w-1/3 rounded" />
                         </div>
                       </div>
-                      <Skeleton className="h-10 bg-slate-200 w-full rounded-xl" />
+                      <Skeleton className="h-10 bg-[#E8DCC3] w-full rounded-xl" />
                     </Card>
                   ))}
                 </div>
               ) : filteredReviews.length === 0 ? (
                 /* EMPTY STATE DISPLAY */
-                <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-slate-900/5 text-slate-900 rounded-full border border-slate-900/10">
+                <div className="bg-white border border-[#5A5146]/15 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
+                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mt-2">No Reviews Found</h3>
-                  <p className="text-xs text-slate-450 max-w-sm leading-relaxed">
+                  <h3 className="text-xl font-bold text-[#1F1D1A] mt-2">No Reviews Found</h3>
+                  <p className="text-xs text-[#7A7266] max-w-sm leading-relaxed">
                     We couldn't find any feedback comments matching your selection criteria. Try clearing search filters.
                   </p>
                 </div>
@@ -378,25 +378,25 @@ export default function Reviews() {
                 /* CARDS LISTINGS GRID */
                 <div className="space-y-4">
                   {filteredReviews.map(rev => (
-                    <Card key={rev.id} className="overflow-hidden border border-slate-100 bg-white p-5 rounded-2xl space-y-4 shadow-2xs">
+                    <Card key={rev.id} className="overflow-hidden border border-[#5A5146]/15 bg-white p-5 rounded-2xl space-y-4 shadow-2xs">
                       
                       {/* Customer Metadata */}
                       <div className="flex items-center justify-between flex-wrap gap-2.5">
                         <div className="flex items-center gap-3">
-                          <Avatar className="w-10 h-10 border border-slate-100 overflow-hidden shrink-0">
+                          <Avatar className="w-10 h-10 border border-[#5A5146]/15 overflow-hidden shrink-0">
                             <AvatarImage src={rev.avatar} className="object-cover" />
                             <AvatarFallback>{rev.name[0]}</AvatarFallback>
                           </Avatar>
                           <div>
-                            <span className="text-xs font-black text-slate-800 block">{rev.name}</span>
-                            <span className="text-[10px] text-slate-400 font-bold bg-slate-50 px-2 py-0.5 rounded border border-slate-100 uppercase tracking-wide inline-block mt-0.5">
+                            <span className="text-xs font-black text-[#1F1D1A] block">{rev.name}</span>
+                            <span className="text-[10px] text-[#7A7266] font-bold bg-[#FAF6F0] px-2 py-0.5 rounded border border-[#5A5146]/15 uppercase tracking-wide inline-block mt-0.5">
                               {rev.serviceName}
                             </span>
                           </div>
                         </div>
 
                         <div className="text-right space-y-1">
-                          <div className="flex items-center justify-end gap-0.5 text-amber-500">
+                          <div className="flex items-center justify-end gap-0.5 text-[#C9A46A]">
                             {[...Array(5)].map((_, idx) => {
                               const starNum = idx + 1;
                               const isFilled = starNum <= Math.floor(rev.rating);
@@ -404,27 +404,27 @@ export default function Reviews() {
                                 <Star 
                                   key={idx} 
                                   className={`h-3.5 w-3.5 ${
-                                    isFilled ? "fill-amber-400 text-amber-500" : "text-slate-200"
+                                    isFilled ? "fill-amber-400 text-[#C9A46A]" : "text-stone-200"
                                   }`} 
                                 />
                               );
                             })}
                           </div>
-                          <span className="text-[9px] text-slate-400 font-bold block">{rev.date}</span>
+                          <span className="text-[9px] text-[#7A7266] font-bold block">{rev.date}</span>
                         </div>
                       </div>
 
                       {/* Review Comment Text */}
-                      <p className="text-xs text-slate-700 leading-relaxed font-medium bg-slate-50/30 p-3 rounded-xl border border-slate-100/50">
+                      <p className="text-xs text-[#B2563B] leading-relaxed font-medium bg-[#FAF6F0]/30 p-3 rounded-xl border border-[#5A5146]/15/50">
                         "{rev.comment}"
                       </p>
 
                       {/* Provider Reply block */}
                       {rev.reply ? (
                         /* ACTIVE REPLY BOX */
-                        <div className="p-4 bg-slate-900/5 border border-slate-900/10 rounded-xl space-y-2.5 animate-fade-in relative">
+                        <div className="p-4 bg-[#B2563B]/5 border border-violet-950/10 rounded-xl space-y-2.5 animate-fade-in relative">
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-extrabold text-slate-900 bg-slate-900/5 border border-slate-900/10 rounded-lg py-0.5 px-2.5 uppercase flex items-center gap-1">
+                            <span className="text-[10px] font-extrabold text-[#1F1D1A] bg-[#B2563B]/5 border border-violet-950/10 rounded-lg py-0.5 px-2.5 uppercase flex items-center gap-1">
                               <CornerDownRight className="h-3.5 w-3.5" />
                               Your Reply
                             </span>
@@ -433,7 +433,7 @@ export default function Reviews() {
                             <div className="flex items-center gap-1.5 print:hidden">
                               <button 
                                 onClick={() => handleStartEdit(rev.id, rev.reply)}
-                                className="p-1 text-slate-450 hover:text-slate-700 transition-colors"
+                                className="p-1 text-[#7A7266] hover:text-[#B2563B] transition-colors"
                               >
                                 <Edit3 className="h-3.5 w-3.5" />
                               </button>
@@ -452,46 +452,46 @@ export default function Reviews() {
                               <Input
                                 value={editTexts[rev.id] || ""}
                                 onChange={(e) => setEditTexts(prev => ({ ...prev, [rev.id]: e.target.value }))}
-                                className="h-9 border-slate-300 rounded-xl text-xs bg-white"
+                                className="h-9 border-stone-300 rounded-xl text-xs bg-white"
                               />
                               <div className="flex justify-end gap-1.5">
                                 <Button 
                                   size="xs" 
                                   variant="outline"
                                   onClick={() => setEditingReplyIds(prev => ({ ...prev, [rev.id]: false }))}
-                                  className="h-7 text-[9px] font-bold border-slate-200 bg-white"
+                                  className="h-7 text-[9px] font-bold border-[#5A5146]/20 bg-white"
                                 >
                                   Cancel
                                 </Button>
                                 <Button 
                                   size="xs"
                                   onClick={() => handleSaveEdit(rev.id)}
-                                  className="h-7 text-[9px] font-bold bg-slate-900 text-white hover:bg-slate-900"
+                                  className="h-7 text-[9px] font-bold bg-[#B2563B] text-white hover:bg-[#B2563B]"
                                 >
                                   Save Reply
                                 </Button>
                               </div>
                             </div>
                           ) : (
-                            <p className="text-xs text-slate-700 font-semibold leading-relaxed">
+                            <p className="text-xs text-[#B2563B] font-semibold leading-relaxed">
                               {rev.reply}
                             </p>
                           )}
                         </div>
                       ) : (
                         /* WRITE REPLY FORM */
-                        <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl space-y-2 animate-fade-in">
-                          <Label className="text-[10px] font-bold text-slate-500 block">No response yet. Write a reply:</Label>
+                        <div className="p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl space-y-2 animate-fade-in">
+                          <Label className="text-[10px] font-bold text-[#7A7266] block">No response yet. Write a reply:</Label>
                           <div className="flex gap-2">
                             <Input
                               placeholder="e.g. Thanks for the feedback! Glad to assist."
                               value={replyInputs[rev.id] || ""}
                               onChange={(e) => setReplyInputs(prev => ({ ...prev, [rev.id]: e.target.value }))}
-                              className="h-9 border-slate-200 focus:ring-1 focus:ring-slate-900 rounded-xl text-xs bg-white flex-1"
+                              className="h-9 border-[#5A5146]/20 focus:ring-1 focus:ring-violet-950 rounded-xl text-xs bg-white flex-1"
                             />
                             <Button
                               onClick={() => handleAddReplySubmit(rev.id)}
-                              className="bg-slate-900 hover:bg-black text-white h-9 px-4 font-bold text-xs rounded-xl"
+                              className="bg-[#B2563B] hover:bg-black text-white h-9 px-4 font-bold text-xs rounded-xl"
                             >
                               Submit
                             </Button>

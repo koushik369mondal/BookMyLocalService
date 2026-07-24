@@ -168,8 +168,8 @@ export default function EditProfile() {
   if (authLoading || !user) {
     return (
       <DashboardLayout>
-        <div className="min-h-[50vh] flex items-center justify-center bg-slate-50/50">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
+        <div className="min-h-[50vh] flex items-center justify-center bg-[#FAF6F0]">
+          <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
         </div>
       </DashboardLayout>
     );
@@ -179,7 +179,7 @@ export default function EditProfile() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen py-12 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen py-12 px-4 sm:px-6 lg:px-8 font-sans">
         
         {/* Hidden File Picker Input */}
         <input 
@@ -195,7 +195,7 @@ export default function EditProfile() {
           <div className="flex items-center justify-between">
             <button 
               onClick={() => navigate(-1)} 
-              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-550 hover:text-slate-900 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-550 hover:text-[#1F1D1A] transition-colors cursor-pointer"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to Profile
@@ -216,33 +216,33 @@ export default function EditProfile() {
             </div>
           )}
 
-          <Card className="border border-slate-200 bg-white rounded-2xl overflow-hidden">
+          <Card className="border border-[#5A5146]/20 bg-white rounded-2xl overflow-hidden">
             
-            <div className="bg-slate-900 text-white p-6 sm:p-7">
+            <div className="bg-[#B2563B] text-white p-6 sm:p-7">
               <CardTitle className="text-xl sm:text-2xl font-extrabold">Edit Account Profile</CardTitle>
-              <CardDescription className="text-slate-400 text-xs mt-1">Modify your contact details, photo, and settings</CardDescription>
+              <CardDescription className="text-[#7A7266] text-xs mt-1">Modify your contact details, photo, and settings</CardDescription>
             </div>
 
             <CardContent className="p-6 sm:p-8 space-y-8">
               
               {/* Photo Display Upload section */}
-              <div className="flex flex-col sm:flex-row items-center gap-5 pb-6 border-b border-slate-100">
+              <div className="flex flex-col sm:flex-row items-center gap-5 pb-6 border-b border-[#5A5146]/15">
                 <div className="relative group cursor-pointer" onClick={handlePhotoClick}>
-                  <Avatar className="w-20 h-20 border-2 border-slate-100 shadow-md rounded-full overflow-hidden shrink-0">
+                  <Avatar className="w-20 h-20 border-2 border-[#5A5146]/15 shadow-md rounded-full overflow-hidden shrink-0">
                     {user.avatar ? (
                       <AvatarImage src={user.avatar} className="object-cover w-full h-full" />
                     ) : null}
-                    <AvatarFallback className="text-xl font-bold bg-slate-900/10 text-slate-900">{initials}</AvatarFallback>
+                    <AvatarFallback className="text-xl font-bold bg-[#E8DCC3]/40 text-[#1F1D1A]">{initials}</AvatarFallback>
                   </Avatar>
-                  <div className="absolute inset-0 bg-slate-950/60 text-white rounded-full flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-[#B2563B]/60 text-white rounded-full flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <Camera className="h-4.5 w-4.5" />
                     <span className="text-[8px] font-bold uppercase">Upload</span>
                   </div>
                 </div>
 
                 <div className="space-y-1 text-center sm:text-left">
-                  <h4 className="text-xs font-black text-slate-400 uppercase tracking-wider">Profile Avatar Picture</h4>
-                  <p className="text-[11px] text-slate-400">Accepts JPG, PNG, or WebP formats under 5 MB max sizing</p>
+                  <h4 className="text-xs font-black text-[#7A7266] uppercase tracking-wider">Profile Avatar Picture</h4>
+                  <p className="text-[11px] text-[#7A7266]">Accepts JPG, PNG, or WebP formats under 5 MB max sizing</p>
                   
                   <div className="flex items-center gap-2.5 pt-2">
                     <Button 
@@ -250,7 +250,7 @@ export default function EditProfile() {
                       onClick={handlePhotoClick}
                       disabled={isUploadingPhoto}
                       size="xs" 
-                      className="bg-slate-900 hover:bg-slate-700 text-white rounded-xl text-[10px] font-bold h-8 px-4"
+                      className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl text-[10px] font-bold h-8 px-4"
                     >
                       {isUploadingPhoto ? "Uploading..." : "Upload New Image"}
                     </Button>
@@ -263,11 +263,11 @@ export default function EditProfile() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   
                   <div className="space-y-1.5">
-                    <Label htmlFor="fullName" className="text-xs font-bold text-slate-700">Full Name</Label>
+                    <Label htmlFor="fullName" className="text-xs font-bold text-[#B2563B]">Full Name</Label>
                     <Input
                       id="fullName"
                       placeholder="Chloe Bennett"
-                      className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                      className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                       disabled={isSubmitting}
                       {...register("fullName")}
                     />
@@ -275,22 +275,22 @@ export default function EditProfile() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="email" className="text-xs font-bold text-slate-700">Email Address</Label>
+                    <Label htmlFor="email" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
                     <Input
                       id="email"
                       type="email"
-                      className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-slate-50 cursor-not-allowed"
+                      className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-[#FAF6F0] cursor-not-allowed"
                       disabled
                       {...register("email")}
                     />
                   </div>
 
                   <div className="space-y-1.5 col-span-2">
-                    <Label htmlFor="phone" className="text-xs font-bold text-slate-700">Phone Number</Label>
+                    <Label htmlFor="phone" className="text-xs font-bold text-[#B2563B]">Phone Number</Label>
                     <Input
                       id="phone"
                       placeholder="555-019-2834"
-                      className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                      className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                       disabled={isSubmitting}
                       {...register("phone")}
                     />
@@ -299,15 +299,15 @@ export default function EditProfile() {
 
                 </div>
 
-                <div className="space-y-4 border-t border-slate-100 pt-6">
-                  <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block">Default Dispatch Address</span>
+                <div className="space-y-4 border-t border-[#5A5146]/15 pt-6">
+                  <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block">Default Dispatch Address</span>
                   
                   <div className="space-y-1.5">
-                    <Label htmlFor="address" className="text-xs font-bold text-slate-700">Street Address</Label>
+                    <Label htmlFor="address" className="text-xs font-bold text-[#B2563B]">Street Address</Label>
                     <Input
                       id="address"
                       placeholder="789 Pine Street, Apt 1C"
-                      className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                      className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                       disabled={isSubmitting}
                       {...register("address")}
                     />
@@ -315,34 +315,34 @@ export default function EditProfile() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="space-y-1.5">
-                      <Label htmlFor="city" className="text-xs font-bold text-slate-700">City</Label>
+                      <Label htmlFor="city" className="text-xs font-bold text-[#B2563B]">City</Label>
                       <Input
                         id="city"
                         placeholder="Brooklyn"
-                        className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                        className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                         disabled={isSubmitting}
                         {...register("city")}
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="state" className="text-xs font-bold text-slate-700">State</Label>
+                      <Label htmlFor="state" className="text-xs font-bold text-[#B2563B]">State</Label>
                       <Input
                         id="state"
                         placeholder="NY"
-                        className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white text-center"
+                        className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white text-center"
                         disabled={isSubmitting}
                         {...register("state")}
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="zipCode" className="text-xs font-bold text-slate-700">ZIP Code</Label>
+                      <Label htmlFor="zipCode" className="text-xs font-bold text-[#B2563B]">ZIP Code</Label>
                       <Input
                         id="zipCode"
                         placeholder="400001"
                         maxLength={6}
-                        className="h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white text-center"
+                        className="h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white text-center"
                         disabled={isSubmitting}
                         {...register("zipCode")}
                       />
@@ -352,19 +352,19 @@ export default function EditProfile() {
 
                 </div>
 
-                <div className="pt-6 border-t border-slate-100 flex items-center justify-end gap-3.5">
+                <div className="pt-6 border-t border-[#5A5146]/15 flex items-center justify-end gap-3.5">
                   <Button 
                     type="button" 
                     variant="ghost" 
                     onClick={() => navigate(-1)}
-                    className="rounded-xl border-0 text-slate-600 hover:bg-slate-50 text-xs font-bold h-10 px-6 cursor-pointer"
+                    className="rounded-xl border-0 text-[#5A5146] hover:bg-[#FAF6F0] text-xs font-bold h-10 px-6 cursor-pointer"
                   >
                     Cancel
                   </Button>
                   <Button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="bg-slate-900 hover:bg-slate-700 text-white font-bold text-xs h-10 px-8 rounded-xl shadow-xs"
+                    className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold text-xs h-10 px-8 rounded-xl shadow-xs"
                   >
                     {isSubmitting ? "Saving Changes..." : "Save Changes"}
                   </Button>

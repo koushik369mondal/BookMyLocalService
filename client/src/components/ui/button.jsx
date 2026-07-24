@@ -4,24 +4,24 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-slate-900 focus-visible:ring-slate-900/50 focus-visible:ring-[3px] aria-invalid:ring-red-500/20 dark:aria-invalid:ring-red-500/40 aria-invalid:border-red-500",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-bold transition-all duration-150 active:scale-[0.98] cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[#C9A46A]/30 focus-visible:ring-offset-1 select-none shadow-xs",
   {
     variants: {
       variant: {
-        default: 'bg-slate-900 text-white shadow-xs hover:bg-slate-900/90',
-        destructive:
-          'bg-red-500 text-white shadow-xs hover:bg-red-500/90 focus-visible:ring-red-500/20 dark:focus-visible:ring-red-500/40 dark:bg-red-500/60',
-        outline:
-          'border bg-slate-50 shadow-xs hover:bg-amber-500 hover:text-white dark:bg-slate-200/30 dark:border-slate-200 dark:hover:bg-slate-200/50',
-        secondary: 'bg-slate-700 text-white shadow-xs hover:bg-slate-700/80',
-        ghost: 'hover:bg-amber-500 hover:text-white dark:hover:bg-amber-500/50',
-        link: 'text-slate-900 underline-offset-4 hover:underline',
+        default: 'bg-[#C9A46A] text-white hover:bg-[#b89359] border border-[#E8DCC3]',
+        destructive: 'bg-[#B2563B] text-white hover:bg-[#9e4a32] border border-[#E8DCC3]',
+        outline: 'border border-[#E8DCC3] bg-[#FAF6F0] text-[#1F1D1A] hover:bg-[#F0E7D5]',
+        secondary: 'bg-[#F0E7D5] text-[#1F1D1A] hover:bg-[#E8DCC3] border border-[#E8DCC3]',
+        ghost: 'text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#1F1D1A] shadow-none',
+        link: 'text-[#C9A46A] underline-offset-4 hover:underline shadow-none',
+        terracotta: 'bg-[#B2563B] text-white hover:bg-[#9e4a32] border border-[#E8DCC3]',
       },
       size: {
-        default: 'h-9 px-4 py-2 has-[>svg]:px-3',
-        sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
-        lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
-        icon: 'size-9',
+        default: 'h-10 px-4.5 py-2.5 has-[>svg]:px-3.5',
+        xs: 'h-7 rounded-lg text-xs px-2.5',
+        sm: 'h-8.5 rounded-lg text-xs px-3 has-[>svg]:px-2.5',
+        lg: 'h-11 rounded-xl px-6 text-base has-[>svg]:px-4.5',
+        icon: 'size-10 rounded-xl',
       },
     },
     defaultVariants: {
@@ -38,13 +38,10 @@ const Button = forwardRef(({ className, variant, size, asChild = false, ...props
 
   if (className) {
     if (className.includes("bg-")) {
-      variantClasses = variantClasses.replace(/\bbg-slate-900\b/g, "");
+      variantClasses = variantClasses.replace(/\bbg-\[#C9A46A\]\b/g, "");
     }
     if (className.includes("text-") && !className.includes("text-white")) {
       variantClasses = variantClasses.replace(/\btext-white\b/g, "");
-    }
-    if (className.includes("hover:bg-")) {
-      variantClasses = variantClasses.replace(/\bhover:bg-slate-900\/90\b/g, "");
     }
   }
 

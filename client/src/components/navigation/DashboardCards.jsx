@@ -41,7 +41,7 @@ export default function DashboardCards({ role }) {
       description: "See customer feedback, performance ratings, and comments.",
       path: "/provider/reviews",
       icon: Star,
-      color: "text-amber-600 bg-amber-50 border-amber-100",
+      color: "text-[#B2563B] bg-amber-50 border-amber-100",
     },
   ];
 
@@ -72,7 +72,7 @@ export default function DashboardCards({ role }) {
       description: "Manage SMS updates, promo alerts, and dispatch receipts.",
       path: "/notifications",
       icon: Bell,
-      color: "text-amber-600 bg-amber-50 border-amber-100",
+      color: "text-[#B2563B] bg-amber-50 border-amber-100",
     },
     {
       title: "Payment Methods",
@@ -93,25 +93,25 @@ export default function DashboardCards({ role }) {
           <Link
             key={idx}
             to={card.path}
-            className="group flex flex-col justify-between border border-slate-200 bg-white p-5 rounded-2xl hover:border-slate-400 hover:bg-slate-50/50 transition-all duration-200 relative overflow-hidden h-full"
+            className="group flex flex-col justify-between border border-[#5A5146]/20 bg-white p-5 rounded-2xl hover:border-stone-400 hover:bg-[#FAF6F0] transition-all duration-200 relative overflow-hidden h-full"
           >
             <div className="relative z-10 space-y-3">
               <div className={`p-3 rounded-xl border w-fit shrink-0 transition-transform group-hover:scale-105 duration-200 ${card.color}`}>
                 <Icon className="h-5 w-5" />
               </div>
               <div className="space-y-1">
-                <h4 className="font-extrabold text-slate-900 text-sm leading-tight group-hover:text-amber-600 transition-colors">
+                <h4 className="font-extrabold text-[#1F1D1A] text-sm leading-tight group-hover:text-[#B2563B] transition-colors">
                   {card.title}
                 </h4>
-                <p className="text-xs text-slate-500 leading-relaxed font-normal">
+                <p className="text-xs text-[#7A7266] leading-relaxed font-normal">
                   {card.description}
                 </p>
               </div>
             </div>
 
-            <div className="border-t border-slate-100 pt-3 mt-4 flex items-center justify-between relative z-10 text-xs font-bold text-slate-400 group-hover:text-slate-900 transition-colors">
+            <div className="border-t border-[#5A5146]/15 pt-3 mt-4 flex items-center justify-between relative z-10 text-xs font-bold text-[#7A7266] group-hover:text-[#1F1D1A] transition-colors">
               <span>Access Action</span>
-              <ArrowUpRight className="h-4 w-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 text-slate-400 group-hover:text-amber-500" />
+              <ArrowUpRight className="h-4 w-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 text-[#7A7266] group-hover:text-[#C9A46A]" />
             </div>
           </Link>
         );

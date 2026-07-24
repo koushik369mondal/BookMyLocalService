@@ -35,22 +35,22 @@ export default function ProviderSidebar({ collapsed }) {
     : "?";
 
   return (
-    <div className="flex flex-col h-full bg-white border-r border-slate-200/90 w-full shadow-xs">
+    <div className="flex flex-col h-full bg-[#F0E7D5] border-r border-[#E8DCC3] w-full">
       {/* Header Profile Section */}
-      <div className={`p-4 border-b border-slate-100 flex flex-col items-center text-center transition-all duration-300 ${collapsed ? "py-5 px-2" : "p-6"}`}>
-        <div className={`rounded-2xl overflow-hidden border-2 border-slate-100 shadow-xs bg-amber-500/10 flex items-center justify-center font-extrabold text-slate-800 transition-all duration-300 ${
+      <div className={`p-4 border-b border-[#E8DCC3] flex flex-col items-center text-center transition-all ${collapsed ? "py-5 px-2" : "p-6"}`}>
+        <div className={`rounded-xl overflow-hidden border border-[#E8DCC3] shadow-2xs bg-[#FAF6F0] flex items-center justify-center font-bold text-[#C9A46A] transition-all ${
           collapsed ? "h-10 w-10 mb-0" : "h-14 w-14 mb-3"
         }`}>
           {user?.avatar ? (
             <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
           ) : (
-            <span className={collapsed ? "text-sm" : "text-lg text-amber-600"}>{initials}</span>
+            <span className={collapsed ? "text-sm" : "text-lg"}>{initials}</span>
           )}
         </div>
         {!collapsed && (
           <>
-            <h4 className="font-extrabold text-sm text-slate-900 leading-tight mt-1 truncate max-w-full">{user?.fullName}</h4>
-            <span className="text-[10px] text-amber-600 font-bold uppercase tracking-wider mt-1 px-2 py-0.5 bg-amber-50 rounded-full border border-amber-200/60">
+            <h4 className="font-bold text-sm text-[#1F1D1A] leading-tight mt-1 truncate max-w-full">{user?.fullName}</h4>
+            <span className="text-[10px] text-[#C9A46A] font-extrabold uppercase tracking-wider mt-1 px-2.5 py-0.5 bg-[#FAF6F0] rounded-lg border border-[#E8DCC3]">
               Provider Account
             </span>
           </>
@@ -68,12 +68,12 @@ export default function ProviderSidebar({ collapsed }) {
               <button
                 key={idx}
                 onClick={handleLogout}
-                className={`w-full flex items-center gap-3 text-xs font-semibold py-3 rounded-xl text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition-all text-left group ${
+                className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#B2563B] hover:bg-[#FAF6F0] transition-all text-left ${
                   collapsed ? "justify-center px-0" : "px-3.5"
                 }`}
                 title={collapsed ? item.label : undefined}
               >
-                <Icon className="h-4.5 w-4.5 shrink-0 transition-transform group-hover:scale-110 duration-200" />
+                <Icon className="h-4.5 w-4.5 shrink-0" />
                 {!collapsed && <span>{item.label}</span>}
               </button>
             );
@@ -85,23 +85,16 @@ export default function ProviderSidebar({ collapsed }) {
             <Link
               key={idx}
               to={destination}
-              className={`relative flex items-center gap-3 text-xs font-semibold py-3 rounded-xl transition-all duration-200 group ${
+              className={`flex items-center gap-3 text-xs font-bold py-3 rounded-xl transition-all ${
                 collapsed ? "justify-center px-0" : "px-3.5"
               } ${
                 active
-                  ? "bg-slate-900 text-white font-bold shadow-sm shadow-slate-900/10"
-                  : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
+                  ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                  : "text-[#5A5146] hover:bg-[#FAF6F0] hover:text-[#C9A46A]"
               }`}
               title={collapsed ? item.label : undefined}
             >
-              {/* Thin Orange Accent Bar for active menu item */}
-              {active && (
-                <span className="absolute left-0 top-2 bottom-2 w-1 bg-amber-500 rounded-r-full shadow-xs"></span>
-              )}
-
-              <Icon className={`h-4.5 w-4.5 shrink-0 transition-transform group-hover:scale-110 duration-200 ${
-                active ? "text-amber-400" : "text-slate-400 group-hover:text-slate-700"
-              }`} />
+              <Icon className={`h-4.5 w-4.5 shrink-0 ${active ? "text-[#C9A46A]" : "text-[#7A7266]"}`} />
               {!collapsed && <span>{item.label}</span>}
             </Link>
           );

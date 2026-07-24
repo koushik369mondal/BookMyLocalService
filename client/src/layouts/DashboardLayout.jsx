@@ -16,8 +16,8 @@ export default function DashboardLayout({ children }) {
   if (loading) {
     return (
       <MainLayout>
-        <div className="min-h-screen flex items-center justify-center bg-slate-50/50">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-900" />
+        <div className="min-h-screen flex items-center justify-center bg-[#FAF6F0]">
+          <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
         </div>
       </MainLayout>
     );
@@ -41,7 +41,7 @@ export default function DashboardLayout({ children }) {
 
   return (
     <MainLayout>
-      <div className="flex min-h-[calc(100vh-4rem)] bg-slate-50/50 font-sans relative">
+      <div className="flex min-h-[calc(100vh-4rem)] bg-[#FAF6F0] font-sans relative">
         
         {/* Desktop Sidebar (Sticky under main navbar) */}
         <aside 
@@ -55,7 +55,7 @@ export default function DashboardLayout({ children }) {
             {/* Collapse toggle button */}
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="absolute -right-3.5 top-20 bg-white border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50 shadow-xs h-7 w-7 rounded-full flex items-center justify-center z-40 transition-colors"
+              className="absolute -right-3.5 top-20 bg-[#FAF6F0] border border-[#E8DCC3] text-[#5A5146] hover:text-[#C9A46A] hover:bg-[#F0E7D5] shadow-2xs h-7 w-7 rounded-full flex items-center justify-center z-40 transition-colors"
               title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
             >
               {isCollapsed ? (
@@ -70,21 +70,21 @@ export default function DashboardLayout({ children }) {
         {/* Mobile Drawer Backdrop */}
         {isMobileOpen && (
           <div 
-            className="fixed inset-0 z-45 bg-slate-900/40 backdrop-blur-xs md:hidden"
+            className="fixed inset-0 z-45 bg-[#1F1D1A]/40 backdrop-blur-xs md:hidden"
             onClick={() => setIsMobileOpen(false)}
           />
         )}
 
         {/* Mobile Drawer Panel */}
         <aside 
-          className={`fixed top-16 left-0 bottom-0 z-50 w-72 bg-white border-r border-slate-200 transform transition-transform duration-300 md:hidden flex flex-col ${
+          className={`fixed top-16 left-0 bottom-0 z-50 w-72 bg-[#F0E7D5] border-r border-[#E8DCC3] transform transition-transform duration-300 md:hidden flex flex-col ${
             isMobileOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           {/* Close Button Inside Drawer */}
           <button
             onClick={() => setIsMobileOpen(false)}
-            className="absolute right-4 top-4 text-slate-400 hover:text-slate-900 p-1.5 z-55"
+            className="absolute right-4 top-4 text-[#7A7266] hover:text-[#1F1D1A] p-1.5 z-55"
           >
             <X className="h-5 w-5" />
           </button>
@@ -97,16 +97,16 @@ export default function DashboardLayout({ children }) {
         <div className="flex-1 flex flex-col min-w-0 min-h-full pb-16">
           
           {/* Mobile Navigation Header Bar */}
-          <div className="md:hidden flex items-center bg-white border-b border-slate-200 px-4 py-3 sticky top-16 z-30 justify-between">
+          <div className="md:hidden flex items-center bg-[#F0E7D5] border-b border-[#E8DCC3] px-4 py-3 sticky top-16 z-30 justify-between">
             <button
               onClick={() => setIsMobileOpen(true)}
-              className="p-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg flex items-center gap-1.5"
+              className="p-1.5 text-[#5A5146] hover:text-[#C9A46A] hover:bg-[#FAF6F0] rounded-lg flex items-center gap-1.5 font-bold text-xs"
             >
               <Menu className="h-5 w-5" />
-              <span className="text-xs font-bold text-slate-700">Dashboard Menu</span>
+              <span>Dashboard Menu</span>
             </button>
 
-            <span className="text-[10px] font-black uppercase text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">
+            <span className="text-[10px] font-extrabold uppercase text-[#1F1D1A] bg-[#FAF6F0] border border-[#E8DCC3] px-2.5 py-0.5 rounded-lg">
               {user.role}
             </span>
           </div>

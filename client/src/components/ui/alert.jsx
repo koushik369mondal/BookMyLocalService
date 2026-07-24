@@ -3,11 +3,11 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-slate-900",
+  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-[#1F1D1A]",
   {
     variants: {
       variant: {
-        default: "bg-slate-50 text-slate-900",
+        default: "bg-[#FAF6F0] text-[#1F1D1A]",
         destructive:
           "border-red-500/50 text-red-500 dark:border-red-500 [&>svg]:text-red-500",
         success:

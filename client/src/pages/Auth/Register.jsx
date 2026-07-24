@@ -139,13 +139,13 @@ export default function Register() {
 
   return (
     <MainLayout>
-      <div className="min-h-[85vh] bg-slate-50/50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="min-h-[85vh] bg-[#FAF6F0] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
 
         {/* Container box */}
-        <div className="max-w-5xl w-full bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[650px] transition-all duration-300 hover:shadow-2xl">
+        <div className="max-w-5xl w-full bg-white rounded-3xl border border-[#5A5146]/15 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[650px] transition-all duration-300 hover:shadow-2xl">
 
           {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 via-slate-700 to-slate-900 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+          <div className="lg:col-span-5 bg-gradient-to-br from-violet-950 via-violet-800 to-violet-950 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
 
             {/* Mesh shapes and overlays */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
@@ -157,7 +157,7 @@ export default function Register() {
 
             {/* Benefit statements block matching the active role tab */}
             <div className="relative z-10 space-y-6 my-auto pt-8">
-              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-slate-300 border border-white/5 backdrop-blur-xs">
+              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-[#7A7266] border border-white/5 backdrop-blur-xs">
                 <Sparkles className="h-3.5 w-3.5 text-amber-300" />
                 Join the Platform
               </span>
@@ -167,7 +167,7 @@ export default function Register() {
                   <h2 className="text-3xl font-black leading-tight tracking-tight">
                     Get Things Done with Verified Experts.
                   </h2>
-                  <p className="text-slate-300 text-sm leading-relaxed">
+                  <p className="text-[#7A7266] text-sm leading-relaxed">
                     Create a free account to compare reviews, book appointments instantly, and manage transactions securely.
                   </p>
 
@@ -177,7 +177,7 @@ export default function Register() {
                       "Verified Service Guarantee",
                       "Easy Booking Calendar & Schedule Slots"
                     ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-slate-300">
+                      <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-[#7A7266]">
                         <UserCheck className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
                         <span>{item}</span>
                       </div>
@@ -189,7 +189,7 @@ export default function Register() {
                   <h2 className="text-3xl font-black leading-tight tracking-tight">
                     Grow Your Service Business.
                   </h2>
-                  <p className="text-slate-300 text-sm leading-relaxed">
+                  <p className="text-[#7A7266] text-sm leading-relaxed">
                     Register as a service provider to list your specialties, accept online bookings, structure pricing tiers, and find local customers.
                   </p>
 
@@ -199,7 +199,7 @@ export default function Register() {
                       "Keep 100% of Your Standard Rates",
                       "Interactive Provider Dashboard Included"
                     ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-slate-300">
+                      <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-[#7A7266]">
                         <Briefcase className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
                         <span>{item}</span>
                       </div>
@@ -212,7 +212,7 @@ export default function Register() {
             {/* Footer note */}
             <div className="relative z-10 bg-white/10 border border-white/5 rounded-2xl p-4 backdrop-blur-xs">
               <span className="text-[10px] font-bold uppercase tracking-wider text-white/60 block mb-1">Identity Safety</span>
-              <p className="text-[11px] text-slate-300 leading-relaxed">
+              <p className="text-[11px] text-[#7A7266] leading-relaxed">
                 All data transfers are protected under 256-bit encryption protocols. We never share your personal information with unverified third parties.
               </p>
             </div>
@@ -228,8 +228,8 @@ export default function Register() {
             </div>
 
             <div className="space-y-2 mb-8 text-center lg:text-left">
-              <h1 className="text-2xl font-black text-slate-900 tracking-tight">Create your account using Email OTP</h1>
-              <p className="text-sm text-slate-450 font-medium">Join BookMyLocalService to manage your bookings</p>
+              <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Create your account using Email OTP</h1>
+              <p className="text-sm text-[#7A7266] font-medium">Join BookMyLocalService to manage your bookings</p>
             </div>
 
             {/* Error & Success Notice Banners */}
@@ -252,15 +252,15 @@ export default function Register() {
 
               {/* Role Switcher Tabs */}
               <div className="space-y-1.5">
-                <Label className="text-xs font-bold text-slate-700">I want to register as a:</Label>
-                <div className="grid grid-cols-2 bg-slate-50 border border-slate-200 p-1.5 rounded-xl h-12">
+                <Label className="text-xs font-bold text-[#B2563B]">I want to register as a:</Label>
+                <div className="grid grid-cols-2 bg-[#FAF6F0] border border-[#5A5146]/20 p-1.5 rounded-xl h-12">
                   <button
                     type="button"
                     onClick={() => setValue("role", "customer")}
                     disabled={isSubmitting}
                     className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedRole === "customer"
-                        ? "bg-white text-slate-900 shadow-xs border border-slate-100"
-                        : "text-slate-500 hover:text-slate-700"
+                        ? "bg-white text-[#1F1D1A] shadow-xs border border-[#5A5146]/15"
+                        : "text-[#7A7266] hover:text-[#B2563B]"
                       }`}
                   >
                     <User className="h-3.5 w-3.5" />
@@ -271,8 +271,8 @@ export default function Register() {
                     onClick={() => setValue("role", "provider")}
                     disabled={isSubmitting}
                     className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedRole === "provider"
-                        ? "bg-white text-slate-900 shadow-xs border border-slate-100"
-                        : "text-slate-500 hover:text-slate-700"
+                        ? "bg-white text-[#1F1D1A] shadow-xs border border-[#5A5146]/15"
+                        : "text-[#7A7266] hover:text-[#B2563B]"
                       }`}
                   >
                     <Briefcase className="h-3.5 w-3.5" />
@@ -283,15 +283,15 @@ export default function Register() {
 
               {/* Full Name */}
               <div className="space-y-1.5">
-                <Label htmlFor="fullName" className="text-xs font-bold text-slate-700">Full Name</Label>
+                <Label htmlFor="fullName" className="text-xs font-bold text-[#B2563B]">Full Name</Label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-slate-400">
+                  <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
                     <User className="h-4 w-4" />
                   </span>
                   <Input
                     id="fullName"
                     placeholder="e.g. Amanda Watson"
-                    className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${errors.fullName ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
+                    className={`pl-10 h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${errors.fullName ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
                       }`}
                     disabled={isSubmitting}
                     {...register("fullName")}
@@ -310,16 +310,16 @@ export default function Register() {
 
                 {/* Email address */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="email" className="text-xs font-bold text-slate-700">Email Address</Label>
+                  <Label htmlFor="email" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
                   <div className="relative">
-                    <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-slate-400">
+                    <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
                       <Mail className="h-4 w-4" />
                     </span>
                     <Input
                       id="email"
                       type="email"
                       placeholder="name@example.com"
-                      className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${errors.email ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
+                      className={`pl-10 h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${errors.email ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
                         }`}
                       disabled={isSubmitting}
                       {...register("email")}
@@ -335,15 +335,15 @@ export default function Register() {
 
                 {/* Phone number */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="phone" className="text-xs font-bold text-slate-700">Phone Number</Label>
+                  <Label htmlFor="phone" className="text-xs font-bold text-[#B2563B]">Phone Number</Label>
                   <div className="relative">
-                    <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-slate-400">
+                    <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
                       <Phone className="h-4 w-4" />
                     </span>
                     <Input
                       id="phone"
                       placeholder="123-456-7890"
-                      className={`pl-10 h-10 border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 rounded-xl text-xs bg-white ${errors.phone ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
+                      className={`pl-10 h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${errors.phone ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
                         }`}
                       disabled={isSubmitting}
                       {...register("phone")}
@@ -367,15 +367,15 @@ export default function Register() {
                     checked={acceptTermsValue}
                     onCheckedChange={(checked) => setValue("acceptTerms", checked === true)}
                     disabled={isSubmitting}
-                    className="rounded-md border-slate-300 bg-white mt-0.5"
+                    className="rounded-md border-stone-300 bg-white mt-0.5"
                   />
                   <label
                     htmlFor="acceptTerms"
                     className="text-xs font-semibold text-slate-550 leading-relaxed cursor-pointer select-none"
                   >
                     I agree to the BookMyLocalService{" "}
-                    <Link to="/terms" className="text-slate-900 hover:text-amber-500 hover:underline">Terms of Service</Link> and{" "}
-                    <Link to="/privacy" className="text-slate-900 hover:text-amber-500 hover:underline">Privacy Policy</Link>.
+                    <Link to="/terms" className="text-[#1F1D1A] hover:text-[#C9A46A] hover:underline">Terms of Service</Link> and{" "}
+                    <Link to="/privacy" className="text-[#1F1D1A] hover:text-[#C9A46A] hover:underline">Privacy Policy</Link>.
                   </label>
                 </div>
                 {errors.acceptTerms && (
@@ -390,7 +390,7 @@ export default function Register() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 bg-slate-900 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -409,9 +409,9 @@ export default function Register() {
             {/* Continue with divider */}
             <div className="relative my-6 shrink-0">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-100"></div>
+                <div className="w-full border-t border-[#5A5146]/15"></div>
               </div>
-              <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider text-slate-400">
+              <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider text-[#7A7266]">
                 <span className="bg-white px-3.5">or continue with</span>
               </div>
             </div>
@@ -423,7 +423,7 @@ export default function Register() {
                 variant="outline"
                 disabled={isSubmitting}
                 onClick={() => handleSocialSignUp("Google")}
-                className="border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
+                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#B2563B] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
               >
                 <GoogleIcon className="h-4 w-4" />
                 Google
@@ -433,19 +433,19 @@ export default function Register() {
                 variant="outline"
                 disabled={isSubmitting}
                 onClick={() => handleSocialSignUp("GitHub")}
-                className="border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
+                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#B2563B] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
               >
-                <GitHubIcon className="h-4 w-4 text-slate-900" />
+                <GitHubIcon className="h-4 w-4 text-[#1F1D1A]" />
                 GitHub
               </Button>
             </div>
 
             {/* Redirect to login */}
-            <div className="mt-8 text-center text-xs font-semibold text-slate-500">
+            <div className="mt-8 text-center text-xs font-semibold text-[#7A7266]">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-slate-900 hover:text-amber-500 transition-colors font-bold hover:underline"
+                className="text-[#1F1D1A] hover:text-[#C9A46A] transition-colors font-bold hover:underline"
               >
                 Sign In
               </Link>

@@ -240,12 +240,12 @@ export default function Availability() {
     }
 
     return (
-      <div className="border border-slate-100 p-4.5 rounded-2xl bg-white shadow-2xs">
-        <span className="text-xs font-bold text-slate-800 block mb-3 flex items-center gap-1">
-          <CalendarIcon className="h-4 w-4 text-slate-900" /> Visual Month View (July 2026)
+      <div className="border border-[#5A5146]/15 p-4.5 rounded-2xl bg-white shadow-2xs">
+        <span className="text-xs font-bold text-[#1F1D1A] block mb-3 flex items-center gap-1">
+          <CalendarIcon className="h-4 w-4 text-[#1F1D1A]" /> Visual Month View (July 2026)
         </span>
         
-        <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400 mb-2 uppercase tracking-wide">
+        <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-[#7A7266] mb-2 uppercase tracking-wide">
           <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
         </div>
 
@@ -271,7 +271,7 @@ export default function Availability() {
           ))}
         </div>
 
-        <div className="mt-4 flex items-center justify-center gap-4 text-[10px] font-semibold text-slate-500">
+        <div className="mt-4 flex items-center justify-center gap-4 text-[10px] font-semibold text-[#7A7266]">
           <div className="flex items-center gap-1">
             <span className="h-2.5 w-2.5 rounded-sm bg-emerald-50 border border-emerald-200"></span>
             <span>Available</span>
@@ -287,16 +287,16 @@ export default function Availability() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Availability & Scheduling</h1>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium">Configure daily operational hours, add custom break windows, or block vacation days</p>
+              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Configure daily operational hours, add custom break windows, or block vacation days</p>
             </div>
             
             {/* Quick dashboard back button */}
@@ -331,13 +331,13 @@ export default function Availability() {
             {/* LEFT COLUMN: WEEKLY AVAILABILITY GRID */}
             <div className="lg:col-span-7 space-y-6">
               
-              <Card className="border border-slate-100 shadow-md bg-white rounded-2xl p-6">
-                <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
+              <Card className="border border-[#5A5146]/15 shadow-md bg-white rounded-2xl p-6">
+                <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
+                  <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
-                    <CardTitle className="text-base font-extrabold text-slate-900">Weekly Shift Schedule</CardTitle>
+                    <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Weekly Shift Schedule</CardTitle>
                     <CardDescription className="text-xs">Configure daily slots. Gray indicates off-duty days.</CardDescription>
                   </div>
                 </CardHeader>
@@ -350,8 +350,8 @@ export default function Availability() {
                         key={day} 
                         className={`p-4 border rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4.5 transition-all ${
                           dayData.active 
-                            ? "bg-white border-slate-200" 
-                            : "bg-slate-50 border-slate-100 opacity-70"
+                            ? "bg-white border-[#5A5146]/20" 
+                            : "bg-[#FAF6F0] border-[#5A5146]/15 opacity-70"
                         }`}
                       >
                         
@@ -363,9 +363,9 @@ export default function Availability() {
                             disabled={isSaving}
                           />
                           <div>
-                            <span className="text-xs font-black text-slate-900 block">{day}</span>
+                            <span className="text-xs font-black text-[#1F1D1A] block">{day}</span>
                             <span className={`text-[10px] font-bold uppercase tracking-wider ${
-                              dayData.active ? "text-emerald-600" : "text-slate-400"
+                              dayData.active ? "text-emerald-600" : "text-[#7A7266]"
                             }`}>
                               {dayData.active ? "Available" : "Unavailable / Off"}
                             </span>
@@ -378,23 +378,23 @@ export default function Availability() {
                             dayData.slots.map((slot, index) => (
                               <div key={slot.id} className="flex items-center gap-2.5 flex-wrap">
                                 
-                                <div className="flex items-center gap-2 border border-slate-200 bg-slate-50 p-1.5 rounded-xl text-xs font-semibold text-slate-700">
+                                <div className="flex items-center gap-2 border border-[#5A5146]/20 bg-[#FAF6F0] p-1.5 rounded-xl text-xs font-semibold text-[#B2563B]">
                                   {/* Start Time Option select */}
                                   <div className="relative">
                                     <select
                                       value={slot.start}
                                       onChange={(e) => handleModifySlot(day, slot.id, "start", e.target.value)}
                                       disabled={isSaving}
-                                      className="h-7 border-0 bg-transparent text-xs font-bold text-slate-800 pr-5 appearance-none focus:outline-none"
+                                      className="h-7 border-0 bg-transparent text-xs font-bold text-[#1F1D1A] pr-5 appearance-none focus:outline-none"
                                     >
                                       {timeOptions.map(t => (
                                         <option key={t} value={t}>{t}</option>
                                       ))}
                                     </select>
-                                    <ChevronDown className="h-3 w-3 absolute right-0 top-[50%] translate-y-[-50%] pointer-events-none text-slate-400" />
+                                    <ChevronDown className="h-3 w-3 absolute right-0 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
                                   </div>
 
-                                  <span className="text-slate-400">to</span>
+                                  <span className="text-[#7A7266]">to</span>
 
                                   {/* End Time Option select */}
                                   <div className="relative">
@@ -402,13 +402,13 @@ export default function Availability() {
                                       value={slot.end}
                                       onChange={(e) => handleModifySlot(day, slot.id, "end", e.target.value)}
                                       disabled={isSaving}
-                                      className="h-7 border-0 bg-transparent text-xs font-bold text-slate-800 pr-5 appearance-none focus:outline-none"
+                                      className="h-7 border-0 bg-transparent text-xs font-bold text-[#1F1D1A] pr-5 appearance-none focus:outline-none"
                                     >
                                       {timeOptions.map(t => (
                                         <option key={t} value={t}>{t}</option>
                                       ))}
                                     </select>
-                                    <ChevronDown className="h-3 w-3 absolute right-0 top-[50%] translate-y-[-50%] pointer-events-none text-slate-400" />
+                                    <ChevronDown className="h-3 w-3 absolute right-0 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
                                   </div>
 
                                 </div>
@@ -425,7 +425,7 @@ export default function Availability() {
                               </div>
                             ))
                           ) : (
-                            <span className="text-[10px] font-semibold text-slate-400 italic">No bookings accepted on this day</span>
+                            <span className="text-[10px] font-semibold text-[#7A7266] italic">No bookings accepted on this day</span>
                           )}
                         </div>
 
@@ -437,7 +437,7 @@ export default function Availability() {
                             variant="outline"
                             onClick={() => handleAddSlot(day)}
                             disabled={isSaving}
-                            className="border-slate-200 hover:bg-slate-50 text-slate-600 font-bold h-8 rounded-lg text-[9px] uppercase tracking-wide flex items-center gap-1 shrink-0 ml-auto"
+                            className="border-[#5A5146]/20 hover:bg-[#FAF6F0] text-[#5A5146] font-bold h-8 rounded-lg text-[9px] uppercase tracking-wide flex items-center gap-1 shrink-0 ml-auto"
                           >
                             <Plus className="h-3.5 w-3.5" /> Add Slot
                           </Button>
@@ -456,7 +456,7 @@ export default function Availability() {
                   variant="outline"
                   onClick={handleResetSchedule}
                   disabled={isSaving}
-                  className="border-slate-200 hover:bg-slate-50 text-slate-600 font-bold text-xs h-10 px-5 rounded-xl transition-all"
+                  className="border-[#5A5146]/20 hover:bg-[#FAF6F0] text-[#5A5146] font-bold text-xs h-10 px-5 rounded-xl transition-all"
                 >
                   <RotateCcw className="h-4 w-4 mr-1" /> Reset Defaults
                 </Button>
@@ -465,7 +465,7 @@ export default function Availability() {
                   type="button"
                   onClick={handleSaveSchedule}
                   disabled={isSaving}
-                  className="bg-slate-900 hover:bg-slate-900 text-white font-bold text-xs h-10 px-6 rounded-xl shadow-md flex items-center justify-center gap-1.5"
+                  className="bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs h-10 px-6 rounded-xl shadow-md flex items-center justify-center gap-1.5"
                 >
                   {isSaving ? (
                     <>
@@ -490,31 +490,31 @@ export default function Availability() {
               {renderMiniCalendar()}
 
               {/* VACATION LEAVE BLOCKER */}
-              <Card className="border border-slate-100 shadow-2xs bg-white rounded-2xl p-5 space-y-4">
-                <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2">Block Holidays / Leaves</span>
+              <Card className="border border-[#5A5146]/15 shadow-2xs bg-white rounded-2xl p-5 space-y-4">
+                <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2">Block Holidays / Leaves</span>
                 
                 <form onSubmit={handleAddBlockDate} className="space-y-3.5">
                   <div className="space-y-1.5">
-                    <Label htmlFor="blockDate" className="text-[11px] font-bold text-slate-700">Select Date</Label>
+                    <Label htmlFor="blockDate" className="text-[11px] font-bold text-[#B2563B]">Select Date</Label>
                     <Input
                       id="blockDate"
                       type="date"
                       value={newBlockDate}
                       onChange={(e) => setNewBlockDate(e.target.value)}
-                      className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                      className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                       disabled={isSaving}
                       required
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="blockReason" className="text-[11px] font-bold text-slate-700">Reason / Holiday Name</Label>
+                    <Label htmlFor="blockReason" className="text-[11px] font-bold text-[#B2563B]">Reason / Holiday Name</Label>
                     <Input
                       id="blockReason"
                       placeholder="e.g. Summer Vacation, Doctor Visit"
                       value={newBlockReason}
                       onChange={(e) => setNewBlockReason(e.target.value)}
-                      className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                      className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                       disabled={isSaving}
                       required
                     />
@@ -523,26 +523,26 @@ export default function Availability() {
                   <Button
                     type="submit"
                     disabled={isSaving}
-                    className="w-full bg-slate-900 hover:bg-black text-white h-9.5 font-bold text-xs rounded-xl flex items-center justify-center gap-1"
+                    className="w-full bg-[#B2563B] hover:bg-black text-white h-9.5 font-bold text-xs rounded-xl flex items-center justify-center gap-1"
                   >
-                    <Coffee className="h-4 w-4 text-amber-400" /> Block Selected Date
+                    <Coffee className="h-4 w-4 text-[#B2563B]" /> Block Selected Date
                   </Button>
                 </form>
               </Card>
 
               {/* LIST OF BLOCKED DATES */}
-              <Card className="border border-slate-100 shadow-2xs bg-white rounded-2xl p-5 space-y-4">
-                <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block border-b border-slate-50 pb-2">Blocked Dates List</span>
+              <Card className="border border-[#5A5146]/15 shadow-2xs bg-white rounded-2xl p-5 space-y-4">
+                <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2">Blocked Dates List</span>
                 
                 {blockedDates.length === 0 ? (
-                  <p className="text-[10px] text-slate-400 font-semibold text-center py-2.5">No holidays or leaves blocked for this month.</p>
+                  <p className="text-[10px] text-[#7A7266] font-semibold text-center py-2.5">No holidays or leaves blocked for this month.</p>
                 ) : (
                   <div className="space-y-2.5">
                     {blockedDates.map(b => (
-                      <div key={b.id} className="flex items-center justify-between p-3 border border-slate-200 rounded-xl bg-white shadow-2xs group hover:border-slate-300 transition-colors">
+                      <div key={b.id} className="flex items-center justify-between p-3 border border-[#5A5146]/20 rounded-xl bg-white shadow-2xs group hover:border-stone-300 transition-colors">
                         <div>
-                          <span className="text-[9px] font-bold text-slate-450 block">{b.date}</span>
-                          <h5 className="font-extrabold text-slate-800 text-xs mt-0.5">{b.reason}</h5>
+                          <span className="text-[9px] font-bold text-[#7A7266] block">{b.date}</span>
+                          <h5 className="font-extrabold text-[#1F1D1A] text-xs mt-0.5">{b.reason}</h5>
                         </div>
 
                         <button

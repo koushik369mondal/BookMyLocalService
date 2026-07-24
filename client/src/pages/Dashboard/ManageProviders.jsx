@@ -251,7 +251,7 @@ export default function ManageProviders() {
       case "verified":
         return <Badge className="bg-emerald-500 hover:bg-emerald-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Verified</Badge>;
       case "pending":
-        return <Badge className="bg-amber-500 hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
+        return <Badge className="bg-[#B2563B] hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
       default: // suspended
         return <Badge className="bg-rose-500 hover:bg-rose-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Suspended</Badge>;
     }
@@ -259,16 +259,16 @@ export default function ManageProviders() {
 
   return (
     <DashboardLayout>
-      <div className="bg-slate-50/50 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
+        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Manage Service Specialists</h1>
-              <p className="text-slate-300 text-xs sm:text-sm font-medium">Verify credentials, edit pricing categories, suspend accounts, or export databases</p>
+              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Verify credentials, edit pricing categories, suspend accounts, or export databases</p>
             </div>
             
             {/* Quick dashboard back button */}
@@ -283,26 +283,26 @@ export default function ManageProviders() {
 
         {/* STATISTICS OVERVIEW CARDS */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-slate-100 p-5 rounded-2xl shadow-md">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-[#5A5146]/15 p-5 rounded-2xl shadow-md">
             
             <div className="text-center space-y-1 py-1">
-              <span className="block text-2xl font-black text-slate-900">{stats.total}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Specialists</span>
+              <span className="block text-2xl font-black text-[#1F1D1A]">{stats.total}</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Specialists</span>
             </div>
             
-            <div className="text-center space-y-1 py-1 border-l border-slate-100">
+            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
               <span className="block text-2xl font-black text-emerald-600">{stats.verified}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Verified Pros</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Verified Pros</span>
             </div>
 
-            <div className="text-center space-y-1 py-1 border-l border-slate-100">
-              <span className="block text-2xl font-black text-amber-600">{stats.pending}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Pending Approval</span>
+            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
+              <span className="block text-2xl font-black text-[#B2563B]">{stats.pending}</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Pending Approval</span>
             </div>
 
-            <div className="text-center space-y-1 py-1 border-l border-slate-100">
+            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
               <span className="block text-2xl font-black text-rose-600">{stats.suspended}</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Suspended Accounts</span>
+              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Suspended Accounts</span>
             </div>
 
           </div>
@@ -316,31 +316,31 @@ export default function ManageProviders() {
             <div className="lg:col-span-3 space-y-5 shrink-0">
               
               {/* Search */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5 flex items-center gap-1.5">
-                  <Search className="h-4 w-4 text-slate-900" /> Search Specialists
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5 flex items-center gap-1.5">
+                  <Search className="h-4 w-4 text-[#1F1D1A]" /> Search Specialists
                 </span>
                 <div className="relative">
-                  <span className="absolute left-3 top-[50%] translate-y-[-50%] text-slate-400">
+                  <span className="absolute left-3 top-[50%] translate-y-[-50%] text-[#7A7266]">
                     <Search className="h-4 w-4" />
                   </span>
                   <Input 
                     placeholder="Search name, category..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                    className="pl-9 h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                   />
                 </div>
               </Card>
 
               {/* Categories */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5">Filter by Category</span>
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5">Filter by Category</span>
                 <div className="relative">
                   <select
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Categories</option>
                     <option value="Home Cleaning">Home Cleaning</option>
@@ -349,47 +349,47 @@ export default function ManageProviders() {
                     <option value="Lawn & Garden">Lawn & Garden</option>
                     <option value="Wellness & Personal">Wellness & Personal</option>
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                     <ChevronDown className="h-4 w-4 opacity-60" />
                   </div>
                 </div>
               </Card>
 
               {/* Verification Status */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5">Verification Status</span>
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5">Verification Status</span>
                 <div className="relative">
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Statuses</option>
                     <option value="verified">Verified</option>
                     <option value="pending">Pending</option>
                     <option value="suspended">Suspended</option>
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                     <ChevronDown className="h-4 w-4 opacity-60" />
                   </div>
                 </div>
               </Card>
 
               {/* Sort options */}
-              <Card className="border border-slate-100 bg-white p-4.5 rounded-2xl shadow-2xs">
-                <span className="text-xs font-bold text-slate-800 block mb-2.5">Sort Options</span>
+              <Card className="border border-[#5A5146]/15 bg-white p-4.5 rounded-2xl shadow-2xs">
+                <span className="text-xs font-bold text-[#1F1D1A] block mb-2.5">Sort Options</span>
                 <div className="relative">
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="bookings-desc">Bookings: High to Low</option>
                     <option value="rating-desc">Rating: Highest First</option>
                     <option value="date-desc">Join Date: Newest First</option>
                     <option value="name-asc">Name: A to Z</option>
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
                     <ChevronDown className="h-4 w-4 opacity-60" />
                   </div>
                 </div>
@@ -402,9 +402,9 @@ export default function ManageProviders() {
               
               {/* BULK ACTIONS PANEL */}
               {selectedIds.length > 0 && (
-                <div className="p-4 bg-slate-900 border border-slate-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
+                <div className="p-4 bg-[#B2563B] border border-violet-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
                   <span className="text-xs font-extrabold flex items-center gap-2">
-                    <Briefcase className="h-4.5 w-4.5 text-slate-700" />
+                    <Briefcase className="h-4.5 w-4.5 text-[#B2563B]" />
                     {selectedIds.length} Providers Selected
                   </span>
                   
@@ -438,40 +438,40 @@ export default function ManageProviders() {
                 /* LOADING SHIMMER CARDS */
                 <div className="space-y-4">
                   {[...Array(4)].map((_, i) => (
-                    <Card key={i} className="border border-slate-100 bg-white p-5 rounded-2xl animate-pulse flex items-center gap-4">
+                    <Card key={i} className="border border-[#5A5146]/15 bg-white p-5 rounded-2xl animate-pulse flex items-center gap-4">
                       <Skeleton className="w-5 h-5 rounded" />
-                      <Skeleton className="w-10 h-10 rounded-full bg-slate-200" />
+                      <Skeleton className="w-10 h-10 rounded-full bg-[#E8DCC3]" />
                       <div className="space-y-2 flex-1">
-                        <Skeleton className="h-4 bg-slate-200 w-1/4 rounded" />
-                        <Skeleton className="h-3.5 bg-slate-200 w-1/3 rounded" />
+                        <Skeleton className="h-4 bg-[#E8DCC3] w-1/4 rounded" />
+                        <Skeleton className="h-3.5 bg-[#E8DCC3] w-1/3 rounded" />
                       </div>
                     </Card>
                   ))}
                 </div>
               ) : paginatedProviders.length === 0 ? (
                 /* EMPTY STATE BOARD */
-                <div className="bg-white border border-slate-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-slate-900/5 text-slate-900 rounded-full border border-slate-900/10">
+                <div className="bg-white border border-[#5A5146]/15 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
+                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mt-2">No Providers Found</h3>
-                  <p className="text-xs text-slate-450 max-w-sm leading-relaxed">
+                  <h3 className="text-xl font-bold text-[#1F1D1A] mt-2">No Providers Found</h3>
+                  <p className="text-xs text-[#7A7266] max-w-sm leading-relaxed">
                     We couldn't find any specialist profiles matching your selected criteria. Clear search queries.
                   </p>
                 </div>
               ) : (
                 /* PROVIDERS TABLE GRID */
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 overflow-hidden">
+                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-xs text-left">
                       <thead>
-                        <tr className="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider text-[9px] pb-2">
+                        <tr className="border-b border-[#5A5146]/15 text-[#7A7266] font-bold uppercase tracking-wider text-[9px] pb-2">
                           <th className="py-2.5 px-1 shrink-0 w-8">
                             <Checkbox 
                               id="selectAll"
                               checked={selectedIds.length === filteredProviders.length && filteredProviders.length > 0}
                               onCheckedChange={handleSelectAll}
-                              className="rounded border-slate-400"
+                              className="rounded border-stone-400"
                             />
                           </th>
                           <th className="py-2.5">Provider</th>
@@ -483,49 +483,49 @@ export default function ManageProviders() {
                           <th className="py-2.5 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-50 font-medium text-slate-700">
+                      <tbody className="divide-y divide-stone-50 font-medium text-[#B2563B]">
                         {paginatedProviders.map(prov => {
                           const isSelected = selectedIds.includes(prov.id);
                           return (
-                            <tr key={prov.id} className={`hover:bg-slate-50/50 transition-colors ${isSelected ? "bg-slate-900/5/10" : ""}`}>
+                            <tr key={prov.id} className={`hover:bg-[#FAF6F0] transition-colors ${isSelected ? "bg-[#B2563B]/5/10" : ""}`}>
                               <td className="py-3 px-1 shrink-0 w-8">
                                 <Checkbox 
                                   checked={isSelected}
                                   onCheckedChange={(checked) => handleSelectRow(prov.id, checked === true)}
-                                  className="rounded border-slate-400"
+                                  className="rounded border-stone-400"
                                 />
                               </td>
                               <td className="py-3">
                                 <div className="flex items-center gap-3">
-                                  <Avatar className="w-9 h-9 border border-slate-100 overflow-hidden shrink-0">
+                                  <Avatar className="w-9 h-9 border border-[#5A5146]/15 overflow-hidden shrink-0">
                                     <AvatarImage src={prov.avatar} className="object-cover" />
                                     <AvatarFallback>{prov.name[0]}</AvatarFallback>
                                   </Avatar>
                                   <div>
-                                    <span className="block text-slate-800 font-bold">{prov.name}</span>
-                                    <span className="text-[10px] text-slate-450 font-semibold flex items-center gap-0.5 mt-0.5"><MapPin className="h-3 w-3" /> {prov.location}</span>
+                                    <span className="block text-[#1F1D1A] font-bold">{prov.name}</span>
+                                    <span className="text-[10px] text-[#7A7266] font-semibold flex items-center gap-0.5 mt-0.5"><MapPin className="h-3 w-3" /> {prov.location}</span>
                                   </div>
                                 </div>
                               </td>
                               <td className="py-3">
-                                <span className="block text-slate-700">{prov.category}</span>
-                                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">{prov.serviceName}</span>
+                                <span className="block text-[#B2563B]">{prov.category}</span>
+                                <span className="text-[9px] text-[#7A7266] font-bold uppercase tracking-wider">{prov.serviceName}</span>
                               </td>
-                              <td className="py-3 font-bold text-slate-900">
+                              <td className="py-3 font-bold text-[#1F1D1A]">
                                 <span className="flex items-center gap-0.5">
-                                  <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" /> {prov.rating}
+                                  <Star className="h-3.5 w-3.5 fill-amber-400 text-[#C9A46A]" /> {prov.rating}
                                 </span>
                               </td>
-                              <td className="py-3 font-bold text-slate-900">{prov.bookings} jobs</td>
+                              <td className="py-3 font-bold text-[#1F1D1A]">{prov.bookings} jobs</td>
                               <td className="py-3">{getStatusBadge(prov.status)}</td>
-                              <td className="py-3 text-slate-500 font-semibold">{prov.date}</td>
+                              <td className="py-3 text-[#7A7266] font-semibold">{prov.date}</td>
                               <td className="py-3 text-right">
                                 <div className="flex justify-end gap-1.5">
                                   <Button
                                     size="xs"
                                     variant="outline"
                                     onClick={() => handleOpenView(prov)}
-                                    className="h-7 text-[9px] font-bold border-slate-200 hover:bg-slate-50 bg-white"
+                                    className="h-7 text-[9px] font-bold border-[#5A5146]/20 hover:bg-[#FAF6F0] bg-white"
                                   >
                                     <Eye className="h-3 w-3" />
                                   </Button>
@@ -533,7 +533,7 @@ export default function ManageProviders() {
                                     size="xs"
                                     variant="outline"
                                     onClick={() => handleOpenEdit(prov)}
-                                    className="h-7 text-[9px] font-bold border-slate-200 hover:bg-slate-50 bg-white"
+                                    className="h-7 text-[9px] font-bold border-[#5A5146]/20 hover:bg-[#FAF6F0] bg-white"
                                   >
                                     <Edit3 className="h-3 w-3" />
                                   </Button>
@@ -554,7 +554,7 @@ export default function ManageProviders() {
                                       className={`h-7 text-[9px] font-bold rounded-lg border bg-white ${
                                         prov.status === "suspended" 
                                           ? "border-emerald-300 hover:bg-emerald-50 text-emerald-600"
-                                          : "border-amber-200 hover:bg-amber-50 text-amber-600"
+                                          : "border-[#C9A46A]/40 hover:bg-amber-50 text-[#B2563B]"
                                       }`}
                                     >
                                       {prov.status === "suspended" ? "Activate" : "Suspend"}
@@ -580,13 +580,13 @@ export default function ManageProviders() {
 
                   {/* PAGINATION */}
                   {totalPages > 1 && (
-                    <div className="flex items-center justify-between border-t border-slate-100 pt-5 mt-4">
+                    <div className="flex items-center justify-between border-t border-[#5A5146]/15 pt-5 mt-4">
                       <Button
                         variant="outline"
                         size="sm"
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                        className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] h-9 font-semibold text-xs"
                       >
                         <ChevronLeft className="h-4 w-4 mr-1.5" />
                         Previous
@@ -602,8 +602,8 @@ export default function ManageProviders() {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
                                 currentPage === pageNum
-                                  ? "bg-slate-900 text-white shadow-md shadow-slate-900/15"
-                                  : "text-slate-600 hover:bg-slate-100"
+                                  ? "bg-[#B2563B] text-white shadow-md shadow-2xs"
+                                  : "text-[#5A5146] hover:bg-[#F0E7D5]"
                               }`}
                             >
                               {pageNum}
@@ -617,7 +617,7 @@ export default function ManageProviders() {
                         size="sm"
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                        className="rounded-xl border-slate-200 text-slate-600 hover:bg-slate-50 h-9 font-semibold text-xs"
+                        className="rounded-xl border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] h-9 font-semibold text-xs"
                       >
                         Next
                         <ChevronRight className="h-4 w-4 ml-1.5" />
@@ -638,55 +638,55 @@ export default function ManageProviders() {
       {/* DIALOG 1: VIEW DETAILS MODAL */}
       <Dialog open={isViewOpen} onOpenChange={setIsViewOpen}>
         {viewingProvider && (
-          <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
-            <DialogHeader className="border-b border-slate-50 pb-4">
-              <DialogTitle className="text-base font-extrabold text-slate-900">Provider Audit Profile</DialogTitle>
+          <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
+            <DialogHeader className="border-b border-stone-50 pb-4">
+              <DialogTitle className="text-base font-extrabold text-[#1F1D1A]">Provider Audit Profile</DialogTitle>
               <DialogDescription className="text-xs">Platform database specialist catalog logs</DialogDescription>
             </DialogHeader>
 
             <div className="flex items-center gap-4 py-4">
-              <Avatar className="w-16 h-16 border border-slate-100 overflow-hidden shrink-0">
+              <Avatar className="w-16 h-16 border border-[#5A5146]/15 overflow-hidden shrink-0">
                 <AvatarImage src={viewingProvider.avatar} className="object-cover" />
                 <AvatarFallback>{viewingProvider.name[0]}</AvatarFallback>
               </Avatar>
               <div>
-                <h4 className="font-extrabold text-slate-900 text-base">{viewingProvider.name}</h4>
-                <span className="text-[10px] text-slate-450 font-bold block mt-0.5">Specialist ID: {viewingProvider.id}</span>
+                <h4 className="font-extrabold text-[#1F1D1A] text-base">{viewingProvider.name}</h4>
+                <span className="text-[10px] text-[#7A7266] font-bold block mt-0.5">Specialist ID: {viewingProvider.id}</span>
                 <div className="flex items-center gap-2 mt-2 flex-wrap">
-                  <Badge variant="secondary" className="capitalize text-[8px] px-2 border-slate-200 font-extrabold">{viewingProvider.category}</Badge>
+                  <Badge variant="secondary" className="capitalize text-[8px] px-2 border-[#5A5146]/20 font-extrabold">{viewingProvider.category}</Badge>
                   <Badge variant={viewingProvider.status === "verified" ? "success" : "destructive"} className="capitalize text-[8px] px-2 font-extrabold border-0">{viewingProvider.status}</Badge>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-2 text-xs border-t border-slate-100 pt-4 font-semibold text-slate-550">
+            <div className="space-y-2 text-xs border-t border-[#5A5146]/15 pt-4 font-semibold text-slate-550">
               <div className="flex justify-between">
                 <span>Primary Service:</span>
-                <span className="text-slate-800">{viewingProvider.serviceName}</span>
+                <span className="text-[#1F1D1A]">{viewingProvider.serviceName}</span>
               </div>
               <div className="flex justify-between">
                 <span>Rating Score:</span>
-                <span className="text-slate-800 flex items-center gap-0.5"><Star className="h-3.5 w-3.5 fill-amber-400 text-amber-500" /> {viewingProvider.rating}</span>
+                <span className="text-[#1F1D1A] flex items-center gap-0.5"><Star className="h-3.5 w-3.5 fill-amber-400 text-[#C9A46A]" /> {viewingProvider.rating}</span>
               </div>
               <div className="flex justify-between">
                 <span>Total Bookings Placed:</span>
-                <span className="text-slate-800">{viewingProvider.bookings} completed jobs</span>
+                <span className="text-[#1F1D1A]">{viewingProvider.bookings} completed jobs</span>
               </div>
               <div className="flex justify-between">
                 <span>Email Address:</span>
-                <span className="text-slate-800">{viewingProvider.email}</span>
+                <span className="text-[#1F1D1A]">{viewingProvider.email}</span>
               </div>
               <div className="flex justify-between">
                 <span>State Location:</span>
-                <span className="text-slate-800">{viewingProvider.location}</span>
+                <span className="text-[#1F1D1A]">{viewingProvider.location}</span>
               </div>
             </div>
 
-            <DialogFooter className="pt-4 border-t border-slate-50">
+            <DialogFooter className="pt-4 border-t border-stone-50">
               <Button
                 type="button"
                 onClick={() => setIsViewOpen(false)}
-                className="rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
+                className="rounded-xl bg-[#B2563B] hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
               >
                 Close View
               </Button>
@@ -698,13 +698,13 @@ export default function ManageProviders() {
       {/* DIALOG 2: EDIT PROVIDER DETAILS FORM */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
         {editingProvider && (
-          <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
+          <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
             <DialogHeader>
-              <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <Edit3 className="h-5 w-5 text-slate-900" />
+              <DialogTitle className="text-base font-extrabold text-[#1F1D1A] flex items-center gap-2">
+                <Edit3 className="h-5 w-5 text-[#1F1D1A]" />
                 Modify Specialist Details
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-400 pt-0.5">
+              <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
                 Edit catalog details for public platform listing parameters
               </DialogDescription>
             </DialogHeader>
@@ -712,36 +712,36 @@ export default function ManageProviders() {
             <form onSubmit={onEditSaveSubmit} className="space-y-4 pt-3">
               {/* Provider Name */}
               <div className="space-y-1.5">
-                <Label htmlFor="editName" className="text-xs font-bold text-slate-700">Provider Name</Label>
+                <Label htmlFor="editName" className="text-xs font-bold text-[#B2563B]">Provider Name</Label>
                 <Input
                   id="editName"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
 
               {/* Service Title */}
               <div className="space-y-1.5">
-                <Label htmlFor="editService" className="text-xs font-bold text-slate-700">Service Title</Label>
+                <Label htmlFor="editService" className="text-xs font-bold text-[#B2563B]">Service Title</Label>
                 <Input
                   id="editService"
                   value={editServiceName}
                   onChange={(e) => setEditServiceName(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
 
               {/* Location */}
               <div className="space-y-1.5">
-                <Label htmlFor="editLocation" className="text-xs font-bold text-slate-700">Location</Label>
+                <Label htmlFor="editLocation" className="text-xs font-bold text-[#B2563B]">Location</Label>
                 <Input
                   id="editLocation"
                   value={editLocation}
                   onChange={(e) => setEditLocation(e.target.value)}
-                  className="h-9.5 border-slate-200 focus:ring-2 focus:ring-slate-900 rounded-xl text-xs bg-white"
+                  className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
                   required
                 />
               </div>
@@ -749,13 +749,13 @@ export default function ManageProviders() {
               {/* Category & Status */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <Label htmlFor="editCategory" className="text-xs font-bold text-slate-700">Category Group</Label>
+                  <Label htmlFor="editCategory" className="text-xs font-bold text-[#B2563B]">Category Group</Label>
                   <div className="relative">
                     <select
                       id="editCategory"
                       value={editCategory}
                       onChange={(e) => setEditCategory(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="Home Cleaning">Home Cleaning</option>
                       <option value="Plumbing">Plumbing</option>
@@ -763,24 +763,24 @@ export default function ManageProviders() {
                       <option value="Lawn & Garden">Lawn & Garden</option>
                       <option value="Wellness & Personal">Wellness & Personal</option>
                     </select>
-                    <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-slate-400" />
+                    <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="editStatus" className="text-xs font-bold text-slate-700">Verification Status</Label>
+                  <Label htmlFor="editStatus" className="text-xs font-bold text-[#B2563B]">Verification Status</Label>
                   <div className="relative">
                     <select
                       id="editStatus"
                       value={editStatus}
                       onChange={(e) => setEditStatus(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900 rounded-xl bg-white text-xs font-semibold text-slate-700 cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="verified">Verified</option>
                       <option value="pending">Pending</option>
                       <option value="suspended">Suspended</option>
                     </select>
-                    <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-slate-400" />
+                    <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
                   </div>
                 </div>
               </div>
@@ -790,13 +790,13 @@ export default function ManageProviders() {
                   type="button" 
                   variant="outline" 
                   onClick={() => setIsEditOpen(false)}
-                  className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
+                  className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 w-full sm:w-auto"
                 >
                   Cancel
                 </Button>
                 <Button 
                   type="submit" 
-                  className="rounded-xl bg-slate-900 hover:bg-slate-900 text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                  className="rounded-xl bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
                 >
                   Save Changes
                 </Button>
@@ -809,26 +809,26 @@ export default function ManageProviders() {
       {/* DIALOG 3: VERIFY/SUSPEND/DELETE ACTIONS CONFIRMATION */}
       <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
         {confirmTarget && (
-          <DialogContent className="max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl p-6">
+          <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
             <DialogHeader>
-              <DialogTitle className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+              <DialogTitle className="text-base font-extrabold text-[#1F1D1A] flex items-center gap-2">
                 <ShieldAlert className="h-5 w-5 text-rose-600 animate-pulse" />
                 Confirm Administrative Action
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-400 pt-0.5">
+              <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
                 Are you sure you want to perform this action? Verification requires approval.
               </DialogDescription>
             </DialogHeader>
 
             {confirmTarget.data && (
-              <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold space-y-1">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Target Details</span>
+              <div className="p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-xs font-bold space-y-1">
+                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wide">Target Details</span>
                 {confirmTarget.action.startsWith("bulk") ? (
-                  <span className="text-slate-800">{selectedIds.length} Selected Service Specialists</span>
+                  <span className="text-[#1F1D1A]">{selectedIds.length} Selected Service Specialists</span>
                 ) : (
                   <>
-                    <span className="text-slate-800 block">Name: {confirmTarget.data.name}</span>
-                    <span className="text-slate-500 block">Service: {confirmTarget.data.serviceName}</span>
+                    <span className="text-[#1F1D1A] block">Name: {confirmTarget.data.name}</span>
+                    <span className="text-[#7A7266] block">Service: {confirmTarget.data.serviceName}</span>
                   </>
                 )}
               </div>
@@ -839,7 +839,7 @@ export default function ManageProviders() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setIsConfirmOpen(false)}
-                className="rounded-xl border-slate-200 text-xs h-9.5 w-full sm:w-auto"
+                className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 w-full sm:w-auto"
               >
                 Close Dialog
               </Button>

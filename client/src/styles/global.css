@@ -1,6 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
 
-/* body {
-  background-color: #F8FAFC;
-  color: #111827;
-} */
+body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  background-color: #FAF6F0;
+  color: #5A5146;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  color: #1F1D1A;
+}
