@@ -321,7 +321,7 @@ export default function ManageUsers() {
                   <select
                     value={roleFilter}
                     onChange={(e) => setRoleFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Roles</option>
                     <option value="customer">Customers</option>
@@ -340,7 +340,7 @@ export default function ManageUsers() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Statuses</option>
                     <option value="active">Active only</option>
@@ -359,7 +359,7 @@ export default function ManageUsers() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="date-desc">Join Date: Newest First</option>
                     <option value="date-asc">Join Date: Oldest First</option>
@@ -379,9 +379,9 @@ export default function ManageUsers() {
               
               {/* BULK ACTIONS HEADER PANEL */}
               {selectedUserIds.length > 0 && (
-                <div className="p-4 bg-[#B2563B] border border-violet-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
+                <div className="p-4 bg-[#8C4B3E] border border-violet-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
                   <span className="text-xs font-extrabold flex items-center gap-2">
-                    <SlidersHorizontal className="h-4.5 w-4.5 text-[#B2563B]" />
+                    <SlidersHorizontal className="h-4.5 w-4.5 text-[#8C4B3E]" />
                     {selectedUserIds.length} Users Selected
                   </span>
                   
@@ -428,7 +428,7 @@ export default function ManageUsers() {
               ) : paginatedUsers.length === 0 ? (
                 /* EMPTY STATE BOARD */
                 <div className="bg-white border border-[#5A5146]/15 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
+                  <div className="p-4 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-[#1F1D1A] mt-2">No Users Found</h3>
@@ -459,11 +459,11 @@ export default function ManageUsers() {
                           <th className="py-2.5 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-50 font-medium text-[#B2563B]">
+                      <tbody className="divide-y divide-stone-50 font-medium text-[#8C4B3E]">
                         {paginatedUsers.map(user => {
                           const isSelected = selectedUserIds.includes(user.id);
                           return (
-                            <tr key={user.id} className={`hover:bg-[#FAF6F0] transition-colors ${isSelected ? "bg-[#B2563B]/5/10" : ""}`}>
+                            <tr key={user.id} className={`hover:bg-[#FAF6F0] transition-colors ${isSelected ? "bg-[#8C4B3E]/5/10" : ""}`}>
                               <td className="py-3 px-1 shrink-0 w-8">
                                 <Checkbox 
                                   checked={isSelected}
@@ -523,7 +523,7 @@ export default function ManageUsers() {
                                     className={`h-7 text-[9px] font-bold rounded-lg border bg-white ${
                                       user.status === "blocked" 
                                         ? "border-emerald-300 hover:bg-emerald-50 text-emerald-600"
-                                        : "border-[#C9A46A]/40 hover:bg-amber-50 text-[#B2563B]"
+                                        : "border-[#C9A46A]/40 hover:bg-amber-50 text-[#8C4B3E]"
                                     }`}
                                   >
                                     {user.status === "blocked" ? "Unblock" : "Block"}
@@ -569,7 +569,7 @@ export default function ManageUsers() {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
                                 currentPage === pageNum
-                                  ? "bg-[#B2563B] text-white shadow-md shadow-2xs"
+                                  ? "bg-[#8C4B3E] text-white shadow-md shadow-2xs"
                                   : "text-[#5A5146] hover:bg-[#F0E7D5]"
                               }`}
                             >
@@ -645,7 +645,7 @@ export default function ManageUsers() {
               <Button
                 type="button"
                 onClick={() => setIsViewOpen(false)}
-                className="rounded-xl bg-[#B2563B] hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
+                className="rounded-xl bg-[#8C4B3E] hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
               >
                 Close View
               </Button>
@@ -671,7 +671,7 @@ export default function ManageUsers() {
             <form onSubmit={onEditSaveSubmit} className="space-y-4 pt-3">
               {/* Name */}
               <div className="space-y-1.5">
-                <Label htmlFor="editName" className="text-xs font-bold text-[#B2563B]">Full Name</Label>
+                <Label htmlFor="editName" className="text-xs font-bold text-[#8C4B3E]">Full Name</Label>
                 <Input
                   id="editName"
                   value={editName}
@@ -683,7 +683,7 @@ export default function ManageUsers() {
 
               {/* Email */}
               <div className="space-y-1.5">
-                <Label htmlFor="editEmail" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
+                <Label htmlFor="editEmail" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
                 <Input
                   id="editEmail"
                   type="email"
@@ -696,7 +696,7 @@ export default function ManageUsers() {
 
               {/* Phone */}
               <div className="space-y-1.5">
-                <Label htmlFor="editPhone" className="text-xs font-bold text-[#B2563B]">Phone Contact</Label>
+                <Label htmlFor="editPhone" className="text-xs font-bold text-[#8C4B3E]">Phone Contact</Label>
                 <Input
                   id="editPhone"
                   value={editPhone}
@@ -709,13 +709,13 @@ export default function ManageUsers() {
               {/* Role & Status */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <Label htmlFor="editRole" className="text-xs font-bold text-[#B2563B]">Role</Label>
+                  <Label htmlFor="editRole" className="text-xs font-bold text-[#8C4B3E]">Role</Label>
                   <div className="relative">
                     <select
                       id="editRole"
                       value={editRole}
                       onChange={(e) => setEditRole(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="customer">Customer</option>
                       <option value="provider">Provider</option>
@@ -725,13 +725,13 @@ export default function ManageUsers() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="editStatus" className="text-xs font-bold text-[#B2563B]">Status</Label>
+                  <Label htmlFor="editStatus" className="text-xs font-bold text-[#8C4B3E]">Status</Label>
                   <div className="relative">
                     <select
                       id="editStatus"
                       value={editStatus}
                       onChange={(e) => setEditStatus(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="active">Active</option>
                       <option value="blocked">Blocked</option>
@@ -752,7 +752,7 @@ export default function ManageUsers() {
                 </Button>
                 <Button 
                   type="submit" 
-                  className="rounded-xl bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                  className="rounded-xl bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
                 >
                   Save Changes
                 </Button>

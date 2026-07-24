@@ -30,9 +30,9 @@ const getCategoryStyles = (category) => {
     case "Home Cleaning":
       return "bg-pink-50 text-pink-600 border-pink-100";
     case "Plumbing":
-      return "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10";
+      return "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10";
     case "Electrical":
-      return "bg-amber-50 text-[#B2563B] border-amber-100";
+      return "bg-amber-50 text-[#8C4B3E] border-amber-100";
     case "Moving & Packing":
       return "bg-emerald-50 text-emerald-600 border-emerald-100";
     case "Lawn & Garden":
@@ -321,7 +321,7 @@ export default function Booking() {
         <div className="bg-[#FAF6F0] min-h-screen py-12 flex justify-center items-center">
           <div className="flex flex-col items-center gap-4">
             <Loader2 className="h-10 w-10 text-[#1F1D1A] animate-spin" />
-            <p className="text-sm font-semibold text-[#B2563B]">Loading service details...</p>
+            <p className="text-sm font-semibold text-[#8C4B3E]">Loading service details...</p>
           </div>
         </div>
       </MainLayout>
@@ -344,7 +344,7 @@ export default function Booking() {
             </CardHeader>
             <CardContent className="pt-4 flex flex-col gap-3">
               <Link to="/services">
-                <Button className="w-full bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl h-11 font-bold shadow-xs">
+                <Button className="w-full bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl h-11 font-bold shadow-xs">
                   Browse Services
                 </Button>
               </Link>
@@ -365,7 +365,7 @@ export default function Booking() {
 
           {/* Header breadcrumb bar */}
           <div className="mb-8">
-            <Link to={`/services/${service.id}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#B2563B] hover:text-[#1F1D1A] transition-all">
+            <Link to={`/services/${service.id}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#8C4B3E] hover:text-[#1F1D1A] transition-all">
               <ArrowLeft className="h-4 w-4" /> Back to Details
             </Link>
             <h1 className="text-3xl font-black text-[#1F1D1A] tracking-tight mt-2">Schedule Your Booking</h1>
@@ -392,7 +392,7 @@ export default function Booking() {
                           {service.category}
                         </span>
                         {service.badge && (
-                          <span className="text-[10px] bg-[#B2563B] text-[#1F1D1A] font-bold px-2 py-0.5 rounded-full">
+                          <span className="text-[10px] bg-[#8C4B3E] text-[#1F1D1A] font-bold px-2 py-0.5 rounded-full">
                             {service.badge}
                           </span>
                         )}
@@ -493,7 +493,7 @@ export default function Booking() {
                     <div className="flex justify-between items-center">
                       <span className="text-[11px] font-extrabold text-[#7A7266] uppercase tracking-wider block">Available Days</span>
                       {selectedDate && (
-                        <span className="text-[10px] font-bold text-[#1F1D1A] bg-[#B2563B]/5 px-2.5 py-0.5 rounded-full border border-violet-950/10">
+                        <span className="text-[10px] font-bold text-[#1F1D1A] bg-[#8C4B3E]/5 px-2.5 py-0.5 rounded-full border border-violet-950/10">
                           {selectedDate}
                         </span>
                       )}
@@ -510,7 +510,7 @@ export default function Booking() {
                               setDateAlert(false);
                             }}
                             className={`flex flex-col items-center justify-center p-3 border rounded-2xl min-w-[62px] snap-center transition-all cursor-pointer ${isSelected
-                                ? "bg-[#B2563B] border-violet-950 text-white shadow-md shadow-2xs"
+                                ? "bg-[#8C4B3E] border-violet-950 text-white shadow-md shadow-2xs"
                                 : "bg-white border-[#5A5146]/20 text-slate-655 hover:bg-[#FAF6F0] hover:border-stone-300"
                               }`}
                           >
@@ -549,7 +549,7 @@ export default function Booking() {
                                     setTimeAlert(false);
                                   }}
                                   className={`py-2 text-xs font-bold text-center border rounded-xl transition-all cursor-pointer ${isSelected
-                                      ? "bg-[#B2563B] border-violet-950 text-white shadow-xs"
+                                      ? "bg-[#8C4B3E] border-violet-950 text-white shadow-xs"
                                       : "bg-white border-[#5A5146]/20 text-slate-655 hover:bg-[#FAF6F0] hover:border-stone-300"
                                     }`}
                                 >
@@ -585,7 +585,7 @@ export default function Booking() {
                   {/* Grid for Name, Email, Phone */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <Label htmlFor="fullName" className="text-xs font-bold text-[#B2563B]">Contact Full Name</Label>
+                      <Label htmlFor="fullName" className="text-xs font-bold text-[#8C4B3E]">Contact Full Name</Label>
                       <Input
                         id="fullName"
                         name="fullName"
@@ -599,7 +599,7 @@ export default function Booking() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="email" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
+                      <Label htmlFor="email" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
                       <Input
                         id="email"
                         name="email"
@@ -615,7 +615,7 @@ export default function Booking() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <Label htmlFor="phone" className="text-xs font-bold text-[#B2563B]">Phone Number</Label>
+                      <Label htmlFor="phone" className="text-xs font-bold text-[#8C4B3E]">Phone Number</Label>
                       <Input
                         id="phone"
                         name="phone"
@@ -629,7 +629,7 @@ export default function Booking() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="street" className="text-xs font-bold text-[#B2563B]">Street Address</Label>
+                      <Label htmlFor="street" className="text-xs font-bold text-[#8C4B3E]">Street Address</Label>
                       <Input
                         id="street"
                         name="street"
@@ -646,7 +646,7 @@ export default function Booking() {
                   {/* City, State, Zip */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-1.5">
-                      <Label htmlFor="city" className="text-xs font-bold text-[#B2563B]">City</Label>
+                      <Label htmlFor="city" className="text-xs font-bold text-[#8C4B3E]">City</Label>
                       <Input
                         id="city"
                         name="city"
@@ -660,7 +660,7 @@ export default function Booking() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="state" className="text-xs font-bold text-[#B2563B]">State</Label>
+                      <Label htmlFor="state" className="text-xs font-bold text-[#8C4B3E]">State</Label>
                       <Input
                         id="state"
                         name="state"
@@ -674,7 +674,7 @@ export default function Booking() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="zipCode" className="text-xs font-bold text-[#B2563B]">ZIP Code</Label>
+                      <Label htmlFor="zipCode" className="text-xs font-bold text-[#8C4B3E]">ZIP Code</Label>
                       <Input
                         id="zipCode"
                         name="zipCode"
@@ -775,7 +775,7 @@ export default function Booking() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl h-11 font-bold shadow-md cursor-pointer flex items-center justify-center gap-1.5 transition-all active:scale-[0.99] disabled:opacity-50"
+                    className="w-full bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl h-11 font-bold shadow-md cursor-pointer flex items-center justify-center gap-1.5 transition-all active:scale-[0.99] disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>

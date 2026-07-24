@@ -7,7 +7,7 @@ export default function NotFound() {
                 <h1 className="text-4xl font-bold text-red-500 mb-4">404</h1>
                 <h2 className="text-xl font-semibold mb-4 text-gray-800">Page Not Found</h2>
                 <p className="text-gray-600 mb-6">The page you are looking for does not exist or has been moved.</p>
-                <a href="/" className="inline-block bg-[#B2563B] text-white px-6 py-2 rounded-md hover:bg-[#7C8A6B] transition">
+                <a href="/" className="inline-block bg-[#8C4B3E] text-white px-6 py-2 rounded-md hover:bg-[#7C8A6B] transition">
                     Go Back Home
                 </a>
             </div>

@@ -241,7 +241,7 @@ export default function VerifyOtp() {
             {/* OTP VERIFICATION FORM */}
             <form onSubmit={handleVerify} className="space-y-6">
               <div className="space-y-3">
-                <label className="text-xs font-bold text-[#B2563B] block text-center lg:text-left">
+                <label className="text-xs font-bold text-[#8C4B3E] block text-center lg:text-left">
                   Enter 6-Digit OTP Code
                 </label>
 
@@ -264,7 +264,7 @@ export default function VerifyOtp() {
                 </div>
 
                 <p className="text-[11px] text-[#7A7266] text-center lg:text-left">
-                  The code will expire in <span className="font-semibold text-[#B2563B]">5 minutes</span>.
+                  The code will expire in <span className="font-semibold text-[#8C4B3E]">5 minutes</span>.
                 </p>
               </div>
 
@@ -272,7 +272,7 @@ export default function VerifyOtp() {
               <Button
                 type="submit"
                 disabled={isSubmitting || isResending || otp.join("").length !== 6}
-                className="w-full h-11 bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -295,7 +295,7 @@ export default function VerifyOtp() {
                   <Mail className="h-4.5 w-4.5" />
                 </span>
                 <div>
-                  <span className="block text-xs font-bold text-[#B2563B]">Didn't receive the email?</span>
+                  <span className="block text-xs font-bold text-[#8C4B3E]">Didn't receive the email?</span>
                   <span className="text-[10px] text-[#7A7266] font-medium">Check your spam folder or try again.</span>
                 </div>
               </div>

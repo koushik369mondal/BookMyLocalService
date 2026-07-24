@@ -72,8 +72,8 @@ export default function AdminBookings() {
                   {mockAllBookings.map((b) => (
                     <tr key={b.id} className="hover:bg-slate-55/30 transition-colors">
                       <td className="py-3 px-1 font-bold text-[#1F1D1A]">{b.id}</td>
-                      <td className="py-3 text-[#B2563B]">{b.customer}</td>
-                      <td className="py-3 text-[#B2563B]">{b.provider}</td>
+                      <td className="py-3 text-[#8C4B3E]">{b.customer}</td>
+                      <td className="py-3 text-[#8C4B3E]">{b.provider}</td>
                       <td className="py-3 text-slate-550">{b.date}</td>
                       <td className="py-3 font-bold text-[#1F1D1A]">${b.amount.toFixed(2)}</td>
                       <td className="py-3">{getStatusBadge(b.status)}</td>

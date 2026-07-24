@@ -104,9 +104,9 @@ export default function Contact() {
           {/* CONTACT INFO GRID */}
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: "Office Address", detail: "123 Business Hub, Sector 62, Noida, UP, India", icon: MapPin, color: "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10" },
+              { title: "Office Address", detail: "123 Business Hub, Sector 62, Noida, UP, India", icon: MapPin, color: "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10" },
               { title: "Phone Number", detail: "+91 120 456 7890\n+91 98765 43210", icon: Phone, color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
-              { title: "Email Address", detail: "support@bookmylocal.com\ninfo@bookmylocal.com", icon: Mail, color: "bg-amber-50 text-[#B2563B] border-amber-100" },
+              { title: "Email Address", detail: "support@bookmylocal.com\ninfo@bookmylocal.com", icon: Mail, color: "bg-amber-50 text-[#8C4B3E] border-amber-100" },
               { title: "Business Hours", detail: "Mon - Sat: 9:00 AM - 6:00 PM\nSunday: Closed", icon: Clock, color: "bg-pink-50 text-pink-600 border-pink-100" }
             ].map((card, idx) => {
               const IconComp = card.icon;
@@ -136,7 +136,7 @@ export default function Contact() {
             <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-xs flex flex-col justify-between h-full">
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-2.5 mb-2">
-                  <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
                     <MessageSquare className="h-5 w-5" />
                   </div>
                   <div>
@@ -237,7 +237,7 @@ export default function Contact() {
                   <Button 
                     type="submit" 
                     disabled={loading}
-                    className="w-full h-11 bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2"
+                    className="w-full h-11 bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <>
@@ -272,8 +272,8 @@ export default function Contact() {
               {/* Pinned map marker */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 z-10 select-none">
                 <div className="relative">
-                  <div className="w-8 h-8 rounded-full bg-[#B2563B]/25 absolute -inset-2 animate-ping"></div>
-                  <div className="w-8 h-8 rounded-full bg-[#B2563B] text-white flex items-center justify-center border border-white shadow-md relative z-10">
+                  <div className="w-8 h-8 rounded-full bg-[#8C4B3E]/25 absolute -inset-2 animate-ping"></div>
+                  <div className="w-8 h-8 rounded-full bg-[#8C4B3E] text-white flex items-center justify-center border border-white shadow-md relative z-10">
                     <MapPin className="h-4 w-4 text-[#C9A46A] fill-accent" />
                   </div>
                 </div>
@@ -348,7 +348,7 @@ export default function Contact() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2 max-w-sm mx-auto sm:max-w-none">
               <NavLink to="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-12 bg-[#B2563B] hover:bg-amber-600 text-[#1F1D1A] font-bold rounded-xl px-8 shadow-md">
+                <Button className="w-full sm:w-auto h-12 bg-[#8C4B3E] hover:bg-amber-600 text-[#1F1D1A] font-bold rounded-xl px-8 shadow-md">
                   Browse Services
                 </Button>
               </NavLink>

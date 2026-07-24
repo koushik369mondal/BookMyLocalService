@@ -189,7 +189,7 @@ export default function Payments() {
       case "completed":
         return <Badge className="bg-emerald-500 hover:bg-emerald-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Paid</Badge>;
       case "pending":
-        return <Badge className="bg-[#B2563B] hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
+        return <Badge className="bg-[#8C4B3E] hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
       default: // refunded
         return <Badge className="bg-rose-500 hover:bg-rose-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Refunded</Badge>;
     }
@@ -234,7 +234,7 @@ export default function Payments() {
             </div>
 
             <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
-              <span className="block text-2xl font-black text-[#B2563B]">${stats.pending.toLocaleString()}</span>
+              <span className="block text-2xl font-black text-[#8C4B3E]">${stats.pending.toLocaleString()}</span>
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Pending Escrow</span>
             </div>
 
@@ -278,7 +278,7 @@ export default function Payments() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Statuses</option>
                     <option value="completed">Paid</option>
@@ -298,7 +298,7 @@ export default function Payments() {
                   <select
                     value={methodFilter}
                     onChange={(e) => setMethodFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Methods</option>
                     <option value="Credit Card">Credit Card</option>
@@ -348,7 +348,7 @@ export default function Payments() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="date-desc">Date: Newest First</option>
                     <option value="date-asc">Date: Oldest First</option>
@@ -388,7 +388,7 @@ export default function Payments() {
               ) : paginatedTxns.length === 0 ? (
                 /* EMPTY STATE BOARD */
                 <div className="bg-white border border-[#5A5146]/15 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
+                  <div className="p-4 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-[#1F1D1A] mt-2">No Transactions Found</h3>
@@ -413,7 +413,7 @@ export default function Payments() {
                           <th className="py-2.5 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-50 font-medium text-[#B2563B]">
+                      <tbody className="divide-y divide-stone-50 font-medium text-[#8C4B3E]">
                         {paginatedTxns.map(txn => (
                           <tr key={txn.id} className="hover:bg-[#FAF6F0] transition-colors">
                             <td className="py-3 px-1 font-bold text-[#7A7266]">{txn.id}</td>
@@ -498,7 +498,7 @@ export default function Payments() {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
                                 currentPage === pageNum
-                                  ? "bg-[#B2563B] text-white shadow-md shadow-2xs"
+                                  ? "bg-[#8C4B3E] text-white shadow-md shadow-2xs"
                                   : "text-[#5A5146] hover:bg-[#F0E7D5]"
                               }`}
                             >
@@ -583,7 +583,7 @@ export default function Payments() {
               <Button
                 type="button"
                 onClick={() => setIsViewOpen(false)}
-                className="rounded-xl bg-[#B2563B] hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
+                className="rounded-xl bg-[#8C4B3E] hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
               >
                 Close View
               </Button>

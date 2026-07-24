@@ -195,7 +195,7 @@ export default function Subscription() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
 
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0 mt-0.5">
+                <div className="p-3 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-2xl shrink-0 mt-0.5">
                   <CreditCard className="h-7 w-7" />
                 </div>
                 <div>
@@ -232,7 +232,7 @@ export default function Subscription() {
                 {activePlan === "none" && (
                   <Button
                     onClick={() => triggerPlanChange("pro")}
-                    className="w-full md:w-auto bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold h-10 text-xs rounded-xl shadow-md"
+                    className="w-full md:w-auto bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-bold h-10 text-xs rounded-xl shadow-md"
                   >
                     Re-Activate Pro Plan
                   </Button>
@@ -254,7 +254,7 @@ export default function Subscription() {
                   onClick={() => setBillingCycle("monthly")}
                   className={`flex-1 rounded-lg text-xs font-bold transition-all ${billingCycle === "monthly"
                     ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                    : "text-[#7A7266] hover:text-[#B2563B]"
+                    : "text-[#7A7266] hover:text-[#8C4B3E]"
                     }`}
                 >
                   Monthly
@@ -264,7 +264,7 @@ export default function Subscription() {
                   onClick={() => setBillingCycle("yearly")}
                   className={`flex-1 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 ${billingCycle === "yearly"
                     ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                    : "text-[#7A7266] hover:text-[#B2563B]"
+                    : "text-[#7A7266] hover:text-[#8C4B3E]"
                     }`}
                 >
                   Yearly
@@ -332,7 +332,7 @@ export default function Subscription() {
                 : "bg-white border-[#5A5146]/20 hover:border-stone-400 shadow-md transition-all"
                 }`}>
                 {/* Popular Badge */}
-                <div className="absolute top-0 right-0 bg-[#B2563B] text-white text-[9px] font-black tracking-wider uppercase px-4 py-1.5 rounded-bl-2xl">
+                <div className="absolute top-0 right-0 bg-[#8C4B3E] text-white text-[9px] font-black tracking-wider uppercase px-4 py-1.5 rounded-bl-2xl">
                   Popular
                 </div>
 
@@ -375,7 +375,7 @@ export default function Subscription() {
                   <Button
                     onClick={() => triggerPlanChange("pro")}
                     disabled={activePlan === "pro"}
-                    className="w-full h-10 bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs rounded-xl shadow-xs"
+                    className="w-full h-10 bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-bold text-xs rounded-xl shadow-xs"
                   >
                     {activePlan === "pro" ? "Active Plan" : (activePlan === "basic" ? "Upgrade to Pro" : "Downgrade to Pro")}
                   </Button>
@@ -452,7 +452,7 @@ export default function Subscription() {
                     <th className="py-2.5">Premium Plan</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-stone-50 font-semibold text-[#B2563B]">
+                <tbody className="divide-y divide-stone-50 font-semibold text-[#8C4B3E]">
                   {featuresMatrix.map((row, idx) => (
                     <tr key={idx} className="hover:bg-[#FAF6F0] transition-colors">
                       <td className="py-3.5 font-bold text-[#1F1D1A]">{row.label}</td>
@@ -587,7 +587,7 @@ export default function Subscription() {
               type="button"
               onClick={executePlanChange}
               disabled={isActionLoading}
-              className="rounded-xl bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
+              className="rounded-xl bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
             >
               {isActionLoading ? (
                 <>

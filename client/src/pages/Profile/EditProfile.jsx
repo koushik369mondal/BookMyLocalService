@@ -218,7 +218,7 @@ export default function EditProfile() {
 
           <Card className="border border-[#5A5146]/20 bg-white rounded-2xl overflow-hidden">
             
-            <div className="bg-[#B2563B] text-white p-6 sm:p-7">
+            <div className="bg-[#8C4B3E] text-white p-6 sm:p-7">
               <CardTitle className="text-xl sm:text-2xl font-extrabold">Edit Account Profile</CardTitle>
               <CardDescription className="text-[#7A7266] text-xs mt-1">Modify your contact details, photo, and settings</CardDescription>
             </div>
@@ -234,7 +234,7 @@ export default function EditProfile() {
                     ) : null}
                     <AvatarFallback className="text-xl font-bold bg-[#E8DCC3]/40 text-[#1F1D1A]">{initials}</AvatarFallback>
                   </Avatar>
-                  <div className="absolute inset-0 bg-[#B2563B]/60 text-white rounded-full flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-[#8C4B3E]/60 text-white rounded-full flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <Camera className="h-4.5 w-4.5" />
                     <span className="text-[8px] font-bold uppercase">Upload</span>
                   </div>
@@ -250,7 +250,7 @@ export default function EditProfile() {
                       onClick={handlePhotoClick}
                       disabled={isUploadingPhoto}
                       size="xs" 
-                      className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl text-[10px] font-bold h-8 px-4"
+                      className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl text-[10px] font-bold h-8 px-4"
                     >
                       {isUploadingPhoto ? "Uploading..." : "Upload New Image"}
                     </Button>
@@ -263,7 +263,7 @@ export default function EditProfile() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   
                   <div className="space-y-1.5">
-                    <Label htmlFor="fullName" className="text-xs font-bold text-[#B2563B]">Full Name</Label>
+                    <Label htmlFor="fullName" className="text-xs font-bold text-[#8C4B3E]">Full Name</Label>
                     <Input
                       id="fullName"
                       placeholder="Chloe Bennett"
@@ -275,7 +275,7 @@ export default function EditProfile() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="email" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
+                    <Label htmlFor="email" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
                     <Input
                       id="email"
                       type="email"
@@ -286,7 +286,7 @@ export default function EditProfile() {
                   </div>
 
                   <div className="space-y-1.5 col-span-2">
-                    <Label htmlFor="phone" className="text-xs font-bold text-[#B2563B]">Phone Number</Label>
+                    <Label htmlFor="phone" className="text-xs font-bold text-[#8C4B3E]">Phone Number</Label>
                     <Input
                       id="phone"
                       placeholder="555-019-2834"
@@ -303,7 +303,7 @@ export default function EditProfile() {
                   <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block">Default Dispatch Address</span>
                   
                   <div className="space-y-1.5">
-                    <Label htmlFor="address" className="text-xs font-bold text-[#B2563B]">Street Address</Label>
+                    <Label htmlFor="address" className="text-xs font-bold text-[#8C4B3E]">Street Address</Label>
                     <Input
                       id="address"
                       placeholder="789 Pine Street, Apt 1C"
@@ -315,7 +315,7 @@ export default function EditProfile() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="space-y-1.5">
-                      <Label htmlFor="city" className="text-xs font-bold text-[#B2563B]">City</Label>
+                      <Label htmlFor="city" className="text-xs font-bold text-[#8C4B3E]">City</Label>
                       <Input
                         id="city"
                         placeholder="Brooklyn"
@@ -326,7 +326,7 @@ export default function EditProfile() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="state" className="text-xs font-bold text-[#B2563B]">State</Label>
+                      <Label htmlFor="state" className="text-xs font-bold text-[#8C4B3E]">State</Label>
                       <Input
                         id="state"
                         placeholder="NY"
@@ -337,7 +337,7 @@ export default function EditProfile() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="zipCode" className="text-xs font-bold text-[#B2563B]">ZIP Code</Label>
+                      <Label htmlFor="zipCode" className="text-xs font-bold text-[#8C4B3E]">ZIP Code</Label>
                       <Input
                         id="zipCode"
                         placeholder="400001"
@@ -364,7 +364,7 @@ export default function EditProfile() {
                   <Button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold text-xs h-10 px-8 rounded-xl shadow-xs"
+                    className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-bold text-xs h-10 px-8 rounded-xl shadow-xs"
                   >
                     {isSubmitting ? "Saving Changes..." : "Save Changes"}
                   </Button>

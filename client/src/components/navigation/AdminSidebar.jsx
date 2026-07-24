@@ -68,7 +68,7 @@ export default function AdminSidebar({ collapsed }) {
               <button
                 key={idx}
                 onClick={handleLogout}
-                className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#B2563B] hover:bg-[#FAF6F0] transition-all text-left ${
+                className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#8C4B3E] hover:bg-[#FAF6F0] transition-all text-left ${
                   collapsed ? "justify-center px-0" : "px-4"
                 }`}
                 title={collapsed ? item.label : undefined}

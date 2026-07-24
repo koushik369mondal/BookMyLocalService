@@ -39,7 +39,7 @@ export default function Notifications() {
       case "payment":
         return <CreditCard className="h-4.5 w-4.5 text-emerald-600" />;
       default:
-        return <ShieldCheck className="h-4.5 w-4.5 text-[#B2563B]" />;
+        return <ShieldCheck className="h-4.5 w-4.5 text-[#8C4B3E]" />;
     }
   };
 
@@ -50,7 +50,7 @@ export default function Notifications() {
       case "payment":
         return "bg-emerald-55 text-emerald-600 border-emerald-100";
       default:
-        return "bg-[#F0E7D5] text-[#B2563B] border-[#5A5146]/20";
+        return "bg-[#F0E7D5] text-[#8C4B3E] border-[#5A5146]/20";
     }
   };
 
@@ -101,7 +101,7 @@ export default function Notifications() {
                         <div className="flex items-center gap-2 flex-wrap">
                           <h4 className="font-extrabold text-sm text-[#1F1D1A] leading-snug">{notif.title}</h4>
                           {notif.unread && (
-                            <span className="bg-[#B2563B] text-white font-bold text-[8px] uppercase px-1.5 py-0.5 rounded-full tracking-wider animate-pulse">
+                            <span className="bg-[#8C4B3E] text-white font-bold text-[8px] uppercase px-1.5 py-0.5 rounded-full tracking-wider animate-pulse">
                               New
                             </span>
                           )}

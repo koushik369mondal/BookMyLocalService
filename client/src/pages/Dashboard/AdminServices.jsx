@@ -54,7 +54,7 @@ export default function AdminServices() {
                       <td className="py-3 px-1 font-bold text-[#1F1D1A]">#{svc.id}</td>
                       <td className="py-3 font-extrabold text-[#1F1D1A]">{svc.name}</td>
                       <td className="py-3">
-                        <span className="inline-block text-[10px] font-bold text-[#1F1D1A] bg-[#B2563B]/5 px-2 py-0.5 rounded-lg border border-violet-950/10">
+                        <span className="inline-block text-[10px] font-bold text-[#1F1D1A] bg-[#8C4B3E]/5 px-2 py-0.5 rounded-lg border border-violet-950/10">
                           {svc.category}
                         </span>
                       </td>

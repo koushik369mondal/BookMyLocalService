@@ -333,7 +333,7 @@ export default function Availability() {
               
               <Card className="border border-[#5A5146]/15 shadow-md bg-white rounded-2xl p-6">
                 <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
@@ -378,7 +378,7 @@ export default function Availability() {
                             dayData.slots.map((slot, index) => (
                               <div key={slot.id} className="flex items-center gap-2.5 flex-wrap">
                                 
-                                <div className="flex items-center gap-2 border border-[#5A5146]/20 bg-[#FAF6F0] p-1.5 rounded-xl text-xs font-semibold text-[#B2563B]">
+                                <div className="flex items-center gap-2 border border-[#5A5146]/20 bg-[#FAF6F0] p-1.5 rounded-xl text-xs font-semibold text-[#8C4B3E]">
                                   {/* Start Time Option select */}
                                   <div className="relative">
                                     <select
@@ -465,7 +465,7 @@ export default function Availability() {
                   type="button"
                   onClick={handleSaveSchedule}
                   disabled={isSaving}
-                  className="bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs h-10 px-6 rounded-xl shadow-md flex items-center justify-center gap-1.5"
+                  className="bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-bold text-xs h-10 px-6 rounded-xl shadow-md flex items-center justify-center gap-1.5"
                 >
                   {isSaving ? (
                     <>
@@ -495,7 +495,7 @@ export default function Availability() {
                 
                 <form onSubmit={handleAddBlockDate} className="space-y-3.5">
                   <div className="space-y-1.5">
-                    <Label htmlFor="blockDate" className="text-[11px] font-bold text-[#B2563B]">Select Date</Label>
+                    <Label htmlFor="blockDate" className="text-[11px] font-bold text-[#8C4B3E]">Select Date</Label>
                     <Input
                       id="blockDate"
                       type="date"
@@ -508,7 +508,7 @@ export default function Availability() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="blockReason" className="text-[11px] font-bold text-[#B2563B]">Reason / Holiday Name</Label>
+                    <Label htmlFor="blockReason" className="text-[11px] font-bold text-[#8C4B3E]">Reason / Holiday Name</Label>
                     <Input
                       id="blockReason"
                       placeholder="e.g. Summer Vacation, Doctor Visit"
@@ -523,9 +523,9 @@ export default function Availability() {
                   <Button
                     type="submit"
                     disabled={isSaving}
-                    className="w-full bg-[#B2563B] hover:bg-black text-white h-9.5 font-bold text-xs rounded-xl flex items-center justify-center gap-1"
+                    className="w-full bg-[#8C4B3E] hover:bg-black text-white h-9.5 font-bold text-xs rounded-xl flex items-center justify-center gap-1"
                   >
-                    <Coffee className="h-4 w-4 text-[#B2563B]" /> Block Selected Date
+                    <Coffee className="h-4 w-4 text-[#8C4B3E]" /> Block Selected Date
                   </Button>
                 </form>
               </Card>

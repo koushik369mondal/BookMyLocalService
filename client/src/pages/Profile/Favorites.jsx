@@ -66,7 +66,7 @@ export default function Favorites() {
                       </Avatar>
                       <div className="space-y-1">
                         <h4 className="font-extrabold text-sm text-[#1F1D1A]">{provider.name}</h4>
-                        <span className="inline-block text-[10px] font-bold text-[#1F1D1A] bg-[#B2563B]/5 px-2 py-0.5 rounded-lg">
+                        <span className="inline-block text-[10px] font-bold text-[#1F1D1A] bg-[#8C4B3E]/5 px-2 py-0.5 rounded-lg">
                           {provider.category}
                         </span>
                         <div className="flex items-center gap-1.5 text-xs text-[#7A7266] font-semibold mt-1">
@@ -82,7 +82,7 @@ export default function Favorites() {
 
                     <div className="border-t border-stone-50 pt-4 mt-5 flex items-center justify-between flex-wrap gap-2.5">
                       <Link to="/booking">
-                        <Button size="xs" className="bg-[#B2563B] hover:bg-black text-white rounded-xl h-8.5 text-[10px] font-bold flex items-center gap-1">
+                        <Button size="xs" className="bg-[#8C4B3E] hover:bg-black text-white rounded-xl h-8.5 text-[10px] font-bold flex items-center gap-1">
                           <Calendar className="h-3.5 w-3.5" /> Rebook Now
                         </Button>
                       </Link>

@@ -13,7 +13,7 @@ export default function AdminSettings() {
   return (
     <DashboardLayout>
       {/* HEADER */}
-      <section className="bg-[#B2563B] text-white p-6 rounded-2xl mb-6">
+      <section className="bg-[#8C4B3E] text-white p-6 rounded-2xl mb-6">
         <h1 className="text-xl font-extrabold tracking-tight">System Settings</h1>
         <p className="text-[#7A7266] text-xs mt-1">Configure global platform attributes, registration policies, and maintenance states</p>
       </section>
@@ -22,7 +22,7 @@ export default function AdminSettings() {
       <div className="space-y-6">
         <Card className="border border-[#5A5146]/20 rounded-2xl bg-white p-6">
           <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2">
-            <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+            <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
               <Settings className="h-5 w-5" />
             </div>
             <div>
@@ -64,7 +64,7 @@ export default function AdminSettings() {
             </div>
 
             <div className="pt-2 border-t border-stone-50 flex justify-end">
-              <Button className="bg-[#B2563B] hover:bg-black text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5">
+              <Button className="bg-[#8C4B3E] hover:bg-black text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5">
                 <Save className="h-4 w-4" /> Save System Settings
               </Button>
             </div>

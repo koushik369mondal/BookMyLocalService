@@ -189,7 +189,7 @@ export default function Analytics() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Bookings</span>
                 <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">1,840</span>
               </div>
-              <div className="p-2.5 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0">
                 <Activity className="h-5 w-5" />
               </div>
             </Card>
@@ -200,7 +200,7 @@ export default function Analytics() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Users</span>
                 <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">4,250</span>
               </div>
-              <div className="p-2.5 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0">
                 <Users className="h-5 w-5" />
               </div>
             </Card>
@@ -222,7 +222,7 @@ export default function Analytics() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Growth Rate</span>
                 <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">+15.4%</span>
               </div>
-              <div className="p-2.5 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0">
                 <TrendingUp className="h-5 w-5" />
               </div>
             </Card>
@@ -274,7 +274,7 @@ export default function Analytics() {
                     id="categoryFilter"
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Categories</option>
                     <option value="Home Cleaning">Home Cleaning</option>
@@ -292,7 +292,7 @@ export default function Analytics() {
                     id="locationFilter"
                     value={locationFilter}
                     onChange={(e) => setLocationFilter(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Boroughs</option>
                     <option value="Brooklyn">Brooklyn</option>
@@ -309,7 +309,7 @@ export default function Analytics() {
               <Button
                 size="sm"
                 onClick={() => handleExport("PDF")}
-                className="bg-[#B2563B] hover:bg-black text-white rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
+                className="bg-[#8C4B3E] hover:bg-black text-white rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
               >
                 <FileText className="h-4 w-4" /> PDF Report
               </Button>
@@ -343,7 +343,7 @@ export default function Analytics() {
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "revenue"
                         ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#B2563B]"
+                        : "text-[#7A7266] hover:text-[#8C4B3E]"
                     }`}
                   >
                     Revenue
@@ -354,7 +354,7 @@ export default function Analytics() {
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "bookings"
                         ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#B2563B]"
+                        : "text-[#7A7266] hover:text-[#8C4B3E]"
                     }`}
                   >
                     Bookings
@@ -365,7 +365,7 @@ export default function Analytics() {
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "users"
                         ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#B2563B]"
+                        : "text-[#7A7266] hover:text-[#8C4B3E]"
                     }`}
                   >
                     User Growth
@@ -376,7 +376,7 @@ export default function Analytics() {
                     className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                       metricTab === "providers"
                         ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#B2563B]"
+                        : "text-[#7A7266] hover:text-[#8C4B3E]"
                     }`}
                   >
                     Provider Growth
@@ -469,7 +469,7 @@ export default function Analytics() {
                 {categoryShare.map(cat => (
                   <div key={cat.name} className="space-y-1">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-[#B2563B]">{cat.name}</span>
+                      <span className="text-[#8C4B3E]">{cat.name}</span>
                       <span className="text-[#7A7266]">{cat.share}%</span>
                     </div>
                     <Progress value={cat.share} className="h-2 rounded-full bg-[#F0E7D5] [&>div]:bg-[#7C8A6B]" />
@@ -518,10 +518,10 @@ export default function Analytics() {
                 {demographics.map(cat => (
                   <div key={cat.borough} className="space-y-1">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-[#B2563B]">{cat.borough}</span>
+                      <span className="text-[#8C4B3E]">{cat.borough}</span>
                       <span className="text-[#7A7266] font-semibold">{cat.count} jobs ({cat.percentage}%)</span>
                     </div>
-                    <Progress value={cat.percentage} className="h-2 rounded-full bg-[#F0E7D5] [&>div]:bg-[#B2563B]" />
+                    <Progress value={cat.percentage} className="h-2 rounded-full bg-[#F0E7D5] [&>div]:bg-[#8C4B3E]" />
                   </div>
                 ))}
               </div>
@@ -536,7 +536,7 @@ export default function Analytics() {
                   <div key={log.id} className="relative group animate-fade-in">
                     
                     {/* Ring dot indicator */}
-                    <span className="absolute -left-[20.5px] top-1 h-3.5 w-3.5 rounded-full border border-white bg-[#B2563B] ring-2 ring-violet-950/10 shrink-0"></span>
+                    <span className="absolute -left-[20.5px] top-1 h-3.5 w-3.5 rounded-full border border-white bg-[#8C4B3E] ring-2 ring-violet-950/10 shrink-0"></span>
                     
                     <div className="space-y-0.5">
                       <span className="text-[10px] text-[#7A7266] font-bold block">{log.time}</span>

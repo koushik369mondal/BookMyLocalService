@@ -276,7 +276,7 @@ export default function BookingHistory() {
   const getStatusBadge = (status) => {
     switch (status) {
       case "upcoming":
-        return <Badge className="bg-[#B2563B] hover:bg-[#7C8A6B] border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[10px] uppercase">Upcoming</Badge>;
+        return <Badge className="bg-[#8C4B3E] hover:bg-[#7C8A6B] border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[10px] uppercase">Upcoming</Badge>;
       case "completed":
         return <Badge className="bg-emerald-500 hover:bg-emerald-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[10px] uppercase">Completed</Badge>;
       default: // cancelled
@@ -380,7 +380,7 @@ export default function BookingHistory() {
                         setCurrentPage(1);
                       }}
                       className={`flex items-center justify-between text-left px-3.5 py-2.5 rounded-xl border text-xs font-semibold transition-all ${activeStatusTab === opt.id
-                          ? "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/20 font-extrabold"
+                          ? "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/20 font-extrabold"
                           : "bg-white text-[#5A5146] border-[#5A5146]/15 hover:bg-[#FAF6F0]"
                         }`}
                     >
@@ -401,7 +401,7 @@ export default function BookingHistory() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="date-desc">Date: Latest First</option>
                     <option value="date-asc">Date: Oldest First</option>
@@ -449,7 +449,7 @@ export default function BookingHistory() {
               ) : paginatedBookings.length === 0 ? (
                 /* EMPTY STATE DISPLAY */
                 <div className="bg-white border border-[#5A5146]/15 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
+                  <div className="p-4 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-[#1F1D1A] mt-2">No Bookings Found</h3>
@@ -457,7 +457,7 @@ export default function BookingHistory() {
                     We couldn't find any booking record matching your selection. Try clearing filters or schedule an appointment with a pro!
                   </p>
                   <Link to="/services">
-                    <Button className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-bold text-xs h-9.5 px-6 shadow-md flex items-center gap-1.5">
+                    <Button className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-bold text-xs h-9.5 px-6 shadow-md flex items-center gap-1.5">
                       Explore Services Pro
                       <ArrowRight className="h-3.5 w-3.5 text-white/60" />
                     </Button>
@@ -541,7 +541,7 @@ export default function BookingHistory() {
                               <Link to={`/services/${b.serviceId}`}>
                                 <Button
                                   size="xs"
-                                  className="h-8 text-[10px] font-bold bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-lg flex items-center gap-1"
+                                  className="h-8 text-[10px] font-bold bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-lg flex items-center gap-1"
                                 >
                                   <RotateCcw className="h-3 w-3" />
                                   Book Again
@@ -579,7 +579,7 @@ export default function BookingHistory() {
                               type="button"
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${currentPage === pageNum
-                                  ? "bg-[#B2563B] text-white shadow-md shadow-2xs"
+                                  ? "bg-[#8C4B3E] text-white shadow-md shadow-2xs"
                                   : "text-[#5A5146] hover:bg-[#F0E7D5]"
                                 }`}
                             >
@@ -669,7 +669,7 @@ export default function BookingHistory() {
           <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-0 overflow-hidden">
 
             {/* Header booking ID banner */}
-            <div className="bg-[#B2563B] text-white py-4 px-6 flex items-center justify-between">
+            <div className="bg-[#8C4B3E] text-white py-4 px-6 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider">Ref ID:</span>
                 <span className="font-extrabold text-xs bg-white/10 text-white py-0.5 px-2.5 rounded-lg border border-white/5 tracking-wider">
@@ -690,7 +690,7 @@ export default function BookingHistory() {
                   <AvatarFallback>{selectedBooking.providerName[0]}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <Badge variant="secondary" className="bg-white border-[#5A5146]/20 text-[#B2563B] font-bold rounded-lg text-[9px] uppercase py-0.5 px-2">
+                  <Badge variant="secondary" className="bg-white border-[#5A5146]/20 text-[#8C4B3E] font-bold rounded-lg text-[9px] uppercase py-0.5 px-2">
                     {selectedBooking.category}
                   </Badge>
                   <h4 className="font-extrabold text-[#1F1D1A] text-sm mt-1">{selectedBooking.providerName}</h4>
@@ -700,15 +700,15 @@ export default function BookingHistory() {
 
               {/* Time Slots */}
               <div className="grid grid-cols-2 gap-3.5">
-                <div className="flex items-start gap-2.5 p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-[#B2563B]">
-                  <Calendar className="h-4.5 w-4.5 text-[#B2563B] shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2.5 p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-[#8C4B3E]">
+                  <Calendar className="h-4.5 w-4.5 text-[#8C4B3E] shrink-0 mt-0.5" />
                   <div>
                     <span className="text-[9px] text-[#7A7266] font-bold uppercase tracking-wider">Date</span>
                     <span className="text-xs font-bold block">{selectedBooking.date}</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-2.5 p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-[#B2563B]">
-                  <Clock className="h-4.5 w-4.5 text-[#B2563B] shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2.5 p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-[#8C4B3E]">
+                  <Clock className="h-4.5 w-4.5 text-[#8C4B3E] shrink-0 mt-0.5" />
                   <div>
                     <span className="text-[9px] text-[#7A7266] font-bold uppercase tracking-wider">Arrival Time</span>
                     <span className="text-xs font-bold block">{getArrivalWindow(selectedBooking.time)}</span>
@@ -764,7 +764,7 @@ export default function BookingHistory() {
               <Button
                 type="button"
                 onClick={() => handlePrintInvoice(selectedBooking)}
-                className="rounded-xl bg-[#B2563B] hover:bg-black text-white font-bold text-xs h-9.5 w-full sm:w-auto flex items-center justify-center gap-1.5"
+                className="rounded-xl bg-[#8C4B3E] hover:bg-black text-white font-bold text-xs h-9.5 w-full sm:w-auto flex items-center justify-center gap-1.5"
               >
                 <Printer className="h-4 w-4" />
                 Print Invoice

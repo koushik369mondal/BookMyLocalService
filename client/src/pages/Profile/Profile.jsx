@@ -349,7 +349,7 @@ export default function Profile() {
         />
 
         {/* BANNER HEADER */}
-        <section className="bg-[#B2563B] text-white py-8 border-b border-violet-900">
+        <section className="bg-[#8C4B3E] text-white py-8 border-b border-violet-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">Account Settings</h1>
             <p className="text-[#7A7266] text-xs mt-1">Configure your contact details, password, and preferences</p>
@@ -364,7 +364,7 @@ export default function Profile() {
             <Card className="border border-[#C9A46A]/40 bg-amber-50/80 rounded-2xl p-4 mb-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-start gap-3">
-                  <div className="p-1.5 bg-amber-100 text-[#B2563B] rounded-lg shrink-0 mt-0.5">
+                  <div className="p-1.5 bg-amber-100 text-[#8C4B3E] rounded-lg shrink-0 mt-0.5">
                     <AlertCircle className="h-4.5 w-4.5" />
                   </div>
                   <div>
@@ -376,7 +376,7 @@ export default function Profile() {
                 </div>
                 <div className="flex items-center gap-2.5 shrink-0">
                   <span className="text-xs font-black text-amber-700">{completionPercent}%</span>
-                  <Progress value={completionPercent} className="w-24 h-1.5 rounded-full bg-amber-200 [&>div]:bg-[#B2563B]" />
+                  <Progress value={completionPercent} className="w-24 h-1.5 rounded-full bg-amber-200 [&>div]:bg-[#8C4B3E]" />
                 </div>
               </div>
             </Card>
@@ -426,7 +426,7 @@ export default function Profile() {
                     <button 
                       type="button"
                       disabled={isUploadingPhoto}
-                      className="absolute inset-0 bg-[#B2563B]/60 text-white rounded-full flex flex-col items-center justify-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
+                      className="absolute inset-0 bg-[#8C4B3E]/60 text-white rounded-full flex flex-col items-center justify-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
                     >
                       {isUploadingPhoto ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -454,7 +454,7 @@ export default function Profile() {
                     <form onSubmit={handleProfileSubmit(onProfileSave)} className="space-y-4">
                       {/* Name */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="fullName" className="text-xs font-bold text-[#B2563B]">Full Name</Label>
+                        <Label htmlFor="fullName" className="text-xs font-bold text-[#8C4B3E]">Full Name</Label>
                         <Input
                           id="fullName"
                           placeholder="Enter your full name"
@@ -468,7 +468,7 @@ export default function Profile() {
                       {/* Email / Phone grid */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                          <Label htmlFor="email" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
+                          <Label htmlFor="email" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
                           <Input
                             id="email"
                             type="email"
@@ -480,7 +480,7 @@ export default function Profile() {
                         </div>
 
                         <div className="space-y-1.5">
-                          <Label htmlFor="phone" className="text-xs font-bold text-[#B2563B]">Phone Number</Label>
+                          <Label htmlFor="phone" className="text-xs font-bold text-[#8C4B3E]">Phone Number</Label>
                           <Input
                             id="phone"
                             placeholder="Enter your phone number"
@@ -494,7 +494,7 @@ export default function Profile() {
 
                       {/* Address */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="address" className="text-xs font-bold text-[#B2563B]">Primary Street Address</Label>
+                        <Label htmlFor="address" className="text-xs font-bold text-[#8C4B3E]">Primary Street Address</Label>
                         <Input
                           id="address"
                           placeholder="e.g. 789 Pine Street, Apt 1C"
@@ -507,7 +507,7 @@ export default function Profile() {
                       {/* City State Zip */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div className="space-y-1.5">
-                          <Label htmlFor="city" className="text-xs font-bold text-[#B2563B]">City</Label>
+                          <Label htmlFor="city" className="text-xs font-bold text-[#8C4B3E]">City</Label>
                           <Input
                             id="city"
                             placeholder="e.g. Brooklyn"
@@ -518,7 +518,7 @@ export default function Profile() {
                         </div>
 
                         <div className="space-y-1.5">
-                          <Label htmlFor="state" className="text-xs font-bold text-[#B2563B]">State</Label>
+                          <Label htmlFor="state" className="text-xs font-bold text-[#8C4B3E]">State</Label>
                           <Input
                             id="state"
                             placeholder="e.g. NY"
@@ -529,7 +529,7 @@ export default function Profile() {
                         </div>
 
                         <div className="space-y-1.5">
-                          <Label htmlFor="zipCode" className="text-xs font-bold text-[#B2563B]">ZIP Code</Label>
+                          <Label htmlFor="zipCode" className="text-xs font-bold text-[#8C4B3E]">ZIP Code</Label>
                           <Input
                             id="zipCode"
                             placeholder="e.g. 400001"
@@ -546,7 +546,7 @@ export default function Profile() {
                         <Button
                           type="submit"
                           disabled={isSavingDetails}
-                          className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
+                          className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
                         >
                           {isSavingDetails ? (
                             <>
@@ -571,7 +571,7 @@ export default function Profile() {
                 <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
                   <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between flex-wrap gap-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+                      <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
                         <MapPin className="h-5 w-5" />
                       </div>
                       <div>
@@ -583,7 +583,7 @@ export default function Profile() {
                     <Button 
                       onClick={() => setIsAddAddressOpen(true)}
                       size="sm"
-                      className="bg-[#B2563B] hover:bg-black text-white rounded-xl h-9.5 text-xs font-bold flex items-center gap-1"
+                      className="bg-[#8C4B3E] hover:bg-black text-white rounded-xl h-9.5 text-xs font-bold flex items-center gap-1"
                     >
                       <Plus className="h-4 w-4" /> Add Address
                     </Button>
@@ -601,7 +601,7 @@ export default function Profile() {
                         {addresses.map(addr => (
                           <div key={addr.id} className="border border-[#5A5146]/20 p-4.5 rounded-2xl bg-white relative flex flex-col justify-between hover:border-stone-300 transition-colors shadow-2xs">
                             <div>
-                              <span className="inline-flex items-center text-[10px] font-bold text-[#1F1D1A] bg-[#B2563B]/5 border border-violet-950/10 rounded-lg py-0.5 px-2 mb-2">
+                              <span className="inline-flex items-center text-[10px] font-bold text-[#1F1D1A] bg-[#8C4B3E]/5 border border-violet-950/10 rounded-lg py-0.5 px-2 mb-2">
                                 {addr.label}
                               </span>
                               <span className="block text-xs font-bold text-[#1F1D1A]">{addr.street}</span>
@@ -629,7 +629,7 @@ export default function Profile() {
               {activeTab === "settings" && (
                 <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
                   <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+                    <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
                       <Bell className="h-5 w-5" />
                     </div>
                     <div>
@@ -705,7 +705,7 @@ export default function Profile() {
                           <select
                             value={appLanguage}
                             onChange={(e) => setAppLanguage(e.target.value)}
-                            className="w-full h-9 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                            className="w-full h-9 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                           >
                             <option value="en">English (US)</option>
                             <option value="es">Español (ES)</option>
@@ -727,7 +727,7 @@ export default function Profile() {
               {activeTab === "security" && (
                 <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
                   <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+                    <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
                       <Lock className="h-5 w-5" />
                     </div>
                     <div>
@@ -740,7 +740,7 @@ export default function Profile() {
                     <form onSubmit={handlePasswordSubmit(onPasswordChange)} className="space-y-4">
                       {/* Current Pass */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="currentPassword" className="text-xs font-bold text-[#B2563B]">Current Password</Label>
+                        <Label htmlFor="currentPassword" className="text-xs font-bold text-[#8C4B3E]">Current Password</Label>
                         <Input
                           id="currentPassword"
                           type="password"
@@ -754,7 +754,7 @@ export default function Profile() {
 
                       {/* New Pass */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="newPassword" className="text-xs font-bold text-[#B2563B]">New Password</Label>
+                        <Label htmlFor="newPassword" className="text-xs font-bold text-[#8C4B3E]">New Password</Label>
                         <Input
                           id="newPassword"
                           type="password"
@@ -768,7 +768,7 @@ export default function Profile() {
 
                       {/* Confirm New Pass */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="confirmPassword" className="text-xs font-bold text-[#B2563B]">Confirm New Password</Label>
+                        <Label htmlFor="confirmPassword" className="text-xs font-bold text-[#8C4B3E]">Confirm New Password</Label>
                         <Input
                           id="confirmPassword"
                           type="password"
@@ -784,7 +784,7 @@ export default function Profile() {
                         <Button
                           type="submit"
                           disabled={isChangingPass}
-                          className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
+                          className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-bold text-xs h-10 px-6 rounded-xl shadow-xs flex items-center justify-center gap-1.5"
                         >
                           {isChangingPass ? (
                             <>
@@ -809,7 +809,7 @@ export default function Profile() {
                 <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
                   <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between flex-wrap gap-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+                      <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
                         <Calendar className="h-5 w-5" />
                       </div>
                       <div>
@@ -873,7 +873,7 @@ export default function Profile() {
           <form onSubmit={handleAddAddress} className="space-y-4 pt-3">
             {/* Label select */}
             <div className="space-y-1.5">
-              <Label className="text-xs font-bold text-[#B2563B]">Location Label</Label>
+              <Label className="text-xs font-bold text-[#8C4B3E]">Location Label</Label>
               <div className="grid grid-cols-3 bg-[#FAF6F0] border border-[#5A5146]/20 p-1 rounded-xl h-10">
                 {["Home", "Office", "Other"].map(lbl => (
                   <button
@@ -883,7 +883,7 @@ export default function Profile() {
                     className={`rounded-lg text-xs font-bold transition-all ${
                       newAddressLabel === lbl
                         ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#B2563B]"
+                        : "text-[#7A7266] hover:text-[#8C4B3E]"
                     }`}
                   >
                     {lbl}
@@ -894,7 +894,7 @@ export default function Profile() {
 
             {/* Street Address */}
             <div className="space-y-1.5">
-              <Label htmlFor="newStreet" className="text-xs font-bold text-[#B2563B]">Street Address</Label>
+              <Label htmlFor="newStreet" className="text-xs font-bold text-[#8C4B3E]">Street Address</Label>
               <Input
                 id="newStreet"
                 placeholder="e.g. 500 Madison Avenue, Floor 12"
@@ -908,7 +908,7 @@ export default function Profile() {
             {/* City State Zip */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="newCity" className="text-xs font-bold text-[#B2563B]">City</Label>
+                <Label htmlFor="newCity" className="text-xs font-bold text-[#8C4B3E]">City</Label>
                 <Input
                   id="newCity"
                   placeholder="Manhattan"
@@ -919,7 +919,7 @@ export default function Profile() {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="newState" className="text-xs font-bold text-[#B2563B]">State</Label>
+                <Label htmlFor="newState" className="text-xs font-bold text-[#8C4B3E]">State</Label>
                 <Input
                   id="newState"
                   placeholder="NY"
@@ -930,7 +930,7 @@ export default function Profile() {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="newZip" className="text-xs font-bold text-[#B2563B]">ZIP Code</Label>
+                <Label htmlFor="newZip" className="text-xs font-bold text-[#8C4B3E]">ZIP Code</Label>
                 <Input
                   id="newZip"
                   placeholder="400001"
@@ -956,7 +956,7 @@ export default function Profile() {
               </Button>
               <Button 
                 type="submit" 
-                className="rounded-xl bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                className="rounded-xl bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
               >
                 Save Location
               </Button>

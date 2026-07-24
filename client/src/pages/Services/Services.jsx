@@ -34,8 +34,8 @@ import { fadeInUp, staggerContainer } from "@/utils/motion";
 // Predefined categories matching the Home page aesthetics
 const categories = [
   { name: "Home Cleaning", icon: Paintbrush, count: "120+ Providers", color: "bg-pink-50 text-pink-600 border-pink-100" },
-  { name: "Plumbing", icon: Droplet, count: "80+ Providers", color: "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10" },
-  { name: "Electrical", icon: Zap, count: "95+ Providers", color: "bg-amber-50 text-[#B2563B] border-amber-100" },
+  { name: "Plumbing", icon: Droplet, count: "80+ Providers", color: "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10" },
+  { name: "Electrical", icon: Zap, count: "95+ Providers", color: "bg-amber-50 text-[#8C4B3E] border-amber-100" },
   { name: "Moving & Packing", icon: Truck, count: "60+ Providers", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
   { name: "Lawn & Garden", icon: Flower2, count: "75+ Providers", color: "bg-lime-50 text-lime-600 border-lime-100" },
   { name: "Wellness & Personal", icon: Heart, count: "110+ Providers", color: "bg-rose-50 text-rose-600 border-rose-100" },
@@ -57,9 +57,9 @@ const getCategoryStyles = (category) => {
     case "Home Cleaning":
       return "bg-pink-50 text-pink-600 border-pink-100";
     case "Plumbing":
-      return "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10";
+      return "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10";
     case "Electrical":
-      return "bg-amber-50 text-[#B2563B] border-amber-100";
+      return "bg-amber-50 text-[#8C4B3E] border-amber-100";
     case "Moving & Packing":
       return "bg-emerald-50 text-emerald-600 border-emerald-100";
     case "Lawn & Garden":
@@ -340,7 +340,7 @@ export default function Services() {
               className="bg-white p-2.5 sm:p-3 rounded-2xl border border-[#5A5146]/20 w-full max-w-3xl flex flex-col md:flex-row gap-2.5 items-center mt-2"
             >
               <div className="relative w-full md:flex-1">
-                <Search className="absolute left-3.5 top-3 h-5 w-5 text-[#B2563B]" />
+                <Search className="absolute left-3.5 top-3 h-5 w-5 text-[#8C4B3E]" />
                 <Input
                   placeholder="What service do you need?"
                   value={heroSearch}
@@ -350,7 +350,7 @@ export default function Services() {
               </div>
 
               <div className="relative w-full md:w-60">
-                <MapPin className="absolute left-3.5 top-3 h-5 w-5 text-[#B2563B]" />
+                <MapPin className="absolute left-3.5 top-3 h-5 w-5 text-[#8C4B3E]" />
                 <select
                   value={heroLocation}
                   onChange={(e) => setHeroLocation(e.target.value)}
@@ -369,7 +369,7 @@ export default function Services() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full md:w-auto h-11 bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl px-8 shadow-sm transition-all font-semibold">
+              <Button type="submit" className="w-full md:w-auto h-11 bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl px-8 shadow-sm transition-all font-semibold">
                 Search
               </Button>
             </form>
@@ -405,7 +405,7 @@ export default function Services() {
                     type="button"
                     onClick={() => toggleCategory(cat.name)}
                     className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 ${isSelected
-                      ? "bg-[#B2563B] text-white border-violet-950 shadow-md shadow-2xs -translate-y-0.5"
+                      ? "bg-[#8C4B3E] text-white border-violet-950 shadow-md shadow-2xs -translate-y-0.5"
                       : "bg-white text-gray-900 border-gray-100 hover:shadow-md hover:-translate-y-0.5"
                       }`}
                   >
@@ -554,12 +554,12 @@ export default function Services() {
                       type="button"
                       onClick={() => setMinRating(opt.value)}
                       className={`flex items-center justify-between text-left px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${minRating === opt.value
-                        ? "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/20"
+                        ? "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/20"
                         : "bg-white text-gray-600 border-gray-100 hover:bg-gray-50"
                         }`}
                     >
                       <span className="flex items-center gap-1">
-                        {opt.value > 0 && <Star className="h-3.5 w-3.5 fill-amber-400 text-[#B2563B]" />}
+                        {opt.value > 0 && <Star className="h-3.5 w-3.5 fill-amber-400 text-[#8C4B3E]" />}
                         {opt.label}
                       </span>
                       {opt.value > 0 && (
@@ -614,7 +614,7 @@ export default function Services() {
                   <SlidersHorizontal className="h-4 w-4 text-gray-500" />
                   Filters
                   {activeFilterCount > 0 && (
-                    <span className="flex items-center justify-center bg-[#B2563B] text-white rounded-full text-[10px] w-5 h-5 font-bold">
+                    <span className="flex items-center justify-center bg-[#8C4B3E] text-white rounded-full text-[10px] w-5 h-5 font-bold">
                       {activeFilterCount}
                     </span>
                   )}
@@ -721,7 +721,7 @@ export default function Services() {
                   <p className="text-sm text-gray-500 max-w-sm">
                     {error}
                   </p>
-                  <Button onClick={() => window.location.reload()} className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-semibold">
+                  <Button onClick={() => window.location.reload()} className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-semibold">
                     Retry
                   </Button>
                 </div>
@@ -734,14 +734,14 @@ export default function Services() {
               ) : sortedServices.length === 0 ? (
                 /* NO RESULTS FOUND STATE */
                 <div className="bg-white border border-gray-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto mt-8 shadow-xs">
-                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
+                  <div className="p-4 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <Info className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mt-2">No Services Found</h3>
                   <p className="text-sm text-gray-500 max-w-sm">
                     We couldn't find any service matching your selection. Try clearing search filters or picking a different category.
                   </p>
-                  <Button onClick={handleClearFilters} className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-semibold">
+                  <Button onClick={handleClearFilters} className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-semibold">
                     Reset All Filters
                   </Button>
                 </div>
@@ -788,7 +788,7 @@ export default function Services() {
                               type="button"
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${currentPage === pageNum
-                                ? "bg-[#B2563B] text-white shadow-md shadow-2xs"
+                                ? "bg-[#8C4B3E] text-white shadow-md shadow-2xs"
                                 : "text-gray-600 hover:bg-[#F0E7D5] hover:text-gray-900"
                                 }`}
                             >
@@ -848,7 +848,7 @@ export default function Services() {
                     handleClearFilters();
                     setIsMobileFilterOpen(false);
                   }}
-                  className="w-full text-xs text-[#1F1D1A] font-semibold border-violet-950/20 bg-[#B2563B]/5 hover:bg-[#E8DCC3]/40"
+                  className="w-full text-xs text-[#1F1D1A] font-semibold border-violet-950/20 bg-[#8C4B3E]/5 hover:bg-[#E8DCC3]/40"
                 >
                   Reset Active Filters ({activeFilterCount})
                 </Button>
@@ -966,12 +966,12 @@ export default function Services() {
                       type="button"
                       onClick={() => setMinRating(opt.value)}
                       className={`flex items-center justify-between text-left px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all ${minRating === opt.value
-                        ? "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/20"
+                        ? "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/20"
                         : "bg-white text-gray-600 border-gray-100 hover:bg-gray-50"
                         }`}
                     >
                       <span className="flex items-center gap-1">
-                        {opt.value > 0 && <Star className="h-3.5 w-3.5 fill-amber-400 text-[#B2563B]" />}
+                        {opt.value > 0 && <Star className="h-3.5 w-3.5 fill-amber-400 text-[#8C4B3E]" />}
                         {opt.label}
                       </span>
                       {opt.value > 0 && (
@@ -1013,7 +1013,7 @@ export default function Services() {
               <Button
                 type="button"
                 onClick={() => setIsMobileFilterOpen(false)}
-                className="w-full bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl font-bold mt-auto h-11"
+                className="w-full bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl font-bold mt-auto h-11"
               >
                 Apply Filters
               </Button>

@@ -69,7 +69,7 @@ export default function PaymentMethods() {
                     >
                       <div>
                         <div className="flex items-center justify-between mb-4">
-                          <div className="p-2 bg-[#B2563B]/5 rounded-xl border border-[#5A5146]/20 text-slate-850">
+                          <div className="p-2 bg-[#8C4B3E]/5 rounded-xl border border-[#5A5146]/20 text-slate-850">
                             <CreditCard className="h-5 w-5" />
                           </div>
                           {card.isDefault && (

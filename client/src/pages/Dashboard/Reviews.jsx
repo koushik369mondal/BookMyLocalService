@@ -220,7 +220,7 @@ export default function Reviews() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Reviews</span>
                 <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">{totalCount}</span>
               </div>
-              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
+              <div className="p-3 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <MessageSquare className="h-6 w-6" />
               </div>
             </Card>
@@ -231,7 +231,7 @@ export default function Reviews() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Response Rate</span>
                 <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">{responseRate}%</span>
               </div>
-              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
+              <div className="p-3 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
             </Card>
@@ -268,7 +268,7 @@ export default function Reviews() {
                         {item.star} <Star className="h-3.5 w-3.5 fill-amber-400 text-[#C9A46A]" />
                       </span>
                       
-                      <Progress value={item.percentage} className="h-2 flex-1 rounded-full bg-[#F0E7D5] [&>div]:bg-[#B2563B]" />
+                      <Progress value={item.percentage} className="h-2 flex-1 rounded-full bg-[#F0E7D5] [&>div]:bg-[#8C4B3E]" />
                       
                       <span className="w-10 text-right text-[#7A7266] font-semibold shrink-0">
                         {item.percentage}%
@@ -284,7 +284,7 @@ export default function Reviews() {
                 
                 {/* Search */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="searchQuery" className="text-[10px] font-bold text-[#B2563B]">Search reviews</Label>
+                  <Label htmlFor="searchQuery" className="text-[10px] font-bold text-[#8C4B3E]">Search reviews</Label>
                   <div className="relative">
                     <span className="absolute left-3 top-[50%] translate-y-[-50%] text-[#7A7266]">
                       <Search className="h-4 w-4" />
@@ -301,13 +301,13 @@ export default function Reviews() {
 
                 {/* Rating filter */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="starFilter" className="text-[10px] font-bold text-[#B2563B]">Star Rating</Label>
+                  <Label htmlFor="starFilter" className="text-[10px] font-bold text-[#8C4B3E]">Star Rating</Label>
                   <div className="relative">
                     <select
                       id="starFilter"
                       value={starFilter}
                       onChange={(e) => setStarFilter(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="all">All Stars</option>
                       <option value="5">5 Stars only</option>
@@ -322,13 +322,13 @@ export default function Reviews() {
 
                 {/* Sort */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="sortBy" className="text-[10px] font-bold text-[#B2563B]">Sort By</Label>
+                  <Label htmlFor="sortBy" className="text-[10px] font-bold text-[#8C4B3E]">Sort By</Label>
                   <div className="relative">
                     <select
                       id="sortBy"
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="newest">Newest First</option>
                       <option value="highest">Highest Rating</option>
@@ -366,7 +366,7 @@ export default function Reviews() {
               ) : filteredReviews.length === 0 ? (
                 /* EMPTY STATE DISPLAY */
                 <div className="bg-white border border-[#5A5146]/15 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
+                  <div className="p-4 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-[#1F1D1A] mt-2">No Reviews Found</h3>
@@ -415,16 +415,16 @@ export default function Reviews() {
                       </div>
 
                       {/* Review Comment Text */}
-                      <p className="text-xs text-[#B2563B] leading-relaxed font-medium bg-[#FAF6F0]/30 p-3 rounded-xl border border-[#5A5146]/15/50">
+                      <p className="text-xs text-[#8C4B3E] leading-relaxed font-medium bg-[#FAF6F0]/30 p-3 rounded-xl border border-[#5A5146]/15/50">
                         "{rev.comment}"
                       </p>
 
                       {/* Provider Reply block */}
                       {rev.reply ? (
                         /* ACTIVE REPLY BOX */
-                        <div className="p-4 bg-[#B2563B]/5 border border-violet-950/10 rounded-xl space-y-2.5 animate-fade-in relative">
+                        <div className="p-4 bg-[#8C4B3E]/5 border border-violet-950/10 rounded-xl space-y-2.5 animate-fade-in relative">
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-extrabold text-[#1F1D1A] bg-[#B2563B]/5 border border-violet-950/10 rounded-lg py-0.5 px-2.5 uppercase flex items-center gap-1">
+                            <span className="text-[10px] font-extrabold text-[#1F1D1A] bg-[#8C4B3E]/5 border border-violet-950/10 rounded-lg py-0.5 px-2.5 uppercase flex items-center gap-1">
                               <CornerDownRight className="h-3.5 w-3.5" />
                               Your Reply
                             </span>
@@ -433,7 +433,7 @@ export default function Reviews() {
                             <div className="flex items-center gap-1.5 print:hidden">
                               <button 
                                 onClick={() => handleStartEdit(rev.id, rev.reply)}
-                                className="p-1 text-[#7A7266] hover:text-[#B2563B] transition-colors"
+                                className="p-1 text-[#7A7266] hover:text-[#8C4B3E] transition-colors"
                               >
                                 <Edit3 className="h-3.5 w-3.5" />
                               </button>
@@ -466,14 +466,14 @@ export default function Reviews() {
                                 <Button 
                                   size="xs"
                                   onClick={() => handleSaveEdit(rev.id)}
-                                  className="h-7 text-[9px] font-bold bg-[#B2563B] text-white hover:bg-[#B2563B]"
+                                  className="h-7 text-[9px] font-bold bg-[#8C4B3E] text-white hover:bg-[#8C4B3E]"
                                 >
                                   Save Reply
                                 </Button>
                               </div>
                             </div>
                           ) : (
-                            <p className="text-xs text-[#B2563B] font-semibold leading-relaxed">
+                            <p className="text-xs text-[#8C4B3E] font-semibold leading-relaxed">
                               {rev.reply}
                             </p>
                           )}
@@ -491,7 +491,7 @@ export default function Reviews() {
                             />
                             <Button
                               onClick={() => handleAddReplySubmit(rev.id)}
-                              className="bg-[#B2563B] hover:bg-black text-white h-9 px-4 font-bold text-xs rounded-xl"
+                              className="bg-[#8C4B3E] hover:bg-black text-white h-9 px-4 font-bold text-xs rounded-xl"
                             >
                               Submit
                             </Button>

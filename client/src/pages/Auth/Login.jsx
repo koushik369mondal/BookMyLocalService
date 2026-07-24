@@ -212,7 +212,7 @@ export default function Login() {
 
               {/* Email Field */}
               <div className="space-y-1.5">
-                <Label htmlFor="email" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
+                <Label htmlFor="email" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
                     <Mail className="h-4 w-4" />
@@ -239,7 +239,7 @@ export default function Login() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -272,7 +272,7 @@ export default function Login() {
                 variant="outline"
                 disabled={isSubmitting}
                 onClick={() => handleSocialSignIn("Google")}
-                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#B2563B] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
+                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#8C4B3E] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
               >
                 <GoogleIcon className="h-4 w-4" />
                 Google
@@ -282,7 +282,7 @@ export default function Login() {
                 variant="outline"
                 disabled={isSubmitting}
                 onClick={() => handleSocialSignIn("GitHub")}
-                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#B2563B] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
+                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#8C4B3E] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
               >
                 <GitHubIcon className="h-4 w-4 text-[#1F1D1A]" />
                 GitHub

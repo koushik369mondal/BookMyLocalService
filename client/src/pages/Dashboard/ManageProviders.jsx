@@ -251,7 +251,7 @@ export default function ManageProviders() {
       case "verified":
         return <Badge className="bg-emerald-500 hover:bg-emerald-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Verified</Badge>;
       case "pending":
-        return <Badge className="bg-[#B2563B] hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
+        return <Badge className="bg-[#8C4B3E] hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
       default: // suspended
         return <Badge className="bg-rose-500 hover:bg-rose-600 border-0 text-white font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Suspended</Badge>;
     }
@@ -296,7 +296,7 @@ export default function ManageProviders() {
             </div>
 
             <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
-              <span className="block text-2xl font-black text-[#B2563B]">{stats.pending}</span>
+              <span className="block text-2xl font-black text-[#8C4B3E]">{stats.pending}</span>
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Pending Approval</span>
             </div>
 
@@ -340,7 +340,7 @@ export default function ManageProviders() {
                   <select
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Categories</option>
                     <option value="Home Cleaning">Home Cleaning</option>
@@ -362,7 +362,7 @@ export default function ManageProviders() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Statuses</option>
                     <option value="verified">Verified</option>
@@ -382,7 +382,7 @@ export default function ManageProviders() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="bookings-desc">Bookings: High to Low</option>
                     <option value="rating-desc">Rating: Highest First</option>
@@ -402,9 +402,9 @@ export default function ManageProviders() {
               
               {/* BULK ACTIONS PANEL */}
               {selectedIds.length > 0 && (
-                <div className="p-4 bg-[#B2563B] border border-violet-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
+                <div className="p-4 bg-[#8C4B3E] border border-violet-950 text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in shadow-md">
                   <span className="text-xs font-extrabold flex items-center gap-2">
-                    <Briefcase className="h-4.5 w-4.5 text-[#B2563B]" />
+                    <Briefcase className="h-4.5 w-4.5 text-[#8C4B3E]" />
                     {selectedIds.length} Providers Selected
                   </span>
                   
@@ -451,7 +451,7 @@ export default function ManageProviders() {
               ) : paginatedProviders.length === 0 ? (
                 /* EMPTY STATE BOARD */
                 <div className="bg-white border border-[#5A5146]/15 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
+                  <div className="p-4 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                     <AlertCircle className="h-8 w-8" />
                   </div>
                   <h3 className="text-xl font-bold text-[#1F1D1A] mt-2">No Providers Found</h3>
@@ -483,11 +483,11 @@ export default function ManageProviders() {
                           <th className="py-2.5 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-50 font-medium text-[#B2563B]">
+                      <tbody className="divide-y divide-stone-50 font-medium text-[#8C4B3E]">
                         {paginatedProviders.map(prov => {
                           const isSelected = selectedIds.includes(prov.id);
                           return (
-                            <tr key={prov.id} className={`hover:bg-[#FAF6F0] transition-colors ${isSelected ? "bg-[#B2563B]/5/10" : ""}`}>
+                            <tr key={prov.id} className={`hover:bg-[#FAF6F0] transition-colors ${isSelected ? "bg-[#8C4B3E]/5/10" : ""}`}>
                               <td className="py-3 px-1 shrink-0 w-8">
                                 <Checkbox 
                                   checked={isSelected}
@@ -508,7 +508,7 @@ export default function ManageProviders() {
                                 </div>
                               </td>
                               <td className="py-3">
-                                <span className="block text-[#B2563B]">{prov.category}</span>
+                                <span className="block text-[#8C4B3E]">{prov.category}</span>
                                 <span className="text-[9px] text-[#7A7266] font-bold uppercase tracking-wider">{prov.serviceName}</span>
                               </td>
                               <td className="py-3 font-bold text-[#1F1D1A]">
@@ -554,7 +554,7 @@ export default function ManageProviders() {
                                       className={`h-7 text-[9px] font-bold rounded-lg border bg-white ${
                                         prov.status === "suspended" 
                                           ? "border-emerald-300 hover:bg-emerald-50 text-emerald-600"
-                                          : "border-[#C9A46A]/40 hover:bg-amber-50 text-[#B2563B]"
+                                          : "border-[#C9A46A]/40 hover:bg-amber-50 text-[#8C4B3E]"
                                       }`}
                                     >
                                       {prov.status === "suspended" ? "Activate" : "Suspend"}
@@ -602,7 +602,7 @@ export default function ManageProviders() {
                               onClick={() => setCurrentPage(pageNum)}
                               className={`h-8 w-8 text-xs font-bold rounded-xl transition-all ${
                                 currentPage === pageNum
-                                  ? "bg-[#B2563B] text-white shadow-md shadow-2xs"
+                                  ? "bg-[#8C4B3E] text-white shadow-md shadow-2xs"
                                   : "text-[#5A5146] hover:bg-[#F0E7D5]"
                               }`}
                             >
@@ -686,7 +686,7 @@ export default function ManageProviders() {
               <Button
                 type="button"
                 onClick={() => setIsViewOpen(false)}
-                className="rounded-xl bg-[#B2563B] hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
+                className="rounded-xl bg-[#8C4B3E] hover:bg-black text-white font-bold text-xs h-9.5 px-5 w-full sm:w-auto"
               >
                 Close View
               </Button>
@@ -712,7 +712,7 @@ export default function ManageProviders() {
             <form onSubmit={onEditSaveSubmit} className="space-y-4 pt-3">
               {/* Provider Name */}
               <div className="space-y-1.5">
-                <Label htmlFor="editName" className="text-xs font-bold text-[#B2563B]">Provider Name</Label>
+                <Label htmlFor="editName" className="text-xs font-bold text-[#8C4B3E]">Provider Name</Label>
                 <Input
                   id="editName"
                   value={editName}
@@ -724,7 +724,7 @@ export default function ManageProviders() {
 
               {/* Service Title */}
               <div className="space-y-1.5">
-                <Label htmlFor="editService" className="text-xs font-bold text-[#B2563B]">Service Title</Label>
+                <Label htmlFor="editService" className="text-xs font-bold text-[#8C4B3E]">Service Title</Label>
                 <Input
                   id="editService"
                   value={editServiceName}
@@ -736,7 +736,7 @@ export default function ManageProviders() {
 
               {/* Location */}
               <div className="space-y-1.5">
-                <Label htmlFor="editLocation" className="text-xs font-bold text-[#B2563B]">Location</Label>
+                <Label htmlFor="editLocation" className="text-xs font-bold text-[#8C4B3E]">Location</Label>
                 <Input
                   id="editLocation"
                   value={editLocation}
@@ -749,13 +749,13 @@ export default function ManageProviders() {
               {/* Category & Status */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <Label htmlFor="editCategory" className="text-xs font-bold text-[#B2563B]">Category Group</Label>
+                  <Label htmlFor="editCategory" className="text-xs font-bold text-[#8C4B3E]">Category Group</Label>
                   <div className="relative">
                     <select
                       id="editCategory"
                       value={editCategory}
                       onChange={(e) => setEditCategory(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="Home Cleaning">Home Cleaning</option>
                       <option value="Plumbing">Plumbing</option>
@@ -768,13 +768,13 @@ export default function ManageProviders() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="editStatus" className="text-xs font-bold text-[#B2563B]">Verification Status</Label>
+                  <Label htmlFor="editStatus" className="text-xs font-bold text-[#8C4B3E]">Verification Status</Label>
                   <div className="relative">
                     <select
                       id="editStatus"
                       value={editStatus}
                       onChange={(e) => setEditStatus(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                      className="w-full h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                     >
                       <option value="verified">Verified</option>
                       <option value="pending">Pending</option>
@@ -796,7 +796,7 @@ export default function ManageProviders() {
                 </Button>
                 <Button 
                   type="submit" 
-                  className="rounded-xl bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
+                  className="rounded-xl bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto"
                 >
                   Save Changes
                 </Button>

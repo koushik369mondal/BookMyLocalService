@@ -32,9 +32,9 @@ export default function ProviderJobs() {
   const getBadge = (status) => {
     switch (status) {
       case "pending":
-        return <Badge className="bg-[#B2563B] hover:bg-amber-600 text-white border-0 font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
+        return <Badge className="bg-[#8C4B3E] hover:bg-amber-600 text-white border-0 font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
       default:
-        return <Badge className="bg-[#B2563B]/50 hover:bg-[#B2563B] text-white border-0 font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Confirmed</Badge>;
+        return <Badge className="bg-[#8C4B3E]/50 hover:bg-[#8C4B3E] text-white border-0 font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Confirmed</Badge>;
     }
   };
 
@@ -85,7 +85,7 @@ export default function ProviderJobs() {
                         <span className="text-[9px] font-bold text-[#7A7266] uppercase block tracking-wider">Settlement Rate</span>
                         <span className="text-base font-black text-[#1F1D1A]">${job.price.toFixed(2)}</span>
                       </div>
-                      <Button size="xs" className="bg-[#B2563B] hover:bg-black text-white rounded-xl h-9 px-4 text-[10px] font-bold flex items-center gap-1 shrink-0">
+                      <Button size="xs" className="bg-[#8C4B3E] hover:bg-black text-white rounded-xl h-9 px-4 text-[10px] font-bold flex items-center gap-1 shrink-0">
                         Manage Job <ArrowRight className="h-3.5 w-3.5" />
                       </Button>
                     </div>

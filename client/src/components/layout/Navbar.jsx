@@ -36,7 +36,7 @@ const navLinks = [
 const mockNotifications = [
   { id: 1, title: "Booking Confirmed", desc: "Deep Home Cleaning scheduled for Tomorrow at 10:30 AM", time: "5 mins ago", icon: CheckCircle2, iconColor: "text-emerald-400 bg-emerald-500/10", unread: true },
   { id: 2, title: "Specialist Assigned", desc: "Sarah Jenkins accepted your dispatch request in Brooklyn", time: "1 hour ago", icon: ShieldCheck, iconColor: "text-blue-400 bg-blue-500/10", unread: true },
-  { id: 3, title: "Payment Received", desc: "Receipt of $55.00 generated for Window Washing", time: "3 hours ago", icon: Sparkles, iconColor: "text-[#B2563B] bg-[#C9A46A]/20", unread: true },
+  { id: 3, title: "Payment Received", desc: "Receipt of $55.00 generated for Window Washing", time: "3 hours ago", icon: Sparkles, iconColor: "text-[#8C4B3E] bg-[#C9A46A]/20", unread: true },
   { id: 4, title: "Rate Your Service", desc: "Share your feedback for Sofa & Carpet Sanitization", time: "1 day ago", icon: Clock, iconColor: "text-purple-400 bg-purple-500/10", unread: false }
 ];
 
@@ -85,11 +85,11 @@ export default function Navbar() {
       {/* {showAnnouncementBar && (
         <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-[#1F1D1A] px-4 py-2 text-xs font-bold flex items-center justify-between shadow-xs transition-all duration-300 relative z-55">
           <div className="flex-1 flex items-center justify-center gap-2 text-center">
-            <span className="bg-[#B2563B] text-[#B2563B] text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-md shrink-0">
+            <span className="bg-[#8C4B3E] text-[#8C4B3E] text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-md shrink-0">
               Limited Offer
             </span>
             <span className="truncate">
-              🎉 Get <strong>20% OFF</strong> your first service booking! Use code <code className="bg-[#B2563B]/20 px-1.5 py-0.5 rounded font-mono font-extrabold">LOCAL20</code> at checkout.
+              🎉 Get <strong>20% OFF</strong> your first service booking! Use code <code className="bg-[#8C4B3E]/20 px-1.5 py-0.5 rounded font-mono font-extrabold">LOCAL20</code> at checkout.
             </span>
             <NavLink to="/services" className="underline hover:text-white transition-colors shrink-0 hidden sm:inline-flex items-center gap-0.5">
               Book Now <ArrowRight className="h-3 w-3 inline" />
@@ -146,7 +146,7 @@ export default function Navbar() {
               <Input
                 type="search"
                 placeholder="Search services..."
-                className="pl-10 pr-4 h-[44px] lg:h-[48px] w-full bg-[#b84832]/80 border border-violet-800/60 text-stone-100 placeholder:text-[#7A7266] focus:bg-[#B2563B] focus:border-amber-500 focus-visible:ring-2 focus-visible:ring-amber-500/25 shadow-inner rounded-xl text-xs lg:text-sm transition-all duration-200"
+                className="pl-10 pr-4 h-[44px] lg:h-[48px] w-full bg-[#FAF6F0] border border-[#E8DCC3] text-[#1F1D1A] placeholder:text-[#7A7266] focus:border-[#C9A46A] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 shadow-2xs rounded-xl text-xs lg:text-sm transition-all duration-200"
               />
             </div>
 
@@ -156,12 +156,12 @@ export default function Navbar() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="relative hover:bg-[#b84832] text-[#7A7266] hover:text-white rounded-xl h-[44px] w-[44px] lg:h-[48px] lg:w-[48px] transition-all duration-200 shrink-0"
+                className="relative hover:bg-[#F0E7D5] text-[#5A5146] hover:text-[#1F1D1A] rounded-xl h-[44px] w-[44px] lg:h-[48px] lg:w-[48px] transition-all duration-200 shrink-0"
                 title="Notifications"
               >
-                <Bell className="h-5 w-5 text-[#7A7266] group-hover:text-[#B2563B] transition-colors" />
+                <Bell className="h-5 w-5 text-[#5A5146] hover:text-[#C9A46A] transition-colors" />
                 {unreadCount > 0 && (
-                  <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#B2563B] text-[10px] font-extrabold text-[#1F1D1A] ring-2 ring-violet-950 animate-pulse">
+                  <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#8C4B3E] text-[10px] font-extrabold text-white ring-2 ring-white">
                     {unreadCount}
                   </span>
                 )}
@@ -169,13 +169,13 @@ export default function Navbar() {
 
               {/* LIVE NOTIFICATIONS DROPDOWN MENU */}
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-[#B2563B] border border-violet-900 rounded-2xl shadow-2xl shadow-black/60 py-3 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="px-4 pb-3 border-b border-violet-900 flex items-center justify-between">
+                <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl shadow-lg py-3 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="px-4 pb-3 border-b border-[#E8DCC3] flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Bell className="h-4 w-4 text-[#C9A46A]" />
-                      <h4 className="font-bold text-sm text-white">Notifications</h4>
+                      <h4 className="font-bold text-sm text-[#1F1D1A]">Notifications</h4>
                       {unreadCount > 0 && (
-                        <span className="bg-[#C9A46A]/30 text-[#B2563B] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#C9A46A]/40">
+                        <span className="bg-[#C9A46A]/20 text-[#8C4B3E] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#C9A46A]/30">
                           {unreadCount} new
                         </span>
                       )}
@@ -184,44 +184,49 @@ export default function Navbar() {
                     {unreadCount > 0 && (
                       <button
                         onClick={handleMarkAllRead}
-                        className="text-[11px] text-[#B2563B] hover:underline font-semibold flex items-center gap-1"
+                        className="text-[11px] text-[#8C4B3E] hover:underline font-semibold flex items-center gap-1"
                       >
                         <Check className="h-3 w-3" /> Mark all read
                       </button>
                     )}
                   </div>
 
-                  <div className="divide-y divide-violet-900/60 max-h-80 overflow-y-auto">
-                    {notificationsList.map(item => {
-                      const IconComp = item.icon;
-                      return (
-                        <div
-                          key={item.id}
-                          className={`p-3.5 flex items-start gap-3 hover:bg-[#b84832]/60 transition-colors cursor-pointer ${item.unread ? "bg-[#b84832]/30" : ""
+                  <div className="max-h-80 overflow-y-auto divide-y divide-[#E8DCC3]/60">
+                    {notificationsList.length === 0 ? (
+                      <div className="p-6 text-center text-xs text-[#7A7266]">No new notifications</div>
+                    ) : (
+                      notificationsList.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <div
+                            key={item.id}
+                            className={`p-3.5 flex items-start gap-3 transition-colors hover:bg-[#F0E7D5]/50 ${
+                              item.unread ? "bg-[#F0E7D5]/30" : ""
                             }`}
-                        >
-                          <div className={`p-2 rounded-xl shrink-0 mt-0.5 ${item.iconColor}`}>
-                            <IconComp className="h-4 w-4" />
-                          </div>
-                          <div className="space-y-1 min-w-0 flex-1">
-                            <div className="flex items-center justify-between gap-2">
-                              <h5 className="font-bold text-xs text-white truncate">{item.title}</h5>
-                              <span className="text-[10px] text-[#7A7266] font-medium shrink-0">{item.time}</span>
+                          >
+                            <div className={`p-2 rounded-xl shrink-0 ${item.iconColor || "bg-[#C9A46A]/10 text-[#C9A46A]"}`}>
+                              <Icon className="h-4 w-4" />
                             </div>
-                            <p className="text-xs text-[#7A7266] leading-snug font-normal line-clamp-2">
-                              {item.desc}
-                            </p>
+                            <div className="space-y-1 min-w-0 flex-1">
+                              <div className="flex items-center justify-between gap-2">
+                                <h5 className="font-bold text-xs text-[#1F1D1A] truncate">{item.title}</h5>
+                                <span className="text-[10px] text-[#7A7266] font-medium shrink-0">{item.time}</span>
+                              </div>
+                              <p className="text-xs text-[#5A5146] leading-snug font-normal line-clamp-2">
+                                {item.desc}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })
+                    )}
                   </div>
 
-                  <div className="pt-2 px-4 border-t border-violet-900 text-center">
+                  <div className="px-4 pt-2.5 border-t border-[#E8DCC3] text-center">
                     <NavLink
                       to="/notifications"
                       onClick={() => setShowNotifications(false)}
-                      className="text-xs text-[#7A7266] hover:text-[#B2563B] font-bold transition-colors block py-1"
+                      className="text-xs text-[#7A7266] hover:text-[#C9A46A] font-bold transition-colors block py-1"
                     >
                       View all notification history →
                     </NavLink>
@@ -235,9 +240,9 @@ export default function Navbar() {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-[#b84832]/80 focus:outline-none transition-all duration-200 border border-transparent hover:border-violet-800/60"
+                  className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-[#F0E7D5] focus:outline-none transition-all duration-200 border border-transparent hover:border-[#E8DCC3]"
                 >
-                  <div className="h-9 w-9 lg:h-10 lg:w-10 rounded-xl overflow-hidden border border-[#C9A46A]/40 bg-[#C9A46A]/20 flex items-center justify-center font-bold text-xs lg:text-sm text-[#B2563B] shadow-sm shrink-0">
+                  <div className="h-9 w-9 lg:h-10 lg:w-10 rounded-xl overflow-hidden border border-[#E8DCC3] bg-[#F0E7D5] flex items-center justify-center font-bold text-xs lg:text-sm text-[#C9A46A] shadow-2xs shrink-0">
                     {user.avatar ? (
                       <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
                     ) : (
@@ -248,21 +253,21 @@ export default function Navbar() {
                 </button>
 
                 {showDropdown && (
-                  <div className="absolute right-0 mt-2 w-56 bg-[#B2563B] border border-violet-900 rounded-2xl shadow-2xl shadow-black/40 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200 font-medium text-xs text-stone-200">
-                    <div className="px-4 py-2.5 border-b border-violet-900 text-[11px] text-[#7A7266] font-semibold uppercase tracking-wider">
-                      Signed in as <span className="text-white font-bold block normal-case text-sm truncate mt-0.5">{user.fullName}</span>
+                  <div className="absolute right-0 mt-2 w-56 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl shadow-lg py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200 font-medium text-xs text-[#5A5146]">
+                    <div className="px-4 py-2.5 border-b border-[#E8DCC3] text-[11px] text-[#7A7266] font-semibold uppercase tracking-wider">
+                      Signed in as <span className="text-[#1F1D1A] font-bold block normal-case text-sm truncate mt-0.5">{user.fullName}</span>
                     </div>
                     <NavLink
                       to="/profile"
                       onClick={() => setShowDropdown(false)}
-                      className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#b84832] hover:text-[#B2563B] transition-colors duration-150"
+                      className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#F0E7D5] hover:text-[#C9A46A] transition-colors duration-150"
                     >
                       <User className="h-4 w-4 text-[#7A7266]" /> My Profile
                     </NavLink>
                     <NavLink
                       to="/bookings"
                       onClick={() => setShowDropdown(false)}
-                      className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#b84832] hover:text-[#B2563B] transition-colors duration-150"
+                      className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#F0E7D5] hover:text-[#C9A46A] transition-colors duration-150"
                     >
                       <Calendar className="h-4 w-4 text-[#7A7266]" /> Booking History
                     </NavLink>
@@ -270,7 +275,7 @@ export default function Navbar() {
                       <NavLink
                         to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"}
                         onClick={() => setShowDropdown(false)}
-                        className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#b84832] hover:text-[#B2563B] transition-colors duration-150"
+                        className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#F0E7D5] hover:text-[#C9A46A] transition-colors duration-150"
                       >
                         <LayoutDashboard className="h-4 w-4 text-[#7A7266]" /> Dashboard
                       </NavLink>
@@ -278,14 +283,14 @@ export default function Navbar() {
                     <NavLink
                       to="/profile"
                       onClick={() => setShowDropdown(false)}
-                      className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#b84832] hover:text-[#B2563B] transition-colors duration-150"
+                      className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#F0E7D5] hover:text-[#C9A46A] transition-colors duration-150"
                     >
                       <Settings className="h-4 w-4 text-[#7A7266]" /> Settings
                     </NavLink>
-                    <hr className="my-1.5 border-violet-900" />
+                    <hr className="my-1.5 border-[#E8DCC3]" />
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-rose-500/10 text-rose-400 hover:text-rose-300 transition-colors duration-150 text-left font-semibold"
+                      className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-rose-50 text-[#8C4B3E] transition-colors duration-150 text-left font-bold"
                     >
                       <LogOut className="h-4 w-4" /> Logout
                     </button>
@@ -299,7 +304,7 @@ export default function Navbar() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-stone-200 hover:text-[#B2563B] hover:bg-[#b84832] h-[44px] px-4 rounded-xl text-sm font-semibold transition-all duration-200"
+                    className="text-[#5A5146] hover:text-[#C9A46A] hover:bg-[#F0E7D5] h-[44px] px-4 rounded-xl text-sm font-semibold transition-all duration-200"
                   >
                     Login
                   </Button>
@@ -307,7 +312,7 @@ export default function Navbar() {
                 <NavLink to="/register">
                   <Button
                     size="sm"
-                    className="bg-[#B2563B] hover:bg-[#C9A46A] text-[#1F1D1A] font-bold h-[44px] px-5 rounded-xl text-sm transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98]"
+                    className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold h-[44px] px-5 rounded-xl text-sm transition-all duration-200 border border-[#E8DCC3]"
                   >
                     Sign Up
                   </Button>
@@ -323,33 +328,32 @@ export default function Navbar() {
               variant="ghost"
               size="icon"
               onClick={() => setShowNotifications(!showNotifications)}
-              className="relative hover:bg-[#b84832] text-[#7A7266] rounded-xl h-10 w-10 transition-colors"
+              className="relative hover:bg-[#F0E7D5] text-[#5A5146] rounded-xl h-10 w-10 transition-colors"
             >
               <Bell className="h-5 w-5 text-[#7A7266]" />
               {unreadCount > 0 && (
-                <span className="absolute top-2 right-2 h-2 w-2 bg-[#B2563B] rounded-full border border-violet-950"></span>
+                <span className="absolute top-2 right-2 h-2 w-2 bg-[#8C4B3E] rounded-full border border-white"></span>
               )}
             </Button>
-
 
             {/* Mobile Hamburger Drawer */}
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-xl hover:bg-[#b84832] h-10 w-10 transition-colors">
-                  <Menu className="h-6 w-6 text-white" />
+                <Button variant="ghost" size="icon" className="rounded-xl hover:bg-[#F0E7D5] h-10 w-10 transition-colors">
+                  <Menu className="h-6 w-6 text-[#1F1D1A]" />
                 </Button>
               </DialogTrigger>
 
-              <DialogContent className="fixed right-0 top-0 bottom-0 left-auto h-full w-80 max-w-[85vw] translate-x-0 translate-y-0 rounded-none border-y-0 border-r-0 border-l border-violet-900 p-6 bg-[#B2563B] shadow-2xl flex flex-col gap-6 z-50 transition-all duration-300 text-white">
+              <DialogContent className="fixed right-0 top-0 bottom-0 left-auto h-full w-80 max-w-[85vw] translate-x-0 translate-y-0 rounded-none border-y-0 border-r-0 border-l border-[#E8DCC3] p-6 bg-[#FAF6F0] shadow-2xl flex flex-col gap-6 z-50 transition-all duration-300 text-[#5A5146]">
 
-                <DialogHeader className="flex flex-row items-center justify-between border-b border-violet-900 pb-4">
+                <DialogHeader className="flex flex-row items-center justify-between border-b border-[#E8DCC3] pb-4">
                   <DialogTitle className="flex items-center gap-2.5">
                     <img
                       src="/logo.png"
                       alt="BookMyLocalService Logo"
                       className="h-8 w-auto object-contain"
                     />
-                    <span className="font-extrabold text-lg text-white">
+                    <span className="font-bold text-lg text-[#1F1D1A]">
                       BookMyLocal<span className="text-[#C9A46A]">Service</span>
                     </span>
                   </DialogTitle>
@@ -361,7 +365,7 @@ export default function Navbar() {
                   <Input
                     type="search"
                     placeholder="Search services..."
-                    className="pl-10 h-11 w-full bg-[#b84832] border-violet-800 text-stone-100 placeholder:text-[#7A7266] focus:border-amber-500 rounded-xl text-sm"
+                    className="pl-10 h-11 w-full bg-[#FAF6F0] border-[#E8DCC3] text-[#1F1D1A] placeholder:text-[#7A7266] focus:border-[#C9A46A] rounded-xl text-sm"
                   />
                 </div>
 
@@ -374,8 +378,8 @@ export default function Navbar() {
                         className={({ isActive }) => cn(
                           "text-base font-semibold py-2.5 px-3.5 rounded-xl transition-all duration-200",
                           isActive
-                            ? "bg-[#C9A46A]/20 text-[#B2563B] font-bold"
-                            : "text-[#7A7266] hover:bg-[#b84832] hover:text-white"
+                            ? "bg-[#F0E7D5] text-[#C9A46A] font-bold"
+                            : "text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#1F1D1A]"
                         )}
                       >
                         {link.name}
@@ -385,11 +389,11 @@ export default function Navbar() {
                 </nav>
 
                 {/* Mobile Action Buttons / Profile */}
-                <div className="border-t border-violet-900 pt-4 flex flex-col gap-2 shrink-0">
+                <div className="border-t border-[#E8DCC3] pt-4 flex flex-col gap-2 shrink-0">
                   {user ? (
                     <>
-                      <div className="flex items-center gap-3 px-3 py-2 border-b border-violet-900 pb-4 mb-2">
-                        <div className="h-10 w-10 rounded-xl overflow-hidden border border-[#C9A46A]/40 bg-[#C9A46A]/20 flex items-center justify-center font-bold text-sm text-[#B2563B] shrink-0">
+                      <div className="flex items-center gap-3 px-3 py-2 border-b border-[#E8DCC3] pb-4 mb-2">
+                        <div className="h-10 w-10 rounded-xl overflow-hidden border border-[#E8DCC3] bg-[#F0E7D5] flex items-center justify-center font-bold text-sm text-[#C9A46A] shrink-0">
                           {user.avatar ? (
                             <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
                           ) : (
@@ -397,23 +401,23 @@ export default function Navbar() {
                           )}
                         </div>
                         <div>
-                          <span className="block text-sm font-bold text-white leading-tight">{user.fullName}</span>
-                          <span className="text-xs text-[#B2563B] capitalize block mt-0.5 font-medium">{user.role.toLowerCase()} Account</span>
+                          <span className="block text-sm font-bold text-[#1F1D1A] leading-tight">{user.fullName}</span>
+                          <span className="text-xs text-[#8C4B3E] capitalize block mt-0.5 font-medium">{user.role.toLowerCase()} Account</span>
                         </div>
                       </div>
                       <DialogClose asChild>
-                        <NavLink to="/profile" className="flex items-center gap-2.5 px-3 py-2 text-sm text-[#7A7266] hover:bg-[#b84832] hover:text-[#B2563B] rounded-xl transition-colors">
+                        <NavLink to="/profile" className="flex items-center gap-2.5 px-3 py-2 text-sm text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
                           <User className="h-4.5 w-4.5" /> My Profile
                         </NavLink>
                       </DialogClose>
                       <DialogClose asChild>
-                        <NavLink to="/bookings" className="flex items-center gap-2.5 px-3 py-2 text-sm text-[#7A7266] hover:bg-[#b84832] hover:text-[#B2563B] rounded-xl transition-colors">
+                        <NavLink to="/bookings" className="flex items-center gap-2.5 px-3 py-2 text-sm text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
                           <Calendar className="h-4.5 w-4.5" /> Booking History
                         </NavLink>
                       </DialogClose>
                       {(user.role === "PROVIDER" || user.role === "ADMIN") && (
                         <DialogClose asChild>
-                          <NavLink to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"} className="flex items-center gap-2.5 px-3 py-2 text-sm text-[#7A7266] hover:bg-[#b84832] hover:text-[#B2563B] rounded-xl transition-colors">
+                          <NavLink to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"} className="flex items-center gap-2.5 px-3 py-2 text-sm text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
                             <LayoutDashboard className="h-4.5 w-4.5" /> Dashboard
                           </NavLink>
                         </DialogClose>
@@ -421,7 +425,7 @@ export default function Navbar() {
                       <DialogClose asChild>
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-rose-400 hover:bg-rose-500/10 rounded-xl text-left mt-2 font-bold transition-colors"
+                          className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-[#8C4B3E] hover:bg-rose-50 rounded-xl text-left mt-2 font-bold transition-colors"
                         >
                           <LogOut className="h-4.5 w-4.5" /> Logout
                         </button>
@@ -431,14 +435,14 @@ export default function Navbar() {
                     <>
                       <DialogClose asChild>
                         <NavLink to="/login" className="w-full">
-                          <Button variant="outline" className="w-full border-violet-800 bg-[#b84832] hover:bg-[#7C8A6B] text-stone-100 rounded-xl h-11 text-sm font-semibold">
+                          <Button variant="outline" className="w-full border-[#E8DCC3] bg-[#FAF6F0] hover:bg-[#F0E7D5] text-[#1F1D1A] rounded-xl h-11 text-sm font-semibold">
                             Login
                           </Button>
                         </NavLink>
                       </DialogClose>
                       <DialogClose asChild>
                         <NavLink to="/register" className="w-full">
-                          <Button className="w-full bg-[#B2563B] hover:bg-[#C9A46A] text-[#1F1D1A] font-bold rounded-xl h-11 text-sm">
+                          <Button className="w-full bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold rounded-xl h-11 text-sm border border-[#E8DCC3]">
                             Sign Up
                           </Button>
                         </NavLink>

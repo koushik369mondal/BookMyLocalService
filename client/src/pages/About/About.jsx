@@ -51,7 +51,7 @@ export default function About() {
 
                 <div className="flex flex-wrap gap-4 pt-1 w-full sm:w-auto">
                   <NavLink to="/services" className="w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto h-11 bg-[#B2563B] hover:bg-[#b84832] text-white rounded-xl px-7 font-bold transition-all flex items-center justify-center gap-2">
+                    <Button className="w-full sm:w-auto h-11 bg-[#8C4B3E] hover:bg-[#7A3E32] text-white rounded-xl px-7 font-bold transition-all flex items-center justify-center gap-2">
                       Browse Services
                       <ArrowRight className="h-4 w-4" />
                     </Button>
@@ -147,7 +147,7 @@ export default function About() {
               {/* Mission Card */}
               <Card className="border border-[#5A5146]/20 bg-white rounded-2xl p-6 flex flex-col justify-between h-full">
                 <div className="space-y-3">
-                  <div className="p-2.5 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl border border-violet-950/10 w-fit">
+                  <div className="p-2.5 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl border border-violet-950/10 w-fit">
                     <Award className="h-5 w-5" />
                   </div>
                   <h3 className="text-lg font-bold text-[#1F1D1A]">Our Mission</h3>
@@ -208,9 +208,9 @@ export default function About() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { title: "Verified Professionals", description: "Every service provider is background-checked and identity-verified to ensure absolute safety and quality.", icon: ShieldCheck, color: "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10" },
+                { title: "Verified Professionals", description: "Every service provider is background-checked and identity-verified to ensure absolute safety and quality.", icon: ShieldCheck, color: "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10" },
                 { title: "Secure Bookings", description: "Easily schedule, coordinate, and pay for all services directly through our secure platform.", icon: Lock, color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
-                { title: "Transparent Pricing", description: "No hidden charges or surprise costs. See clear hourly or flat rates up front before you book.", icon: DollarSign, color: "bg-amber-50 text-[#B2563B] border-amber-100" },
+                { title: "Transparent Pricing", description: "No hidden charges or surprise costs. See clear hourly or flat rates up front before you book.", icon: DollarSign, color: "bg-amber-50 text-[#8C4B3E] border-amber-100" },
                 { title: "Fast Service", description: "Book instant same-day service or schedule weeks ahead. We respect your busy schedule.", icon: Clock, color: "bg-pink-50 text-pink-600 border-pink-100" },
                 { title: "Ratings & Reviews", description: "Read verified feedback from genuine customers to hire the right provider for your project.", icon: Star, color: "bg-rose-50 text-rose-600 border-rose-100" },
                 { title: "24/7 Support", description: "Our dedicated support team is available round the clock to help resolve any booking queries.", icon: HelpCircle, color: "bg-sky-50 text-sky-600 border-sky-100" }
@@ -249,7 +249,7 @@ export default function About() {
                 { step: "04", title: "Get Work Done", desc: "Your pro arrives fully equipped to complete the job to your standards." }
               ].map((item, idx) => (
                 <div key={idx} className="bg-white border border-[#5A5146]/20 p-5 rounded-2xl flex flex-col gap-3 text-center items-center">
-                  <div className="w-10 h-10 rounded-full bg-[#B2563B] text-white flex items-center justify-center font-black text-xs">
+                  <div className="w-10 h-10 rounded-full bg-[#8C4B3E] text-white flex items-center justify-center font-black text-xs">
                     {item.step}
                   </div>
                   <h3 className="font-bold text-sm text-[#1F1D1A]">{item.title}</h3>
@@ -274,7 +274,7 @@ export default function About() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2 max-w-sm mx-auto sm:max-w-none">
               <NavLink to="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-12 bg-[#B2563B] hover:bg-amber-600 text-[#1F1D1A] font-bold rounded-xl px-8 shadow-md">
+                <Button className="w-full sm:w-auto h-12 bg-[#8C4B3E] hover:bg-amber-600 text-[#1F1D1A] font-bold rounded-xl px-8 shadow-md">
                   Browse Services
                 </Button>
               </NavLink>

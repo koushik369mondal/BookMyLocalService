@@ -14,9 +14,9 @@ const badgeVariants = cva(
         mustard:
           "border-[#E8DCC3] bg-[#C9A46A] text-white",
         terracotta:
-          "border-[#E8DCC3] bg-[#B2563B] text-white",
+          "border-[#E8DCC3] bg-[#8C4B3E] text-white",
         destructive:
-          "border-[#E8DCC3] bg-[#B2563B] text-white",
+          "border-[#E8DCC3] bg-[#8C4B3E] text-white",
         outline:
           "border-[#E8DCC3] text-[#5A5146] bg-[#FAF6F0]",
         success:

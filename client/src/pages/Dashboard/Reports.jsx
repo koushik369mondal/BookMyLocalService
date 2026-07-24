@@ -181,7 +181,7 @@ export default function Reports() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Bookings</span>
                 <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">1,840</span>
               </div>
-              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
+              <div className="p-3 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <Layers className="h-6 w-6" />
               </div>
             </Card>
@@ -192,7 +192,7 @@ export default function Reports() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Active Users</span>
                 <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">4,250</span>
               </div>
-              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
+              <div className="p-3 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <Users className="h-6 w-6" />
               </div>
             </Card>
@@ -233,7 +233,7 @@ export default function Reports() {
                     id="reportType"
                     value={reportType}
                     onChange={(e) => setReportType(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="revenue">Financial Revenue Report</option>
                     <option value="bookings">Volume Bookings Report</option>
@@ -271,7 +271,7 @@ export default function Reports() {
               <Button
                 size="sm"
                 onClick={() => handleExport("PDF")}
-                className="bg-[#B2563B] hover:bg-black text-white rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
+                className="bg-[#8C4B3E] hover:bg-black text-white rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
               >
                 <FileText className="h-4 w-4" /> PDF Report
               </Button>
@@ -306,7 +306,7 @@ export default function Reports() {
                   </CardTitle>
                   <CardDescription className="text-xs">Visual analytics mapping current cycle parameters</CardDescription>
                 </div>
-                <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0">
+                <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0">
                   <TrendingUp className="h-5 w-5" />
                 </div>
               </CardHeader>
@@ -396,7 +396,7 @@ export default function Reports() {
                 {categoryShare.map(cat => (
                   <div key={cat.name} className="space-y-1.5">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-[#B2563B]">{cat.name}</span>
+                      <span className="text-[#8C4B3E]">{cat.name}</span>
                       <span className="text-[#7A7266] font-semibold">{cat.count} jobs ({cat.share}%)</span>
                     </div>
                     <Progress value={cat.share} className="h-2 rounded-full bg-[#F0E7D5] [&>div]:bg-[#7C8A6B]" />
@@ -432,7 +432,7 @@ export default function Reports() {
                     </div>
 
                     <div className="text-right space-y-1 shrink-0">
-                      <span className="text-xs font-extrabold text-[#B2563B] block">{prov.bookings} jobs</span>
+                      <span className="text-xs font-extrabold text-[#8C4B3E] block">{prov.bookings} jobs</span>
                       <span className="text-[11px] text-emerald-600 font-black block">${prov.revenue.toLocaleString()}</span>
                     </div>
                   </div>
@@ -455,7 +455,7 @@ export default function Reports() {
                       <th className="py-2.5 text-right">Revenue</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-stone-50 font-semibold text-[#B2563B]">
+                  <tbody className="divide-y divide-stone-50 font-semibold text-[#8C4B3E]">
                     <tr className="hover:bg-[#FAF6F0] transition-colors">
                       <td className="py-3 px-1 font-bold text-[#1F1D1A]">Deep Home Cleaning Service</td>
                       <td className="py-3">Cleaning</td>
@@ -500,7 +500,7 @@ export default function Reports() {
                     <th className="py-2.5 text-right">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-stone-50 font-semibold text-[#B2563B]">
+                <tbody className="divide-y divide-stone-50 font-semibold text-[#8C4B3E]">
                   {recentTransactions.map(txn => (
                     <tr key={txn.id} className="hover:bg-[#FAF6F0] transition-colors">
                       <td className="py-3 px-1 font-bold text-[#7A7266]">{txn.id}</td>

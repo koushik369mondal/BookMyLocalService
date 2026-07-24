@@ -152,7 +152,7 @@ export default function ProviderDashboard() {
   const getStatusBadge = (status) => {
     switch (status) {
       case "pending":
-        return <span className="bg-[#C9A46A]/20 text-[#B2563B] border border-amber-500/20 font-extrabold rounded-full px-2.5 py-1 text-[10px] uppercase tracking-wider">Pending</span>;
+        return <span className="bg-[#C9A46A]/20 text-[#8C4B3E] border border-amber-500/20 font-extrabold rounded-full px-2.5 py-1 text-[10px] uppercase tracking-wider">Pending</span>;
       case "confirmed":
         return <span className="bg-blue-500/10 text-blue-600 border border-blue-500/20 font-extrabold rounded-full px-2.5 py-1 text-[10px] uppercase tracking-wider">Confirmed</span>;
       case "completed":
@@ -172,7 +172,7 @@ export default function ProviderDashboard() {
           
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
-              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#B2563B] uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#8C4B3E] uppercase tracking-wider">
                 <Sparkles className="h-3.5 w-3.5 fill-amber-400" /> Provider Operations Portal
               </span>
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Welcome back, Sarah 👋</h1>
@@ -184,7 +184,7 @@ export default function ProviderDashboard() {
               <Button 
                 onClick={() => setIsAddServiceOpen(true)}
                 size="sm" 
-                className="bg-[#B2563B] hover:bg-[#C9A46A] text-[#1F1D1A] rounded-xl text-xs font-bold px-5 h-10 shadow-md transition-all hover:scale-[1.02] flex items-center gap-1.5"
+                className="bg-[#8C4B3E] hover:bg-[#C9A46A] text-[#1F1D1A] rounded-xl text-xs font-bold px-5 h-10 shadow-md transition-all hover:scale-[1.02] flex items-center gap-1.5"
               >
                 <Plus className="h-4 w-4" /> Add Catalog Service
               </Button>
@@ -261,7 +261,7 @@ export default function ProviderDashboard() {
                 </div>
                 <div className="mt-3">
                   <div className="text-2xl sm:text-3xl font-black text-[#1F1D1A]">{ratingAvg} <span className="text-xs text-[#7A7266] font-normal">/ 5.0</span></div>
-                  <div className="flex items-center gap-1 text-xs font-semibold text-[#B2563B] mt-1">
+                  <div className="flex items-center gap-1 text-xs font-semibold text-[#8C4B3E] mt-1">
                     <ArrowUpRight className="h-3.5 w-3.5" />
                     <span>+0.2 rating points</span>
                   </div>
@@ -310,7 +310,7 @@ export default function ProviderDashboard() {
               <div className="border border-[#5A5146]/20 rounded-2xl bg-white p-6">
                 <div className="pb-5 border-b border-[#5A5146]/15 flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 bg-[#B2563B] text-white rounded-xl shadow-xs">
+                    <div className="p-2.5 bg-[#8C4B3E] text-white rounded-xl shadow-xs">
                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
@@ -469,7 +469,7 @@ export default function ProviderDashboard() {
                             <th className="py-3 px-3 text-right">Actions</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-stone-100 font-medium text-[#B2563B]">
+                        <tbody className="divide-y divide-stone-100 font-medium text-[#8C4B3E]">
                           {filteredBookings.map((b) => (
                             <tr key={b.id} className="hover:bg-[#FAF6F0]/80 transition-colors duration-150">
                               <td className="py-3.5 px-3 font-bold text-[#1F1D1A]">{b.id}</td>
@@ -509,7 +509,7 @@ export default function ProviderDashboard() {
                                     <Button
                                       size="xs"
                                       onClick={() => handleBookingStatus(b.id, "completed")}
-                                      className="bg-[#B2563B] hover:bg-[#b84832] text-white font-semibold h-8 rounded-xl text-xs px-3 shadow-xs"
+                                      className="bg-[#8C4B3E] hover:bg-[#7A3E32] text-white font-semibold h-8 rounded-xl text-xs px-3 shadow-xs"
                                     >
                                       Mark Completed
                                     </Button>
@@ -550,7 +550,7 @@ export default function ProviderDashboard() {
                     <AvatarFallback>SJ</AvatarFallback>
                   </Avatar>
                   <div>
-                    <span className="bg-[#C9A46A]/20 text-[#B2563B] border border-amber-500/20 font-extrabold rounded-full text-[10px] uppercase px-2.5 py-0.5 inline-block">
+                    <span className="bg-[#C9A46A]/20 text-[#8C4B3E] border border-amber-500/20 font-extrabold rounded-full text-[10px] uppercase px-2.5 py-0.5 inline-block">
                       Verified Specialist
                     </span>
                     <h4 className="font-extrabold text-[#1F1D1A] text-sm mt-1 leading-snug">Sarah Jenkins</h4>
@@ -620,7 +620,7 @@ export default function ProviderDashboard() {
                     {services.map(svc => (
                       <div key={svc.id} className="flex items-center justify-between p-3.5 border border-[#5A5146]/20 rounded-xl bg-[#FAF6F0] hover:bg-white hover:border-stone-300 shadow-2xs group transition-all">
                         <div className="min-w-0">
-                          <span className="text-[10px] font-bold text-[#B2563B] uppercase tracking-wider block">{svc.category}</span>
+                          <span className="text-[10px] font-bold text-[#8C4B3E] uppercase tracking-wider block">{svc.category}</span>
                           <h5 className="font-bold text-[#1F1D1A] text-xs truncate mt-0.5">{svc.name}</h5>
                           <span className="text-xs font-black text-[#1F1D1A] block mt-0.5">${svc.price.toFixed(2)}{svc.type}</span>
                         </div>
@@ -656,9 +656,9 @@ export default function ProviderDashboard() {
                         <span className="text-[10px] text-[#7A7266] font-semibold">{rev.date}</span>
                       </div>
                       
-                      <div className="flex items-center gap-0.5 text-[#B2563B]">
+                      <div className="flex items-center gap-0.5 text-[#8C4B3E]">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-[#B2563B]" />
+                          <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-[#8C4B3E]" />
                         ))}
                       </div>
 
@@ -693,7 +693,7 @@ export default function ProviderDashboard() {
           <form onSubmit={handleAddService} className="space-y-4 pt-3">
             {/* Service Name */}
             <div className="space-y-1.5">
-              <Label htmlFor="svcName" className="text-xs font-bold text-[#B2563B]">Service Title</Label>
+              <Label htmlFor="svcName" className="text-xs font-bold text-[#8C4B3E]">Service Title</Label>
               <Input
                 id="svcName"
                 placeholder="e.g. Premium Bathroom Sanitization"
@@ -706,13 +706,13 @@ export default function ProviderDashboard() {
 
             {/* Category Select */}
             <div className="space-y-1.5">
-              <Label htmlFor="svcCategory" className="text-xs font-bold text-[#B2563B]">Category Group</Label>
+              <Label htmlFor="svcCategory" className="text-xs font-bold text-[#8C4B3E]">Category Group</Label>
               <div className="relative">
                 <select
                   id="svcCategory"
                   value={newServiceCategory}
                   onChange={(e) => setNewServiceCategory(e.target.value)}
-                  className="w-full h-10 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 rounded-xl bg-white text-xs font-semibold text-[#B2563B] cursor-pointer appearance-none shadow-2xs"
+                  className="w-full h-10 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
                 >
                   <option value="Home Cleaning">Home Cleaning</option>
                   <option value="Plumbing">Plumbing</option>
@@ -728,7 +728,7 @@ export default function ProviderDashboard() {
 
             {/* Price */}
             <div className="space-y-1.5">
-              <Label htmlFor="svcPrice" className="text-xs font-bold text-[#B2563B]">Price Rate ($/hr)</Label>
+              <Label htmlFor="svcPrice" className="text-xs font-bold text-[#8C4B3E]">Price Rate ($/hr)</Label>
               <Input
                 id="svcPrice"
                 type="number"
@@ -751,7 +751,7 @@ export default function ProviderDashboard() {
               </Button>
               <Button 
                 type="submit" 
-                className="rounded-xl bg-[#B2563B] hover:bg-[#b84832] text-white font-bold text-xs h-10 px-6 w-full sm:w-auto transition-all shadow-md"
+                className="rounded-xl bg-[#8C4B3E] hover:bg-[#7A3E32] text-white font-bold text-xs h-10 px-6 w-full sm:w-auto transition-all shadow-md"
               >
                 Add Service
               </Button>

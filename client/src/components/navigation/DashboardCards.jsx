@@ -41,7 +41,7 @@ export default function DashboardCards({ role }) {
       description: "See customer feedback, performance ratings, and comments.",
       path: "/provider/reviews",
       icon: Star,
-      color: "text-[#B2563B] bg-amber-50 border-amber-100",
+      color: "text-[#8C4B3E] bg-amber-50 border-amber-100",
     },
   ];
 
@@ -72,7 +72,7 @@ export default function DashboardCards({ role }) {
       description: "Manage SMS updates, promo alerts, and dispatch receipts.",
       path: "/notifications",
       icon: Bell,
-      color: "text-[#B2563B] bg-amber-50 border-amber-100",
+      color: "text-[#8C4B3E] bg-amber-50 border-amber-100",
     },
     {
       title: "Payment Methods",
@@ -100,7 +100,7 @@ export default function DashboardCards({ role }) {
                 <Icon className="h-5 w-5" />
               </div>
               <div className="space-y-1">
-                <h4 className="font-extrabold text-[#1F1D1A] text-sm leading-tight group-hover:text-[#B2563B] transition-colors">
+                <h4 className="font-extrabold text-[#1F1D1A] text-sm leading-tight group-hover:text-[#8C4B3E] transition-colors">
                   {card.title}
                 </h4>
                 <p className="text-xs text-[#7A7266] leading-relaxed font-normal">

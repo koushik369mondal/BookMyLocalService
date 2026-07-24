@@ -561,7 +561,7 @@ export default function ServiceDetails() {
                   </div>
 
                   <p className="text-[#7A7266] font-medium text-sm sm:text-base flex items-center justify-center sm:justify-start gap-1">
-                    <Star className="h-4 w-4 fill-amber-400 text-[#B2563B]" />
+                    <Star className="h-4 w-4 fill-amber-400 text-[#8C4B3E]" />
                     <span className="font-extrabold text-white">{provider.rating}</span>
                     <span className="opacity-75">({totalReviews} reviews)</span>
                   </p>
@@ -587,7 +587,7 @@ export default function ServiceDetails() {
                 <span className="text-[10px] font-bold tracking-wider text-[#7A7266] uppercase">Availability Status</span>
                 <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold ${provider.availability === "today"
                     ? "bg-emerald-500/15 border-emerald-400/30 text-emerald-300"
-                    : "bg-[#B2563B]/15 border-amber-400/30 text-amber-300"
+                    : "bg-[#8C4B3E]/15 border-amber-400/30 text-amber-300"
                   }`}>
                   <span className={`w-2 h-2 rounded-full ${provider.availability === "today" ? "bg-emerald-400 animate-pulse" : "bg-[#C9A46A]"}`}></span>
                   Available {provider.availability === "today" ? "Today" : (provider.availability === "weekend" ? "This Weekend" : "This Week")}
@@ -608,7 +608,7 @@ export default function ServiceDetails() {
               {/* SECTION 3: ABOUT */}
               <Card className="border border-[#5A5146]/15 shadow-2xs hover:shadow-xs transition-shadow duration-300 bg-white p-6 rounded-2xl">
                 <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
                     <ShieldCheck className="h-5 w-5" />
                   </div>
                   <div>
@@ -640,7 +640,7 @@ export default function ServiceDetails() {
               {/* SECTION 4: SKILLS & CERTIFICATIONS */}
               <Card className="border border-[#5A5146]/15 shadow-2xs hover:shadow-xs transition-shadow duration-300 bg-white p-6 rounded-2xl">
                 <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
                     <Award className="h-5 w-5" />
                   </div>
                   <div>
@@ -654,7 +654,7 @@ export default function ServiceDetails() {
                     <span className="text-xs font-bold uppercase tracking-wider text-[#7A7266] block mb-2.5">Specialized Skills</span>
                     <div className="flex flex-wrap gap-2">
                       {provider.skills.map((skill, index) => (
-                        <Badge key={index} variant="secondary" className="bg-[#F0E7D5] hover:bg-[#E8DCC3] text-[#B2563B] font-semibold px-3 py-1 text-xs rounded-lg border-0">
+                        <Badge key={index} variant="secondary" className="bg-[#F0E7D5] hover:bg-[#E8DCC3] text-[#8C4B3E] font-semibold px-3 py-1 text-xs rounded-lg border-0">
                           <Check className="h-3 w-3 text-[#1F1D1A] mr-1.5" />
                           {skill}
                         </Badge>
@@ -702,7 +702,7 @@ export default function ServiceDetails() {
                           alt={photo.caption}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-[#B2563B]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-[#8C4B3E]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                           <ZoomIn className="h-6 w-6 text-white" />
                         </div>
                         <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-1.5 text-center text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity truncate">
@@ -718,7 +718,7 @@ export default function ServiceDetails() {
               <Card className="border border-[#5A5146]/15 shadow-2xs hover:shadow-xs transition-shadow duration-300 bg-white p-6 rounded-2xl">
                 <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-2.5">
-                    <div className="p-2 bg-amber-50 text-[#B2563B] rounded-xl">
+                    <div className="p-2 bg-amber-50 text-[#8C4B3E] rounded-xl">
                       <MessageSquare className="h-5 w-5" />
                     </div>
                     <div>
@@ -731,8 +731,8 @@ export default function ServiceDetails() {
                   <Tabs value={reviewsFilter} onValueChange={setReviewsFilter} className="w-auto">
                     <TabsList className="bg-[#FAF6F0] p-1 border border-[#5A5146]/15 rounded-xl h-8">
                       <TabsTrigger value="all" className="rounded-lg text-xs font-bold py-1 px-3">All</TabsTrigger>
-                      <TabsTrigger value="5" className="rounded-lg text-xs font-bold py-1 px-3 flex items-center gap-0.5">5 <Star className="h-3 w-3 fill-amber-400 text-[#B2563B]" /></TabsTrigger>
-                      <TabsTrigger value="4" className="rounded-lg text-xs font-bold py-1 px-3 flex items-center gap-0.5">4 <Star className="h-3 w-3 fill-amber-400 text-[#B2563B]" /></TabsTrigger>
+                      <TabsTrigger value="5" className="rounded-lg text-xs font-bold py-1 px-3 flex items-center gap-0.5">5 <Star className="h-3 w-3 fill-amber-400 text-[#8C4B3E]" /></TabsTrigger>
+                      <TabsTrigger value="4" className="rounded-lg text-xs font-bold py-1 px-3 flex items-center gap-0.5">4 <Star className="h-3 w-3 fill-amber-400 text-[#8C4B3E]" /></TabsTrigger>
                     </TabsList>
                   </Tabs>
                 </CardHeader>
@@ -744,7 +744,7 @@ export default function ServiceDetails() {
                       <span className="block text-4xl font-black text-[#1F1D1A]">{avgRating}</span>
                       <div className="flex justify-center gap-0.5">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`h-4.5 w-4.5 ${i < Math.floor(avgRating) ? 'fill-amber-400 text-[#B2563B]' : 'text-[#7A7266]'}`} />
+                          <Star key={i} className={`h-4.5 w-4.5 ${i < Math.floor(avgRating) ? 'fill-amber-400 text-[#8C4B3E]' : 'text-[#7A7266]'}`} />
                         ))}
                       </div>
                       <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider">Overall Rating</span>
@@ -775,7 +775,7 @@ export default function ServiceDetails() {
                         <div key={rev.id} className="border-b border-stone-50 pb-6 last:border-0 last:pb-0">
                           <div className="flex items-start justify-between flex-wrap gap-2 mb-2">
                             <div className="flex items-center gap-3">
-                              <Avatar className="h-10 w-10 border border-[#5A5146]/15 bg-[#B2563B]/5 text-[#1F1D1A]">
+                              <Avatar className="h-10 w-10 border border-[#5A5146]/15 bg-[#8C4B3E]/5 text-[#1F1D1A]">
                                 {rev.avatar && <AvatarImage src={rev.avatar} className="object-cover" />}
                                 <AvatarFallback className="font-bold text-xs">{rev.name[0]}</AvatarFallback>
                               </Avatar>
@@ -786,7 +786,7 @@ export default function ServiceDetails() {
                             </div>
 
                             <div className="flex items-center gap-0.5 bg-amber-50 border border-amber-100/50 py-0.5 px-2 rounded-full">
-                              <Star className="h-3 w-3 fill-amber-400 text-[#B2563B]" />
+                              <Star className="h-3 w-3 fill-amber-400 text-[#8C4B3E]" />
                               <span className="text-xs font-extrabold text-amber-700">{rev.rating}.0</span>
                             </div>
                           </div>
@@ -826,7 +826,7 @@ export default function ServiceDetails() {
                       {/* Image cover */}
                       <div className="relative h-32 w-full overflow-hidden shrink-0">
                         <img src={sim.image} alt={sim.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                        <span className="absolute top-2 left-2 bg-[#B2563B] text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
+                        <span className="absolute top-2 left-2 bg-[#8C4B3E] text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
                           {sim.rating} <Star className="h-2.5 w-2.5 fill-white text-white inline ml-0.5" />
                         </span>
                       </div>
@@ -871,7 +871,7 @@ export default function ServiceDetails() {
                 <Card className="border border-[#5A5146]/20 shadow-md bg-white overflow-hidden rounded-2xl relative">
 
                   {/* Banner tag overlay */}
-                  <div className="bg-[#B2563B] text-white py-3 px-5 flex items-center justify-between shrink-0">
+                  <div className="bg-[#8C4B3E] text-white py-3 px-5 flex items-center justify-between shrink-0">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-[#7A7266]">Available Pricing</span>
                     <span className="text-[11px] font-extrabold text-white flex items-center gap-1">
                       <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 fill-emerald-400/10" /> Verified Rates
@@ -924,7 +924,7 @@ export default function ServiceDetails() {
                         <Calendar className="h-4 w-4 text-[#1F1D1A]" /> Select Date
                       </span>
                       {selectedDate && (
-                        <span className="text-[11px] font-bold text-[#1F1D1A] bg-[#B2563B]/5 px-2.5 py-0.5 rounded-full border border-violet-950/10">
+                        <span className="text-[11px] font-bold text-[#1F1D1A] bg-[#8C4B3E]/5 px-2.5 py-0.5 rounded-full border border-violet-950/10">
                           Selected
                         </span>
                       )}
@@ -943,7 +943,7 @@ export default function ServiceDetails() {
                               setDateAlert(false);
                             }}
                             className={`flex flex-col items-center justify-center p-2.5 border rounded-xl min-w-[54px] snap-center transition-all ${isSelected
-                                ? "bg-[#B2563B] border-violet-950 text-white shadow-md shadow-2xs"
+                                ? "bg-[#8C4B3E] border-violet-950 text-white shadow-md shadow-2xs"
                                 : "bg-white border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] hover:border-stone-300"
                               }`}
                           >
@@ -986,7 +986,7 @@ export default function ServiceDetails() {
                                       setTimeAlert(false);
                                     }}
                                     className={`py-1.5 text-[11px] font-bold text-center border rounded-lg transition-all ${isSelected
-                                        ? "bg-[#B2563B] border-violet-950 text-white shadow-xs"
+                                        ? "bg-[#8C4B3E] border-violet-950 text-white shadow-xs"
                                         : "bg-white border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] hover:border-stone-400"
                                       }`}
                                   >
@@ -1014,7 +1014,7 @@ export default function ServiceDetails() {
                   <div className="p-5 bg-[#FAF6F0] space-y-3 shrink-0">
                     <Button
                       onClick={handleBooking}
-                      className="w-full bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-extrabold py-5 rounded-xl flex items-center justify-center gap-2 text-sm shadow-md transition-all hover:scale-[1.01]"
+                      className="w-full bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-extrabold py-5 rounded-xl flex items-center justify-center gap-2 text-sm shadow-md transition-all hover:scale-[1.01]"
                     >
                       <CalendarCheck className="h-4.5 w-4.5" />
                       Book Appointment Now
@@ -1040,7 +1040,7 @@ export default function ServiceDetails() {
 
                 {/* HELP CARD */}
                 <Card className="border border-[#5A5146]/15 bg-white p-5 rounded-2xl flex items-start gap-3">
-                  <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0">
+                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0">
                     <AlertCircle className="h-5 w-5" />
                   </div>
                   <div className="space-y-1">
@@ -1099,7 +1099,7 @@ export default function ServiceDetails() {
           ) : (
             <form onSubmit={handleContactSubmit} className="space-y-4 pt-3">
               <div className="space-y-1.5">
-                <Label htmlFor="contactName" className="text-xs font-bold text-[#B2563B]">Your Full Name</Label>
+                <Label htmlFor="contactName" className="text-xs font-bold text-[#8C4B3E]">Your Full Name</Label>
                 <Input
                   id="contactName"
                   value={contactName}
@@ -1111,7 +1111,7 @@ export default function ServiceDetails() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="contactEmail" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
+                <Label htmlFor="contactEmail" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
                 <Input
                   id="contactEmail"
                   type="email"
@@ -1124,7 +1124,7 @@ export default function ServiceDetails() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="contactSubject" className="text-xs font-bold text-[#B2563B]">Subject (Optional)</Label>
+                <Label htmlFor="contactSubject" className="text-xs font-bold text-[#8C4B3E]">Subject (Optional)</Label>
                 <Input
                   id="contactSubject"
                   value={contactSubject}
@@ -1135,7 +1135,7 @@ export default function ServiceDetails() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="contactMessage" className="text-xs font-bold text-[#B2563B]">Inquiry Message</Label>
+                <Label htmlFor="contactMessage" className="text-xs font-bold text-[#8C4B3E]">Inquiry Message</Label>
                 <Textarea
                   id="contactMessage"
                   value={contactMessage}
@@ -1160,7 +1160,7 @@ export default function ServiceDetails() {
                 <Button
                   type="submit"
                   disabled={isSendingContact}
-                  className="rounded-xl bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
+                  className="rounded-xl bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
                 >
                   {isSendingContact ? (
                     <>

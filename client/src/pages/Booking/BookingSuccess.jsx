@@ -171,7 +171,7 @@ export default function BookingSuccess() {
           <Card className="border border-[#5A5146]/20 shadow-md bg-white rounded-2xl overflow-hidden print:border-[#5A5146]/20 print:shadow-none">
             
             {/* Header booking ID banner */}
-            <div className="bg-[#B2563B] text-white py-3.5 px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 print:bg-[#F0E7D5] print:text-[#1F1D1A] print:border-b print:border-[#5A5146]/20">
+            <div className="bg-[#8C4B3E] text-white py-3.5 px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 print:bg-[#F0E7D5] print:text-[#1F1D1A] print:border-b print:border-[#5A5146]/20">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold text-[#7A7266] print:text-[#7A7266] uppercase tracking-wider">Booking Reference:</span>
                 <span className="font-extrabold text-xs bg-white/10 text-white print:bg-[#E8DCC3] print:text-[#1F1D1A] py-0.5 px-2.5 rounded-lg border border-white/5 tracking-wider">
@@ -195,7 +195,7 @@ export default function BookingSuccess() {
                     <AvatarFallback className="text-lg font-bold bg-[#E8DCC3]/40 text-[#1F1D1A]">{provider.providerName[0]}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <Badge variant="secondary" className="bg-white border-[#5A5146]/20 text-[#B2563B] font-bold rounded-lg text-[9px] uppercase py-0.5 px-2">
+                    <Badge variant="secondary" className="bg-white border-[#5A5146]/20 text-[#8C4B3E] font-bold rounded-lg text-[9px] uppercase py-0.5 px-2">
                       {provider.category}
                     </Badge>
                     <h3 className="font-black text-[#1F1D1A] text-base mt-1 leading-snug">{provider.providerName}</h3>
@@ -209,7 +209,7 @@ export default function BookingSuccess() {
                 
                 {/* Date */}
                 <div className="flex items-start gap-3 p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl print:bg-white print:border-[#5A5146]/20">
-                  <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0 mt-0.5">
+                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0 mt-0.5">
                     <Calendar className="h-4.5 w-4.5" />
                   </div>
                   <div>
@@ -220,7 +220,7 @@ export default function BookingSuccess() {
 
                 {/* Time */}
                 <div className="flex items-start gap-3 p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl print:bg-white print:border-[#5A5146]/20">
-                  <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0 mt-0.5">
+                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0 mt-0.5">
                     <Clock className="h-4.5 w-4.5" />
                   </div>
                   <div>
@@ -239,7 +239,7 @@ export default function BookingSuccess() {
                   </div>
                   <div>
                     <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Payment Details</span>
-                    <span className="text-xs font-semibold text-[#B2563B] block mt-0.5">
+                    <span className="text-xs font-semibold text-[#8C4B3E] block mt-0.5">
                       {getPaymentLabel(paymentMethod)}
                     </span>
                   </div>
@@ -254,11 +254,11 @@ export default function BookingSuccess() {
               </div>
 
               {/* ARRIVAL NOTICE INFORMATION */}
-              <div className="p-4.5 bg-[#B2563B]/5 border border-violet-950/10 text-[#1F1D1A] rounded-2xl flex items-start gap-3 print:hidden">
+              <div className="p-4.5 bg-[#8C4B3E]/5 border border-violet-950/10 text-[#1F1D1A] rounded-2xl flex items-start gap-3 print:hidden">
                 <Info className="h-5 w-5 text-[#1F1D1A] shrink-0 mt-0.5" />
                 <div className="space-y-1">
                   <h4 className="font-bold text-xs">Estimated Arrival Notification</h4>
-                  <p className="text-[11px] text-[#B2563B] leading-relaxed">
+                  <p className="text-[11px] text-[#8C4B3E] leading-relaxed">
                     Specialist {provider.providerName} will arrive within the estimated window of {getArrivalWindow(selectedTime)}. Please ensure the service area is accessible. You can coordinate details directly in the dashboard.
                   </p>
                 </div>
@@ -295,7 +295,7 @@ export default function BookingSuccess() {
               </Button>
               
               <NavLink to="/customer/dashboard" className="w-full sm:w-auto">
-                <Button className="w-full bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-extrabold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5 shadow-md">
+                <Button className="w-full bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-extrabold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5 shadow-md">
                   View Bookings Dashboard
                   <ChevronRight className="h-4 w-4 text-white/60" />
                 </Button>

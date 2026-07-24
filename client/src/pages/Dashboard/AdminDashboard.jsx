@@ -115,9 +115,9 @@ export default function AdminDashboard() {
   const getStatusBadge = (status) => {
     switch (status) {
       case "pending":
-        return <Badge className="bg-[#B2563B] hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Pending</Badge>;
+        return <Badge className="bg-[#8C4B3E] hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Pending</Badge>;
       case "confirmed":
-        return <Badge className="bg-[#B2563B]/50 hover:bg-[#B2563B] border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
+        return <Badge className="bg-[#8C4B3E]/50 hover:bg-[#8C4B3E] border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
       default:
         return <Badge className="bg-emerald-500 hover:bg-emerald-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Completed</Badge>;
     }
@@ -156,7 +156,7 @@ export default function AdminDashboard() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Users</span>
                 <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">4,250</span>
               </div>
-              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
+              <div className="p-3 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <Users className="h-6 w-6" />
               </div>
             </Card>
@@ -167,7 +167,7 @@ export default function AdminDashboard() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Providers</span>
                 <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">380</span>
               </div>
-              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
+              <div className="p-3 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <Briefcase className="h-6 w-6" />
               </div>
             </Card>
@@ -216,7 +216,7 @@ export default function AdminDashboard() {
               <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
                 <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+                    <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
@@ -233,7 +233,7 @@ export default function AdminDashboard() {
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                         chartView === "users"
                           ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                          : "text-[#7A7266] hover:text-[#B2563B]"
+                          : "text-[#7A7266] hover:text-[#8C4B3E]"
                       }`}
                     >
                       User Registrations
@@ -244,7 +244,7 @@ export default function AdminDashboard() {
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
                         chartView === "bookings"
                           ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                          : "text-[#7A7266] hover:text-[#B2563B]"
+                          : "text-[#7A7266] hover:text-[#8C4B3E]"
                       }`}
                     >
                       Bookings Placed
@@ -351,7 +351,7 @@ export default function AdminDashboard() {
                             <Button
                               size="xs"
                               onClick={() => handleApprovalAction(app.id, "approve")}
-                              className="bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold h-7 rounded-lg text-[9px] py-0 px-2.5 shadow-2xs"
+                              className="bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-bold h-7 rounded-lg text-[9px] py-0 px-2.5 shadow-2xs"
                             >
                               Approve Pro
                             </Button>
@@ -383,7 +383,7 @@ export default function AdminDashboard() {
                           <th className="py-2.5 text-right">Status</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-50 font-medium text-[#B2563B]">
+                      <tbody className="divide-y divide-stone-50 font-medium text-[#8C4B3E]">
                         {recentBookings.map(b => (
                           <tr key={b.id} className="hover:bg-[#FAF6F0] transition-colors">
                             <td className="py-3 px-1 font-bold text-[#7A7266]">{b.id}</td>
@@ -414,7 +414,7 @@ export default function AdminDashboard() {
                     <div key={n.id} className={`p-3.5 border rounded-xl flex items-start gap-2.5 ${
                       n.type === "warning"
                         ? "bg-rose-50/50 border-rose-100 text-rose-800"
-                        : "bg-[#B2563B]/5 border-violet-950/10 text-[#1F1D1A]"
+                        : "bg-[#8C4B3E]/5 border-violet-950/10 text-[#1F1D1A]"
                     }`}>
                       <AlertCircle className={`h-4.5 w-4.5 shrink-0 mt-0.5 ${
                         n.type === "warning" ? "text-rose-600" : "text-[#1F1D1A]"
@@ -468,9 +468,9 @@ export default function AdminDashboard() {
                   <div className="space-y-1.5">
                     <div className="flex justify-between items-baseline text-xs font-bold">
                       <span className="text-[#7A7266]">Image Storage Capacity</span>
-                      <span className="text-[#B2563B]">42% Used</span>
+                      <span className="text-[#8C4B3E]">42% Used</span>
                     </div>
-                    <Progress value={42} className="h-1.5 bg-[#F0E7D5] [&>div]:bg-[#B2563B]" />
+                    <Progress value={42} className="h-1.5 bg-[#F0E7D5] [&>div]:bg-[#8C4B3E]" />
                   </div>
 
                   {/* Mail */}

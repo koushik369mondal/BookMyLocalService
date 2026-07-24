@@ -34,8 +34,8 @@ import {
 // Category list
 const categories = [
   { name: "Home Cleaning", icon: Paintbrush, count: "120+ Providers", color: "bg-pink-50 text-pink-600 border-pink-100" },
-  { name: "Plumbing", icon: Droplet, count: "80+ Providers", color: "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10" },
-  { name: "Electrical", icon: Zap, count: "95+ Providers", color: "bg-amber-50 text-[#B2563B] border-amber-100" },
+  { name: "Plumbing", icon: Droplet, count: "80+ Providers", color: "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10" },
+  { name: "Electrical", icon: Zap, count: "95+ Providers", color: "bg-amber-50 text-[#8C4B3E] border-amber-100" },
   { name: "Moving & Packing", icon: Truck, count: "60+ Providers", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
   { name: "Lawn & Garden", icon: Flower2, count: "75+ Providers", color: "bg-lime-50 text-lime-600 border-lime-100" },
   { name: "Wellness & Personal", icon: Heart, count: "110+ Providers", color: "bg-rose-50 text-rose-600 border-rose-100" },
@@ -100,13 +100,13 @@ const features = [
     title: "Verified Professionals",
     description: "Every service provider is background-checked and identity-verified to ensure absolute safety and quality.",
     icon: ShieldAlert,
-    color: "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10"
+    color: "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10"
   },
   {
     title: "Transparent Pricing",
     description: "No hidden charges or surprise costs. See clear hourly or flat rates up front before you book.",
     icon: CircleDollarSign,
-    color: "bg-amber-50 text-[#B2563B] border-amber-100"
+    color: "bg-amber-50 text-[#8C4B3E] border-amber-100"
   },
   {
     title: "Happiness Guarantee",
@@ -201,7 +201,7 @@ export default function Home() {
                 className="lg:col-span-7 flex flex-col gap-6 sm:gap-8 text-center lg:text-left"
               >
                 <motion.div variants={fadeInUp}>
-                  <span className="inline-flex items-center gap-2 self-center lg:self-start bg-[#C9A46A]/20 text-[#B2563B] text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full border border-[#C9A46A]/40 shadow-xs transition-transform hover:scale-105 duration-200">
+                  <span className="inline-flex items-center gap-2 self-center lg:self-start bg-[#C9A46A]/20 text-[#8C4B3E] text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full border border-[#C9A46A]/40 shadow-xs transition-transform hover:scale-105 duration-200">
                     <Star className="h-3.5 w-3.5 fill-accent text-[#C9A46A]" /> Verified Local Professionals
                   </span>
                 </motion.div>
@@ -217,12 +217,12 @@ export default function Home() {
                 {/* Hero CTA buttons */}
                 <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-1 sm:pt-2">
                   <NavLink to="/services" className="w-full sm:w-auto">
-                    <Button size="lg" className="w-full sm:w-auto bg-[#B2563B] hover:bg-[#b84832] text-white rounded-xl font-semibold shadow-md hover:shadow-lg hover:shadow-2xs px-8 h-12 sm:h-[48px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
+                    <Button size="lg" className="w-full sm:w-auto bg-[#8C4B3E] hover:bg-[#7A3E32] text-white rounded-xl font-semibold shadow-md hover:shadow-lg hover:shadow-2xs px-8 h-12 sm:h-[48px] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
                       Book a Service
                     </Button>
                   </NavLink>
                   <NavLink to="/provider/dashboard" className="w-full sm:w-auto">
-                    <Button size="lg" variant="outline" className="w-full sm:w-auto border-[#5A5146]/20 hover:border-stone-300 hover:bg-white hover:text-[#1F1D1A] text-[#B2563B] font-semibold rounded-xl px-8 h-12 sm:h-[48px] shadow-xs hover:shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
+                    <Button size="lg" variant="outline" className="w-full sm:w-auto border-[#5A5146]/20 hover:border-stone-300 hover:bg-white hover:text-[#1F1D1A] text-[#8C4B3E] font-semibold rounded-xl px-8 h-12 sm:h-[48px] shadow-xs hover:shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
                       Become a Provider
                     </Button>
                   </NavLink>
@@ -244,7 +244,7 @@ export default function Home() {
                       className="pl-11 h-14 bg-[#FAF6F0]/80 border-[#5A5146]/20 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:border-amber-500 rounded-2xl text-sm font-medium text-[#1F1D1A] placeholder:text-[#7A7266] transition-all duration-200"
                     />
                   </div>
-                  <Button className="w-full sm:w-auto h-14 bg-[#B2563B] hover:bg-[#b84832] text-white font-bold rounded-2xl px-8 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-base shrink-0">
+                  <Button className="w-full sm:w-auto h-14 bg-[#8C4B3E] hover:bg-[#7A3E32] text-white font-bold rounded-2xl px-8 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-base shrink-0">
                     <Search className="h-4.5 w-4.5" />
                     <span>Search</span>
                   </Button>
@@ -428,7 +428,7 @@ export default function Home() {
                     </div>
                     <div className="ml-auto flex gap-0.5">
                       {[...Array(test.rating)].map((_, i) => (
-                        <Star key={i} className="h-3 w-3 fill-amber-400 text-[#B2563B]" />
+                        <Star key={i} className="h-3 w-3 fill-amber-400 text-[#8C4B3E]" />
                       ))}
                     </div>
                   </div>

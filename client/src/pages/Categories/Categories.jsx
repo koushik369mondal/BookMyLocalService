@@ -50,9 +50,9 @@ const getCategoryColors = (category) => {
     case "Home Cleaning":
       return "bg-pink-50 text-pink-600 border-pink-100";
     case "Plumbing":
-      return "bg-[#B2563B]/5 text-[#1F1D1A] border-violet-950/10";
+      return "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10";
     case "Electrical":
-      return "bg-amber-50 text-[#B2563B] border-amber-100";
+      return "bg-amber-50 text-[#8C4B3E] border-amber-100";
     case "Moving & Packing":
       return "bg-emerald-50 text-emerald-600 border-emerald-100";
     case "Lawn & Garden":
@@ -171,7 +171,7 @@ export default function Categories() {
               <p className="text-sm text-gray-500 max-w-sm">
                 {error}
               </p>
-              <Button onClick={fetchCategories} className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-semibold">
+              <Button onClick={fetchCategories} className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-semibold">
                 Retry
               </Button>
             </div>
@@ -217,7 +217,7 @@ export default function Categories() {
 
                         {/* Badge / icon header */}
                         <div className="flex items-center gap-1.5">
-                          <span className="p-1 bg-[#B2563B]/5 text-[#1F1D1A] rounded-md">
+                          <span className="p-1 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-md">
                             <IconComponent className="h-3.5 w-3.5" />
                           </span>
                           <span className="text-gray-400 text-xs font-semibold">Service Directory</span>
@@ -255,7 +255,7 @@ export default function Categories() {
                           <Button
                             onClick={() => handleExplore(category.name)}
                             size="sm"
-                            className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl h-9 px-4 font-bold shadow-xs flex items-center gap-1 group-hover:scale-[1.01] transition-transform"
+                            className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl h-9 px-4 font-bold shadow-xs flex items-center gap-1 group-hover:scale-[1.01] transition-transform"
                           >
                             Explore Services
                             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -273,14 +273,14 @@ export default function Categories() {
           {/* EMPTY SEARCH STATE - Styled precisely like Services.jsx */}
           {!loading && !error && filteredCategories.length === 0 && (
             <div className="bg-white border border-gray-100 rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto mt-8 shadow-xs">
-              <div className="p-4 bg-[#B2563B]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
+              <div className="p-4 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-full border border-violet-950/10">
                 <Info className="h-8 w-8" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mt-2">No Categories Found</h3>
               <p className="text-sm text-gray-500 max-w-sm">
                 We couldn't find any category matching "{searchQuery}". Try typing another service name or clearing the search.
               </p>
-              <Button onClick={() => setSearchQuery("")} className="bg-[#B2563B] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-semibold">
+              <Button onClick={() => setSearchQuery("")} className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl mt-2 font-semibold">
                 Clear Search
               </Button>
             </div>

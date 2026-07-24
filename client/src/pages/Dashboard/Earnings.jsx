@@ -263,7 +263,7 @@ export default function Earnings() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Cleared Balance</span>
                 <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">${withdrawableBalance.toFixed(2)}</span>
               </div>
-              <div className="p-3 bg-[#B2563B]/5 text-[#1F1D1A] rounded-2xl shrink-0">
+              <div className="p-3 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <ShieldCheck className="h-6 w-6" />
               </div>
             </Card>
@@ -280,11 +280,11 @@ export default function Earnings() {
             </Card>
 
             {/* Withdraw Action Card */}
-            <Card className="border border-violet-950/10 shadow-md bg-[#B2563B]/5 p-5 flex flex-col justify-center gap-2 rounded-2xl">
+            <Card className="border border-violet-950/10 shadow-md bg-[#8C4B3E]/5 p-5 flex flex-col justify-center gap-2 rounded-2xl">
               <span className="text-[10px] font-extrabold text-[#1F1D1A] uppercase tracking-wider">Authorize Transfer</span>
               <Button
                 onClick={() => setIsWithdrawOpen(true)}
-                className="w-full h-9.5 bg-[#B2563B] hover:bg-[#B2563B] text-white font-extrabold text-xs rounded-xl shadow-xs"
+                className="w-full h-9.5 bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-extrabold text-xs rounded-xl shadow-xs"
               >
                 Withdraw Cleared Funds
               </Button>
@@ -312,7 +312,7 @@ export default function Earnings() {
               <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
                 <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl">
+                    <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
@@ -328,7 +328,7 @@ export default function Earnings() {
                       onClick={() => setChartView("daily")}
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${chartView === "daily"
                         ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#B2563B]"
+                        : "text-[#7A7266] hover:text-[#8C4B3E]"
                         }`}
                     >
                       Daily
@@ -338,7 +338,7 @@ export default function Earnings() {
                       onClick={() => setChartView("monthly")}
                       className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${chartView === "monthly"
                         ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#B2563B]"
+                        : "text-[#7A7266] hover:text-[#8C4B3E]"
                         }`}
                     >
                       Monthly
@@ -431,7 +431,7 @@ export default function Earnings() {
                         onClick={() => setStatusFilter(tab.id)}
                         className={`rounded-lg text-[10px] font-bold px-3.5 py-1.5 transition-all ${statusFilter === tab.id
                           ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                          : "text-[#7A7266] hover:text-[#B2563B]"
+                          : "text-[#7A7266] hover:text-[#8C4B3E]"
                           }`}
                       >
                         {tab.label}
@@ -445,7 +445,7 @@ export default function Earnings() {
                   {/* SEARCH AND DATE RANGES */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-[#FAF6F0] p-4 border border-[#5A5146]/20 rounded-2xl">
                     <div className="space-y-1.5">
-                      <Label htmlFor="searchQuery" className="text-[10px] font-bold text-[#B2563B]">Search</Label>
+                      <Label htmlFor="searchQuery" className="text-[10px] font-bold text-[#8C4B3E]">Search</Label>
                       <Input
                         id="searchQuery"
                         placeholder="TXN ID, name..."
@@ -456,7 +456,7 @@ export default function Earnings() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="dateFrom" className="text-[10px] font-bold text-[#B2563B]">From Date</Label>
+                      <Label htmlFor="dateFrom" className="text-[10px] font-bold text-[#8C4B3E]">From Date</Label>
                       <Input
                         id="dateFrom"
                         type="date"
@@ -467,7 +467,7 @@ export default function Earnings() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="dateTo" className="text-[10px] font-bold text-[#B2563B]">To Date</Label>
+                      <Label htmlFor="dateTo" className="text-[10px] font-bold text-[#8C4B3E]">To Date</Label>
                       <Input
                         id="dateTo"
                         type="date"
@@ -496,7 +496,7 @@ export default function Earnings() {
                             <th className="py-2.5 text-right">Status</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-stone-50 font-medium text-[#B2563B]">
+                        <tbody className="divide-y divide-stone-50 font-medium text-[#8C4B3E]">
                           {filteredTransactions.map(txn => (
                             <tr key={txn.id} className="hover:bg-[#FAF6F0] transition-colors">
                               <td className="py-3 px-1 font-bold text-[#7A7266]">{txn.id}</td>
@@ -548,8 +548,8 @@ export default function Earnings() {
 
               {/* SECURITY ASSURANCES CARD */}
               <Card className="border border-[#5A5146]/15 shadow-2xs bg-white rounded-2xl p-5 space-y-4">
-                <div className="flex items-start gap-3 text-[#B2563B]">
-                  <div className="p-2 bg-[#B2563B]/5 text-[#1F1D1A] rounded-xl shrink-0 mt-0.5">
+                <div className="flex items-start gap-3 text-[#8C4B3E]">
+                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0 mt-0.5">
                     <Lock className="h-4.5 w-4.5" />
                   </div>
                   <div className="space-y-1">
@@ -584,7 +584,7 @@ export default function Earnings() {
           <form onSubmit={handleWithdrawSubmit} className="space-y-4 pt-3">
 
             {/* Display Withdrawable Balance */}
-            <div className="p-3 bg-[#B2563B]/5 border border-violet-950/10 rounded-xl flex justify-between items-center text-xs">
+            <div className="p-3 bg-[#8C4B3E]/5 border border-violet-950/10 rounded-xl flex justify-between items-center text-xs">
               <span className="font-bold text-white">Withdrawable Balance:</span>
               <span className="font-black text-white text-sm">${withdrawableBalance.toFixed(2)}</span>
             </div>
@@ -605,7 +605,7 @@ export default function Earnings() {
                   onClick={() => setWithdrawMethod("bank")}
                   className={`rounded-lg text-xs font-bold transition-all ${withdrawMethod === "bank"
                     ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                    : "text-[#7A7266] hover:text-[#B2563B]"
+                    : "text-[#7A7266] hover:text-[#8C4B3E]"
                     }`}
                 >
                   Chase Bank
@@ -615,7 +615,7 @@ export default function Earnings() {
                   onClick={() => setWithdrawMethod("upi")}
                   className={`rounded-lg text-xs font-bold transition-all ${withdrawMethod === "upi"
                     ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                    : "text-[#7A7266] hover:text-[#B2563B]"
+                    : "text-[#7A7266] hover:text-[#8C4B3E]"
                     }`}
                 >
                   UPI Paytm / GPay
@@ -649,7 +649,7 @@ export default function Earnings() {
               <Button
                 type="submit"
                 disabled={isWithdrawing}
-                className="rounded-xl bg-[#B2563B] hover:bg-[#B2563B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5 shadow-md"
+                className="rounded-xl bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5 shadow-md"
               >
                 {isWithdrawing ? (
                   <>

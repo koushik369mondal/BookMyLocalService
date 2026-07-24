@@ -81,7 +81,7 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
         {/* Metadata Bar (Location & Rating) */}
         <div className="flex items-center justify-between gap-2 text-xs text-[#7A7266] mt-0.5">
           <div className="flex items-center gap-1.5 truncate font-medium text-[#7A7266]">
-            <MapPin className="h-3.5 w-3.5 text-[#B2563B] shrink-0" />
+            <MapPin className="h-3.5 w-3.5 text-[#8C4B3E] shrink-0" />
             <span className="truncate">{location}</span>
           </div>
 

@@ -252,7 +252,7 @@ export default function Register() {
 
               {/* Role Switcher Tabs */}
               <div className="space-y-1.5">
-                <Label className="text-xs font-bold text-[#B2563B]">I want to register as a:</Label>
+                <Label className="text-xs font-bold text-[#8C4B3E]">I want to register as a:</Label>
                 <div className="grid grid-cols-2 bg-[#FAF6F0] border border-[#5A5146]/20 p-1.5 rounded-xl h-12">
                   <button
                     type="button"
@@ -260,7 +260,7 @@ export default function Register() {
                     disabled={isSubmitting}
                     className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedRole === "customer"
                         ? "bg-white text-[#1F1D1A] shadow-xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#B2563B]"
+                        : "text-[#7A7266] hover:text-[#8C4B3E]"
                       }`}
                   >
                     <User className="h-3.5 w-3.5" />
@@ -272,7 +272,7 @@ export default function Register() {
                     disabled={isSubmitting}
                     className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedRole === "provider"
                         ? "bg-white text-[#1F1D1A] shadow-xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#B2563B]"
+                        : "text-[#7A7266] hover:text-[#8C4B3E]"
                       }`}
                   >
                     <Briefcase className="h-3.5 w-3.5" />
@@ -283,7 +283,7 @@ export default function Register() {
 
               {/* Full Name */}
               <div className="space-y-1.5">
-                <Label htmlFor="fullName" className="text-xs font-bold text-[#B2563B]">Full Name</Label>
+                <Label htmlFor="fullName" className="text-xs font-bold text-[#8C4B3E]">Full Name</Label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
                     <User className="h-4 w-4" />
@@ -310,7 +310,7 @@ export default function Register() {
 
                 {/* Email address */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="email" className="text-xs font-bold text-[#B2563B]">Email Address</Label>
+                  <Label htmlFor="email" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
                   <div className="relative">
                     <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
                       <Mail className="h-4 w-4" />
@@ -335,7 +335,7 @@ export default function Register() {
 
                 {/* Phone number */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="phone" className="text-xs font-bold text-[#B2563B]">Phone Number</Label>
+                  <Label htmlFor="phone" className="text-xs font-bold text-[#8C4B3E]">Phone Number</Label>
                   <div className="relative">
                     <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
                       <Phone className="h-4 w-4" />
@@ -390,7 +390,7 @@ export default function Register() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 bg-[#B2563B] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                className="w-full h-11 bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
               >
                 {isSubmitting ? (
                   <>
@@ -423,7 +423,7 @@ export default function Register() {
                 variant="outline"
                 disabled={isSubmitting}
                 onClick={() => handleSocialSignUp("Google")}
-                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#B2563B] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
+                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#8C4B3E] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
               >
                 <GoogleIcon className="h-4 w-4" />
                 Google
@@ -433,7 +433,7 @@ export default function Register() {
                 variant="outline"
                 disabled={isSubmitting}
                 onClick={() => handleSocialSignUp("GitHub")}
-                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#B2563B] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
+                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#8C4B3E] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
               >
                 <GitHubIcon className="h-4 w-4 text-[#1F1D1A]" />
                 GitHub
