@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams, useNavigate, Link } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -22,12 +22,9 @@ import {
   Calendar, 
   Clock, 
   User, 
-  MapPin, 
   Sparkles, 
   Percent, 
   ArrowLeft,
-  Mail,
-  Phone,
   Building,
   Check,
   QrCode,
@@ -147,7 +144,6 @@ export default function Checkout() {
         if (response.success && response.data) {
           setBooking(response.data);
           
-          // Pre-populate customer details in the checkout form
           const b = response.data;
           if (b.customer) {
             setValue("fullName", b.billingName || b.customer.fullName || "");
@@ -193,7 +189,6 @@ export default function Checkout() {
     image: booking.service?.imageUrl || ""
   } : {};
 
-  // Auto scroll to top
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -219,7 +214,6 @@ export default function Checkout() {
     setSubmitSuccess(false);
 
     try {
-      // 1. Submit billing/address details
       await checkoutService.submitCheckout({
         bookingId,
         fullName: data.fullName,
@@ -233,7 +227,6 @@ export default function Checkout() {
         discount: appliedDiscount
       });
 
-      // 2. Submit payment authorization
       const paymentResponse = await checkoutService.processPayment({
         bookingId,
         paymentMethod: data.paymentMethod,
@@ -246,7 +239,6 @@ export default function Checkout() {
         setSubmitSuccess(true);
         setIsSubmitting(false);
         
-        // Navigate to booking dashboard or success confirmation page after 2 seconds
         setTimeout(() => {
           navigate("/customer/dashboard");
         }, 2000);
@@ -264,9 +256,9 @@ export default function Checkout() {
   if (isLoading) {
     return (
       <MainLayout>
-        <div className="max-w-7xl mx-auto px-4 py-20 text-center space-y-4">
+        <div className="bg-[#FAF6F0] min-h-screen max-w-7xl mx-auto px-4 py-20 text-center space-y-4">
           <Loader2 className="h-10 w-10 animate-spin text-[#1F1D1A] mx-auto" />
-          <p className="text-[#7A7266] font-bold text-sm">Loading checkout details...</p>
+          <p className="text-[#5A5146] font-bold text-xs">Loading checkout details...</p>
         </div>
       </MainLayout>
     );
@@ -275,13 +267,15 @@ export default function Checkout() {
   if (error || !booking) {
     return (
       <MainLayout>
-        <div className="max-w-xl mx-auto my-16 p-8 bg-white border border-[#5A5146]/15 rounded-3xl shadow-md text-center space-y-4">
-          <AlertCircle className="h-12 w-12 text-rose-500 mx-auto" />
-          <h2 className="text-lg font-black text-[#1F1D1A]">Checkout Error</h2>
-          <p className="text-xs text-[#7A7266]">{error || "We couldn't retrieve the checkout details for this booking."}</p>
-          <Button onClick={() => navigate("/services")} className="bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl text-xs h-9.5 px-6 font-bold mt-2">
-            Back to Services
-          </Button>
+        <div className="bg-[#FAF6F0] min-h-screen py-16 px-4">
+          <div className="max-w-xl mx-auto my-8 p-8 bg-white border border-[#E8DCC3] rounded-3xl shadow-2xs text-center space-y-4">
+            <AlertCircle className="h-12 w-12 text-[#8C4B3E] mx-auto" />
+            <h2 className="text-lg font-bold text-[#1F1D1A]">Checkout Error</h2>
+            <p className="text-xs text-[#7A7266] font-medium">{error || "We couldn't retrieve the checkout details for this booking."}</p>
+            <Button onClick={() => navigate("/services")} className="bg-[#C9A46A] hover:bg-[#b89359] text-white rounded-xl text-xs h-9.5 px-6 font-bold mt-2 border border-[#E8DCC3]">
+              Back to Services
+            </Button>
+          </div>
         </div>
       </MainLayout>
     );
@@ -291,32 +285,31 @@ export default function Checkout() {
     <MainLayout>
       <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
-        {/* TOP PATH BANNER */}
-        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-10 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* LIGHT RETRO BANNER HEADER */}
+        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <button 
               onClick={() => navigate(-1)} 
-              className="inline-flex items-center gap-2 text-xs font-semibold text-[#7A7266] hover:text-white transition-colors mb-4 bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-full backdrop-blur-xs"
+              className="inline-flex items-center gap-2 text-xs font-bold text-[#C9A46A] hover:underline transition-colors mb-3 bg-white px-3 py-1 rounded-full border border-[#E8DCC3] shadow-2xs"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               Modify Details
             </button>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Checkout Booking Securely</h1>
-            <p className="text-[#7A7266] text-xs sm:text-sm mt-1.5 font-medium">Verify your booking specifications, credentials, and select payment</p>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1F1D1A]">Checkout Booking Securely</h1>
+            <p className="text-[#5A5146] text-xs sm:text-sm mt-1 font-medium">Verify your booking specifications, credentials, and select payment method</p>
           </div>
         </section>
 
         {/* SECURE SUB-BANNER */}
-        <div className="bg-[#8C4B3E] text-[#7A7266] py-3 text-center border-y border-violet-950/20 px-4">
+        <div className="bg-[#F0E7D5]/70 text-[#5A5146] py-2.5 text-center border-b border-[#E8DCC3] px-4">
           <span className="text-[10px] sm:text-xs font-bold tracking-wider uppercase inline-flex items-center gap-1.5">
-            <Lock className="h-3.5 w-3.5 text-emerald-400" />
+            <Lock className="h-3.5 w-3.5 text-[#2B522B]" />
             256-Bit SSL Encryption Payment Protocols Active
           </span>
         </div>
 
         {/* CONTAINER */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           
           {successSubmitUI(submitSuccess, provider, selectedDate, selectedTime, selectedPlanName, grandTotal)}
 
@@ -327,162 +320,162 @@ export default function Checkout() {
               <div className="lg:col-span-7 space-y-6">
                 
                 {submitError && (
-                  <div className="flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-                    <AlertCircle className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
+                  <div className="flex items-start gap-2.5 p-3.5 bg-[#8C4B3E]/20 border border-[#8C4B3E]/40 text-[#8C4B3E] text-xs font-bold rounded-xl shadow-2xs">
+                    <AlertCircle className="h-4.5 w-4.5 shrink-0 mt-0.5 text-[#8C4B3E]" />
                     <span>{submitError}</span>
                   </div>
                 )}
 
                 {/* STEP 1: CUSTOMER DETAILS */}
-                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
-                  <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
+                <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6">
+                  <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-row items-center gap-2.5">
+                    <div className="p-2 bg-[#F0E7D5] text-[#C9A46A] rounded-xl border border-[#E8DCC3]">
                       <User className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-[#1F1D1A]">1. Customer Information</CardTitle>
-                      <CardDescription className="text-xs">Provide contact details for booking verification</CardDescription>
+                      <CardTitle className="text-base font-bold text-[#1F1D1A]">1. Customer Information</CardTitle>
+                      <CardDescription className="text-xs text-[#7A7266]">Provide contact details for booking verification</CardDescription>
                     </div>
                   </CardHeader>
 
                   <CardContent className="p-0 pt-5 space-y-4">
                     {/* Full Name */}
                     <div className="space-y-1.5">
-                      <Label htmlFor="fullName" className="text-xs font-bold text-[#8C4B3E]">Full Name</Label>
+                      <Label htmlFor="fullName" className="text-xs font-bold text-[#1F1D1A]">Full Name</Label>
                       <Input
                         id="fullName"
                         placeholder="Amanda Watson"
-                        className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
-                          errors.fullName ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
+                        className={`h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A] ${
+                          errors.fullName ? "border-[#8C4B3E]" : ""
                         }`}
                         disabled={isSubmitting}
                         {...register("fullName")}
                       />
-                      {errors.fullName && <p className="text-[10px] text-rose-600 font-bold mt-1">{errors.fullName.message}</p>}
+                      {errors.fullName && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{errors.fullName.message}</p>}
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {/* Email */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="email" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
+                        <Label htmlFor="email" className="text-xs font-bold text-[#1F1D1A]">Email Address</Label>
                         <Input
                           id="email"
                           type="email"
                           placeholder="amanda@example.com"
-                          className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
-                            errors.email ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
+                          className={`h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A] ${
+                            errors.email ? "border-[#8C4B3E]" : ""
                           }`}
                           disabled={isSubmitting}
                           {...register("email")}
                         />
-                        {errors.email && <p className="text-[10px] text-rose-600 font-bold mt-1">{errors.email.message}</p>}
+                        {errors.email && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{errors.email.message}</p>}
                       </div>
 
                       {/* Phone */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="phone" className="text-xs font-bold text-[#8C4B3E]">Phone Number</Label>
+                        <Label htmlFor="phone" className="text-xs font-bold text-[#1F1D1A]">Phone Number</Label>
                         <Input
                           id="phone"
                           placeholder="123-456-7890"
-                          className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
-                            errors.phone ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
+                          className={`h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A] ${
+                            errors.phone ? "border-[#8C4B3E]" : ""
                           }`}
                           disabled={isSubmitting}
                           {...register("phone")}
                         />
-                        {errors.phone && <p className="text-[10px] text-rose-600 font-bold mt-1">{errors.phone.message}</p>}
+                        {errors.phone && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{errors.phone.message}</p>}
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* STEP 2: BILLING ADDRESS */}
-                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
-                  <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
+                <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6">
+                  <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-row items-center gap-2.5">
+                    <div className="p-2 bg-[#F0E7D5] text-[#C9A46A] rounded-xl border border-[#E8DCC3]">
                       <Building className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-[#1F1D1A]">2. Billing Address</CardTitle>
-                      <CardDescription className="text-xs">Address connected to invoice calculations</CardDescription>
+                      <CardTitle className="text-base font-bold text-[#1F1D1A]">2. Billing Address</CardTitle>
+                      <CardDescription className="text-xs text-[#7A7266]">Address connected to invoice calculations</CardDescription>
                     </div>
                   </CardHeader>
 
                   <CardContent className="p-0 pt-5 space-y-4">
                     {/* Street Address */}
                     <div className="space-y-1.5">
-                      <Label htmlFor="street" className="text-xs font-bold text-[#8C4B3E]">Street Address</Label>
+                      <Label htmlFor="street" className="text-xs font-bold text-[#1F1D1A]">Street Address</Label>
                       <Input
                         id="street"
                         placeholder="123 Main St, Apt 4B"
-                        className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
-                          errors.street ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
+                        className={`h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A] ${
+                          errors.street ? "border-[#8C4B3E]" : ""
                         }`}
                         disabled={isSubmitting}
                         {...register("street")}
                       />
-                      {errors.street && <p className="text-[10px] text-rose-600 font-bold mt-1">{errors.street.message}</p>}
+                      {errors.street && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{errors.street.message}</p>}
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       {/* City */}
                       <div className="space-y-1.5 sm:col-span-1">
-                        <Label htmlFor="city" className="text-xs font-bold text-[#8C4B3E]">City</Label>
+                        <Label htmlFor="city" className="text-xs font-bold text-[#1F1D1A]">City</Label>
                         <Input
                           id="city"
                           placeholder="Brooklyn"
-                          className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
-                            errors.city ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
+                          className={`h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A] ${
+                            errors.city ? "border-[#8C4B3E]" : ""
                           }`}
                           disabled={isSubmitting}
                           {...register("city")}
                         />
-                        {errors.city && <p className="text-[10px] text-rose-600 font-bold mt-1">{errors.city.message}</p>}
+                        {errors.city && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{errors.city.message}</p>}
                       </div>
 
                       {/* State */}
                       <div className="space-y-1.5 sm:col-span-1">
-                        <Label htmlFor="state" className="text-xs font-bold text-[#8C4B3E]">State</Label>
+                        <Label htmlFor="state" className="text-xs font-bold text-[#1F1D1A]">State</Label>
                         <Input
                           id="state"
                           placeholder="NY"
-                          className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
-                            errors.state ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
+                          className={`h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A] ${
+                            errors.state ? "border-[#8C4B3E]" : ""
                           }`}
                           disabled={isSubmitting}
                           {...register("state")}
                         />
-                        {errors.state && <p className="text-[10px] text-rose-600 font-bold mt-1">{errors.state.message}</p>}
+                        {errors.state && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{errors.state.message}</p>}
                       </div>
 
                       {/* ZIP Code */}
                       <div className="space-y-1.5 sm:col-span-1">
-                        <Label htmlFor="zipCode" className="text-xs font-bold text-[#8C4B3E]">ZIP Code</Label>
+                        <Label htmlFor="zipCode" className="text-xs font-bold text-[#1F1D1A]">ZIP Code</Label>
                         <Input
                           id="zipCode"
                           placeholder="400001"
                           maxLength={6}
-                          className={`h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${
-                            errors.zipCode ? "border-rose-300 focus:ring-rose-500 focus:border-rose-500" : ""
+                          className={`h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A] ${
+                            errors.zipCode ? "border-[#8C4B3E]" : ""
                           }`}
                           disabled={isSubmitting}
                           {...register("zipCode")}
                         />
-                        {errors.zipCode && <p className="text-[10px] text-rose-600 font-bold mt-1">{errors.zipCode.message}</p>}
+                        {errors.zipCode && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{errors.zipCode.message}</p>}
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* STEP 3: PAYMENT METHOD */}
-                <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
-                  <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+                <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6">
+                  <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-row items-center gap-2.5">
+                    <div className="p-2 bg-[#F0E7D5] text-[#C9A46A] rounded-xl border border-[#E8DCC3]">
                       <CreditCard className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-[#1F1D1A]">3. Select Payment Method</CardTitle>
-                      <CardDescription className="text-xs">Choose how you want to settle the transaction</CardDescription>
+                      <CardTitle className="text-base font-bold text-[#1F1D1A]">3. Select Payment Method</CardTitle>
+                      <CardDescription className="text-xs text-[#7A7266]">Choose how you want to settle the transaction</CardDescription>
                     </div>
                   </CardHeader>
 
@@ -503,14 +496,14 @@ export default function Checkout() {
                             type="button"
                             onClick={() => setValue("paymentMethod", opt.id)}
                             disabled={isSubmitting}
-                            className={`flex flex-col items-center justify-center p-3.5 border rounded-xl gap-2 transition-all ${
+                            className={`flex flex-col items-center justify-center p-3.5 border rounded-xl gap-2 transition-all cursor-pointer ${
                               isSelected 
-                                ? "bg-emerald-50 border-emerald-500 text-emerald-700 shadow-2xs font-extrabold"
-                                : "bg-white border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] hover:border-stone-400"
+                                ? "bg-[#F0E7D5] border-[#C9A46A] text-[#C9A46A] shadow-2xs font-bold"
+                                : "bg-white border-[#E8DCC3] text-[#5A5146] hover:bg-[#FAF6F0]"
                             }`}
                           >
-                            <opt.icon className={`h-5 w-5 ${isSelected ? "text-emerald-600" : "text-[#7A7266]"}`} />
-                            <span className="text-[10px] text-center">{opt.label}</span>
+                            <opt.icon className={`h-5 w-5 ${isSelected ? "text-[#C9A46A]" : "text-[#7A7266]"}`} />
+                            <span className="text-[10px] text-center font-bold">{opt.label}</span>
                           </button>
                         );
                       })}
@@ -518,12 +511,12 @@ export default function Checkout() {
 
                     {/* DYNAMIC CARD DETAIL INPUT SUB-FIELDS */}
                     {selectedPaymentMethod === "card" && (
-                      <div className="p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl space-y-3.5 animate-fade-in">
+                      <div className="p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl space-y-3.5">
                         <span className="text-xs font-bold text-[#1F1D1A] block">Credit/Debit Card Details</span>
                         
                         {/* Card number */}
                         <div className="space-y-1.5">
-                          <Label htmlFor="cardNumber" className="text-[11px] font-bold text-[#8C4B3E]">Card Number</Label>
+                          <Label htmlFor="cardNumber" className="text-[11px] font-bold text-[#1F1D1A]">Card Number</Label>
                           <div className="relative">
                             <span className="absolute left-3 top-[50%] translate-y-[-50%] text-[#7A7266]">
                               <CreditCard className="h-4 w-4" />
@@ -532,40 +525,40 @@ export default function Checkout() {
                               id="cardNumber"
                               placeholder="1234 5678 1234 5678"
                               maxLength={19}
-                              className="pl-9 h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
+                              className="pl-9 h-9 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
                               disabled={isSubmitting}
                               {...register("cardNumber")}
                             />
                           </div>
-                          {errors.cardNumber && <p className="text-[10px] text-rose-600 font-bold mt-0.5">{errors.cardNumber.message}</p>}
+                          {errors.cardNumber && <p className="text-[10px] text-[#8C4B3E] font-bold mt-0.5">{errors.cardNumber.message}</p>}
                         </div>
 
                         {/* Expiry / CVC grid */}
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-1.5">
-                            <Label htmlFor="cardExpiry" className="text-[11px] font-bold text-[#8C4B3E]">Expiry Date</Label>
+                            <Label htmlFor="cardExpiry" className="text-[11px] font-bold text-[#1F1D1A]">Expiry Date</Label>
                             <Input
                               id="cardExpiry"
                               placeholder="MM/YY"
                               maxLength={5}
-                              className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white text-center"
+                              className="h-9 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-center text-[#1F1D1A]"
                               disabled={isSubmitting}
                               {...register("cardExpiry")}
                             />
-                            {errors.cardExpiry && <p className="text-[10px] text-rose-600 font-bold mt-0.5">{errors.cardExpiry.message}</p>}
+                            {errors.cardExpiry && <p className="text-[10px] text-[#8C4B3E] font-bold mt-0.5">{errors.cardExpiry.message}</p>}
                           </div>
                           <div className="space-y-1.5">
-                            <Label htmlFor="cardCvc" className="text-[11px] font-bold text-[#8C4B3E]">CVC Code</Label>
+                            <Label htmlFor="cardCvc" className="text-[11px] font-bold text-[#1F1D1A]">CVC Code</Label>
                             <Input
                               id="cardCvc"
                               type="password"
                               placeholder="123"
                               maxLength={4}
-                              className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white text-center"
+                              className="h-9 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-center text-[#1F1D1A]"
                               disabled={isSubmitting}
                               {...register("cardCvc")}
                             />
-                            {errors.cardCvc && <p className="text-[10px] text-rose-600 font-bold mt-0.5">{errors.cardCvc.message}</p>}
+                            {errors.cardCvc && <p className="text-[10px] text-[#8C4B3E] font-bold mt-0.5">{errors.cardCvc.message}</p>}
                           </div>
                         </div>
                       </div>
@@ -573,11 +566,11 @@ export default function Checkout() {
 
                     {/* DYNAMIC UPI PAY SUB-DETAILS */}
                     {selectedPaymentMethod === "upi" && (
-                      <div className="p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl text-center space-y-3.5 animate-fade-in flex flex-col items-center">
-                        <QrCode className="h-16 w-16 text-[#8C4B3E] border border-[#5A5146]/20 p-2 bg-white rounded-xl" />
+                      <div className="p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl text-center space-y-3.5 flex flex-col items-center">
+                        <QrCode className="h-16 w-16 text-[#C9A46A] border border-[#E8DCC3] p-2 bg-white rounded-xl" />
                         <div className="space-y-1">
                           <span className="text-xs font-bold text-[#1F1D1A] block">Scan Dynamic QR Code</span>
-                          <p className="text-[10px] text-[#7A7266] max-w-xs leading-relaxed">
+                          <p className="text-[10px] text-[#7A7266] max-w-xs leading-relaxed font-medium">
                             Upon submitting the order, a secure dynamic UPI payment overlay will open to authorize the transaction.
                           </p>
                         </div>
@@ -586,11 +579,11 @@ export default function Checkout() {
 
                     {/* DYNAMIC CASH PAYMENT SUB-DETAILS */}
                     {selectedPaymentMethod === "cash" && (
-                      <div className="p-4 bg-amber-50/50 border border-amber-100 rounded-2xl space-y-2 animate-fade-in flex items-start gap-2.5">
-                        <CheckCircle2 className="h-5 w-5 text-[#8C4B3E] shrink-0 mt-0.5" />
+                      <div className="p-4 bg-[#7DAB7D]/10 border border-[#7DAB7D]/30 rounded-2xl space-y-2 flex items-start gap-2.5">
+                        <CheckCircle2 className="h-5 w-5 text-[#2B522B] shrink-0 mt-0.5" />
                         <div className="space-y-1">
-                          <span className="text-xs font-bold text-amber-800 block">Cash on Service Confirmed</span>
-                          <p className="text-[10px] text-amber-700/80 leading-relaxed">
+                          <span className="text-xs font-bold text-[#2B522B] block">Cash on Service Confirmed</span>
+                          <p className="text-[10px] text-[#2B522B]/80 leading-relaxed font-medium">
                             No upfront payment required today. Pay provider directly in cash or digital wallet once the service is fully completed to your satisfaction.
                           </p>
                         </div>
@@ -598,23 +591,23 @@ export default function Checkout() {
                     )}
 
                     {/* TERMS AGREEMENT CHECKBOX */}
-                    <div className="space-y-1.5 border-t border-[#5A5146]/15 pt-5">
+                    <div className="space-y-1.5 border-t border-[#E8DCC3] pt-5">
                       <div className="flex items-start space-x-2.5">
                         <Checkbox 
                           id="acceptTerms" 
                           checked={acceptTermsValue}
                           onCheckedChange={(checked) => setValue("acceptTerms", checked === true)}
                           disabled={isSubmitting}
-                          className="rounded-md border-stone-300 bg-white mt-0.5"
+                          className="rounded-md border-[#E8DCC3] bg-white mt-0.5"
                         />
                         <label
                           htmlFor="acceptTerms"
-                          className="text-[11px] font-semibold text-slate-550 leading-relaxed cursor-pointer select-none"
+                          className="text-[11px] font-medium text-[#5A5146] leading-relaxed cursor-pointer select-none"
                         >
-                          I agree to BookMyLocalService's booking guidelines, cancellation policies, and payment terms. I verify that the service requirements specified in this summaries are correct.
+                          I agree to BookMyLocalService's booking guidelines, cancellation policies, and payment terms. I verify that the service requirements specified in this summary are correct.
                         </label>
                       </div>
-                      {errors.acceptTerms && <p className="text-[10px] text-rose-600 font-bold mt-1">{errors.acceptTerms.message}</p>}
+                      {errors.acceptTerms && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{errors.acceptTerms.message}</p>}
                     </div>
                   </CardContent>
                 </Card>
@@ -626,33 +619,33 @@ export default function Checkout() {
                 <div className="lg:sticky lg:top-24 space-y-6">
                   
                   {/* BOOKING DETAILS CARD */}
-                  <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
-                    <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block">Booking Details</span>
+                  <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-5 space-y-4">
+                    <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block">Booking Details</span>
                     
-                    <div className="flex items-center gap-3.5 p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl">
-                      <Avatar className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-white shadow-2xs">
+                    <div className="flex items-center gap-3.5 p-3 bg-[#FAF6F0] border border-[#E8DCC3] rounded-xl">
+                      <Avatar className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-[#E8DCC3]">
                         <AvatarImage src={provider.providerImage} className="object-cover" />
                         <AvatarFallback>{provider.providerName[0]}</AvatarFallback>
                       </Avatar>
                       <div>
-                        <span className="text-[10px] font-bold text-[#C9A46A] bg-[#C9A46A]/20 px-2.5 py-0.5 rounded-full border border-amber-500/20 tracking-wide uppercase">
+                        <span className="text-[10px] font-bold text-[#C9A46A] bg-[#F0E7D5] px-2.5 py-0.5 rounded-full border border-[#E8DCC3] tracking-wide uppercase">
                           {provider.category}
                         </span>
-                        <h4 className="font-extrabold text-[#1F1D1A] text-sm mt-1">{provider.providerName}</h4>
+                        <h4 className="font-bold text-[#1F1D1A] text-sm mt-1">{provider.providerName}</h4>
                         <p className="text-[11px] text-[#7A7266] truncate max-w-[200px]">{provider.name}</p>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3.5">
-                      <div className="flex items-center gap-2 p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-[#8C4B3E]">
-                        <Calendar className="h-4.5 w-4.5 text-[#8C4B3E] shrink-0" />
+                      <div className="flex items-center gap-2 p-3 bg-[#FAF6F0] border border-[#E8DCC3] rounded-xl text-[#1F1D1A]">
+                        <Calendar className="h-4.5 w-4.5 text-[#C9A46A] shrink-0" />
                         <div className="flex flex-col">
                           <span className="text-[9px] text-[#7A7266] font-bold uppercase tracking-wider">Date</span>
                           <span className="text-xs font-bold">{selectedDate}</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 p-3 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-xl text-[#8C4B3E]">
-                        <Clock className="h-4.5 w-4.5 text-[#8C4B3E] shrink-0" />
+                      <div className="flex items-center gap-2 p-3 bg-[#FAF6F0] border border-[#E8DCC3] rounded-xl text-[#1F1D1A]">
+                        <Clock className="h-4.5 w-4.5 text-[#C9A46A] shrink-0" />
                         <div className="flex flex-col">
                           <span className="text-[9px] text-[#7A7266] font-bold uppercase tracking-wider">Time</span>
                           <span className="text-xs font-bold">{selectedTime}</span>
@@ -660,17 +653,17 @@ export default function Checkout() {
                       </div>
                     </div>
 
-                    <div className="flex justify-between items-center bg-[#FAF6F0] p-3 border border-[#5A5146]/15 rounded-xl">
+                    <div className="flex justify-between items-center bg-[#FAF6F0] p-3 border border-[#E8DCC3] rounded-xl">
                       <span className="text-xs font-bold text-[#1F1D1A]">Tier Package:</span>
-                      <Badge variant="secondary" className="bg-white border-[#5A5146]/20 text-[#8C4B3E] font-bold rounded-lg text-xs py-0.5 px-2.5">
+                      <Badge variant="secondary" className="bg-white border-[#E8DCC3] text-[#C9A46A] font-bold rounded-lg text-xs py-0.5 px-2.5">
                         {selectedPlanName}
                       </Badge>
                     </div>
                   </Card>
 
                   {/* PROMO / COUPON CODE CARD */}
-                  <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5">
-                    <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block mb-3.5">Promo / Coupon Code</span>
+                  <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-5">
+                    <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block mb-3.5">Promo / Coupon Code</span>
                     
                     <div className="flex gap-2">
                       <div className="relative flex-1">
@@ -681,7 +674,7 @@ export default function Checkout() {
                           placeholder="Enter Promo Code"
                           value={promoInput}
                           onChange={(e) => setPromoInput(e.target.value)}
-                          className="pl-9 h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
+                          className="pl-9 h-9.5 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
                           disabled={isSubmitting}
                         />
                       </div>
@@ -689,70 +682,70 @@ export default function Checkout() {
                         type="button"
                         onClick={handleApplyPromo}
                         disabled={isSubmitting}
-                        className="bg-[#8C4B3E] hover:bg-black text-white h-9.5 px-4 font-bold text-xs rounded-xl"
+                        className="bg-[#C9A46A] hover:bg-[#b89359] text-white h-9.5 px-4 font-bold text-xs rounded-xl border border-[#E8DCC3]"
                       >
                         Apply
                       </Button>
                     </div>
 
                     {promoSuccessMsg && (
-                      <p className="text-[11px] text-emerald-600 font-bold mt-2 flex items-center gap-1">
-                        <Check className="h-3.5 w-3.5 text-emerald-500" /> {promoSuccessMsg}
+                      <p className="text-[11px] text-[#2B522B] font-bold mt-2 flex items-center gap-1">
+                        <Check className="h-3.5 w-3.5 text-[#2B522B]" /> {promoSuccessMsg}
                       </p>
                     )}
 
                     {promoErrorMsg && (
-                      <p className="text-[11px] text-rose-600 font-bold mt-2 flex items-center gap-1">
-                        <AlertCircle className="h-3.5 w-3.5 text-rose-500" /> {promoErrorMsg}
+                      <p className="text-[11px] text-[#8C4B3E] font-bold mt-2 flex items-center gap-1">
+                        <AlertCircle className="h-3.5 w-3.5 text-[#8C4B3E]" /> {promoErrorMsg}
                       </p>
                     )}
 
-                    <div className="mt-3 text-[10px] text-[#7A7266] font-semibold flex items-center gap-1">
+                    <div className="mt-3 text-[10px] text-[#7A7266] font-medium flex items-center gap-1">
                       <Sparkles className="h-3.5 w-3.5 text-[#C9A46A]" />
-                      <span>Use coupon <span className="font-bold text-[#5A5146]">LOCAL20</span> to save 20% on booking fees.</span>
+                      <span>Use coupon <span className="font-bold text-[#1F1D1A]">LOCAL20</span> to save 20% on booking fees.</span>
                     </div>
                   </Card>
 
                   {/* ORDER INVOICE SUMMARY CARD */}
-                  <Card className="border border-[#5A5146]/20 shadow-md rounded-2xl bg-white overflow-hidden">
-                    <div className="bg-[#8C4B3E] text-white py-3.5 px-5 flex items-center justify-between shrink-0">
-                      <span className="text-xs font-bold uppercase tracking-wider text-[#7A7266]">Order Invoice</span>
-                      <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 py-0.5 px-2.5 rounded-full border border-emerald-500/20">Final Amount</span>
+                  <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white overflow-hidden">
+                    <div className="bg-[#F0E7D5] text-[#1F1D1A] py-3.5 px-5 flex items-center justify-between shrink-0 border-b border-[#E8DCC3]">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#1F1D1A]">Order Invoice</span>
+                      <span className="text-[10px] font-bold text-[#2B522B] bg-[#7DAB7D]/20 py-0.5 px-2.5 rounded-full border border-[#7DAB7D]/30">Final Amount</span>
                     </div>
 
                     <CardContent className="p-5 space-y-3.5">
-                      <div className="flex justify-between text-xs text-slate-550 font-semibold">
+                      <div className="flex justify-between text-xs text-[#5A5146] font-medium">
                         <span>Service Base Price:</span>
                         <span>${serviceFee.toFixed(2)}</span>
                       </div>
 
-                      <div className="flex justify-between text-xs text-slate-550 font-semibold">
+                      <div className="flex justify-between text-xs text-[#5A5146] font-medium">
                         <span>Platform Handling Fee:</span>
                         <span>${platformFee.toFixed(2)}</span>
                       </div>
 
-                      <div className="flex justify-between text-xs text-slate-550 font-semibold">
+                      <div className="flex justify-between text-xs text-[#5A5146] font-medium">
                         <span>Local State Taxes (8.5%):</span>
                         <span>${taxVal.toFixed(2)}</span>
                       </div>
 
                       {appliedDiscount > 0 && (
-                        <div className="flex justify-between text-xs text-emerald-600 font-extrabold bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
+                        <div className="flex justify-between text-xs text-[#2B522B] font-bold bg-[#7DAB7D]/10 p-2.5 rounded-xl border border-[#7DAB7D]/30">
                           <span className="flex items-center gap-1"><Percent className="h-3.5 w-3.5" /> Coupon Discount:</span>
                           <span>-${discountVal.toFixed(2)}</span>
                         </div>
                       )}
 
-                      <div className="border-t border-[#5A5146]/15 pt-3.5 flex justify-between items-baseline">
-                        <span className="text-sm font-black text-[#1F1D1A]">Total Amount:</span>
-                        <span className="text-xl font-black text-[#1F1D1A]">${grandTotal.toFixed(2)}</span>
+                      <div className="border-t border-[#E8DCC3] pt-3.5 flex justify-between items-baseline">
+                        <span className="text-sm font-bold text-[#1F1D1A]">Total Amount:</span>
+                        <span className="text-xl font-bold text-[#1F1D1A]">${grandTotal.toFixed(2)}</span>
                       </div>
 
                       <div className="pt-3">
                         <Button
                           type="submit"
                           disabled={isSubmitting}
-                          className="w-full h-11 bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
+                          className="w-full h-11 bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-2xs border border-[#E8DCC3]"
                         >
                           {isSubmitting ? (
                             <>
@@ -770,7 +763,7 @@ export default function Checkout() {
 
                       <div className="text-center pt-2">
                         <span className="text-[10px] font-bold text-[#7A7266] flex items-center justify-center gap-1">
-                          <Lock className="h-3.5 w-3.5 text-emerald-500" /> SSL Insured Checkout Processing
+                          <Lock className="h-3.5 w-3.5 text-[#2B522B]" /> SSL Insured Checkout Processing
                         </span>
                       </div>
                     </CardContent>
@@ -794,23 +787,23 @@ function successSubmitUI(submitSuccess, provider, date, time, plan, total) {
   if (!submitSuccess) return null;
 
   return (
-    <div className="max-w-xl mx-auto py-12 px-6 bg-white border border-[#5A5146]/15 rounded-3xl shadow-xl text-center space-y-6 animate-fade-in">
-      <div className="w-16 h-16 bg-emerald-50 text-emerald-500 border border-emerald-100 rounded-full flex items-center justify-center mx-auto shadow-xs animate-bounce">
+    <div className="max-w-xl mx-auto py-12 px-6 bg-white border border-[#E8DCC3] rounded-3xl shadow-2xs text-center space-y-6">
+      <div className="w-16 h-16 bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/40 rounded-full flex items-center justify-center mx-auto shadow-2xs">
         <Check className="h-8 w-8" />
       </div>
       
       <div className="space-y-2">
-        <h2 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Booking Confirmed!</h2>
-        <p className="text-xs text-[#7A7266] font-semibold max-w-sm mx-auto leading-relaxed">
+        <h2 className="text-2xl font-bold text-[#1F1D1A] tracking-tight">Booking Confirmed!</h2>
+        <p className="text-xs text-[#7A7266] font-medium max-w-sm mx-auto leading-relaxed">
           Your transaction has been processed securely. A confirmation email invoice was dispatched containing appointment details.
         </p>
       </div>
 
-      <div className="p-4 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl text-left space-y-3.5 max-w-md mx-auto">
+      <div className="p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl text-left space-y-3.5 max-w-md mx-auto">
         <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A7266] block">Transaction Details</span>
         
         <div className="flex items-center gap-2">
-          <Avatar className="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-white shadow-2xs">
+          <Avatar className="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-[#E8DCC3]">
             <AvatarImage src={provider.providerImage} className="object-cover" />
             <AvatarFallback>{provider.providerName[0]}</AvatarFallback>
           </Avatar>
@@ -820,20 +813,20 @@ function successSubmitUI(submitSuccess, provider, date, time, plan, total) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 border-t border-[#5A5146]/15 pt-3">
+        <div className="grid grid-cols-2 gap-4 border-t border-[#E8DCC3] pt-3">
           <div>
             <span className="text-[9px] text-[#7A7266] font-bold uppercase block">Date & Time</span>
-            <span className="text-xs font-bold text-[#8C4B3E]">{date} at {time}</span>
+            <span className="text-xs font-bold text-[#C9A46A]">{date} at {time}</span>
           </div>
           <div>
             <span className="text-[9px] text-[#7A7266] font-bold uppercase block">Amount Paid</span>
-            <span className="text-xs font-bold text-[#8C4B3E]">${total.toFixed(2)}</span>
+            <span className="text-xs font-bold text-[#C9A46A]">${total.toFixed(2)}</span>
           </div>
         </div>
       </div>
 
       <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#7A7266] pt-2.5">
-        <Loader2 className="h-4 w-4 animate-spin text-white" />
+        <Loader2 className="h-4 w-4 animate-spin text-[#C9A46A]" />
         <span>Loading Customer Dashboard... Please wait.</span>
       </div>
     </div>

@@ -1,13 +1,8 @@
 import { 
   User, 
-  Edit3, 
-  Calendar, 
   MapPin, 
-  Heart, 
   Bell, 
   CreditCard, 
-  Lock, 
-  Sliders, 
   LogOut,
   LayoutDashboard,
   Briefcase,
@@ -20,19 +15,16 @@ import {
   FileText,
   TrendingUp,
   Grid,
-  Layers
+  Layers,
+  Calendar,
+  Edit3
 } from "lucide-react";
 
 export const customerMenu = [
-  { label: "Personal Information", icon: User, path: "/profile", tab: "details" },
-  { label: "Edit Profile", icon: Edit3, path: "/profile/edit" },
-  { label: "My Bookings", icon: Calendar, path: "/bookings" },
+  { label: "My Profile", icon: User, path: "/profile" },
   { label: "Saved Addresses", icon: MapPin, path: "/profile", tab: "addresses" },
-  { label: "Favorites", icon: Heart, path: "/favorites" },
   { label: "Notifications", icon: Bell, path: "/notifications" },
   { label: "Payment Methods", icon: CreditCard, path: "/payment-methods" },
-  { label: "Security", icon: Lock, path: "/profile", tab: "security" },
-  { label: "Preferences", icon: Sliders, path: "/profile", tab: "settings" },
   { label: "Logout", icon: LogOut, path: "/logout", isLogout: true }
 ];
 
@@ -43,7 +35,7 @@ export const providerMenu = [
   { label: "Earnings", icon: DollarSign, path: "/provider/earnings" },
   { label: "Reviews", icon: Star, path: "/provider/reviews" },
   { label: "Billing & Subscription", icon: CreditCard, path: "/provider/subscription" },
-  { label: "Edit Provider Profile", icon: Edit3, path: "/profile/edit" },
+  { label: "Edit Provider Profile", icon: Edit3, path: "/profile" },
   { label: "Settings", icon: Settings, path: "/provider/settings" },
   { label: "Logout", icon: LogOut, path: "/logout", isLogout: true }
 ];

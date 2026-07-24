@@ -20,28 +20,12 @@ import {
   Info,
   Check,
   AlertCircle,
-  Loader2,
-  DollarSign
+  Loader2
 } from "lucide-react";
 
 // Helpers to get matching category styling
-const getCategoryStyles = (category) => {
-  switch (category) {
-    case "Home Cleaning":
-      return "bg-pink-50 text-pink-600 border-pink-100";
-    case "Plumbing":
-      return "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10";
-    case "Electrical":
-      return "bg-amber-50 text-[#8C4B3E] border-amber-100";
-    case "Moving & Packing":
-      return "bg-emerald-50 text-emerald-600 border-emerald-100";
-    case "Lawn & Garden":
-      return "bg-lime-50 text-lime-600 border-lime-100";
-    case "Wellness & Personal":
-      return "bg-rose-50 text-rose-600 border-rose-100";
-    default:
-      return "bg-[#FAF6F0] text-[#5A5146] border-[#5A5146]/15";
-  }
+const getCategoryStyles = () => {
+  return "bg-[#F0E7D5] text-[#C9A46A] border-[#E8DCC3]";
 };
 
 const getProviderPlans = (category, basePrice) => {
@@ -101,7 +85,7 @@ export default function Booking() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const [activePlanIdx, setActivePlanIdx] = useState(1); // Default to Standard
+  const [activePlanIdx, setActivePlanIdx] = useState(1);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
 
@@ -200,7 +184,7 @@ export default function Booking() {
   const selectedPlan = plans[activePlanIdx] || null;
   const basePrice = selectedPlan ? selectedPlan.price : 0;
   const platformFee = 4.99;
-  const tax = Math.round(basePrice * 0.085 * 100) / 100; // 8.5%
+  const tax = Math.round(basePrice * 0.085 * 100) / 100;
   const total = Math.round((basePrice + platformFee + tax) * 100) / 100;
 
   const handleInputChange = (e) => {
@@ -238,7 +222,6 @@ export default function Booking() {
   const handleSubmitBooking = async (e) => {
     e.preventDefault();
 
-    // Check authentication first
     const token = localStorage.getItem("token");
     if (!token) {
       alert("Please log in to proceed with booking.");
@@ -248,7 +231,6 @@ export default function Booking() {
 
     let hasErrors = false;
 
-    // Validate date selection
     if (!selectedDate) {
       setDateAlert(true);
       hasErrors = true;
@@ -256,7 +238,6 @@ export default function Booking() {
       setDateAlert(false);
     }
 
-    // Validate time selection
     if (!selectedTimeSlot) {
       setTimeAlert(true);
       hasErrors = true;
@@ -264,7 +245,6 @@ export default function Booking() {
       setTimeAlert(false);
     }
 
-    // Validate form inputs
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
@@ -272,14 +252,12 @@ export default function Booking() {
     }
 
     if (hasErrors) {
-      // Scroll to error or display message
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      // 1. Create a pending booking on backend
       const createResponse = await bookingsService.createBooking({
         serviceId: service.id,
         plan: selectedPlan.name,
@@ -291,7 +269,6 @@ export default function Booking() {
       if (createResponse.success && createResponse.data) {
         const bookingId = createResponse.data.id;
 
-        // 2. Save custom customer details to the booking
         await bookingsService.updateBooking(bookingId, {
           billingName: formData.fullName,
           billingEmail: formData.email,
@@ -302,7 +279,6 @@ export default function Booking() {
           zipCode: formData.zipCode
         });
 
-        // 3. Navigate to checkout page
         navigate(`/checkout?bookingId=${bookingId}`);
       } else {
         alert(createResponse.message || "Failed to initiate booking.");
@@ -321,7 +297,7 @@ export default function Booking() {
         <div className="bg-[#FAF6F0] min-h-screen py-12 flex justify-center items-center">
           <div className="flex flex-col items-center gap-4">
             <Loader2 className="h-10 w-10 text-[#1F1D1A] animate-spin" />
-            <p className="text-sm font-semibold text-[#8C4B3E]">Loading service details...</p>
+            <p className="text-xs font-bold text-[#5A5146]">Loading service details...</p>
           </div>
         </div>
       </MainLayout>
@@ -332,19 +308,19 @@ export default function Booking() {
     return (
       <MainLayout>
         <div className="bg-[#FAF6F0] min-h-screen py-16 flex items-center justify-center px-4">
-          <Card className="max-w-md w-full border border-[#5A5146]/20 text-center shadow-lg p-8">
+          <Card className="max-w-md w-full border border-[#E8DCC3] bg-white text-center shadow-2xs p-8">
             <CardHeader className="pb-4">
-              <div className="mx-auto w-12 h-12 rounded-full bg-rose-50 border border-rose-100 flex items-center justify-center mb-2">
-                <AlertCircle className="h-6 w-6 text-rose-500" />
+              <div className="mx-auto w-12 h-12 rounded-full bg-[#8C4B3E]/20 border border-[#8C4B3E]/30 flex items-center justify-center mb-2">
+                <AlertCircle className="h-6 w-6 text-[#8C4B3E]" />
               </div>
               <CardTitle className="text-xl font-bold text-[#1F1D1A]">No Service Selected</CardTitle>
-              <CardDescription className="text-sm text-[#7A7266]">
-                {error || "To schedule a booking, please select one of our premium services from our services directory first."}
+              <CardDescription className="text-xs text-[#7A7266]">
+                {error || "To schedule a booking, please select one of our services from our directory first."}
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-4 flex flex-col gap-3">
               <Link to="/services">
-                <Button className="w-full bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl h-11 font-bold shadow-xs">
+                <Button className="w-full bg-[#C9A46A] hover:bg-[#b89359] text-white rounded-xl h-10 font-bold shadow-2xs border border-[#E8DCC3]">
                   Browse Services
                 </Button>
               </Link>
@@ -360,16 +336,16 @@ export default function Booking() {
 
   return (
     <MainLayout>
-      <div className="bg-[#FAF6F0] min-h-screen py-10 md:py-16">
+      <div className="bg-[#FAF6F0] min-h-screen py-10 md:py-16 font-sans">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header breadcrumb bar */}
           <div className="mb-8">
-            <Link to={`/services/${service.id}`} className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#8C4B3E] hover:text-[#1F1D1A] transition-all">
+            <Link to={`/services/${service.id}`} className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A46A] hover:underline transition-all">
               <ArrowLeft className="h-4 w-4" /> Back to Details
             </Link>
-            <h1 className="text-3xl font-black text-[#1F1D1A] tracking-tight mt-2">Schedule Your Booking</h1>
-            <p className="text-sm text-[#7A7266]">Customize plan parameters, select your scheduling slot, and review pricing.</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#1F1D1A] tracking-tight mt-2">Schedule Your Booking</h1>
+            <p className="text-xs sm:text-sm text-[#7A7266] font-medium">Customize plan parameters, select your scheduling slot, and review pricing.</p>
           </div>
 
           <form onSubmit={handleSubmitBooking} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -378,38 +354,38 @@ export default function Booking() {
             <div className="lg:col-span-8 space-y-8">
 
               {/* SERVICE CARD & PROVIDER COMPACT BOX */}
-              <Card className="border border-[#5A5146]/20 overflow-hidden shadow-sm bg-white p-0 gap-0">
+              <Card className="border border-[#E8DCC3] overflow-hidden shadow-2xs bg-white p-0">
                 <div className="flex flex-col sm:flex-row gap-5 p-5">
                   <img
                     src={service.imageUrl}
                     alt={service.title}
-                    className="w-full sm:w-44 h-32 object-cover rounded-xl shrink-0"
+                    className="w-full sm:w-44 h-32 object-cover rounded-xl shrink-0 border border-[#E8DCC3]"
                   />
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between gap-2">
-                        <span className={`px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full border ${getCategoryStyles(service.category)}`}>
+                        <span className={`px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-full border ${getCategoryStyles(service.category)}`}>
                           {service.category}
                         </span>
                         {service.badge && (
-                          <span className="text-[10px] bg-[#8C4B3E] text-[#1F1D1A] font-bold px-2 py-0.5 rounded-full">
+                          <span className="text-[10px] bg-[#C9A46A] text-white font-bold px-2 py-0.5 rounded-full border border-[#E8DCC3]">
                             {service.badge}
                           </span>
                         )}
                       </div>
-                      <h2 className="text-lg font-black text-[#1F1D1A] mt-2 leading-tight">{service.title}</h2>
-                      <div className="flex items-center gap-1.5 text-xs text-[#7A7266] mt-1">
+                      <h2 className="text-lg font-bold text-[#1F1D1A] mt-2 leading-tight">{service.title}</h2>
+                      <div className="flex items-center gap-1.5 text-xs text-[#7A7266] mt-1 font-medium">
                         <MapPin className="h-3.5 w-3.5 text-[#7A7266]" />
                         <span>{service.location}</span>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between border-t border-[#5A5146]/15 pt-3 mt-4">
+                    <div className="flex items-center justify-between border-t border-[#E8DCC3] pt-3 mt-4">
                       {/* Provider badge */}
                       <div className="flex items-center gap-2">
-                        <Avatar className="h-7 w-7 border border-[#5A5146]/15">
+                        <Avatar className="h-7 w-7 border border-[#E8DCC3]">
                           <AvatarImage src={service.provider?.avatar || ""} />
-                          <AvatarFallback className="text-[10px] font-black">{service.provider?.fullName?.charAt(0)}</AvatarFallback>
+                          <AvatarFallback className="text-[10px] font-bold bg-[#F0E7D5] text-[#C9A46A]">{service.provider?.fullName?.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">
                           <span className="text-[10px] text-[#7A7266] font-bold uppercase tracking-wider">Provider</span>
@@ -419,10 +395,10 @@ export default function Booking() {
 
                       {/* Ratings */}
                       <div className="flex items-center gap-1">
-                        <Badge variant="secondary" className="bg-[#F0E7D5] text-[#1F1D1A] gap-1 border-0 hover:bg-[#F0E7D5] text-[11px] font-bold">
+                        <Badge variant="secondary" className="bg-[#F0E7D5] border-[#E8DCC3] text-[#1F1D1A] gap-1 text-[11px] font-bold">
                           ★ {service.rating.toFixed(1)}
                         </Badge>
-                        <span className="text-[10px] text-[#7A7266]">({service.reviewCount} Reviews)</span>
+                        <span className="text-[10px] text-[#7A7266] font-medium">({service.reviewCount} Reviews)</span>
                       </div>
                     </div>
                   </div>
@@ -430,21 +406,21 @@ export default function Booking() {
               </Card>
 
               {/* PLAN / PACKAGE SELECTION TABS */}
-              <Card className="border border-[#5A5146]/20 shadow-sm bg-white">
+              <Card className="border border-[#E8DCC3] shadow-2xs bg-white">
                 <CardHeader className="p-5 pb-3">
                   <CardTitle className="text-sm font-bold text-[#1F1D1A] flex items-center gap-1.5">
-                    <ShieldCheck className="h-4.5 w-4.5 text-[#1F1D1A]" /> Choose Service Tier
+                    <ShieldCheck className="h-4.5 w-4.5 text-[#C9A46A]" /> Choose Service Tier
                   </CardTitle>
                   <CardDescription className="text-xs text-[#7A7266]">Select a pricing plan matching your work requirements.</CardDescription>
                 </CardHeader>
                 <CardContent className="p-5 pt-0">
                   <Tabs value={activePlanIdx.toString()} onValueChange={(val) => setActivePlanIdx(parseInt(val))} className="w-full">
-                    <TabsList className="grid grid-cols-3 w-full bg-[#F0E7D5] p-1 rounded-xl h-11">
+                    <TabsList className="grid grid-cols-3 w-full bg-[#F0E7D5] p-1 rounded-xl h-11 border border-[#E8DCC3]">
                       {plans.map((plan, idx) => (
                         <TabsTrigger
                           key={idx}
                           value={idx.toString()}
-                          className="rounded-lg font-bold text-xs data-[state=active]:bg-white data-[state=active]:text-[#1F1D1A] transition-all cursor-pointer"
+                          className="rounded-lg font-bold text-xs data-[state=active]:bg-[#FAF6F0] data-[state=active]:text-[#C9A46A] data-[state=active]:shadow-2xs transition-all cursor-pointer"
                         >
                           {plan.name}
                         </TabsTrigger>
@@ -452,20 +428,20 @@ export default function Booking() {
                     </TabsList>
 
                     {plans.map((plan, idx) => (
-                      <TabsContent key={idx} value={idx.toString()} className="mt-4 pt-2 border-t border-stone-50 space-y-4 focus-visible:outline-none focus-visible:ring-0">
+                      <TabsContent key={idx} value={idx.toString()} className="mt-4 pt-2 border-t border-[#E8DCC3] space-y-4 focus-visible:outline-none focus-visible:ring-0">
                         <div className="flex items-center justify-between">
-                          <h3 className="font-extrabold text-[#1F1D1A] text-base">{plan.name} Package</h3>
-                          <span className="text-xl font-black text-slate-905">${plan.price}</span>
+                          <h3 className="font-bold text-[#1F1D1A] text-base">{plan.name} Package</h3>
+                          <span className="text-xl font-bold text-[#1F1D1A]">${plan.price}</span>
                         </div>
-                        <p className="text-xs text-[#7A7266] leading-relaxed">{plan.description}</p>
+                        <p className="text-xs text-[#5A5146] leading-relaxed font-medium">{plan.description}</p>
 
                         <div className="space-y-2 pt-1.5">
-                          <span className="text-[10px] font-extrabold text-[#7A7266] uppercase tracking-wider block">What's Included:</span>
+                          <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">What's Included:</span>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                             {plan.inclusions.map((inc, i) => (
-                              <div key={i} className="flex items-center gap-2 text-xs text-slate-655 font-medium">
-                                <div className="w-4 h-4 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
-                                  <Check className="h-3 w-3 text-emerald-600" />
+                              <div key={i} className="flex items-center gap-2 text-xs text-[#5A5146] font-medium">
+                                <div className="w-4 h-4 rounded-full bg-[#7DAB7D]/20 border border-[#7DAB7D]/40 flex items-center justify-center shrink-0">
+                                  <Check className="h-3 w-3 text-[#2B522B]" />
                                 </div>
                                 <span>{inc}</span>
                               </div>
@@ -479,10 +455,10 @@ export default function Booking() {
               </Card>
 
               {/* DATE & TIME PICKER */}
-              <Card className="border border-[#5A5146]/20 shadow-sm bg-white">
+              <Card className="border border-[#E8DCC3] shadow-2xs bg-white">
                 <CardHeader className="p-5 pb-3">
                   <CardTitle className="text-sm font-bold text-[#1F1D1A] flex items-center gap-1.5">
-                    <Calendar className="h-4.5 w-4.5 text-[#1F1D1A]" /> Select Schedule Date & Time
+                    <Calendar className="h-4.5 w-4.5 text-[#C9A46A]" /> Select Schedule Date & Time
                   </CardTitle>
                   <CardDescription className="text-xs text-[#7A7266]">Choose a convenient date and arrival window for your service dispatch.</CardDescription>
                 </CardHeader>
@@ -491,9 +467,9 @@ export default function Booking() {
                   {/* Date strips */}
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-[11px] font-extrabold text-[#7A7266] uppercase tracking-wider block">Available Days</span>
+                      <span className="text-[11px] font-bold text-[#7A7266] uppercase tracking-wider block">Available Days</span>
                       {selectedDate && (
-                        <span className="text-[10px] font-bold text-[#1F1D1A] bg-[#8C4B3E]/5 px-2.5 py-0.5 rounded-full border border-violet-950/10">
+                        <span className="text-[10px] font-bold text-[#C9A46A] bg-[#F0E7D5] px-2.5 py-0.5 rounded-full border border-[#E8DCC3]">
                           {selectedDate}
                         </span>
                       )}
@@ -510,33 +486,33 @@ export default function Booking() {
                               setDateAlert(false);
                             }}
                             className={`flex flex-col items-center justify-center p-3 border rounded-2xl min-w-[62px] snap-center transition-all cursor-pointer ${isSelected
-                                ? "bg-[#8C4B3E] border-violet-950 text-white shadow-md shadow-2xs"
-                                : "bg-white border-[#5A5146]/20 text-slate-655 hover:bg-[#FAF6F0] hover:border-stone-300"
+                                ? "bg-[#C9A46A] border-[#E8DCC3] text-white shadow-2xs"
+                                : "bg-white border-[#E8DCC3] text-[#5A5146] hover:bg-[#FAF6F0]"
                               }`}
                           >
                             <span className="text-[9px] font-bold uppercase tracking-wider opacity-85">{d.dayName}</span>
-                            <span className="text-base font-black mt-0.5 leading-none">{d.dayNum}</span>
+                            <span className="text-base font-bold mt-0.5 leading-none">{d.dayNum}</span>
                             <span className="text-[9px] font-bold opacity-75 mt-1">{d.month}</span>
                           </button>
                         );
                       })}
                     </div>
                     {dateAlert && (
-                      <div className="flex items-center gap-2 p-2.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs rounded-xl mt-2">
+                      <div className="flex items-center gap-2 p-2.5 bg-[#8C4B3E]/20 border border-[#8C4B3E]/40 text-[#8C4B3E] text-xs rounded-xl mt-2 font-bold">
                         <AlertCircle className="h-4 w-4 shrink-0" />
-                        <span className="font-bold">Please select a booking date to proceed.</span>
+                        <span>Please select a booking date to proceed.</span>
                       </div>
                     )}
                   </div>
 
                   {/* Time slots scheduler */}
                   <div className="space-y-3 pt-2">
-                    <span className="text-[11px] font-extrabold text-[#7A7266] uppercase tracking-wider block">Available Time Slots</span>
+                    <span className="text-[11px] font-bold text-[#7A7266] uppercase tracking-wider block">Available Time Slots</span>
 
                     <div className="space-y-3">
                       {Object.entries(timeSlots).map(([groupName, slots]) => (
                         <div key={groupName} className="space-y-1.5">
-                          <span className="text-[10px] font-extrabold text-[#7A7266] tracking-wider block uppercase">{groupName}</span>
+                          <span className="text-[10px] font-bold text-[#7A7266] tracking-wider block uppercase">{groupName}</span>
                           <div className="grid grid-cols-3 gap-2">
                             {slots.map((slot) => {
                               const isSelected = selectedTimeSlot === slot;
@@ -549,8 +525,8 @@ export default function Booking() {
                                     setTimeAlert(false);
                                   }}
                                   className={`py-2 text-xs font-bold text-center border rounded-xl transition-all cursor-pointer ${isSelected
-                                      ? "bg-[#8C4B3E] border-violet-950 text-white shadow-xs"
-                                      : "bg-white border-[#5A5146]/20 text-slate-655 hover:bg-[#FAF6F0] hover:border-stone-300"
+                                      ? "bg-[#C9A46A] border-[#E8DCC3] text-white shadow-2xs"
+                                      : "bg-white border-[#E8DCC3] text-[#5A5146] hover:bg-[#FAF6F0]"
                                     }`}
                                 >
                                   {slot}
@@ -562,9 +538,9 @@ export default function Booking() {
                       ))}
                     </div>
                     {timeAlert && (
-                      <div className="flex items-center gap-2 p-2.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs rounded-xl mt-2">
+                      <div className="flex items-center gap-2 p-2.5 bg-[#8C4B3E]/20 border border-[#8C4B3E]/40 text-[#8C4B3E] text-xs rounded-xl mt-2 font-bold">
                         <AlertCircle className="h-4 w-4 shrink-0" />
-                        <span className="font-bold">Please select a time slot to proceed.</span>
+                        <span>Please select a time slot to proceed.</span>
                       </div>
                     )}
                   </div>
@@ -573,10 +549,10 @@ export default function Booking() {
               </Card>
 
               {/* CUSTOMER DETAILS FORM */}
-              <Card className="border border-[#5A5146]/20 shadow-sm bg-white">
+              <Card className="border border-[#E8DCC3] shadow-2xs bg-white">
                 <CardHeader className="p-5 pb-3">
                   <CardTitle className="text-sm font-bold text-[#1F1D1A] flex items-center gap-1.5">
-                    <User className="h-4.5 w-4.5 text-[#1F1D1A]" /> Service Address & Customer Details
+                    <User className="h-4.5 w-4.5 text-[#C9A46A]" /> Service Address & Customer Details
                   </CardTitle>
                   <CardDescription className="text-xs text-[#7A7266]">Please fill in where the service professional should be dispatched.</CardDescription>
                 </CardHeader>
@@ -585,7 +561,7 @@ export default function Booking() {
                   {/* Grid for Name, Email, Phone */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <Label htmlFor="fullName" className="text-xs font-bold text-[#8C4B3E]">Contact Full Name</Label>
+                      <Label htmlFor="fullName" className="text-xs font-bold text-[#1F1D1A]">Contact Full Name</Label>
                       <Input
                         id="fullName"
                         name="fullName"
@@ -593,13 +569,13 @@ export default function Booking() {
                         value={formData.fullName}
                         onChange={handleInputChange}
                         placeholder="e.g. Sarah Connor"
-                        className={`h-10 rounded-xl border-[#5A5146]/20 focus-visible:ring-violet-950 ${formErrors.fullName ? "border-rose-400" : ""}`}
+                        className={`h-10 rounded-xl border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] text-xs bg-white text-[#1F1D1A] ${formErrors.fullName ? "border-[#8C4B3E]" : ""}`}
                       />
-                      {formErrors.fullName && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.fullName}</p>}
+                      {formErrors.fullName && <p className="text-[10px] font-bold text-[#8C4B3E] mt-0.5">{formErrors.fullName}</p>}
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="email" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
+                      <Label htmlFor="email" className="text-xs font-bold text-[#1F1D1A]">Email Address</Label>
                       <Input
                         id="email"
                         name="email"
@@ -607,15 +583,15 @@ export default function Booking() {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="e.g. name@example.com"
-                        className={`h-10 rounded-xl border-[#5A5146]/20 focus-visible:ring-violet-950 ${formErrors.email ? "border-rose-400" : ""}`}
+                        className={`h-10 rounded-xl border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] text-xs bg-white text-[#1F1D1A] ${formErrors.email ? "border-[#8C4B3E]" : ""}`}
                       />
-                      {formErrors.email && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.email}</p>}
+                      {formErrors.email && <p className="text-[10px] font-bold text-[#8C4B3E] mt-0.5">{formErrors.email}</p>}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <Label htmlFor="phone" className="text-xs font-bold text-[#8C4B3E]">Phone Number</Label>
+                      <Label htmlFor="phone" className="text-xs font-bold text-[#1F1D1A]">Phone Number</Label>
                       <Input
                         id="phone"
                         name="phone"
@@ -623,13 +599,13 @@ export default function Booking() {
                         value={formData.phone}
                         onChange={handleInputChange}
                         placeholder="e.g. 555-555-5555"
-                        className={`h-10 rounded-xl border-[#5A5146]/20 focus-visible:ring-violet-950 ${formErrors.phone ? "border-rose-400" : ""}`}
+                        className={`h-10 rounded-xl border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] text-xs bg-white text-[#1F1D1A] ${formErrors.phone ? "border-[#8C4B3E]" : ""}`}
                       />
-                      {formErrors.phone && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.phone}</p>}
+                      {formErrors.phone && <p className="text-[10px] font-bold text-[#8C4B3E] mt-0.5">{formErrors.phone}</p>}
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="street" className="text-xs font-bold text-[#8C4B3E]">Street Address</Label>
+                      <Label htmlFor="street" className="text-xs font-bold text-[#1F1D1A]">Street Address</Label>
                       <Input
                         id="street"
                         name="street"
@@ -637,16 +613,16 @@ export default function Booking() {
                         value={formData.street}
                         onChange={handleInputChange}
                         placeholder="e.g. 123 Main St, Apt 4B"
-                        className={`h-10 rounded-xl border-[#5A5146]/20 focus-visible:ring-violet-950 ${formErrors.street ? "border-rose-400" : ""}`}
+                        className={`h-10 rounded-xl border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] text-xs bg-white text-[#1F1D1A] ${formErrors.street ? "border-[#8C4B3E]" : ""}`}
                       />
-                      {formErrors.street && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.street}</p>}
+                      {formErrors.street && <p className="text-[10px] font-bold text-[#8C4B3E] mt-0.5">{formErrors.street}</p>}
                     </div>
                   </div>
 
                   {/* City, State, Zip */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-1.5">
-                      <Label htmlFor="city" className="text-xs font-bold text-[#8C4B3E]">City</Label>
+                      <Label htmlFor="city" className="text-xs font-bold text-[#1F1D1A]">City</Label>
                       <Input
                         id="city"
                         name="city"
@@ -654,13 +630,13 @@ export default function Booking() {
                         value={formData.city}
                         onChange={handleInputChange}
                         placeholder="e.g. Brooklyn"
-                        className={`h-10 rounded-xl border-[#5A5146]/20 focus-visible:ring-violet-950 ${formErrors.city ? "border-rose-400" : ""}`}
+                        className={`h-10 rounded-xl border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] text-xs bg-white text-[#1F1D1A] ${formErrors.city ? "border-[#8C4B3E]" : ""}`}
                       />
-                      {formErrors.city && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.city}</p>}
+                      {formErrors.city && <p className="text-[10px] font-bold text-[#8C4B3E] mt-0.5">{formErrors.city}</p>}
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="state" className="text-xs font-bold text-[#8C4B3E]">State</Label>
+                      <Label htmlFor="state" className="text-xs font-bold text-[#1F1D1A]">State</Label>
                       <Input
                         id="state"
                         name="state"
@@ -668,13 +644,13 @@ export default function Booking() {
                         value={formData.state}
                         onChange={handleInputChange}
                         placeholder="e.g. NY"
-                        className={`h-10 rounded-xl border-[#5A5146]/20 focus-visible:ring-violet-950 ${formErrors.state ? "border-rose-400" : ""}`}
+                        className={`h-10 rounded-xl border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] text-xs bg-white text-[#1F1D1A] ${formErrors.state ? "border-[#8C4B3E]" : ""}`}
                       />
-                      {formErrors.state && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.state}</p>}
+                      {formErrors.state && <p className="text-[10px] font-bold text-[#8C4B3E] mt-0.5">{formErrors.state}</p>}
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="zipCode" className="text-xs font-bold text-[#8C4B3E]">ZIP Code</Label>
+                      <Label htmlFor="zipCode" className="text-xs font-bold text-[#1F1D1A]">ZIP Code</Label>
                       <Input
                         id="zipCode"
                         name="zipCode"
@@ -683,9 +659,9 @@ export default function Booking() {
                         onChange={handleInputChange}
                         placeholder="e.g. 400001"
                         maxLength={6}
-                        className={`h-10 rounded-xl border-[#5A5146]/20 focus-visible:ring-violet-950 ${formErrors.zipCode ? "border-rose-400" : ""}`}
+                        className={`h-10 rounded-xl border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] text-xs bg-white text-[#1F1D1A] ${formErrors.zipCode ? "border-[#8C4B3E]" : ""}`}
                       />
-                      {formErrors.zipCode && <p className="text-[10px] font-semibold text-rose-600 mt-0.5">{formErrors.zipCode}</p>}
+                      {formErrors.zipCode && <p className="text-[10px] font-bold text-[#8C4B3E] mt-0.5">{formErrors.zipCode}</p>}
                     </div>
                   </div>
 
@@ -697,8 +673,8 @@ export default function Booking() {
             {/* RIGHT COLUMN: BOOKING SUMMARY SIDEBAR (STICKY) */}
             <div className="lg:col-span-4 lg:sticky lg:top-6 space-y-6">
 
-              <Card className="border border-[#5A5146]/20 shadow-md bg-white">
-                <CardHeader className="p-5 pb-3 border-b border-stone-50 bg-[#FAF6F0]">
+              <Card className="border border-[#E8DCC3] shadow-2xs bg-white">
+                <CardHeader className="p-5 pb-3 border-b border-[#E8DCC3] bg-[#F0E7D5]">
                   <CardTitle className="text-sm font-bold text-[#1F1D1A]">Booking Summary</CardTitle>
                 </CardHeader>
                 <CardContent className="p-5 space-y-5">
@@ -718,19 +694,19 @@ export default function Booking() {
 
                     <div className="flex justify-between items-center">
                       <span className="text-[#7A7266] font-medium">Selected Plan</span>
-                      <span className="font-bold text-[#1F1D1A] bg-[#F0E7D5] px-2 py-0.5 rounded-md">{selectedPlan?.name || "Standard"}</span>
+                      <span className="font-bold text-[#C9A46A] bg-[#F0E7D5] px-2 py-0.5 rounded-md border border-[#E8DCC3]">{selectedPlan?.name || "Standard"}</span>
                     </div>
 
-                    <div className="flex justify-between items-center border-t border-[#5A5146]/15 pt-3">
+                    <div className="flex justify-between items-center border-t border-[#E8DCC3] pt-3">
                       <span className="text-[#7A7266] font-medium flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5 text-[#7A7266]" /> Date</span>
-                      <span className={`font-bold ${selectedDate ? "text-[#1F1D1A]" : "text-rose-500 font-semibold"}`}>
+                      <span className={`font-bold ${selectedDate ? "text-[#1F1D1A]" : "text-[#8C4B3E]"}`}>
                         {selectedDate || "Not selected"}
                       </span>
                     </div>
 
                     <div className="flex justify-between items-center">
                       <span className="text-[#7A7266] font-medium flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-[#7A7266]" /> Time Slot</span>
-                      <span className={`font-bold ${selectedTimeSlot ? "text-[#1F1D1A]" : "text-rose-500 font-semibold"}`}>
+                      <span className={`font-bold ${selectedTimeSlot ? "text-[#1F1D1A]" : "text-[#8C4B3E]"}`}>
                         {selectedTimeSlot || "Not selected"}
                       </span>
                     </div>
@@ -738,8 +714,8 @@ export default function Booking() {
                   </div>
 
                   {/* Price breakdown */}
-                  <div className="border-t border-[#5A5146]/20 pt-4 space-y-2.5">
-                    <span className="text-[10px] font-extrabold text-[#7A7266] uppercase tracking-wider block">Price Breakdown</span>
+                  <div className="border-t border-[#E8DCC3] pt-4 space-y-2.5">
+                    <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Price Breakdown</span>
 
                     <div className="flex justify-between text-xs">
                       <span className="text-[#7A7266] font-medium">Base Package Price</span>
@@ -756,18 +732,18 @@ export default function Booking() {
                       <span className="font-bold text-[#1F1D1A]">${tax.toFixed(2)}</span>
                     </div>
 
-                    <div className="flex justify-between text-sm border-t border-[#5A5146]/20 pt-3 mt-1.5">
-                      <span className="font-extrabold text-[#1F1D1A]">Total Amount</span>
-                      <span className="font-black text-[#1F1D1A] text-base">${total.toFixed(2)}</span>
+                    <div className="flex justify-between text-sm border-t border-[#E8DCC3] pt-3 mt-1.5">
+                      <span className="font-bold text-[#1F1D1A]">Total Amount</span>
+                      <span className="font-bold text-[#1F1D1A] text-base">${total.toFixed(2)}</span>
                     </div>
                   </div>
 
                   {/* Guarantee banner */}
-                  <div className="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5 flex items-start gap-2.5">
-                    <ShieldCheck className="h-4.5 w-4.5 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="bg-[#7DAB7D]/10 border border-[#7DAB7D]/30 rounded-xl p-3.5 flex items-start gap-2.5">
+                    <ShieldCheck className="h-4.5 w-4.5 text-[#2B522B] shrink-0 mt-0.5" />
                     <div>
-                      <span className="text-[10.5px] font-black text-emerald-800 block leading-tight">Happiness Guarantee Active</span>
-                      <p className="text-[9.5px] text-emerald-600 leading-tight mt-0.5">Your satisfaction is backed by our customer support. Secure payment authorization holds apply.</p>
+                      <span className="text-[11px] font-bold text-[#2B522B] block leading-tight">Happiness Guarantee Active</span>
+                      <p className="text-[10px] text-[#2B522B]/80 leading-tight mt-0.5 font-medium">Your satisfaction is backed by our customer support. Secure payment authorization holds apply.</p>
                     </div>
                   </div>
 
@@ -775,11 +751,11 @@ export default function Booking() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white rounded-xl h-11 font-bold shadow-md cursor-pointer flex items-center justify-center gap-1.5 transition-all active:scale-[0.99] disabled:opacity-50"
+                    className="w-full bg-[#C9A46A] hover:bg-[#b89359] text-white rounded-xl h-11 font-bold shadow-2xs border border-[#E8DCC3] cursor-pointer flex items-center justify-center gap-1.5 transition-all disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="h-4 w-4 animate-spin" /> Scheduling...
+                        <Loader2 className="h-4 w-4 animate-spin text-white" /> Scheduling...
                       </>
                     ) : (
                       <>
