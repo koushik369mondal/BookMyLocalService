@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { providerMenu } from "../../config/navigationConfig";
 
-export default function ProviderSidebar({ collapsed }) {
+export default function ProviderSidebar({ collapsed, onNavigate }) {
   const { logout, user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ export default function ProviderSidebar({ collapsed }) {
 
   const handleLogout = (e) => {
     e.preventDefault();
+    onNavigate?.();
     logout();
     navigate("/");
   };
@@ -37,7 +38,7 @@ export default function ProviderSidebar({ collapsed }) {
   return (
     <div className="flex flex-col h-full bg-[#F0E7D5] border-r border-[#E8DCC3] w-full">
       {/* Header Profile Section */}
-      <div className={`p-4 border-b border-[#E8DCC3] flex flex-col items-center text-center transition-all ${collapsed ? "py-5 px-2" : "p-6"}`}>
+      <div className={`p-4 border-b border-[#E8DCC3] flex flex-col items-center text-center transition-all shrink-0 ${collapsed ? "py-5 px-2" : "p-6"}`}>
         <div className={`rounded-xl overflow-hidden border border-[#E8DCC3] shadow-2xs bg-[#FAF6F0] flex items-center justify-center font-bold text-[#C9A46A] transition-all ${
           collapsed ? "h-10 w-10 mb-0" : "h-14 w-14 mb-3"
         }`}>
@@ -58,7 +59,7 @@ export default function ProviderSidebar({ collapsed }) {
       </div>
 
       {/* Navigation List */}
-      <nav className={`flex-1 py-5 space-y-1.5 overflow-y-auto transition-all ${collapsed ? "px-2" : "px-3.5"}`}>
+      <nav className={`flex-1 py-4 space-y-1.5 overflow-y-auto transition-all ${collapsed ? "px-2" : "px-3.5"}`}>
         {providerMenu.map((item, idx) => {
           const Icon = item.icon;
           const active = isItemActive(item);
@@ -68,7 +69,7 @@ export default function ProviderSidebar({ collapsed }) {
               <button
                 key={idx}
                 onClick={handleLogout}
-                className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#8C4B3E] hover:bg-[#FAF6F0] transition-all text-left ${
+                className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#8C4B3E] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer ${
                   collapsed ? "justify-center px-0" : "px-3.5"
                 }`}
                 title={collapsed ? item.label : undefined}
@@ -85,6 +86,7 @@ export default function ProviderSidebar({ collapsed }) {
             <Link
               key={idx}
               to={destination}
+              onClick={() => onNavigate?.()}
               className={`flex items-center gap-3 text-xs font-bold py-3 rounded-xl transition-all ${
                 collapsed ? "justify-center px-0" : "px-3.5"
               } ${

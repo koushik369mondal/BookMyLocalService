@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -13,11 +13,9 @@ import {
   Settings,
   LayoutDashboard,
   ChevronDown,
-  X,
   Sparkles,
   CheckCircle2,
   Clock,
-  ArrowRight,
   ShieldCheck,
   Check
 } from "lucide-react";
@@ -34,10 +32,10 @@ const navLinks = [
 ];
 
 const mockNotifications = [
-  { id: 1, title: "Booking Confirmed", desc: "Deep Home Cleaning scheduled for Tomorrow at 10:30 AM", time: "5 mins ago", icon: CheckCircle2, iconColor: "text-emerald-400 bg-emerald-500/10", unread: true },
-  { id: 2, title: "Specialist Assigned", desc: "Sarah Jenkins accepted your dispatch request in Brooklyn", time: "1 hour ago", icon: ShieldCheck, iconColor: "text-blue-400 bg-blue-500/10", unread: true },
-  { id: 3, title: "Payment Received", desc: "Receipt of $55.00 generated for Window Washing", time: "3 hours ago", icon: Sparkles, iconColor: "text-[#8C4B3E] bg-[#C9A46A]/20", unread: true },
-  { id: 4, title: "Rate Your Service", desc: "Share your feedback for Sofa & Carpet Sanitization", time: "1 day ago", icon: Clock, iconColor: "text-purple-400 bg-purple-500/10", unread: false }
+  { id: 1, title: "Booking Confirmed", desc: "Deep Home Cleaning scheduled for Tomorrow at 10:30 AM", time: "5 mins ago", icon: CheckCircle2, iconColor: "text-[#2B522B] bg-[#7DAB7D]/20", unread: true },
+  { id: 2, title: "Specialist Assigned", desc: "Sarah Jenkins accepted your dispatch request in Brooklyn", time: "1 hour ago", icon: ShieldCheck, iconColor: "text-[#C9A46A] bg-[#F0E7D5]", unread: true },
+  { id: 3, title: "Payment Received", desc: "Receipt of $55.00 generated for Window Washing", time: "3 hours ago", icon: Sparkles, iconColor: "text-[#8C4B3E] bg-[#8C4B3E]/20", unread: true },
+  { id: 4, title: "Rate Your Service", desc: "Share your feedback for Sofa & Carpet Sanitization", time: "1 day ago", icon: Clock, iconColor: "text-[#5A5146] bg-[#FAF6F0]", unread: false }
 ];
 
 export default function Navbar() {
@@ -47,7 +45,6 @@ export default function Navbar() {
   // State management
   const [showDropdown, setShowDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const [showAnnouncementBar, setShowAnnouncementBar] = useState(true);
   const [notificationsList, setNotificationsList] = useState(mockNotifications);
 
   const dropdownRef = useRef(null);
@@ -80,31 +77,6 @@ export default function Navbar() {
 
   return (
     <div className="sticky top-0 z-50 w-full font-sans">
-
-      {/* TOP DUMMY ANNOUNCEMENT NOTIFICATION BAR */}
-      {/* {showAnnouncementBar && (
-        <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-[#1F1D1A] px-4 py-2 text-xs font-bold flex items-center justify-between shadow-xs transition-all duration-300 relative z-55">
-          <div className="flex-1 flex items-center justify-center gap-2 text-center">
-            <span className="bg-[#8C4B3E] text-[#8C4B3E] text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-md shrink-0">
-              Limited Offer
-            </span>
-            <span className="truncate">
-              🎉 Get <strong>20% OFF</strong> your first service booking! Use code <code className="bg-[#8C4B3E]/20 px-1.5 py-0.5 rounded font-mono font-extrabold">LOCAL20</code> at checkout.
-            </span>
-            <NavLink to="/services" className="underline hover:text-white transition-colors shrink-0 hidden sm:inline-flex items-center gap-0.5">
-              Book Now <ArrowRight className="h-3 w-3 inline" />
-            </NavLink>
-          </div>
-          <button
-            onClick={() => setShowAnnouncementBar(false)}
-            className="text-[#1F1D1A]/70 hover:text-[#1F1D1A] p-1 rounded-md transition-colors shrink-0 ml-2"
-            title="Dismiss Announcement"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-      )} */}
-
       <header className="w-full border-b border-[#E8DCC3] bg-[#F0E7D5] shadow-2xs text-[#1F1D1A] transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[72px] flex items-center justify-between gap-4 lg:gap-6">
 
@@ -156,7 +128,7 @@ export default function Navbar() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="relative hover:bg-[#F0E7D5] text-[#5A5146] hover:text-[#1F1D1A] rounded-xl h-[44px] w-[44px] lg:h-[48px] lg:w-[48px] transition-all duration-200 shrink-0"
+                className="relative hover:bg-[#F0E7D5] text-[#5A5146] hover:text-[#1F1D1A] rounded-xl h-[44px] w-[44px] lg:h-[48px] lg:w-[48px] transition-all duration-200 shrink-0 cursor-pointer"
                 title="Notifications"
               >
                 <Bell className="h-5 w-5 text-[#5A5146] hover:text-[#C9A46A] transition-colors" />
@@ -184,7 +156,7 @@ export default function Navbar() {
                     {unreadCount > 0 && (
                       <button
                         onClick={handleMarkAllRead}
-                        className="text-[11px] text-[#8C4B3E] hover:underline font-semibold flex items-center gap-1"
+                        className="text-[11px] text-[#8C4B3E] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
                       >
                         <Check className="h-3 w-3" /> Mark all read
                       </button>
@@ -240,7 +212,7 @@ export default function Navbar() {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-[#F0E7D5] focus:outline-none transition-all duration-200 border border-transparent hover:border-[#E8DCC3]"
+                  className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-[#F0E7D5] focus:outline-none transition-all duration-200 border border-transparent hover:border-[#E8DCC3] cursor-pointer"
                 >
                   <div className="h-9 w-9 lg:h-10 lg:w-10 rounded-xl overflow-hidden border border-[#E8DCC3] bg-[#F0E7D5] flex items-center justify-center font-bold text-xs lg:text-sm text-[#C9A46A] shadow-2xs shrink-0">
                     {user.avatar ? (
@@ -290,7 +262,7 @@ export default function Navbar() {
                     <hr className="my-1.5 border-[#E8DCC3]" />
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-rose-50 text-[#8C4B3E] transition-colors duration-150 text-left font-bold"
+                      className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#8C4B3E]/10 text-[#8C4B3E] transition-colors duration-150 text-left font-bold cursor-pointer"
                     >
                       <LogOut className="h-4 w-4" /> Logout
                     </button>
@@ -304,7 +276,7 @@ export default function Navbar() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-[#5A5146] hover:text-[#C9A46A] hover:bg-[#F0E7D5] h-[44px] px-4 rounded-xl text-sm font-semibold transition-all duration-200"
+                    className="text-[#5A5146] hover:text-[#C9A46A] hover:bg-[#F0E7D5] h-[44px] px-4 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer"
                   >
                     Login
                   </Button>
@@ -312,7 +284,7 @@ export default function Navbar() {
                 <NavLink to="/register">
                   <Button
                     size="sm"
-                    className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold h-[44px] px-5 rounded-xl text-sm transition-all duration-200 border border-[#E8DCC3]"
+                    className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold h-[44px] px-5 rounded-xl text-sm transition-all duration-200 border border-[#E8DCC3] cursor-pointer"
                   >
                     Sign Up
                   </Button>
@@ -321,14 +293,14 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile Navigation controls */}
+          {/* Mobile Navigation Controls */}
           <div className="flex lg:hidden items-center gap-2">
             {/* Mobile Notifications Bell */}
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setShowNotifications(!showNotifications)}
-              className="relative hover:bg-[#F0E7D5] text-[#5A5146] rounded-xl h-10 w-10 transition-colors"
+              className="relative hover:bg-[#F0E7D5] text-[#5A5146] rounded-xl h-10 w-10 transition-colors cursor-pointer"
             >
               <Bell className="h-5 w-5 text-[#7A7266]" />
               {unreadCount > 0 && (
@@ -339,116 +311,123 @@ export default function Navbar() {
             {/* Mobile Hamburger Drawer */}
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-xl hover:bg-[#F0E7D5] h-10 w-10 transition-colors">
+                <Button variant="ghost" size="icon" className="rounded-xl hover:bg-[#F0E7D5] h-10 w-10 transition-colors cursor-pointer" title="Open Menu">
                   <Menu className="h-6 w-6 text-[#1F1D1A]" />
                 </Button>
               </DialogTrigger>
 
-              <DialogContent className="fixed right-0 top-0 bottom-0 left-auto h-full w-80 max-w-[85vw] translate-x-0 translate-y-0 rounded-none border-y-0 border-r-0 border-l border-[#E8DCC3] p-6 bg-[#FAF6F0] shadow-2xl flex flex-col gap-6 z-50 transition-all duration-300 text-[#5A5146]">
+              <DialogContent className="fixed right-0 top-0 bottom-0 inset-y-0 h-full h-screen w-[85vw] max-w-[320px] translate-x-0 translate-y-0 rounded-none border-y-0 border-r-0 border-l border-[#E8DCC3] p-0 bg-[#FAF6F0] shadow-2xl flex flex-col z-50 transition-all duration-300 text-[#5A5146] overflow-hidden">
 
-                <DialogHeader className="flex flex-row items-center justify-between border-b border-[#E8DCC3] pb-4">
-                  <DialogTitle className="flex items-center gap-2.5">
+                {/* Header with logo & title */}
+                <div className="p-4 sm:p-5 border-b border-[#E8DCC3] flex items-center justify-between shrink-0 bg-[#F0E7D5] pr-12">
+                  <div className="flex items-center gap-2.5">
                     <img
                       src="/logo.png"
                       alt="BookMyLocalService Logo"
                       className="h-8 w-auto object-contain"
                     />
-                    <span className="font-bold text-lg text-[#1F1D1A]">
+                    <span className="font-bold text-base text-[#1F1D1A]">
                       BookMyLocal<span className="text-[#C9A46A]">Service</span>
                     </span>
-                  </DialogTitle>
-                </DialogHeader>
-
-                {/* Mobile Search */}
-                <div className="relative w-full">
-                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A7266] pointer-events-none" />
-                  <Input
-                    type="search"
-                    placeholder="Search services..."
-                    className="pl-10 h-11 w-full bg-[#FAF6F0] border-[#E8DCC3] text-[#1F1D1A] placeholder:text-[#7A7266] focus:border-[#C9A46A] rounded-xl text-sm"
-                  />
+                  </div>
                 </div>
 
-                {/* Mobile Menu Links */}
-                <nav className="flex flex-col gap-2 py-2 flex-1 overflow-y-auto">
-                  {navLinks.map((link) => (
-                    <DialogClose asChild key={link.path}>
-                      <NavLink
-                        to={link.path}
-                        className={({ isActive }) => cn(
-                          "text-base font-semibold py-2.5 px-3.5 rounded-xl transition-all duration-200",
-                          isActive
-                            ? "bg-[#F0E7D5] text-[#C9A46A] font-bold"
-                            : "text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#1F1D1A]"
-                        )}
-                      >
-                        {link.name}
-                      </NavLink>
-                    </DialogClose>
-                  ))}
-                </nav>
+                {/* Scrollable Container inside Mobile Drawer */}
+                <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-5">
+                  {/* Mobile Search */}
+                  <div className="relative w-full">
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A7266] pointer-events-none" />
+                    <Input
+                      type="search"
+                      placeholder="Search services..."
+                      className="pl-10 h-10 w-full bg-white border-[#E8DCC3] text-[#1F1D1A] placeholder:text-[#7A7266] focus:border-[#C9A46A] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 rounded-xl text-xs"
+                    />
+                  </div>
 
-                {/* Mobile Action Buttons / Profile */}
-                <div className="border-t border-[#E8DCC3] pt-4 flex flex-col gap-2 shrink-0">
-                  {user ? (
-                    <>
-                      <div className="flex items-center gap-3 px-3 py-2 border-b border-[#E8DCC3] pb-4 mb-2">
-                        <div className="h-10 w-10 rounded-xl overflow-hidden border border-[#E8DCC3] bg-[#F0E7D5] flex items-center justify-center font-bold text-sm text-[#C9A46A] shrink-0">
-                          {user.avatar ? (
-                            <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
-                          ) : (
-                            user.fullName[0].toUpperCase()
+                  {/* Mobile Navigation Links */}
+                  <nav className="flex flex-col gap-1 py-1">
+                    {navLinks.map((link) => (
+                      <DialogClose asChild key={link.path}>
+                        <NavLink
+                          to={link.path}
+                          className={({ isActive }) => cn(
+                            "text-xs font-bold py-2.5 px-3 rounded-xl transition-all duration-150 flex items-center justify-between",
+                            isActive
+                              ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                              : "text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#1F1D1A]"
                           )}
-                        </div>
-                        <div>
-                          <span className="block text-sm font-bold text-[#1F1D1A] leading-tight">{user.fullName}</span>
-                          <span className="text-xs text-[#8C4B3E] capitalize block mt-0.5 font-medium">{user.role.toLowerCase()} Account</span>
-                        </div>
-                      </div>
-                      <DialogClose asChild>
-                        <NavLink to="/profile" className="flex items-center gap-2.5 px-3 py-2 text-sm text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
-                          <User className="h-4.5 w-4.5" /> My Profile
+                        >
+                          <span>{link.name}</span>
                         </NavLink>
                       </DialogClose>
-                      <DialogClose asChild>
-                        <NavLink to="/bookings" className="flex items-center gap-2.5 px-3 py-2 text-sm text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
-                          <Calendar className="h-4.5 w-4.5" /> Booking History
-                        </NavLink>
-                      </DialogClose>
-                      {(user.role === "PROVIDER" || user.role === "ADMIN") && (
+                    ))}
+                  </nav>
+
+                  {/* User Profile / Auth Section */}
+                  <div className="border-t border-[#E8DCC3] pt-4 space-y-3 shrink-0">
+                    {user ? (
+                      <>
+                        <div className="flex items-center gap-3 p-3 bg-[#F0E7D5] border border-[#E8DCC3] rounded-2xl">
+                          <div className="h-10 w-10 rounded-xl overflow-hidden border border-[#E8DCC3] bg-white flex items-center justify-center font-bold text-sm text-[#C9A46A] shrink-0">
+                            {user.avatar ? (
+                              <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
+                            ) : (
+                              user.fullName[0].toUpperCase()
+                            )}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <span className="block text-xs font-bold text-[#1F1D1A] truncate">{user.fullName}</span>
+                            <span className="text-[10px] text-[#C9A46A] font-bold uppercase tracking-wider block mt-0.5">{user.role} Account</span>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <DialogClose asChild>
+                            <NavLink to="/profile" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
+                              <User className="h-4 w-4 text-[#7A7266]" /> My Profile
+                            </NavLink>
+                          </DialogClose>
+                          <DialogClose asChild>
+                            <NavLink to="/bookings" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
+                              <Calendar className="h-4 w-4 text-[#7A7266]" /> Booking History
+                            </NavLink>
+                          </DialogClose>
+                          {(user.role === "PROVIDER" || user.role === "ADMIN") && (
+                            <DialogClose asChild>
+                              <NavLink to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"} className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
+                                <LayoutDashboard className="h-4 w-4 text-[#7A7266]" /> Dashboard
+                              </NavLink>
+                            </DialogClose>
+                          )}
+                          <DialogClose asChild>
+                            <button
+                              onClick={handleLogout}
+                              className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-[#8C4B3E] hover:bg-[#8C4B3E]/10 rounded-xl text-left font-bold transition-colors mt-1 cursor-pointer"
+                            >
+                              <LogOut className="h-4 w-4" /> Logout
+                            </button>
+                          </DialogClose>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex flex-col gap-2 pt-1">
                         <DialogClose asChild>
-                          <NavLink to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"} className="flex items-center gap-2.5 px-3 py-2 text-sm text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
-                            <LayoutDashboard className="h-4.5 w-4.5" /> Dashboard
+                          <NavLink to="/login" className="w-full">
+                            <Button variant="outline" className="w-full border-[#E8DCC3] bg-white hover:bg-[#F0E7D5] text-[#1F1D1A] rounded-xl h-10 text-xs font-bold">
+                              Login
+                            </Button>
                           </NavLink>
                         </DialogClose>
-                      )}
-                      <DialogClose asChild>
-                        <button
-                          onClick={handleLogout}
-                          className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-[#8C4B3E] hover:bg-rose-50 rounded-xl text-left mt-2 font-bold transition-colors"
-                        >
-                          <LogOut className="h-4.5 w-4.5" /> Logout
-                        </button>
-                      </DialogClose>
-                    </>
-                  ) : (
-                    <>
-                      <DialogClose asChild>
-                        <NavLink to="/login" className="w-full">
-                          <Button variant="outline" className="w-full border-[#E8DCC3] bg-[#FAF6F0] hover:bg-[#F0E7D5] text-[#1F1D1A] rounded-xl h-11 text-sm font-semibold">
-                            Login
-                          </Button>
-                        </NavLink>
-                      </DialogClose>
-                      <DialogClose asChild>
-                        <NavLink to="/register" className="w-full">
-                          <Button className="w-full bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold rounded-xl h-11 text-sm border border-[#E8DCC3]">
-                            Sign Up
-                          </Button>
-                        </NavLink>
-                      </DialogClose>
-                    </>
-                  )}
+                        <DialogClose asChild>
+                          <NavLink to="/register" className="w-full">
+                            <Button className="w-full bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold rounded-xl h-10 text-xs border border-[#E8DCC3]">
+                              Sign Up
+                            </Button>
+                          </NavLink>
+                        </DialogClose>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
               </DialogContent>
