@@ -4,16 +4,16 @@ import MainLayout from "../../layouts/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
-  Sparkles, 
-  ArrowRight, 
-  Send, 
-  Loader2, 
-  CheckCircle2, 
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Sparkles,
+  ArrowRight,
+  Send,
+  Loader2,
+  CheckCircle2,
   AlertCircle,
   MessageSquare,
   Lock,
@@ -33,7 +33,7 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
-  
+
   // FAQs Accordion State
   const [openFaq, setOpenFaq] = useState(null);
 
@@ -86,7 +86,7 @@ export default function Contact() {
   return (
     <MainLayout>
       <div className="bg-[#FAF6F0] min-h-screen font-sans antialiased text-[#1F1D1A]">
-        
+
         {/* PAGE HEADER */}
         <section className="py-12 bg-white border-b border-[#5A5146]/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-3">
@@ -100,7 +100,7 @@ export default function Contact() {
         </section>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-          
+
           {/* CONTACT INFO GRID */}
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -111,8 +111,8 @@ export default function Contact() {
             ].map((card, idx) => {
               const IconComp = card.icon;
               return (
-                <Card 
-                  key={idx} 
+                <Card
+                  key={idx}
                   className="p-5 gap-0 border border-[#5A5146]/20 flex flex-col h-full bg-white rounded-2xl relative"
                 >
                   <div className={`p-2.5 rounded-xl border self-start ${card.color} mb-3`}>
@@ -131,7 +131,7 @@ export default function Contact() {
 
           {/* TWO-COLUMN FORM & MAP - Equal height alignment via grid items-stretch */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            
+
             {/* Contact Form Column */}
             <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-xs flex flex-col justify-between h-full">
               <div className="flex flex-col gap-5">
@@ -146,7 +146,7 @@ export default function Contact() {
                 </div>
 
                 <form onSubmit={handleFormSubmit} className="space-y-5">
-                  
+
                   {success && (
                     <div className="bg-emerald-50 border border-emerald-100 text-emerald-800 text-xs rounded-xl p-4 flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
@@ -234,8 +234,8 @@ export default function Contact() {
                     ></textarea>
                   </div>
 
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     disabled={loading}
                     className="w-full h-11 bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-bold rounded-xl shadow-xs transition-all flex items-center justify-center gap-2"
                   >
@@ -258,7 +258,7 @@ export default function Contact() {
 
             {/* Google Map Column - Styled precisely to match Form height */}
             <div className="lg:col-span-5 relative border border-gray-100 rounded-2xl overflow-hidden bg-[#F0E7D5] hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full min-h-[450px]">
-              
+
               {/* Mock Map Vector Grid */}
               <div className="absolute inset-0 bg-[#E5E9F0] pointer-events-none overflow-hidden">
                 <div className="absolute top-[20%] left-0 w-full h-[6px] bg-white transform rotate-3"></div>
@@ -307,8 +307,8 @@ export default function Contact() {
               {faqs.map((faq, i) => {
                 const isOpen = openFaq === i;
                 return (
-                  <div 
-                    key={i} 
+                  <div
+                    key={i}
                     className="border border-[#5A5146]/15 rounded-xl overflow-hidden bg-[#FAF6F0] hover:bg-[#FAF6F0] transition-colors"
                   >
                     <button
@@ -334,32 +334,6 @@ export default function Contact() {
           </section>
 
         </div>
-
-        {/* CALL TO ACTION - Mirrored from Home CTA */}
-        <section className="bg-[#0F172A] text-white py-20 px-4 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.05),transparent_40%)] pointer-events-none"></div>
-          
-          <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              Need Immediate Assistance?
-            </h2>
-            <p className="text-[#7A7266] text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-              Our support team is ready to help you. Send a message, schedule a booking, or reach out to verify provider registration.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2 max-w-sm mx-auto sm:max-w-none">
-              <NavLink to="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-12 bg-[#8C4B3E] hover:bg-amber-600 text-[#1F1D1A] font-bold rounded-xl px-8 shadow-md">
-                  Browse Services
-                </Button>
-              </NavLink>
-              <NavLink to="/register?role=PROVIDER" className="w-full sm:w-auto">
-                <Button variant="outline" className="w-full sm:w-auto h-12 border-white/20 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl px-8">
-                  Become a Provider
-                </Button>
-              </NavLink>
-            </div>
-          </div>
-        </section>
 
       </div>
     </MainLayout>

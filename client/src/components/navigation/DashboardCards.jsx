@@ -5,7 +5,6 @@ import {
   CreditCard, 
   DollarSign, 
   Star, 
-  LayoutDashboard, 
   User, 
   Calendar, 
   Heart, 
@@ -20,28 +19,28 @@ export default function DashboardCards({ role }) {
       description: "Set your weekly shift hours, dates, and block calendar holidays.",
       path: "/provider/availability",
       icon: Clock,
-      color: "text-blue-600 bg-blue-50 border-blue-100",
+      color: "text-[#1E4B75] bg-[#5A95C9]/20 border-[#5A95C9]/30",
     },
     {
       title: "Subscription Plan",
       description: "Configure your service tier plans, check billing, and invoices.",
       path: "/provider/subscription",
       icon: CreditCard,
-      color: "text-purple-600 bg-purple-50 border-purple-100",
+      color: "text-[#5A5146] bg-[#F0E7D5] border-[#E8DCC3]",
     },
     {
       title: "Earnings & Payouts",
       description: "Track your income stats, transaction histories, and cashouts.",
       path: "/provider/earnings",
       icon: DollarSign,
-      color: "text-emerald-600 bg-emerald-50 border-emerald-100",
+      color: "text-[#2B522B] bg-[#7DAB7D]/20 border-[#7DAB7D]/30",
     },
     {
       title: "Reviews & Ratings",
       description: "See customer feedback, performance ratings, and comments.",
       path: "/provider/reviews",
       icon: Star,
-      color: "text-[#8C4B3E] bg-amber-50 border-amber-100",
+      color: "text-[#C9A46A] bg-[#C9A46A]/20 border-[#C9A46A]/30",
     },
   ];
 
@@ -51,35 +50,35 @@ export default function DashboardCards({ role }) {
       description: "Configure your personal info, login keys, and address rules.",
       path: "/profile",
       icon: User,
-      color: "text-indigo-600 bg-indigo-50 border-indigo-100",
+      color: "text-[#5A5146] bg-[#F0E7D5] border-[#E8DCC3]",
     },
     {
       title: "Booking History",
       description: "Track your active, past, or cancelled dispatch bookings.",
       path: "/bookings",
       icon: Calendar,
-      color: "text-sky-600 bg-sky-50 border-sky-100",
+      color: "text-[#1E4B75] bg-[#5A95C9]/20 border-[#5A95C9]/30",
     },
     {
       title: "My Favorites",
       description: "Manage your preferred categories and bookmarked local experts.",
       path: "/favorites",
       icon: Heart,
-      color: "text-rose-600 bg-rose-50 border-rose-100",
+      color: "text-[#8C4B3E] bg-[#8C4B3E]/20 border-[#8C4B3E]/30",
     },
     {
       title: "Notifications",
       description: "Manage SMS updates, promo alerts, and dispatch receipts.",
       path: "/notifications",
       icon: Bell,
-      color: "text-[#8C4B3E] bg-amber-50 border-amber-100",
+      color: "text-[#C9A46A] bg-[#C9A46A]/20 border-[#C9A46A]/30",
     },
     {
       title: "Payment Methods",
       description: "Securely link credit cards, bank accounts, or digital wallets.",
       path: "/payment-methods",
       icon: CreditCard,
-      color: "text-emerald-600 bg-emerald-50 border-emerald-100",
+      color: "text-[#2B522B] bg-[#7DAB7D]/20 border-[#7DAB7D]/30",
     },
   ];
 
@@ -93,23 +92,23 @@ export default function DashboardCards({ role }) {
           <Link
             key={idx}
             to={card.path}
-            className="group flex flex-col justify-between border border-[#5A5146]/20 bg-white p-5 rounded-2xl hover:border-stone-400 hover:bg-[#FAF6F0] transition-all duration-200 relative overflow-hidden h-full"
+            className="group flex flex-col justify-between border border-[#E8DCC3] bg-white p-5 rounded-2xl shadow-2xs hover:border-[#C9A46A] hover:bg-[#FAF6F0] transition-all duration-200 relative overflow-hidden h-full"
           >
             <div className="relative z-10 space-y-3">
               <div className={`p-3 rounded-xl border w-fit shrink-0 transition-transform group-hover:scale-105 duration-200 ${card.color}`}>
                 <Icon className="h-5 w-5" />
               </div>
               <div className="space-y-1">
-                <h4 className="font-extrabold text-[#1F1D1A] text-sm leading-tight group-hover:text-[#8C4B3E] transition-colors">
+                <h4 className="font-bold text-[#1F1D1A] text-sm leading-tight group-hover:text-[#C9A46A] transition-colors">
                   {card.title}
                 </h4>
-                <p className="text-xs text-[#7A7266] leading-relaxed font-normal">
+                <p className="text-xs text-[#5A5146] leading-relaxed font-normal">
                   {card.description}
                 </p>
               </div>
             </div>
 
-            <div className="border-t border-[#5A5146]/15 pt-3 mt-4 flex items-center justify-between relative z-10 text-xs font-bold text-[#7A7266] group-hover:text-[#1F1D1A] transition-colors">
+            <div className="border-t border-[#E8DCC3] pt-3 mt-4 flex items-center justify-between relative z-10 text-xs font-bold text-[#7A7266] group-hover:text-[#1F1D1A] transition-colors">
               <span>Access Action</span>
               <ArrowUpRight className="h-4 w-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 text-[#7A7266] group-hover:text-[#C9A46A]" />
             </div>

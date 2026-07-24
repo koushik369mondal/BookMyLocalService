@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { 
   Dialog,
@@ -32,7 +31,6 @@ import {
   Sparkles, 
   MapPin, 
   ArrowUpRight, 
-  ArrowDownRight,
   Info,
   Clock,
   Layers
@@ -152,31 +150,29 @@ export default function ProviderDashboard() {
   const getStatusBadge = (status) => {
     switch (status) {
       case "pending":
-        return <span className="bg-[#C9A46A]/20 text-[#8C4B3E] border border-amber-500/20 font-extrabold rounded-full px-2.5 py-1 text-[10px] uppercase tracking-wider">Pending</span>;
+        return <Badge className="bg-[#C9A46A]/20 text-[#C9A46A] border-[#C9A46A]/30">Pending</Badge>;
       case "confirmed":
-        return <span className="bg-blue-500/10 text-blue-600 border border-blue-500/20 font-extrabold rounded-full px-2.5 py-1 text-[10px] uppercase tracking-wider">Confirmed</span>;
+        return <Badge className="bg-[#5A95C9]/20 text-[#1E4B75] border-[#5A95C9]/30">Confirmed</Badge>;
       case "completed":
-        return <span className="bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 font-extrabold rounded-full px-2.5 py-1 text-[10px] uppercase tracking-wider">Completed</span>;
+        return <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border-[#7DAB7D]/30">Completed</Badge>;
       default:
-        return <span className="bg-rose-500/10 text-rose-600 border border-rose-500/20 font-extrabold rounded-full px-2.5 py-1 text-[10px] uppercase tracking-wider">Cancelled</span>;
+        return <Badge className="bg-[#8C4B3E]/20 text-[#8C4B3E] border-[#8C4B3E]/30">Cancelled</Badge>;
     }
   };
 
   return (
     <DashboardLayout>
-      <div className="bg-[#FAF6F0]/60 min-h-screen pb-16 font-sans">
+      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
-        {/* TOP PATH BANNER */}
-        <section className="bg-gradient-to-r from-violet-950 via-violet-900 to-violet-950 text-white py-12 relative overflow-hidden shadow-md">
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)] pointer-events-none"></div>
-          
+        {/* TOP LIGHT RETRO HEADER BANNER */}
+        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-10 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1.5">
-              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#8C4B3E] uppercase tracking-wider">
-                <Sparkles className="h-3.5 w-3.5 fill-amber-400" /> Provider Operations Portal
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A46A] uppercase tracking-wider">
+                <Sparkles className="h-3.5 w-3.5 fill-[#C9A46A]" /> Provider Operations Portal
               </span>
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Welcome back, Sarah 👋</h1>
-              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Manage dispatch schedules, payouts statistics, rating reviews, and service rates</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#1F1D1A] tracking-tight">Welcome back, Sarah 👋</h1>
+              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Manage dispatch schedules, payout statistics, rating reviews, and service rates</p>
             </div>
             
             {/* Quick Actions Panel */}
@@ -184,12 +180,12 @@ export default function ProviderDashboard() {
               <Button 
                 onClick={() => setIsAddServiceOpen(true)}
                 size="sm" 
-                className="bg-[#8C4B3E] hover:bg-[#C9A46A] text-[#1F1D1A] rounded-xl text-xs font-bold px-5 h-10 shadow-md transition-all hover:scale-[1.02] flex items-center gap-1.5"
+                className="bg-[#C9A46A] hover:bg-[#b89359] text-white rounded-xl text-xs font-bold px-5 h-10 border border-[#E8DCC3] shadow-2xs flex items-center gap-1.5"
               >
                 <Plus className="h-4 w-4" /> Add Catalog Service
               </Button>
               <Link to="/profile">
-                <Button size="sm" className="bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl text-white text-xs font-bold px-5 h-10 backdrop-blur-xs transition-all">
+                <Button size="sm" variant="outline" className="bg-[#FAF6F0] hover:bg-white text-[#1F1D1A] border-[#E8DCC3] rounded-xl text-xs font-bold px-5 h-10 transition-all shadow-2xs">
                   View Profile
                 </Button>
               </Link>
@@ -198,11 +194,11 @@ export default function ProviderDashboard() {
         </section>
 
         {/* OVERVIEW STATS BOARD */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="border border-[#5A5146]/20 bg-white p-5 rounded-2xl shadow-xs space-y-3">
+                <div key={i} className="border border-[#E8DCC3] bg-white p-5 rounded-2xl shadow-2xs space-y-3">
                   <Skeleton className="h-4 w-24 rounded-md" />
                   <Skeleton className="h-8 w-32 rounded-md" />
                   <Skeleton className="h-3 w-20 rounded-md" />
@@ -218,16 +214,16 @@ export default function ProviderDashboard() {
             >
               
               {/* Total Earnings */}
-              <div className="border border-[#5A5146]/20/90 shadow-xs hover:shadow-lg bg-white p-5 rounded-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full group">
+              <div className="border border-[#E8DCC3] shadow-2xs hover:shadow-md bg-white p-5 rounded-2xl transition-all duration-200 flex flex-col justify-between h-full group">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider">Total Earnings</span>
-                  <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-100/60 group-hover:scale-110 transition-transform duration-300">
+                  <div className="p-2.5 bg-[#7DAB7D]/20 text-[#2B522B] rounded-xl border border-[#7DAB7D]/30 group-hover:scale-105 transition-transform duration-200">
                     <DollarSign className="h-5 w-5" />
                   </div>
                 </div>
                 <div className="mt-3">
-                  <div className="text-2xl sm:text-3xl font-black text-[#1F1D1A]">${totalEarnings.toFixed(2)}</div>
-                  <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600 mt-1">
+                  <div className="text-2xl sm:text-3xl font-bold text-[#1F1D1A]">${totalEarnings.toFixed(2)}</div>
+                  <div className="flex items-center gap-1 text-xs font-bold text-[#2B522B] mt-1">
                     <ArrowUpRight className="h-3.5 w-3.5" />
                     <span>+12.4% vs last month</span>
                   </div>
@@ -235,16 +231,16 @@ export default function ProviderDashboard() {
               </div>
 
               {/* Total Bookings */}
-              <div className="border border-[#5A5146]/20/90 shadow-xs hover:shadow-lg bg-white p-5 rounded-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full group">
+              <div className="border border-[#E8DCC3] shadow-2xs hover:shadow-md bg-white p-5 rounded-2xl transition-all duration-200 flex flex-col justify-between h-full group">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider">Total Bookings</span>
-                  <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl border border-blue-100/60 group-hover:scale-110 transition-transform duration-300">
+                  <div className="p-2.5 bg-[#5A95C9]/20 text-[#1E4B75] rounded-xl border border-[#5A95C9]/30 group-hover:scale-105 transition-transform duration-200">
                     <Calendar className="h-5 w-5" />
                   </div>
                 </div>
                 <div className="mt-3">
-                  <div className="text-2xl sm:text-3xl font-black text-[#1F1D1A]">{totalBookingsCount}</div>
-                  <div className="flex items-center gap-1 text-xs font-semibold text-blue-600 mt-1">
+                  <div className="text-2xl sm:text-3xl font-bold text-[#1F1D1A]">{totalBookingsCount}</div>
+                  <div className="flex items-center gap-1 text-xs font-bold text-[#1E4B75] mt-1">
                     <ArrowUpRight className="h-3.5 w-3.5" />
                     <span>+8.1% vs last month</span>
                   </div>
@@ -252,16 +248,16 @@ export default function ProviderDashboard() {
               </div>
 
               {/* Rating Score */}
-              <div className="border border-[#5A5146]/20/90 shadow-xs hover:shadow-lg bg-white p-5 rounded-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full group">
+              <div className="border border-[#E8DCC3] shadow-2xs hover:shadow-md bg-white p-5 rounded-2xl transition-all duration-200 flex flex-col justify-between h-full group">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider">Rating Score</span>
-                  <div className="p-2.5 bg-amber-50 text-[#C9A46A] rounded-xl border border-amber-100/60 group-hover:scale-110 transition-transform duration-300">
-                    <Star className="h-5 w-5 fill-amber-400 text-[#C9A46A]" />
+                  <div className="p-2.5 bg-[#C9A46A]/20 text-[#C9A46A] rounded-xl border border-[#C9A46A]/30 group-hover:scale-105 transition-transform duration-200">
+                    <Star className="h-5 w-5 fill-[#C9A46A] text-[#C9A46A]" />
                   </div>
                 </div>
                 <div className="mt-3">
-                  <div className="text-2xl sm:text-3xl font-black text-[#1F1D1A]">{ratingAvg} <span className="text-xs text-[#7A7266] font-normal">/ 5.0</span></div>
-                  <div className="flex items-center gap-1 text-xs font-semibold text-[#8C4B3E] mt-1">
+                  <div className="text-2xl sm:text-3xl font-bold text-[#1F1D1A]">{ratingAvg} <span className="text-xs text-[#7A7266] font-normal">/ 5.0</span></div>
+                  <div className="flex items-center gap-1 text-xs font-bold text-[#C9A46A] mt-1">
                     <ArrowUpRight className="h-3.5 w-3.5" />
                     <span>+0.2 rating points</span>
                   </div>
@@ -269,16 +265,16 @@ export default function ProviderDashboard() {
               </div>
 
               {/* Active Services */}
-              <div className="border border-[#5A5146]/20/90 shadow-xs hover:shadow-lg bg-white p-5 rounded-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full group">
+              <div className="border border-[#E8DCC3] shadow-2xs hover:shadow-md bg-white p-5 rounded-2xl transition-all duration-200 flex flex-col justify-between h-full group">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider">Active Services</span>
-                  <div className="p-2.5 bg-[#F0E7D5] text-[#1F1D1A] rounded-xl border border-[#5A5146]/15 group-hover:scale-110 transition-transform duration-300">
+                  <div className="p-2.5 bg-[#F0E7D5] text-[#5A5146] rounded-xl border border-[#E8DCC3] group-hover:scale-105 transition-transform duration-200">
                     <Activity className="h-5 w-5" />
                   </div>
                 </div>
                 <div className="mt-3">
-                  <div className="text-2xl sm:text-3xl font-black text-[#1F1D1A]">{services.length}</div>
-                  <div className="flex items-center gap-1 text-xs font-semibold text-[#7A7266] mt-1">
+                  <div className="text-2xl sm:text-3xl font-bold text-[#1F1D1A]">{services.length}</div>
+                  <div className="flex items-center gap-1 text-xs font-bold text-[#7A7266] mt-1">
                     <Layers className="h-3.5 w-3.5 text-[#7A7266]" />
                     <span>Active public catalog</span>
                   </div>
@@ -307,10 +303,10 @@ export default function ProviderDashboard() {
             <div className="lg:col-span-8 space-y-8">
               
               {/* EARNINGS GRAPH CARD */}
-              <div className="border border-[#5A5146]/20 rounded-2xl bg-white p-6">
-                <div className="pb-5 border-b border-[#5A5146]/15 flex flex-row items-center justify-between flex-wrap gap-4">
+              <div className="border border-[#E8DCC3] rounded-2xl bg-white p-6 shadow-2xs">
+                <div className="pb-5 border-b border-[#E8DCC3] flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 bg-[#8C4B3E] text-white rounded-xl shadow-xs">
+                    <div className="p-2.5 bg-[#C9A46A] text-white rounded-xl shadow-2xs">
                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
@@ -319,7 +315,7 @@ export default function ProviderDashboard() {
                     </div>
                   </div>
 
-                  <span className="text-xs font-bold text-[#5A5146] bg-[#F0E7D5] py-1 px-3 rounded-full border border-[#5A5146]/20">
+                  <span className="text-xs font-bold text-[#5A5146] bg-[#F0E7D5] py-1 px-3 rounded-full border border-[#E8DCC3]">
                     Last 6 Months
                   </span>
                 </div>
@@ -330,23 +326,23 @@ export default function ProviderDashboard() {
                     <div className="min-w-[450px] h-[190px] relative">
                       <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-full overflow-visible">
                         {/* Grid lines */}
-                        <line x1="20" y1="20" x2="480" y2="20" stroke="#f1f5f9" strokeWidth="1" />
-                        <line x1="20" y1="65" x2="480" y2="65" stroke="#f1f5f9" strokeWidth="1" />
-                        <line x1="20" y1="110" x2="480" y2="110" stroke="#f1f5f9" strokeWidth="1" />
-                        <line x1="20" y1="145" x2="480" y2="145" stroke="#e2e8f0" strokeWidth="1.5" />
+                        <line x1="20" y1="20" x2="480" y2="20" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="3 3" />
+                        <line x1="20" y1="65" x2="480" y2="65" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="3 3" />
+                        <line x1="20" y1="110" x2="480" y2="110" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="3 3" />
+                        <line x1="20" y1="145" x2="480" y2="145" stroke="#E8DCC3" strokeWidth="1.5" />
 
                         {/* Spline Area Fill */}
                         <path
                           d={`M 20,145 L ${points} L 480,145 Z`}
-                          fill="url(#gradient)"
-                          opacity="0.2"
+                          fill="url(#retro-gradient)"
+                          opacity="0.25"
                         />
 
                         {/* Spline Line */}
                         <polyline
                           fill="none"
-                          stroke="#f59e0b"
-                          strokeWidth="3.5"
+                          stroke="#C9A46A"
+                          strokeWidth="3"
                           points={points}
                           strokeLinecap="round"
                         />
@@ -361,9 +357,9 @@ export default function ProviderDashboard() {
                                 cx={x}
                                 cy={y}
                                 r="5"
-                                fill="#ffffff"
-                                stroke="#f59e0b"
-                                strokeWidth="3"
+                                fill="#FAF6F0"
+                                stroke="#C9A46A"
+                                strokeWidth="2.5"
                                 className="transition-transform group-hover:scale-125"
                               />
                               
@@ -372,7 +368,7 @@ export default function ProviderDashboard() {
                                 x={x}
                                 y={y - 12}
                                 textAnchor="middle"
-                                className="text-[11px] font-extrabold fill-violet-950 bg-white"
+                                className="text-[11px] font-extrabold fill-[#1F1D1A]"
                               >
                                 ${e.amount}
                               </text>
@@ -382,7 +378,7 @@ export default function ProviderDashboard() {
                                 x={x}
                                 y={chartHeight + 14}
                                 textAnchor="middle"
-                                className="text-[11px] font-bold fill-stone-400"
+                                className="text-[11px] font-bold fill-[#7A7266]"
                               >
                                 {e.month}
                               </text>
@@ -392,9 +388,9 @@ export default function ProviderDashboard() {
 
                         {/* Gradients definition */}
                         <defs>
-                          <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stopColor="#f59e0b" />
-                            <stop offset="100%" stopColor="#ffffff" />
+                          <linearGradient id="retro-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#C9A46A" />
+                            <stop offset="100%" stopColor="#FAF6F0" />
                           </linearGradient>
                         </defs>
                       </svg>
@@ -404,15 +400,15 @@ export default function ProviderDashboard() {
               </div>
 
               {/* RECENT BOOKINGS & STATUS CARD */}
-              <div className="border border-[#5A5146]/20 rounded-2xl bg-white p-6">
-                <div className="pb-5 border-b border-[#5A5146]/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="border border-[#E8DCC3] rounded-2xl bg-white p-6 shadow-2xs">
+                <div className="pb-5 border-b border-[#E8DCC3] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <h3 className="text-base font-bold text-[#1F1D1A]">Job Board Requests</h3>
                     <p className="text-xs text-[#7A7266]">Accept, decline, or complete bookings scheduled</p>
                   </div>
 
                   {/* Filter Switcher */}
-                  <div className="flex bg-[#F0E7D5] p-1 rounded-xl h-10 overflow-x-auto shrink-0 border border-[#5A5146]/15">
+                  <div className="flex bg-[#F0E7D5] p-1 rounded-xl h-10 overflow-x-auto shrink-0 border border-[#E8DCC3]">
                     {[
                       { id: "all", label: "All" },
                       { id: "pending", label: "Pending" },
@@ -425,8 +421,8 @@ export default function ProviderDashboard() {
                         onClick={() => setBookingFilter(tab.id)}
                         className={`rounded-lg text-xs font-bold px-3 py-1 transition-all shrink-0 ${
                           bookingFilter === tab.id
-                            ? "bg-white text-[#1F1D1A] shadow-xs border border-[#5A5146]/20"
-                            : "text-[#7A7266] hover:text-[#1F1D1A]"
+                            ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                            : "text-[#5A5146] hover:text-[#1F1D1A]"
                         }`}
                       >
                         {tab.label}
@@ -450,7 +446,7 @@ export default function ProviderDashboard() {
                         size="sm" 
                         variant="outline" 
                         onClick={() => setBookingFilter("all")}
-                        className="rounded-xl border-[#5A5146]/20 text-xs font-semibold h-9 mt-1"
+                        className="rounded-xl border-[#E8DCC3] bg-[#FAF6F0] text-xs font-bold h-9 mt-1"
                       >
                         View All Bookings
                       </Button>
@@ -459,7 +455,7 @@ export default function ProviderDashboard() {
                     <div className="overflow-x-auto">
                       <table className="w-full text-xs text-left">
                         <thead>
-                          <tr className="border-b border-[#5A5146]/15 text-[#7A7266] font-bold uppercase tracking-wider text-[10px]">
+                          <tr className="border-b border-[#E8DCC3] bg-[#F0E7D5]/50 text-[#7A7266] font-bold uppercase tracking-wider text-[10px]">
                             <th className="py-3 px-3">Ref ID</th>
                             <th className="py-3 px-3">Customer</th>
                             <th className="py-3 px-3">Date & Time</th>
@@ -469,20 +465,20 @@ export default function ProviderDashboard() {
                             <th className="py-3 px-3 text-right">Actions</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-stone-100 font-medium text-[#8C4B3E]">
+                        <tbody className="divide-y divide-[#E8DCC3]/60 font-medium text-[#5A5146]">
                           {filteredBookings.map((b) => (
-                            <tr key={b.id} className="hover:bg-[#FAF6F0]/80 transition-colors duration-150">
+                            <tr key={b.id} className="hover:bg-[#FAF6F0] transition-colors duration-150">
                               <td className="py-3.5 px-3 font-bold text-[#1F1D1A]">{b.id}</td>
                               <td className="py-3.5 px-3">
                                 <span className="block text-[#1F1D1A] font-bold">{b.customerName}</span>
                                 <span className="text-[10px] text-[#7A7266] font-medium flex items-center gap-0.5 mt-0.5"><MapPin className="h-3 w-3" /> {b.location}</span>
                               </td>
                               <td className="py-3.5 px-3">
-                                <span className="block font-semibold">{b.date}</span>
+                                <span className="block font-semibold text-[#1F1D1A]">{b.date}</span>
                                 <span className="text-[10px] text-[#7A7266] font-medium">{b.time}</span>
                               </td>
                               <td className="py-3.5 px-3 truncate max-w-[140px] font-semibold text-[#1F1D1A]">{b.serviceName}</td>
-                              <td className="py-3.5 px-3 font-extrabold text-[#1F1D1A]">${b.price.toFixed(2)}</td>
+                              <td className="py-3.5 px-3 font-bold text-[#1F1D1A]">${b.price.toFixed(2)}</td>
                               <td className="py-3.5 px-3">{getStatusBadge(b.status)}</td>
                               <td className="py-3.5 px-3 text-right">
                                 <div className="flex justify-end gap-1.5">
@@ -491,7 +487,7 @@ export default function ProviderDashboard() {
                                       <Button
                                         size="xs"
                                         onClick={() => handleBookingStatus(b.id, "confirmed")}
-                                        className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold h-8 rounded-xl text-xs px-3 shadow-xs"
+                                        className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold h-8 rounded-xl text-xs px-3 shadow-2xs border border-[#E8DCC3]"
                                       >
                                         Accept
                                       </Button>
@@ -499,7 +495,7 @@ export default function ProviderDashboard() {
                                         size="xs"
                                         variant="outline"
                                         onClick={() => handleBookingStatus(b.id, "cancelled")}
-                                        className="border-rose-200 hover:bg-rose-50 text-rose-600 font-semibold h-8 rounded-xl text-xs px-3 bg-white"
+                                        className="border-[#E8DCC3] hover:bg-[#F0E7D5] text-[#8C4B3E] font-bold h-8 rounded-xl text-xs px-3 bg-[#FAF6F0]"
                                       >
                                         Decline
                                       </Button>
@@ -509,18 +505,18 @@ export default function ProviderDashboard() {
                                     <Button
                                       size="xs"
                                       onClick={() => handleBookingStatus(b.id, "completed")}
-                                      className="bg-[#8C4B3E] hover:bg-[#7A3E32] text-white font-semibold h-8 rounded-xl text-xs px-3 shadow-xs"
+                                      className="bg-[#8C4B3E] hover:bg-[#7A3E32] text-white font-bold h-8 rounded-xl text-xs px-3 shadow-2xs border border-[#E8DCC3]"
                                     >
                                       Mark Completed
                                     </Button>
                                   )}
                                   {b.status === "completed" && (
-                                    <span className="text-xs text-emerald-600 font-bold flex items-center gap-1">
+                                    <span className="text-xs text-[#2B522B] font-bold flex items-center gap-1">
                                       <CheckCircle2 className="h-4 w-4" /> Settled
                                     </span>
                                   )}
                                   {b.status === "cancelled" && (
-                                    <span className="text-xs text-rose-500 font-bold flex items-center gap-1">
+                                    <span className="text-xs text-[#8C4B3E] font-bold flex items-center gap-1">
                                       <XCircle className="h-4 w-4" /> Defunct
                                     </span>
                                   )}
@@ -541,27 +537,27 @@ export default function ProviderDashboard() {
             <div className="lg:col-span-4 space-y-8">
               
               {/* PROVIDER PROFILE CARD */}
-              <div className="border border-[#5A5146]/20 rounded-2xl bg-white p-6 space-y-4">
+              <div className="border border-[#E8DCC3] rounded-2xl bg-white p-6 space-y-4 shadow-2xs">
                 <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block">Specialist Profile</span>
                 
-                <div className="flex items-center gap-3.5 p-4 bg-[#FAF6F0]/80 border border-[#5A5146]/20/70 rounded-2xl">
-                  <Avatar className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-white shadow-xs">
+                <div className="flex items-center gap-3.5 p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl">
+                  <Avatar className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-[#E8DCC3] shadow-2xs">
                     <AvatarImage src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80" className="object-cover" />
-                    <AvatarFallback>SJ</AvatarFallback>
+                    <AvatarFallback className="bg-[#F0E7D5] text-[#C9A46A] font-bold">SJ</AvatarFallback>
                   </Avatar>
                   <div>
-                    <span className="bg-[#C9A46A]/20 text-[#8C4B3E] border border-amber-500/20 font-extrabold rounded-full text-[10px] uppercase px-2.5 py-0.5 inline-block">
+                    <Badge variant="mustard" className="text-[9px] mb-1">
                       Verified Specialist
-                    </span>
-                    <h4 className="font-extrabold text-[#1F1D1A] text-sm mt-1 leading-snug">Sarah Jenkins</h4>
+                    </Badge>
+                    <h4 className="font-bold text-[#1F1D1A] text-sm leading-snug">Sarah Jenkins</h4>
                     <p className="text-xs text-[#7A7266] font-medium flex items-center gap-0.5 mt-0.5"><MapPin className="h-3 w-3 text-[#7A7266]" /> Brooklyn, NY</p>
                   </div>
                 </div>
 
-                <div className="space-y-2.5 border-t border-[#5A5146]/15 pt-3.5 text-xs text-[#5A5146] font-medium">
+                <div className="space-y-2.5 border-t border-[#E8DCC3] pt-3.5 text-xs text-[#5A5146] font-medium">
                   <div className="flex justify-between">
                     <span>Active Tier:</span>
-                    <span className="text-[#1F1D1A] flex items-center gap-1 font-bold"><Sparkles className="h-3.5 w-3.5 text-[#C9A46A] fill-amber-400" /> Pro Platinum</span>
+                    <span className="text-[#1F1D1A] flex items-center gap-1 font-bold"><Sparkles className="h-3.5 w-3.5 text-[#C9A46A] fill-[#C9A46A]" /> Pro Platinum</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Completed Jobs:</span>
@@ -569,29 +565,29 @@ export default function ProviderDashboard() {
                   </div>
                   <div className="flex justify-between">
                     <span>Satisfaction Score:</span>
-                    <span className="font-bold text-emerald-600">99% Positive</span>
+                    <span className="font-bold text-[#2B522B]">99% Positive</span>
                   </div>
                 </div>
               </div>
 
               {/* LIVE NOTIFICATIONS / ALERTS */}
-              <div className="border border-[#5A5146]/20 rounded-2xl bg-white p-6">
-                <div className="flex items-center justify-between mb-4 border-b border-[#5A5146]/15 pb-3">
+              <div className="border border-[#E8DCC3] rounded-2xl bg-white p-6 shadow-2xs">
+                <div className="flex items-center justify-between mb-4 border-b border-[#E8DCC3] pb-3">
                   <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider flex items-center gap-1.5">
                     <Bell className="h-4 w-4 text-[#C9A46A]" /> Operations Alerts
                   </span>
-                  <span className="text-[10px] font-bold text-[#7A7266] bg-[#F0E7D5] px-2 py-0.5 rounded-full">Live</span>
+                  <span className="text-[10px] font-bold text-[#5A5146] bg-[#F0E7D5] px-2 py-0.5 rounded-full border border-[#E8DCC3]">Live</span>
                 </div>
 
                 <div className="space-y-3">
                   {alerts.map(alt => (
                     <div key={alt.id} className={`p-3.5 rounded-xl border flex items-start gap-3 transition-colors ${
                       alt.type === "success" 
-                        ? "bg-emerald-50/50 border-emerald-100/80 text-emerald-900"
-                        : "bg-[#FAF6F0] border-[#5A5146]/20 text-[#1F1D1A]"
+                        ? "bg-[#7DAB7D]/10 border-[#7DAB7D]/30 text-[#2B522B]"
+                        : "bg-[#FAF6F0] border-[#E8DCC3] text-[#1F1D1A]"
                     }`}>
                       <CheckCircle2 className={`h-4 w-4 shrink-0 mt-0.5 ${
-                        alt.type === "success" ? "text-emerald-600" : "text-[#1F1D1A]"
+                        alt.type === "success" ? "text-[#2B522B]" : "text-[#1F1D1A]"
                       }`} />
                       <div className="space-y-1 flex-1">
                         <p className="text-xs font-semibold leading-normal">{alt.text}</p>
@@ -605,10 +601,10 @@ export default function ProviderDashboard() {
               </div>
 
               {/* SERVICES MANAGEMENT LISTING */}
-              <div className="border border-[#5A5146]/20 rounded-2xl bg-white p-6 space-y-4">
-                <div className="flex items-center justify-between border-b border-[#5A5146]/15 pb-3">
+              <div className="border border-[#E8DCC3] rounded-2xl bg-white p-6 space-y-4 shadow-2xs">
+                <div className="flex items-center justify-between border-b border-[#E8DCC3] pb-3">
                   <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block">Catalog Services</span>
-                  <span className="text-xs font-bold text-[#7A7266] bg-[#F0E7D5] px-2.5 py-0.5 rounded-full">{services.length} items</span>
+                  <span className="text-xs font-bold text-[#5A5146] bg-[#F0E7D5] px-2.5 py-0.5 rounded-full border border-[#E8DCC3]">{services.length} items</span>
                 </div>
 
                 {services.length === 0 ? (
@@ -618,17 +614,17 @@ export default function ProviderDashboard() {
                 ) : (
                   <div className="space-y-2.5">
                     {services.map(svc => (
-                      <div key={svc.id} className="flex items-center justify-between p-3.5 border border-[#5A5146]/20 rounded-xl bg-[#FAF6F0] hover:bg-white hover:border-stone-300 shadow-2xs group transition-all">
+                      <div key={svc.id} className="flex items-center justify-between p-3.5 border border-[#E8DCC3] rounded-xl bg-[#FAF6F0] hover:bg-white hover:border-[#C9A46A] shadow-2xs group transition-all">
                         <div className="min-w-0">
                           <span className="text-[10px] font-bold text-[#8C4B3E] uppercase tracking-wider block">{svc.category}</span>
                           <h5 className="font-bold text-[#1F1D1A] text-xs truncate mt-0.5">{svc.name}</h5>
-                          <span className="text-xs font-black text-[#1F1D1A] block mt-0.5">${svc.price.toFixed(2)}{svc.type}</span>
+                          <span className="text-xs font-bold text-[#1F1D1A] block mt-0.5">${svc.price.toFixed(2)}{svc.type}</span>
                         </div>
 
                         <button
                           type="button"
                           onClick={() => handleDeleteService(svc.id)}
-                          className="text-[#7A7266] hover:text-rose-600 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-rose-50"
+                          className="text-[#7A7266] hover:text-[#8C4B3E] opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-rose-50"
                           title="Delete Service"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -640,11 +636,11 @@ export default function ProviderDashboard() {
               </div>
 
               {/* RATINGS & REVIEWS SECTION */}
-              <div className="border border-[#5A5146]/20 rounded-2xl bg-white p-6 space-y-4">
-                <div className="flex items-center justify-between border-b border-[#5A5146]/15 pb-3">
+              <div className="border border-[#E8DCC3] rounded-2xl bg-white p-6 space-y-4 shadow-2xs">
+                <div className="flex items-center justify-between border-b border-[#E8DCC3] pb-3">
                   <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block">Recent Reviews</span>
                   <span className="text-xs font-bold text-[#C9A46A] flex items-center gap-1">
-                    <Star className="h-3.5 w-3.5 fill-amber-400" /> 4.9 Average
+                    <Star className="h-3.5 w-3.5 fill-[#C9A46A]" /> 4.9 Average
                   </span>
                 </div>
                 
@@ -656,13 +652,13 @@ export default function ProviderDashboard() {
                         <span className="text-[10px] text-[#7A7266] font-semibold">{rev.date}</span>
                       </div>
                       
-                      <div className="flex items-center gap-0.5 text-[#8C4B3E]">
+                      <div className="flex items-center gap-0.5 text-[#C9A46A]">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-[#8C4B3E]" />
+                          <Star key={i} className="h-3.5 w-3.5 fill-[#C9A46A] text-[#C9A46A]" />
                         ))}
                       </div>
 
-                      <p className="text-xs text-[#5A5146] leading-relaxed font-normal italic bg-[#FAF6F0] p-2.5 rounded-xl border border-[#5A5146]/15">
+                      <p className="text-xs text-[#5A5146] leading-relaxed font-normal italic bg-[#FAF6F0] p-2.5 rounded-xl border border-[#E8DCC3]">
                         "{rev.comment}"
                       </p>
                     </div>
@@ -679,10 +675,10 @@ export default function ProviderDashboard() {
 
       {/* ADD SERVICE DIALOG FORM */}
       <Dialog open={isAddServiceOpen} onOpenChange={setIsAddServiceOpen}>
-        <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
+        <DialogContent className="max-w-md bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl shadow-xl p-6 text-[#1F1D1A]">
           <DialogHeader>
-            <DialogTitle className="text-base font-extrabold text-[#1F1D1A] flex items-center gap-2">
-              <Plus className="h-5 w-5 text-[#1F1D1A]" />
+            <DialogTitle className="text-base font-bold text-[#1F1D1A] flex items-center gap-2">
+              <Plus className="h-5 w-5 text-[#C9A46A]" />
               Add Catalog Service
             </DialogTitle>
             <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
@@ -693,26 +689,26 @@ export default function ProviderDashboard() {
           <form onSubmit={handleAddService} className="space-y-4 pt-3">
             {/* Service Name */}
             <div className="space-y-1.5">
-              <Label htmlFor="svcName" className="text-xs font-bold text-[#8C4B3E]">Service Title</Label>
+              <Label htmlFor="svcName" className="text-xs font-bold text-[#1F1D1A]">Service Title</Label>
               <Input
                 id="svcName"
                 placeholder="e.g. Premium Bathroom Sanitization"
                 value={newServiceName}
                 onChange={(e) => setNewServiceName(e.target.value)}
-                className="h-10 border-[#5A5146]/20 focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:border-amber-500 rounded-xl text-xs bg-white text-[#1F1D1A] placeholder:text-[#7A7266] shadow-2xs"
+                className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A] placeholder:text-[#7A7266] shadow-2xs"
                 required
               />
             </div>
 
             {/* Category Select */}
             <div className="space-y-1.5">
-              <Label htmlFor="svcCategory" className="text-xs font-bold text-[#8C4B3E]">Category Group</Label>
+              <Label htmlFor="svcCategory" className="text-xs font-bold text-[#1F1D1A]">Category Group</Label>
               <div className="relative">
                 <select
                   id="svcCategory"
                   value={newServiceCategory}
                   onChange={(e) => setNewServiceCategory(e.target.value)}
-                  className="w-full h-10 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
+                  className="w-full h-10 pl-3 pr-8 border border-[#E8DCC3] focus:outline-none focus:ring-2 focus:ring-[#C9A46A]/20 focus:border-[#C9A46A] rounded-xl bg-white text-xs font-semibold text-[#1F1D1A] cursor-pointer appearance-none shadow-2xs"
                 >
                   <option value="Home Cleaning">Home Cleaning</option>
                   <option value="Plumbing">Plumbing</option>
@@ -728,14 +724,14 @@ export default function ProviderDashboard() {
 
             {/* Price */}
             <div className="space-y-1.5">
-              <Label htmlFor="svcPrice" className="text-xs font-bold text-[#8C4B3E]">Price Rate ($/hr)</Label>
+              <Label htmlFor="svcPrice" className="text-xs font-bold text-[#1F1D1A]">Price Rate ($/hr)</Label>
               <Input
                 id="svcPrice"
                 type="number"
                 placeholder="e.g. 40"
                 value={newServicePrice}
                 onChange={(e) => setNewServicePrice(e.target.value)}
-                className="h-10 border-[#5A5146]/20 focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:border-amber-500 rounded-xl text-xs bg-white text-[#1F1D1A] placeholder:text-[#7A7266] shadow-2xs"
+                className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A] placeholder:text-[#7A7266] shadow-2xs"
                 required
               />
             </div>
@@ -745,13 +741,13 @@ export default function ProviderDashboard() {
                 type="button" 
                 variant="outline" 
                 onClick={() => setIsAddServiceOpen(false)}
-                className="rounded-xl border-[#5A5146]/20 text-xs h-10 px-6 w-full sm:w-auto hover:bg-[#FAF6F0]"
+                className="rounded-xl border-[#E8DCC3] bg-[#FAF6F0] text-[#5A5146] hover:bg-[#F0E7D5] text-xs h-10 px-6 w-full sm:w-auto"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit" 
-                className="rounded-xl bg-[#8C4B3E] hover:bg-[#7A3E32] text-white font-bold text-xs h-10 px-6 w-full sm:w-auto transition-all shadow-md"
+                className="rounded-xl bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs h-10 px-6 w-full sm:w-auto transition-all border border-[#E8DCC3] shadow-2xs"
               >
                 Add Service
               </Button>

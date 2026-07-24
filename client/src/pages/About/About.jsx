@@ -262,31 +262,6 @@ export default function About() {
           </div>
         </section>
 
-        {/* CALL TO ACTION */}
-        <section className="bg-[#0F172A] text-white py-20 px-4 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.05),transparent_40%)] pointer-events-none"></div>
-          <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              Ready to Book Your Next Service?
-            </h2>
-            <p className="text-[#7A7266] text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-              Find trusted professionals near you within minutes. Compare profiles, schedules, ratings, and book completely online.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2 max-w-sm mx-auto sm:max-w-none">
-              <NavLink to="/services" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-12 bg-[#8C4B3E] hover:bg-amber-600 text-[#1F1D1A] font-bold rounded-xl px-8 shadow-md">
-                  Browse Services
-                </Button>
-              </NavLink>
-              <NavLink to="/register?role=PROVIDER" className="w-full sm:w-auto">
-                <Button variant="outline" className="w-full sm:w-auto h-12 border-white/20 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl px-8">
-                  Become a Provider
-                </Button>
-              </NavLink>
-            </div>
-          </div>
-        </section>
-
       </div>
     </MainLayout>
   );
