@@ -349,137 +349,108 @@ export default function Profile() {
         />
 
         {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Account Settings</h1>
-            <p className="text-slate-300 text-xs sm:text-sm mt-1.5 font-medium">Configure preferences, details, password keys, and delivery locations</p>
+        <section className="bg-slate-900 text-white py-8 border-b border-slate-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">Account Settings</h1>
+            <p className="text-slate-400 text-xs mt-1">Configure your contact details, password, and preferences</p>
           </div>
         </section>
 
         {/* CONTAINER */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
           {/* COMPLETE YOUR PROFILE BANNER */}
           {completionPercent < 100 && (
-            <Card className="border border-amber-200 bg-amber-50/80 shadow-2xs rounded-2xl p-5 mb-8 animate-fade-in">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <Card className="border border-amber-200 bg-amber-50/80 rounded-2xl p-4 mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-start gap-3">
-                  <div className="p-2 bg-amber-100 text-amber-600 rounded-xl shrink-0 mt-0.5">
-                    <AlertCircle className="h-5 w-5" />
+                  <div className="p-1.5 bg-amber-100 text-amber-600 rounded-lg shrink-0 mt-0.5">
+                    <AlertCircle className="h-4.5 w-4.5" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-extrabold text-slate-900">Complete Your Profile</h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      Fill in the missing fields to unlock the full experience: {missingFields.map(f => f.label).join(", ")}
+                    <h3 className="text-xs font-bold text-slate-900">Complete Your Profile</h3>
+                    <p className="text-[11px] text-slate-500 mt-0.5">
+                      Fill in missing fields: {missingFields.map(f => f.label).join(", ")}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 shrink-0">
+                <div className="flex items-center gap-2.5 shrink-0">
                   <span className="text-xs font-black text-amber-700">{completionPercent}%</span>
-                  <Progress value={completionPercent} className="w-28 h-2 rounded-full bg-amber-200 [&>div]:bg-amber-500" />
+                  <Progress value={completionPercent} className="w-24 h-1.5 rounded-full bg-amber-200 [&>div]:bg-amber-500" />
                 </div>
               </div>
             </Card>
           )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div>
             
-            {/* LEFT MENU SIDEBAR */}
-            <div className="lg:col-span-4 space-y-6">
-              
-              {/* Photo Display Card */}
-              <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 text-center">
-                <CardContent className="p-0 flex flex-col items-center gap-4">
+            {successMsg && (
+              <div className="mb-5 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl">
+                <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
+                <span>{successMsg}</span>
+              </div>
+            )}
+
+            {errorMsg && (
+              <div className="mb-5 flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl">
+                <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
+                <span>{errorMsg}</span>
+              </div>
+            )}
+
+            {/* PANEL 1: ACCOUNT DETAILS */}
+            {activeTab === "details" && (
+              <Card className="border border-slate-200 rounded-2xl bg-white p-6">
+              <CardHeader className="p-0 pb-4 border-b border-slate-100 flex flex-row items-center gap-2.5">
+                <div className="p-2 bg-slate-100 text-slate-900 rounded-xl">
+                  <User className="h-5 w-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-base font-extrabold text-slate-900">Personal Information</CardTitle>
+                  <CardDescription className="text-xs">Manage your account profile details and photo</CardDescription>
+                </div>
+              </CardHeader>
+
+              <CardContent className="p-0 pt-5">
+                
+                {/* INTEGRATED AVATAR UPLOAD SECTION */}
+                <div className="flex flex-col sm:flex-row items-center gap-4 pb-5 mb-5 border-b border-slate-100">
                   <div className="relative group cursor-pointer" onClick={handlePhotoClick}>
-                    <Avatar className="w-24 h-24 border-4 border-slate-100 shadow-md rounded-full overflow-hidden shrink-0">
+                    <Avatar className="w-16 h-16 border-2 border-slate-200 rounded-full overflow-hidden shrink-0">
                       {user.avatar ? (
                         <AvatarImage src={user.avatar} className="object-cover w-full h-full" />
                       ) : null}
-                      <AvatarFallback className="text-2xl font-bold bg-slate-900/10 text-slate-900">{initials}</AvatarFallback>
+                      <AvatarFallback className="text-lg font-bold bg-slate-100 text-slate-800">{initials}</AvatarFallback>
                     </Avatar>
                     
-                    {/* Camera upload overlay trigger */}
                     <button 
                       type="button"
                       disabled={isUploadingPhoto}
-                      className="absolute inset-0 bg-slate-950/60 text-white rounded-full flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+                      className="absolute inset-0 bg-slate-950/60 text-white rounded-full flex flex-col items-center justify-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
                     >
                       {isUploadingPhoto ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
                       ) : (
-                        <>
-                          <Camera className="h-5 w-5" />
-                          <span className="text-[9px] font-bold uppercase tracking-wider">Change</span>
-                        </>
+                        <Camera className="h-4 w-4" />
                       )}
                     </button>
                   </div>
 
-                  <div>
-                    <h3 className="font-extrabold text-slate-900 text-base leading-snug">{user.fullName}</h3>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wide block mb-2.5">{user.role} Account</span>
+                  <div className="space-y-1 text-center sm:text-left">
+                    <h4 className="text-xs font-bold text-slate-900">{user.fullName}</h4>
+                    <p className="text-[11px] text-slate-500">{user.role} Account • {user.email}</p>
                     <Button 
                       type="button" 
                       variant="outline" 
                       size="xs" 
                       onClick={handlePhotoClick}
                       disabled={isUploadingPhoto}
-                      className="rounded-lg border-slate-200 text-[10px] font-semibold h-7 px-2.5 hover:bg-slate-50"
+                      className="rounded-lg border-slate-200 text-[10px] font-semibold h-7 px-2.5 mt-1"
                     >
-                      {isUploadingPhoto ? (
-                        <>
-                          <Loader2 className="h-3 w-3 animate-spin mr-1" />
-                          Uploading...
-                        </>
-                      ) : (
-                        <>
-                          <Camera className="h-3.5 w-3.5 mr-1" />
-                          Upload Photo
-                        </>
-                      )}
+                      {isUploadingPhoto ? "Uploading..." : "Change Photo"}
                     </Button>
                   </div>
-
-                  <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-semibold">
-                    <Mail className="h-3 w-3" /> {user.email}
-                  </div>
-                </CardContent>
-              </Card>
-
-            </div>
-
-            {/* RIGHT DETAILS ACTIVE SCREEN */}
-            <div className="lg:col-span-8">
-              
-              {successMsg && (
-                <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-                  <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
-                  <span>{successMsg}</span>
                 </div>
-              )}
-
-              {errorMsg && (
-                <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-                  <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
-                  <span>{errorMsg}</span>
-                </div>
-              )}
-
-              {/* PANEL 1: ACCOUNT DETAILS */}
-              {activeTab === "details" && (
-                <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6 animate-fade-in">
-                  <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2.5">
-                    <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
-                      <User className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <CardTitle className="text-base font-extrabold text-slate-900">Personal Information</CardTitle>
-                      <CardDescription className="text-xs">Update your primary registration contact credentials</CardDescription>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="p-0 pt-5">
                     <form onSubmit={handleProfileSubmit(onProfileSave)} className="space-y-4">
                       {/* Name */}
                       <div className="space-y-1.5">
@@ -881,8 +852,6 @@ export default function Profile() {
               )}
 
             </div>
-
-          </div>
 
         </div>
 

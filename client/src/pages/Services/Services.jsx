@@ -324,25 +324,20 @@ export default function Services() {
     <MainLayout>
       <div className="bg-slate-50 min-h-screen">
 
-        {/* HERO SECTION */}
-        <section className="relative overflow-hidden py-16 lg:py-20 bg-slate-50 border-b border-slate-200">
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/5 to-transparent pointer-events-none"></div>
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center gap-6">
-            <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-500 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">
-              <Sparkles className="h-3.5 w-3.5 fill-accent text-amber-500" /> Verified Local Specialists
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-tight max-w-3xl">
-              Find and Book the Best <span className="text-amber-500">Local Services</span>
+        {/* PAGE HEADER */}
+        <section className="py-12 bg-slate-50 border-b border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-4">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 leading-tight max-w-3xl">
+              Find and Book <span className="text-amber-500">Local Services</span>
             </h1>
-            <p className="text-base text-slate-600 font-normal leading-relaxed max-w-2xl">
-              Instantly match with verified professionals in your neighborhood. Compare reviews, pricing, and book your service online with peace of mind.
+            <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed max-w-xl">
+              Instantly match with verified professionals in your neighborhood. Compare reviews, pricing, and book your service online.
             </p>
 
             {/* HERO SEARCH BAR */}
             <form
               onSubmit={handleHeroSearchSubmit}
-              className="bg-white p-3 sm:p-4 rounded-2xl shadow-xl border border-slate-200 w-full max-w-3xl flex flex-col md:flex-row gap-3 items-center mt-4"
+              className="bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 w-full max-w-3xl flex flex-col md:flex-row gap-2.5 items-center mt-2"
             >
               <div className="relative w-full md:flex-1">
                 <Search className="absolute left-3.5 top-3 h-5 w-5 text-slate-700" />

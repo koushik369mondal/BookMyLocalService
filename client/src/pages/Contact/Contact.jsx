@@ -87,26 +87,21 @@ export default function Contact() {
     <MainLayout>
       <div className="bg-slate-50 min-h-screen font-sans antialiased text-slate-800">
         
-        {/* HERO SECTION - Mirrored from Services.jsx */}
-        <section className="relative overflow-hidden py-16 lg:py-20 bg-white border-b border-slate-200">
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/5 to-transparent pointer-events-none"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center gap-6">
-            <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-500 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">
-              <Sparkles className="h-3.5 w-3.5 fill-accent text-amber-500" /> We're Here to Help
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 leading-tight max-w-3xl">
+        {/* PAGE HEADER */}
+        <section className="py-12 bg-white border-b border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-3">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
               Get in <span className="text-amber-500">Touch</span>
             </h1>
-            <p className="text-base sm:text-lg text-slate-500 max-w-2xl">
-              Have questions about booking a service, listing your business as a provider, or need technical assistance? Drop us a message, and our support team will help you out.
+            <p className="text-xs sm:text-sm text-slate-500 max-w-xl leading-relaxed">
+              Have questions about booking a service, provider registration, or need assistance? Drop us a message, and our team will get back to you.
             </p>
           </div>
         </section>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
           
-          {/* CONTACT INFO GRID - Styled exactly like Services.jsx cards */}
+          {/* CONTACT INFO GRID */}
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { title: "Office Address", detail: "123 Business Hub, Sector 62, Noida, UP, India", icon: MapPin, color: "bg-slate-900/5 text-slate-900 border-slate-900/10" },
@@ -118,15 +113,15 @@ export default function Contact() {
               return (
                 <Card 
                   key={idx} 
-                  className="group overflow-hidden p-6 gap-0 hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 border border-gray-100 flex flex-col h-full bg-white rounded-2xl relative"
+                  className="p-5 gap-0 border border-slate-200 flex flex-col h-full bg-white rounded-2xl relative"
                 >
-                  <div className={`p-3 rounded-full border self-start ${card.color} mb-4`}>
-                    <IconComp className="h-5 w-5" />
+                  <div className={`p-2.5 rounded-xl border self-start ${card.color} mb-3`}>
+                    <IconComp className="h-4.5 w-4.5" />
                   </div>
-                  <h3 className="font-bold text-slate-900 text-lg leading-snug group-hover:text-amber-500 transition-colors">
+                  <h3 className="font-bold text-slate-900 text-base leading-snug">
                     {card.title}
                   </h3>
-                  <p className="text-xs text-slate-500 leading-relaxed mt-2 whitespace-pre-line flex-1">
+                  <p className="text-xs text-slate-500 leading-relaxed mt-1.5 whitespace-pre-line flex-1">
                     {card.detail}
                   </p>
                 </Card>

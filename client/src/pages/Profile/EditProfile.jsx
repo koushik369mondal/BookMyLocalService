@@ -216,14 +216,11 @@ export default function EditProfile() {
             </div>
           )}
 
-          <Card className="border border-slate-100 shadow-md bg-white rounded-3xl overflow-hidden">
+          <Card className="border border-slate-200 bg-white rounded-2xl overflow-hidden">
             
-            <div className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white p-6 sm:p-8 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-              <div className="relative z-10">
-                <CardTitle className="text-xl sm:text-2xl font-black">Edit Account Profile</CardTitle>
-                <CardDescription className="text-slate-300 text-xs sm:text-sm mt-1">Modify your contact variables, photo, and default settings</CardDescription>
-              </div>
+            <div className="bg-slate-900 text-white p-6 sm:p-7">
+              <CardTitle className="text-xl sm:text-2xl font-extrabold">Edit Account Profile</CardTitle>
+              <CardDescription className="text-slate-400 text-xs mt-1">Modify your contact details, photo, and settings</CardDescription>
             </div>
 
             <CardContent className="p-6 sm:p-8 space-y-8">

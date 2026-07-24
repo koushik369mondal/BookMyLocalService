@@ -107,30 +107,25 @@ export default function Categories() {
     <MainLayout>
       <div className="bg-slate-50 min-h-screen">
 
-        {/* HERO SECTION - Mirrored from Services.jsx */}
-        <section className="relative overflow-hidden py-16 lg:py-20 bg-slate-50 border-b border-slate-200">
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/5 to-transparent pointer-events-none"></div>
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center gap-6">
-            <span className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-500 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">
-              <Sparkles className="h-3.5 w-3.5 fill-accent text-amber-500" /> Verified Local Specialists
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-tight max-w-3xl">
+        {/* PAGE HEADER */}
+        <section className="py-12 bg-slate-50 border-b border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-4">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 leading-tight max-w-3xl">
               Browse <span className="text-amber-500">Service Categories</span>
             </h1>
-            <p className="text-base text-slate-600 font-normal leading-relaxed max-w-2xl">
+            <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed max-w-xl">
               Find trusted professionals for every household and business need. Compare rates, reviews, and book instantly.
             </p>
 
-            {/* HERO SEARCH BAR - Styled like Services search */}
-            <div className="w-full max-w-md flex items-center mt-2">
+            {/* SEARCH BAR */}
+            <div className="w-full max-w-md flex items-center mt-1">
               <div className="relative w-full">
-                <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-700" />
+                <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
                 <Input
                   placeholder="Search categories..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 h-11 border-slate-200 focus-visible:ring-slate-900 rounded-xl bg-white text-xs text-slate-800 shadow-xs"
+                  className="pl-10 h-10 border-slate-200 focus-visible:ring-slate-900 rounded-xl bg-white text-xs text-slate-800"
                 />
               </div>
             </div>

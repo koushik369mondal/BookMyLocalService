@@ -42,9 +42,9 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
 
   return (
     <motion.div 
-      whileHover={prefersReducedMotion ? {} : { y: -6 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className="group overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col h-full relative"
+      whileHover={prefersReducedMotion ? {} : { y: -4 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition-all duration-200 flex flex-col h-full relative"
     >
       
       {/* Image Thumbnail Header */}
@@ -52,24 +52,19 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
 
-        {/* Primary Badge (e.g. Top Rated / Featured) */}
+        {/* Primary Badge */}
         {badge && (
-          <span className="absolute top-3 left-3 bg-amber-500 text-slate-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider">
+          <span className="absolute top-3 left-3 bg-amber-500 text-slate-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-xs uppercase tracking-wider">
             {badge}
           </span>
         )}
 
-        {/* Status Chips Overlay */}
-        <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5">
-          {availability === "today" && (
-            <span className="bg-emerald-500/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-xs backdrop-blur-xs flex items-center gap-1">
-              <Zap className="h-3 w-3 fill-current" /> Available Today
-            </span>
-          )}
-          <span className="bg-slate-900/85 text-slate-100 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-xs backdrop-blur-xs border border-white/10 uppercase tracking-wider">
+        {/* Category Overlay */}
+        <div className="absolute top-3 right-3">
+          <span className="bg-slate-900/80 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-xs uppercase tracking-wider">
             {category}
           </span>
         </div>

@@ -43,13 +43,6 @@ export default function DashboardCards({ role }) {
       icon: Star,
       color: "text-amber-600 bg-amber-50 border-amber-100",
     },
-    {
-      title: "Dashboard Home",
-      description: "View your pending bookings, job boards, and weekly trends.",
-      path: "/provider/dashboard",
-      icon: LayoutDashboard,
-      color: "text-slate-700 bg-slate-100/80 border-slate-200",
-    },
   ];
 
   const customerCards = [
@@ -100,13 +93,10 @@ export default function DashboardCards({ role }) {
           <Link
             key={idx}
             to={card.path}
-            className="group flex flex-col justify-between border border-slate-200/90 p-5 rounded-2xl bg-white hover:border-slate-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden h-full"
+            className="group flex flex-col justify-between border border-slate-200 bg-white p-5 rounded-2xl hover:border-slate-400 hover:bg-slate-50/50 transition-all duration-200 relative overflow-hidden h-full"
           >
-            {/* Ambient hover effect */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.08),transparent_50%)] transition-opacity duration-300 pointer-events-none"></div>
-
             <div className="relative z-10 space-y-3">
-              <div className={`p-3 rounded-xl border w-fit shrink-0 transition-transform group-hover:scale-105 duration-300 ${card.color}`}>
+              <div className={`p-3 rounded-xl border w-fit shrink-0 transition-transform group-hover:scale-105 duration-200 ${card.color}`}>
                 <Icon className="h-5 w-5" />
               </div>
               <div className="space-y-1">

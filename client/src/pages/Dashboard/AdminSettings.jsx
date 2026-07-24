@@ -12,18 +12,15 @@ export default function AdminSettings() {
 
   return (
     <DashboardLayout>
-      {/* BANNER HEADER */}
-      <section className="bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 text-white py-12 relative overflow-hidden rounded-2xl mb-8">
-        <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <h1 className="text-xl sm:text-2xl font-black tracking-tight">System Settings</h1>
-          <p className="text-slate-350 text-xs mt-1.5 font-medium">Configure global platform attributes, registration policies, and maintenance states</p>
-        </div>
+      {/* HEADER */}
+      <section className="bg-slate-900 text-white p-6 rounded-2xl mb-6">
+        <h1 className="text-xl font-extrabold tracking-tight">System Settings</h1>
+        <p className="text-slate-400 text-xs mt-1">Configure global platform attributes, registration policies, and maintenance states</p>
       </section>
 
       {/* SETTINGS CARD */}
       <div className="space-y-6">
-        <Card className="border border-slate-100 shadow-2xs rounded-2xl bg-white p-6">
+        <Card className="border border-slate-200 rounded-2xl bg-white p-6">
           <CardHeader className="p-0 pb-4 border-b border-slate-50 flex flex-row items-center gap-2">
             <div className="p-2 bg-slate-900/5 text-slate-900 rounded-xl">
               <Settings className="h-5 w-5" />

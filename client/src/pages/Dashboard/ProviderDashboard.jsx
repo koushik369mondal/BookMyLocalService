@@ -307,7 +307,7 @@ export default function ProviderDashboard() {
             <div className="lg:col-span-8 space-y-8">
               
               {/* EARNINGS GRAPH CARD */}
-              <div className="border border-slate-200/90 shadow-xs rounded-2xl bg-white p-6 hover:shadow-md transition-shadow">
+              <div className="border border-slate-200 rounded-2xl bg-white p-6">
                 <div className="pb-5 border-b border-slate-100 flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-3">
                     <div className="p-2.5 bg-slate-900 text-white rounded-xl shadow-xs">
@@ -404,7 +404,7 @@ export default function ProviderDashboard() {
               </div>
 
               {/* RECENT BOOKINGS & STATUS CARD */}
-              <div className="border border-slate-200/90 shadow-xs rounded-2xl bg-white p-6 hover:shadow-md transition-shadow">
+              <div className="border border-slate-200 rounded-2xl bg-white p-6">
                 <div className="pb-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <h3 className="text-base font-bold text-slate-900">Job Board Requests</h3>
@@ -541,7 +541,7 @@ export default function ProviderDashboard() {
             <div className="lg:col-span-4 space-y-8">
               
               {/* PROVIDER PROFILE CARD */}
-              <div className="border border-slate-200/90 shadow-xs rounded-2xl bg-white p-6 space-y-4 hover:shadow-md transition-shadow">
+              <div className="border border-slate-200 rounded-2xl bg-white p-6 space-y-4">
                 <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block">Specialist Profile</span>
                 
                 <div className="flex items-center gap-3.5 p-4 bg-slate-50/80 border border-slate-200/70 rounded-2xl">
@@ -575,7 +575,7 @@ export default function ProviderDashboard() {
               </div>
 
               {/* LIVE NOTIFICATIONS / ALERTS */}
-              <div className="border border-slate-200/90 shadow-xs rounded-2xl bg-white p-6 hover:shadow-md transition-shadow">
+              <div className="border border-slate-200 rounded-2xl bg-white p-6">
                 <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
                   <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                     <Bell className="h-4 w-4 text-amber-500" /> Operations Alerts
@@ -605,7 +605,7 @@ export default function ProviderDashboard() {
               </div>
 
               {/* SERVICES MANAGEMENT LISTING */}
-              <div className="border border-slate-200/90 shadow-xs rounded-2xl bg-white p-6 space-y-4 hover:shadow-md transition-shadow">
+              <div className="border border-slate-200 rounded-2xl bg-white p-6 space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block">Catalog Services</span>
                   <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">{services.length} items</span>
@@ -640,7 +640,7 @@ export default function ProviderDashboard() {
               </div>
 
               {/* RATINGS & REVIEWS SECTION */}
-              <div className="border border-slate-200/90 shadow-xs rounded-2xl bg-white p-6 space-y-4 hover:shadow-md transition-shadow">
+              <div className="border border-slate-200 rounded-2xl bg-white p-6 space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <span className="text-xs font-extrabold text-slate-400 uppercase tracking-wider block">Recent Reviews</span>
                   <span className="text-xs font-bold text-amber-500 flex items-center gap-1">
