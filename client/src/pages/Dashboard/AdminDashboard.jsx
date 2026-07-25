@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -26,7 +27,8 @@ import {
   FileText, 
   Check, 
   MapPin,
-  ChevronDown
+  ChevronDown,
+  DollarSign
 } from "lucide-react";
 
 // Mock user growth
@@ -76,6 +78,7 @@ const notifications = [
 ];
 
 export default function AdminDashboard() {
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   // Admin dashboard states
@@ -98,9 +101,9 @@ export default function AdminDashboard() {
 
   // Provider approvals handler
   const handleApprovalAction = (id, action) => {
-    setApprovals(approvals.filter(app => app.id !== id));
-    setSuccessMsg(`Provider request successfully ${action === "approve" ? "Approved" : "Declined"}!`);
-    setTimeout(() => setSuccessMsg(""), 2000);
+    setApprovals(approvals.filter(a => a.id !== id));
+    setSuccessMsg(`Provider ${action === "approve" ? "approved" : "rejected"} successfully.`);
+    setTimeout(() => setSuccessMsg(""), 2500);
   };
 
   // Chart calculations
@@ -115,11 +118,11 @@ export default function AdminDashboard() {
   const getStatusBadge = (status) => {
     switch (status) {
       case "pending":
-        return <Badge className="bg-[#8C4B3E] hover:bg-amber-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Pending</Badge>;
+        return <Badge className="bg-[#C9A46A] border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Pending</Badge>;
       case "confirmed":
-        return <Badge className="bg-[#8C4B3E]/50 hover:bg-[#8C4B3E] border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
+        return <Badge className="bg-[#5A95C9]/20 text-[#1E4B75] border-0 font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
       default:
-        return <Badge className="bg-emerald-500 hover:bg-emerald-600 border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Completed</Badge>;
+        return <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border-0 font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Completed</Badge>;
     }
   };
 
@@ -127,19 +130,19 @@ export default function AdminDashboard() {
     <DashboardLayout>
       <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
-        {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-1.5">
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight">System Administration</h1>
-              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Moderate platform registrations, monitor servers, and audit user dispatch bookings</p>
+        {/* LIGHT RETRO BANNER HEADER */}
+        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-1">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">
+                {user?.fullName ? `Welcome back, ${user.fullName} 👋` : "System Administration 👋"}
+              </h1>
+              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Moderate platform registrations, monitor servers, and audit user dispatch bookings</p>
             </div>
             
             {/* Quick Actions Panel */}
             <div className="flex items-center gap-3 flex-wrap">
-              <Button size="sm" className="bg-white text-[#1F1D1A] hover:bg-[#FAF6F0] rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1">
+              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] text-white rounded-xl text-xs font-bold px-5 h-9.5 shadow-2xs flex items-center gap-1 border border-[#E8DCC3] cursor-pointer">
                 <Settings className="h-4 w-4" /> Manage System
               </Button>
             </div>

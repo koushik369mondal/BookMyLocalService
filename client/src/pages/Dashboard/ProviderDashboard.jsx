@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import DashboardCards from "../../components/navigation/DashboardCards";
+import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -38,23 +39,22 @@ import {
 
 // Mock earnings database records
 const monthlyEarnings = [
-  { month: "Jan", amount: 650 },
-  { month: "Feb", amount: 800 },
-  { month: "Mar", amount: 1100 },
-  { month: "Apr", amount: 950 },
-  { month: "May", amount: 1300 },
-  { month: "Jun", amount: 1550 }
+  { month: "Jan", amount: 1200 },
+  { month: "Feb", amount: 980 },
+  { month: "Mar", amount: 1550 },
+  { month: "Apr", amount: 1300 },
+  { month: "May", amount: 1750 },
+  { month: "Jun", amount: 2100 }
 ];
 
-// Mock Initial Bookings list
+// Mock Recent Dispatch Activity Bookings
 const initialBookings = [
-  { id: "BMLS-98394", customerName: "Amanda Watson", serviceName: "Deep Home Cleaning Service", date: "2026-07-10", time: "10:30 AM", price: 55.00, status: "pending", location: "Brooklyn, NY" },
-  { id: "BMLS-88294", customerName: "Robert Garcia", serviceName: "Window Washing Service", date: "2026-07-12", time: "01:00 PM", price: 30.00, status: "confirmed", location: "Queens, NY" },
-  { id: "BMLS-77291", customerName: "Sarah Connor", serviceName: "Sofa & Carpet Sanitization", date: "2026-07-05", time: "03:30 PM", price: 90.00, status: "completed", location: "Manhattan, NY" },
-  { id: "BMLS-66381", customerName: "Jessica Alba", serviceName: "Deep Home Cleaning Service", date: "2026-07-02", time: "11:00 AM", price: 110.00, status: "cancelled", location: "Manhattan, NY" }
+  { id: "BMLS-98394", customerName: "Amanda Watson", serviceName: "Deep Home Cleaning Service", date: "2026-07-15", time: "10:30 AM", price: 55.00, status: "pending", location: "Brooklyn, NY" },
+  { id: "BMLS-88294", customerName: "Robert Garcia", serviceName: "Window Washing Service", date: "2026-07-16", time: "01:00 PM", price: 30.00, status: "confirmed", location: "Queens, NY" },
+  { id: "BMLS-77291", customerName: "Sarah Connor", serviceName: "Sofa & Carpet Sanitization", date: "2026-07-05", time: "03:30 PM", price: 90.00, status: "completed", location: "Manhattan, NY" }
 ];
 
-// Mock Initial Services
+// Mock Catalog Services
 const initialServices = [
   { id: 1, name: "Deep Home Cleaning Service", category: "Home Cleaning", price: 35, type: "/hr" },
   { id: 2, name: "Sofa & Carpet Sanitization", category: "Home Cleaning", price: 45, type: "/hr" },
@@ -74,6 +74,7 @@ const alerts = [
 ];
 
 export default function ProviderDashboard() {
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   // Dashboard states
@@ -171,7 +172,7 @@ export default function ProviderDashboard() {
               <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C9A46A] uppercase tracking-wider">
                 <Sparkles className="h-3.5 w-3.5 fill-[#C9A46A]" /> Provider Operations Portal
               </span>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#1F1D1A] tracking-tight">Welcome back, Sarah 👋</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#1F1D1A] tracking-tight">{user?.fullName ? `Welcome back, ${user.fullName} 👋` : "Welcome back 👋"}</h1>
               <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Manage dispatch schedules, payout statistics, rating reviews, and service rates</p>
             </div>
             
@@ -542,15 +543,17 @@ export default function ProviderDashboard() {
                 
                 <div className="flex items-center gap-3.5 p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl">
                   <Avatar className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-[#E8DCC3] shadow-2xs">
-                    <AvatarImage src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80" className="object-cover" />
-                    <AvatarFallback className="bg-[#F0E7D5] text-[#C9A46A] font-bold">SJ</AvatarFallback>
+                    <AvatarImage src={user?.avatar} className="object-cover" />
+                    <AvatarFallback className="bg-[#F0E7D5] text-[#C9A46A] font-bold">
+                      {user?.fullName ? user.fullName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) : "P"}
+                    </AvatarFallback>
                   </Avatar>
                   <div>
                     <Badge variant="mustard" className="text-[9px] mb-1">
                       Verified Specialist
                     </Badge>
-                    <h4 className="font-bold text-[#1F1D1A] text-sm leading-snug">Sarah Jenkins</h4>
-                    <p className="text-xs text-[#7A7266] font-medium flex items-center gap-0.5 mt-0.5"><MapPin className="h-3 w-3 text-[#7A7266]" /> Brooklyn, NY</p>
+                    <h4 className="font-bold text-[#1F1D1A] text-sm leading-snug">{user?.fullName || "Provider Specialist"}</h4>
+                    <p className="text-xs text-[#7A7266] font-medium flex items-center gap-0.5 mt-0.5"><MapPin className="h-3 w-3 text-[#7A7266]" /> {user?.city ? `${user.city}, ${user.state || ""}` : "Verified Location"}</p>
                   </div>
                 </div>
 
