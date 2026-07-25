@@ -304,6 +304,33 @@ async function main() {
     providerMap[prov.fullName] = user.id;
   }
 
+  // 1b. Seed Admin User
+  const adminEmail = "bookmylocalservice@gmail.com";
+  let adminUser = await prisma.user.findUnique({
+    where: { email: adminEmail }
+  });
+
+  if (!adminUser) {
+    adminUser = await prisma.user.create({
+      data: {
+        fullName: "System Admin",
+        email: adminEmail,
+        phone: "000-999-8888",
+        password: hashedPassword,
+        role: "ADMIN",
+        isVerified: true
+      }
+    });
+    console.log(`Created admin user: ${adminEmail}`);
+  } else {
+    // Ensure role is ADMIN
+    await prisma.user.update({
+      where: { email: adminEmail },
+      data: { role: "ADMIN", password: hashedPassword, isVerified: true }
+    });
+    console.log(`Admin user ${adminEmail} updated to ADMIN role`);
+  }
+
   // 2. Seed Services
   for (const s of servicesData) {
     const providerId = providerMap[s.providerName];

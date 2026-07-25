@@ -129,7 +129,13 @@ export default function VerifyOtp() {
       const response = await verifyOtp(email, otpString, flow);
       if (response.success) {
         toast.success(flow === "register" ? "Account created and logged in successfully!" : "Logged in successfully!");
-        navigate("/");
+        if (response.user?.role === "ADMIN") {
+          navigate("/admin/dashboard");
+        } else if (response.user?.role === "PROVIDER") {
+          navigate("/provider/dashboard");
+        } else {
+          navigate("/");
+        }
       }
     } catch (err) {
       console.error("OTP verification error:", err);
