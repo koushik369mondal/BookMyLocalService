@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
 import { 
   DollarSign, 
   Calendar, 
@@ -26,13 +25,11 @@ import {
   Share2, 
   Download, 
   Sparkles, 
-  BookOpen, 
-  Heart, 
-  Percent, 
   Activity,
   AlertCircle,
   FileSpreadsheet,
-  FileText
+  FileText,
+  Loader2
 } from "lucide-react";
 
 // Mock Analytical Charts Datasets
@@ -148,20 +145,18 @@ export default function Analytics() {
     <DashboardLayout>
       <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
-        {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-1.5">
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight">System Analytics</h1>
-              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Verify system transaction spline logs, category sharing indexes, and demographics</p>
+        {/* LIGHT RETRO BANNER HEADER */}
+        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-1">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">System Analytics</h1>
+              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Verify system transaction spline logs, category sharing indexes, and demographics</p>
             </div>
             
             {/* Quick dashboard back button */}
             <Link to="/admin/dashboard">
-              <Button size="sm" className="bg-white/10 hover:bg-white/15 border border-white/5 rounded-full text-white text-xs font-bold px-5 h-9.5 backdrop-blur-xs">
-                <ArrowLeft className="h-4 w-4 text-white/60 mr-1" />
+              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] text-white border border-[#E8DCC3] rounded-xl text-xs font-bold px-5 h-9.5 shadow-2xs flex items-center gap-1 cursor-pointer">
+                <ArrowLeft className="h-4 w-4 mr-1" />
                 Back to Dashboard
               </Button>
             </Link>
@@ -169,60 +164,60 @@ export default function Analytics() {
         </section>
 
         {/* STATISTICS OVERVIEW CARDS */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             
             {/* Total Revenue */}
-            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Revenue</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">$42,850</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">$42,850</span>
               </div>
-              <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#7DAB7D]/20 text-[#2B522B] rounded-xl shrink-0 border border-[#7DAB7D]/30">
                 <DollarSign className="h-5 w-5" />
               </div>
             </Card>
 
             {/* Total Bookings */}
-            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Bookings</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">1,840</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">1,840</span>
               </div>
-              <div className="p-2.5 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#F0E7D5] text-[#C9A46A] rounded-xl shrink-0 border border-[#E8DCC3]">
                 <Activity className="h-5 w-5" />
               </div>
             </Card>
 
             {/* Total Users */}
-            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Users</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">4,250</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">4,250</span>
               </div>
-              <div className="p-2.5 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#F0E7D5] text-[#C9A46A] rounded-xl shrink-0 border border-[#E8DCC3]">
                 <Users className="h-5 w-5" />
               </div>
             </Card>
 
             {/* Total Providers */}
-            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Providers</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">380</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">380</span>
               </div>
-              <div className="p-2.5 bg-amber-50 text-[#C9A46A] rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#F0E7D5] text-[#C9A46A] rounded-xl shrink-0 border border-[#E8DCC3]">
                 <Briefcase className="h-5 w-5" />
               </div>
             </Card>
 
             {/* Growth rate */}
-            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform col-span-2 md:col-span-1">
+            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl col-span-2 md:col-span-1">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Growth Rate</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">+15.4%</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#2B522B]">+15.4%</span>
               </div>
-              <div className="p-2.5 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0">
+              <div className="p-2.5 bg-[#7DAB7D]/20 text-[#2B522B] rounded-xl shrink-0 border border-[#7DAB7D]/30">
                 <TrendingUp className="h-5 w-5" />
               </div>
             </Card>
@@ -234,14 +229,14 @@ export default function Analytics() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
           
           {successMsg && (
-            <div className="flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
+            <div className="flex items-start gap-2.5 p-3.5 bg-[#7DAB7D]/20 border border-[#7DAB7D]/40 text-[#2B522B] text-xs font-bold rounded-xl shadow-2xs">
+              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-[#2B522B]" />
               <span>{successMsg}</span>
             </div>
           )}
 
           {/* FILTERS & DOWNLOAD BUTTONS */}
-          <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-6 print:hidden">
+          <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-6 print:hidden">
             
             {/* Filters */}
             <div className="flex flex-wrap items-center gap-4 flex-1">
@@ -252,7 +247,7 @@ export default function Analytics() {
                   type="date"
                   value={dateFrom}
                   onChange={(e) => setDateFrom(e.target.value)}
-                  className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white cursor-pointer"
+                  className="h-9 border-[#E8DCC3] focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl text-xs bg-white cursor-pointer"
                 />
               </div>
 
@@ -263,7 +258,7 @@ export default function Analytics() {
                   type="date"
                   value={dateTo}
                   onChange={(e) => setDateTo(e.target.value)}
-                  className="h-9 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white cursor-pointer"
+                  className="h-9 border-[#E8DCC3] focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl text-xs bg-white cursor-pointer"
                 />
               </div>
 
@@ -274,7 +269,7 @@ export default function Analytics() {
                     id="categoryFilter"
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
+                    className="h-9.5 pl-3 pr-8 border border-[#E8DCC3] focus:outline-none focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl bg-white text-xs font-semibold text-[#1F1D1A] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Categories</option>
                     <option value="Home Cleaning">Home Cleaning</option>
@@ -292,7 +287,7 @@ export default function Analytics() {
                     id="locationFilter"
                     value={locationFilter}
                     onChange={(e) => setLocationFilter(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-violet-950 rounded-xl bg-white text-xs font-semibold text-[#8C4B3E] cursor-pointer appearance-none shadow-2xs"
+                    className="h-9.5 pl-3 pr-8 border border-[#E8DCC3] focus:outline-none focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl bg-white text-xs font-semibold text-[#1F1D1A] cursor-pointer appearance-none shadow-2xs"
                   >
                     <option value="all">All Boroughs</option>
                     <option value="Brooklyn">Brooklyn</option>
@@ -305,20 +300,20 @@ export default function Analytics() {
             </div>
 
             {/* Exports */}
-            <div className="flex items-center gap-2 shrink-0 border-t border-[#5A5146]/15 lg:border-0 pt-4 lg:pt-0">
+            <div className="flex items-center gap-2 shrink-0 border-t border-[#E8DCC3] lg:border-0 pt-4 lg:pt-0">
               <Button
                 size="sm"
                 onClick={() => handleExport("PDF")}
-                className="bg-[#8C4B3E] hover:bg-black text-white rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5"
+                className="bg-[#C9A46A] hover:bg-[#b89359] text-white border border-[#E8DCC3] rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5 shadow-2xs cursor-pointer"
               >
                 <FileText className="h-4 w-4" /> PDF Report
               </Button>
               <Button
                 size="sm"
                 onClick={() => handleExport("Excel")}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white border-0 rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5 shadow-2xs"
+                className="bg-[#7DAB7D]/20 text-[#2B522B] hover:bg-[#7DAB7D]/30 border border-[#7DAB7D]/40 rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5 shadow-2xs cursor-pointer"
               >
-                <FileSpreadsheet className="h-4 w-4" /> Excel Sheet
+                <FileSpreadsheet className="h-4 w-4 text-[#2B522B]" /> Excel Sheet
               </Button>
             </div>
 
@@ -328,22 +323,22 @@ export default function Analytics() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Swappable analytics growth chart */}
-            <Card className="lg:col-span-8 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 flex flex-col justify-between">
-              <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <Card className="lg:col-span-8 border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 flex flex-col justify-between">
+              <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Statistical Trends Analysis</CardTitle>
-                  <CardDescription className="text-xs">Monitor analytical spline lines</CardDescription>
+                  <CardTitle className="text-base font-bold text-[#1F1D1A]">Statistical Trends Analysis</CardTitle>
+                  <CardDescription className="text-xs text-[#7A7266]">Monitor analytical spline lines</CardDescription>
                 </div>
                 
                 {/* Switch Tabs */}
-                <div className="flex bg-[#F0E7D5]/70 border border-[#5A5146]/20 p-0.5 rounded-xl h-9 shrink-0 overflow-x-auto max-w-full">
+                <div className="flex bg-[#F0E7D5]/70 border border-[#E8DCC3] p-1 rounded-xl h-9 shrink-0 overflow-x-auto max-w-full gap-1">
                   <button
                     type="button"
                     onClick={() => setMetricTab("revenue")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
+                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
                       metricTab === "revenue"
-                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#8C4B3E]"
+                        ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                        : "text-[#5A5146] hover:text-[#1F1D1A]"
                     }`}
                   >
                     Revenue
@@ -351,10 +346,10 @@ export default function Analytics() {
                   <button
                     type="button"
                     onClick={() => setMetricTab("bookings")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
+                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
                       metricTab === "bookings"
-                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#8C4B3E]"
+                        ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                        : "text-[#5A5146] hover:text-[#1F1D1A]"
                     }`}
                   >
                     Bookings
@@ -362,10 +357,10 @@ export default function Analytics() {
                   <button
                     type="button"
                     onClick={() => setMetricTab("users")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
+                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
                       metricTab === "users"
-                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#8C4B3E]"
+                        ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                        : "text-[#5A5146] hover:text-[#1F1D1A]"
                     }`}
                   >
                     User Growth
@@ -373,10 +368,10 @@ export default function Analytics() {
                   <button
                     type="button"
                     onClick={() => setMetricTab("providers")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${
+                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
                       metricTab === "providers"
-                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#8C4B3E]"
+                        ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                        : "text-[#5A5146] hover:text-[#1F1D1A]"
                     }`}
                   >
                     Provider Growth
@@ -386,16 +381,16 @@ export default function Analytics() {
 
               <CardContent className="p-0 pt-6 flex-1 flex items-center justify-center min-h-[170px]">
                 {isLoading ? (
-                  <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
+                  <Loader2 className="h-8 w-8 animate-spin text-[#C9A46A]" />
                 ) : (
                   <div className="w-full overflow-x-auto">
                     <div className="min-w-[480px] h-[160px] relative">
                       <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-full overflow-visible">
                         
                         {/* Grid lines */}
-                        <line x1="20" y1="20" x2="520" y2="20" stroke="#f8fafc" strokeWidth="1" />
-                        <line x1="20" y1="65" x2="520" y2="65" stroke="#f1f5f9" strokeWidth="1" />
-                        <line x1="20" y1="110" x2="520" y2="110" stroke="#cbd5e1" strokeWidth="2" />
+                        <line x1="20" y1="20" x2="520" y2="20" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="3 3" />
+                        <line x1="20" y1="65" x2="520" y2="65" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="3 3" />
+                        <line x1="20" y1="110" x2="520" y2="110" stroke="#E8DCC3" strokeWidth="1.5" />
 
                         {/* Chart Render paths or bars */}
                         {metricTab === "bookings" ? (
@@ -412,11 +407,11 @@ export default function Analytics() {
                                   width={barWidth}
                                   height={barHeight}
                                   rx="4"
-                                  fill="#2563eb"
-                                  className="hover:fill-secondary transition-colors cursor-pointer"
+                                  fill="#C9A46A"
+                                  className="hover:fill-[#b89359] transition-colors cursor-pointer"
                                 />
-                                <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" className="text-[9px] font-black fill-violet-900">{d.val}</text>
-                                <text x={x + barWidth / 2} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-bold fill-stone-500">{d.label}</text>
+                                <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" className="text-[9px] font-bold fill-[#1F1D1A]">{d.val}</text>
+                                <text x={x + barWidth / 2} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-medium fill-[#7A7266]">{d.label}</text>
                               </g>
                             );
                           })
@@ -431,7 +426,7 @@ export default function Analytics() {
                                 return path + `${index === 0 ? "M" : "L"} ${x} ${y}`;
                               }, "")}
                               fill="none"
-                              stroke="#6366f1"
+                              stroke="#C9A46A"
                               strokeWidth="3.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -443,11 +438,11 @@ export default function Analytics() {
                               const y = chartHeight - barHeight - 30;
                               return (
                                 <g key={d.label}>
-                                  <circle cx={x} cy={y} r="5" fill="#6366f1" stroke="#ffffff" strokeWidth="2" className="cursor-pointer" />
-                                  <text x={x} y={y - 10} textAnchor="middle" className="text-[9px] font-black fill-violet-900">
+                                  <circle cx={x} cy={y} r="5" fill="#C9A46A" stroke="#FAF6F0" strokeWidth="2" className="cursor-pointer" />
+                                  <text x={x} y={y - 10} textAnchor="middle" className="text-[9px] font-bold fill-[#1F1D1A]">
                                     {metricTab === "revenue" ? `$${d.val}` : d.val}
                                   </text>
-                                  <text x={x} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-bold fill-stone-500">{d.label}</text>
+                                  <text x={x} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-medium fill-[#7A7266]">{d.label}</text>
                                 </g>
                               );
                             })}
@@ -462,17 +457,17 @@ export default function Analytics() {
             </Card>
 
             {/* Category breakdown Share */}
-            <Card className="lg:col-span-4 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Category Shares</span>
+            <Card className="lg:col-span-4 border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Category Shares</span>
               
               <div className="space-y-4">
                 {categoryShare.map(cat => (
                   <div key={cat.name} className="space-y-1">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-[#8C4B3E]">{cat.name}</span>
+                      <span className="text-[#1F1D1A]">{cat.name}</span>
                       <span className="text-[#7A7266]">{cat.share}%</span>
                     </div>
-                    <Progress value={cat.share} className="h-2 rounded-full bg-[#F0E7D5] [&>div]:bg-[#7C8A6B]" />
+                    <Progress value={cat.share} className="h-2 rounded-full bg-[#FAF6F0] [&>div]:bg-[#C9A46A]" />
                   </div>
                 ))}
               </div>
@@ -484,60 +479,57 @@ export default function Analytics() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Top performing specialists */}
-            <Card className="lg:col-span-4 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Top Specialists</span>
+            <Card className="lg:col-span-4 border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Top Specialists</span>
               
               <div className="space-y-4">
                 {topPerformers.map(prov => (
-                  <div key={prov.id} className="p-3 border border-[#5A5146]/20 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-stone-300 transition-colors">
+                  <div key={prov.id} className="p-3 border border-[#E8DCC3] rounded-xl bg-[#FAF6F0]/50 shadow-2xs flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <Avatar className="w-9 h-9 border border-[#5A5146]/15 overflow-hidden shrink-0">
+                      <Avatar className="w-9 h-9 border border-[#E8DCC3] overflow-hidden shrink-0">
                         <AvatarImage src={prov.avatar} className="object-cover" />
-                        <AvatarFallback>{prov.name[0]}</AvatarFallback>
+                        <AvatarFallback className="bg-[#F0E7D5] text-[#C9A46A] font-bold">{prov.name[0]}</AvatarFallback>
                       </Avatar>
                       <div>
                         <span className="block text-xs font-bold text-[#1F1D1A]">{prov.name}</span>
-                        <span className="text-[10px] text-[#7A7266] font-bold block mt-0.5">{prov.service}</span>
-                        <span className="text-[10px] text-[#C9A46A] font-bold flex items-center gap-0.5 mt-1.5">
-                          <Star className="h-3.5 w-3.5 fill-amber-400 text-[#C9A46A]" /> {prov.rating}
+                        <span className="text-[10px] text-[#5A5146] font-medium block mt-0.5">{prov.service}</span>
+                        <span className="text-[10px] text-[#C9A46A] font-bold flex items-center gap-0.5 mt-1">
+                          <Star className="h-3 w-3 fill-[#C9A46A] text-[#C9A46A]" /> {prov.rating}
                         </span>
                       </div>
                     </div>
 
-                    <span className="text-xs font-black text-[#1F1D1A] shrink-0">{prov.bookings} jobs</span>
+                    <span className="text-xs font-bold text-[#1F1D1A] shrink-0">{prov.bookings} jobs</span>
                   </div>
                 ))}
               </div>
             </Card>
 
             {/* Customer Demographics location distribution */}
-            <Card className="lg:col-span-4 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Booking Demographics</span>
+            <Card className="lg:col-span-4 border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Booking Demographics</span>
               
               <div className="space-y-4">
                 {demographics.map(cat => (
                   <div key={cat.borough} className="space-y-1">
                     <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-[#8C4B3E]">{cat.borough}</span>
-                      <span className="text-[#7A7266] font-semibold">{cat.count} jobs ({cat.percentage}%)</span>
+                      <span className="text-[#1F1D1A]">{cat.borough}</span>
+                      <span className="text-[#7A7266] font-medium">{cat.count} jobs ({cat.percentage}%)</span>
                     </div>
-                    <Progress value={cat.percentage} className="h-2 rounded-full bg-[#F0E7D5] [&>div]:bg-[#8C4B3E]" />
+                    <Progress value={cat.percentage} className="h-2 rounded-full bg-[#FAF6F0] [&>div]:bg-[#C9A46A]" />
                   </div>
                 ))}
               </div>
             </Card>
 
             {/* Recent activity timeline */}
-            <Card className="lg:col-span-4 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Activity Timeline Logs</span>
+            <Card className="lg:col-span-4 border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Activity Timeline Logs</span>
               
-              <div className="relative pl-4 border-l border-[#5A5146]/20 space-y-5 pt-1.5 ml-1 text-xs">
+              <div className="relative pl-4 border-l border-[#E8DCC3] space-y-5 pt-1.5 ml-1 text-xs">
                 {activityLogs.map(log => (
-                  <div key={log.id} className="relative group animate-fade-in">
-                    
-                    {/* Ring dot indicator */}
-                    <span className="absolute -left-[20.5px] top-1 h-3.5 w-3.5 rounded-full border border-white bg-[#8C4B3E] ring-2 ring-violet-950/10 shrink-0"></span>
-                    
+                  <div key={log.id} className="relative group">
+                    <span className="absolute -left-[20.5px] top-1 h-3.5 w-3.5 rounded-full border border-white bg-[#C9A46A] shrink-0"></span>
                     <div className="space-y-0.5">
                       <span className="text-[10px] text-[#7A7266] font-bold block">{log.time}</span>
                       <p className="font-bold text-[#1F1D1A] leading-relaxed text-[11px]">{log.text}</p>
@@ -551,7 +543,6 @@ export default function Analytics() {
 
         </div>
       </div>
-
     </DashboardLayout>
   );
 }

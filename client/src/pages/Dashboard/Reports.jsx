@@ -132,14 +132,12 @@ export default function Reports() {
     <DashboardLayout>
       <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
-        {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-1.5">
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Reports & Analytics</h1>
-              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Verify system transaction graphs, top performing specialists, and export records</p>
+        {/* LIGHT RETRO BANNER HEADER */}
+        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-1">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Reports & Analytics</h1>
+              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Verify system transaction graphs, top performing specialists, and export records</p>
             </div>
             
             {/* Quick Actions Panel */}
@@ -147,12 +145,12 @@ export default function Reports() {
               <Button 
                 onClick={handlePrint}
                 size="sm" 
-                className="bg-white/10 hover:bg-white/15 border border-white/5 rounded-full text-white text-xs font-bold px-4 h-9.5 backdrop-blur-xs flex items-center gap-1.5"
+                className="bg-[#FAF6F0] hover:bg-white text-[#1F1D1A] border border-[#E8DCC3] rounded-xl text-xs font-bold px-4 h-9.5 shadow-2xs flex items-center gap-1.5 cursor-pointer"
               >
-                <Printer className="h-4 w-4" /> Print Reports
+                <Printer className="h-4 w-4 text-[#C9A46A]" /> Print Reports
               </Button>
               <Link to="/admin/dashboard">
-                <Button size="sm" className="bg-white text-[#1F1D1A] hover:bg-[#FAF6F0] border border-[#5A5146]/15 rounded-full text-xs font-bold px-4 h-9.5 shadow-md flex items-center gap-1">
+                <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] text-white border border-[#E8DCC3] rounded-xl text-xs font-bold px-4 h-9.5 shadow-2xs flex items-center gap-1 cursor-pointer">
                   <ArrowLeft className="h-4 w-4 mr-0.5" /> Back to Dashboard
                 </Button>
               </Link>
@@ -161,14 +159,14 @@ export default function Reports() {
         </section>
 
         {/* STATISTICS OVERVIEW CARDS */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             
             {/* Total Revenue */}
-            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Revenue</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">$42,850 <span className="text-[10px] text-[#7A7266] font-semibold">USD</span></span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">$42,850 <span className="text-[10px] text-[#7A7266] font-medium">USD</span></span>
               </div>
               <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl shrink-0">
                 <DollarSign className="h-6 w-6" />

@@ -242,20 +242,18 @@ export default function ManageUsers() {
     <DashboardLayout>
       <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
-        {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-1.5">
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Manage Platform Users</h1>
-              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Audit profiles, modify roles, block accounts, or export databases</p>
+        {/* LIGHT RETRO BANNER HEADER */}
+        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-1">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Manage Platform Users</h1>
+              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Audit profiles, modify roles, block accounts, or export databases</p>
             </div>
             
             {/* Quick dashboard back button */}
             <Link to="/admin/dashboard">
-              <Button size="sm" className="bg-white/10 hover:bg-white/15 border border-white/5 rounded-full text-white text-xs font-bold px-5 h-9.5 backdrop-blur-xs">
-                <ArrowLeft className="h-4 w-4 text-white/60 mr-1" />
+              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] text-white border border-[#E8DCC3] rounded-xl text-xs font-bold px-5 h-9.5 shadow-2xs flex items-center gap-1 cursor-pointer">
+                <ArrowLeft className="h-4 w-4 mr-1" />
                 Back to Dashboard
               </Button>
             </Link>
@@ -263,26 +261,26 @@ export default function ManageUsers() {
         </section>
 
         {/* STATISTICS OVERVIEW CARDS */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-[#5A5146]/15 p-5 rounded-2xl shadow-md">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-[#E8DCC3] p-5 rounded-2xl shadow-2xs">
             
             <div className="text-center space-y-1 py-1">
-              <span className="block text-2xl font-black text-[#1F1D1A]">{stats.total}</span>
+              <span className="block text-2xl font-bold text-[#1F1D1A]">{stats.total}</span>
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Users</span>
             </div>
             
-            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
-              <span className="block text-2xl font-black text-emerald-600">{stats.active}</span>
+            <div className="text-center space-y-1 py-1 border-l border-[#E8DCC3]">
+              <span className="block text-2xl font-bold text-[#2B522B]">{stats.active}</span>
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Active Users</span>
             </div>
 
-            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
-              <span className="block text-2xl font-black text-rose-600">{stats.blocked}</span>
+            <div className="text-center space-y-1 py-1 border-l border-[#E8DCC3]">
+              <span className="block text-2xl font-bold text-[#8C4B3E]">{stats.blocked}</span>
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Blocked Users</span>
             </div>
 
-            <div className="text-center space-y-1 py-1 border-l border-[#5A5146]/15">
-              <span className="block text-2xl font-black text-[#1F1D1A]">+{stats.newCount}</span>
+            <div className="text-center space-y-1 py-1 border-l border-[#E8DCC3]">
+              <span className="block text-2xl font-bold text-[#C9A46A]">+{stats.newCount}</span>
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">New Today</span>
             </div>
 

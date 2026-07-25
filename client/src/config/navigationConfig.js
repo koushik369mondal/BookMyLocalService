@@ -14,8 +14,6 @@ import {
   ShieldCheck,
   FileText,
   TrendingUp,
-  Grid,
-  Layers,
   Calendar,
   Edit3
 } from "lucide-react";
@@ -48,7 +46,5 @@ export const adminMenu = [
   { label: "Payments", icon: CreditCard, path: "/admin/payments" },
   { label: "Reports", icon: FileText, path: "/admin/reports" },
   { label: "Analytics", icon: TrendingUp, path: "/admin/analytics" },
-  { label: "Categories", icon: Grid, path: "/categories" },
-  { label: "Services", icon: Layers, path: "/services" },
   { label: "Settings", icon: Settings, path: "/admin/settings" }
 ];
