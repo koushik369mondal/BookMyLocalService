@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
+import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -26,6 +27,7 @@ import {
 } from "lucide-react";
 
 export default function About() {
+  const { user } = useAuth();
   return (
     <MainLayout>
       <div className="bg-[#FAF6F0] min-h-screen font-sans antialiased text-[#1F1D1A]">
@@ -56,9 +58,9 @@ export default function About() {
                       <ArrowRight className="h-4 w-4" />
                     </Button>
                   </NavLink>
-                  <NavLink to="/register?role=PROVIDER" className="w-full sm:w-auto">
-                    <Button variant="outline" className="w-full sm:w-auto h-11 border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] rounded-xl px-7 font-bold transition-all">
-                      Become a Provider
+                  <NavLink to={user?.role === 'ADMIN' ? '/admin/dashboard' : '/provider/dashboard'} className="w-full sm:w-auto">
+                    <Button variant="outline" className="w-full sm:w-auto h-11 border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] rounded-xl px-7 font-bold transition-all cursor-pointer">
+                      {user?.role === 'PROVIDER' ? 'Provider Dashboard' : (user?.role === 'ADMIN' ? 'Admin Dashboard' : 'Become a Provider')}
                     </Button>
                   </NavLink>
                 </div>

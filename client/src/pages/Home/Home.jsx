@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -148,6 +149,7 @@ const testimonials = [
 ];
 
 export default function Home() {
+  const { user } = useAuth();
   const [dbServices, setDbServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -221,9 +223,12 @@ export default function Home() {
                       Book a Service
                     </Button>
                   </NavLink>
-                  <NavLink to="/provider/dashboard" className="w-full sm:w-auto">
-                    <Button size="lg" variant="outline" className="w-full sm:w-auto border-[#5A5146]/20 hover:border-stone-300 hover:bg-white hover:text-[#1F1D1A] text-[#8C4B3E] font-semibold rounded-xl px-8 h-12 sm:h-[48px] shadow-xs hover:shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base">
-                      Become a Provider
+                  <NavLink 
+                    to={user?.role === 'ADMIN' ? '/admin/dashboard' : '/provider/dashboard'} 
+                    className="w-full sm:w-auto"
+                  >
+                    <Button size="lg" variant="outline" className="w-full sm:w-auto border-[#E8DCC3] hover:border-[#C9A46A] hover:bg-white hover:text-[#1F1D1A] text-[#8C4B3E] font-semibold rounded-xl px-8 h-12 sm:h-[48px] shadow-2xs transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base cursor-pointer">
+                      {user?.role === 'PROVIDER' ? 'Provider Dashboard' : (user?.role === 'ADMIN' ? 'Admin Dashboard' : 'Become a Provider')}
                     </Button>
                   </NavLink>
                 </motion.div>

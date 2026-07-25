@@ -22,15 +22,6 @@ import {
 import { cn } from "@/lib/utils";
 import { useAuth } from "../../context/AuthContext";
 
-const navLinks = [
-  { name: 'Home', path: '/' },
-  { name: 'Services', path: '/services' },
-  { name: 'Categories', path: '/categories' },
-  { name: 'Become a Provider', path: '/provider/dashboard' },
-  { name: 'About', path: '/about' },
-  { name: 'Contact', path: '/contact' },
-];
-
 const mockNotifications = [
   { id: 1, title: "Booking Confirmed", desc: "Deep Home Cleaning scheduled for Tomorrow at 10:30 AM", time: "5 mins ago", icon: CheckCircle2, iconColor: "text-[#2B522B] bg-[#7DAB7D]/20", unread: true },
   { id: 2, title: "Specialist Assigned", desc: "Sarah Jenkins accepted your dispatch request in Brooklyn", time: "1 hour ago", icon: ShieldCheck, iconColor: "text-[#C9A46A] bg-[#F0E7D5]", unread: true },
@@ -41,6 +32,30 @@ const mockNotifications = [
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  // Dynamic role-based navbar links
+  const navLinks = React.useMemo(() => {
+    const items = [
+      { name: 'Home', path: '/' },
+      { name: 'Services', path: '/services' },
+      { name: 'Categories', path: '/categories' },
+    ];
+
+    if (user?.role === 'PROVIDER') {
+      items.push({ name: 'Provider Dashboard', path: '/provider/dashboard' });
+    } else if (user?.role === 'ADMIN') {
+      items.push({ name: 'Admin Dashboard', path: '/admin/dashboard' });
+    } else {
+      items.push({ name: 'Become a Provider', path: '/provider/dashboard' });
+    }
+
+    items.push(
+      { name: 'About', path: '/about' },
+      { name: 'Contact', path: '/contact' }
+    );
+
+    return items;
+  }, [user?.role]);
 
   // State management
   const [showDropdown, setShowDropdown] = useState(false);
