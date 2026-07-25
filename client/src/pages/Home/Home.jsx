@@ -189,7 +189,7 @@ export default function Home() {
       <div className="bg-[#FAF6F0] min-h-screen">
 
         {/* HERO SECTION */}
-        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-28 bg-[#FAF6F0]">
+        <section className="relative overflow-hidden pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 lg:pb-20 bg-[#FAF6F0]">
           <div className="absolute inset-0 bg-linear-to-b from-violet-950/5 to-transparent pointer-events-none"></div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -223,8 +223,8 @@ export default function Home() {
                       Book a Service
                     </Button>
                   </NavLink>
-                  <NavLink 
-                    to={user?.role === 'ADMIN' ? '/admin/dashboard' : '/provider/dashboard'} 
+                  <NavLink
+                    to={user?.role === 'ADMIN' ? '/admin/dashboard' : '/provider/dashboard'}
                     className="w-full sm:w-auto"
                   >
                     <Button size="lg" variant="outline" className="w-full sm:w-auto border-[#E8DCC3] hover:border-[#C9A46A] hover:bg-white hover:text-[#1F1D1A] text-[#8C4B3E] font-semibold rounded-xl px-8 h-12 sm:h-[48px] shadow-2xs transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base cursor-pointer">
