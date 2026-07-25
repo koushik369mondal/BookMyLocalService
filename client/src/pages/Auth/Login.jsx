@@ -105,201 +105,140 @@ export default function Login() {
 
   return (
     <MainLayout>
-      <div className="min-h-[85vh] bg-[#FAF6F0] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="min-h-[85vh] bg-[#FAF6F0] flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
 
-        {/* Container box */}
-        <div className="max-w-5xl w-full bg-white rounded-3xl border border-[#5A5146]/15 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] transition-all duration-300 hover:shadow-2xl">
+        {/* Brand Logo */}
+        <div className="mb-6 flex justify-center">
+          <Logo size={42} showText={true} />
+        </div>
 
-          {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-violet-950 via-violet-800 to-violet-950 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+        {/* Minimal Centered Card */}
+        <div className="max-w-md w-full bg-white rounded-3xl border border-[#E8DCC3] shadow-xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl">
 
-            {/* Mesh shapes and overlays */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
-            <div className="absolute -top-32 -left-32 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
-
-            <div className="relative z-10 shrink-0">
-              <Logo size={36} showText={true} />
-            </div>
-
-            {/* Testimonials or Stats Info Block */}
-            <div className="relative z-10 space-y-6 my-auto pt-10">
-              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-[#7A7266] border border-white/5 backdrop-blur-xs">
-                <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-                Verified Local Pros
-              </span>
-              <h2 className="text-3xl font-black leading-tight tracking-tight">
-                Find and Book Service Experts Near You.
-              </h2>
-              <p className="text-[#7A7266] text-sm leading-relaxed">
-                Connect with verified local cleaners, plumbers, electricians, and personal coaches. Manage schedules, messaging, and secured checkout all in one place.
-              </p>
-
-              {/* Verified Features list */}
-              <div className="space-y-3.5 pt-4">
-                {[
-                  "100% Background Checked Specialists",
-                  "Secure & Encrypted Booking Checkout",
-                  "Clear, Upfront Pricing Tiers"
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-[#7A7266]">
-                    <ShieldCheck className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Quote footer card */}
-            <div className="relative z-10 bg-white/10 border border-white/5 rounded-2xl p-4.5 backdrop-blur-xs">
-              <p className="text-xs italic text-[#7A7266] leading-relaxed">
-                "Finding a smart home electrician used to take hours. On BookMyLocalService, I matched and scheduled Marcus in under 5 minutes!"
-              </p>
-              <div className="flex items-center gap-2 mt-3">
-                <div className="w-6 h-6 rounded-full bg-[#E8DCC3] overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=40&h=40&q=80" alt="Client User" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <span className="block text-[11px] font-bold">Helena Rostova</span>
-                  <span className="text-[9px] text-white/60">Verified Customer</span>
-                </div>
-              </div>
-            </div>
-
+          {/* Title Header */}
+          <div className="space-y-1.5 mb-8 text-center">
+            <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Login to your account</h1>
+            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">Enter your email to receive a secure login code</p>
           </div>
 
-          {/* RIGHT PANEL: AUTHENTICATION FORM CARD */}
-          <div className="lg:col-span-7 p-8 sm:p-12 md:p-14 flex flex-col justify-center bg-white relative">
+          {/* Success and Error Banners */}
+          {errorMsg && (
+            <div className="mb-6 flex flex-col gap-3 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
+              <div className="flex items-start gap-2.5">
+                <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
+                <span>{errorMsg}</span>
+              </div>
+              {errorMsg.toLowerCase().includes("no account found") && (
+                <Button
+                  type="button"
+                  onClick={() => navigate("/register", { state: { email: watch("email") } })}
+                  className="self-start mt-1 h-8 bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-[11px] rounded-lg px-4 flex items-center gap-1 shadow-sm transition-all"
+                >
+                  Create Account
+                  <ArrowRight className="h-3 w-3 text-white" />
+                </Button>
+              )}
+            </div>
+          )}
 
-            {/* Platform branding on mobile */}
-            <div className="lg:hidden mb-6 flex justify-center">
-              <Logo size={32} showText={true} />
+          {successMsg && (
+            <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
+              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
+              <span>{successMsg}</span>
+            </div>
+          )}
+
+          {/* FORM */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+
+            {/* Email Field */}
+            <div className="space-y-1.5">
+              <Label htmlFor="email" className="text-xs font-bold text-[#1F1D1A]">Email Address</Label>
+              <div className="relative">
+                <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#8C4B3E]/60">
+                  <Mail className="h-4 w-4" />
+                </span>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="name@example.com"
+                  className={`pl-10 h-11 border-[#E8DCC3] focus:ring-2 focus:ring-[#8C4B3E] focus:border-[#8C4B3E] rounded-xl text-xs bg-[#FAF6F0]/30 ${errors.email ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
+                    }`}
+                  disabled={isSubmitting}
+                  {...register("email")}
+                />
+              </div>
+              {errors.email && (
+                <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
+                  <ShieldAlert className="h-3 w-3" />
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
-            <div className="space-y-2 mb-8 text-center lg:text-left">
-              <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Login securely with Email OTP</h1>
-              <p className="text-sm text-[#7A7266] font-medium">Enter your email to receive a secure login code</p>
+            {/* Login Button */}
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full h-11 bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01] cursor-pointer"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin text-white" />
+                  Sending verification code...
+                </>
+              ) : (
+                <>
+                  Send Login OTP
+                  <ArrowRight className="h-4 w-4 text-white/70" />
+                </>
+              )}
+            </Button>
+          </form>
+
+          {/* OR Continue With Divider */}
+          <div className="relative my-6 shrink-0">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[#E8DCC3]"></div>
             </div>
-
-            {/* Success and Error Banners */}
-            {errorMsg && (
-              <div className="mb-6 flex flex-col gap-3 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-                <div className="flex items-start gap-2.5">
-                  <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
-                  <span>{errorMsg}</span>
-                </div>
-                {errorMsg.toLowerCase().includes("no account found") && (
-                  <Button
-                    type="button"
-                    onClick={() => navigate("/register", { state: { email: watch("email") } })}
-                    className="self-start mt-1 h-8 bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-[11px] rounded-lg px-4 flex items-center gap-1 shadow-sm transition-all"
-                  >
-                    Create Account
-                    <ArrowRight className="h-3 w-3 text-white" />
-                  </Button>
-                )}
-              </div>
-            )}
-
-            {successMsg && (
-              <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-                <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
-                <span>{successMsg}</span>
-              </div>
-            )}
-
-            {/* FORM */}
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5.5">
-
-              {/* Email Field */}
-              <div className="space-y-1.5">
-                <Label htmlFor="email" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
-                    <Mail className="h-4 w-4" />
-                  </span>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="name@example.com"
-                    className={`pl-10 h-11 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${errors.email ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
-                      }`}
-                    disabled={isSubmitting}
-                    {...register("email")}
-                  />
-                </div>
-                {errors.email && (
-                  <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
-                    <ShieldAlert className="h-3 w-3" />
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Login Button */}
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full h-11 bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin text-white" />
-                    Sending verification code...
-                  </>
-                ) : (
-                  <>
-                    Send Login OTP
-                    <ArrowRight className="h-4 w-4 text-white/60" />
-                  </>
-                )}
-              </Button>
-            </form>
-
-            {/* OR Continue With Divider */}
-            <div className="relative my-7 shrink-0">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-[#5A5146]/15"></div>
-              </div>
-              <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider text-[#7A7266]">
-                <span className="bg-white px-3.5">or continue with</span>
-              </div>
+            <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider text-[#7A7266]">
+              <span className="bg-white px-3.5">or continue with</span>
             </div>
+          </div>
 
-            {/* Social Oauth Buttons */}
-            <div className="grid grid-cols-2 gap-4 shrink-0">
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isSubmitting}
-                onClick={() => handleSocialSignIn("Google")}
-                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#8C4B3E] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
-              >
-                <GoogleIcon className="h-4 w-4" />
-                Google
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isSubmitting}
-                onClick={() => handleSocialSignIn("GitHub")}
-                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#8C4B3E] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
-              >
-                <GitHubIcon className="h-4 w-4 text-[#1F1D1A]" />
-                GitHub
-              </Button>
-            </div>
+          {/* Social Oauth Buttons */}
+          <div className="grid grid-cols-2 gap-3.5 shrink-0">
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isSubmitting}
+              onClick={() => handleSocialSignIn("Google")}
+              className="border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            >
+              <GoogleIcon className="h-4 w-4" />
+              Google
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isSubmitting}
+              onClick={() => handleSocialSignIn("GitHub")}
+              className="border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            >
+              <GitHubIcon className="h-4 w-4 text-[#1F1D1A]" />
+              GitHub
+            </Button>
+          </div>
 
-            {/* Sign Up Link */}
-            <div className="mt-8 text-center text-xs font-semibold text-[#7A7266]">
-              Don't have an account yet?{" "}
-              <Link
-                to="/register"
-                className="text-[#1F1D1A] hover:text-[#C9A46A] transition-colors font-bold hover:underline"
-              >
-                Create client account
-              </Link>
-            </div>
-
+          {/* Sign Up Link */}
+          <div className="mt-8 text-center text-xs font-semibold text-[#5A5146]">
+            Don't have an account yet?{" "}
+            <Link
+              to="/register"
+              className="text-[#8C4B3E] hover:text-[#C9A46A] transition-colors font-bold hover:underline"
+            >
+              Create client account
+            </Link>
           </div>
 
         </div>

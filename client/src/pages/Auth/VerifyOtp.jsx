@@ -161,178 +161,118 @@ export default function VerifyOtp() {
 
   return (
     <MainLayout>
-      <div className="min-h-[85vh] bg-[#FAF6F0] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="min-h-[85vh] bg-[#FAF6F0] flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
 
-        {/* Container box */}
-        <div className="max-w-5xl w-full bg-white rounded-3xl border border-[#5A5146]/15 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] transition-all duration-300 hover:shadow-2xl">
+        {/* Brand Logo */}
+        <div className="mb-6 flex justify-center">
+          <Logo size={42} showText={true} />
+        </div>
 
-          {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-violet-950 via-violet-800 to-violet-950 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+        {/* Minimal Centered Card */}
+        <div className="max-w-md w-full bg-white rounded-3xl border border-[#E8DCC3] shadow-xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl">
 
-            {/* Mesh shapes and overlays */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
-            <div className="absolute -top-32 -left-32 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
-
-            <div className="relative z-10 shrink-0">
-              <Logo size={36} showText={true} />
-            </div>
-
-            {/* Stats Info Block */}
-            <div className="relative z-10 space-y-6 my-auto pt-10">
-              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-[#7A7266] border border-white/5 backdrop-blur-xs">
-                <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-                Verified Local Pros
-              </span>
-              <h2 className="text-3xl font-black leading-tight tracking-tight">
-                Secure & Fast Access.
-              </h2>
-              <p className="text-[#7A7266] text-sm leading-relaxed">
-                Connect with verified local cleaners, plumbers, electricians, and personal coaches. Manage schedules, messaging, and secured checkout all in one place.
-              </p>
-
-              {/* Verified Features list */}
-              <div className="space-y-3.5 pt-4">
-                {[
-                  "100% Background Checked Specialists",
-                  "Secure & Encrypted Booking Checkout",
-                  "Clear, Upfront Pricing Tiers"
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-[#7A7266]">
-                    <ShieldCheck className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Quote footer card */}
-            <div className="relative z-10 bg-white/10 border border-white/5 rounded-2xl p-4.5 backdrop-blur-xs">
-              <p className="text-xs italic text-[#7A7266] leading-relaxed">
-                "Finding a smart home electrician used to take hours. On BookMyLocalService, I matched and scheduled Marcus in under 5 minutes!"
-              </p>
-              <div className="flex items-center gap-2 mt-3">
-                <div className="w-6 h-6 rounded-full bg-[#E8DCC3] overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=40&h=40&q=80" alt="Client User" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <span className="block text-[11px] font-bold">Helena Rostova</span>
-                  <span className="text-[9px] text-white/60">Verified Customer</span>
-                </div>
-              </div>
-            </div>
-
+          {/* Title Header */}
+          <div className="space-y-1.5 mb-8 text-center">
+            <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Verify your Email</h1>
+            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">
+              We sent a 6-digit verification code to <br className="hidden sm:inline" />
+              <strong className="text-[#1F1D1A] font-bold">{email}</strong>
+            </p>
           </div>
 
-          {/* RIGHT PANEL: AUTHENTICATION FORM CARD */}
-          <div className="lg:col-span-7 p-8 sm:p-12 md:p-14 flex flex-col justify-center bg-white relative">
+          {/* OTP VERIFICATION FORM */}
+          <form onSubmit={handleVerify} className="space-y-6">
+            <div className="space-y-3">
+              <label className="text-xs font-bold text-[#1F1D1A] block text-center">
+                Enter 6-Digit Verification Code
+              </label>
 
-            {/* Platform branding on mobile */}
-            <div className="lg:hidden mb-6 flex justify-center">
-              <Logo size={32} showText={true} />
-            </div>
+              {/* 6 Digit Inputs */}
+              <div className="flex justify-between gap-2 max-w-xs mx-auto">
+                {otp.map((data, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    maxLength="1"
+                    ref={(el) => (inputRefs.current[index] = el)}
+                    onChange={(e) => handleChange(e.target, index)}
+                    onKeyDown={(e) => handleKeyDown(e, index)}
+                    onPaste={handlePaste}
+                    value={data}
+                    className="w-11 h-13 text-center text-xl font-bold border border-[#E8DCC3] rounded-xl bg-[#FAF6F0]/30 focus:ring-2 focus:ring-[#8C4B3E] focus:border-[#8C4B3E] outline-none transition-all shadow-2xs"
+                    disabled={isSubmitting || isResending}
+                  />
+                ))}
+              </div>
 
-            <div className="space-y-2 mb-8 text-center lg:text-left">
-              <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Verify your Email</h1>
-              <p className="text-sm text-[#7A7266] font-medium">
-                We sent a 6-digit verification code to <strong className="text-[#1F1D1A]">{email}</strong>.
+              <p className="text-[11px] text-[#5A5146] text-center">
+                The code will expire in <span className="font-semibold text-[#8C4B3E]">5 minutes</span>.
               </p>
             </div>
 
-            {/* OTP VERIFICATION FORM */}
-            <form onSubmit={handleVerify} className="space-y-6">
-              <div className="space-y-3">
-                <label className="text-xs font-bold text-[#8C4B3E] block text-center lg:text-left">
-                  Enter 6-Digit OTP Code
-                </label>
+            {/* Submit Button */}
+            <Button
+              type="submit"
+              disabled={isSubmitting || isResending || otp.join("").length !== 6}
+              className="w-full h-11 bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01] cursor-pointer"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin text-white" />
+                  Verifying code...
+                </>
+              ) : (
+                <>
+                  Verify & Sign In
+                  <ArrowRight className="h-4 w-4 text-white/70" />
+                </>
+              )}
+            </Button>
+          </form>
 
-                {/* 6 Digit Inputs */}
-                <div className="flex justify-between gap-2 max-w-sm mx-auto lg:mx-0">
-                  {otp.map((data, index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      maxLength="1"
-                      ref={(el) => (inputRefs.current[index] = el)}
-                      onChange={(e) => handleChange(e.target, index)}
-                      onKeyDown={(e) => handleKeyDown(e, index)}
-                      onPaste={handlePaste}
-                      value={data}
-                      className="w-12 h-14 text-center text-xl font-bold border border-[#5A5146]/20 rounded-xl bg-white focus:ring-2 focus:ring-violet-950 focus:border-violet-950 outline-none transition-all shadow-sm"
-                      disabled={isSubmitting || isResending}
-                    />
-                  ))}
-                </div>
-
-                <p className="text-[11px] text-[#7A7266] text-center lg:text-left">
-                  The code will expire in <span className="font-semibold text-[#8C4B3E]">5 minutes</span>.
-                </p>
+          {/* RESEND SECTION */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl">
+            <div className="flex items-center gap-3">
+              <span className="p-2 bg-white rounded-xl shadow-2xs text-[#8C4B3E]">
+                <Mail className="h-4 w-4" />
+              </span>
+              <div>
+                <span className="block text-xs font-bold text-[#1F1D1A]">Didn't receive code?</span>
+                <span className="text-[10px] text-[#5A5146] font-medium">Check spam folder or retry</span>
               </div>
-
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                disabled={isSubmitting || isResending || otp.join("").length !== 6}
-                className="w-full h-11 bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin text-white" />
-                    Verifying code...
-                  </>
-                ) : (
-                  <>
-                    Verify & Sign In
-                    <ArrowRight className="h-4 w-4 text-white/60" />
-                  </>
-                )}
-              </Button>
-            </form>
-
-            {/* RESEND SECTION */}
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4.5 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl">
-              <div className="flex items-center gap-3">
-                <span className="p-2 bg-white rounded-xl shadow-2xs text-[#7A7266]">
-                  <Mail className="h-4.5 w-4.5" />
-                </span>
-                <div>
-                  <span className="block text-xs font-bold text-[#8C4B3E]">Didn't receive the email?</span>
-                  <span className="text-[10px] text-[#7A7266] font-medium">Check your spam folder or try again.</span>
-                </div>
-              </div>
-
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleResend}
-                disabled={!canResend || isResending || isSubmitting}
-                className={`h-9 font-extrabold text-xs rounded-xl flex items-center gap-1.5 shadow-2xs border-[#5A5146]/20 bg-white ${canResend ? "text-[#1F1D1A] hover:bg-[#FAF6F0] cursor-pointer" : "text-[#7A7266]"
-                  }`}
-              >
-                {isResending ? (
-                  <>
-                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <RotateCw className="h-3.5 w-3.5" />
-                    {canResend ? "Resend OTP" : `Resend in ${timer}s`}
-                  </>
-                )}
-              </Button>
             </div>
 
-            {/* Back to Login Link */}
-            <div className="mt-8 text-center text-xs font-semibold text-[#7A7266]">
-              <button
-                type="button"
-                onClick={() => navigate("/login")}
-                className="text-[#1F1D1A] hover:text-[#C9A46A] transition-colors font-bold hover:underline"
-              >
-                Back to email entry
-              </button>
-            </div>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleResend}
+              disabled={!canResend || isResending || isSubmitting}
+              className={`h-9 font-extrabold text-xs rounded-xl flex items-center gap-1.5 shadow-2xs border-[#E8DCC3] bg-white shrink-0 ${canResend ? "text-[#8C4B3E] hover:bg-[#FAF6F0] cursor-pointer" : "text-[#7A7266]"
+                }`}
+            >
+              {isResending ? (
+                <>
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <RotateCw className="h-3.5 w-3.5" />
+                  {canResend ? "Resend Code" : `Resend in ${timer}s`}
+                </>
+              )}
+            </Button>
+          </div>
 
+          {/* Back to Login Link */}
+          <div className="mt-8 text-center text-xs font-semibold text-[#5A5146]">
+            <button
+              type="button"
+              onClick={() => navigate("/login")}
+              className="text-[#8C4B3E] hover:text-[#C9A46A] transition-colors font-bold hover:underline cursor-pointer"
+            >
+              Back to email entry
+            </button>
           </div>
 
         </div>

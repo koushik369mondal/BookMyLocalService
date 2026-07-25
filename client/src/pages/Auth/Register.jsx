@@ -139,318 +139,239 @@ export default function Register() {
 
   return (
     <MainLayout>
-      <div className="min-h-[85vh] bg-[#FAF6F0] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="min-h-[85vh] bg-[#FAF6F0] flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
 
-        {/* Container box */}
-        <div className="max-w-5xl w-full bg-white rounded-3xl border border-[#5A5146]/15 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[650px] transition-all duration-300 hover:shadow-2xl">
+        {/* Brand Logo */}
+        <div className="mb-6 flex justify-center">
+          <Logo size={42} showText={true} />
+        </div>
 
-          {/* LEFT PANEL: PLATFORM PRESENTATION BANNER (DESKTOP ONLY) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-violet-950 via-violet-800 to-violet-950 p-10 text-white flex flex-col justify-between relative overflow-hidden hidden lg:flex">
+        {/* Minimal Centered Card */}
+        <div className="max-w-lg w-full bg-white rounded-3xl border border-[#E8DCC3] shadow-xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl">
 
-            {/* Mesh shapes and overlays */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_45%)]"></div>
-            <div className="absolute -top-32 -left-32 w-64 h-64 bg-white/5 rounded-full blur-2xl"></div>
+          {/* Title Header */}
+          <div className="space-y-1.5 mb-8 text-center">
+            <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Create your account</h1>
+            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">Join BookMyLocalService to manage your bookings</p>
+          </div>
 
-            <div className="relative z-10 shrink-0">
-              <Logo size={36} showText={true} />
+          {/* Error & Success Notice Banners */}
+          {errorMsg && (
+            <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
+              <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
+          {successMsg && (
+            <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
+              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
+              <span>{successMsg}</span>
+            </div>
+          )}
+
+          {/* FORM */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4.5">
+
+            {/* Role Switcher Tabs */}
+            <div className="space-y-1.5">
+              <Label className="text-xs font-bold text-[#1F1D1A]">I want to register as a:</Label>
+              <div className="grid grid-cols-2 bg-[#FAF6F0] border border-[#E8DCC3] p-1.5 rounded-xl h-12">
+                <button
+                  type="button"
+                  onClick={() => setValue("role", "customer")}
+                  disabled={isSubmitting}
+                  className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${selectedRole === "customer"
+                      ? "bg-[#8C4B3E] text-white shadow-sm"
+                      : "text-[#5A5146] hover:text-[#8C4B3E]"
+                    }`}
+                >
+                  <User className="h-3.5 w-3.5" />
+                  Customer / Client
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setValue("role", "provider")}
+                  disabled={isSubmitting}
+                  className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${selectedRole === "provider"
+                      ? "bg-[#8C4B3E] text-white shadow-sm"
+                      : "text-[#5A5146] hover:text-[#8C4B3E]"
+                    }`}
+                >
+                  <Briefcase className="h-3.5 w-3.5" />
+                  Service Provider
+                </button>
+              </div>
             </div>
 
-            {/* Benefit statements block matching the active role tab */}
-            <div className="relative z-10 space-y-6 my-auto pt-8">
-              <span className="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-[#7A7266] border border-white/5 backdrop-blur-xs">
-                <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-                Join the Platform
-              </span>
-
-              {selectedRole === "customer" ? (
-                <div className="space-y-4 animate-fade-in">
-                  <h2 className="text-3xl font-black leading-tight tracking-tight">
-                    Get Things Done with Verified Experts.
-                  </h2>
-                  <p className="text-[#7A7266] text-sm leading-relaxed">
-                    Create a free account to compare reviews, book appointments instantly, and manage transactions securely.
-                  </p>
-
-                  <div className="space-y-3.5 pt-4">
-                    {[
-                      "Over 120+ Service Specialties",
-                      "Verified Service Guarantee",
-                      "Easy Booking Calendar & Schedule Slots"
-                    ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-[#7A7266]">
-                        <UserCheck className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-4 animate-fade-in">
-                  <h2 className="text-3xl font-black leading-tight tracking-tight">
-                    Grow Your Service Business.
-                  </h2>
-                  <p className="text-[#7A7266] text-sm leading-relaxed">
-                    Register as a service provider to list your specialties, accept online bookings, structure pricing tiers, and find local customers.
-                  </p>
-
-                  <div className="space-y-3.5 pt-4">
-                    {[
-                      "Zero Registration Setup Fees",
-                      "Keep 100% of Your Standard Rates",
-                      "Interactive Provider Dashboard Included"
-                    ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3 text-xs font-semibold text-[#7A7266]">
-                        <Briefcase className="h-4.5 w-4.5 text-emerald-400 shrink-0" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            {/* Full Name */}
+            <div className="space-y-1.5">
+              <Label htmlFor="fullName" className="text-xs font-bold text-[#1F1D1A]">Full Name</Label>
+              <div className="relative">
+                <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#8C4B3E]/60">
+                  <User className="h-4 w-4" />
+                </span>
+                <Input
+                  id="fullName"
+                  placeholder="e.g. Amanda Watson"
+                  className={`pl-10 h-10 border-[#E8DCC3] focus:ring-2 focus:ring-[#8C4B3E] focus:border-[#8C4B3E] rounded-xl text-xs bg-[#FAF6F0]/30 ${errors.fullName ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
+                    }`}
+                  disabled={isSubmitting}
+                  {...register("fullName")}
+                />
+              </div>
+              {errors.fullName && (
+                <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
+                  <ShieldAlert className="h-3 w-3" />
+                  {errors.fullName.message}
+                </p>
               )}
             </div>
 
-            {/* Footer note */}
-            <div className="relative z-10 bg-white/10 border border-white/5 rounded-2xl p-4 backdrop-blur-xs">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-white/60 block mb-1">Identity Safety</span>
-              <p className="text-[11px] text-[#7A7266] leading-relaxed">
-                All data transfers are protected under 256-bit encryption protocols. We never share your personal information with unverified third parties.
-              </p>
-            </div>
+            {/* Grid: Email & Phone */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-          </div>
-
-          {/* RIGHT PANEL: REGISTRATION FORM CARD */}
-          <div className="lg:col-span-7 p-8 sm:p-12 md:p-14 flex flex-col justify-center bg-white relative">
-
-            {/* Brand logo on mobile */}
-            <div className="lg:hidden mb-6 flex justify-center">
-              <Logo size={32} showText={true} />
-            </div>
-
-            <div className="space-y-2 mb-8 text-center lg:text-left">
-              <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Create your account using Email OTP</h1>
-              <p className="text-sm text-[#7A7266] font-medium">Join BookMyLocalService to manage your bookings</p>
-            </div>
-
-            {/* Error & Success Notice Banners */}
-            {errorMsg && (
-              <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-                <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
-                <span>{errorMsg}</span>
-              </div>
-            )}
-
-            {successMsg && (
-              <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-                <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
-                <span>{successMsg}</span>
-              </div>
-            )}
-
-            {/* FORM */}
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4.5">
-
-              {/* Role Switcher Tabs */}
+              {/* Email address */}
               <div className="space-y-1.5">
-                <Label className="text-xs font-bold text-[#8C4B3E]">I want to register as a:</Label>
-                <div className="grid grid-cols-2 bg-[#FAF6F0] border border-[#5A5146]/20 p-1.5 rounded-xl h-12">
-                  <button
-                    type="button"
-                    onClick={() => setValue("role", "customer")}
-                    disabled={isSubmitting}
-                    className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedRole === "customer"
-                        ? "bg-white text-[#1F1D1A] shadow-xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#8C4B3E]"
-                      }`}
-                  >
-                    <User className="h-3.5 w-3.5" />
-                    Customer / Client
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setValue("role", "provider")}
-                    disabled={isSubmitting}
-                    className={`rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${selectedRole === "provider"
-                        ? "bg-white text-[#1F1D1A] shadow-xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#8C4B3E]"
-                      }`}
-                  >
-                    <Briefcase className="h-3.5 w-3.5" />
-                    Service Provider
-                  </button>
-                </div>
-              </div>
-
-              {/* Full Name */}
-              <div className="space-y-1.5">
-                <Label htmlFor="fullName" className="text-xs font-bold text-[#8C4B3E]">Full Name</Label>
+                <Label htmlFor="email" className="text-xs font-bold text-[#1F1D1A]">Email Address</Label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
-                    <User className="h-4 w-4" />
+                  <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#8C4B3E]/60">
+                    <Mail className="h-4 w-4" />
                   </span>
                   <Input
-                    id="fullName"
-                    placeholder="e.g. Amanda Watson"
-                    className={`pl-10 h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${errors.fullName ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
+                    id="email"
+                    type="email"
+                    placeholder="name@example.com"
+                    className={`pl-10 h-10 border-[#E8DCC3] focus:ring-2 focus:ring-[#8C4B3E] focus:border-[#8C4B3E] rounded-xl text-xs bg-[#FAF6F0]/30 ${errors.email ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
                       }`}
                     disabled={isSubmitting}
-                    {...register("fullName")}
+                    {...register("email")}
                   />
                 </div>
-                {errors.fullName && (
+                {errors.email && (
                   <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
                     <ShieldAlert className="h-3 w-3" />
-                    {errors.fullName.message}
+                    {errors.email.message}
                   </p>
                 )}
               </div>
 
-              {/* Grid: Email & Phone */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                {/* Email address */}
-                <div className="space-y-1.5">
-                  <Label htmlFor="email" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
-                  <div className="relative">
-                    <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
-                      <Mail className="h-4 w-4" />
-                    </span>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="name@example.com"
-                      className={`pl-10 h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${errors.email ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
-                        }`}
-                      disabled={isSubmitting}
-                      {...register("email")}
-                    />
-                  </div>
-                  {errors.email && (
-                    <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
-                      <ShieldAlert className="h-3 w-3" />
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Phone number */}
-                <div className="space-y-1.5">
-                  <Label htmlFor="phone" className="text-xs font-bold text-[#8C4B3E]">Phone Number</Label>
-                  <div className="relative">
-                    <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#7A7266]">
-                      <Phone className="h-4 w-4" />
-                    </span>
-                    <Input
-                      id="phone"
-                      placeholder="123-456-7890"
-                      className={`pl-10 h-10 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 rounded-xl text-xs bg-white ${errors.phone ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
-                        }`}
-                      disabled={isSubmitting}
-                      {...register("phone")}
-                    />
-                  </div>
-                  {errors.phone && (
-                    <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
-                      <ShieldAlert className="h-3 w-3" />
-                      {errors.phone.message}
-                    </p>
-                  )}
-                </div>
-
-              </div>
-
-              {/* Accept Terms Checkbox */}
-              <div className="space-y-1.5 pt-1">
-                <div className="flex items-start space-x-2.5">
-                  <Checkbox
-                    id="acceptTerms"
-                    checked={acceptTermsValue}
-                    onCheckedChange={(checked) => setValue("acceptTerms", checked === true)}
+              {/* Phone number */}
+              <div className="space-y-1.5">
+                <Label htmlFor="phone" className="text-xs font-bold text-[#1F1D1A]">Phone Number</Label>
+                <div className="relative">
+                  <span className="absolute left-3.5 top-[50%] translate-y-[-50%] text-[#8C4B3E]/60">
+                    <Phone className="h-4 w-4" />
+                  </span>
+                  <Input
+                    id="phone"
+                    placeholder="123-456-7890"
+                    className={`pl-10 h-10 border-[#E8DCC3] focus:ring-2 focus:ring-[#8C4B3E] focus:border-[#8C4B3E] rounded-xl text-xs bg-[#FAF6F0]/30 ${errors.phone ? "border-rose-400 focus:ring-rose-500 focus:border-rose-500" : ""
+                      }`}
                     disabled={isSubmitting}
-                    className="rounded-md border-stone-300 bg-white mt-0.5"
+                    {...register("phone")}
                   />
-                  <label
-                    htmlFor="acceptTerms"
-                    className="text-xs font-semibold text-slate-550 leading-relaxed cursor-pointer select-none"
-                  >
-                    I agree to the BookMyLocalService{" "}
-                    <Link to="/terms" className="text-[#1F1D1A] hover:text-[#C9A46A] hover:underline">Terms of Service</Link> and{" "}
-                    <Link to="/privacy" className="text-[#1F1D1A] hover:text-[#C9A46A] hover:underline">Privacy Policy</Link>.
-                  </label>
                 </div>
-                {errors.acceptTerms && (
+                {errors.phone && (
                   <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
                     <ShieldAlert className="h-3 w-3" />
-                    {errors.acceptTerms.message}
+                    {errors.phone.message}
                   </p>
                 )}
               </div>
 
-              {/* Register Submit Button */}
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full h-11 bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin text-white" />
-                    Sending verification code...
-                  </>
-                ) : (
-                  <>
-                    Continue with Email OTP
-                    <ArrowRight className="h-4 w-4 text-white/60" />
-                  </>
-                )}
-              </Button>
-            </form>
+            </div>
 
-            {/* Continue with divider */}
-            <div className="relative my-6 shrink-0">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-[#5A5146]/15"></div>
+            {/* Accept Terms Checkbox */}
+            <div className="space-y-1.5 pt-1">
+              <div className="flex items-start space-x-2.5">
+                <Checkbox
+                  id="acceptTerms"
+                  checked={acceptTermsValue}
+                  onCheckedChange={(checked) => setValue("acceptTerms", checked === true)}
+                  disabled={isSubmitting}
+                  className="rounded-md border-[#E8DCC3] data-[state=checked]:bg-[#8C4B3E] data-[state=checked]:border-[#8C4B3E] bg-white mt-0.5"
+                />
+                <label
+                  htmlFor="acceptTerms"
+                  className="text-xs font-semibold text-[#5A5146] leading-relaxed cursor-pointer select-none"
+                >
+                  I agree to the BookMyLocalService{" "}
+                  <Link to="/terms" className="text-[#8C4B3E] hover:text-[#C9A46A] hover:underline">Terms of Service</Link> and{" "}
+                  <Link to="/privacy" className="text-[#8C4B3E] hover:text-[#C9A46A] hover:underline">Privacy Policy</Link>.
+                </label>
               </div>
-              <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider text-[#7A7266]">
-                <span className="bg-white px-3.5">or continue with</span>
-              </div>
+              {errors.acceptTerms && (
+                <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-1">
+                  <ShieldAlert className="h-3 w-3" />
+                  {errors.acceptTerms.message}
+                </p>
+              )}
             </div>
 
-            {/* Social oauth buttons */}
-            <div className="grid grid-cols-2 gap-4 shrink-0">
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isSubmitting}
-                onClick={() => handleSocialSignUp("Google")}
-                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#8C4B3E] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
-              >
-                <GoogleIcon className="h-4 w-4" />
-                Google
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isSubmitting}
-                onClick={() => handleSocialSignUp("GitHub")}
-                className="border-[#5A5146]/20 bg-white hover:bg-[#FAF6F0] text-[#8C4B3E] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2"
-              >
-                <GitHubIcon className="h-4 w-4 text-[#1F1D1A]" />
-                GitHub
-              </Button>
-            </div>
+            {/* Register Submit Button */}
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full h-11 bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01] cursor-pointer"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin text-white" />
+                  Sending verification code...
+                </>
+              ) : (
+                <>
+                  Continue with Email OTP
+                  <ArrowRight className="h-4 w-4 text-white/70" />
+                </>
+              )}
+            </Button>
+          </form>
 
-            {/* Redirect to login */}
-            <div className="mt-8 text-center text-xs font-semibold text-[#7A7266]">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="text-[#1F1D1A] hover:text-[#C9A46A] transition-colors font-bold hover:underline"
-              >
-                Sign In
-              </Link>
+          {/* Continue with divider */}
+          <div className="relative my-6 shrink-0">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[#E8DCC3]"></div>
             </div>
+            <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider text-[#7A7266]">
+              <span className="bg-white px-3.5">or continue with</span>
+            </div>
+          </div>
 
+          {/* Social oauth buttons */}
+          <div className="grid grid-cols-2 gap-3.5 shrink-0">
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isSubmitting}
+              onClick={() => handleSocialSignUp("Google")}
+              className="border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            >
+              <GoogleIcon className="h-4 w-4" />
+              Google
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isSubmitting}
+              onClick={() => handleSocialSignUp("GitHub")}
+              className="border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            >
+              <GitHubIcon className="h-4 w-4 text-[#1F1D1A]" />
+              GitHub
+            </Button>
+          </div>
+
+          {/* Redirect to login */}
+          <div className="mt-8 text-center text-xs font-semibold text-[#5A5146]">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-[#8C4B3E] hover:text-[#C9A46A] transition-colors font-bold hover:underline"
+            >
+              Sign In
+            </Link>
           </div>
 
         </div>
