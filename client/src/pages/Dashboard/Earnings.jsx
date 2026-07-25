@@ -17,25 +17,15 @@ import {
 import {
   TrendingUp,
   DollarSign,
-  Calendar,
   Clock,
-  ArrowUpRight,
   Download,
   CreditCard,
-  Printer,
   Loader2,
   ShieldCheck,
   CheckCircle2,
-  SlidersHorizontal,
-  ChevronLeft,
-  ChevronRight,
-  Info,
   Lock,
   ArrowLeft,
-  AlertCircle,
-  Building,
-  Check,
-  ChevronDown
+  AlertCircle
 } from "lucide-react";
 
 // Mock daily earnings
@@ -102,7 +92,6 @@ export default function Earnings() {
 
   // General notification triggers
   const [successMsg, setSuccessMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
   const [isDownloading, setIsDownloading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -170,16 +159,13 @@ export default function Earnings() {
   // Filter calculations
   const filteredTransactions = React.useMemo(() => {
     return transactions.filter(txn => {
-      // Search matching
       const matchesSearch =
         txn.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         txn.serviceName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         txn.id.toLowerCase().includes(searchQuery.toLowerCase());
 
-      // Status matching
       const matchesStatus = statusFilter === "all" || txn.status === statusFilter;
 
-      // Dates matching
       let matchesDate = true;
       if (dateFrom) {
         matchesDate = matchesDate && new Date(txn.date) >= new Date(dateFrom);
@@ -198,7 +184,6 @@ export default function Earnings() {
   const chartHeight = 130;
   const chartWidth = 500;
 
-  // Custom styled SVG bars coordinates
   const barWidth = 30;
   const spacing = (chartWidth - 40) / activeChartData.length;
 
@@ -206,35 +191,32 @@ export default function Earnings() {
     <DashboardLayout>
       <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
 
-        {/* BANNER HEADER */}
-        <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-1.5">
-              <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Earnings & Settlements</h1>
-              <p className="text-[#7A7266] text-xs sm:text-sm font-medium">Verify payout logs, trace transaction references, or withdraw cleared funds</p>
+        {/* LIGHT RETRO BANNER HEADER */}
+        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-1">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Earnings & Settlements</h1>
+              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Verify payout logs, trace transaction references, or withdraw cleared funds</p>
             </div>
 
-            {/* Quick dashboard back button */}
             <div className="flex items-center gap-3.5 flex-wrap">
               <Button
                 onClick={handleDownloadReport}
                 disabled={isDownloading}
                 size="sm"
-                className="bg-white/10 hover:bg-white/15 border border-white/5 rounded-full text-white text-xs font-bold px-5 h-9.5 backdrop-blur-xs flex items-center gap-1.5"
+                className="bg-[#FAF6F0] hover:bg-[#F0E7D5] text-[#1F1D1A] border border-[#E8DCC3] rounded-xl text-xs font-bold px-5 h-9.5 flex items-center gap-1.5 cursor-pointer shadow-2xs"
               >
                 {isDownloading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin text-[#C9A46A]" />
                 ) : (
-                  <Download className="h-4 w-4 text-white/60" />
+                  <Download className="h-4 w-4 text-[#C9A46A]" />
                 )}
                 Download Report
               </Button>
 
               <Link to="/provider/dashboard">
-                <Button size="sm" className="bg-white text-[#1F1D1A] hover:bg-[#FAF6F0] rounded-full text-xs font-bold px-5 h-9.5 shadow-md flex items-center gap-1.5">
-                  <ArrowLeft className="h-4 w-4 text-[#1F1D1A]" />
+                <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] text-white border border-[#E8DCC3] rounded-xl text-xs font-bold px-5 h-9.5 shadow-2xs flex items-center gap-1.5 cursor-pointer">
+                  <ArrowLeft className="h-4 w-4 text-white" />
                   Dashboard
                 </Button>
               </Link>
@@ -243,48 +225,48 @@ export default function Earnings() {
         </section>
 
         {/* OVERVIEW STATS PANEL */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 
             {/* Total Balance */}
-            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Cleared</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">${(withdrawableBalance + 4760.00).toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">${(withdrawableBalance + 4760.00).toFixed(2)}</span>
               </div>
-              <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl shrink-0">
+              <div className="p-3 bg-[#7DAB7D]/20 text-[#2B522B] rounded-2xl shrink-0 border border-[#7DAB7D]/30">
                 <DollarSign className="h-6 w-6" />
               </div>
             </Card>
 
             {/* Withdrawable Balance */}
-            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Cleared Balance</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">${withdrawableBalance.toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">${withdrawableBalance.toFixed(2)}</span>
               </div>
-              <div className="p-3 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-2xl shrink-0">
+              <div className="p-3 bg-[#F0E7D5] text-[#C9A46A] rounded-2xl shrink-0 border border-[#E8DCC3]">
                 <ShieldCheck className="h-6 w-6" />
               </div>
             </Card>
 
             {/* Pending Balance */}
-            <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl hover:scale-[1.01] transition-transform">
+            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Pending Payouts</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">${pendingBalance.toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">${pendingBalance.toFixed(2)}</span>
               </div>
-              <div className="p-3 bg-amber-50 text-[#C9A46A] rounded-2xl shrink-0">
+              <div className="p-3 bg-[#F0E7D5] text-[#C9A46A] rounded-2xl shrink-0 border border-[#E8DCC3]">
                 <Clock className="h-6 w-6" />
               </div>
             </Card>
 
             {/* Withdraw Action Card */}
-            <Card className="border border-violet-950/10 shadow-md bg-[#8C4B3E]/5 p-5 flex flex-col justify-center gap-2 rounded-2xl">
-              <span className="text-[10px] font-extrabold text-[#1F1D1A] uppercase tracking-wider">Authorize Transfer</span>
+            <Card className="border border-[#E8DCC3] shadow-2xs bg-[#FAF6F0] p-5 flex flex-col justify-center gap-2 rounded-2xl">
+              <span className="text-[10px] font-bold text-[#1F1D1A] uppercase tracking-wider">Authorize Transfer</span>
               <Button
                 onClick={() => setIsWithdrawOpen(true)}
-                className="w-full h-9.5 bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-extrabold text-xs rounded-xl shadow-xs"
+                className="w-full h-9.5 bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs rounded-xl shadow-2xs border border-[#E8DCC3] cursor-pointer"
               >
                 Withdraw Cleared Funds
               </Button>
@@ -294,11 +276,11 @@ export default function Earnings() {
         </section>
 
         {/* DETAILS GRID LAYOUT */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 
           {successMsg && (
-            <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
+            <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-[#7DAB7D]/20 border border-[#7DAB7D]/40 text-[#2B522B] text-xs font-bold rounded-xl shadow-2xs">
+              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-[#2B522B]" />
               <span>{successMsg}</span>
             </div>
           )}
@@ -309,26 +291,26 @@ export default function Earnings() {
             <div className="lg:col-span-8 space-y-6">
 
               {/* ANALYTICS CHART */}
-              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
-                <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between flex-wrap gap-4">
+              <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6">
+                <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
+                    <div className="p-2 bg-[#F0E7D5] text-[#C9A46A] rounded-xl border border-[#E8DCC3]">
                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Earnings Performance</CardTitle>
-                      <CardDescription className="text-xs">Compare monthly shifts or daily payouts</CardDescription>
+                      <CardTitle className="text-base font-bold text-[#1F1D1A]">Earnings Performance</CardTitle>
+                      <CardDescription className="text-xs text-[#7A7266]">Compare monthly shifts or daily payouts</CardDescription>
                     </div>
                   </div>
 
                   {/* Chart view toggler */}
-                  <div className="flex bg-[#F0E7D5]/70 border border-[#5A5146]/20 p-0.5 rounded-xl h-9 shrink-0">
+                  <div className="flex bg-[#F0E7D5] border border-[#E8DCC3] p-1 rounded-xl h-9 shrink-0">
                     <button
                       type="button"
                       onClick={() => setChartView("daily")}
-                      className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${chartView === "daily"
-                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#8C4B3E]"
+                      className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${chartView === "daily"
+                        ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                        : "text-[#5A5146] hover:text-[#1F1D1A]"
                         }`}
                     >
                       Daily
@@ -336,9 +318,9 @@ export default function Earnings() {
                     <button
                       type="button"
                       onClick={() => setChartView("monthly")}
-                      className={`rounded-lg text-[10px] font-bold px-3 py-1.5 transition-all ${chartView === "monthly"
-                        ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                        : "text-[#7A7266] hover:text-[#8C4B3E]"
+                      className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${chartView === "monthly"
+                        ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                        : "text-[#5A5146] hover:text-[#1F1D1A]"
                         }`}
                     >
                       Monthly
@@ -349,7 +331,7 @@ export default function Earnings() {
                 <CardContent className="p-0 pt-6">
                   {isLoading ? (
                     <div className="h-[150px] flex items-center justify-center">
-                      <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
+                      <Loader2 className="h-8 w-8 animate-spin text-[#C9A46A]" />
                     </div>
                   ) : (
                     /* SVG Bars chart */
@@ -357,45 +339,40 @@ export default function Earnings() {
                       <div className="min-w-[400px] h-[160px] relative">
                         <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-full overflow-visible">
 
-                          {/* Grids */}
-                          <line x1="20" y1="20" x2="480" y2="20" stroke="#f1f5f9" strokeWidth="1" />
-                          <line x1="20" y1="65" x2="480" y2="65" stroke="#f1f5f9" strokeWidth="1" />
-                          <line x1="20" y1="110" x2="480" y2="110" stroke="#cbd5e1" strokeWidth="2" />
+                          <line x1="20" y1="20" x2="480" y2="20" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="4 4" />
+                          <line x1="20" y1="65" x2="480" y2="65" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="4 4" />
+                          <line x1="20" y1="110" x2="480" y2="110" stroke="#E8DCC3" strokeWidth="1.5" />
 
-                          {/* Bars */}
                           {activeChartData.map((d, index) => {
                             const x = index * spacing + 25;
                             const barHeight = (d.amount / maxVal) * (chartHeight - 40);
                             const y = chartHeight - barHeight - 20;
                             return (
                               <g key={d.label} className="group cursor-pointer">
-                                {/* Bar rect */}
                                 <rect
                                   x={x}
                                   y={y}
                                   width={barWidth}
                                   height={barHeight}
                                   rx="4"
-                                  fill="#3b82f6"
-                                  className="transition-colors hover:fill-secondary"
+                                  fill="#C9A46A"
+                                  className="transition-colors hover:fill-[#b89359]"
                                 />
 
-                                {/* Amount tag */}
                                 <text
                                   x={x + barWidth / 2}
                                   y={y - 8}
                                   textAnchor="middle"
-                                  className="text-[9px] font-black fill-violet-900"
+                                  className="text-[9px] font-bold fill-[#1F1D1A]"
                                 >
                                   ${d.amount}
                                 </text>
 
-                                {/* Label tag */}
                                 <text
                                   x={x + barWidth / 2}
                                   y={chartHeight - 4}
                                   textAnchor="middle"
-                                  className="text-[9px] font-bold fill-stone-500"
+                                  className="text-[9px] font-bold fill-[#7A7266]"
                                 >
                                   {d.label}
                                 </text>
@@ -411,15 +388,15 @@ export default function Earnings() {
               </Card>
 
               {/* TRANSACTION HISTORY TABLE */}
-              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
-                <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6">
+                <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
-                    <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Transaction History</CardTitle>
-                    <CardDescription className="text-xs">Settle logs and verification audits</CardDescription>
+                    <CardTitle className="text-base font-bold text-[#1F1D1A]">Transaction History</CardTitle>
+                    <CardDescription className="text-xs text-[#7A7266]">Settle logs and verification audits</CardDescription>
                   </div>
 
                   {/* Status buttons */}
-                  <div className="flex bg-[#F0E7D5]/70 border border-[#5A5146]/20 p-0.5 rounded-xl h-9 shrink-0">
+                  <div className="flex bg-[#F0E7D5] border border-[#E8DCC3] p-1 rounded-xl h-9 shrink-0">
                     {[
                       { id: "all", label: "All" },
                       { id: "cleared", label: "Cleared" },
@@ -429,9 +406,9 @@ export default function Earnings() {
                         key={tab.id}
                         type="button"
                         onClick={() => setStatusFilter(tab.id)}
-                        className={`rounded-lg text-[10px] font-bold px-3.5 py-1.5 transition-all ${statusFilter === tab.id
-                          ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                          : "text-[#7A7266] hover:text-[#8C4B3E]"
+                        className={`rounded-lg text-[10px] font-bold px-3.5 py-1 transition-all ${statusFilter === tab.id
+                          ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                          : "text-[#5A5146] hover:text-[#1F1D1A]"
                           }`}
                       >
                         {tab.label}
@@ -443,51 +420,51 @@ export default function Earnings() {
                 <CardContent className="p-0 pt-6 space-y-4">
 
                   {/* SEARCH AND DATE RANGES */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-[#FAF6F0] p-4 border border-[#5A5146]/20 rounded-2xl">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-[#FAF6F0] p-4 border border-[#E8DCC3] rounded-2xl">
                     <div className="space-y-1.5">
-                      <Label htmlFor="searchQuery" className="text-[10px] font-bold text-[#8C4B3E]">Search</Label>
+                      <Label htmlFor="searchQuery" className="text-[10px] font-bold text-[#7A7266]">Search</Label>
                       <Input
                         id="searchQuery"
                         placeholder="TXN ID, name..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
+                        className="h-9.5 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="dateFrom" className="text-[10px] font-bold text-[#8C4B3E]">From Date</Label>
+                      <Label htmlFor="dateFrom" className="text-[10px] font-bold text-[#7A7266]">From Date</Label>
                       <Input
                         id="dateFrom"
                         type="date"
                         value={dateFrom}
                         onChange={(e) => setDateFrom(e.target.value)}
-                        className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
+                        className="h-9.5 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="dateTo" className="text-[10px] font-bold text-[#8C4B3E]">To Date</Label>
+                      <Label htmlFor="dateTo" className="text-[10px] font-bold text-[#7A7266]">To Date</Label>
                       <Input
                         id="dateTo"
                         type="date"
                         value={dateTo}
                         onChange={(e) => setDateTo(e.target.value)}
-                        className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
+                        className="h-9.5 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
                       />
                     </div>
                   </div>
 
                   {/* TABLE LISTING */}
                   {filteredTransactions.length === 0 ? (
-                    <div className="py-8 text-center text-xs text-[#7A7266] font-semibold">
+                    <div className="py-8 text-center text-xs text-[#7A7266] font-medium">
                       No transactions match your queries.
                     </div>
                   ) : (
                     <div className="overflow-x-auto pt-2">
                       <table className="w-full text-xs text-left">
                         <thead>
-                          <tr className="border-b border-stone-50 text-[#7A7266] font-bold uppercase tracking-wider text-[9px] pb-2">
+                          <tr className="border-b border-[#E8DCC3] text-[#7A7266] font-bold uppercase tracking-wider text-[9px] pb-2">
                             <th className="py-2.5 px-1">TXN ID</th>
                             <th className="py-2.5">Customer</th>
                             <th className="py-2.5">Date</th>
@@ -496,16 +473,18 @@ export default function Earnings() {
                             <th className="py-2.5 text-right">Status</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-stone-50 font-medium text-[#8C4B3E]">
+                        <tbody className="divide-y divide-[#E8DCC3] font-medium text-[#5A5146]">
                           {filteredTransactions.map(txn => (
                             <tr key={txn.id} className="hover:bg-[#FAF6F0] transition-colors">
                               <td className="py-3 px-1 font-bold text-[#7A7266]">{txn.id}</td>
                               <td className="py-3 font-bold text-[#1F1D1A]">{txn.customerName}</td>
                               <td className="py-3">{txn.date}</td>
                               <td className="py-3 truncate max-w-[130px]">{txn.serviceName}</td>
-                              <td className="py-3 font-black text-[#1F1D1A]">${txn.amount.toFixed(2)}</td>
+                              <td className="py-3 font-bold text-[#1F1D1A]">${txn.amount.toFixed(2)}</td>
                               <td className="py-3 text-right">
-                                <Badge variant={txn.status === "cleared" ? "success" : "warning"} className="rounded-lg text-[9px] font-bold px-2 py-0 border-0 leading-none">
+                                <Badge className={`rounded-lg text-[9px] font-bold px-2 py-0.5 border-0 leading-none ${
+                                  txn.status === "cleared" ? "bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30" : "bg-[#F0E7D5] text-[#C9A46A] border border-[#E8DCC3]"
+                                }`}>
                                   {txn.status.toUpperCase()}
                                 </Badge>
                               </td>
@@ -525,36 +504,36 @@ export default function Earnings() {
             <div className="lg:col-span-4 space-y-6">
 
               {/* PAYOUT BANK ARCHIVES */}
-              <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-5 space-y-4">
-                <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2">Payout History</span>
+              <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-5 space-y-4">
+                <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2">Payout History</span>
 
                 <div className="space-y-3">
                   {payouts.map(p => (
-                    <div key={p.id} className="p-3.5 border border-[#5A5146]/20 rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-stone-300 transition-colors">
+                    <div key={p.id} className="p-3.5 border border-[#E8DCC3] rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-[#C9A46A] transition-colors">
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-1.5">
                           <span className="text-[9px] font-bold text-[#7A7266] uppercase tracking-wider">Ref: {p.id}</span>
-                          <Badge variant="success" className="bg-emerald-500 border-0 text-white font-bold rounded-lg text-[8px] py-0 px-1 leading-none uppercase">Success</Badge>
+                          <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg text-[8px] py-0 px-1 leading-none uppercase">Success</Badge>
                         </div>
-                        <h5 className="font-extrabold text-[#1F1D1A] text-xs mt-1 truncate max-w-[180px]">{p.method}</h5>
-                        <span className="text-[9px] text-[#7A7266] font-semibold block">{p.date}</span>
+                        <h5 className="font-bold text-[#1F1D1A] text-xs mt-1 truncate max-w-[180px]">{p.method}</h5>
+                        <span className="text-[9px] text-[#7A7266] font-medium block">{p.date}</span>
                       </div>
 
-                      <span className="font-black text-[#1F1D1A] text-sm shrink-0">${p.amount.toFixed(2)}</span>
+                      <span className="font-bold text-[#1F1D1A] text-sm shrink-0">${p.amount.toFixed(2)}</span>
                     </div>
                   ))}
                 </div>
               </Card>
 
               {/* SECURITY ASSURANCES CARD */}
-              <Card className="border border-[#5A5146]/15 shadow-2xs bg-white rounded-2xl p-5 space-y-4">
-                <div className="flex items-start gap-3 text-[#8C4B3E]">
-                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0 mt-0.5">
+              <Card className="border border-[#E8DCC3] shadow-2xs bg-white rounded-2xl p-5 space-y-4">
+                <div className="flex items-start gap-3 text-[#1F1D1A]">
+                  <div className="p-2 bg-[#F0E7D5] text-[#C9A46A] rounded-xl shrink-0 mt-0.5 border border-[#E8DCC3]">
                     <Lock className="h-4.5 w-4.5" />
                   </div>
                   <div className="space-y-1">
                     <h4 className="font-bold text-xs">Direct Deposits</h4>
-                    <p className="text-[10px] text-[#7A7266] leading-relaxed font-semibold">
+                    <p className="text-[10px] text-[#5A5146] leading-relaxed font-medium">
                       Withdrawals take 1-3 business days to post to your bank routing details. No fees are deducted on transfers to linked checking accounts.
                     </p>
                   </div>
@@ -570,10 +549,10 @@ export default function Earnings() {
 
       {/* WITHDRAW EARNINGS FORM MODAL */}
       <Dialog open={isWithdrawOpen} onOpenChange={setIsWithdrawOpen}>
-        <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
+        <DialogContent className="max-w-md bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl shadow-xl p-6 text-[#1F1D1A]">
           <DialogHeader>
-            <DialogTitle className="text-base font-extrabold text-white flex items-center gap-2">
-              <CreditCard className="h-5 w-5 text-white" />
+            <DialogTitle className="text-base font-bold text-[#1F1D1A] flex items-center gap-2">
+              <CreditCard className="h-5 w-5 text-[#C9A46A]" />
               Withdraw Cleared Balance
             </DialogTitle>
             <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
@@ -584,28 +563,28 @@ export default function Earnings() {
           <form onSubmit={handleWithdrawSubmit} className="space-y-4 pt-3">
 
             {/* Display Withdrawable Balance */}
-            <div className="p-3 bg-[#8C4B3E]/5 border border-violet-950/10 rounded-xl flex justify-between items-center text-xs">
-              <span className="font-bold text-white">Withdrawable Balance:</span>
-              <span className="font-black text-white text-sm">${withdrawableBalance.toFixed(2)}</span>
+            <div className="p-3 bg-[#F0E7D5] border border-[#E8DCC3] rounded-xl flex justify-between items-center text-xs">
+              <span className="font-bold text-[#1F1D1A]">Withdrawable Balance:</span>
+              <span className="font-bold text-[#1F1D1A] text-sm">${withdrawableBalance.toFixed(2)}</span>
             </div>
 
             {withdrawError && (
-              <div className="flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
-                <AlertCircle className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
+              <div className="flex items-start gap-2.5 p-3.5 bg-[#8C4B3E]/20 border border-[#8C4B3E]/40 text-[#8C4B3E] text-xs font-bold rounded-xl shadow-2xs">
+                <AlertCircle className="h-4.5 w-4.5 shrink-0 mt-0.5 text-[#8C4B3E]" />
                 <span>{withdrawError}</span>
               </div>
             )}
 
             {/* Withdrawal Method */}
             <div className="space-y-1.5">
-              <Label className="text-xs font-bold text-white">Transfer Endpoint</Label>
-              <div className="grid grid-cols-2 bg-[#FAF6F0] border border-[#5A5146]/20 p-1 rounded-xl h-10">
+              <Label className="text-xs font-bold text-[#1F1D1A]">Transfer Endpoint</Label>
+              <div className="grid grid-cols-2 bg-[#F0E7D5] border border-[#E8DCC3] p-1 rounded-xl h-10">
                 <button
                   type="button"
                   onClick={() => setWithdrawMethod("bank")}
                   className={`rounded-lg text-xs font-bold transition-all ${withdrawMethod === "bank"
-                    ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                    : "text-[#7A7266] hover:text-[#8C4B3E]"
+                    ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                    : "text-[#5A5146] hover:text-[#1F1D1A]"
                     }`}
                 >
                   Chase Bank
@@ -614,8 +593,8 @@ export default function Earnings() {
                   type="button"
                   onClick={() => setWithdrawMethod("upi")}
                   className={`rounded-lg text-xs font-bold transition-all ${withdrawMethod === "upi"
-                    ? "bg-white text-[#1F1D1A] shadow-2xs border border-[#5A5146]/15"
-                    : "text-[#7A7266] hover:text-[#8C4B3E]"
+                    ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                    : "text-[#5A5146] hover:text-[#1F1D1A]"
                     }`}
                 >
                   UPI Paytm / GPay
@@ -625,14 +604,14 @@ export default function Earnings() {
 
             {/* Amount input */}
             <div className="space-y-1.5">
-              <Label htmlFor="amount" className="text-xs font-bold text-white">Withdraw Amount ($)</Label>
+              <Label htmlFor="amount" className="text-xs font-bold text-[#1F1D1A]">Withdraw Amount ($)</Label>
               <Input
                 id="amount"
                 type="number"
                 placeholder="e.g. 200"
                 value={withdrawAmount}
                 onChange={(e) => setWithdrawAmount(e.target.value)}
-                className="h-9.5 border-[#5A5146]/20 focus:ring-2 focus:ring-violet-950 rounded-xl text-xs bg-white"
+                className="h-9.5 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
                 required
               />
             </div>
@@ -642,14 +621,14 @@ export default function Earnings() {
                 type="button"
                 variant="outline"
                 onClick={() => setIsWithdrawOpen(false)}
-                className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 w-full sm:w-auto"
+                className="rounded-xl border-[#E8DCC3] bg-[#FAF6F0] text-xs h-9.5 w-full sm:w-auto"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isWithdrawing}
-                className="rounded-xl bg-[#8C4B3E] hover:bg-[#8C4B3E] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5 shadow-md"
+                className="rounded-xl bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5 border border-[#E8DCC3] cursor-pointer"
               >
                 {isWithdrawing ? (
                   <>
