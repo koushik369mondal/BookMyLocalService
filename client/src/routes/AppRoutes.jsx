@@ -17,6 +17,7 @@ import Notifications from "../pages/Profile/Notifications";
 import PaymentMethods from "../pages/Profile/PaymentMethods";
 import CustomerDashboard from "../pages/Dashboard/CustomerDashboard";
 import ProviderDashboard from "../pages/Dashboard/ProviderDashboard";
+import ProviderServices from "../pages/Dashboard/ProviderServices";
 import ProviderJobs from "../pages/Dashboard/ProviderJobs";
 import Availability from "../pages/Dashboard/Availability";
 import Earnings from "../pages/Dashboard/Earnings";
@@ -60,6 +61,7 @@ export default function AppRoutes() {
             <Route path="/payment-methods" element={<PaymentMethods />} />
             <Route path="/customer/dashboard" element={<CustomerDashboard />} />
             <Route path="/provider/dashboard" element={<ProviderDashboard />} />
+            <Route path="/provider/services" element={<ProviderServices />} />
             <Route path="/provider/jobs" element={<ProviderJobs />} />
             <Route path="/provider/availability" element={<Availability />} />
             <Route path="/provider/earnings" element={<Earnings />} />

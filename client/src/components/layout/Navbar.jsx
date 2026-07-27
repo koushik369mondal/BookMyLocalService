@@ -50,7 +50,7 @@ export default function Navbar() {
       // Provider-specific Navigation
       return [
         { name: 'Dashboard', path: '/provider/dashboard' },
-        { name: 'My Services', path: '/services' },
+        { name: 'My Services', path: '/provider/services' },
         { name: 'Bookings', path: '/provider/jobs' },
         { name: 'Earnings', path: '/provider/earnings' },
         { name: 'Reviews', path: '/provider/reviews' },

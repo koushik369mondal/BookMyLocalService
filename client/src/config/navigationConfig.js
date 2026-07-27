@@ -15,7 +15,8 @@ import {
   FileText,
   TrendingUp,
   Calendar,
-  Edit3
+  Edit3,
+  Layers
 } from "lucide-react";
 
 export const customerMenu = [
@@ -28,6 +29,7 @@ export const customerMenu = [
 
 export const providerMenu = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/provider/dashboard" },
+  { label: "My Services", icon: Layers, path: "/provider/services" },
   { label: "My Jobs", icon: Briefcase, path: "/provider/jobs" },
   { label: "Availability", icon: Clock, path: "/provider/availability" },
   { label: "Earnings", icon: DollarSign, path: "/provider/earnings" },

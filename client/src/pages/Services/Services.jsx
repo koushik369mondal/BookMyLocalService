@@ -1,6 +1,7 @@
 import React from "react";
-import { useSearchParams, NavLink } from "react-router-dom";
+import { useSearchParams, NavLink, Navigate } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
+import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -72,6 +73,12 @@ const getCategoryStyles = (category) => {
 };
 
 export default function Services() {
+  const { user } = useAuth();
+
+  if (user?.role === "PROVIDER") {
+    return <Navigate to="/provider/services" replace />;
+  }
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Extract initial parameters from URL
