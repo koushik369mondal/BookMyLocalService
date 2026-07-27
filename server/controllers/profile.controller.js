@@ -31,10 +31,13 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     try {
-        const { fullName, phone, address, city, state, zipCode } = req.body;
+        const { fullName, phone, address, city, state, zipCode, role } = req.body;
 
         const updateData = {};
         if (fullName !== undefined) updateData.fullName = fullName.trim();
+        if (role !== undefined && (role === "PROVIDER" || role === "CUSTOMER")) {
+            updateData.role = role;
+        }
         if (phone !== undefined) {
             const normalizedPhone = phone.trim();
             if (normalizedPhone !== req.user.phone) {

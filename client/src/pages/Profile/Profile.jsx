@@ -22,7 +22,11 @@ import {
   Camera, 
   Plus, 
   Trash2, 
-  AlertCircle
+  AlertCircle,
+  Briefcase,
+  Sparkles,
+  ArrowRight,
+  ShieldCheck
 } from "lucide-react";
 
 // Schema for updating user details
@@ -81,6 +85,25 @@ export default function Profile() {
   const [errorMsg, setErrorMsg] = useState("");
   const [isSavingDetails, setIsSavingDetails] = useState(false);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+  const [isUpgradingRole, setIsUpgradingRole] = useState(false);
+
+  const handleUpgradeToProvider = async () => {
+    setIsUpgradingRole(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+    try {
+      await authService.updateProfile({ role: "PROVIDER" });
+      await reloadUser();
+      setSuccessMsg("Congratulations! Your account has been upgraded to a Service Provider account. Redirecting to Provider Dashboard...");
+      setTimeout(() => {
+        navigate("/provider/dashboard");
+      }, 1500);
+    } catch (err) {
+      setErrorMsg(err.message || "Failed to upgrade account to Provider.");
+    } finally {
+      setIsUpgradingRole(false);
+    }
+  };
 
   // Saved Addresses (local state)
   const [addresses, setAddresses] = useState([]);
@@ -343,171 +366,210 @@ export default function Profile() {
 
             {/* PANEL 1: ACCOUNT DETAILS & UNIFIED EDIT FORM */}
             {activeTab === "details" && (
-              <Card className="border border-[#E8DCC3] rounded-2xl bg-white p-6 shadow-2xs">
-                <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-[#F0E7D5] text-[#C9A46A] rounded-xl border border-[#E8DCC3]">
-                    <User className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-base font-bold text-[#1F1D1A]">Personal Details & Avatar</CardTitle>
-                    <CardDescription className="text-xs text-[#7A7266]">View and update your personal information and profile picture</CardDescription>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="p-0 pt-6">
-                  
-                  {/* AVATAR UPLOAD SECTION */}
-                  <div className="flex flex-col sm:flex-row items-center gap-4 pb-6 mb-6 border-b border-[#E8DCC3]">
-                    <div className="relative group cursor-pointer" onClick={handlePhotoClick}>
-                      <Avatar className="w-16 h-16 border border-[#E8DCC3] rounded-full overflow-hidden shrink-0 shadow-2xs">
-                        {user.avatar ? (
-                          <AvatarImage src={user.avatar} className="object-cover w-full h-full" />
-                        ) : null}
-                        <AvatarFallback className="text-lg font-bold bg-[#F0E7D5] text-[#C9A46A]">{initials}</AvatarFallback>
-                      </Avatar>
-                      
-                      <button 
-                        type="button"
-                        disabled={isUploadingPhoto}
-                        className="absolute inset-0 bg-[#1F1D1A]/60 text-white rounded-full flex flex-col items-center justify-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
-                      >
-                        {isUploadingPhoto ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <Camera className="h-4 w-4" />
-                        )}
-                      </button>
+              <>
+                <Card className="border border-[#E8DCC3] rounded-2xl bg-white p-6 shadow-2xs">
+                  <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-row items-center gap-2.5">
+                    <div className="p-2 bg-[#F0E7D5] text-[#C9A46A] rounded-xl border border-[#E8DCC3]">
+                      <User className="h-5 w-5" />
                     </div>
-
-                    <div className="space-y-1 text-center sm:text-left">
-                      <h4 className="text-sm font-bold text-[#1F1D1A]">{user.fullName}</h4>
-                      <p className="text-xs text-[#7A7266] font-medium">{user.role} Account • {user.email}</p>
-                      <Button 
-                        type="button" 
-                        variant="outline" 
-                        size="xs" 
-                        onClick={handlePhotoClick}
-                        disabled={isUploadingPhoto}
-                        className="rounded-lg border-[#E8DCC3] bg-[#FAF6F0] text-[#1F1D1A] text-[10px] font-bold h-7 px-3 mt-1 hover:bg-[#F0E7D5]"
-                      >
-                        {isUploadingPhoto ? "Uploading..." : "Change Photo"}
-                      </Button>
+                    <div>
+                      <CardTitle className="text-base font-bold text-[#1F1D1A]">Personal Details & Avatar</CardTitle>
+                      <CardDescription className="text-xs text-[#7A7266]">View and update your personal information and profile picture</CardDescription>
                     </div>
-                  </div>
+                  </CardHeader>
 
-                  <form onSubmit={handleProfileSubmit(onProfileSave)} className="space-y-5">
-                    {/* Name */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="fullName" className="text-xs font-bold text-[#1F1D1A]">Full Name</Label>
-                      <Input
-                        id="fullName"
-                        placeholder="Enter your full name"
-                        className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
-                        disabled={isSavingDetails}
-                        {...regProfile("fullName")}
-                      />
-                      {profileErrors.fullName && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{profileErrors.fullName.message}</p>}
-                    </div>
-
-                    {/* Email / Phone grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-1.5">
-                        <Label htmlFor="email" className="text-xs font-bold text-[#1F1D1A]">Email Address</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          className="h-10 border-[#E8DCC3] rounded-xl text-xs bg-[#F0E7D5]/50 text-[#7A7266] cursor-not-allowed"
-                          disabled
-                          {...regProfile("email")}
-                        />
-                        <p className="text-[10px] text-[#7A7266] font-medium">Email address is locked to your account</p>
+                  <CardContent className="p-0 pt-6">
+                    
+                    {/* AVATAR UPLOAD SECTION */}
+                    <div className="flex flex-col sm:flex-row items-center gap-4 pb-6 mb-6 border-b border-[#E8DCC3]">
+                      <div className="relative group cursor-pointer" onClick={handlePhotoClick}>
+                        <Avatar className="w-16 h-16 border border-[#E8DCC3] rounded-full overflow-hidden shrink-0 shadow-2xs">
+                          {user.avatar ? (
+                            <AvatarImage src={user.avatar} className="object-cover w-full h-full" />
+                          ) : null}
+                          <AvatarFallback className="text-lg font-bold bg-[#F0E7D5] text-[#C9A46A]">{initials}</AvatarFallback>
+                        </Avatar>
+                        
+                        <button 
+                          type="button"
+                          disabled={isUploadingPhoto}
+                          className="absolute inset-0 bg-[#1F1D1A]/60 text-white rounded-full flex flex-col items-center justify-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
+                        >
+                          {isUploadingPhoto ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <Camera className="h-4 w-4" />
+                          )}
+                        </button>
                       </div>
 
+                      <div className="space-y-1 text-center sm:text-left">
+                        <h4 className="text-sm font-bold text-[#1F1D1A]">{user.fullName}</h4>
+                        <p className="text-xs text-[#7A7266] font-medium">{user.role} Account • {user.email}</p>
+                        <Button 
+                          type="button" 
+                          variant="outline" 
+                          size="xs" 
+                          onClick={handlePhotoClick}
+                          disabled={isUploadingPhoto}
+                          className="rounded-lg border-[#E8DCC3] bg-[#FAF6F0] text-[#1F1D1A] text-[10px] font-bold h-7 px-3 mt-1 hover:bg-[#F0E7D5]"
+                        >
+                          {isUploadingPhoto ? "Uploading..." : "Change Photo"}
+                        </Button>
+                      </div>
+                    </div>
+
+                    <form onSubmit={handleProfileSubmit(onProfileSave)} className="space-y-5">
+                      {/* Name */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="phone" className="text-xs font-bold text-[#1F1D1A]">Phone Number</Label>
+                        <Label htmlFor="fullName" className="text-xs font-bold text-[#1F1D1A]">Full Name</Label>
                         <Input
-                          id="phone"
-                          placeholder="Enter your phone number"
+                          id="fullName"
+                          placeholder="Enter your full name"
                           className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
                           disabled={isSavingDetails}
-                          {...regProfile("phone")}
+                          {...regProfile("fullName")}
                         />
-                        {profileErrors.phone && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{profileErrors.phone.message}</p>}
+                        {profileErrors.fullName && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{profileErrors.fullName.message}</p>}
                       </div>
-                    </div>
 
-                    {/* Address */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="address" className="text-xs font-bold text-[#1F1D1A]">Primary Street Address</Label>
-                      <Input
-                        id="address"
-                        placeholder="e.g. 789 Pine Street, Apt 1C"
-                        className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
-                        disabled={isSavingDetails}
-                        {...regProfile("address")}
-                      />
-                    </div>
+                      {/* Email / Phone grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <Label htmlFor="email" className="text-xs font-bold text-[#1F1D1A]">Email Address</Label>
+                          <Input
+                            id="email"
+                            type="email"
+                            className="h-10 border-[#E8DCC3] rounded-xl text-xs bg-[#F0E7D5]/50 text-[#7A7266] cursor-not-allowed"
+                            disabled
+                            {...regProfile("email")}
+                          />
+                          <p className="text-[10px] text-[#7A7266] font-medium">Email address is locked to your account</p>
+                        </div>
 
-                    {/* City State Zip */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className="space-y-1.5">
+                          <Label htmlFor="phone" className="text-xs font-bold text-[#1F1D1A]">Phone Number</Label>
+                          <Input
+                            id="phone"
+                            placeholder="Enter your phone number"
+                            className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
+                            disabled={isSavingDetails}
+                            {...regProfile("phone")}
+                          />
+                          {profileErrors.phone && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{profileErrors.phone.message}</p>}
+                        </div>
+                      </div>
+
+                      {/* Address */}
                       <div className="space-y-1.5">
-                        <Label htmlFor="city" className="text-xs font-bold text-[#1F1D1A]">City</Label>
+                        <Label htmlFor="address" className="text-xs font-bold text-[#1F1D1A]">Primary Street Address</Label>
                         <Input
-                          id="city"
-                          placeholder="e.g. Brooklyn"
+                          id="address"
+                          placeholder="e.g. 789 Pine Street, Apt 1C"
                           className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
                           disabled={isSavingDetails}
-                          {...regProfile("city")}
+                          {...regProfile("address")}
                         />
                       </div>
 
-                      <div className="space-y-1.5">
-                        <Label htmlFor="state" className="text-xs font-bold text-[#1F1D1A]">State</Label>
-                        <Input
-                          id="state"
-                          placeholder="e.g. NY"
-                          className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
+                      {/* City State Zip */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className="space-y-1.5">
+                          <Label htmlFor="city" className="text-xs font-bold text-[#1F1D1A]">City</Label>
+                          <Input
+                            id="city"
+                            placeholder="e.g. Brooklyn"
+                            className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
+                            disabled={isSavingDetails}
+                            {...regProfile("city")}
+                          />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <Label htmlFor="state" className="text-xs font-bold text-[#1F1D1A]">State</Label>
+                          <Input
+                            id="state"
+                            placeholder="e.g. NY"
+                            className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
+                            disabled={isSavingDetails}
+                            {...regProfile("state")}
+                          />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <Label htmlFor="zipCode" className="text-xs font-bold text-[#1F1D1A]">ZIP Code</Label>
+                          <Input
+                            id="zipCode"
+                            placeholder="e.g. 400001"
+                            maxLength={6}
+                            className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
+                            disabled={isSavingDetails}
+                            {...regProfile("zipCode")}
+                          />
+                          {profileErrors.zipCode && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{profileErrors.zipCode.message}</p>}
+                        </div>
+                      </div>
+
+                      <div className="pt-3 border-t border-[#E8DCC3] flex justify-end">
+                        <Button
+                          type="submit"
                           disabled={isSavingDetails}
-                          {...regProfile("state")}
-                        />
+                          className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs h-10 px-7 rounded-xl shadow-2xs border border-[#E8DCC3] flex items-center justify-center gap-1.5"
+                        >
+                          {isSavingDetails ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin text-white" />
+                              Saving...
+                            </>
+                          ) : (
+                            <>
+                              Save Changes
+                            </>
+                          )}
+                        </Button>
                       </div>
 
-                      <div className="space-y-1.5">
-                        <Label htmlFor="zipCode" className="text-xs font-bold text-[#1F1D1A]">ZIP Code</Label>
-                        <Input
-                          id="zipCode"
-                          placeholder="e.g. 400001"
-                          maxLength={6}
-                          className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
-                          disabled={isSavingDetails}
-                          {...regProfile("zipCode")}
-                        />
-                        {profileErrors.zipCode && <p className="text-[10px] text-[#8C4B3E] font-bold mt-1">{profileErrors.zipCode.message}</p>}
-                      </div>
-                    </div>
+                    </form>
+                  </CardContent>
+                </Card>
 
-                    <div className="pt-3 border-t border-[#E8DCC3] flex justify-end">
+                {/* BECOME A PROVIDER CARD (FOR CUSTOMER USERS) */}
+                {(user.role === "CUSTOMER" || user.role === "USER") && (
+                  <Card className="border border-[#E8DCC3] rounded-2xl bg-[#F0E7D5]/40 p-6 mt-6 shadow-2xs">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                      <div className="space-y-2 max-w-xl">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#C9A46A]/20 text-[#8C4B3E] font-bold text-[11px] rounded-lg border border-[#C9A46A]/30">
+                          <Sparkles className="h-3.5 w-3.5 text-[#C9A46A]" /> Provider Onboarding
+                        </div>
+                        <h3 className="text-lg font-bold text-[#1F1D1A]">Become a Local Service Provider</h3>
+                        <p className="text-xs text-[#5A5146] leading-relaxed">
+                          Expand your business on BookMyLocalService. Offer your local specialized services, receive instant job dispatches, set flexible hours, and grow your revenue seamlessly.
+                        </p>
+                      </div>
+
                       <Button
-                        type="submit"
-                        disabled={isSavingDetails}
-                        className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs h-10 px-7 rounded-xl shadow-2xs border border-[#E8DCC3] flex items-center justify-center gap-1.5"
+                        type="button"
+                        onClick={handleUpgradeToProvider}
+                        disabled={isUpgradingRole}
+                        className="bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs h-11 px-6 rounded-xl shadow-md border border-[#E8DCC3] shrink-0 flex items-center gap-2 cursor-pointer transition-all"
                       >
-                        {isSavingDetails ? (
+                        {isUpgradingRole ? (
                           <>
                             <Loader2 className="h-4 w-4 animate-spin text-white" />
-                            Saving...
+                            Upgrading Account...
                           </>
                         ) : (
                           <>
-                            Save Changes
+                            <Briefcase className="h-4 w-4 text-white" />
+                            Become a Provider
+                            <ArrowRight className="h-4 w-4 text-white/70" />
                           </>
                         )}
                       </Button>
                     </div>
-
-                  </form>
-                </CardContent>
-              </Card>
+                  </Card>
+                )}
+              </>
             )}
 
             {/* PANEL 2: SAVED LOCATIONS */}

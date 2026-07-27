@@ -35,27 +35,52 @@ export default function Navbar() {
 
   // Dynamic role-based navbar links
   const navLinks = React.useMemo(() => {
-    const items = [
+    if (!user) {
+      // Guest Navigation
+      return [
+        { name: 'Home', path: '/' },
+        { name: 'Services', path: '/services' },
+        { name: 'Categories', path: '/categories' },
+        { name: 'About', path: '/about' },
+        { name: 'Contact', path: '/contact' }
+      ];
+    }
+
+    if (user.role === 'PROVIDER') {
+      // Provider-specific Navigation
+      return [
+        { name: 'Dashboard', path: '/provider/dashboard' },
+        { name: 'My Services', path: '/services' },
+        { name: 'Bookings', path: '/provider/jobs' },
+        { name: 'Earnings', path: '/provider/earnings' },
+        { name: 'Reviews', path: '/provider/reviews' },
+        { name: 'Settings', path: '/provider/settings' }
+      ];
+    }
+
+    if (user.role === 'ADMIN') {
+      // Admin-specific Navigation
+      return [
+        { name: 'Dashboard', path: '/admin/dashboard' },
+        { name: 'Users', path: '/admin/users' },
+        { name: 'Providers', path: '/admin/providers' },
+        { name: 'Bookings', path: '/admin/bookings' },
+        { name: 'Payments', path: '/admin/payments' },
+        { name: 'Reports', path: '/admin/reports' },
+        { name: 'Settings', path: '/admin/settings' }
+      ];
+    }
+
+    // Customer Navigation
+    return [
       { name: 'Home', path: '/' },
       { name: 'Services', path: '/services' },
       { name: 'Categories', path: '/categories' },
-    ];
-
-    if (user?.role === 'PROVIDER') {
-      items.push({ name: 'Provider Dashboard', path: '/provider/dashboard' });
-    } else if (user?.role === 'ADMIN') {
-      items.push({ name: 'Admin Dashboard', path: '/admin/dashboard' });
-    } else {
-      items.push({ name: 'Become a Provider', path: '/provider/dashboard' });
-    }
-
-    items.push(
+      { name: 'My Bookings', path: '/bookings' },
       { name: 'About', path: '/about' },
       { name: 'Contact', path: '/contact' }
-    );
-
-    return items;
-  }, [user?.role]);
+    ];
+  }, [user]);
 
   // State management
   const [showDropdown, setShowDropdown] = useState(false);
@@ -187,9 +212,8 @@ export default function Navbar() {
                         return (
                           <div
                             key={item.id}
-                            className={`p-3.5 flex items-start gap-3 transition-colors hover:bg-[#F0E7D5]/50 ${
-                              item.unread ? "bg-[#F0E7D5]/30" : ""
-                            }`}
+                            className={`p-3.5 flex items-start gap-3 transition-colors hover:bg-[#F0E7D5]/50 ${item.unread ? "bg-[#F0E7D5]/30" : ""
+                              }`}
                           >
                             <div className={`p-2 rounded-xl shrink-0 ${item.iconColor || "bg-[#C9A46A]/10 text-[#C9A46A]"}`}>
                               <Icon className="h-4 w-4" />
@@ -244,6 +268,21 @@ export default function Navbar() {
                     <div className="px-4 py-2.5 border-b border-[#E8DCC3] text-[11px] text-[#7A7266] font-semibold uppercase tracking-wider">
                       Signed in as <span className="text-[#1F1D1A] font-bold block normal-case text-sm truncate mt-0.5">{user.fullName}</span>
                     </div>
+
+                    <NavLink
+                      to={
+                        user.role === "ADMIN"
+                          ? "/admin/dashboard"
+                          : user.role === "PROVIDER"
+                            ? "/provider/dashboard"
+                            : "/customer/dashboard"
+                      }
+                      onClick={() => setShowDropdown(false)}
+                      className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#F0E7D5] hover:text-[#C9A46A] transition-colors duration-150 font-bold"
+                    >
+                      <LayoutDashboard className="h-4 w-4 text-[#7A7266]" /> Dashboard
+                    </NavLink>
+
                     <NavLink
                       to="/profile"
                       onClick={() => setShowDropdown(false)}
@@ -251,29 +290,31 @@ export default function Navbar() {
                     >
                       <User className="h-4 w-4 text-[#7A7266]" /> My Profile
                     </NavLink>
-                    <NavLink
-                      to="/bookings"
-                      onClick={() => setShowDropdown(false)}
-                      className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#F0E7D5] hover:text-[#C9A46A] transition-colors duration-150"
-                    >
-                      <Calendar className="h-4 w-4 text-[#7A7266]" /> Booking History
-                    </NavLink>
-                    {(user.role === "PROVIDER" || user.role === "ADMIN") && (
+
+                    {user.role === "CUSTOMER" && (
                       <NavLink
-                        to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"}
+                        to="/bookings"
                         onClick={() => setShowDropdown(false)}
                         className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#F0E7D5] hover:text-[#C9A46A] transition-colors duration-150"
                       >
-                        <LayoutDashboard className="h-4 w-4 text-[#7A7266]" /> Dashboard
+                        <Calendar className="h-4 w-4 text-[#7A7266]" /> Booking History
                       </NavLink>
                     )}
+
                     <NavLink
-                      to="/profile"
+                      to={
+                        user.role === "ADMIN"
+                          ? "/admin/settings"
+                          : user.role === "PROVIDER"
+                            ? "/provider/settings"
+                            : "/profile"
+                      }
                       onClick={() => setShowDropdown(false)}
                       className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#F0E7D5] hover:text-[#C9A46A] transition-colors duration-150"
                     >
                       <Settings className="h-4 w-4 text-[#7A7266]" /> Settings
                     </NavLink>
+
                     <hr className="my-1.5 border-[#E8DCC3]" />
                     <button
                       onClick={handleLogout}
@@ -398,19 +439,28 @@ export default function Navbar() {
 
                         <div className="space-y-1">
                           <DialogClose asChild>
+                            <NavLink
+                              to={
+                                user.role === "ADMIN"
+                                  ? "/admin/dashboard"
+                                  : user.role === "PROVIDER"
+                                    ? "/provider/dashboard"
+                                    : "/customer/dashboard"
+                              }
+                              className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors"
+                            >
+                              <LayoutDashboard className="h-4 w-4 text-[#7A7266]" /> Dashboard
+                            </NavLink>
+                          </DialogClose>
+                          <DialogClose asChild>
                             <NavLink to="/profile" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
                               <User className="h-4 w-4 text-[#7A7266]" /> My Profile
                             </NavLink>
                           </DialogClose>
-                          <DialogClose asChild>
-                            <NavLink to="/bookings" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
-                              <Calendar className="h-4 w-4 text-[#7A7266]" /> Booking History
-                            </NavLink>
-                          </DialogClose>
-                          {(user.role === "PROVIDER" || user.role === "ADMIN") && (
+                          {user.role === "CUSTOMER" && (
                             <DialogClose asChild>
-                              <NavLink to={user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard"} className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
-                                <LayoutDashboard className="h-4 w-4 text-[#7A7266]" /> Dashboard
+                              <NavLink to="/bookings" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
+                                <Calendar className="h-4 w-4 text-[#7A7266]" /> Booking History
                               </NavLink>
                             </DialogClose>
                           )}

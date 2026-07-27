@@ -134,7 +134,7 @@ export default function VerifyOtp() {
         } else if (response.user?.role === "PROVIDER") {
           navigate("/provider/dashboard");
         } else {
-          navigate("/");
+          navigate("/customer/dashboard");
         }
       }
     } catch (err) {

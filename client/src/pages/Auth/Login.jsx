@@ -98,7 +98,7 @@ export default function Login() {
       setTimeout(() => {
         setIsSubmitting(false);
         setSuccessMsg("");
-        navigate("/");
+        navigate("/customer/dashboard");
       }, 1500);
     }, 800);
   };
@@ -230,15 +230,26 @@ export default function Login() {
             </Button>
           </div>
 
-          {/* Sign Up Link */}
-          <div className="mt-8 text-center text-xs font-semibold text-[#5A5146]">
-            Don't have an account yet?{" "}
-            <Link
-              to="/register"
-              className="text-[#8C4B3E] hover:text-[#C9A46A] transition-colors font-bold hover:underline"
-            >
-              Create client account
-            </Link>
+          {/* Sign Up Links */}
+          <div className="mt-8 space-y-2.5 text-center text-xs font-semibold text-[#5A5146]">
+            <div>
+              Don't have an account yet?{" "}
+              <Link
+                to="/register"
+                className="text-[#8C4B3E] hover:text-[#C9A46A] transition-colors font-bold hover:underline"
+              >
+                Create client account
+              </Link>
+            </div>
+            <div className="pt-2.5 border-t border-[#E8DCC3]">
+              Are you a service provider?{" "}
+              <Link
+                to="/register?role=provider"
+                className="text-[#C9A46A] hover:text-[#8C4B3E] transition-colors font-bold hover:underline"
+              >
+                Register as a Provider →
+              </Link>
+            </div>
           </div>
 
         </div>

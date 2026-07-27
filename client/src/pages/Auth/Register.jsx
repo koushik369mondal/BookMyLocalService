@@ -88,6 +88,15 @@ export default function Register() {
   const selectedRole = watch("role");
   const acceptTermsValue = watch("acceptTerms");
 
+  // Read ?role=provider query parameter on mount
+  React.useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const roleParam = params.get("role");
+    if (roleParam === "provider") {
+      setValue("role", "provider");
+    }
+  }, [location.search, setValue]);
+
   const { registerSendOtp } = useAuth();
 
   const onSubmit = async (data) => {
@@ -132,7 +141,7 @@ export default function Register() {
       setTimeout(() => {
         setIsSubmitting(false);
         setSuccessMsg("");
-        navigate("/");
+        navigate(selectedRole === "provider" ? "/provider/dashboard" : "/customer/dashboard");
       }, 1500);
     }, 800);
   };
@@ -151,8 +160,14 @@ export default function Register() {
 
           {/* Title Header */}
           <div className="space-y-1.5 mb-8 text-center">
-            <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Create your account</h1>
-            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">Join BookMyLocalService to manage your bookings</p>
+            <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">
+              {selectedRole === "provider" ? "Register as a Service Provider" : "Create your account"}
+            </h1>
+            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">
+              {selectedRole === "provider"
+                ? "Offer local services, receive dispatches, and manage your business"
+                : "Join BookMyLocalService to manage your bookings"}
+            </p>
           </div>
 
           {/* Error & Success Notice Banners */}
@@ -202,6 +217,15 @@ export default function Register() {
                   Service Provider
                 </button>
               </div>
+
+              {selectedRole === "provider" && (
+                <div className="p-3 bg-[#F0E7D5]/70 border border-[#E8DCC3] rounded-xl flex items-start gap-2.5 text-xs text-[#5A5146] mt-2">
+                  <Sparkles className="h-4 w-4 text-[#C9A46A] shrink-0 mt-0.5" />
+                  <span>
+                    <strong>Provider Onboarding:</strong> Showcase your service offerings, set availability, accept customer jobs, and track payments.
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Full Name */}
