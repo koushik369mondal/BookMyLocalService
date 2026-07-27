@@ -1,0 +1,16 @@
+[
+  {
+    "serviceSlug": "deep-home-cleaning-service",
+    "customerEmail": "customer@example.com",
+    "rating": 5.0,
+    "comment": "Sarah did an unbelievable job! The house smells fresh and clean.",
+    "createdAt": "2026-07-16T10:00:00Z"
+  },
+  {
+    "serviceSlug": "expert-plumbing-leak-repair",
+    "customerEmail": "customer@example.com",
+    "rating": 4.8,
+    "comment": "David arrived right on time and fixed our kitchen sink leak quickly.",
+    "createdAt": "2026-07-04T15:30:00Z"
+  }
+]
