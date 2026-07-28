@@ -17,7 +17,10 @@ import {
   CheckCircle2,
   Clock,
   ShieldCheck,
-  Check
+  Check,
+  Repeat,
+  Briefcase,
+  Loader2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "../../context/AuthContext";
@@ -30,8 +33,28 @@ const mockNotifications = [
 ];
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
+  const { user, logout, switchRole } = useAuth();
   const navigate = useNavigate();
+  const [isSwitchingRole, setIsSwitchingRole] = useState(false);
+
+  const handleToggleRole = async () => {
+    if (!user || isSwitchingRole) return;
+    const targetRole = user.role === "PROVIDER" ? "CUSTOMER" : "PROVIDER";
+    setIsSwitchingRole(true);
+    setShowDropdown(false);
+    try {
+      await switchRole(targetRole);
+      if (targetRole === "PROVIDER") {
+        navigate("/provider/dashboard");
+      } else {
+        navigate("/customer/dashboard");
+      }
+    } catch (error) {
+      console.error("Role switch error:", error);
+    } finally {
+      setIsSwitchingRole(false);
+    }
+  };
 
   // Dynamic role-based navbar links
   const navLinks = React.useMemo(() => {
@@ -315,6 +338,31 @@ export default function Navbar() {
                       <Settings className="h-4 w-4 text-[#7A7266]" /> Settings
                     </NavLink>
 
+                    {user.role !== "ADMIN" && (
+                      <button
+                        onClick={handleToggleRole}
+                        disabled={isSwitchingRole}
+                        className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#F0E7D5] text-[#C9A46A] transition-colors duration-150 text-left font-bold cursor-pointer border-t border-[#E8DCC3]/60"
+                      >
+                        {isSwitchingRole ? (
+                          <>
+                            <Loader2 className="h-4 w-4 animate-spin text-[#C9A46A]" />
+                            <span>Switching...</span>
+                          </>
+                        ) : user.role === "PROVIDER" ? (
+                          <>
+                            <User className="h-4 w-4 text-[#C9A46A]" />
+                            <span>Switch to Customer</span>
+                          </>
+                        ) : (
+                          <>
+                            <Briefcase className="h-4 w-4 text-[#C9A46A]" />
+                            <span>Switch to Provider</span>
+                          </>
+                        )}
+                      </button>
+                    )}
+
                     <hr className="my-1.5 border-[#E8DCC3]" />
                     <button
                       onClick={handleLogout}
@@ -462,6 +510,32 @@ export default function Navbar() {
                               <NavLink to="/bookings" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#C9A46A] rounded-xl transition-colors">
                                 <Calendar className="h-4 w-4 text-[#7A7266]" /> Booking History
                               </NavLink>
+                            </DialogClose>
+                          )}
+                          {user.role !== "ADMIN" && (
+                            <DialogClose asChild>
+                              <button
+                                onClick={handleToggleRole}
+                                disabled={isSwitchingRole}
+                                className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-[#C9A46A] hover:bg-[#F0E7D5] rounded-xl text-left transition-colors cursor-pointer"
+                              >
+                                {isSwitchingRole ? (
+                                  <>
+                                    <Loader2 className="h-4 w-4 animate-spin text-[#C9A46A]" />
+                                    <span>Switching Account...</span>
+                                  </>
+                                ) : user.role === "PROVIDER" ? (
+                                  <>
+                                    <User className="h-4 w-4 text-[#C9A46A]" />
+                                    <span>Switch to Customer</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Briefcase className="h-4 w-4 text-[#C9A46A]" />
+                                    <span>Switch to Provider</span>
+                                  </>
+                                )}
+                              </button>
                             </DialogClose>
                           )}
                           <DialogClose asChild>

@@ -135,8 +135,23 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
+    const switchRole = async (targetRole) => {
+        setLoading(true);
+        try {
+            const data = await authService.updateProfile({ role: targetRole });
+            if (data.success) {
+                setUser(data.user);
+                localStorage.setItem("user", JSON.stringify(data.user));
+                return data;
+            }
+            throw new Error(data.message || "Failed to switch role");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loading, login, register, logout, reloadUser: loadUser, registerSendOtp, loginSendOtp, verifyOtp, resendOtp }}>
+        <AuthContext.Provider value={{ user, loading, login, register, logout, reloadUser: loadUser, registerSendOtp, loginSendOtp, verifyOtp, resendOtp, switchRole }}>
             {children}
         </AuthContext.Provider>
     );

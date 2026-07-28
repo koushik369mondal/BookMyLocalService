@@ -94,12 +94,30 @@ export default function Profile() {
     try {
       await authService.updateProfile({ role: "PROVIDER" });
       await reloadUser();
-      setSuccessMsg("Congratulations! Your account has been upgraded to a Service Provider account. Redirecting to Provider Dashboard...");
+      setSuccessMsg("Congratulations! Your account has been switched to a Service Provider account. Redirecting to Provider Dashboard...");
       setTimeout(() => {
         navigate("/provider/dashboard");
       }, 1500);
     } catch (err) {
-      setErrorMsg(err.message || "Failed to upgrade account to Provider.");
+      setErrorMsg(err.message || "Failed to switch account to Provider.");
+    } finally {
+      setIsUpgradingRole(false);
+    }
+  };
+
+  const handleSwitchToCustomer = async () => {
+    setIsUpgradingRole(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+    try {
+      await authService.updateProfile({ role: "CUSTOMER" });
+      await reloadUser();
+      setSuccessMsg("Your account has been switched to a Customer account. Redirecting to Customer Dashboard...");
+      setTimeout(() => {
+        navigate("/customer/dashboard");
+      }, 1500);
+    } catch (err) {
+      setErrorMsg(err.message || "Failed to switch account to Customer.");
     } finally {
       setIsUpgradingRole(false);
     }
@@ -562,6 +580,43 @@ export default function Profile() {
                           <>
                             <Briefcase className="h-4 w-4 text-white" />
                             Become a Provider
+                            <ArrowRight className="h-4 w-4 text-white/70" />
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </Card>
+                )}
+
+                {/* SWITCH TO CUSTOMER CARD (FOR PROVIDER USERS) */}
+                {user.role === "PROVIDER" && (
+                  <Card className="border border-[#E8DCC3] rounded-2xl bg-[#F0E7D5]/40 p-6 mt-6 shadow-2xs">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                      <div className="space-y-2 max-w-xl">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#C9A46A]/20 text-[#C9A46A] font-bold text-[11px] rounded-lg border border-[#C9A46A]/30">
+                          <User className="h-3.5 w-3.5 text-[#C9A46A]" /> Account Switching
+                        </div>
+                        <h3 className="text-lg font-bold text-[#1F1D1A]">Switch to Customer Account</h3>
+                        <p className="text-xs text-[#5A5146] leading-relaxed">
+                          Need to book local services for yourself? Switch back to your Customer account mode to browse available services, request dispatches, and view your bookings.
+                        </p>
+                      </div>
+
+                      <Button
+                        type="button"
+                        onClick={handleSwitchToCustomer}
+                        disabled={isUpgradingRole}
+                        className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-extrabold text-xs h-11 px-6 rounded-xl shadow-md border border-[#E8DCC3] shrink-0 flex items-center gap-2 cursor-pointer transition-all"
+                      >
+                        {isUpgradingRole ? (
+                          <>
+                            <Loader2 className="h-4 w-4 animate-spin text-white" />
+                            Switching Account...
+                          </>
+                        ) : (
+                          <>
+                            <User className="h-4 w-4 text-white" />
+                            Switch to Customer
                             <ArrowRight className="h-4 w-4 text-white/70" />
                           </>
                         )}

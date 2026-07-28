@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { User, Loader2 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { providerMenu } from "../../config/navigationConfig";
 
 export default function ProviderSidebar({ collapsed, onNavigate }) {
-  const { logout, user } = useAuth();
+  const { logout, user, switchRole } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const [isSwitching, setIsSwitching] = useState(false);
+
+  const handleSwitchToCustomer = async (e) => {
+    e.preventDefault();
+    if (isSwitching) return;
+    setIsSwitching(true);
+    onNavigate?.();
+    try {
+      await switchRole("CUSTOMER");
+      navigate("/customer/dashboard");
+    } catch (err) {
+      console.error("Failed to switch to customer:", err);
+    } finally {
+      setIsSwitching(false);
+    }
+  };
 
   const isItemActive = (item) => {
     if (item.path !== location.pathname) return false;
@@ -66,17 +83,35 @@ export default function ProviderSidebar({ collapsed, onNavigate }) {
 
           if (item.isLogout) {
             return (
-              <button
-                key={idx}
-                onClick={handleLogout}
-                className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#8C4B3E] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer ${
-                  collapsed ? "justify-center px-0" : "px-3.5"
-                }`}
-                title={collapsed ? item.label : undefined}
-              >
-                <Icon className="h-4.5 w-4.5 shrink-0" />
-                {!collapsed && <span>{item.label}</span>}
-              </button>
+              <React.Fragment key={idx}>
+                <button
+                  type="button"
+                  onClick={handleSwitchToCustomer}
+                  disabled={isSwitching}
+                  className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#C9A46A] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer border-t border-[#E8DCC3]/60 ${
+                    collapsed ? "justify-center px-0" : "px-3.5"
+                  }`}
+                  title={collapsed ? "Switch to Customer Account" : undefined}
+                >
+                  {isSwitching ? (
+                    <Loader2 className="h-4.5 w-4.5 shrink-0 text-[#C9A46A] animate-spin" />
+                  ) : (
+                    <User className="h-4.5 w-4.5 shrink-0 text-[#C9A46A]" />
+                  )}
+                  {!collapsed && <span>{isSwitching ? "Switching..." : "Switch to Customer"}</span>}
+                </button>
+
+                <button
+                  onClick={handleLogout}
+                  className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#8C4B3E] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer ${
+                    collapsed ? "justify-center px-0" : "px-3.5"
+                  }`}
+                  title={collapsed ? item.label : undefined}
+                >
+                  <Icon className="h-4.5 w-4.5 shrink-0" />
+                  {!collapsed && <span>{item.label}</span>}
+                </button>
+              </React.Fragment>
             );
           }
 
