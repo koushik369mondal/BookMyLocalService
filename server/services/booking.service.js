@@ -1,4 +1,5 @@
-const prisma = require("../config/prisma");
+const bookingRepository = require("../repositories/booking.repository");
+const serviceRepository = require("../repositories/service.repository");
 
 /**
  * Create a new pending booking
@@ -6,107 +7,53 @@ const prisma = require("../config/prisma");
 const createBooking = async (bookingData) => {
   const { customerId, serviceId, plan, date, time, price } = bookingData;
 
-  // Verify service exists and get its providerId
-  const service = await prisma.service.findUnique({
-    where: { id: serviceId }
-  });
-
+  const service = await serviceRepository.findById(serviceId);
   if (!service) {
     throw new Error("Service not found.");
   }
 
-  // Calculate pricing breakdown
   const basePrice = parseFloat(price);
   const platformFee = 4.99;
-  const tax = Math.round(basePrice * 0.085 * 100) / 100; // 8.5%
-  const discount = 0.0; // Initially no discount
+  const tax = Math.round(basePrice * 0.085 * 100) / 100;
+  const discount = 0.0;
   const total = Math.round((basePrice + platformFee + tax - discount) * 100) / 100;
 
-  return await prisma.booking.create({
-    data: {
-      customerId,
-      serviceId,
-      providerId: service.providerId,
-      plan,
-      date,
-      time,
-      price: basePrice,
-      platformFee,
-      tax,
-      discount,
-      total,
-      status: "pending",
-      paymentStatus: "pending"
-    },
-    include: {
-      customer: {
-        select: { id: true, fullName: true, email: true, phone: true, avatar: true }
-      },
-      provider: {
-        select: { id: true, fullName: true, email: true, phone: true, avatar: true }
-      },
-      service: {
-        select: { id: true, title: true, imageUrl: true, category: true }
-      }
-    }
+  return await bookingRepository.create({
+    customerId,
+    serviceId,
+    providerId: service.provider.id,
+    plan,
+    date,
+    time,
+    price: basePrice,
+    platformFee,
+    tax,
+    discount,
+    total,
+    status: "pending",
+    paymentStatus: "pending"
   });
 };
 
 /**
- * Get all bookings of a user (either customer, provider, or all if admin)
+ * Get all bookings of a user (customer, provider, or admin)
  */
 const getUserBookings = async (userId, role) => {
-  let where = {};
-  
-  if (role === "CUSTOMER") {
-    where.customerId = userId;
-  } else if (role === "PROVIDER") {
-    where.providerId = userId;
-  } else if (role !== "ADMIN") {
-    // Fallback for user role check
-    where.OR = [
-      { customerId: userId },
-      { providerId: userId }
-    ];
+  const where = {};
+  if (role === "CUSTOMER") where.customerId = userId;
+  else if (role === "PROVIDER") where.providerId = userId;
+  else if (role !== "ADMIN") {
+    where.OR = [{ customerId: userId }, { providerId: userId }];
   }
 
-  return await prisma.booking.findMany({
-    where,
-    include: {
-      customer: {
-        select: { id: true, fullName: true, email: true, phone: true, avatar: true, address: true, city: true, state: true, zipCode: true }
-      },
-      provider: {
-        select: { id: true, fullName: true, email: true, phone: true, avatar: true }
-      },
-      service: {
-        select: { id: true, title: true, imageUrl: true, category: true, description: true }
-      }
-    },
-    orderBy: {
-      createdAt: "desc"
-    }
-  });
+  return await bookingRepository.findMany(where);
 };
 
 /**
  * Get booking by ID
  */
 const getBookingById = async (id) => {
-  return await prisma.booking.findUnique({
-    where: { id },
-    include: {
-      customer: {
-        select: { id: true, fullName: true, email: true, phone: true, avatar: true, address: true, city: true, state: true, zipCode: true }
-      },
-      provider: {
-        select: { id: true, fullName: true, email: true, phone: true, avatar: true }
-      },
-      service: {
-        select: { id: true, title: true, imageUrl: true, category: true, description: true }
-      }
-    }
-  });
+  return await bookingRepository.findById(id);
 };
 
 /**
@@ -126,11 +73,10 @@ const updateBooking = async (id, updateData) => {
   if (city !== undefined) data.city = city;
   if (state !== undefined) data.state = state;
   if (zipCode !== undefined) data.zipCode = zipCode;
-  
+
   if (discount !== undefined) {
     data.discount = parseFloat(discount);
-    // Recalculate total
-    const booking = await prisma.booking.findUnique({ where: { id } });
+    const booking = await bookingRepository.findById(id);
     if (booking) {
       const basePrice = booking.price;
       const platformFee = booking.platformFee;
@@ -139,30 +85,14 @@ const updateBooking = async (id, updateData) => {
     }
   }
 
-  return await prisma.booking.update({
-    where: { id },
-    data,
-    include: {
-      customer: {
-        select: { id: true, fullName: true, email: true, phone: true, avatar: true }
-      },
-      provider: {
-        select: { id: true, fullName: true, email: true, phone: true, avatar: true }
-      },
-      service: {
-        select: { id: true, title: true, imageUrl: true, category: true }
-      }
-    }
-  });
+  return await bookingRepository.update(id, data);
 };
 
 /**
  * Delete a booking
  */
 const deleteBooking = async (id) => {
-  return await prisma.booking.delete({
-    where: { id }
-  });
+  return await bookingRepository.delete(id);
 };
 
 module.exports = {

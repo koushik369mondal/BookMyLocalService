@@ -1,36 +1,27 @@
-const prisma = require("../config/prisma");
+const serviceRepository = require("../repositories/service.repository");
+const userRepository = require("../repositories/user.repository");
 const cloudinary = require("../config/cloudinary");
 
-/**
- * Slugify a string helper
- */
 const slugify = (text) => {
   return text
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-    .replace(/\-\-+/g, "-") // Replace multiple - with single -
-    .replace(/^-+/, "") // Trim - from start of text
-    .replace(/-+$/, ""); // Trim - from end of text
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
 };
 
-/**
- * Generate a unique slug
- */
 const generateUniqueSlug = async (title) => {
   let slug = slugify(title);
   let uniqueSlug = slug;
   let counter = 1;
 
   while (true) {
-    const existing = await prisma.service.findUnique({
-      where: { slug: uniqueSlug }
-    });
-    if (!existing) {
-      break;
-    }
+    const existing = await serviceRepository.findBySlug(uniqueSlug);
+    if (!existing) break;
     uniqueSlug = `${slug}-${counter}`;
     counter++;
   }
@@ -38,9 +29,6 @@ const generateUniqueSlug = async (title) => {
   return uniqueSlug;
 };
 
-/**
- * Upload image to Cloudinary helper
- */
 const uploadToCloudinary = async (file) => {
   if (!file) return null;
 
@@ -62,16 +50,11 @@ const uploadToCloudinary = async (file) => {
   return uploadResponse.secure_url;
 };
 
-/**
- * Get all services with optional filters
- */
 const getAllServices = async (filters = {}) => {
   const { category, search, location, minPrice, maxPrice, rating, availability, sortBy } = filters;
-
   const where = {};
 
   if (category && category !== "all") {
-    // If multiple categories are passed (comma-separated or array)
     if (Array.isArray(category)) {
       where.category = { in: category };
     } else if (category.includes(",")) {
@@ -81,187 +64,76 @@ const getAllServices = async (filters = {}) => {
     }
   }
 
-  if (location && location !== "all") {
-    where.location = location;
-  }
+  if (location && location !== "all") where.location = location;
+  if (availability && availability !== "all") where.availability = availability;
 
-  if (availability && availability !== "all") {
-    where.availability = availability;
-  }
-
-  // Price range
   if (minPrice !== undefined || maxPrice !== undefined) {
     where.price = {};
-    if (minPrice !== undefined && minPrice !== "") {
-      where.price.gte = parseFloat(minPrice);
-    }
-    if (maxPrice !== undefined && maxPrice !== "") {
-      where.price.lte = parseFloat(maxPrice);
-    }
+    if (minPrice !== undefined && minPrice !== "") where.price.gte = parseFloat(minPrice);
+    if (maxPrice !== undefined && maxPrice !== "") where.price.lte = parseFloat(maxPrice);
   }
 
   if (rating !== undefined && rating !== "" && rating !== "0" && parseFloat(rating) > 0) {
-    where.rating = {
-      gte: parseFloat(rating)
-    };
+    where.rating = { gte: parseFloat(rating) };
   }
 
-  // Text search query matching title, description or provider name
   if (search && search.trim() !== "") {
     const q = search.trim();
     where.OR = [
       { title: { contains: q, mode: "insensitive" } },
       { description: { contains: q, mode: "insensitive" } },
       { category: { contains: q, mode: "insensitive" } },
-      {
-        provider: {
-          fullName: { contains: q, mode: "insensitive" }
-        }
-      }
+      { provider: { fullName: { contains: q, mode: "insensitive" } } }
     ];
   }
 
-  // Order sorting logic
-  let orderBy = { createdAt: "desc" }; // default sorting
-  if (sortBy === "popularity") {
-    orderBy = { reviewCount: "desc" };
-  } else if (sortBy === "rating") {
-    orderBy = [
-      { rating: "desc" },
-      { reviewCount: "desc" }
-    ];
-  } else if (sortBy === "price-asc") {
-    orderBy = { price: "asc" };
-  } else if (sortBy === "price-desc") {
-    orderBy = { price: "desc" };
-  } else if (sortBy === "newest") {
-    orderBy = { createdAt: "desc" };
-  }
+  let orderBy = { createdAt: "desc" };
+  if (sortBy === "popularity") orderBy = { reviewCount: "desc" };
+  else if (sortBy === "rating") orderBy = [{ rating: "desc" }, { reviewCount: "desc" }];
+  else if (sortBy === "price-asc") orderBy = { price: "asc" };
+  else if (sortBy === "price-desc") orderBy = { price: "desc" };
+  else if (sortBy === "newest") orderBy = { createdAt: "desc" };
 
-  return await prisma.service.findMany({
-    where,
-    orderBy,
-    include: {
-      provider: {
-        select: {
-          id: true,
-          fullName: true,
-          avatar: true,
-          email: true,
-          phone: true
-        }
-      }
-    }
-  });
+  return await serviceRepository.findMany(where, orderBy);
 };
 
-/**
- * Get service by ID
- */
-const getServiceById = async (id) => {
-  return await prisma.service.findUnique({
-    where: { id },
-    include: {
-      provider: {
-        select: {
-          id: true,
-          fullName: true,
-          avatar: true,
-          email: true,
-          phone: true
-        }
-      }
-    }
-  });
-};
+const getServiceById = async (id) => serviceRepository.findById(id);
 
-/**
- * Get service by Slug
- */
-const getServiceBySlug = async (slug) => {
-  return await prisma.service.findUnique({
-    where: { slug },
-    include: {
-      provider: {
-        select: {
-          id: true,
-          fullName: true,
-          avatar: true,
-          email: true,
-          phone: true
-        }
-      }
-    }
-  });
-};
+const getServiceBySlug = async (slug) => serviceRepository.findBySlug(slug);
 
-/**
- * Create a new service
- */
 const createService = async (serviceData, file) => {
   const { title, description, category, providerId, location, price, priceType, availability, badge } = serviceData;
 
-  // Validate provider exists
-  const provider = await prisma.user.findUnique({
-    where: { id: providerId }
-  });
-
-  if (!provider) {
-    throw new Error("Provider user does not exist.");
-  }
-
+  const provider = await userRepository.findById(providerId);
+  if (!provider) throw new Error("Provider user does not exist.");
   if (provider.role !== "PROVIDER" && provider.role !== "ADMIN") {
     throw new Error("Specified provider must have a PROVIDER or ADMIN role.");
   }
 
-  // Upload image to Cloudinary
-  if (!file) {
-    throw new Error("Service image is required.");
-  }
+  if (!file) throw new Error("Service image is required.");
   const imageUrl = await uploadToCloudinary(file);
-
-  // Generate unique slug
   const slug = await generateUniqueSlug(title);
 
-  return await prisma.service.create({
-    data: {
-      title,
-      slug,
-      description,
-      category,
-      providerId,
-      location,
-      price: parseFloat(price),
-      priceType,
-      availability,
-      badge: badge || null,
-      imageUrl,
-      rating: 5.0, // Initial defaults
-      reviewCount: 0
-    },
-    include: {
-      provider: {
-        select: {
-          id: true,
-          fullName: true,
-          avatar: true
-        }
-      }
-    }
+  return await serviceRepository.create({
+    title,
+    slug,
+    description,
+    category,
+    providerId,
+    location,
+    price: parseFloat(price),
+    priceType,
+    availability,
+    badge: badge || null,
+    imageUrl,
+    rating: 5.0,
+    reviewCount: 0
   });
 };
 
-/**
- * Update service details
- */
 const updateService = async (id, serviceData, file) => {
-  const existingService = await prisma.service.findUnique({
-    where: { id }
-  });
-
-  if (!existingService) {
-    throw new Error("Service not found.");
-  }
+  const existingService = await serviceRepository.findById(id);
+  if (!existingService) throw new Error("Service not found.");
 
   const { title, description, category, location, price, priceType, availability, badge } = serviceData;
   const updateData = {};
@@ -281,18 +153,14 @@ const updateService = async (id, serviceData, file) => {
   if (availability !== undefined) updateData.availability = availability;
   if (badge !== undefined) updateData.badge = badge || null;
 
-  // If a new image is provided, upload to Cloudinary and delete old image if it is stored in Cloudinary
   if (file) {
     const imageUrl = await uploadToCloudinary(file);
     updateData.imageUrl = imageUrl;
-
-    // Delete old image from Cloudinary if possible
     if (existingService.imageUrl && existingService.imageUrl.includes("cloudinary.com")) {
       try {
         const parts = existingService.imageUrl.split("/upload/");
         if (parts.length >= 2) {
-          const pathAfterUpload = parts[1];
-          const pathWithoutVersion = pathAfterUpload.replace(/^v\d+\//, "");
+          const pathWithoutVersion = parts[1].replace(/^v\d+\//, "");
           const publicId = pathWithoutVersion.substring(0, pathWithoutVersion.lastIndexOf("."));
           await cloudinary.uploader.destroy(publicId);
         }
@@ -302,40 +170,18 @@ const updateService = async (id, serviceData, file) => {
     }
   }
 
-  return await prisma.service.update({
-    where: { id },
-    data: updateData,
-    include: {
-      provider: {
-        select: {
-          id: true,
-          fullName: true,
-          avatar: true
-        }
-      }
-    }
-  });
+  return await serviceRepository.update(id, updateData);
 };
 
-/**
- * Delete a service
- */
 const deleteService = async (id) => {
-  const existingService = await prisma.service.findUnique({
-    where: { id }
-  });
+  const existingService = await serviceRepository.findById(id);
+  if (!existingService) throw new Error("Service not found.");
 
-  if (!existingService) {
-    throw new Error("Service not found.");
-  }
-
-  // Delete image from Cloudinary
   if (existingService.imageUrl && existingService.imageUrl.includes("cloudinary.com")) {
     try {
       const parts = existingService.imageUrl.split("/upload/");
       if (parts.length >= 2) {
-        const pathAfterUpload = parts[1];
-        const pathWithoutVersion = pathAfterUpload.replace(/^v\d+\//, "");
+        const pathWithoutVersion = parts[1].replace(/^v\d+\//, "");
         const publicId = pathWithoutVersion.substring(0, pathWithoutVersion.lastIndexOf("."));
         await cloudinary.uploader.destroy(publicId);
       }
@@ -344,26 +190,11 @@ const deleteService = async (id) => {
     }
   }
 
-  return await prisma.service.delete({
-    where: { id }
-  });
+  return await serviceRepository.delete(id);
 };
 
-/**
- * Get distinct categories with service & provider counts
- */
 const getServiceCategories = async () => {
-  const services = await prisma.service.findMany({
-    include: {
-      provider: {
-        select: {
-          id: true,
-          isVerified: true
-        }
-      }
-    }
-  });
-
+  const services = await serviceRepository.findMany();
   const categoryMap = {};
 
   services.forEach(service => {
@@ -378,7 +209,7 @@ const getServiceCategories = async () => {
     }
 
     categoryMap[cat].serviceCount += 1;
-    if (service.provider && service.provider.isVerified) {
+    if (service.provider) {
       categoryMap[cat].providerIds.add(service.provider.id);
     }
   });
@@ -401,7 +232,7 @@ const getServiceCategories = async () => {
     "Wellness & Personal": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80"
   };
 
-  const categories = Object.keys(categoryMap).map(name => {
+  return Object.keys(categoryMap).map(name => {
     const data = categoryMap[name];
     return {
       name,
@@ -411,8 +242,6 @@ const getServiceCategories = async () => {
       providerCount: data.providerIds.size
     };
   });
-
-  return categories;
 };
 
 module.exports = {

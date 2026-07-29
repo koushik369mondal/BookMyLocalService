@@ -1,4 +1,4 @@
-const prisma = require("../config/prisma");
+const userRepository = require("../repositories/user.repository");
 const { sendOtpEmail } = require("./emailService");
 const otpService = require("./otp.service");
 const { generateToken } = require("../utils/jwt.util");
@@ -25,15 +25,13 @@ const sendRegisterOtp = async ({ fullName, email, phone, role }) => {
         throw err;
     }
 
-    // Check for existing verified account with this email
-    const existingEmailUser = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+    const existingEmailUser = await userRepository.findByEmail(normalizedEmail);
     if (existingEmailUser && existingEmailUser.isVerified) {
         const err = new Error("An account with this email already exists. Please log in.");
         err.statusCode = 400;
         throw err;
     }
 
-    // Check rate limit on previous unverified registration attempts
     if (existingEmailUser) {
         const { isRateLimited, secondsToWait } = otpService.checkRateLimit(existingEmailUser.otpExpiresAt);
         if (isRateLimited) {
@@ -42,11 +40,9 @@ const sendRegisterOtp = async ({ fullName, email, phone, role }) => {
             throw err;
         }
 
-        // Clean up previous unverified record for this email
-        await prisma.user.delete({ where: { id: existingEmailUser.id } });
+        await userRepository.delete(existingEmailUser.id);
     }
 
-    // Generate and hash OTP
     const otp = otpService.generateOtpCode();
     const otpHash = otpService.hashOtp(otp);
     const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
@@ -59,21 +55,17 @@ const sendRegisterOtp = async ({ fullName, email, phone, role }) => {
         }
     }
 
-    // Create unverified user record
-    await prisma.user.create({
-        data: {
-            fullName: fullName.trim(),
-            email: normalizedEmail,
-            phone: normalizedPhone,
-            role: userRole,
-            isVerified: false,
-            otpHash,
-            otpExpiresAt,
-            otpAttempts: 0
-        }
+    await userRepository.create({
+        fullName: fullName.trim(),
+        email: normalizedEmail,
+        phone: normalizedPhone,
+        role: userRole,
+        isVerified: false,
+        otpHash,
+        otpExpiresAt,
+        otpAttempts: 0
     });
 
-    // Send email dispatch
     await sendOtpEmail(normalizedEmail, otp, fullName.trim());
 
     return { success: true, message: "OTP sent successfully" };
@@ -90,7 +82,7 @@ const verifyRegisterOtp = async ({ email, otp }) => {
     }
 
     const normalizedEmail = email.toLowerCase().trim();
-    const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+    const user = await userRepository.findByEmail(normalizedEmail);
 
     if (!user || user.isVerified) {
         const err = new Error("Registration session not found or user already verified.");
@@ -98,59 +90,35 @@ const verifyRegisterOtp = async ({ email, otp }) => {
         throw err;
     }
 
-    if (!user.otpHash || !user.otpExpiresAt) {
-        const err = new Error("No pending verification found. Please request a new OTP.");
+    const validation = otpService.validateOtpState(user);
+    if (!validation.valid) {
+        const err = new Error(validation.reason);
         err.statusCode = 400;
         throw err;
     }
 
-    if (user.otpAttempts >= 5) {
-        await prisma.user.delete({ where: { id: user.id } });
-        const err = new Error("Too many incorrect attempts. Please start registration again.");
+    const isMatch = otpService.verifyOtpCode(otp, user.otpHash);
+    if (!isMatch) {
+        await userRepository.update(user.id, {
+            otpAttempts: user.otpAttempts + 1
+        });
+        const err = new Error("Invalid OTP. Please try again.");
         err.statusCode = 400;
         throw err;
     }
 
-    if (otpService.isOtpExpired(user.otpExpiresAt)) {
-        await prisma.user.delete({ where: { id: user.id } });
-        const err = new Error("OTP has expired. Please request a new registration.");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const isValid = otpService.verifyOtpHash(otp, user.otpHash);
-    if (!isValid) {
-        const { isLockedOut, remainingAttempts } = await otpService.incrementOtpAttempts(user.id, user.otpAttempts);
-        if (isLockedOut) {
-            await prisma.user.delete({ where: { id: user.id } });
-            const err = new Error("Too many incorrect attempts. Please start registration again.");
-            err.statusCode = 400;
-            throw err;
-        }
-        const err = new Error(`Invalid verification code. ${remainingAttempts} attempts remaining.`);
-        err.statusCode = 400;
-        throw err;
-    }
-
-    // Success - verify user & clear OTP fields
-    const verifiedUser = await prisma.user.update({
-        where: { id: user.id },
-        data: {
-            isVerified: true,
-            otpHash: null,
-            otpExpiresAt: null,
-            otpAttempts: 0
-        },
-        select: userSelect
+    const verifiedUser = await userRepository.update(user.id, {
+        isVerified: true,
+        otpHash: null,
+        otpExpiresAt: null,
+        otpAttempts: 0
     });
 
-    const token = generateToken(verifiedUser.id, verifiedUser.role);
+    const token = generateToken({ id: verifiedUser.id, role: verifiedUser.role });
 
     return {
-        success: true,
-        message: "Registration verified and account created successfully",
-        token,
-        user: verifiedUser
+        user: toSafeUser(verifiedUser),
+        token
     };
 };
 
@@ -159,21 +127,22 @@ const verifyRegisterOtp = async ({ email, otp }) => {
  */
 const sendLoginOtp = async ({ email }) => {
     if (!email) {
-        const err = new Error("Please provide an email address");
+        const err = new Error("Email address is required");
         err.statusCode = 400;
         throw err;
     }
 
     const normalizedEmail = email.toLowerCase().trim();
+
     if (!isValidEmail(normalizedEmail)) {
-        const err = new Error("Please provide a valid email address");
+        const err = new Error("Please enter a valid email address");
         err.statusCode = 400;
         throw err;
     }
 
-    const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
-    if (!user || !user.isVerified) {
-        const err = new Error("No account found with this email.");
+    const user = await userRepository.findByEmail(normalizedEmail);
+    if (!user) {
+        const err = new Error("No account found with this email address");
         err.statusCode = 404;
         throw err;
     }
@@ -187,15 +156,21 @@ const sendLoginOtp = async ({ email }) => {
 
     const otp = otpService.generateOtpCode();
     const otpHash = otpService.hashOtp(otp);
+    const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
-    await otpService.storeOtp(user.id, otpHash);
-    await sendOtpEmail(normalizedEmail, otp, user.fullName || "");
+    await userRepository.update(user.id, {
+        otpHash,
+        otpExpiresAt,
+        otpAttempts: 0
+    });
 
-    return { success: true, message: "OTP sent successfully" };
+    await sendOtpEmail(normalizedEmail, otp, user.fullName);
+
+    return { success: true, message: "Login OTP sent successfully" };
 };
 
 /**
- * Verify login OTP and return JWT token with safe user payload.
+ * Verify login OTP code and issue auth token.
  */
 const verifyLoginOtp = async ({ email, otp }) => {
     if (!email || !otp) {
@@ -205,88 +180,102 @@ const verifyLoginOtp = async ({ email, otp }) => {
     }
 
     const normalizedEmail = email.toLowerCase().trim();
-    const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+    const user = await userRepository.findByEmail(normalizedEmail);
 
-    if (!user || !user.isVerified) {
-        const err = new Error("Account not found.");
-        err.statusCode = 404;
-        throw err;
-    }
-
-    if (!user.otpHash || !user.otpExpiresAt) {
-        const err = new Error("No pending verification found. Please request a new OTP.");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    if (user.otpAttempts >= 5) {
-        await otpService.clearOtp(user.id);
-        const err = new Error("Too many incorrect attempts. Please request a new OTP.");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    if (otpService.isOtpExpired(user.otpExpiresAt)) {
-        await otpService.clearOtp(user.id);
-        const err = new Error("OTP has expired. Please request a new one.");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const isValid = otpService.verifyOtpHash(otp, user.otpHash);
-    if (!isValid) {
-        const { isLockedOut, remainingAttempts } = await otpService.incrementOtpAttempts(user.id, user.otpAttempts);
-        if (isLockedOut) {
-            const err = new Error("Too many incorrect attempts. Please request a new OTP.");
-            err.statusCode = 400;
-            throw err;
-        }
-        const err = new Error(`Invalid verification code. ${remainingAttempts} attempts remaining.`);
-        err.statusCode = 400;
-        throw err;
-    }
-
-    // Success - clear OTP fields and return session token
-    await otpService.clearOtp(user.id);
-    const token = generateToken(user.id, user.role);
-
-    return {
-        success: true,
-        message: "Login successful",
-        token,
-        user: toSafeUser(user)
-    };
-};
-
-/**
- * Get current authenticated user profile by ID.
- */
-const getUserProfile = async (userId) => {
-    const user = await prisma.user.findUnique({
-        where: { id: userId },
-        select: userSelect
-    });
     if (!user) {
         const err = new Error("User not found");
         err.statusCode = 404;
         throw err;
     }
-    return user;
+
+    const validation = otpService.validateOtpState(user);
+    if (!validation.valid) {
+        const err = new Error(validation.reason);
+        err.statusCode = 400;
+        throw err;
+    }
+
+    const isMatch = otpService.verifyOtpCode(otp, user.otpHash);
+    if (!isMatch) {
+        await userRepository.update(user.id, {
+            otpAttempts: user.otpAttempts + 1
+        });
+        const err = new Error("Invalid OTP code");
+        err.statusCode = 400;
+        throw err;
+    }
+
+    const loggedInUser = await userRepository.update(user.id, {
+        isVerified: true,
+        otpHash: null,
+        otpExpiresAt: null,
+        otpAttempts: 0
+    });
+
+    const token = generateToken({ id: loggedInUser.id, role: loggedInUser.role });
+
+    return {
+        user: toSafeUser(loggedInUser),
+        token
+    };
 };
 
 /**
- * Update authenticated user profile fields.
+ * Get current user profile details
+ */
+const getUserProfile = async (userId) => {
+    const user = await userRepository.findById(userId);
+    if (!user) {
+        const err = new Error("User not found");
+        err.statusCode = 404;
+        throw err;
+    }
+    return toSafeUser(user);
+};
+
+/**
+ * Update current user profile details
  */
 const updateUserProfile = async (userId, updateData) => {
+    const user = await userRepository.findById(userId);
+    if (!user) {
+        const err = new Error("User not found");
+        err.statusCode = 404;
+        throw err;
+    }
+
     const fieldsToUpdate = {};
-    if (updateData.fullName !== undefined) fieldsToUpdate.fullName = updateData.fullName.trim();
-    if (updateData.phone !== undefined) fieldsToUpdate.phone = updateData.phone.trim();
+
+    if (updateData.role !== undefined) {
+        const roleUpper = updateData.role.toUpperCase();
+        if (Object.values(USER_ROLES).includes(roleUpper)) {
+            fieldsToUpdate.role = roleUpper;
+        }
+    }
+
+    if (updateData.fullName !== undefined) {
+        const trimmedName = updateData.fullName.trim();
+        if (trimmedName.length < 2) {
+            const err = new Error("Full name must be at least 2 characters long");
+            err.statusCode = 400;
+            throw err;
+        }
+        fieldsToUpdate.fullName = trimmedName;
+    }
+
+    if (updateData.phone !== undefined) {
+        const trimmedPhone = updateData.phone.trim();
+        if (!/^\+?1?\s*\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/.test(trimmedPhone)) {
+            const err = new Error("Please enter a valid 10-digit phone number");
+            err.statusCode = 400;
+            throw err;
+        }
+        fieldsToUpdate.phone = trimmedPhone;
+    }
+
     if (updateData.address !== undefined) fieldsToUpdate.address = updateData.address.trim();
     if (updateData.city !== undefined) fieldsToUpdate.city = updateData.city.trim();
     if (updateData.state !== undefined) fieldsToUpdate.state = updateData.state.trim();
-    if (updateData.role !== undefined && (updateData.role === USER_ROLES.PROVIDER || updateData.role === USER_ROLES.CUSTOMER)) {
-        fieldsToUpdate.role = updateData.role;
-    }
 
     if (updateData.zipCode !== undefined) {
         const trimmedZip = updateData.zipCode.trim();
@@ -304,12 +293,7 @@ const updateUserProfile = async (userId, updateData) => {
         throw err;
     }
 
-    const updatedUser = await prisma.user.update({
-        where: { id: userId },
-        data: fieldsToUpdate,
-        select: userSelect
-    });
-
+    const updatedUser = await userRepository.update(userId, fieldsToUpdate);
     return updatedUser;
 };
 
