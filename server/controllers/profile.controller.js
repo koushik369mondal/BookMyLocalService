@@ -1,29 +1,19 @@
 const prisma = require("../config/prisma");
 const cloudinary = require("../config/cloudinary");
-
-const userSelect = {
-    id: true,
-    fullName: true,
-    email: true,
-    phone: true,
-    role: true,
-    avatar: true,
-    isVerified: true,
-    address: true,
-    city: true,
-    state: true,
-    zipCode: true,
-    createdAt: true,
-    updatedAt: true
-};
+const authService = require("../services/auth.service");
+const { userSelect } = require("../utils/user.util");
 
 const getProfile = async (req, res) => {
     try {
-        if (!req.user) {
+        if (!req.user || !req.user.id) {
             return res.status(401).json({ success: false, message: "Not authorized" });
         }
-        return res.json({ success: true, user: req.user });
+        const user = await authService.getUserProfile(req.user.id);
+        return res.json({ success: true, user });
     } catch (error) {
+        if (error.statusCode) {
+            return res.status(error.statusCode).json({ success: false, message: error.message });
+        }
         console.error("getProfile error:", error);
         return res.status(500).json({ success: false, message: "Server error fetching profile" });
     }
@@ -31,46 +21,19 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     try {
-        const { fullName, phone, address, city, state, zipCode, role } = req.body;
-
-        const updateData = {};
-        if (fullName !== undefined) updateData.fullName = fullName.trim();
-        if (role !== undefined && (role === "PROVIDER" || role === "CUSTOMER")) {
-            updateData.role = role;
+        if (!req.user || !req.user.id) {
+            return res.status(401).json({ success: false, message: "Not authorized" });
         }
-        if (phone !== undefined) {
-            const normalizedPhone = phone.trim();
-            if (normalizedPhone !== req.user.phone) {
-                const existingPhone = await prisma.user.findUnique({ where: { phone: normalizedPhone } });
-                if (existingPhone) {
-                    return res.status(400).json({ success: false, message: "This phone number is already in use" });
-                }
-            }
-            updateData.phone = normalizedPhone;
-        }
-        if (address !== undefined) updateData.address = address.trim();
-        if (city !== undefined) updateData.city = city.trim();
-        if (state !== undefined) updateData.state = state.trim();
-        if (zipCode !== undefined) {
-            const trimmedZip = zipCode.trim();
-            if (trimmedZip !== "" && !/^\d{6}$/.test(trimmedZip)) {
-                return res.status(400).json({ success: false, message: "PIN code must be 6 digits" });
-            }
-            updateData.zipCode = trimmedZip;
-        }
-
-        const updatedUser = await prisma.user.update({
-            where: { id: req.user.id },
-            data: updateData,
-            select: userSelect
-        });
-
+        const updatedUser = await authService.updateUserProfile(req.user.id, req.body);
         return res.json({
             success: true,
             message: "Profile updated successfully",
             user: updatedUser
         });
     } catch (error) {
+        if (error.statusCode) {
+            return res.status(error.statusCode).json({ success: false, message: error.message });
+        }
         console.error("updateProfile error:", error);
         return res.status(500).json({ success: false, message: "Server error updating profile", error: error.message });
     }

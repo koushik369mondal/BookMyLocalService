@@ -1,0 +1,29 @@
+/**
+ * Authentication module constants
+ */
+
+const OTP_EXPIRE_MINUTES = 5;
+const OTP_EXPIRE_MS = OTP_EXPIRE_MINUTES * 60 * 1000;
+
+const OTP_RATE_LIMIT_SECONDS = 60;
+const OTP_RATE_LIMIT_MS = OTP_RATE_LIMIT_SECONDS * 1000;
+
+const OTP_MAX_ATTEMPTS = 5;
+
+const USER_ROLES = {
+    CUSTOMER: "CUSTOMER",
+    PROVIDER: "PROVIDER",
+    ADMIN: "ADMIN"
+};
+
+const DEFAULT_JWT_EXPIRES_IN = "30d";
+
+module.exports = {
+    OTP_EXPIRE_MINUTES,
+    OTP_EXPIRE_MS,
+    OTP_RATE_LIMIT_SECONDS,
+    OTP_RATE_LIMIT_MS,
+    OTP_MAX_ATTEMPTS,
+    USER_ROLES,
+    DEFAULT_JWT_EXPIRES_IN
+};

@@ -125,7 +125,7 @@ export default function Register() {
       }, 1200);
     } catch (err) {
       console.error("Register page error:", err);
-      setErrorMsg(err.message || "Registration failed. Email or phone number might already be registered.");
+      setErrorMsg(err.message || "Registration failed. Email address might already be registered.");
       setIsSubmitting(false);
     }
   };

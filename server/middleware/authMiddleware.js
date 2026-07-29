@@ -1,5 +1,6 @@
-const jwt = require("jsonwebtoken");
 const prisma = require("../config/prisma");
+const { verifyToken } = require("../utils/jwt.util");
+const { userSelect } = require("../utils/user.util");
 
 const protect = async (req, res, next) => {
     let token;
@@ -7,25 +8,12 @@ const protect = async (req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         try {
             token = req.headers.authorization.split(" ")[1];
-            const decoded = jwt.verify(token, process.env.JWT_SECRET || "bookmylocalservice-super-secret-jwt-key-2026");
+            const decoded = verifyToken(token);
 
             // Attach user details to request
             req.user = await prisma.user.findUnique({
                 where: { id: decoded.id },
-                select: {
-                    id: true,
-                    fullName: true,
-                    email: true,
-                    phone: true,
-                    role: true,
-                    avatar: true,
-                    isVerified: true,
-                    address: true,
-                    city: true,
-                    state: true,
-                    zipCode: true,
-                    createdAt: true
-                }
+                select: userSelect
             });
 
             if (!req.user) {
