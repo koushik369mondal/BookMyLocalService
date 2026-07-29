@@ -3,6 +3,33 @@ const jwt = require("jsonwebtoken");
 const prisma = require("../../config/prisma");
 const { sendOtpEmail } = require("../../services/emailService");
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const handleMailOrServerError = (res, error, actionName = "sending OTP") => {
+    console.error(`[${actionName} Error Detail]:`, error);
+
+    if (error.code === "INVALID_RECIPIENT") {
+        return res.status(400).json({
+            success: false,
+            message: "Invalid email address format."
+        });
+    }
+
+    if (error.code === "EAUTH" || error.code === "ESOCKET" || error.code === "ETIMEDOUT" || error.code === "ECONNECTION") {
+        return res.status(503).json({
+            success: false,
+            message: "Email delivery service is currently unavailable. Please try again later or contact support.",
+            error: process.env.NODE_ENV === "development" ? error.message : undefined
+        });
+    }
+
+    return res.status(500).json({
+        success: false,
+        message: `Server error ${actionName}`,
+        error: process.env.NODE_ENV === "development" ? error.message : undefined
+    });
+};
+
 const generateToken = (id, role) => {
     return jwt.sign(
         { id, role },
@@ -260,27 +287,36 @@ const changePassword = async (req, res) => {
 // @route   POST /api/auth/send-otp
 // @access  Public
 const sendOtp = async (req, res) => {
+    console.log(`[sendOtp] Step 1: Request received`);
     try {
         const { email } = req.body;
 
         if (!email) {
+            console.warn(`[sendOtp] Validation failed: Missing email address`);
             return res.status(400).json({ success: false, message: "Please provide an email address" });
         }
 
         const normalizedEmail = email.toLowerCase().trim();
 
-        // Check if user exists
+        if (!EMAIL_REGEX.test(normalizedEmail)) {
+            console.warn(`[sendOtp] Validation failed: Invalid email format (${normalizedEmail})`);
+            return res.status(400).json({ success: false, message: "Please provide a valid email address" });
+        }
+
+        console.log(`[sendOtp] Step 2: Querying database for user: ${normalizedEmail}`);
         const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
         if (!user) {
+            console.warn(`[sendOtp] Account not found for email: ${normalizedEmail}`);
             return res.status(404).json({ success: false, message: "Account not found." });
         }
 
-        // Rate limiting check: check if the previous OTP was sent within the last 60 seconds
-        if (user.otpExpiresAt) {
+        console.log(`[sendOtp] Step 3: Account found (ID: ${user.id}). Checking rate limits...`);
+        if (user.otpExpiresAt instanceof Date && !isNaN(user.otpExpiresAt)) {
             const timeUntilExpiry = user.otpExpiresAt.getTime() - Date.now();
             const timeSinceLastSent = (5 * 60 * 1000) - timeUntilExpiry;
             if (timeSinceLastSent > 0 && timeSinceLastSent < 60 * 1000) {
                 const secondsToWait = Math.ceil((60 * 1000 - timeSinceLastSent) / 1000);
+                console.warn(`[sendOtp] Rate limited: Must wait ${secondsToWait} seconds`);
                 return res.status(429).json({
                     success: false,
                     message: `Please wait ${secondsToWait} seconds before requesting a new OTP.`
@@ -288,15 +324,14 @@ const sendOtp = async (req, res) => {
             }
         }
 
-        // Generate 6-digit OTP
+        console.log(`[sendOtp] Step 4: Generating 6-digit OTP...`);
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-        // Hash the OTP
         const salt = await bcrypt.genSalt(10);
         const otpHash = await bcrypt.hash(otp, salt);
         const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
 
-        // Save to DB
+        console.log(`[sendOtp] Step 5: Saving OTP hash to database...`);
         await prisma.user.update({
             where: { id: user.id },
             data: {
@@ -306,16 +341,16 @@ const sendOtp = async (req, res) => {
             }
         });
 
-        // Send email
-        await sendOtpEmail(normalizedEmail, otp);
+        console.log(`[sendOtp] Step 6: Dispatching OTP email to ${normalizedEmail}...`);
+        await sendOtpEmail(normalizedEmail, otp, user.fullName || "");
 
+        console.log(`[sendOtp] Step 7: OTP sent successfully to ${normalizedEmail}`);
         return res.status(200).json({
             success: true,
             message: "OTP sent successfully"
         });
     } catch (error) {
-        console.error("SendOtp error:", error);
-        return res.status(500).json({ success: false, message: "Server error sending OTP", error: error.message });
+        return handleMailOrServerError(res, error, "sendOtp");
     }
 };
 
@@ -453,40 +488,49 @@ const resendOtp = async (req, res) => {
 // @route   POST /api/auth/register/send-otp
 // @access  Public
 const registerSendOtp = async (req, res) => {
+    console.log(`[registerSendOtp] Step 1: Request received`);
     try {
         const { fullName, email, phone, role } = req.body;
 
         if (!fullName || !email || !phone) {
+            console.warn(`[registerSendOtp] Validation failed: Missing required fields`);
             return res.status(400).json({ success: false, message: "Please enter all required fields" });
         }
 
         const normalizedEmail = email.toLowerCase().trim();
         const normalizedPhone = phone.trim();
 
-        // Check if verified email exists
+        if (!EMAIL_REGEX.test(normalizedEmail)) {
+            console.warn(`[registerSendOtp] Validation failed: Invalid email format (${normalizedEmail})`);
+            return res.status(400).json({ success: false, message: "Please provide a valid email address" });
+        }
+
+        console.log(`[registerSendOtp] Step 2: Checking existing accounts for email: ${normalizedEmail} and phone: ${normalizedPhone}`);
         const existingEmailUser = await prisma.user.findUnique({ where: { email: normalizedEmail } });
         if (existingEmailUser && existingEmailUser.isVerified) {
+            console.warn(`[registerSendOtp] Verified account already exists for email: ${normalizedEmail}`);
             return res.status(400).json({
                 success: false,
                 message: "An account with this email already exists. Please log in."
             });
         }
 
-        // Check if verified phone exists
         const existingPhoneUser = await prisma.user.findUnique({ where: { phone: normalizedPhone } });
         if (existingPhoneUser && existingPhoneUser.isVerified) {
+            console.warn(`[registerSendOtp] Verified account already exists for phone: ${normalizedPhone}`);
             return res.status(400).json({
                 success: false,
                 message: "A user with this phone number already exists."
             });
         }
 
-        // Rate limiting check for unverified user with same email
-        if (existingEmailUser && existingEmailUser.otpExpiresAt) {
+        console.log(`[registerSendOtp] Step 3: Checking rate limits...`);
+        if (existingEmailUser && existingEmailUser.otpExpiresAt instanceof Date && !isNaN(existingEmailUser.otpExpiresAt)) {
             const timeUntilExpiry = existingEmailUser.otpExpiresAt.getTime() - Date.now();
             const timeSinceLastSent = (5 * 60 * 1000) - timeUntilExpiry;
             if (timeSinceLastSent > 0 && timeSinceLastSent < 60 * 1000) {
                 const secondsToWait = Math.ceil((60 * 1000 - timeSinceLastSent) / 1000);
+                console.warn(`[registerSendOtp] Rate limited: Must wait ${secondsToWait} seconds`);
                 return res.status(429).json({
                     success: false,
                     message: `Please wait ${secondsToWait} seconds before requesting a new OTP.`
@@ -494,20 +538,22 @@ const registerSendOtp = async (req, res) => {
             }
         }
 
-        // Delete any unverified user records associated with this email or phone to prevent unique constraint conflicts
+        console.log(`[registerSendOtp] Step 4: Cleaning up previous unverified records...`);
+        const deletedIds = new Set();
         if (existingEmailUser && !existingEmailUser.isVerified) {
             await prisma.user.delete({ where: { id: existingEmailUser.id } });
+            deletedIds.add(existingEmailUser.id);
         }
 
         const duplicatePhoneUser = await prisma.user.findUnique({ where: { phone: normalizedPhone } });
-        if (duplicatePhoneUser && !duplicatePhoneUser.isVerified) {
+        if (duplicatePhoneUser && !duplicatePhoneUser.isVerified && !deletedIds.has(duplicatePhoneUser.id)) {
             await prisma.user.delete({ where: { id: duplicatePhoneUser.id } });
+            deletedIds.add(duplicatePhoneUser.id);
         }
 
-        // Generate 6-digit OTP
+        console.log(`[registerSendOtp] Step 5: Generating 6-digit OTP...`);
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-        // Hash the OTP
         const salt = await bcrypt.genSalt(10);
         const otpHash = await bcrypt.hash(otp, salt);
         const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
@@ -520,7 +566,7 @@ const registerSendOtp = async (req, res) => {
             }
         }
 
-        // Create unverified user
+        console.log(`[registerSendOtp] Step 6: Creating unverified user in database...`);
         await prisma.user.create({
             data: {
                 fullName: fullName.trim(),
@@ -534,16 +580,16 @@ const registerSendOtp = async (req, res) => {
             }
         });
 
-        // Send email
-        await sendOtpEmail(normalizedEmail, otp);
+        console.log(`[registerSendOtp] Step 7: Dispatching OTP email to ${normalizedEmail}...`);
+        await sendOtpEmail(normalizedEmail, otp, fullName.trim());
 
+        console.log(`[registerSendOtp] Step 8: Registration OTP sent successfully to ${normalizedEmail}`);
         return res.status(200).json({
             success: true,
             message: "OTP sent successfully"
         });
     } catch (error) {
-        console.error("registerSendOtp error:", error);
-        return res.status(500).json({ success: false, message: "Server error sending OTP", error: error.message });
+        return handleMailOrServerError(res, error, "registerSendOtp");
     }
 };
 
@@ -636,27 +682,36 @@ const registerVerifyOtp = async (req, res) => {
 // @route   POST /api/auth/login/send-otp
 // @access  Public
 const loginSendOtp = async (req, res) => {
+    console.log(`[loginSendOtp] Step 1: Request received`);
     try {
         const { email } = req.body;
 
         if (!email) {
+            console.warn(`[loginSendOtp] Validation failed: Missing email address`);
             return res.status(400).json({ success: false, message: "Please provide an email address" });
         }
 
         const normalizedEmail = email.toLowerCase().trim();
 
-        // Check if verified user exists
+        if (!EMAIL_REGEX.test(normalizedEmail)) {
+            console.warn(`[loginSendOtp] Validation failed: Invalid email format (${normalizedEmail})`);
+            return res.status(400).json({ success: false, message: "Please provide a valid email address" });
+        }
+
+        console.log(`[loginSendOtp] Step 2: Querying database for user: ${normalizedEmail}`);
         const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
         if (!user || !user.isVerified) {
+            console.warn(`[loginSendOtp] Account not found or unverified for email: ${normalizedEmail}`);
             return res.status(404).json({ success: false, message: "No account found with this email." });
         }
 
-        // Rate limiting check
-        if (user.otpExpiresAt) {
+        console.log(`[loginSendOtp] Step 3: Account verified (ID: ${user.id}). Checking rate limits...`);
+        if (user.otpExpiresAt instanceof Date && !isNaN(user.otpExpiresAt)) {
             const timeUntilExpiry = user.otpExpiresAt.getTime() - Date.now();
             const timeSinceLastSent = (5 * 60 * 1000) - timeUntilExpiry;
             if (timeSinceLastSent > 0 && timeSinceLastSent < 60 * 1000) {
                 const secondsToWait = Math.ceil((60 * 1000 - timeSinceLastSent) / 1000);
+                console.warn(`[loginSendOtp] Rate limited: Must wait ${secondsToWait} seconds`);
                 return res.status(429).json({
                     success: false,
                     message: `Please wait ${secondsToWait} seconds before requesting a new OTP.`
@@ -664,15 +719,14 @@ const loginSendOtp = async (req, res) => {
             }
         }
 
-        // Generate 6-digit OTP
+        console.log(`[loginSendOtp] Step 4: Generating 6-digit OTP...`);
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-        // Hash the OTP
         const salt = await bcrypt.genSalt(10);
         const otpHash = await bcrypt.hash(otp, salt);
         const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
 
-        // Save to DB
+        console.log(`[loginSendOtp] Step 5: Updating user record with OTP hash...`);
         await prisma.user.update({
             where: { id: user.id },
             data: {
@@ -682,16 +736,16 @@ const loginSendOtp = async (req, res) => {
             }
         });
 
-        // Send email
-        await sendOtpEmail(normalizedEmail, otp);
+        console.log(`[loginSendOtp] Step 6: Dispatching OTP email to ${normalizedEmail}...`);
+        await sendOtpEmail(normalizedEmail, otp, user.fullName || "");
 
+        console.log(`[loginSendOtp] Step 7: OTP sent successfully to ${normalizedEmail}`);
         return res.status(200).json({
             success: true,
             message: "OTP sent successfully"
         });
     } catch (error) {
-        console.error("loginSendOtp error:", error);
-        return res.status(500).json({ success: false, message: "Server error sending OTP", error: error.message });
+        return handleMailOrServerError(res, error, "loginSendOtp");
     }
 };
 
