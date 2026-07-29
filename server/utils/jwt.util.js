@@ -3,13 +3,26 @@ const { DEFAULT_JWT_EXPIRES_IN } = require("../constants/auth.constants");
 
 /**
  * Generate JWT token for an authenticated user.
- * @param {string} id - User ID
- * @param {string} role - User role
+ * Supports positional arguments (id, role) or single object argument { id, role }.
+ * @param {string|object} idOrPayload - User ID string or payload object { id, role }
+ * @param {string} [role] - User role
  * @returns {string} Signed JWT token
  */
-const generateToken = (id, role) => {
+const generateToken = (idOrPayload, role) => {
     const secret = process.env.JWT_SECRET || "bookmylocalservice-super-secret-jwt-key-2026";
-    return jwt.sign({ id, role }, secret, { expiresIn: DEFAULT_JWT_EXPIRES_IN });
+    let payload;
+
+    if (typeof idOrPayload === "object" && idOrPayload !== null) {
+        payload = { id: idOrPayload.id, role: idOrPayload.role };
+    } else {
+        payload = { id: idOrPayload, role };
+    }
+
+    if (!payload.id || typeof payload.id !== "string") {
+        throw new Error(`Invalid user ID provided for JWT generation: ${JSON.stringify(idOrPayload)}`);
+    }
+
+    return jwt.sign(payload, secret, { expiresIn: DEFAULT_JWT_EXPIRES_IN });
 };
 
 /**

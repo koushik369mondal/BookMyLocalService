@@ -8,7 +8,8 @@ const { handleMailOrServerError } = require("../../utils/response.util");
  */
 const loginSendOtp = async (req, res) => {
     try {
-        const result = await authService.sendLoginOtp({ email: req.body.email });
+        const email = req.body.email || req.body.identifier;
+        const result = await authService.sendLoginOtp({ email });
         return res.status(200).json(result);
     } catch (error) {
         if (error.statusCode) {
@@ -25,17 +26,16 @@ const loginSendOtp = async (req, res) => {
  */
 const loginVerifyOtp = async (req, res) => {
     try {
-        const result = await authService.verifyLoginOtp({
-            email: req.body.email,
-            otp: req.body.otp
-        });
+        const email = req.body.email || req.body.identifier;
+        const otp = req.body.otp || req.body.code || req.body.otpCode;
+        const result = await authService.verifyLoginOtp({ email, otp });
         return res.status(200).json(result);
     } catch (error) {
         if (error.statusCode) {
             return res.status(error.statusCode).json({ success: false, message: error.message });
         }
         console.error("loginVerifyOtp error:", error);
-        return res.status(500).json({ success: false, message: "Server error verifying OTP", error: error.message });
+        return res.status(500).json({ success: false, message: error.message || "Server error verifying OTP" });
     }
 };
 
@@ -45,10 +45,13 @@ const loginVerifyOtp = async (req, res) => {
  * @access  Public
  */
 const login = async (req, res) => {
-    const { email, identifier, otp } = req.body;
+    const { email, identifier, otp, code } = req.body;
     const targetEmail = email || identifier;
+    const targetOtp = otp || code;
 
-    if (otp) {
+    if (targetOtp) {
+        req.body.email = targetEmail;
+        req.body.otp = targetOtp;
         return loginVerifyOtp(req, res);
     }
 

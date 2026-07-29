@@ -39,6 +39,13 @@ const verifyOtpHash = (otp, hash) => {
 };
 
 /**
+ * Alias for verifyOtpHash
+ */
+const verifyOtpCode = (otp, hash) => {
+    return verifyOtpHash(otp, hash);
+};
+
+/**
  * Check if a new OTP request exceeds the rate limit (1 request per 60 seconds).
  * @param {Date|null} otpExpiresAt
  * @returns {{ isRateLimited: boolean, secondsToWait: number }}
@@ -67,6 +74,24 @@ const checkRateLimit = (otpExpiresAt) => {
 const isOtpExpired = (otpExpiresAt) => {
     if (!otpExpiresAt || !(otpExpiresAt instanceof Date)) return true;
     return otpExpiresAt.getTime() < Date.now();
+};
+
+/**
+ * Validate user's current OTP state (presence, attempt limits, expiration).
+ * @param {object} user
+ * @returns {{ valid: boolean, reason?: string }}
+ */
+const validateOtpState = (user) => {
+    if (!user || !user.otpHash || !user.otpExpiresAt) {
+        return { valid: false, reason: "No OTP was requested for this account." };
+    }
+    if (user.otpAttempts >= OTP_MAX_ATTEMPTS) {
+        return { valid: false, reason: "Maximum OTP attempts exceeded. Please request a new OTP." };
+    }
+    if (isOtpExpired(user.otpExpiresAt)) {
+        return { valid: false, reason: "OTP has expired. Please request a new OTP." };
+    }
+    return { valid: true };
 };
 
 /**
@@ -128,8 +153,10 @@ module.exports = {
     generateOtpCode,
     hashOtp,
     verifyOtpHash,
+    verifyOtpCode,
     checkRateLimit,
     isOtpExpired,
+    validateOtpState,
     storeOtp,
     clearOtp,
     incrementOtpAttempts

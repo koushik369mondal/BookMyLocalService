@@ -7,6 +7,8 @@ export {
     bookingsService,
     checkoutService,
     contactService,
+    dashboardService,
+    adminService,
     api,
     API_URL,
     getHeaders

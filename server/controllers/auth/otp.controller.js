@@ -1,4 +1,6 @@
+const userRepository = require("../../repositories/user.repository");
 const { loginSendOtp, loginVerifyOtp } = require("./login.controller");
+const { registerVerifyOtp } = require("./register.controller");
 
 /**
  * @desc    Send OTP to user email (generic endpoint)
@@ -15,6 +17,13 @@ const sendOtp = async (req, res) => {
  * @access  Public
  */
 const verifyOtp = async (req, res) => {
+    const email = req.body.email || req.body.identifier;
+    if (email) {
+        const user = await userRepository.findByEmail(email);
+        if (user && !user.isVerified) {
+            return registerVerifyOtp(req, res);
+        }
+    }
     return loginVerifyOtp(req, res);
 };
 

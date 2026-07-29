@@ -117,6 +117,8 @@ const verifyRegisterOtp = async ({ email, otp }) => {
     const token = generateToken({ id: verifiedUser.id, role: verifiedUser.role });
 
     return {
+        success: true,
+        message: "Account verified successfully",
         user: toSafeUser(verifiedUser),
         token
     };
@@ -215,6 +217,8 @@ const verifyLoginOtp = async ({ email, otp }) => {
     const token = generateToken({ id: loggedInUser.id, role: loggedInUser.role });
 
     return {
+        success: true,
+        message: "Login successful",
         user: toSafeUser(loggedInUser),
         token
     };

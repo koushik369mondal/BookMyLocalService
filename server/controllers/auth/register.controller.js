@@ -10,7 +10,7 @@ const registerSendOtp = async (req, res) => {
     try {
         const result = await authService.sendRegisterOtp({
             fullName: req.body.fullName,
-            email: req.body.email,
+            email: req.body.email || req.body.identifier,
             phone: req.body.phone,
             role: req.body.role
         });
@@ -30,17 +30,16 @@ const registerSendOtp = async (req, res) => {
  */
 const registerVerifyOtp = async (req, res) => {
     try {
-        const result = await authService.verifyRegisterOtp({
-            email: req.body.email,
-            otp: req.body.otp
-        });
+        const email = req.body.email || req.body.identifier;
+        const otp = req.body.otp || req.body.code || req.body.otpCode;
+        const result = await authService.verifyRegisterOtp({ email, otp });
         return res.status(200).json(result);
     } catch (error) {
         if (error.statusCode) {
             return res.status(error.statusCode).json({ success: false, message: error.message });
         }
         console.error("registerVerifyOtp error:", error);
-        return res.status(500).json({ success: false, message: "Server error verifying OTP", error: error.message });
+        return res.status(500).json({ success: false, message: error.message || "Server error verifying OTP" });
     }
 };
 
@@ -50,8 +49,8 @@ const registerVerifyOtp = async (req, res) => {
  * @access  Public
  */
 const register = async (req, res) => {
-    const { otp } = req.body;
-    if (otp) {
+    const { otp, code } = req.body;
+    if (otp || code) {
         return registerVerifyOtp(req, res);
     }
     return registerSendOtp(req, res);
