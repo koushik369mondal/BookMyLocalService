@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { User, Loader2 } from "lucide-react";
+import { User, Loader2, LogOut } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { providerMenu } from "../../config/navigationConfig";
 
@@ -52,69 +52,38 @@ export default function ProviderSidebar({ collapsed, onNavigate }) {
         .slice(0, 2)
     : "?";
 
+  // Separate main navigation items from logout action
+  const navItems = providerMenu.filter((item) => !item.isLogout);
+
   return (
-    <div className="flex flex-col h-full bg-[#F0E7D5] border-r border-[#E8DCC3] w-full">
-      {/* Header Profile Section */}
-      <div className={`p-4 border-b border-[#E8DCC3] flex flex-col items-center text-center transition-all shrink-0 ${collapsed ? "py-5 px-2" : "p-6"}`}>
-        <div className={`rounded-xl overflow-hidden border border-[#E8DCC3] shadow-2xs bg-[#FAF6F0] flex items-center justify-center font-bold text-[#C9A46A] transition-all ${
-          collapsed ? "h-10 w-10 mb-0" : "h-14 w-14 mb-3"
-        }`}>
+    <div className="flex flex-col h-full bg-[#F0E7D5] border-r border-[#E8DCC3] w-full select-none">
+      
+      {/* Compact Header Profile Section */}
+      <div className={`border-b border-[#E8DCC3] bg-[#FAF6F0]/60 shrink-0 transition-all ${
+        collapsed ? "p-3 flex justify-center" : "p-3.5 flex items-center gap-3"
+      }`}>
+        <div className="h-9 w-9 rounded-xl overflow-hidden border border-[#E8DCC3] shadow-2xs bg-white flex items-center justify-center font-bold text-[#C9A46A] shrink-0">
           {user?.avatar ? (
             <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
           ) : (
-            <span className={collapsed ? "text-sm" : "text-lg"}>{initials}</span>
+            <span className="text-xs">{initials}</span>
           )}
         </div>
         {!collapsed && (
-          <>
-            <h4 className="font-bold text-sm text-[#1F1D1A] leading-tight mt-1 truncate max-w-full">{user?.fullName}</h4>
-            <span className="text-[10px] text-[#C9A46A] font-extrabold uppercase tracking-wider mt-1 px-2.5 py-0.5 bg-[#FAF6F0] rounded-lg border border-[#E8DCC3]">
-              Provider Account
+          <div className="min-w-0 flex-1">
+            <h4 className="font-bold text-xs text-[#1F1D1A] leading-tight truncate">{user?.fullName || "Provider"}</h4>
+            <span className="text-[9px] text-[#C9A46A] font-extrabold uppercase tracking-wider block mt-0.5">
+              Provider Workspace
             </span>
-          </>
+          </div>
         )}
       </div>
 
-      {/* Navigation List */}
-      <nav className={`flex-1 py-4 space-y-1.5 overflow-y-auto transition-all ${collapsed ? "px-2" : "px-3.5"}`}>
-        {providerMenu.map((item, idx) => {
+      {/* Compact Navigation List (No Scrollbar Required) */}
+      <nav className={`flex-1 py-2 space-y-1 overflow-y-auto scrollbar-none ${collapsed ? "px-2" : "px-3"}`}>
+        {navItems.map((item, idx) => {
           const Icon = item.icon;
           const active = isItemActive(item);
-
-          if (item.isLogout) {
-            return (
-              <React.Fragment key={idx}>
-                <button
-                  type="button"
-                  onClick={handleSwitchToCustomer}
-                  disabled={isSwitching}
-                  className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#C9A46A] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer border-t border-[#E8DCC3]/60 ${
-                    collapsed ? "justify-center px-0" : "px-3.5"
-                  }`}
-                  title={collapsed ? "Switch to Customer Account" : undefined}
-                >
-                  {isSwitching ? (
-                    <Loader2 className="h-4.5 w-4.5 shrink-0 text-[#C9A46A] animate-spin" />
-                  ) : (
-                    <User className="h-4.5 w-4.5 shrink-0 text-[#C9A46A]" />
-                  )}
-                  {!collapsed && <span>{isSwitching ? "Switching..." : "Switch to Customer"}</span>}
-                </button>
-
-                <button
-                  onClick={handleLogout}
-                  className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#8C4B3E] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer ${
-                    collapsed ? "justify-center px-0" : "px-3.5"
-                  }`}
-                  title={collapsed ? item.label : undefined}
-                >
-                  <Icon className="h-4.5 w-4.5 shrink-0" />
-                  {!collapsed && <span>{item.label}</span>}
-                </button>
-              </React.Fragment>
-            );
-          }
-
           const destination = item.tab ? `${item.path}?tab=${item.tab}` : item.path;
 
           return (
@@ -122,8 +91,8 @@ export default function ProviderSidebar({ collapsed, onNavigate }) {
               key={idx}
               to={destination}
               onClick={() => onNavigate?.()}
-              className={`flex items-center gap-3 text-xs font-bold py-3 rounded-xl transition-all ${
-                collapsed ? "justify-center px-0" : "px-3.5"
+              className={`flex items-center gap-2.5 text-xs font-bold py-2 rounded-xl transition-all ${
+                collapsed ? "justify-center px-0" : "px-3"
               } ${
                 active
                   ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
@@ -131,12 +100,44 @@ export default function ProviderSidebar({ collapsed, onNavigate }) {
               }`}
               title={collapsed ? item.label : undefined}
             >
-              <Icon className={`h-4.5 w-4.5 shrink-0 ${active ? "text-[#C9A46A]" : "text-[#7A7266]"}`} />
-              {!collapsed && <span>{item.label}</span>}
+              <Icon className={`h-4 w-4 shrink-0 ${active ? "text-[#C9A46A]" : "text-[#7A7266]"}`} />
+              {!collapsed && <span className="truncate">{item.label}</span>}
             </Link>
           );
         })}
       </nav>
+
+      {/* Footer Quick Utility Actions */}
+      <div className={`border-t border-[#E8DCC3] py-2 shrink-0 bg-[#F0E7D5] ${collapsed ? "px-2 space-y-1" : "px-3 space-y-1"}`}>
+        <button
+          type="button"
+          onClick={handleSwitchToCustomer}
+          disabled={isSwitching}
+          className={`w-full flex items-center gap-2.5 text-xs font-bold py-2 rounded-xl text-[#C9A46A] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer ${
+            collapsed ? "justify-center px-0" : "px-3"
+          }`}
+          title={collapsed ? "Switch to Customer Account" : undefined}
+        >
+          {isSwitching ? (
+            <Loader2 className="h-4 w-4 shrink-0 text-[#C9A46A] animate-spin" />
+          ) : (
+            <User className="h-4 w-4 shrink-0 text-[#C9A46A]" />
+          )}
+          {!collapsed && <span className="truncate">{isSwitching ? "Switching..." : "Switch to Customer"}</span>}
+        </button>
+
+        <button
+          onClick={handleLogout}
+          className={`w-full flex items-center gap-2.5 text-xs font-bold py-2 rounded-xl text-[#8C4B3E] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer ${
+            collapsed ? "justify-center px-0" : "px-3"
+          }`}
+          title={collapsed ? "Logout" : undefined}
+        >
+          <LogOut className="h-4 w-4 shrink-0" />
+          {!collapsed && <span className="truncate">Logout</span>}
+        </button>
+      </div>
+
     </div>
   );
 }
