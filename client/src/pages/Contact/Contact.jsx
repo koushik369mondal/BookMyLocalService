@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
+import { contactService } from "../../services/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -60,7 +61,7 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
@@ -71,12 +72,16 @@ export default function Contact() {
     }
 
     setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess("Thank you! Your message has been sent successfully. Our support team will contact you shortly.");
+    try {
+      const res = await contactService.sendMessage(formData);
+      setSuccess(res.message || "Thank you! Your message has been sent successfully. Check your email for a confirmation receipt.");
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    }, 1500);
+    } catch (err) {
+      console.error("Contact Form Submit Error:", err);
+      setError(err.message || "Failed to send message. Please check your details and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const toggleFaq = (index) => {
