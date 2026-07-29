@@ -66,7 +66,7 @@ export default function Login() {
     }
   });
 
-  const { loginSendOtp } = useAuth();
+  const { loginSendOtp, user } = useAuth();
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -98,7 +98,13 @@ export default function Login() {
       setTimeout(() => {
         setIsSubmitting(false);
         setSuccessMsg("");
-        navigate("/customer/dashboard");
+        if (user?.role === "ADMIN") {
+          navigate("/admin/dashboard");
+        } else if (user?.role === "PROVIDER") {
+          navigate("/provider/dashboard");
+        } else {
+          navigate("/customer/dashboard");
+        }
       }, 1500);
     }, 800);
   };

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -149,9 +150,21 @@ const testimonials = [
 ];
 
 export default function Home() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
   const [dbServices, setDbServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Automatic Role Redirection for Provider and Admin
+  useEffect(() => {
+    if (!loading && user) {
+      if (user.role === "PROVIDER") {
+        navigate("/provider/dashboard", { replace: true });
+      } else if (user.role === "ADMIN") {
+        navigate("/admin/dashboard", { replace: true });
+      }
+    }
+  }, [user, loading, navigate]);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -168,6 +181,16 @@ export default function Home() {
     };
     fetchServices();
   }, []);
+
+  if (!loading && user && (user.role === "PROVIDER" || user.role === "ADMIN")) {
+    return (
+      <MainLayout>
+        <div className="min-h-screen flex items-center justify-center bg-[#FAF6F0]">
+          <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
+        </div>
+      </MainLayout>
+    );
+  }
 
   // Map database services if available, fallback to mock providers
   const displayProviders = dbServices.length > 0

@@ -109,9 +109,35 @@ export default function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [notificationsList, setNotificationsList] = useState(mockNotifications);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const dropdownRef = useRef(null);
   const notifRef = useRef(null);
+
+  const logoLink = React.useMemo(() => {
+    if (user?.role === "PROVIDER") return "/provider/dashboard";
+    if (user?.role === "ADMIN") return "/admin/dashboard";
+    return "/";
+  }, [user]);
+
+  const searchPlaceholder = React.useMemo(() => {
+    if (user?.role === "PROVIDER") return "Search my services, jobs...";
+    if (user?.role === "ADMIN") return "Search users, providers, bookings...";
+    return "Search services...";
+  }, [user]);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    const query = searchQuery.trim();
+    if (user?.role === "PROVIDER") {
+      navigate(`/provider/services?search=${encodeURIComponent(query)}`);
+    } else if (user?.role === "ADMIN") {
+      navigate(`/admin/users?search=${encodeURIComponent(query)}`);
+    } else {
+      navigate(`/services?search=${encodeURIComponent(query)}`);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -144,7 +170,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[72px] flex items-center justify-between gap-4 lg:gap-6">
 
           {/* Brand / Logo */}
-          <NavLink to="/" className="flex items-center gap-3 group shrink-0 py-1">
+          <NavLink to={logoLink} className="flex items-center gap-3 group shrink-0 py-1">
             <img
               src="/logo.png"
               alt="BookMyLocalService Logo"
@@ -175,15 +201,17 @@ export default function Navbar() {
 
           {/* Right Actions */}
           <div className="hidden md:flex items-center gap-3 lg:gap-4 shrink-0">
-            {/* Search Input */}
-            <div className="relative w-44 lg:w-60">
+            {/* Search Input Form */}
+            <form onSubmit={handleSearchSubmit} className="relative w-44 lg:w-60">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A7266] pointer-events-none" />
               <Input
                 type="search"
-                placeholder="Search services..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={searchPlaceholder}
                 className="pl-10 pr-4 h-[44px] lg:h-[48px] w-full bg-[#FAF6F0] border border-[#E8DCC3] text-[#1F1D1A] placeholder:text-[#7A7266] focus:border-[#C9A46A] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 shadow-2xs rounded-xl text-xs lg:text-sm transition-all duration-200"
               />
-            </div>
+            </form>
 
             {/* Notifications Bell Button & Dropdown */}
             <div className="relative" ref={notifRef}>
@@ -439,14 +467,16 @@ export default function Navbar() {
                 {/* Scrollable Container inside Mobile Drawer */}
                 <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-5">
                   {/* Mobile Search */}
-                  <div className="relative w-full">
+                  <form onSubmit={handleSearchSubmit} className="relative w-full">
                     <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A7266] pointer-events-none" />
                     <Input
                       type="search"
-                      placeholder="Search services..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder={searchPlaceholder}
                       className="pl-10 h-10 w-full bg-white border-[#E8DCC3] text-[#1F1D1A] placeholder:text-[#7A7266] focus:border-[#C9A46A] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 rounded-xl text-xs"
                     />
-                  </div>
+                  </form>
 
                   {/* Mobile Navigation Links */}
                   <nav className="flex flex-col gap-1 py-1">

@@ -1,9 +1,73 @@
 import { NavLink } from "react-router-dom";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, ShieldCheck, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Footer() {
+  const { user } = useAuth();
+  const isWorkspace = user?.role === "PROVIDER" || user?.role === "ADMIN";
+
+  if (isWorkspace) {
+    const dashboardPath = user.role === "ADMIN" ? "/admin/dashboard" : "/provider/dashboard";
+    const settingsPath = user.role === "ADMIN" ? "/admin/settings" : "/provider/settings";
+
+    return (
+      <footer className="bg-[#F0E7D5] text-[#5A5146] border-t border-[#E8DCC3]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium">
+            
+            {/* Workspace Brand & Badge */}
+            <div className="flex items-center gap-3">
+              <NavLink to={dashboardPath} className="flex items-center gap-2 group shrink-0">
+                <img
+                  src="/logo.png"
+                  alt="BookMyLocalService Logo"
+                  className="h-7 w-auto object-contain transition-transform group-hover:scale-105 duration-300"
+                />
+                <span className="font-bold text-base tracking-tight text-[#1F1D1A]">
+                  BookMyLocal<span className="text-[#C9A46A]">Service</span>
+                </span>
+              </NavLink>
+              <span className="bg-[#FAF6F0] border border-[#E8DCC3] px-2.5 py-0.5 rounded-lg text-[10px] font-bold text-[#C9A46A] uppercase tracking-wider flex items-center gap-1">
+                {user.role === "ADMIN" ? (
+                  <>
+                    <ShieldCheck className="h-3 w-3 text-[#C9A46A]" /> Admin Workspace
+                  </>
+                ) : (
+                  <>
+                    <Briefcase className="h-3 w-3 text-[#C9A46A]" /> Provider Workspace
+                  </>
+                )}
+              </span>
+            </div>
+
+            {/* Copyright Notice */}
+            <p className="text-[11px] text-[#7A7266]">
+              © {new Date().getFullYear()} BookMyLocalService Workspace Portal. All rights reserved.
+            </p>
+
+            {/* Workspace Navigation Links */}
+            <div className="flex items-center gap-5 text-xs">
+              <NavLink to={dashboardPath} className="hover:text-[#C9A46A] transition-colors font-bold">
+                Dashboard
+              </NavLink>
+              <NavLink to={settingsPath} className="hover:text-[#C9A46A] transition-colors font-semibold">
+                Settings
+              </NavLink>
+              <NavLink to="/contact" className="hover:text-[#C9A46A] transition-colors font-semibold">
+                Support
+              </NavLink>
+              <a href="#" className="hover:text-[#C9A46A] transition-colors">Privacy</a>
+              <a href="#" className="hover:text-[#C9A46A] transition-colors">Terms</a>
+            </div>
+
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="bg-[#F0E7D5] text-[#5A5146] border-t border-[#E8DCC3]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
