@@ -18,7 +18,9 @@ const handleMailOrServerError = (res, error, actionName = "sending OTP") => {
         error.code === "EAUTH" ||
         error.code === "ESOCKET" ||
         error.code === "ETIMEDOUT" ||
-        error.code === "ECONNECTION"
+        error.code === "ECONNECTION" ||
+        error.code === "ENETUNREACH" ||
+        error.code === "ENOTFOUND"
     ) {
         return res.status(503).json({
             success: false,

@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 const connectDB = require("./config/db");
 const apiRoutes = require("./routes");
+const { verifyTransporter } = require("./config/mail");
 
 const app = express();
 
@@ -42,4 +43,8 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server running on ${PORT}`);
+    // Verify SMTP mail transporter connection
+    verifyTransporter().catch(err => {
+        console.error("Transporter verification startup check error:", err.message);
+    });
 });
