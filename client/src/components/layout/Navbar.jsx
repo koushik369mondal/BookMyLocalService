@@ -22,7 +22,7 @@ import {
   Briefcase,
   Loader2
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, getUserInitials } from "@/lib/utils";
 import { useAuth } from "../../context/AuthContext";
 
 const mockNotifications = [
@@ -308,7 +308,7 @@ export default function Navbar() {
                     {user.avatar ? (
                       <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
                     ) : (
-                      user.fullName[0].toUpperCase()
+                      getUserInitials(user.fullName)
                     )}
                   </div>
                   <ChevronDown className="h-4 w-4 text-[#7A7266] transition-transform duration-200" />
@@ -506,7 +506,7 @@ export default function Navbar() {
                             {user.avatar ? (
                               <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
                             ) : (
-                              user.fullName[0].toUpperCase()
+                              getUserInitials(user.fullName)
                             )}
                           </div>
                           <div className="min-w-0 flex-1">

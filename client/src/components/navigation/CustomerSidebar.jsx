@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Briefcase, Loader2 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { customerMenu } from "../../config/navigationConfig";
+import { getUserInitials } from "@/lib/utils";
 
 export default function CustomerSidebar({ collapsed, onNavigate }) {
   const { logout, user, switchRole } = useAuth();
@@ -43,26 +44,19 @@ export default function CustomerSidebar({ collapsed, onNavigate }) {
     navigate("/");
   };
 
-  const initials = user?.fullName
-    ? user.fullName
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
-    : "?";
+  const initials = getUserInitials(user?.fullName);
 
   return (
     <div className="flex flex-col h-full bg-[#F0E7D5] border-r border-[#E8DCC3] w-full">
       {/* Header Profile Section */}
       <div className={`p-4 border-b border-[#E8DCC3] flex flex-col items-center text-center transition-all shrink-0 ${collapsed ? "py-6 px-2" : "p-6"}`}>
-        <div className={`rounded-full overflow-hidden border border-[#E8DCC3] shadow-2xs bg-[#FAF6F0] flex items-center justify-center font-bold text-[#C9A46A] transition-all ${
-          collapsed ? "h-10 w-10 mb-0" : "h-14 w-14 mb-3"
+        <div className={`rounded-full overflow-hidden border border-[#E8DCC3] shadow-2xs bg-[#8C4B3E] text-white flex items-center justify-center font-bold transition-all ${
+          collapsed ? "h-10 w-10 mb-0 text-sm" : "h-14 w-14 mb-3 text-lg"
         }`}>
           {user?.avatar ? (
             <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
           ) : (
-            <span className={collapsed ? "text-sm" : "text-lg"}>{initials}</span>
+            <span>{initials}</span>
           )}
         </div>
         {!collapsed && (

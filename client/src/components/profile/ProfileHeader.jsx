@@ -1,9 +1,10 @@
 import React from "react";
-import { Camera, Loader2, Sparkles, Briefcase, User, ArrowRight } from "lucide-react";
+import { Camera, Loader2, Sparkles, Briefcase, User } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { getProfileCompletion } from "@/hooks/useProfile";
+import { getUserInitials } from "@/lib/utils";
 
 export function ProfileHeader({
   user,
@@ -16,6 +17,7 @@ export function ProfileHeader({
 }) {
   if (!user) return null;
   const completion = getProfileCompletion(user);
+  const initials = getUserInitials(user.fullName);
 
   return (
     <div className="bg-white rounded-3xl border border-[#E8DCC3] shadow-sm p-6 sm:p-8 space-y-6">
@@ -25,7 +27,7 @@ export function ProfileHeader({
           <Avatar className="h-24 w-24 border-4 border-[#FAF6F0] shadow-md">
             <AvatarImage src={user.avatar} alt={user.fullName} className="object-cover" />
             <AvatarFallback className="bg-[#8C4B3E] text-white font-extrabold text-2xl">
-              {user.fullName ? user.fullName.substring(0, 2).toUpperCase() : "US"}
+              {initials}
             </AvatarFallback>
           </Avatar>
           <button

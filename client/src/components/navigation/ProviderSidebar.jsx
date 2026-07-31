@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { User, Loader2, LogOut } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { providerMenu } from "../../config/navigationConfig";
+import { getUserInitials } from "@/lib/utils";
 
 export default function ProviderSidebar({ collapsed, onNavigate }) {
   const { logout, user, switchRole } = useAuth();
@@ -43,16 +44,7 @@ export default function ProviderSidebar({ collapsed, onNavigate }) {
     navigate("/");
   };
 
-  const initials = user?.fullName
-    ? user.fullName
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
-    : "?";
-
-  // Separate main navigation items from logout action
+  const initials = getUserInitials(user?.fullName);
   const navItems = providerMenu.filter((item) => !item.isLogout);
 
   return (
@@ -62,11 +54,11 @@ export default function ProviderSidebar({ collapsed, onNavigate }) {
       <div className={`border-b border-[#E8DCC3] bg-[#FAF6F0]/60 shrink-0 transition-all ${
         collapsed ? "p-3 flex justify-center" : "p-3.5 flex items-center gap-3"
       }`}>
-        <div className="h-9 w-9 rounded-xl overflow-hidden border border-[#E8DCC3] shadow-2xs bg-white flex items-center justify-center font-bold text-[#C9A46A] shrink-0">
+        <div className="h-9 w-9 rounded-full overflow-hidden border border-[#E8DCC3] shadow-2xs bg-[#8C4B3E] text-white flex items-center justify-center font-extrabold text-xs shrink-0">
           {user?.avatar ? (
             <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
           ) : (
-            <span className="text-xs">{initials}</span>
+            <span>{initials}</span>
           )}
         </div>
         {!collapsed && (
@@ -79,7 +71,7 @@ export default function ProviderSidebar({ collapsed, onNavigate }) {
         )}
       </div>
 
-      {/* Compact Navigation List (No Scrollbar Required) */}
+      {/* Navigation List */}
       <nav className={`flex-1 py-2 space-y-1 overflow-y-auto scrollbar-none ${collapsed ? "px-2" : "px-3"}`}>
         {navItems.map((item, idx) => {
           const Icon = item.icon;

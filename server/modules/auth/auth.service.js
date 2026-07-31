@@ -8,7 +8,7 @@ const { USER_ROLES } = require("../../constants/auth.constants");
  * Uses email as the sole unique identifier for lookup and creation.
  */
 const googleAuth = async ({ credential, role }) => {
-    console.log("[GOOGLE AUTH STEP 1] Initiating Google Sign-In verification...");
+    console.log("[GOOGLE AUTH STEP 1] Verifying Google credential token...");
     if (!credential) {
         const err = new Error("Google credential token is required");
         err.statusCode = 400;
@@ -27,23 +27,24 @@ const googleAuth = async ({ credential, role }) => {
     }
 
     if (tokenInfo.error || !tokenInfo.email) {
-        console.error("[GOOGLE AUTH STEP 1 ERROR] Invalid Google ID token payload:", tokenInfo);
+        console.error("[GOOGLE AUTH STEP 1 ERROR] Invalid Google token response:", tokenInfo);
         const err = new Error(tokenInfo.error_description || "Invalid Google ID token");
         err.statusCode = 401;
         throw err;
     }
 
     const email = tokenInfo.email.toLowerCase().trim();
-    const fullName = tokenInfo.name || tokenInfo.given_name || email.split("@")[0];
+    const extractedName = tokenInfo.name || tokenInfo.given_name || email.split("@")[0];
+    const fullName = (extractedName && extractedName.trim().length > 0) ? extractedName.trim() : "Google User";
     const avatar = tokenInfo.picture || null;
 
     console.log(`[GOOGLE AUTH STEP 2] Token verified for Email: '${email}', Name: '${fullName}'`);
 
-    console.log(`[GOOGLE AUTH STEP 3] Looking up user in database by email '${email}'...`);
+    console.log(`[GOOGLE AUTH STEP 3] Checking database for existing user with email '${email}'...`);
     let user = await userRepository.findByEmail(email);
 
     let userRole = USER_ROLES.CUSTOMER;
-    if (role) {
+    if (role && typeof role === "string") {
         const roleUpper = role.toUpperCase();
         if (Object.values(USER_ROLES).includes(roleUpper)) {
             userRole = roleUpper;
@@ -51,64 +52,54 @@ const googleAuth = async ({ credential, role }) => {
     }
 
     if (!user) {
-        console.log(`[GOOGLE AUTH STEP 4] User not found. Creating new user record (Role: ${userRole})...`);
+        console.log(`[GOOGLE AUTH STEP 4] User not found. Creating new user (Role: ${userRole})...`);
+        
+        const createPayload = {
+            fullName,
+            email,
+            phone: null,
+            role: userRole,
+            isVerified: true,
+            avatar
+        };
+
         try {
-            user = await userRepository.create({
-                fullName: fullName.trim(),
-                email,
-                phone: null,
-                role: userRole,
-                isVerified: true,
-                avatar
-            });
+            user = await userRepository.create(createPayload);
             console.log(`[GOOGLE AUTH STEP 4 SUCCESS] User created with ID: '${user.id}'`);
         } catch (createErr) {
-            console.error("[GOOGLE AUTH STEP 4 ERROR] Initial user creation attempt failed:", createErr?.message || createErr);
-            
-            // Retry check: Verify if account was created concurrently
+            console.error("[GOOGLE AUTH STEP 4 ERROR] User creation exception:", createErr);
+
+            // Double check if account was created concurrently
             user = await userRepository.findByEmail(email);
-            
             if (!user) {
-                console.log("[GOOGLE AUTH STEP 4 RETRY] Attempting fallback creation without explicit null phone...");
-                try {
-                    user = await userRepository.create({
-                        fullName: fullName.trim(),
-                        email,
-                        role: userRole,
-                        isVerified: true,
-                        avatar
-                    });
-                    console.log(`[GOOGLE AUTH STEP 4 RETRY SUCCESS] User created with ID: '${user.id}'`);
-                } catch (retryErr) {
-                    console.error("[GOOGLE AUTH STEP 4 RETRY ERROR] Fallback user creation failed:", retryErr?.message || retryErr);
-                    const userFacingMsg = retryErr?.message || createErr?.message || "Failed to create account with Google. Please try again.";
-                    const err = new Error(userFacingMsg);
-                    err.statusCode = 400;
-                    throw err;
-                }
-            } else {
-                console.log(`[GOOGLE AUTH STEP 4 RECOVERY] Existing user retrieved after concurrent creation: ID '${user.id}'`);
+                const userFacingMessage = createErr?.message && !createErr.message.includes("prisma")
+                    ? createErr.message
+                    : "Unable to create user account with Google. Please try again or log in.";
+                const err = new Error(userFacingMessage);
+                err.statusCode = 400;
+                throw err;
             }
+            console.log(`[GOOGLE AUTH STEP 4 RECOVERY] Retrieved concurrently created user ID: '${user.id}'`);
         }
     } else {
-        console.log(`[GOOGLE AUTH STEP 4] Existing user found (ID: '${user.id}', Role: '${user.role}'). Linking Google profile...`);
+        console.log(`[GOOGLE AUTH STEP 4] Existing user found (ID: '${user.id}', Role: '${user.role}'). Linking Google account...`);
         try {
             const updateData = { isVerified: true };
             if (!user.avatar && avatar) {
                 updateData.avatar = avatar;
             }
             user = await userRepository.update(user.id, updateData);
-            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] Existing user profile updated`);
+            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] Existing user updated`);
         } catch (updateErr) {
-            console.warn("[GOOGLE AUTH STEP 4 WARNING] User profile update warning:", updateErr);
+            console.warn("[GOOGLE AUTH STEP 4 WARNING] Profile update warning:", updateErr);
         }
     }
 
-    console.log(`[GOOGLE AUTH STEP 5] Generating JWT authentication token for User ID: '${user.id}'...`);
+    console.log(`[GOOGLE AUTH STEP 5] Issuing JWT token for User ID: '${user.id}'...`);
     const token = generateToken({ id: user.id, role: user.role });
     const isProfileComplete = Boolean(user.phone && user.phone.trim() !== "");
 
-    console.log(`[GOOGLE AUTH COMPLETE] Successfully authenticated User ID: '${user.id}', Role: '${user.role}', Complete: ${isProfileComplete}`);
+    console.log(`[GOOGLE AUTH COMPLETE] Successfully authenticated User ID: '${user.id}'`);
 
     return {
         success: true,
@@ -146,14 +137,14 @@ const updateUserProfile = async (userId, updateData) => {
     const fieldsToUpdate = {};
 
     if (updateData.role !== undefined) {
-        const roleUpper = updateData.role.toUpperCase();
+        const roleUpper = String(updateData.role).toUpperCase();
         if (Object.values(USER_ROLES).includes(roleUpper)) {
             fieldsToUpdate.role = roleUpper;
         }
     }
 
     if (updateData.fullName !== undefined) {
-        const trimmedName = updateData.fullName.trim();
+        const trimmedName = String(updateData.fullName).trim();
         if (trimmedName.length < 2) {
             const err = new Error("Full name must be at least 2 characters long");
             err.statusCode = 400;
@@ -163,7 +154,7 @@ const updateUserProfile = async (userId, updateData) => {
     }
 
     if (updateData.phone !== undefined) {
-        const trimmedPhone = updateData.phone ? updateData.phone.trim() : "";
+        const trimmedPhone = updateData.phone ? String(updateData.phone).trim() : "";
         if (trimmedPhone !== "" && !/^\+?1?\s*\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/.test(trimmedPhone)) {
             const err = new Error("Please enter a valid 10-digit phone number");
             err.statusCode = 400;
@@ -172,12 +163,12 @@ const updateUserProfile = async (userId, updateData) => {
         fieldsToUpdate.phone = trimmedPhone === "" ? null : trimmedPhone;
     }
 
-    if (updateData.address !== undefined) fieldsToUpdate.address = updateData.address ? updateData.address.trim() : null;
-    if (updateData.city !== undefined) fieldsToUpdate.city = updateData.city ? updateData.city.trim() : null;
-    if (updateData.state !== undefined) fieldsToUpdate.state = updateData.state ? updateData.state.trim() : null;
+    if (updateData.address !== undefined) fieldsToUpdate.address = updateData.address ? String(updateData.address).trim() : null;
+    if (updateData.city !== undefined) fieldsToUpdate.city = updateData.city ? String(updateData.city).trim() : null;
+    if (updateData.state !== undefined) fieldsToUpdate.state = updateData.state ? String(updateData.state).trim() : null;
 
     if (updateData.zipCode !== undefined) {
-        const trimmedZip = updateData.zipCode ? updateData.zipCode.trim() : "";
+        const trimmedZip = updateData.zipCode ? String(updateData.zipCode).trim() : "";
         if (trimmedZip !== "" && !/^\d{6}$/.test(trimmedZip)) {
             const err = new Error("PIN code must be 6 digits");
             err.statusCode = 400;

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { adminMenu } from "../../config/navigationConfig";
+import { getUserInitials } from "@/lib/utils";
 
 export default function AdminSidebar({ collapsed, onNavigate }) {
   const { logout, user } = useAuth();
@@ -27,15 +28,7 @@ export default function AdminSidebar({ collapsed, onNavigate }) {
     navigate("/");
   };
 
-  const initials = user?.fullName
-    ? user.fullName
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
-    : "?";
-
+  const initials = getUserInitials(user?.fullName);
   const navItems = adminMenu.filter((item) => !item.isLogout);
 
   return (
@@ -45,11 +38,11 @@ export default function AdminSidebar({ collapsed, onNavigate }) {
       <div className={`border-b border-[#E8DCC3] bg-[#FAF6F0]/60 shrink-0 transition-all ${
         collapsed ? "p-3 flex justify-center" : "p-3.5 flex items-center gap-3"
       }`}>
-        <div className="h-9 w-9 rounded-xl overflow-hidden border border-[#E8DCC3] shadow-2xs bg-white flex items-center justify-center font-bold text-[#C9A46A] shrink-0">
+        <div className="h-9 w-9 rounded-full overflow-hidden border border-[#E8DCC3] shadow-2xs bg-[#8C4B3E] text-white flex items-center justify-center font-extrabold text-xs shrink-0">
           {user?.avatar ? (
             <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
           ) : (
-            <span className="text-xs">{initials}</span>
+            <span>{initials}</span>
           )}
         </div>
         {!collapsed && (

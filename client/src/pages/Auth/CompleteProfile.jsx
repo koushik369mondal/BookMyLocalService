@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Logo from "@/components/ui/logo";
+import { getUserInitials } from "@/lib/utils";
 import {
   Phone,
   ArrowRight,
@@ -88,8 +89,8 @@ export default function CompleteProfile() {
             {user?.avatar ? (
               <img src={user.avatar} alt="Google Avatar" className="w-11 h-11 rounded-full object-cover border border-[#8C4B3E]/30" />
             ) : (
-              <div className="w-11 h-11 rounded-full bg-[#8C4B3E] text-white font-bold flex items-center justify-center text-sm">
-                {user?.fullName?.charAt(0) || "U"}
+              <div className="w-11 h-11 rounded-full bg-[#8C4B3E] text-white font-extrabold flex items-center justify-center text-sm">
+                {getUserInitials(user?.fullName)}
               </div>
             )}
             <div>
