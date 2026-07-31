@@ -1,6 +1,6 @@
 const prisma = require("../config/prisma");
 const cloudinary = require("../config/cloudinary");
-const authService = require("../services/auth.service");
+const authService = require("../modules/auth/auth.service");
 const { userSelect } = require("../utils/user.util");
 
 const getProfile = async (req, res) => {
@@ -45,18 +45,15 @@ const uploadAvatar = async (req, res) => {
             return res.status(400).json({ success: false, message: "Please upload an image file" });
         }
 
-        // Validate file type
         const allowedMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
         if (!allowedMimeTypes.includes(req.file.mimetype)) {
             return res.status(400).json({ success: false, message: "Invalid file type. Only JPG, JPEG, PNG, and WebP are allowed." });
         }
 
-        // Validate size (5 MB)
         if (req.file.size > 5 * 1024 * 1024) {
             return res.status(400).json({ success: false, message: "File size exceeds 5MB limit." });
         }
 
-        // Upload to Cloudinary using buffer stream
         const base64File = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
         
         const uploadResponse = await cloudinary.uploader.upload(base64File, {
@@ -66,7 +63,6 @@ const uploadAvatar = async (req, res) => {
 
         const newAvatarUrl = uploadResponse.secure_url;
 
-        // Delete old avatar from Cloudinary if exists and is from Cloudinary
         if (req.user.avatar && req.user.avatar.includes("cloudinary.com")) {
             try {
                 const parts = req.user.avatar.split("/upload/");
@@ -81,7 +77,6 @@ const uploadAvatar = async (req, res) => {
             }
         }
 
-        // Update User
         const updatedUser = await prisma.user.update({
             where: { id: req.user.id },
             data: { avatar: newAvatarUrl },
