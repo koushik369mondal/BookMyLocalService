@@ -4,6 +4,69 @@ const { userSelect, toSafeUser } = require("../../utils/user.util");
 const { USER_ROLES } = require("../../constants/auth.constants");
 
 /**
+ * Safely create a user record with fallbacks for nullability and legacy schema differences.
+ */
+const safeCreateUser = async ({ fullName, email, role, avatar }) => {
+    const cleanName = (fullName && fullName.trim().length > 0) ? fullName.trim() : "Google User";
+    const cleanEmail = email.toLowerCase().trim();
+
+    // Attempt 1: Standard creation with phone: null
+    try {
+        return await userRepository.create({
+            fullName: cleanName,
+            email: cleanEmail,
+            phone: null,
+            role,
+            isVerified: true,
+            avatar
+        });
+    } catch (err1) {
+        console.warn("[GOOGLE AUTH CREATE TRY 1 FAILED]:", err1?.message || err1);
+
+        // Check if user was created concurrently
+        const existing = await userRepository.findByEmail(cleanEmail);
+        if (existing) {
+            console.log("[GOOGLE AUTH CREATE RECOVERY 1] Existing user found by email:", existing.id);
+            return existing;
+        }
+
+        // Attempt 2: Creation with phone: ""
+        try {
+            return await userRepository.create({
+                fullName: cleanName,
+                email: cleanEmail,
+                phone: "",
+                role,
+                isVerified: true,
+                avatar
+            });
+        } catch (err2) {
+            console.warn("[GOOGLE AUTH CREATE TRY 2 FAILED]:", err2?.message || err2);
+
+            const existingRetry = await userRepository.findByEmail(cleanEmail);
+            if (existingRetry) {
+                console.log("[GOOGLE AUTH CREATE RECOVERY 2] Existing user found by email:", existingRetry.id);
+                return existingRetry;
+            }
+
+            // Attempt 3: Creation without phone key
+            try {
+                return await userRepository.create({
+                    fullName: cleanName,
+                    email: cleanEmail,
+                    role,
+                    isVerified: true,
+                    avatar
+                });
+            } catch (err3) {
+                console.error("[GOOGLE AUTH CREATE TRY 3 FAILED]:", err3?.message || err3);
+                throw err3;
+            }
+        }
+    }
+};
+
+/**
  * Verify Google ID Token and authenticate, link, or register user.
  * Uses email as the sole unique identifier for lookup and creation.
  */
@@ -53,33 +116,20 @@ const googleAuth = async ({ credential, role }) => {
 
     if (!user) {
         console.log(`[GOOGLE AUTH STEP 4] User not found. Creating new user (Role: ${userRole})...`);
-        
-        const createPayload = {
-            fullName,
-            email,
-            phone: null,
-            role: userRole,
-            isVerified: true,
-            avatar
-        };
-
         try {
-            user = await userRepository.create(createPayload);
-            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] User created with ID: '${user.id}'`);
+            user = await safeCreateUser({
+                fullName,
+                email,
+                role: userRole,
+                avatar
+            });
+            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] User created/retrieved with ID: '${user.id}'`);
         } catch (createErr) {
             console.error("[GOOGLE AUTH STEP 4 ERROR] User creation exception:", createErr);
-
-            // Double check if account was created concurrently
-            user = await userRepository.findByEmail(email);
-            if (!user) {
-                const userFacingMessage = createErr?.message && !createErr.message.includes("prisma")
-                    ? createErr.message
-                    : "Unable to create user account with Google. Please try again or log in.";
-                const err = new Error(userFacingMessage);
-                err.statusCode = 400;
-                throw err;
-            }
-            console.log(`[GOOGLE AUTH STEP 4 RECOVERY] Retrieved concurrently created user ID: '${user.id}'`);
+            const userFacingMessage = createErr?.message || "Failed to create user account with Google. Please try logging in.";
+            const err = new Error(userFacingMessage);
+            err.statusCode = 400;
+            throw err;
         }
     } else {
         console.log(`[GOOGLE AUTH STEP 4] Existing user found (ID: '${user.id}', Role: '${user.role}'). Linking Google account...`);
@@ -89,7 +139,7 @@ const googleAuth = async ({ credential, role }) => {
                 updateData.avatar = avatar;
             }
             user = await userRepository.update(user.id, updateData);
-            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] Existing user updated`);
+            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] Existing user profile updated`);
         } catch (updateErr) {
             console.warn("[GOOGLE AUTH STEP 4 WARNING] Profile update warning:", updateErr);
         }
@@ -97,7 +147,7 @@ const googleAuth = async ({ credential, role }) => {
 
     console.log(`[GOOGLE AUTH STEP 5] Issuing JWT token for User ID: '${user.id}'...`);
     const token = generateToken({ id: user.id, role: user.role });
-    const isProfileComplete = Boolean(user.phone && user.phone.trim() !== "");
+    const isProfileComplete = Boolean(user.phone && String(user.phone).trim() !== "");
 
     console.log(`[GOOGLE AUTH COMPLETE] Successfully authenticated User ID: '${user.id}'`);
 
