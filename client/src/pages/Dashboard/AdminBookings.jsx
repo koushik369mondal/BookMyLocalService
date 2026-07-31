@@ -8,20 +8,20 @@ import { Calendar, User, UserCheck, Sliders } from "lucide-react";
 const mockAllBookings = [
   {
     id: "BMLS-28491",
-    customer: "Amanda Watson",
-    provider: "Sarah Jenkins",
-    service: "Deep Home Cleaning Service",
+    customer: "Ananya Sen",
+    provider: "Sunita Rao",
+    service: "Deep Home Cleaning & Sanitization",
     date: "2026-07-15",
-    amount: 55.00,
+    amount: 1499.00,
     status: "upcoming"
   },
   {
     id: "BMLS-19402",
-    customer: "John Doe",
-    provider: "David Miller",
-    service: "Expert Plumbing Service",
+    customer: "Rahul Das",
+    provider: "Rajesh Sharma",
+    service: "Expert Plumbing & Leakage Repair",
     date: "2026-07-03",
-    amount: 75.00,
+    amount: 499.00,
     status: "completed"
   }
 ];
@@ -99,7 +99,7 @@ export default function AdminBookings() {
                         </td>
                         <td className="py-3.5 px-4 text-[#5A5146] font-medium">{b.service}</td>
                         <td className="py-3.5 px-4 text-[#7A7266] font-medium">{b.date}</td>
-                        <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">${b.amount.toFixed(2)}</td>
+                        <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">₹{b.amount.toFixed(2)}</td>
                         <td className="py-3.5 px-4">{getStatusBadge(b.status)}</td>
                         <td className="py-3.5 px-4 text-right">
                           <Button size="xs" variant="ghost" className="text-[#C9A46A] hover:text-[#b89359] font-bold text-[11px]">

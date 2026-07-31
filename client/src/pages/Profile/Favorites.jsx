@@ -3,29 +3,29 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Star, MapPin, Phone, Trash2, Calendar } from "lucide-react";
+import { Star, MapPin, Trash2, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const mockFavorites = [
   {
     id: 1,
-    name: "Sarah Jenkins",
+    name: "Sunita Rao",
     category: "Home Cleaning",
     rating: 4.9,
     reviews: 142,
-    location: "Brooklyn, NY",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
-    phone: "+1 (555) 019-2834"
+    location: "Kolkata, WB",
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+    phone: "+91 98765 43210"
   },
   {
     id: 2,
-    name: "David Miller",
+    name: "Rajesh Sharma",
     category: "Plumbing Services",
     rating: 4.8,
     reviews: 98,
-    location: "Queens, NY",
+    location: "Delhi NCR",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
-    phone: "+1 (555) 019-5839"
+    phone: "+91 98765 43211"
   }
 ];
 

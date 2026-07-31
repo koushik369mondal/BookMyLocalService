@@ -146,11 +146,11 @@ export function useCheckoutForm() {
     if (code === "WELCOME10" || code === "LOCAL10") {
       const disc = 10.00;
       setAppliedDiscount(disc);
-      setPromoSuccessMsg(`Coupon "${code}" applied! You saved $${disc.toFixed(2)}.`);
+      setPromoSuccessMsg(`Coupon "${code}" applied! You saved ₹${disc.toFixed(2)}.`);
     } else if (code === "SAVE20") {
       const disc = 20.00;
       setAppliedDiscount(disc);
-      setPromoSuccessMsg(`Coupon "${code}" applied! You saved $${disc.toFixed(2)}.`);
+      setPromoSuccessMsg(`Coupon "${code}" applied! You saved ₹${disc.toFixed(2)}.`);
     } else {
       setPromoErrorMsg("Invalid or expired coupon code. Try WELCOME10.");
     }

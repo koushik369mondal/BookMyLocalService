@@ -68,7 +68,7 @@ export default function ProviderDashboard() {
             <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Earnings</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">${stats.totalEarnings || 0}</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">₹{stats.totalEarnings || 0}</span>
               </div>
               <div className="p-3 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-2xl shrink-0">
                 <DollarSign className="h-6 w-6" />
@@ -172,7 +172,7 @@ export default function ProviderDashboard() {
                           </div>
 
                           <div className="text-right sm:text-right shrink-0">
-                            <span className="text-base font-black text-[#8C4B3E] block">${b.total}</span>
+                            <span className="text-base font-black text-[#8C4B3E] block">₹{b.total}</span>
                             <span className="text-[10px] font-bold text-stone-400 uppercase">Plan: {b.plan}</span>
                           </div>
                         </div>
@@ -218,7 +218,7 @@ export default function ProviderDashboard() {
                       <div key={s.id} className="p-3.5 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3] space-y-1">
                         <div className="flex justify-between items-start">
                           <h5 className="text-xs font-black text-[#1F1D1A]">{s.title}</h5>
-                          <span className="text-xs font-black text-[#8C4B3E]">${s.price}/{s.priceType === "hourly" ? "hr" : "fixed"}</span>
+                          <span className="text-xs font-black text-[#8C4B3E]">₹{s.price}/{s.priceType === "hourly" ? "hr" : "fixed"}</span>
                         </div>
                         <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white border border-[#E8DCC3] text-[#5A5146] inline-block">
                           {s.category}

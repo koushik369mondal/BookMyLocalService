@@ -129,8 +129,8 @@ export function useBookingForm() {
 
   const pricingBreakdown = useMemo(() => {
     const basePrice = selectedPlan ? selectedPlan.price : (service?.price || 0);
-    const platformFee = 4.99;
-    const tax = Math.round(basePrice * 0.085 * 100) / 100;
+    const platformFee = 49.00;
+    const tax = Math.round(basePrice * 0.18 * 100) / 100;
     const total = Math.round((basePrice + platformFee + tax) * 100) / 100;
     return { basePrice, platformFee, tax, total };
   }, [selectedPlan, service]);

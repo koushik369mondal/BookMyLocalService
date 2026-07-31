@@ -22,8 +22,8 @@ export function CheckoutOrderSummary({
   if (!booking) return null;
 
   const basePrice = booking.price || 0;
-  const platformFee = booking.platformFee || 4.99;
-  const tax = booking.tax || 0;
+  const platformFee = booking.platformFee || 49.00;
+  const tax = booking.tax || Math.round(basePrice * 0.18 * 100) / 100;
   const grandTotal = Math.max(0, Math.round((basePrice + platformFee + tax - appliedDiscount) * 100) / 100);
 
   return (
@@ -46,7 +46,7 @@ export function CheckoutOrderSummary({
           <Input
             value={promoInput}
             onChange={(e) => setPromoInput(e.target.value)}
-            placeholder="e.g. WELCOME10"
+            placeholder="e.g. WELCOME100"
             className="h-9 border-[#E8DCC3] text-xs rounded-xl uppercase bg-[#FAF6F0]/40"
           />
           <Button type="submit" variant="outline" className="h-9 px-4 border-[#E8DCC3] text-xs font-bold text-[#8C4B3E] hover:bg-[#8C4B3E]/10 rounded-xl cursor-pointer">
@@ -60,27 +60,27 @@ export function CheckoutOrderSummary({
       <div className="space-y-2 text-xs text-[#5A5146] pt-2 border-t border-[#E8DCC3]">
         <div className="flex justify-between">
           <span>Service Price</span>
-          <strong className="text-[#1F1D1A]">${basePrice.toFixed(2)}</strong>
+          <strong className="text-[#1F1D1A]">₹{basePrice.toFixed(2)}</strong>
         </div>
         <div className="flex justify-between">
           <span>Platform Fee</span>
-          <strong className="text-[#1F1D1A]">${platformFee.toFixed(2)}</strong>
+          <strong className="text-[#1F1D1A]">₹{platformFee.toFixed(2)}</strong>
         </div>
         <div className="flex justify-between">
-          <span>Taxes & Fees</span>
-          <strong className="text-[#1F1D1A]">${tax.toFixed(2)}</strong>
+          <span>GST (18%)</span>
+          <strong className="text-[#1F1D1A]">₹{tax.toFixed(2)}</strong>
         </div>
         {appliedDiscount > 0 && (
           <div className="flex justify-between text-emerald-600">
             <span>Coupon Discount</span>
-            <strong>-${appliedDiscount.toFixed(2)}</strong>
+            <strong>-₹{appliedDiscount.toFixed(2)}</strong>
           </div>
         )}
       </div>
 
       <div className="flex justify-between items-center pt-3 border-t border-[#E8DCC3]">
         <span className="text-sm font-extrabold text-[#1F1D1A]">Total Due</span>
-        <span className="text-2xl font-black text-[#8C4B3E]">${grandTotal.toFixed(2)}</span>
+        <span className="text-2xl font-black text-[#8C4B3E]">₹{grandTotal.toFixed(2)}</span>
       </div>
 
       {/* Terms Checkbox */}
@@ -124,7 +124,7 @@ export function CheckoutOrderSummary({
           </>
         ) : (
           <>
-            Complete Payment (${grandTotal.toFixed(2)})
+            Complete Payment (₹{grandTotal.toFixed(2)})
             <ArrowRight className="h-4 w-4" />
           </>
         )}

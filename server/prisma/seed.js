@@ -164,8 +164,8 @@ async function main() {
       }
 
       const basePrice = b.price;
-      const platformFee = 4.99;
-      const tax = Math.round(basePrice * 0.085 * 100) / 100;
+      const platformFee = 49.00;
+      const tax = Math.round(basePrice * 0.18 * 100) / 100;
       const discount = 0.0;
       const total = Math.round((basePrice + platformFee + tax - discount) * 100) / 100;
 
@@ -188,11 +188,11 @@ async function main() {
           paymentMethod: b.paymentMethod,
           billingName: b.billingName || "Test Customer",
           billingEmail: b.billingEmail || b.customerEmail,
-          billingPhone: b.billingPhone || "999-888-7777",
-          street: b.street || "123 Main St",
-          city: b.city || "New York",
-          state: b.state || "NY",
-          zipCode: b.zipCode || "10001"
+          billingPhone: b.billingPhone || "9876543210",
+          street: b.street || "42 Park Street",
+          city: b.city || "Kolkata",
+          state: b.state || "West Bengal",
+          zipCode: b.zipCode || "700016"
         }
       });
       console.log(`  + Created booking: ${b.id}`);

@@ -21,17 +21,17 @@ import {
 const initialServices = [
   {
     id: 1,
-    name: "Deep Home Cleaning Service",
+    name: "Deep Home Cleaning & Sanitization",
     category: "Home Cleaning",
-    providerName: "Sarah Jenkins",
-    providerImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Brooklyn, NY",
+    providerName: "Sunita Rao",
+    providerImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80",
+    location: "Kolkata, WB",
     rating: 4.9,
     reviewsCount: 142,
-    price: 35,
-    priceType: "/hr",
+    price: 1499,
+    priceType: "/service",
     image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
-    description: "Complete top-to-bottom cleaning of all rooms including dusting, vacuuming, kitchen sanitization, and window washing.",
+    description: "Complete top-to-bottom cleaning of all rooms including dusting, vacuuming, kitchen sanitization, and balcony washing.",
     availability: "today",
     popularity: 98,
     dateAdded: "2026-07-01",
@@ -39,17 +39,17 @@ const initialServices = [
   },
   {
     id: 2,
-    name: "Expert Plumbing & Leak Repair",
+    name: "Expert Plumbing & Leakage Repair",
     category: "Plumbing",
-    providerName: "David Miller",
+    providerName: "Rajesh Sharma",
     providerImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Queens, NY",
+    location: "Delhi NCR",
     rating: 4.8,
     reviewsCount: 98,
-    price: 50,
-    priceType: "/hr",
+    price: 499,
+    priceType: "/visit",
     image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
-    description: "Resolving leakages, clogged drains, toilet repairs, pipe installations, and hot water heater repair with guarantee.",
+    description: "Resolving leakages, clogged drains, tap replacements, geyser installation, and bathroom fitting repairs.",
     availability: "this-week",
     popularity: 85,
     dateAdded: "2026-06-28",
@@ -57,17 +57,17 @@ const initialServices = [
   },
   {
     id: 3,
-    name: "Licensed Smart Home Wiring",
+    name: "Certified Home Electrical & Appliance Repair",
     category: "Electrical",
-    providerName: "Marcus Vance",
+    providerName: "Amit Verma",
     providerImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Manhattan, NY",
+    location: "Bengaluru, KA",
     rating: 4.9,
     reviewsCount: 115,
-    price: 65,
-    priceType: "/hr",
+    price: 399,
+    priceType: "/visit",
     image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80",
-    description: "Installation of smart lighting panels, smart thermostats, EV charger setups, and general home electrical upgrades.",
+    description: "Short circuit fixing, MCB replacement, fan & light installation, inverter setup, and switchboard wiring.",
     availability: "today",
     popularity: 92,
     dateAdded: "2026-07-05",
@@ -242,7 +242,7 @@ export default function BookingSuccess() {
                   <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg text-[10px] py-1 px-3 shrink-0">
                     Paid / Success
                   </Badge>
-                  <span className="text-sm font-bold text-[#1F1D1A]">${selectedPrice.toFixed(2)}</span>
+                  <span className="text-sm font-bold text-[#1F1D1A]">₹{selectedPrice.toFixed(2)}</span>
                 </div>
               </div>
 

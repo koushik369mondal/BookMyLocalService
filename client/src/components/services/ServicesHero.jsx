@@ -5,11 +5,16 @@ import { Input } from "@/components/ui/input";
 
 const locations = [
   "All Locations",
-  "Brooklyn, NY",
-  "Queens, NY",
-  "Manhattan, NY",
-  "Bronx, NY",
-  "Staten Island, NY"
+  "Kolkata, WB",
+  "Delhi NCR",
+  "Mumbai, MH",
+  "Bengaluru, KA",
+  "Hyderabad, TS",
+  "Chennai, TN",
+  "Pune, MH",
+  "Jaipur, RJ",
+  "Siliguri, WB",
+  "Jalpaiguri, WB"
 ];
 
 export function ServicesHero({
@@ -25,13 +30,13 @@ export function ServicesHero({
         <div className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#8C4B3E]/10 border border-[#8C4B3E]/20 text-[#8C4B3E] text-xs font-semibold">
             <span className="flex h-2 w-2 rounded-full bg-[#8C4B3E] animate-pulse"></span>
-            Verified Local Service Directory
+            Verified Indian Local Service Directory
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1F1D1A] tracking-tight">
-            Explore Verified <span className="text-[#8C4B3E]">Local Professionals</span>
+            Explore Verified <span className="text-[#8C4B3E]">Indian Professionals</span>
           </h1>
           <p className="text-xs sm:text-sm text-[#5A5146] font-medium leading-relaxed">
-            Browse top-rated electricians, plumbers, cleaners, and contractors in your area. Read authentic reviews and book instantly.
+            Browse top-rated electricians, plumbers, home cleaners, painters, and AC technicians in your city. Read authentic reviews and book instantly.
           </p>
 
           <form onSubmit={onSearchSubmit} className="bg-white p-2 rounded-2xl border border-[#E8DCC3] shadow-md flex flex-col sm:flex-row items-center gap-2 pt-2 sm:pt-2">
@@ -48,7 +53,7 @@ export function ServicesHero({
 
             <div className="h-6 w-[1px] bg-[#E8DCC3] hidden sm:block"></div>
 
-            <div className="relative w-full sm:w-44">
+            <div className="relative w-full sm:w-48">
               <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A7266]" />
               <select
                 value={heroLocation}

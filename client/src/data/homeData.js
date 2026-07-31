@@ -22,32 +22,32 @@ export const categories = [
 
 export const fallbackProviders = [
   {
-    name: "Sarah Jenkins",
-    service: "Professional Cleaning",
+    name: "Sunita Rao",
+    service: "Deep Home Cleaning",
     rating: 4.9,
     reviews: 142,
-    location: "Brooklyn, NY",
-    price: "$35/hr",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&h=300&q=80",
+    location: "Kolkata, WB",
+    price: "₹1,499",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&h=300&q=80",
     badge: "Top Rated"
   },
   {
-    name: "David Miller",
+    name: "Rajesh Sharma",
     service: "Expert Plumbing",
     rating: 4.8,
     reviews: 98,
-    location: "Queens, NY",
-    price: "$50/hr",
+    location: "Delhi NCR",
+    price: "₹499",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&h=300&q=80",
     badge: "Verified"
   },
   {
-    name: "Marcus Vance",
-    service: "Licensed Electrician",
+    name: "Amit Verma",
+    service: "Certified Electrician",
     rating: 4.9,
     reviews: 115,
-    location: "Manhattan, NY",
-    price: "$65/hr",
+    location: "Bengaluru, KA",
+    price: "₹399",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&h=300&q=80",
     badge: "Top Rated"
   },
@@ -80,7 +80,7 @@ export const features = [
   },
   {
     title: "Transparent Pricing",
-    description: "No hidden charges or surprise costs. See clear hourly or flat rates up front before you book.",
+    description: "No hidden charges or surprise costs. See clear flat rates in ₹ (INR) up front before you book.",
     icon: CircleDollarSign,
     color: "bg-amber-50 text-[#8C4B3E] border-amber-100"
   },
@@ -100,24 +100,24 @@ export const features = [
 
 export const testimonials = [
   {
-    quote: "BookMyLocalService has completely changed how I manage chores. I booked a deep cleaning service, and the professional was punctual, efficient, and extremely friendly!",
-    author: "Jessica Alba",
-    role: "Homeowner",
+    quote: "BookMyLocalService has completely changed how I manage household services in Kolkata. I booked deep cleaning, and the team was punctual, thorough, and polite!",
+    author: "Ananya Sen",
+    role: "Homeowner, Kolkata",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
     rating: 5
   },
   {
-    quote: "Finding an electrician used to take days of phone calls. Here, I found a verified expert within minutes and got my home wiring issues resolved the very next day.",
-    author: "Robert Chen",
-    role: "Apartment Tenant",
+    quote: "Finding an electrician in Delhi used to take hours of searching. Here, I booked an expert in 2 minutes and got our AC circuit issue fixed on the same day.",
+    author: "Rahul Chatterjee",
+    role: "Apartment Owner, Delhi NCR",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
     rating: 5
   },
   {
-    quote: "As a service provider, this platform has helped me build a steady stream of local clients. The billing is transparent, and customer coordination is seamless.",
-    author: "Elena Rostov",
-    role: "Cleaning Agency Owner",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&h=150&q=80",
+    quote: "As a local service provider in Bengaluru, this platform has helped me build a steady stream of satisfied local customers with transparent UPI payouts.",
+    author: "Deepak Kumar",
+    role: "Garden & Lawn Care Owner",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
     rating: 5
   }
 ];

@@ -1,5 +1,5 @@
 import React from "react";
-import { Star, SlidersHorizontal, X } from "lucide-react";
+import { Star, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -63,13 +63,13 @@ export function ServicesFilters({
 
       {/* Price Filter */}
       <div className="space-y-2.5 pt-4 border-t border-[#E8DCC3]">
-        <Label className="text-xs font-bold text-[#1F1D1A]">Price Range</Label>
+        <Label className="text-xs font-bold text-[#1F1D1A]">Price Range (₹ INR)</Label>
         <div className="space-y-1.5">
           {[
             { id: "all", label: "All Prices" },
-            { id: "under-50", label: "Under $50" },
-            { id: "50-100", label: "$50 - $100" },
-            { id: "100-plus", label: "$100+" },
+            { id: "under-50", label: "Under ₹500" },
+            { id: "50-100", label: "₹500 - ₹1,500" },
+            { id: "100-plus", label: "₹1,500+" },
             { id: "custom", label: "Custom Range" }
           ].map((option) => (
             <label key={option.id} className="flex items-center gap-2.5 text-xs text-[#5A5146] font-medium cursor-pointer hover:text-[#1F1D1A]">
@@ -89,7 +89,7 @@ export function ServicesFilters({
           <div className="flex items-center gap-2 pt-2">
             <Input
               type="number"
-              placeholder="Min"
+              placeholder="Min ₹"
               value={customMinPrice}
               onChange={(e) => setCustomMinPrice(e.target.value)}
               className="h-8 text-xs border-[#E8DCC3] rounded-lg"
@@ -97,7 +97,7 @@ export function ServicesFilters({
             <span className="text-xs text-[#7A7266]">-</span>
             <Input
               type="number"
-              placeholder="Max"
+              placeholder="Max ₹"
               value={customMaxPrice}
               onChange={(e) => setCustomMaxPrice(e.target.value)}
               className="h-8 text-xs border-[#E8DCC3] rounded-lg"

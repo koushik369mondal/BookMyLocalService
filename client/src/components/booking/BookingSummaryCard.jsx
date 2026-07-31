@@ -32,15 +32,15 @@ export function BookingSummaryCard({
         </div>
         <div className="flex justify-between py-1 border-b border-[#E8DCC3]/50">
           <span>Package Base Price</span>
-          <strong className="text-[#1F1D1A]">${pricingBreakdown.basePrice.toFixed(2)}</strong>
+          <strong className="text-[#1F1D1A]">₹{pricingBreakdown.basePrice.toFixed(2)}</strong>
         </div>
         <div className="flex justify-between py-1 border-b border-[#E8DCC3]/50">
           <span>Platform Service Fee</span>
-          <strong className="text-[#1F1D1A]">${pricingBreakdown.platformFee.toFixed(2)}</strong>
+          <strong className="text-[#1F1D1A]">₹{pricingBreakdown.platformFee.toFixed(2)}</strong>
         </div>
         <div className="flex justify-between py-1 border-b border-[#E8DCC3]/50">
-          <span>Estimated Tax (8.5%)</span>
-          <strong className="text-[#1F1D1A]">${pricingBreakdown.tax.toFixed(2)}</strong>
+          <span>GST (18%)</span>
+          <strong className="text-[#1F1D1A]">₹{pricingBreakdown.tax.toFixed(2)}</strong>
         </div>
         {selectedDate && (
           <div className="flex justify-between py-1 border-b border-[#E8DCC3]/50">
@@ -58,7 +58,7 @@ export function BookingSummaryCard({
 
       <div className="flex justify-between items-center pt-2">
         <span className="text-sm font-extrabold text-[#1F1D1A]">Total Payable</span>
-        <span className="text-2xl font-black text-[#8C4B3E]">${pricingBreakdown.total.toFixed(2)}</span>
+        <span className="text-2xl font-black text-[#8C4B3E]">₹{pricingBreakdown.total.toFixed(2)}</span>
       </div>
 
       <Button

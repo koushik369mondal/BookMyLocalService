@@ -71,18 +71,18 @@ const providerGrowthData = [
   { label: "Jun", val: 380 }
 ];
 
-// Mock Demographics (Borough booking distribution)
+// Mock Demographics (City booking distribution)
 const demographics = [
-  { borough: "Brooklyn, NY", percentage: 42, count: 772 },
-  { borough: "Manhattan, NY", percentage: 28, count: 515 },
-  { borough: "Queens, NY", percentage: 18, count: 331 },
-  { borough: "Staten Island, NY", percentage: 12, count: 222 }
+  { borough: "Kolkata, WB", percentage: 42, count: 772 },
+  { borough: "Delhi NCR", percentage: 28, count: 515 },
+  { borough: "Mumbai, MH", percentage: 18, count: 331 },
+  { borough: "Bengaluru, KA", percentage: 12, count: 222 }
 ];
 
 // Mock Top Specialists
 const topPerformers = [
-  { id: "1", name: "Sarah Jenkins", service: "Deep Home Cleaning Service", rating: 4.9, bookings: 142, avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80" },
-  { id: "2", name: "Marcus Vance", service: "Licensed Smart Home Wiring", rating: 4.9, bookings: 115, avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80" }
+  { id: "1", name: "Sunita Rao", service: "Deep Home Cleaning & Sanitization", rating: 4.9, bookings: 142, avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80" },
+  { id: "2", name: "Amit Verma", service: "Certified Home Electrical Repair", rating: 4.9, bookings: 115, avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80" }
 ];
 
 // Mock Categories Share
@@ -171,7 +171,7 @@ export default function Analytics() {
             <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Revenue</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">$42,850</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">₹3,42,850</span>
               </div>
               <div className="p-2.5 bg-[#7DAB7D]/20 text-[#2B522B] rounded-xl shrink-0 border border-[#7DAB7D]/30">
                 <DollarSign className="h-5 w-5" />
@@ -289,10 +289,11 @@ export default function Analytics() {
                     onChange={(e) => setLocationFilter(e.target.value)}
                     className="h-9.5 pl-3 pr-8 border border-[#E8DCC3] focus:outline-none focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl bg-white text-xs font-semibold text-[#1F1D1A] cursor-pointer appearance-none shadow-2xs"
                   >
-                    <option value="all">All Boroughs</option>
-                    <option value="Brooklyn">Brooklyn</option>
-                    <option value="Manhattan">Manhattan</option>
-                    <option value="Queens">Queens</option>
+                    <option value="all">All Cities</option>
+                    <option value="Kolkata">Kolkata</option>
+                    <option value="Delhi NCR">Delhi NCR</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Bengaluru">Bengaluru</option>
                   </select>
                   <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
                 </div>

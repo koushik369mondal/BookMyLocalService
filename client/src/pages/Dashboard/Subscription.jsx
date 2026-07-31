@@ -28,9 +28,9 @@ import {
 
 // Mock Initial Payment Invoice history
 const initialInvoices = [
-  { id: "INV-90284", date: "2026-07-01", plan: "Pro Plan (Monthly)", amount: 29.00, status: "success" },
-  { id: "INV-80392", date: "2026-06-01", plan: "Pro Plan (Monthly)", amount: 29.00, status: "success" },
-  { id: "INV-70492", date: "2026-05-01", plan: "Pro Plan (Monthly)", amount: 29.00, status: "success" }
+  { id: "INV-90284", date: "2026-07-01", plan: "Pro Plan (Monthly)", amount: 999.00, status: "success" },
+  { id: "INV-80392", date: "2026-06-01", plan: "Pro Plan (Monthly)", amount: 999.00, status: "success" },
+  { id: "INV-70492", date: "2026-05-01", plan: "Pro Plan (Monthly)", amount: 999.00, status: "success" }
 ];
 
 // Mock FAQs list
@@ -76,79 +76,65 @@ export default function Subscription() {
     return () => clearTimeout(timer);
   }, [billingCycle]);
 
-  // Plan Prices mapping (yearly has 20% discount computed)
+  // Plan Prices mapping (in ₹ INR)
   const getPlanPrice = (planKey) => {
     if (billingCycle === "monthly") {
       switch (planKey) {
         case "basic": return 0;
-        case "pro": return 29;
-        case "premium": return 79;
+        case "pro": return 999;
+        case "premium": return 2499;
         default: return 0;
       }
     } else {
       switch (planKey) {
         case "basic": return 0;
-        case "pro": return 23;
-        case "premium": return 63;
+        case "pro": return 799;
+        case "premium": return 1999;
         default: return 0;
       }
     }
   };
 
-  // Change active plan (upgrade/downgrade)
-  const triggerPlanChange = (planKey) => {
-    if (activePlan === planKey) return;
+  const handlePlanChangeInitiate = (planKey) => {
     setSelectedPlanToChange(planKey);
     setIsPlanDialogOpen(true);
   };
 
-  const executePlanChange = async () => {
+  const handleConfirmPlanChange = () => {
     setIsActionLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsActionLoading(false);
-    setIsPlanDialogOpen(false);
+    setTimeout(() => {
+      setActivePlan(selectedPlanToChange);
+      setIsPlanDialogOpen(false);
+      setIsActionLoading(false);
 
-    setActivePlan(selectedPlanToChange);
-    setRenewalDate("2026-08-01");
+      if (selectedPlanToChange !== "basic") {
+        const newPrice = getPlanPrice(selectedPlanToChange);
+        const newInvoice = {
+          id: `INV-${Math.floor(10000 + Math.random() * 90000)}`,
+          date: new Date().toISOString().split("T")[0],
+          plan: `${selectedPlanToChange.toUpperCase()} Plan (${billingCycle === "monthly" ? "Monthly" : "Yearly"})`,
+          amount: newPrice,
+          status: "success"
+        };
+        setInvoices([newInvoice, ...invoices]);
+      }
 
-    const amountVal = getPlanPrice(selectedPlanToChange);
-    if (amountVal > 0) {
-      const newInv = {
-        id: `INV-${Math.floor(10000 + Math.random() * 90000)}`,
-        date: new Date().toISOString().split("T")[0],
-        plan: `${selectedPlanToChange.toUpperCase()} Plan (${billingCycle === "monthly" ? "Monthly" : "Yearly"})`,
-        amount: billingCycle === "monthly" ? amountVal : amountVal * 12,
-        status: "success"
-      };
-      setInvoices([newInv, ...invoices]);
-    }
-
-    setSuccessMsg(`Plan successfully updated to ${selectedPlanToChange.toUpperCase()}!`);
-    setTimeout(() => setSuccessMsg(""), 2500);
+      setSuccessMsg(`Your subscription has been updated to the ${selectedPlanToChange.toUpperCase()} Plan successfully!`);
+      setTimeout(() => setSuccessMsg(""), 3500);
+    }, 1200);
   };
 
-  // Cancel subscription logic
-  const executeCancellation = async () => {
+  const handleConfirmCancel = () => {
     setIsActionLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsActionLoading(false);
-    setIsCancelDialogOpen(false);
+    setTimeout(() => {
+      setActivePlan("none");
+      setIsCancelDialogOpen(false);
+      setIsActionLoading(false);
 
-    setActivePlan("none");
-    setSuccessMsg("Subscription cancelled. Benefits will expire on renewal date.");
-    setTimeout(() => setSuccessMsg(""), 2500);
+      setSuccessMsg("Your subscription has been cancelled. You can continue using your plan until the end of the current billing cycle.");
+      setTimeout(() => setSuccessMsg(""), 3500);
+    }, 1200);
   };
-
-  // Detailed features comparison matrix checklist
-  const featuresMatrix = [
-    { label: "Active Services Listings", basic: "Up to 3", pro: "Unlimited", premium: "Unlimited" },
-    { label: "Platform Handling Commissions", basic: "5% per job", pro: "0%", premium: "0%" },
-    { label: "Verified Dispatch Trust Badge", basic: false, pro: true, premium: true },
-    { label: "Customer Analytics Logs", basic: false, pro: true, premium: true },
-    { label: "Search Results Visibility Priority", basic: "Standard", pro: "High", premium: "Maximum" },
-    { label: "Custom Ad Promotion Banners", basic: false, pro: false, premium: true },
-    { label: "Support Resolution Channel", basic: "Email", pro: "Priority Email/Chat", premium: "Dedicated Manager" }
-  ];
 
   return (
     <DashboardLayout>
@@ -158,316 +144,346 @@ export default function Subscription() {
         <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1">
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Billing & Subscriptions</h1>
-              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Verify your active plan tier, pricing schedules, features, or print invoices</p>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Subscription & Membership</h1>
+              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Manage your provider membership tier, platform fees, and monthly invoices</p>
             </div>
 
             <Link to="/provider/dashboard">
-              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] border border-[#E8DCC3] rounded-xl text-white text-xs font-bold px-5 h-9.5 shadow-2xs">
-                <ArrowLeft className="h-4 w-4 text-white mr-1" />
-                Back to Dashboard
+              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] text-white border border-[#E8DCC3] rounded-xl text-xs font-bold px-5 h-9.5 shadow-2xs flex items-center gap-1.5 cursor-pointer">
+                <ArrowLeft className="h-4 w-4 text-white" />
+                Dashboard
               </Button>
             </Link>
           </div>
         </section>
 
-        {/* CONTAINER */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-
+        {/* NOTIFICATION ALERTS */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
           {successMsg && (
             <div className="flex items-start gap-2.5 p-3.5 bg-[#7DAB7D]/20 border border-[#7DAB7D]/40 text-[#2B522B] text-xs font-bold rounded-xl shadow-2xs">
               <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-[#2B522B]" />
               <span>{successMsg}</span>
             </div>
           )}
+        </div>
 
-          {/* ACTIVE PLAN TIER CARD OVERVIEW */}
-          <Card className="border border-[#E8DCC3] shadow-2xs bg-white rounded-2xl p-6">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        {/* ACTIVE SUBSCRIPTION OVERVIEW CARD */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <Card className="border border-[#E8DCC3] shadow-2xs bg-white rounded-2xl p-6 relative overflow-hidden">
 
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#F0E7D5] text-[#C9A46A] rounded-2xl shrink-0 border border-[#E8DCC3]">
-                  <CreditCard className="h-7 w-7" />
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              
+              <div className="space-y-3">
+                <div className="flex items-center gap-2.5">
+                  <Badge className="bg-[#F0E7D5] text-[#C9A46A] border border-[#E8DCC3] font-bold rounded-lg text-xs py-1 px-3">
+                    Active Membership
+                  </Badge>
+                  {activePlan === "pro" && (
+                    <span className="inline-flex items-center gap-1 text-xs font-bold text-[#8C4B3E]">
+                      <Sparkles className="h-3.5 w-3.5 fill-[#8C4B3E]" /> Most Popular Tier
+                    </span>
+                  )}
                 </div>
-                <div>
-                  <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Active Plan Tier</span>
-                  <div className="flex items-center gap-2 mt-1">
-                    <h2 className="text-xl font-bold text-[#1F1D1A] capitalize">
-                      {activePlan === "none" ? "No Active Subscription" : `${activePlan} Plan`}
-                    </h2>
-                    {activePlan !== "none" && (
-                      <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg text-[9px] py-0.5 px-2">
-                        Active
-                      </Badge>
-                    )}
+
+                <h2 className="text-2xl font-black text-[#1F1D1A] tracking-tight">
+                  {activePlan === "basic" && "Basic Free Plan"}
+                  {activePlan === "pro" && "Pro Provider Plan"}
+                  {activePlan === "premium" && "Premium Agency Plan"}
+                  {activePlan === "none" && "No Active Subscription"}
+                </h2>
+
+                <p className="text-xs text-[#5A5146] max-w-xl leading-relaxed font-medium">
+                  {activePlan === "basic" && "Standard local directory listing with 5% platform commission rate."}
+                  {activePlan === "pro" && "Enhanced priority placement in search results with 0% platform handling fees."}
+                  {activePlan === "premium" && "Full agency suite with unlimited listings, dedicated support, and top banner placement."}
+                  {activePlan === "none" && "Your subscription has expired or been cancelled."}
+                </p>
+
+                {activePlan !== "none" && (
+                  <div className="flex items-center gap-4 text-xs font-semibold text-[#7A7266] pt-1">
+                    <span>Current Rate: <strong>₹{getPlanPrice(activePlan)} / mo</strong></span>
+                    <span>•</span>
+                    <span>Next Renewal: <strong>{renewalDate}</strong></span>
                   </div>
-                  <p className="text-xs text-[#5A5146] mt-1.5 font-medium leading-relaxed">
-                    {activePlan === "none"
-                      ? "Your subscription is cancelled. Access to premium dispatcher listings expires soon."
-                      : `Your plan renews automatically on ${renewalDate} at $${getPlanPrice(activePlan)}/${billingCycle === "monthly" ? "month" : "month billed annually"}.`
-                    }
-                  </p>
-                </div>
+                )}
               </div>
 
-              <div className="flex items-center gap-3 w-full md:w-auto shrink-0 border-t border-[#E8DCC3] md:border-0 pt-4 md:pt-0">
-                {activePlan !== "none" && activePlan !== "basic" && (
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row md:flex-col gap-2.5 shrink-0 w-full md:w-auto">
+                {activePlan !== "none" && (
                   <Button
                     onClick={() => setIsCancelDialogOpen(true)}
                     variant="outline"
-                    className="w-full md:w-auto border-[#8C4B3E]/30 bg-white hover:bg-[#8C4B3E]/10 text-[#8C4B3E] font-bold h-10 text-xs rounded-xl"
+                    className="border-[#E8DCC3] hover:bg-rose-50 text-rose-600 font-bold text-xs rounded-xl h-9.5 px-4 cursor-pointer"
                   >
                     Cancel Subscription
                   </Button>
                 )}
-                {activePlan === "none" && (
+              </div>
+
+            </div>
+
+          </Card>
+        </section>
+
+        {/* PRICING PLANS COMPARISON GRID */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-6">
+
+          {/* Billing Cycle Toggle */}
+          <div className="flex items-center justify-between flex-wrap gap-4 bg-white p-4 rounded-2xl border border-[#E8DCC3]">
+            <div>
+              <h3 className="text-sm font-bold text-[#1F1D1A]">Available Membership Plans</h3>
+              <p className="text-xs text-[#7A7266]">Choose the ideal tier to grow your local service presence</p>
+            </div>
+
+            <div className="flex items-center gap-3 bg-[#FAF6F0] p-1 rounded-xl border border-[#E8DCC3]">
+              <button
+                type="button"
+                onClick={() => setBillingCycle("monthly")}
+                className={`rounded-lg text-xs font-bold px-3 py-1.5 transition-all cursor-pointer ${
+                  billingCycle === "monthly"
+                    ? "bg-[#C9A46A] text-white shadow-2xs"
+                    : "text-[#5A5146] hover:text-[#1F1D1A]"
+                }`}
+              >
+                Monthly Billing
+              </button>
+              <button
+                type="button"
+                onClick={() => setBillingCycle("yearly")}
+                className={`rounded-lg text-xs font-bold px-3 py-1.5 transition-all flex items-center gap-1 cursor-pointer ${
+                  billingCycle === "yearly"
+                    ? "bg-[#C9A46A] text-white shadow-2xs"
+                    : "text-[#5A5146] hover:text-[#1F1D1A]"
+                }`}
+              >
+                Yearly Billing
+                <span className="text-[9px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-md uppercase font-extrabold">Save 20%</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Pricing Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            {/* Basic Plan */}
+            <Card className={`border rounded-2xl p-6 bg-white flex flex-col justify-between relative transition-all ${
+              activePlan === "basic" ? "border-[#C9A46A] ring-2 ring-[#C9A46A]/20" : "border-[#E8DCC3]"
+            }`}>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <h4 className="font-bold text-[#1F1D1A] text-lg">Basic</h4>
+                  {activePlan === "basic" && (
+                    <Badge className="bg-[#FAF6F0] text-[#C9A46A] border border-[#E8DCC3] font-bold text-[10px]">Active</Badge>
+                  )}
+                </div>
+
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-black text-[#1F1D1A]">₹0</span>
+                  <span className="text-xs text-[#7A7266] font-medium">/ month</span>
+                </div>
+
+                <p className="text-xs text-[#5A5146]">Essential local directory presence for new sole traders.</p>
+
+                <div className="space-y-2.5 pt-4 border-t border-[#E8DCC3] text-xs text-[#5A5146]">
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Up to 3 Active Services</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Standard Search Listing</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Customer Review Management</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-stone-400">
+                    <X className="h-4 w-4 shrink-0" />
+                    <span>5% Handling Commission Fee</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-stone-400">
+                    <X className="h-4 w-4 shrink-0" />
+                    <span>No Top Banner Priority</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6">
+                {activePlan === "basic" ? (
+                  <Button disabled className="w-full h-10 bg-[#FAF6F0] text-[#7A7266] border border-[#E8DCC3] font-bold text-xs rounded-xl">
+                    Current Plan
+                  </Button>
+                ) : (
                   <Button
-                    onClick={() => triggerPlanChange("pro")}
-                    className="w-full md:w-auto bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold h-10 text-xs rounded-xl shadow-2xs border border-[#E8DCC3]"
+                    onClick={() => handlePlanChangeInitiate("basic")}
+                    variant="outline"
+                    className="w-full h-10 border-[#E8DCC3] text-[#1F1D1A] font-bold text-xs rounded-xl hover:bg-[#FAF6F0] cursor-pointer"
                   >
-                    Re-Activate Pro Plan
+                    Switch to Basic
                   </Button>
                 )}
               </div>
+            </Card>
 
-            </div>
-          </Card>
-
-          {/* BILLING TOGGLE AND PRICING CARDS */}
-          <div className="space-y-6">
-
-            {/* Monthly/Yearly toggle */}
-            <div className="flex flex-col items-center gap-3">
-              <span className="text-xs font-bold text-[#7A7266]">Choose your billing cycle</span>
-              <div className="flex bg-[#F0E7D5] border border-[#E8DCC3] p-1 rounded-xl h-10 w-60">
-                <button
-                  type="button"
-                  onClick={() => setBillingCycle("monthly")}
-                  className={`flex-1 rounded-lg text-xs font-bold transition-all ${billingCycle === "monthly"
-                    ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                    : "text-[#5A5146] hover:text-[#1F1D1A]"
-                    }`}
-                >
-                  Monthly
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBillingCycle("yearly")}
-                  className={`flex-1 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 ${billingCycle === "yearly"
-                    ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                    : "text-[#5A5146] hover:text-[#1F1D1A]"
-                    }`}
-                >
-                  Yearly
-                  <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 text-[8px] px-1 py-0">-20%</Badge>
-                </button>
+            {/* Pro Plan */}
+            <Card className={`border rounded-2xl p-6 bg-white flex flex-col justify-between relative transition-all shadow-md ${
+              activePlan === "pro" ? "border-[#C9A46A] ring-2 ring-[#C9A46A]/20" : "border-[#E8DCC3]"
+            }`}>
+              <div className="absolute -top-3 right-6 bg-[#C9A46A] text-white text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase">
+                Most Popular
               </div>
-            </div>
 
-            {/* Pricing Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-              {/* BASIC PLAN */}
-              <Card className={`border rounded-3xl p-6 relative flex flex-col justify-between ${activePlan === "basic"
-                ? "bg-[#FAF6F0]/50 border-[#C9A46A] shadow-2xs"
-                : "bg-white border-[#E8DCC3] hover:border-[#C9A46A] shadow-2xs transition-all"
-                }`}>
-                <div className="space-y-4">
-                  <div>
-                    <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Standard</span>
-                    <h3 className="text-lg font-bold text-[#1F1D1A] mt-1">Basic Plan</h3>
-                  </div>
-
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-[#1F1D1A]">$0</span>
-                    <span className="text-xs text-[#7A7266] font-bold">/month</span>
-                  </div>
-
-                  <p className="text-xs text-[#5A5146] leading-relaxed font-medium">
-                    Perfect for new providers getting started locally.
-                  </p>
-
-                  <hr className="border-[#E8DCC3]" />
-
-                  {/* Highlights */}
-                  <div className="space-y-2.5">
-                    {[
-                      "Up to 3 Active Listings",
-                      "5% Platform Commissions Rate",
-                      "Standard Search Results placement",
-                      "Email support logs"
-                    ].map((feat, i) => (
-                      <div key={i} className="flex items-center gap-2.5 text-xs text-[#5A5146] font-medium">
-                        <Check className="h-4 w-4 text-[#2B522B] shrink-0" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <h4 className="font-bold text-[#1F1D1A] text-lg">Pro Provider</h4>
+                  {activePlan === "pro" && (
+                    <Badge className="bg-[#C9A46A] text-white font-bold text-[10px]">Active</Badge>
+                  )}
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-[#E8DCC3]">
-                  <Button
-                    onClick={() => triggerPlanChange("basic")}
-                    disabled={activePlan === "basic"}
-                    variant={activePlan === "basic" ? "default" : "outline"}
-                    className={`w-full h-10 font-bold text-xs rounded-xl border-[#E8DCC3] ${
-                      activePlan === "basic" ? "bg-[#C9A46A] text-white" : "bg-[#FAF6F0] hover:bg-[#F0E7D5] text-[#1F1D1A]"
-                    }`}
-                  >
-                    {activePlan === "basic" ? "Active Plan" : "Downgrade to Basic"}
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-black text-[#1F1D1A]">₹{getPlanPrice("pro")}</span>
+                  <span className="text-xs text-[#7A7266] font-medium">/ month</span>
+                </div>
+
+                <p className="text-xs text-[#5A5146]">Ideal for established local professionals expanding their client base.</p>
+
+                <div className="space-y-2.5 pt-4 border-t border-[#E8DCC3] text-xs text-[#5A5146]">
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Up to 10 Active Services</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Priority Search Placement</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>0% Commission Handling Rate</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Verified Pro Profile Badge</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Direct Customer Messaging</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6">
+                {activePlan === "pro" ? (
+                  <Button disabled className="w-full h-10 bg-[#FAF6F0] text-[#7A7266] border border-[#E8DCC3] font-bold text-xs rounded-xl">
+                    Current Plan
                   </Button>
-                </div>
-              </Card>
-
-              {/* PRO PLAN (RECOMMENDED) */}
-              <Card className={`border rounded-3xl p-6 relative flex flex-col justify-between overflow-hidden ${activePlan === "pro"
-                ? "bg-[#FAF6F0]/50 border-[#C9A46A] shadow-2xs"
-                : "bg-white border-[#E8DCC3] hover:border-[#C9A46A] shadow-2xs transition-all"
-                }`}>
-                {/* Popular Badge */}
-                <div className="absolute top-0 right-0 bg-[#C9A46A] text-white text-[9px] font-bold tracking-wider uppercase px-4 py-1.5 rounded-bl-2xl border-b border-l border-[#E8DCC3]">
-                  Popular
-                </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <span className="text-[10px] font-bold text-[#1F1D1A] uppercase tracking-wider block">Scale</span>
-                    <h3 className="text-lg font-bold text-[#1F1D1A] mt-1">Pro Plan</h3>
-                  </div>
-
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-[#1F1D1A]">${getPlanPrice("pro")}</span>
-                    <span className="text-xs text-[#7A7266] font-bold">/month</span>
-                  </div>
-
-                  <p className="text-xs text-[#5A5146] leading-relaxed font-medium">
-                    Boost listing exposures and eliminate commission handling rates.
-                  </p>
-
-                  <hr className="border-[#E8DCC3]" />
-
-                  {/* Highlights */}
-                  <div className="space-y-2.5">
-                    {[
-                      "Unlimited Service Listings",
-                      "0% Handling rate commissions",
-                      "Verified Trust Badge status",
-                      "High search visibility placement",
-                      "Customer analytics logs",
-                      "Priority Email/Chat support"
-                    ].map((feat, i) => (
-                      <div key={i} className="flex items-center gap-2.5 text-xs text-[#5A5146] font-medium">
-                        <Check className="h-4 w-4 text-[#2B522B] shrink-0" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-[#E8DCC3]">
+                ) : (
                   <Button
-                    onClick={() => triggerPlanChange("pro")}
-                    disabled={activePlan === "pro"}
-                    className="w-full h-10 bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs rounded-xl shadow-2xs border border-[#E8DCC3]"
+                    onClick={() => handlePlanChangeInitiate("pro")}
+                    className="w-full h-10 bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs rounded-xl shadow-2xs cursor-pointer"
                   >
-                    {activePlan === "pro" ? "Active Plan" : (activePlan === "basic" ? "Upgrade to Pro" : "Downgrade to Pro")}
+                    Upgrade to Pro
                   </Button>
-                </div>
-              </Card>
+                )}
+              </div>
+            </Card>
 
-              {/* PREMIUM PLAN */}
-              <Card className={`border rounded-3xl p-6 relative flex flex-col justify-between ${activePlan === "premium"
-                ? "bg-[#FAF6F0]/50 border-[#C9A46A] shadow-2xs"
-                : "bg-white border-[#E8DCC3] hover:border-[#C9A46A] shadow-2xs transition-all"
-                }`}>
-                <div className="space-y-4">
-                  <div>
-                    <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Enterprise</span>
-                    <h3 className="text-lg font-bold text-[#1F1D1A] mt-1">Premium Plan</h3>
-                  </div>
-
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-[#1F1D1A]">${getPlanPrice("premium")}</span>
-                    <span className="text-xs text-[#7A7266] font-bold">/month</span>
-                  </div>
-
-                  <p className="text-xs text-[#5A5146] leading-relaxed font-medium">
-                    Maximum exposure with custom promotion overlays.
-                  </p>
-
-                  <hr className="border-[#E8DCC3]" />
-
-                  {/* Highlights */}
-                  <div className="space-y-2.5">
-                    {[
-                      "Unlimited Service Listings",
-                      "0% platform commissions",
-                      "Verified Trust Badge status",
-                      "Maximum search priority rank",
-                      "Custom promotion banners active",
-                      "Dedicated Support Manager"
-                    ].map((feat, i) => (
-                      <div key={i} className="flex items-center gap-2.5 text-xs text-[#5A5146] font-medium">
-                        <Check className="h-4 w-4 text-[#2B522B] shrink-0" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
+            {/* Premium Plan */}
+            <Card className={`border rounded-2xl p-6 bg-white flex flex-col justify-between relative transition-all ${
+              activePlan === "premium" ? "border-[#C9A46A] ring-2 ring-[#C9A46A]/20" : "border-[#E8DCC3]"
+            }`}>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <h4 className="font-bold text-[#1F1D1A] text-lg">Premium Agency</h4>
+                  {activePlan === "premium" && (
+                    <Badge className="bg-[#C9A46A] text-white font-bold text-[10px]">Active</Badge>
+                  )}
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-[#E8DCC3]">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-black text-[#1F1D1A]">₹{getPlanPrice("premium")}</span>
+                  <span className="text-xs text-[#7A7266] font-medium">/ month</span>
+                </div>
+
+                <p className="text-xs text-[#5A5146]">Complete agency suite for larger teams & high volume providers.</p>
+
+                <div className="space-y-2.5 pt-4 border-t border-[#E8DCC3] text-xs text-[#5A5146]">
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Unlimited Active Services</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Top Banner Featured Listing</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>0% Commission Handling Rate</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Multi-Staff Account Access</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <span>Dedicated 24/7 Account Manager</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6">
+                {activePlan === "premium" ? (
+                  <Button disabled className="w-full h-10 bg-[#FAF6F0] text-[#7A7266] border border-[#E8DCC3] font-bold text-xs rounded-xl">
+                    Current Plan
+                  </Button>
+                ) : (
                   <Button
-                    onClick={() => triggerPlanChange("premium")}
-                    disabled={activePlan === "premium"}
-                    variant={activePlan === "premium" ? "default" : "outline"}
-                    className={`w-full h-10 font-bold text-xs rounded-xl border-[#E8DCC3] ${
-                      activePlan === "premium" ? "bg-[#C9A46A] text-white" : "bg-[#FAF6F0] hover:bg-[#F0E7D5] text-[#1F1D1A]"
-                    }`}
+                    onClick={() => handlePlanChangeInitiate("premium")}
+                    className="w-full h-10 bg-[#1F1D1A] hover:bg-black text-white font-bold text-xs rounded-xl cursor-pointer"
                   >
-                    {activePlan === "premium" ? "Active Plan" : "Upgrade to Premium"}
+                    Upgrade to Premium
                   </Button>
-                </div>
-              </Card>
-
-            </div>
+                )}
+              </div>
+            </Card>
 
           </div>
+        </section>
 
-          {/* FEATURE COMPARISON MATRIX TABLE */}
-          <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 overflow-hidden">
-            <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Features Comparison Matrix</span>
+        {/* INVOICE HISTORY TABLE */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DCC3]">
+              <div>
+                <h3 className="text-base font-bold text-[#1F1D1A]">Billing & Invoice Statements</h3>
+                <p className="text-xs text-[#7A7266]">Download receipts for tax & membership reporting</p>
+              </div>
+              <CreditCard className="h-5 w-5 text-[#C9A46A]" />
+            </div>
 
-            <div className="overflow-x-auto pt-4">
+            <div className="overflow-x-auto">
               <table className="w-full text-xs text-left">
                 <thead>
-                  <tr className="border-b border-[#E8DCC3] text-[#7A7266] font-bold text-[9px] uppercase tracking-wider">
-                    <th className="py-2.5">Core Features</th>
-                    <th className="py-2.5">Basic Plan</th>
-                    <th className="py-2.5 text-[#1F1D1A]">Pro Plan</th>
-                    <th className="py-2.5">Premium Plan</th>
+                  <tr className="border-b border-[#E8DCC3] text-[#7A7266] font-bold uppercase tracking-wider text-[9px] pb-2">
+                    <th className="py-2.5 px-1">INVOICE ID</th>
+                    <th className="py-2.5">DATE</th>
+                    <th className="py-2.5">PLAN</th>
+                    <th className="py-2.5">AMOUNT</th>
+                    <th className="py-2.5 text-right">STATUS</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#E8DCC3] font-medium text-[#5A5146]">
-                  {featuresMatrix.map((row, idx) => (
-                    <tr key={idx} className="hover:bg-[#FAF6F0] transition-colors">
-                      <td className="py-3.5 font-bold text-[#1F1D1A]">{row.label}</td>
-                      <td className="py-3.5">
-                        {typeof row.basic === "boolean"
-                          ? (row.basic ? <Check className="h-4 w-4 text-[#2B522B]" /> : <X className="h-4 w-4 text-[#7A7266]" />)
-                          : row.basic
-                        }
-                      </td>
-                      <td className="py-3.5 text-[#1F1D1A] font-bold">
-                        {typeof row.pro === "boolean"
-                          ? (row.pro ? <Check className="h-4 w-4 text-[#2B522B]" /> : <X className="h-4 w-4 text-[#7A7266]" />)
-                          : row.pro
-                        }
-                      </td>
-                      <td className="py-3.5">
-                        {typeof row.premium === "boolean"
-                          ? (row.premium ? <Check className="h-4 w-4 text-[#2B522B]" /> : <X className="h-4 w-4 text-[#7A7266]" />)
-                          : row.premium
-                        }
+                  {invoices.map((inv) => (
+                    <tr key={inv.id} className="hover:bg-[#FAF6F0] transition-colors">
+                      <td className="py-3 px-1 font-bold text-[#1F1D1A]">{inv.id}</td>
+                      <td className="py-3">{inv.date}</td>
+                      <td className="py-3 font-semibold text-[#1F1D1A]">{inv.plan}</td>
+                      <td className="py-3 font-bold text-[#1F1D1A]">₹{inv.amount.toFixed(2)}</td>
+                      <td className="py-3 text-right">
+                        <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg text-[9px] px-2 py-0.5">
+                          PAID
+                        </Badge>
                       </td>
                     </tr>
                   ))}
@@ -475,185 +491,118 @@ export default function Subscription() {
               </table>
             </div>
           </Card>
+        </section>
 
-          {/* LOWER GRID: INVOICES & FAQS */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* FAQS ACCORDION */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+            <h3 className="text-base font-bold text-[#1F1D1A] border-b border-[#E8DCC3] pb-3 flex items-center gap-2">
+              <HelpCircle className="h-5 w-5 text-[#C9A46A]" />
+              Membership FAQs
+            </h3>
 
-            {/* PAYMENT INVOICES */}
-            <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Billing History</span>
+            <div className="space-y-3">
+              {faqs.map((faq, idx) => (
+                <div key={idx} className="border border-[#E8DCC3] rounded-xl overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIdx(openFaqIdx === idx ? null : idx)}
+                    className="w-full p-4 bg-[#FAF6F0]/60 hover:bg-[#FAF6F0] flex items-center justify-between text-left transition-colors cursor-pointer"
+                  >
+                    <span className="text-xs font-bold text-[#1F1D1A]">{faq.q}</span>
+                    <ChevronDown className={`h-4 w-4 text-[#7A7266] transition-transform ${openFaqIdx === idx ? "rotate-180" : ""}`} />
+                  </button>
 
-              <div className="space-y-3">
-                {invoices.map(inv => (
-                  <div key={inv.id} className="p-3.5 border border-[#E8DCC3] rounded-xl bg-white shadow-2xs flex items-center justify-between gap-3 hover:border-[#C9A46A] transition-colors">
-                    <div className="space-y-0.5">
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-[9px] font-bold text-[#7A7266] uppercase tracking-wider">Ref ID: {inv.id}</span>
-                        <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg text-[8px] py-0 px-1 leading-none uppercase">Settled</Badge>
-                      </div>
-                      <h5 className="font-bold text-[#1F1D1A] text-xs mt-1 truncate max-w-[200px]">{inv.plan}</h5>
-                      <span className="text-[9px] text-[#7A7266] font-medium block">{inv.date}</span>
+                  {openFaqIdx === idx && (
+                    <div className="p-4 bg-white border-t border-[#E8DCC3] text-xs text-[#5A5146] leading-relaxed">
+                      {faq.a}
                     </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </Card>
+        </section>
 
-                    <span className="font-bold text-[#1F1D1A] text-sm shrink-0">${inv.amount.toFixed(2)}</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            {/* FAQS SECTION */}
-            <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Frequently Asked Questions</span>
-
-              <div className="space-y-3.5">
-                {faqs.map((faq, idx) => {
-                  const isOpen = openFaqIdx === idx;
-                  return (
-                    <div key={idx} className="border border-[#E8DCC3] rounded-xl overflow-hidden bg-white shadow-2xs">
-                      <button
-                        type="button"
-                        onClick={() => setOpenFaqIdx(isOpen ? null : idx)}
-                        className="w-full flex items-center justify-between p-3.5 text-left font-bold text-xs text-[#1F1D1A] hover:text-[#C9A46A] transition-colors bg-[#FAF6F0]"
-                      >
-                        <span className="flex items-center gap-2">
-                          <HelpCircle className="h-4.5 w-4.5 text-[#C9A46A]" />
-                          {faq.q}
-                        </span>
-                        <ChevronDown className={`h-4 w-4 text-[#7A7266] transition-transform ${isOpen ? "rotate-180" : ""}`} />
-                      </button>
-
-                      {isOpen && (
-                        <p className="p-4 border-t border-[#E8DCC3] text-xs text-[#5A5146] leading-relaxed font-medium bg-white">
-                          {faq.a}
-                        </p>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </Card>
-
-          </div>
-
-        </div>
       </div>
 
-      {/* DIALOG 1: PLAN UPGRADE/DOWNGRADE CONFIRMATION */}
+      {/* PLAN CHANGE MODAL */}
       <Dialog open={isPlanDialogOpen} onOpenChange={setIsPlanDialogOpen}>
         <DialogContent className="max-w-md bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl shadow-xl p-6 text-[#1F1D1A]">
           <DialogHeader>
-            <DialogTitle className="text-base font-bold text-[#1F1D1A] flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-[#C9A46A]" />
-              Confirm Plan Switch
-            </DialogTitle>
-            <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
-              Confirm your switch to the selected billing tier
+            <DialogTitle className="text-base font-bold text-[#1F1D1A]">Confirm Plan Change</DialogTitle>
+            <DialogDescription className="text-xs text-[#7A7266]">
+              Are you sure you want to change your membership to the <strong>{selectedPlanToChange.toUpperCase()}</strong> plan?
             </DialogDescription>
           </DialogHeader>
 
-          {selectedPlanToChange && (
-            <div className="p-4 bg-white border border-[#E8DCC3] rounded-xl space-y-2">
-              <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wide">Change Details</span>
-              <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-[#7A7266]">New Target Plan:</span>
-                <span className="text-[#1F1D1A] uppercase">{selectedPlanToChange} Plan</span>
-              </div>
-              <div className="flex justify-between items-center text-xs font-bold">
-                <span className="text-[#7A7266]">Billing Cycle:</span>
-                <span className="text-[#1F1D1A] uppercase">{billingCycle}</span>
-              </div>
-              <div className="flex justify-between items-center text-xs font-bold border-t border-[#E8DCC3] pt-2 mt-1">
-                <span className="text-[#7A7266]">Rate Charged:</span>
-                <span className="text-[#1F1D1A] text-sm font-bold">${getPlanPrice(selectedPlanToChange)}/mo</span>
-              </div>
+          <div className="p-4 bg-white border border-[#E8DCC3] rounded-xl text-xs space-y-2 my-2">
+            <div className="flex justify-between">
+              <span>New Plan:</span>
+              <strong className="text-[#1F1D1A]">{selectedPlanToChange.toUpperCase()}</strong>
             </div>
-          )}
+            <div className="flex justify-between">
+              <span>Billing Cycle:</span>
+              <strong className="text-[#1F1D1A]">{billingCycle === "monthly" ? "Monthly" : "Yearly"}</strong>
+            </div>
+            <div className="flex justify-between text-sm font-black pt-2 border-t border-[#E8DCC3]">
+              <span>New Rate:</span>
+              <span className="text-[#C9A46A]">₹{getPlanPrice(selectedPlanToChange)} / mo</span>
+            </div>
+          </div>
 
-          <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2.5">
+          <DialogFooter className="gap-2">
             <Button
               type="button"
               variant="outline"
               onClick={() => setIsPlanDialogOpen(false)}
-              className="rounded-xl border-[#E8DCC3] bg-[#FAF6F0] text-xs h-9.5 w-full sm:w-auto"
+              className="h-9 px-4 border-[#E8DCC3] text-xs font-bold rounded-xl cursor-pointer"
             >
               Cancel
             </Button>
             <Button
-              type="button"
-              onClick={executePlanChange}
+              onClick={handleConfirmPlanChange}
               disabled={isActionLoading}
-              className="rounded-xl bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5 border border-[#E8DCC3]"
+              className="h-9 px-5 bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs rounded-xl cursor-pointer shadow-2xs"
             >
-              {isActionLoading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin text-white" />
-                  Updating...
-                </>
-              ) : (
-                <>
-                  Confirm Switch
-                </>
-              )}
+              {isActionLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Confirm Change"}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* DIALOG 2: CANCELLATION WARNING DIALOG */}
+      {/* CANCEL SUBSCRIPTION MODAL */}
       <Dialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
         <DialogContent className="max-w-md bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl shadow-xl p-6 text-[#1F1D1A]">
           <DialogHeader>
-            <DialogTitle className="text-base font-bold text-[#1F1D1A] flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-[#8C4B3E]" />
-              Cancel Active Subscription
+            <DialogTitle className="text-base font-bold text-rose-600 flex items-center gap-2">
+              <AlertCircle className="h-5 w-5" />
+              Cancel Subscription?
             </DialogTitle>
-            <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
-              Confirming cancellation will downgrade your account at the end of the active billing cycle.
+            <DialogDescription className="text-xs text-[#7A7266]">
+              Cancelling will downgrade your account to the basic tier at the end of your billing cycle on {renewalDate}.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="p-4.5 bg-[#8C4B3E]/20 border border-[#8C4B3E]/40 rounded-xl space-y-2 text-[#8C4B3E] text-xs">
-            <h4 className="font-bold text-xs flex items-center gap-1">
-              <AlertCircle className="h-4 w-4 text-[#8C4B3E]" />
-              What will change:
-            </h4>
-            <ul className="list-disc pl-4 space-y-1 text-[11px] font-bold">
-              <li>0% Handling Commissions rate will revert to 5%.</li>
-              <li>Verified Specialist trust badge status will expire.</li>
-              <li>Listing search placements priority rank will lower to Standard.</li>
-            </ul>
-          </div>
-
-          <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2.5">
+          <DialogFooter className="gap-2 pt-4">
             <Button
               type="button"
               variant="outline"
               onClick={() => setIsCancelDialogOpen(false)}
-              className="rounded-xl border-[#E8DCC3] bg-[#FAF6F0] text-xs h-9.5 w-full sm:w-auto"
+              className="h-9 px-4 border-[#E8DCC3] text-xs font-bold rounded-xl cursor-pointer"
             >
-              Close Dialog
+              Keep My Plan
             </Button>
             <Button
-              type="button"
-              onClick={executeCancellation}
+              onClick={handleConfirmCancel}
               disabled={isActionLoading}
-              className="rounded-xl bg-[#8C4B3E] hover:bg-[#7A3E32] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1 border border-[#E8DCC3]"
+              className="h-9 px-5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl cursor-pointer"
             >
-              {isActionLoading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin text-white" />
-                  Cancelling...
-                </>
-              ) : (
-                <>
-                  Confirm Cancellation
-                </>
-              )}
+              {isActionLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Confirm Cancellation"}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
     </DashboardLayout>
   );
 }

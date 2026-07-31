@@ -3,12 +3,12 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Settings, Layers, Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 
 const mockAllServices = [
-  { id: 1, name: "Deep Home Cleaning Service", category: "Home Cleaning", basePrice: 35.00, activeProviders: 18 },
-  { id: 2, name: "Expert Plumbing & Leak Repair", category: "Plumbing", basePrice: 45.00, activeProviders: 12 },
-  { id: 3, name: "Window Washing Service", category: "Home Cleaning", basePrice: 30.00, activeProviders: 6 }
+  { id: 1, name: "Deep Home Cleaning & Sanitization", category: "Home Cleaning", basePrice: 1499.00, activeProviders: 18 },
+  { id: 2, name: "Expert Plumbing & Leakage Repair", category: "Plumbing", basePrice: 499.00, activeProviders: 12 },
+  { id: 3, name: "Certified Home Electrical Repair", category: "Electrical", basePrice: 399.00, activeProviders: 15 }
 ];
 
 export default function AdminServices() {
@@ -43,7 +43,7 @@ export default function AdminServices() {
                     <th className="py-2.5 px-1">ID</th>
                     <th className="py-2.5">Service Name</th>
                     <th className="py-2.5">Category</th>
-                    <th className="py-2.5">Base Rate (/hr)</th>
+                    <th className="py-2.5">Base Rate (₹)</th>
                     <th className="py-2.5">Providers Enrolled</th>
                     <th className="py-2.5 text-right">Actions</th>
                   </tr>
@@ -58,7 +58,7 @@ export default function AdminServices() {
                           {svc.category}
                         </span>
                       </td>
-                      <td className="py-3 font-bold text-[#1F1D1A]">${svc.basePrice.toFixed(2)}</td>
+                      <td className="py-3 font-bold text-[#1F1D1A]">₹{svc.basePrice.toFixed(2)}</td>
                       <td className="py-3 text-[#7A7266] font-semibold">{svc.activeProviders} active</td>
                       <td className="py-3 text-right">
                         <div className="flex items-center justify-end gap-2">

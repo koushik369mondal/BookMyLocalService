@@ -30,39 +30,39 @@ import {
 
 // Mock daily earnings
 const dailyEarnings = [
-  { label: "Mon", amount: 120 },
-  { label: "Tue", amount: 150 },
-  { label: "Wed", amount: 80 },
-  { label: "Thu", amount: 220 },
-  { label: "Fri", amount: 190 },
-  { label: "Sat", amount: 250 },
-  { label: "Sun", amount: 310 }
+  { label: "Mon", amount: 1200 },
+  { label: "Tue", amount: 1500 },
+  { label: "Wed", amount: 800 },
+  { label: "Thu", amount: 2200 },
+  { label: "Fri", amount: 1900 },
+  { label: "Sat", amount: 2500 },
+  { label: "Sun", amount: 3100 }
 ];
 
 // Mock monthly earnings
 const monthlyEarnings = [
-  { label: "Jan", amount: 1200 },
-  { label: "Feb", amount: 980 },
-  { label: "Mar", amount: 1550 },
-  { label: "Apr", amount: 1300 },
-  { label: "May", amount: 1750 },
-  { label: "Jun", amount: 2100 },
-  { label: "Jul", amount: 2400 }
+  { label: "Jan", amount: 12000 },
+  { label: "Feb", amount: 9800 },
+  { label: "Mar", amount: 15500 },
+  { label: "Apr", amount: 13000 },
+  { label: "May", amount: 17500 },
+  { label: "Jun", amount: 21000 },
+  { label: "Jul", amount: 24000 }
 ];
 
 // Mock Transaction Database
 const initialTransactions = [
-  { id: "TXN-88391", customerName: "Amanda Watson", serviceName: "Deep Home Cleaning Service", date: "2026-07-08", amount: 55.00, status: "cleared" },
-  { id: "TXN-66382", customerName: "Sarah Connor", serviceName: "Sofa & Carpet Sanitization", date: "2026-07-05", amount: 90.00, status: "cleared" },
-  { id: "TXN-44281", customerName: "Robert Garcia", serviceName: "Window Washing Service", date: "2026-07-02", amount: 30.00, status: "processing" },
-  { id: "TXN-10943", customerName: "Jessica Alba", serviceName: "Deep Home Cleaning Service", date: "2026-06-28", amount: 110.00, status: "cleared" },
-  { id: "TXN-99382", customerName: "Marcus Vance", serviceName: "Smart Plug Install", date: "2026-06-15", amount: 65.00, status: "cleared" }
+  { id: "TXN-88391", customerName: "Ananya Sen", serviceName: "Deep Home Cleaning & Sanitization", date: "2026-07-08", amount: 1499.00, status: "cleared" },
+  { id: "TXN-66382", customerName: "Priya Patel", serviceName: "Expert Plumbing & Leakage Repair", date: "2026-07-05", amount: 499.00, status: "cleared" },
+  { id: "TXN-44281", customerName: "Amit Verma", serviceName: "Split & Window AC Servicing", date: "2026-07-02", amount: 699.00, status: "processing" },
+  { id: "TXN-10943", customerName: "Neha Gupta", serviceName: "Deep Home Cleaning & Sanitization", date: "2026-06-28", amount: 1499.00, status: "cleared" },
+  { id: "TXN-99382", customerName: "Vikram Singh", serviceName: "Home Electrical & Appliance Repair", date: "2026-06-15", amount: 399.00, status: "cleared" }
 ];
 
 // Mock Payouts archive transfers
 const payoutHistory = [
-  { id: "PAY-99381", date: "2026-07-01", amount: 1250.00, method: "Bank Account (Chase ****1290)", status: "success" },
-  { id: "PAY-88291", date: "2026-06-01", amount: 980.00, method: "Bank Account (Chase ****1290)", status: "success" }
+  { id: "PAY-99381", date: "2026-07-01", amount: 12500.00, method: "UPI / HDFC Bank (****1290)", status: "success" },
+  { id: "PAY-88291", date: "2026-06-01", amount: 9800.00, method: "UPI / HDFC Bank (****1290)", status: "success" }
 ];
 
 export default function Earnings() {
@@ -70,8 +70,8 @@ export default function Earnings() {
 
   // Transactions list & balance states
   const [transactions, setTransactions] = useState(initialTransactions);
-  const [pendingBalance, setPendingBalance] = useState(120.00);
-  const [withdrawableBalance, setWithdrawableBalance] = useState(850.00);
+  const [pendingBalance, setPendingBalance] = useState(2400.00);
+  const [withdrawableBalance, setWithdrawableBalance] = useState(18500.00);
   const [payouts, setPayouts] = useState(payoutHistory);
 
   // Filters & Search states
@@ -80,78 +80,53 @@ export default function Earnings() {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
 
-  // Chart data configuration
-  const [chartView, setChartView] = useState("monthly"); // "daily" or "monthly"
-
-  // Withdraw earnings modal states
+  // Withdraw Modal State
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawMethod, setWithdrawMethod] = useState("bank");
   const [withdrawError, setWithdrawError] = useState("");
-  const [isWithdrawing, setIsWithdrawing] = useState(false);
-
-  // General notification triggers
   const [successMsg, setSuccessMsg] = useState("");
+  const [chartView, setChartView] = useState("daily"); // "daily" or "monthly"
   const [isDownloading, setIsDownloading] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // Skeleton loader simulator on filters
-  useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 600);
-
-    return () => clearTimeout(timer);
-  }, [statusFilter, chartView]);
-
-  // Report downloads trigger
   const handleDownloadReport = () => {
     setIsDownloading(true);
-    setSuccessMsg("");
     setTimeout(() => {
       setIsDownloading(false);
-      setSuccessMsg("Earnings report downloaded successfully (PDF/Excel)!");
+      setSuccessMsg("Simulating Earnings Statement PDF download...");
       setTimeout(() => setSuccessMsg(""), 2500);
-    }, 1500);
+    }, 1200);
   };
 
-  // Withdraw processing
-  const handleWithdrawSubmit = async (e) => {
+  const handleWithdrawSubmit = (e) => {
     e.preventDefault();
     setWithdrawError("");
-    const amountVal = parseFloat(withdrawAmount);
 
+    const amountVal = parseFloat(withdrawAmount);
     if (isNaN(amountVal) || amountVal <= 0) {
-      setWithdrawError("Please enter a valid amount.");
+      setWithdrawError("Please enter a valid transfer amount.");
       return;
     }
 
     if (amountVal > withdrawableBalance) {
-      setWithdrawError(`Insufficient funds. Max withdrawable amount is $${withdrawableBalance.toFixed(2)}.`);
+      setWithdrawError(`Transfer value exceeds your available balance of ₹${withdrawableBalance.toFixed(2)}.`);
       return;
     }
 
-    setIsWithdrawing(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsWithdrawing(false);
+    // Process withdrawal
+    setWithdrawableBalance(prev => prev - amountVal);
     setIsWithdrawOpen(false);
 
-    // Subtract balance
-    const nextBalance = withdrawableBalance - amountVal;
-    setWithdrawableBalance(nextBalance);
-
-    // Append mock payout record
     const newPayout = {
       id: `PAY-${Math.floor(10000 + Math.random() * 90000)}`,
       date: new Date().toISOString().split("T")[0],
       amount: amountVal,
-      method: withdrawMethod === "bank" ? "Bank Account (Chase ****1290)" : "UPI Wallet (Paytm/GPay)",
+      method: withdrawMethod === "bank" ? "UPI / HDFC Bank (****1290)" : "Paytm Wallet (****9812)",
       status: "success"
     };
 
     setPayouts([newPayout, ...payouts]);
-    setSuccessMsg(`Withdrawal of $${amountVal.toFixed(2)} authorized successfully!`);
+    setSuccessMsg(`Withdrawal of ₹${amountVal.toFixed(2)} authorized successfully!`);
     setWithdrawAmount("");
     setTimeout(() => setSuccessMsg(""), 3000);
   };
@@ -232,7 +207,7 @@ export default function Earnings() {
             <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Cleared</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">${(withdrawableBalance + 4760.00).toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">₹{(withdrawableBalance + 22300.00).toFixed(2)}</span>
               </div>
               <div className="p-3 bg-[#7DAB7D]/20 text-[#2B522B] rounded-2xl shrink-0 border border-[#7DAB7D]/30">
                 <DollarSign className="h-6 w-6" />
@@ -243,7 +218,7 @@ export default function Earnings() {
             <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Cleared Balance</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">${withdrawableBalance.toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">₹{withdrawableBalance.toFixed(2)}</span>
               </div>
               <div className="p-3 bg-[#F0E7D5] text-[#C9A46A] rounded-2xl shrink-0 border border-[#E8DCC3]">
                 <ShieldCheck className="h-6 w-6" />
@@ -254,7 +229,7 @@ export default function Earnings() {
             <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Pending Payouts</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">${pendingBalance.toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">₹{pendingBalance.toFixed(2)}</span>
               </div>
               <div className="p-3 bg-[#F0E7D5] text-[#C9A46A] rounded-2xl shrink-0 border border-[#E8DCC3]">
                 <Clock className="h-6 w-6" />
@@ -298,30 +273,31 @@ export default function Earnings() {
                       <TrendingUp className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-base font-bold text-[#1F1D1A]">Earnings Performance</CardTitle>
-                      <CardDescription className="text-xs text-[#7A7266]">Compare monthly shifts or daily payouts</CardDescription>
+                      <CardTitle className="text-base font-bold text-[#1F1D1A]">Earnings Analytics</CardTitle>
+                      <CardDescription className="text-xs text-[#7A7266]">Daily and monthly payout trends</CardDescription>
                     </div>
                   </div>
 
-                  {/* Chart view toggler */}
-                  <div className="flex bg-[#F0E7D5] border border-[#E8DCC3] p-1 rounded-xl h-9 shrink-0">
+                  <div className="flex bg-[#F0E7D5]/70 border border-[#E8DCC3] p-1 rounded-xl h-9 shrink-0 gap-1">
                     <button
                       type="button"
                       onClick={() => setChartView("daily")}
-                      className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${chartView === "daily"
-                        ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                        : "text-[#5A5146] hover:text-[#1F1D1A]"
-                        }`}
+                      className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
+                        chartView === "daily"
+                          ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                          : "text-[#5A5146] hover:text-[#1F1D1A]"
+                      }`}
                     >
                       Daily
                     </button>
                     <button
                       type="button"
                       onClick={() => setChartView("monthly")}
-                      className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${chartView === "monthly"
-                        ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                        : "text-[#5A5146] hover:text-[#1F1D1A]"
-                        }`}
+                      className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
+                        chartView === "monthly"
+                          ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                          : "text-[#5A5146] hover:text-[#1F1D1A]"
+                      }`}
                     >
                       Monthly
                     </button>
@@ -329,124 +305,76 @@ export default function Earnings() {
                 </CardHeader>
 
                 <CardContent className="p-0 pt-6">
-                  {isLoading ? (
-                    <div className="h-[150px] flex items-center justify-center">
-                      <Loader2 className="h-8 w-8 animate-spin text-[#C9A46A]" />
+                  <div className="w-full overflow-x-auto">
+                    <div className="min-w-[460px] h-[150px] relative">
+                      <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-full overflow-visible">
+                        <line x1="20" y1="20" x2="480" y2="20" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="3 3" />
+                        <line x1="20" y1="60" x2="480" y2="60" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="3 3" />
+                        <line x1="20" y1="100" x2="480" y2="100" stroke="#E8DCC3" strokeWidth="1.5" />
+
+                        {activeChartData.map((d, index) => {
+                          const x = index * spacing + 30;
+                          const barHeight = (d.amount / maxVal) * (chartHeight - 45);
+                          const y = chartHeight - barHeight - 30;
+
+                          return (
+                            <g key={d.label}>
+                              <rect
+                                x={x}
+                                y={y}
+                                width={barWidth}
+                                height={barHeight}
+                                rx="4"
+                                fill="#C9A46A"
+                                className="hover:fill-[#b89359] transition-colors cursor-pointer"
+                              />
+                              <text x={x + barWidth / 2} y={y - 6} textAnchor="middle" className="text-[9px] font-bold fill-[#1F1D1A]">₹{d.amount}</text>
+                              <text x={x + barWidth / 2} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-medium fill-[#7A7266]">{d.label}</text>
+                            </g>
+                          );
+                        })}
+                      </svg>
                     </div>
-                  ) : (
-                    /* SVG Bars chart */
-                    <div className="w-full overflow-x-auto pb-2">
-                      <div className="min-w-[400px] h-[160px] relative">
-                        <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-full overflow-visible">
-
-                          <line x1="20" y1="20" x2="480" y2="20" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="4 4" />
-                          <line x1="20" y1="65" x2="480" y2="65" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="4 4" />
-                          <line x1="20" y1="110" x2="480" y2="110" stroke="#E8DCC3" strokeWidth="1.5" />
-
-                          {activeChartData.map((d, index) => {
-                            const x = index * spacing + 25;
-                            const barHeight = (d.amount / maxVal) * (chartHeight - 40);
-                            const y = chartHeight - barHeight - 20;
-                            return (
-                              <g key={d.label} className="group cursor-pointer">
-                                <rect
-                                  x={x}
-                                  y={y}
-                                  width={barWidth}
-                                  height={barHeight}
-                                  rx="4"
-                                  fill="#C9A46A"
-                                  className="transition-colors hover:fill-[#b89359]"
-                                />
-
-                                <text
-                                  x={x + barWidth / 2}
-                                  y={y - 8}
-                                  textAnchor="middle"
-                                  className="text-[9px] font-bold fill-[#1F1D1A]"
-                                >
-                                  ${d.amount}
-                                </text>
-
-                                <text
-                                  x={x + barWidth / 2}
-                                  y={chartHeight - 4}
-                                  textAnchor="middle"
-                                  className="text-[9px] font-bold fill-[#7A7266]"
-                                >
-                                  {d.label}
-                                </text>
-                              </g>
-                            );
-                          })}
-
-                        </svg>
-                      </div>
-                    </div>
-                  )}
+                  </div>
                 </CardContent>
               </Card>
 
-              {/* TRANSACTION HISTORY TABLE */}
-              <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6">
-                <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div>
-                    <CardTitle className="text-base font-bold text-[#1F1D1A]">Transaction History</CardTitle>
-                    <CardDescription className="text-xs text-[#7A7266]">Settle logs and verification audits</CardDescription>
-                  </div>
-
-                  {/* Status buttons */}
-                  <div className="flex bg-[#F0E7D5] border border-[#E8DCC3] p-1 rounded-xl h-9 shrink-0">
-                    {[
-                      { id: "all", label: "All" },
-                      { id: "cleared", label: "Cleared" },
-                      { id: "processing", label: "Processing" }
-                    ].map(tab => (
-                      <button
-                        key={tab.id}
-                        type="button"
-                        onClick={() => setStatusFilter(tab.id)}
-                        className={`rounded-lg text-[10px] font-bold px-3.5 py-1 transition-all ${statusFilter === tab.id
-                          ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                          : "text-[#5A5146] hover:text-[#1F1D1A]"
-                          }`}
-                      >
-                        {tab.label}
-                      </button>
-                    ))}
-                  </div>
+              {/* TRANSACTIONS AUDIT TABLE */}
+              <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
+                <CardHeader className="p-0 pb-3 border-b border-[#E8DCC3]">
+                  <CardTitle className="text-base font-bold text-[#1F1D1A]">Recent Transactions</CardTitle>
+                  <CardDescription className="text-xs text-[#7A7266]">Itemized log of completed job receipts and payouts</CardDescription>
                 </CardHeader>
 
-                <CardContent className="p-0 pt-6 space-y-4">
+                <CardContent className="p-0 space-y-4 pt-2">
 
-                  {/* SEARCH AND DATE RANGES */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-[#FAF6F0] p-4 border border-[#E8DCC3] rounded-2xl">
-                    <div className="space-y-1.5">
-                      <Label htmlFor="searchQuery" className="text-[10px] font-bold text-[#7A7266]">Search</Label>
-                      <Input
-                        id="searchQuery"
-                        placeholder="TXN ID, name..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="h-9.5 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
-                      />
-                    </div>
+                  {/* Filter Toolbar */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-[#FAF6F0] p-3 border border-[#E8DCC3] rounded-xl">
+                    <Input
+                      placeholder="Search TXN / Customer..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="h-9.5 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
+                    />
 
-                    <div className="space-y-1.5">
-                      <Label htmlFor="dateFrom" className="text-[10px] font-bold text-[#7A7266]">From Date</Label>
+                    <select
+                      value={statusFilter}
+                      onChange={(e) => setStatusFilter(e.target.value)}
+                      className="h-9.5 border border-[#E8DCC3] focus:outline-none focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl bg-white text-xs font-medium text-[#1F1D1A] px-3 cursor-pointer"
+                    >
+                      <option value="all">All Statuses</option>
+                      <option value="cleared">Cleared</option>
+                      <option value="processing">Processing</option>
+                    </select>
+
+                    <div className="flex items-center gap-1.5">
                       <Input
-                        id="dateFrom"
                         type="date"
                         value={dateFrom}
                         onChange={(e) => setDateFrom(e.target.value)}
                         className="h-9.5 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
                       />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <Label htmlFor="dateTo" className="text-[10px] font-bold text-[#7A7266]">To Date</Label>
                       <Input
-                        id="dateTo"
                         type="date"
                         value={dateTo}
                         onChange={(e) => setDateTo(e.target.value)}
@@ -480,7 +408,7 @@ export default function Earnings() {
                               <td className="py-3 font-bold text-[#1F1D1A]">{txn.customerName}</td>
                               <td className="py-3">{txn.date}</td>
                               <td className="py-3 truncate max-w-[130px]">{txn.serviceName}</td>
-                              <td className="py-3 font-bold text-[#1F1D1A]">${txn.amount.toFixed(2)}</td>
+                              <td className="py-3 font-bold text-[#1F1D1A]">₹{txn.amount.toFixed(2)}</td>
                               <td className="py-3 text-right">
                                 <Badge className={`rounded-lg text-[9px] font-bold px-2 py-0.5 border-0 leading-none ${
                                   txn.status === "cleared" ? "bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30" : "bg-[#F0E7D5] text-[#C9A46A] border border-[#E8DCC3]"
@@ -519,7 +447,7 @@ export default function Earnings() {
                         <span className="text-[9px] text-[#7A7266] font-medium block">{p.date}</span>
                       </div>
 
-                      <span className="font-bold text-[#1F1D1A] text-sm shrink-0">${p.amount.toFixed(2)}</span>
+                      <span className="font-bold text-[#1F1D1A] text-sm shrink-0">₹{p.amount.toFixed(2)}</span>
                     </div>
                   ))}
                 </div>
@@ -532,9 +460,9 @@ export default function Earnings() {
                     <Lock className="h-4.5 w-4.5" />
                   </div>
                   <div className="space-y-1">
-                    <h4 className="font-bold text-xs">Direct Deposits</h4>
+                    <h4 className="font-bold text-xs">Direct UPI & Bank Payouts</h4>
                     <p className="text-[10px] text-[#5A5146] leading-relaxed font-medium">
-                      Withdrawals take 1-3 business days to post to your bank routing details. No fees are deducted on transfers to linked checking accounts.
+                      Withdrawals take 24-48 hours to settle to your verified bank account. Zero transfer fees on linked UPI accounts.
                     </p>
                   </div>
                 </div>
@@ -565,87 +493,60 @@ export default function Earnings() {
             {/* Display Withdrawable Balance */}
             <div className="p-3 bg-[#F0E7D5] border border-[#E8DCC3] rounded-xl flex justify-between items-center text-xs">
               <span className="font-bold text-[#1F1D1A]">Withdrawable Balance:</span>
-              <span className="font-bold text-[#1F1D1A] text-sm">${withdrawableBalance.toFixed(2)}</span>
+              <span className="font-bold text-[#1F1D1A] text-sm">₹{withdrawableBalance.toFixed(2)}</span>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label className="text-xs font-bold text-[#1F1D1A]">Amount to Withdraw (₹)</Label>
+              <Input
+                type="number"
+                placeholder="e.g. 5000"
+                value={withdrawAmount}
+                onChange={(e) => setWithdrawAmount(e.target.value)}
+                className="h-10 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label className="text-xs font-bold text-[#1F1D1A]">Payout Endpoint</Label>
+              <select
+                value={withdrawMethod}
+                onChange={(e) => setWithdrawMethod(e.target.value)}
+                className="w-full h-10 border border-[#E8DCC3] focus:outline-none focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl bg-white text-xs font-medium text-[#1F1D1A] px-3 cursor-pointer"
+              >
+                <option value="bank">UPI / Bank Account (HDFC ****1290)</option>
+                <option value="paytm">Paytm Wallet (****9812)</option>
+              </select>
             </div>
 
             {withdrawError && (
-              <div className="flex items-start gap-2.5 p-3.5 bg-[#8C4B3E]/20 border border-[#8C4B3E]/40 text-[#8C4B3E] text-xs font-bold rounded-xl shadow-2xs">
-                <AlertCircle className="h-4.5 w-4.5 shrink-0 mt-0.5 text-[#8C4B3E]" />
+              <div className="p-3 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-bold rounded-xl flex items-center gap-1.5">
+                <AlertCircle className="h-4 w-4 shrink-0" />
                 <span>{withdrawError}</span>
               </div>
             )}
 
-            {/* Withdrawal Method */}
-            <div className="space-y-1.5">
-              <Label className="text-xs font-bold text-[#1F1D1A]">Transfer Endpoint</Label>
-              <div className="grid grid-cols-2 bg-[#F0E7D5] border border-[#E8DCC3] p-1 rounded-xl h-10">
-                <button
-                  type="button"
-                  onClick={() => setWithdrawMethod("bank")}
-                  className={`rounded-lg text-xs font-bold transition-all ${withdrawMethod === "bank"
-                    ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                    : "text-[#5A5146] hover:text-[#1F1D1A]"
-                    }`}
-                >
-                  Chase Bank
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setWithdrawMethod("upi")}
-                  className={`rounded-lg text-xs font-bold transition-all ${withdrawMethod === "upi"
-                    ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                    : "text-[#5A5146] hover:text-[#1F1D1A]"
-                    }`}
-                >
-                  UPI Paytm / GPay
-                </button>
-              </div>
-            </div>
-
-            {/* Amount input */}
-            <div className="space-y-1.5">
-              <Label htmlFor="amount" className="text-xs font-bold text-[#1F1D1A]">Withdraw Amount ($)</Label>
-              <Input
-                id="amount"
-                type="number"
-                placeholder="e.g. 200"
-                value={withdrawAmount}
-                onChange={(e) => setWithdrawAmount(e.target.value)}
-                className="h-9.5 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
-                required
-              />
-            </div>
-
-            <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2.5">
+            <DialogFooter className="pt-2 flex justify-end gap-2">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setIsWithdrawOpen(false)}
-                className="rounded-xl border-[#E8DCC3] bg-[#FAF6F0] text-xs h-9.5 w-full sm:w-auto"
+                className="h-9.5 px-4 border-[#E8DCC3] text-xs font-bold rounded-xl text-[#5A5146] hover:bg-[#FAF6F0] cursor-pointer"
               >
                 Cancel
               </Button>
+
               <Button
                 type="submit"
-                disabled={isWithdrawing}
-                className="rounded-xl bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5 border border-[#E8DCC3] cursor-pointer"
+                className="h-9.5 px-5 bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs rounded-xl shadow-2xs cursor-pointer"
               >
-                {isWithdrawing ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin text-white" />
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    Request Transfer
-                  </>
-                )}
+                Authorize Transfer
               </Button>
             </DialogFooter>
+
           </form>
         </DialogContent>
       </Dialog>
-
     </DashboardLayout>
   );
 }

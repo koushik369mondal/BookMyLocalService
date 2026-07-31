@@ -20,7 +20,7 @@ export function CheckoutBillingForm({ register, errors, isSubmitting }) {
         <div className="space-y-1.5 sm:col-span-2">
           <Label className="text-xs font-bold text-[#1F1D1A]">Full Name *</Label>
           <Input
-            placeholder="Amanda Watson"
+            placeholder="Rajesh Sharma"
             disabled={isSubmitting}
             className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${errors.fullName ? "border-rose-400" : ""}`}
             {...register("fullName")}
@@ -32,7 +32,7 @@ export function CheckoutBillingForm({ register, errors, isSubmitting }) {
           <Label className="text-xs font-bold text-[#1F1D1A]">Email Address *</Label>
           <Input
             type="email"
-            placeholder="name@example.com"
+            placeholder="rajesh@example.com"
             disabled={isSubmitting}
             className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${errors.email ? "border-rose-400" : ""}`}
             {...register("email")}
@@ -43,7 +43,7 @@ export function CheckoutBillingForm({ register, errors, isSubmitting }) {
         <div className="space-y-1.5">
           <Label className="text-xs font-bold text-[#1F1D1A]">Phone Contact *</Label>
           <Input
-            placeholder="123-456-7890"
+            placeholder="9876543210"
             disabled={isSubmitting}
             className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${errors.phone ? "border-rose-400" : ""}`}
             {...register("phone")}
@@ -54,7 +54,7 @@ export function CheckoutBillingForm({ register, errors, isSubmitting }) {
         <div className="space-y-1.5 sm:col-span-2">
           <Label className="text-xs font-bold text-[#1F1D1A]">Street Address *</Label>
           <Input
-            placeholder="123 Main Street, Apt 4B"
+            placeholder="42 Park Street, Flat 3B"
             disabled={isSubmitting}
             className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${errors.street ? "border-rose-400" : ""}`}
             {...register("street")}
@@ -65,7 +65,7 @@ export function CheckoutBillingForm({ register, errors, isSubmitting }) {
         <div className="space-y-1.5">
           <Label className="text-xs font-bold text-[#1F1D1A]">City *</Label>
           <Input
-            placeholder="New York"
+            placeholder="Kolkata"
             disabled={isSubmitting}
             className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${errors.city ? "border-rose-400" : ""}`}
             {...register("city")}
@@ -76,7 +76,7 @@ export function CheckoutBillingForm({ register, errors, isSubmitting }) {
         <div className="space-y-1.5">
           <Label className="text-xs font-bold text-[#1F1D1A]">State / Region *</Label>
           <Input
-            placeholder="NY"
+            placeholder="West Bengal"
             disabled={isSubmitting}
             className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${errors.state ? "border-rose-400" : ""}`}
             {...register("state")}
@@ -87,7 +87,7 @@ export function CheckoutBillingForm({ register, errors, isSubmitting }) {
         <div className="space-y-1.5 sm:col-span-2">
           <Label className="text-xs font-bold text-[#1F1D1A]">PIN Code *</Label>
           <Input
-            placeholder="100001"
+            placeholder="700016"
             disabled={isSubmitting}
             className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${errors.zipCode ? "border-rose-400" : ""}`}
             {...register("zipCode")}

@@ -27,8 +27,8 @@ import { useAuth } from "../../context/AuthContext";
 
 const mockNotifications = [
   { id: 1, title: "Booking Confirmed", desc: "Deep Home Cleaning scheduled for Tomorrow at 10:30 AM", time: "5 mins ago", icon: CheckCircle2, iconColor: "text-[#2B522B] bg-[#7DAB7D]/20", unread: true },
-  { id: 2, title: "Specialist Assigned", desc: "Sarah Jenkins accepted your dispatch request in Brooklyn", time: "1 hour ago", icon: ShieldCheck, iconColor: "text-[#C9A46A] bg-[#F0E7D5]", unread: true },
-  { id: 3, title: "Payment Received", desc: "Receipt of $55.00 generated for Window Washing", time: "3 hours ago", icon: Sparkles, iconColor: "text-[#8C4B3E] bg-[#8C4B3E]/20", unread: true },
+  { id: 2, title: "Specialist Assigned", desc: "Sunita Rao accepted your dispatch request in Kolkata", time: "1 hour ago", icon: ShieldCheck, iconColor: "text-[#C9A46A] bg-[#F0E7D5]", unread: true },
+  { id: 3, title: "Payment Received", desc: "Receipt of ₹1,499.00 generated for Deep Home Cleaning", time: "3 hours ago", icon: Sparkles, iconColor: "text-[#8C4B3E] bg-[#8C4B3E]/20", unread: true },
   { id: 4, title: "Rate Your Service", desc: "Share your feedback for Sofa & Carpet Sanitization", time: "1 day ago", icon: Clock, iconColor: "text-[#5A5146] bg-[#FAF6F0]", unread: false }
 ];
 

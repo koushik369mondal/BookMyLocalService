@@ -29,7 +29,7 @@ export function BookingPlanSelector({ plans, activePlanIdx, onSelectPlan }) {
                     </span>
                   )}
                 </div>
-                <div className="text-xl font-black text-[#8C4B3E]">${plan.price}</div>
+                <div className="text-xl font-black text-[#8C4B3E]">₹{plan.price}</div>
                 <p className="text-[11px] text-[#5A5146] leading-relaxed">{plan.description}</p>
               </div>
 

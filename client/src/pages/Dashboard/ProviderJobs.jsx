@@ -8,23 +8,23 @@ import { Briefcase, MapPin, Calendar, Clock, ArrowRight } from "lucide-react";
 const mockJobs = [
   {
     id: "BMLS-98394",
-    customer: "Amanda Watson",
-    service: "Deep Home Cleaning Service",
+    customer: "Ananya Sen",
+    service: "Deep Home Cleaning & Sanitization",
     date: "2026-07-15",
     time: "10:30 AM",
-    price: 55.0,
+    price: 1499.0,
     status: "pending",
-    address: "Brooklyn, NY"
+    address: "Kolkata, WB"
   },
   {
     id: "BMLS-88294",
-    customer: "Robert Garcia",
-    service: "Window Washing Service",
+    customer: "Rahul Das",
+    service: "Sofa & Carpet Sanitization",
     date: "2026-07-16",
     time: "01:00 PM",
-    price: 30.0,
+    price: 699.0,
     status: "confirmed",
-    address: "Queens, NY"
+    address: "Kolkata, WB"
   }
 ];
 
@@ -84,7 +84,7 @@ export default function ProviderJobs() {
                       <div className="border-t md:border-t-0 border-[#E8DCC3] pt-4 md:pt-0 flex items-center justify-between md:justify-end gap-6 min-w-[200px]">
                         <div className="text-left md:text-right shrink-0">
                           <span className="text-[9px] font-bold text-[#7A7266] uppercase block tracking-wider">Settlement Rate</span>
-                          <span className="text-base font-bold text-[#1F1D1A]">${job.price.toFixed(2)}</span>
+                          <span className="text-base font-bold text-[#1F1D1A]">₹{job.price.toFixed(2)}</span>
                         </div>
                         <Button size="xs" className="bg-[#C9A46A] hover:bg-[#b89359] text-white rounded-xl h-9 px-4 text-[10px] font-bold flex items-center gap-1 shrink-0 border border-[#E8DCC3] cursor-pointer">
                           Manage Job <ArrowRight className="h-3.5 w-3.5" />

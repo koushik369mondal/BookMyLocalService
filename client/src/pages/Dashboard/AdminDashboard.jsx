@@ -114,7 +114,7 @@ export default function AdminDashboard() {
             <Card className="border border-[#5A5146]/15 shadow-md bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Gross Revenue</span>
-                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">${stats.totalRevenue || 0}</span>
+                <span className="text-xl sm:text-2xl font-black text-[#1F1D1A]">₹{stats.totalRevenue || 0}</span>
               </div>
               <div className="p-3 bg-amber-50 text-[#C9A46A] rounded-2xl shrink-0">
                 <DollarSign className="h-6 w-6" />
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
                             <tr key={b.id} className="hover:bg-[#FAF6F0]/50">
                               <td className="py-3 font-bold text-[#1F1D1A]">{b.customer?.fullName || b.billingName || "Customer"}</td>
                               <td className="py-3 text-[#5A5146]">{b.service?.title || "Local Service"}</td>
-                              <td className="py-3 font-black text-[#8C4B3E]">${b.total}</td>
+                              <td className="py-3 font-black text-[#8C4B3E]">₹{b.total}</td>
                               <td className="py-3">{getStatusBadge(b.status)}</td>
                             </tr>
                           ))}

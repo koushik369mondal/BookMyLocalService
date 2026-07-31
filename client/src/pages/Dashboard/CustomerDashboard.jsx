@@ -142,7 +142,7 @@ export default function CustomerDashboard() {
                       </div>
 
                       <div className="text-right sm:text-right shrink-0">
-                        <span className="text-base font-black text-[#8C4B3E] block">${b.total}</span>
+                        <span className="text-base font-black text-[#8C4B3E] block">₹{b.total}</span>
                         <span className="text-[10px] font-bold text-stone-400 uppercase">Plan: {b.plan}</span>
                       </div>
                     </div>

@@ -130,7 +130,7 @@ export default function BookingHistory() {
                     </div>
 
                     <div className="text-right sm:text-right shrink-0">
-                      <span className="text-xl font-black text-[#8C4B3E] block">${b.total}</span>
+                      <span className="text-xl font-black text-[#8C4B3E] block">₹{b.total}</span>
                       <span className="text-[10px] font-bold text-stone-400 uppercase">Package: {b.plan}</span>
                     </div>
                   </div>

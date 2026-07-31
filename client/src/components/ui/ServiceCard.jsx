@@ -10,6 +10,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { prefersReducedMotion } from "@/utils/motion";
+import { UserAvatar } from "@/components/ui/avatar";
 
 export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   if (!service) return null;
@@ -96,10 +97,10 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
 
         {/* Provider Profile Snippet & Verified Badge */}
         <div className="flex items-center gap-2 pt-2.5 border-t border-[#E8DCC3] mt-1">
-          <img
+          <UserAvatar
             src={providerAvatar}
-            alt={providerName}
-            className="h-6 w-6 rounded-full object-cover border border-[#E8DCC3] shrink-0"
+            name={providerName}
+            className="h-6 w-6 rounded-full border border-[#E8DCC3] shrink-0"
           />
           <span className="text-xs font-bold text-[#1F1D1A] truncate">{providerName}</span>
           <ShieldCheck className="h-3.5 w-3.5 text-[#7DAB7D] shrink-0 ml-auto" title="Verified Provider" />
@@ -110,7 +111,7 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
           <div className="flex flex-col">
             <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider">Price</span>
             <div className="flex items-baseline gap-0.5">
-              <span className="text-lg font-bold text-[#1F1D1A]">${price}</span>
+              <span className="text-lg font-bold text-[#1F1D1A]">₹{price}</span>
               <span className="text-xs font-medium text-[#7A7266]">{priceType}</span>
             </div>
           </div>

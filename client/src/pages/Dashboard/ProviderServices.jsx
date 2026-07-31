@@ -58,30 +58,35 @@ const CATEGORIES = [
 
 // Predefined Location Options
 const LOCATIONS = [
-  "Brooklyn, NY",
-  "Queens, NY",
-  "Manhattan, NY",
-  "Bronx, NY",
-  "Staten Island, NY"
+  "Kolkata, WB",
+  "Delhi NCR",
+  "Mumbai, MH",
+  "Bengaluru, KA",
+  "Hyderabad, TS",
+  "Chennai, TN",
+  "Pune, MH",
+  "Jaipur, RJ",
+  "Siliguri, WB",
+  "Jalpaiguri, WB"
 ];
 
 // Default Initial Mock Catalog for Provider
 const INITIAL_PROVIDER_SERVICES = [
   {
     id: "srv-101",
-    title: "Deep Home Cleaning Service",
+    title: "Deep Home Cleaning & Sanitization",
     slug: "deep-home-cleaning-service",
     category: "Home Cleaning",
-    location: "Brooklyn, NY",
+    location: "Kolkata, WB",
     rating: 4.9,
     reviewCount: 142,
-    price: 35.0,
-    priceType: "/hr",
+    price: 1499.0,
+    priceType: "/service",
     status: "Active",
     bookingsCount: 48,
-    revenue: 1680.0,
+    revenue: 71952.0,
     imageUrl: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
-    description: "Complete top-to-bottom cleaning of all rooms including dusting, vacuuming, kitchen sanitization, and window washing.",
+    description: "Complete top-to-bottom cleaning of all rooms including dusting, vacuuming, kitchen sanitization, and balcony washing.",
     availability: "today",
     badge: "Top Rated"
   },
@@ -90,14 +95,14 @@ const INITIAL_PROVIDER_SERVICES = [
     title: "Sofa & Carpet Sanitization",
     slug: "sofa-carpet-sanitization",
     category: "Home Cleaning",
-    location: "Brooklyn, NY",
+    location: "Kolkata, WB",
     rating: 4.8,
     reviewCount: 65,
-    price: 45.0,
-    priceType: "/hr",
+    price: 699.0,
+    priceType: "/visit",
     status: "Active",
     bookingsCount: 32,
-    revenue: 1440.0,
+    revenue: 22368.0,
     imageUrl: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80",
     description: "Deep steam extraction and eco-friendly sanitization for living room upholstery and wool carpets.",
     availability: "this-week",
@@ -108,14 +113,14 @@ const INITIAL_PROVIDER_SERVICES = [
     title: "Window Washing Service",
     slug: "window-washing-service",
     category: "Home Cleaning",
-    location: "Queens, NY",
+    location: "Delhi NCR",
     rating: 4.7,
     reviewCount: 29,
-    price: 30.0,
-    priceType: "/hr",
+    price: 499.0,
+    priceType: "/visit",
     status: "Paused",
     bookingsCount: 19,
-    revenue: 570.0,
+    revenue: 9481.0,
     imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
     description: "Streak-free exterior and interior window washing for residential homes and office fronts.",
     availability: "weekend",
@@ -126,11 +131,11 @@ const INITIAL_PROVIDER_SERVICES = [
     title: "Post-Renovation Debris Clean",
     slug: "post-renovation-debris-clean",
     category: "Home Cleaning",
-    location: "Manhattan, NY",
+    location: "Mumbai, MH",
     rating: 5.0,
     reviewCount: 14,
-    price: 55.0,
-    priceType: "/hr",
+    price: 1999.0,
+    priceType: "/service",
     status: "Draft",
     bookingsCount: 0,
     revenue: 0.0,
@@ -169,7 +174,7 @@ export default function ProviderServices() {
     category: "Home Cleaning",
     price: "",
     priceType: "/hr",
-    location: "Brooklyn, NY",
+    location: "Kolkata, WB",
     availability: "today",
     status: "Active",
     badge: "",
@@ -228,7 +233,7 @@ export default function ProviderServices() {
       category: "Home Cleaning",
       price: "",
       priceType: "/hr",
-      location: "Brooklyn, NY",
+      location: "Kolkata, WB",
       availability: "today",
       status: "Active",
       badge: "",
@@ -456,7 +461,7 @@ export default function ProviderServices() {
             <div className="bg-[#FAF6F0] p-3.5 rounded-xl border border-[#E8DCC3] col-span-2 sm:col-span-1">
               <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A7266]">Catalog Revenue</span>
               <p className="text-lg font-black text-[#2B522B] mt-0.5">
-                ${catalogStats.totalRevenue.toFixed(2)}
+                ₹{catalogStats.totalRevenue.toFixed(2)}
               </p>
             </div>
           </div>
@@ -617,7 +622,7 @@ export default function ProviderServices() {
 
                       {/* Price Badge Overlay */}
                       <div className="absolute bottom-3 right-3 bg-[#FAF6F0] text-[#1F1D1A] px-3 py-1 rounded-xl border border-[#E8DCC3] text-xs font-black shadow-md">
-                        ${service.price.toFixed(2)}{" "}
+                        ₹{service.price.toFixed(2)}{" "}
                         <span className="text-[10px] font-normal text-[#5A5146]">
                           {service.priceType}
                         </span>
@@ -657,7 +662,7 @@ export default function ProviderServices() {
                         <div className="flex items-center gap-1.5">
                           <DollarSign className="h-3.5 w-3.5 text-[#2B522B]" />
                           <span className="text-[#2B522B] font-bold">
-                            ${(service.revenue || 0).toFixed(0)} Rev
+                            ₹{(service.revenue || 0).toFixed(0)} Rev
                           </span>
                         </div>
 
