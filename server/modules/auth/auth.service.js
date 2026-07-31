@@ -4,62 +4,79 @@ const { userSelect, toSafeUser } = require("../../utils/user.util");
 const { USER_ROLES } = require("../../constants/auth.constants");
 
 /**
- * Safely create a user record with fallbacks for nullability and legacy schema differences.
+ * Safely create a user record with multi-strategy fallbacks for column nullability and schema differences.
  */
 const safeCreateUser = async ({ fullName, email, role, avatar }) => {
-    const cleanName = (fullName && fullName.trim().length > 0) ? fullName.trim() : "Google User";
-    const cleanEmail = email.toLowerCase().trim();
+    const cleanName = (fullName && String(fullName).trim().length > 0) ? String(fullName).trim() : "Google User";
+    const cleanEmail = String(email).toLowerCase().trim();
+    const cleanRole = role || USER_ROLES.CUSTOMER;
+    const cleanAvatar = avatar ? String(avatar) : "";
 
-    // Attempt 1: Standard creation with phone: null
+    console.log(`[GOOGLE AUTH CREATE] Attempting user creation for Email: '${cleanEmail}', Role: '${cleanRole}'`);
+
+    // Strategy 1: Non-null empty strings (prevents Null constraint violation on NOT NULL database columns)
     try {
         return await userRepository.create({
             fullName: cleanName,
             email: cleanEmail,
-            phone: null,
-            role,
+            phone: "",
+            password: "",
+            role: cleanRole,
             isVerified: true,
-            avatar
+            avatar: cleanAvatar,
+            address: "",
+            city: "",
+            state: "",
+            zipCode: "",
+            otpHash: "",
+            otpAttempts: 0
         });
     } catch (err1) {
-        console.warn("[GOOGLE AUTH CREATE TRY 1 FAILED]:", err1?.message || err1);
+        console.warn("[GOOGLE AUTH CREATE STRATEGY 1 FAILED]:", err1?.message || err1);
 
-        // Check if user was created concurrently
+        // Check if user was created concurrently or already exists
         const existing = await userRepository.findByEmail(cleanEmail);
         if (existing) {
-            console.log("[GOOGLE AUTH CREATE RECOVERY 1] Existing user found by email:", existing.id);
+            console.log("[GOOGLE AUTH RECOVERY 1] Existing user retrieved by email:", existing.id);
             return existing;
         }
 
-        // Attempt 2: Creation with phone: ""
+        // Strategy 2: Explicit nulls for optional columns
         try {
             return await userRepository.create({
                 fullName: cleanName,
                 email: cleanEmail,
-                phone: "",
-                role,
+                phone: null,
+                password: null,
+                role: cleanRole,
                 isVerified: true,
-                avatar
+                avatar: avatar || null,
+                address: null,
+                city: null,
+                state: null,
+                zipCode: null,
+                otpHash: null,
+                otpAttempts: 0
             });
         } catch (err2) {
-            console.warn("[GOOGLE AUTH CREATE TRY 2 FAILED]:", err2?.message || err2);
+            console.warn("[GOOGLE AUTH CREATE STRATEGY 2 FAILED]:", err2?.message || err2);
 
             const existingRetry = await userRepository.findByEmail(cleanEmail);
             if (existingRetry) {
-                console.log("[GOOGLE AUTH CREATE RECOVERY 2] Existing user found by email:", existingRetry.id);
+                console.log("[GOOGLE AUTH RECOVERY 2] Existing user retrieved by email:", existingRetry.id);
                 return existingRetry;
             }
 
-            // Attempt 3: Creation without phone key
+            // Strategy 3: Minimal required fields (allowing Prisma/DB schema defaults)
             try {
                 return await userRepository.create({
                     fullName: cleanName,
                     email: cleanEmail,
-                    role,
-                    isVerified: true,
-                    avatar
+                    role: cleanRole,
+                    isVerified: true
                 });
             } catch (err3) {
-                console.error("[GOOGLE AUTH CREATE TRY 3 FAILED]:", err3?.message || err3);
+                console.error("[GOOGLE AUTH CREATE STRATEGY 3 FAILED]:", err3?.message || err3);
                 throw err3;
             }
         }
@@ -98,7 +115,7 @@ const googleAuth = async ({ credential, role }) => {
 
     const email = tokenInfo.email.toLowerCase().trim();
     const extractedName = tokenInfo.name || tokenInfo.given_name || email.split("@")[0];
-    const fullName = (extractedName && extractedName.trim().length > 0) ? extractedName.trim() : "Google User";
+    const fullName = (extractedName && String(extractedName).trim().length > 0) ? String(extractedName).trim() : "Google User";
     const avatar = tokenInfo.picture || null;
 
     console.log(`[GOOGLE AUTH STEP 2] Token verified for Email: '${email}', Name: '${fullName}'`);
