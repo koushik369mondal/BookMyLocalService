@@ -5,6 +5,7 @@ const { USER_ROLES } = require("../../constants/auth.constants");
 
 /**
  * Verify Google ID Token and authenticate, link, or register user.
+ * Uses email as the sole unique identifier for lookup and creation.
  */
 const googleAuth = async ({ credential, role }) => {
     if (!credential) {
@@ -46,22 +47,37 @@ const googleAuth = async ({ credential, role }) => {
     }
 
     if (!user) {
-        // Create new user using Google Profile
-        user = await userRepository.create({
-            fullName: fullName.trim(),
-            email,
-            phone: "",
-            role: userRole,
-            isVerified: true,
-            avatar
-        });
+        try {
+            // Create new user using Google Profile
+            user = await userRepository.create({
+                fullName: fullName.trim(),
+                email,
+                phone: null,
+                role: userRole,
+                isVerified: true,
+                avatar
+            });
+        } catch (createErr) {
+            console.error("Google auth user creation error:", createErr);
+            // Race condition check: if user was created concurrently
+            user = await userRepository.findByEmail(email);
+            if (!user) {
+                const err = new Error("Account creation failed. Please try logging in again.");
+                err.statusCode = 400;
+                throw err;
+            }
+        }
     } else {
         // Link existing account & verify
-        const updateData = { isVerified: true };
-        if (!user.avatar && avatar) {
-            updateData.avatar = avatar;
+        try {
+            const updateData = { isVerified: true };
+            if (!user.avatar && avatar) {
+                updateData.avatar = avatar;
+            }
+            user = await userRepository.update(user.id, updateData);
+        } catch (updateErr) {
+            console.error("Google auth profile update warning:", updateErr);
         }
-        user = await userRepository.update(user.id, updateData);
     }
 
     const token = generateToken({ id: user.id, role: user.role });
@@ -120,27 +136,27 @@ const updateUserProfile = async (userId, updateData) => {
     }
 
     if (updateData.phone !== undefined) {
-        const trimmedPhone = updateData.phone.trim();
+        const trimmedPhone = updateData.phone ? updateData.phone.trim() : "";
         if (trimmedPhone !== "" && !/^\+?1?\s*\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/.test(trimmedPhone)) {
             const err = new Error("Please enter a valid 10-digit phone number");
             err.statusCode = 400;
             throw err;
         }
-        fieldsToUpdate.phone = trimmedPhone;
+        fieldsToUpdate.phone = trimmedPhone === "" ? null : trimmedPhone;
     }
 
-    if (updateData.address !== undefined) fieldsToUpdate.address = updateData.address.trim();
-    if (updateData.city !== undefined) fieldsToUpdate.city = updateData.city.trim();
-    if (updateData.state !== undefined) fieldsToUpdate.state = updateData.state.trim();
+    if (updateData.address !== undefined) fieldsToUpdate.address = updateData.address ? updateData.address.trim() : null;
+    if (updateData.city !== undefined) fieldsToUpdate.city = updateData.city ? updateData.city.trim() : null;
+    if (updateData.state !== undefined) fieldsToUpdate.state = updateData.state ? updateData.state.trim() : null;
 
     if (updateData.zipCode !== undefined) {
-        const trimmedZip = updateData.zipCode.trim();
+        const trimmedZip = updateData.zipCode ? updateData.zipCode.trim() : "";
         if (trimmedZip !== "" && !/^\d{6}$/.test(trimmedZip)) {
             const err = new Error("PIN code must be 6 digits");
             err.statusCode = 400;
             throw err;
         }
-        fieldsToUpdate.zipCode = trimmedZip;
+        fieldsToUpdate.zipCode = trimmedZip === "" ? null : trimmedZip;
     }
 
     if (Object.keys(fieldsToUpdate).length === 0) {
