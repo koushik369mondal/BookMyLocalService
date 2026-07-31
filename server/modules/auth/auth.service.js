@@ -8,6 +8,7 @@ const { USER_ROLES } = require("../../constants/auth.constants");
  * Uses email as the sole unique identifier for lookup and creation.
  */
 const googleAuth = async ({ credential, role }) => {
+    console.log("[GOOGLE AUTH STEP 1] Initiating Google Sign-In verification...");
     if (!credential) {
         const err = new Error("Google credential token is required");
         err.statusCode = 400;
@@ -19,14 +20,14 @@ const googleAuth = async ({ credential, role }) => {
         const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
         tokenInfo = await response.json();
     } catch (fetchErr) {
-        console.error("Google tokeninfo fetch error:", fetchErr);
+        console.error("[GOOGLE AUTH STEP 1 ERROR] Tokeninfo fetch failed:", fetchErr);
         const err = new Error("Failed to verify Google token with Google servers");
         err.statusCode = 401;
         throw err;
     }
 
     if (tokenInfo.error || !tokenInfo.email) {
-        console.error("Google token verification failed:", tokenInfo);
+        console.error("[GOOGLE AUTH STEP 1 ERROR] Invalid Google ID token payload:", tokenInfo);
         const err = new Error(tokenInfo.error_description || "Invalid Google ID token");
         err.statusCode = 401;
         throw err;
@@ -36,6 +37,9 @@ const googleAuth = async ({ credential, role }) => {
     const fullName = tokenInfo.name || tokenInfo.given_name || email.split("@")[0];
     const avatar = tokenInfo.picture || null;
 
+    console.log(`[GOOGLE AUTH STEP 2] Token verified for Email: '${email}', Name: '${fullName}'`);
+
+    console.log(`[GOOGLE AUTH STEP 3] Looking up user in database by email '${email}'...`);
     let user = await userRepository.findByEmail(email);
 
     let userRole = USER_ROLES.CUSTOMER;
@@ -47,8 +51,8 @@ const googleAuth = async ({ credential, role }) => {
     }
 
     if (!user) {
+        console.log(`[GOOGLE AUTH STEP 4] User not found. Creating new user record (Role: ${userRole})...`);
         try {
-            // Create new user using Google Profile
             user = await userRepository.create({
                 fullName: fullName.trim(),
                 email,
@@ -57,31 +61,40 @@ const googleAuth = async ({ credential, role }) => {
                 isVerified: true,
                 avatar
             });
+            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] User created with ID: '${user.id}'`);
         } catch (createErr) {
-            console.error("Google auth user creation error:", createErr);
+            console.error("[GOOGLE AUTH STEP 4 ERROR] Account creation database exception:", createErr);
             // Race condition check: if user was created concurrently
             user = await userRepository.findByEmail(email);
             if (!user) {
-                const err = new Error("Account creation failed. Please try logging in again.");
+                const detailMsg = process.env.NODE_ENV === "production"
+                    ? "Account creation failed. Please try logging in."
+                    : (createErr.message || "Database failed to create user record");
+                const err = new Error(detailMsg);
                 err.statusCode = 400;
                 throw err;
             }
+            console.log(`[GOOGLE AUTH STEP 4 RECOVERY] Existing user retrieved after concurrent creation: ID '${user.id}'`);
         }
     } else {
-        // Link existing account & verify
+        console.log(`[GOOGLE AUTH STEP 4] Existing user found (ID: '${user.id}', Role: '${user.role}'). Linking Google profile...`);
         try {
             const updateData = { isVerified: true };
             if (!user.avatar && avatar) {
                 updateData.avatar = avatar;
             }
             user = await userRepository.update(user.id, updateData);
+            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] Existing user profile updated`);
         } catch (updateErr) {
-            console.error("Google auth profile update warning:", updateErr);
+            console.warn("[GOOGLE AUTH STEP 4 WARNING] User profile update warning:", updateErr);
         }
     }
 
+    console.log(`[GOOGLE AUTH STEP 5] Generating JWT authentication token for User ID: '${user.id}'...`);
     const token = generateToken({ id: user.id, role: user.role });
     const isProfileComplete = Boolean(user.phone && user.phone.trim() !== "");
+
+    console.log(`[GOOGLE AUTH COMPLETE] Successfully authenticated User ID: '${user.id}', Role: '${user.role}', Complete: ${isProfileComplete}`);
 
     return {
         success: true,
