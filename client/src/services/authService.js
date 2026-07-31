@@ -67,6 +67,17 @@ export const authService = {
         return data;
     },
 
+    googleAuth: async ({ credential, role }) => {
+        const response = await fetch(`${API_URL}/auth/google`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ credential, role })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Google authentication failed");
+        return data;
+    },
+
     getMe: async () => {
         const response = await fetch(`${API_URL}/auth/me`, {
             method: "GET",

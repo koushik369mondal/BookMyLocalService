@@ -36,6 +36,16 @@ const verifyLoginOtp = async (req, res) => {
     }
 };
 
+const googleAuth = async (req, res) => {
+    try {
+        const result = await authService.googleAuth(req.body);
+        return res.status(200).json(result);
+    } catch (error) {
+        console.error("googleAuth controller error:", error);
+        return res.status(error.statusCode || 500).json({ success: false, message: error.message });
+    }
+};
+
 const me = async (req, res) => {
     try {
         if (!req.user || !req.user.id) {
@@ -53,5 +63,6 @@ module.exports = {
     verifyRegisterOtp,
     sendLoginOtp,
     verifyLoginOtp,
+    googleAuth,
     me
 };

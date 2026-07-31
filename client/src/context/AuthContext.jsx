@@ -101,6 +101,22 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const googleLogin = async (credential, role) => {
+        setLoading(true);
+        try {
+            const data = await authService.googleAuth({ credential, role });
+            if (data.success) {
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user", JSON.stringify(data.user));
+                setUser(data.user);
+                return data;
+            }
+            throw new Error(data.message || "Google authentication failed");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const resendOtp = async (email, flow, registerData) => {
         setLoading(true);
         try {
@@ -151,7 +167,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, register, logout, reloadUser: loadUser, registerSendOtp, loginSendOtp, verifyOtp, resendOtp, switchRole }}>
+        <AuthContext.Provider value={{ user, loading, login, register, logout, reloadUser: loadUser, registerSendOtp, loginSendOtp, verifyOtp, googleLogin, resendOtp, switchRole }}>
             {children}
         </AuthContext.Provider>
     );

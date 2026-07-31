@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,24 +8,15 @@ import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import Logo from "@/components/ui/logo";
 import {
-  Eye,
-  EyeOff,
   Mail,
-  Lock,
   ArrowRight,
   ShieldAlert,
   CheckCircle2,
-  Loader2,
-  Phone,
-  Sparkles,
-  ShieldCheck,
-  CheckCircle
+  Loader2
 } from "lucide-react";
 
-// Custom high-fidelity brand SVGs to bypass missing Lucide brand icons in old builds
 const GoogleIcon = (props) => (
   <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
@@ -35,13 +26,6 @@ const GoogleIcon = (props) => (
   </svg>
 );
 
-const GitHubIcon = (props) => (
-  <svg viewBox="0 0 24 24" width="1.1em" height="1.1em" fill="currentColor" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.577.688.479C19.138 20.164 22 16.418 22 12c0-5.523-4.527-10-10-10z" />
-  </svg>
-);
-
-// Schema for validating email address
 const loginSchema = z.object({
   email: z.string()
     .min(1, { message: "Email address is required" })
@@ -53,6 +37,7 @@ export default function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const googleBtnRef = useRef(null);
 
   const {
     register,
@@ -66,7 +51,68 @@ export default function Login() {
     }
   });
 
-  const { loginSendOtp, user } = useAuth();
+  const { loginSendOtp, googleLogin } = useAuth();
+
+  const handleGoogleCallback = async (response) => {
+    if (!response.credential) return;
+    setIsSubmitting(true);
+    setErrorMsg("");
+    setSuccessMsg("Authenticating with Google...");
+
+    try {
+      const data = await googleLogin(response.credential, "CUSTOMER");
+      setSuccessMsg("Google login successful! Redirecting...");
+      setIsSubmitting(false);
+      setTimeout(() => {
+        const userRole = data.user?.role?.toUpperCase();
+        if (userRole === "ADMIN") {
+          navigate("/admin/dashboard");
+        } else if (userRole === "PROVIDER") {
+          navigate("/provider/dashboard");
+        } else {
+          navigate("/customer/dashboard");
+        }
+      }, 1000);
+    } catch (err) {
+      console.error("Google login error:", err);
+      setErrorMsg(err.message || "Failed to authenticate with Google.");
+      setIsSubmitting(false);
+    }
+  };
+
+  useEffect(() => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "1059298384612-7g8dpchm16n2fts4oel7nd5l10h32drv.apps.googleusercontent.com";
+
+    const initGsi = () => {
+      if (window.google?.accounts?.id) {
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: handleGoogleCallback
+        });
+        if (googleBtnRef.current) {
+          window.google.accounts.id.renderButton(googleBtnRef.current, {
+            theme: "outline",
+            size: "large",
+            width: "100%",
+            text: "signin_with",
+            shape: "pill"
+          });
+        }
+      }
+    };
+
+    if (!document.getElementById("google-gsi-script")) {
+      const script = document.createElement("script");
+      script.id = "google-gsi-script";
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      script.onload = initGsi;
+      document.head.appendChild(script);
+    } else {
+      initGsi();
+    }
+  }, []);
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -87,26 +133,12 @@ export default function Login() {
     }
   };
 
-  const handleSocialSignIn = (provider) => {
-    setIsSubmitting(true);
-    setErrorMsg("");
-    setSuccessMsg("");
-
-    // Simulate social auth oauth popup redirect
-    setTimeout(() => {
-      setSuccessMsg(`Signing in with ${provider}... Please wait.`);
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setSuccessMsg("");
-        if (user?.role === "ADMIN") {
-          navigate("/admin/dashboard");
-        } else if (user?.role === "PROVIDER") {
-          navigate("/provider/dashboard");
-        } else {
-          navigate("/customer/dashboard");
-        }
-      }, 1500);
-    }, 800);
+  const handleCustomGoogleClick = () => {
+    if (window.google?.accounts?.id) {
+      window.google.accounts.id.prompt();
+    } else {
+      setErrorMsg("Google Sign-In is initializing. Please try again in a moment.");
+    }
   };
 
   return (
@@ -124,7 +156,7 @@ export default function Login() {
           {/* Title Header */}
           <div className="space-y-1.5 mb-8 text-center">
             <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Login to your account</h1>
-            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">Enter your email to receive a secure login code</p>
+            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">Enter your email or sign in with Google</p>
           </div>
 
           {/* Success and Error Banners */}
@@ -153,6 +185,21 @@ export default function Login() {
               <span>{successMsg}</span>
             </div>
           )}
+
+          {/* Google Official Button Mount */}
+          <div className="mb-6 flex flex-col items-center justify-center">
+            <div ref={googleBtnRef} className="w-full flex justify-center min-h-[44px]"></div>
+          </div>
+
+          {/* OR Continue With Email */}
+          <div className="relative my-6 shrink-0">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[#E8DCC3]"></div>
+            </div>
+            <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider text-[#7A7266]">
+              <span className="bg-white px-3.5">or continue with email</span>
+            </div>
+          </div>
 
           {/* FORM */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -201,40 +248,6 @@ export default function Login() {
               )}
             </Button>
           </form>
-
-          {/* OR Continue With Divider */}
-          <div className="relative my-6 shrink-0">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#E8DCC3]"></div>
-            </div>
-            <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider text-[#7A7266]">
-              <span className="bg-white px-3.5">or continue with</span>
-            </div>
-          </div>
-
-          {/* Social Oauth Buttons */}
-          <div className="grid grid-cols-2 gap-3.5 shrink-0">
-            <Button
-              type="button"
-              variant="outline"
-              disabled={isSubmitting}
-              onClick={() => handleSocialSignIn("Google")}
-              className="border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
-            >
-              <GoogleIcon className="h-4 w-4" />
-              Google
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              disabled={isSubmitting}
-              onClick={() => handleSocialSignIn("GitHub")}
-              className="border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] font-bold h-10 text-xs rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer"
-            >
-              <GitHubIcon className="h-4 w-4 text-[#1F1D1A]" />
-              GitHub
-            </Button>
-          </div>
 
           {/* Sign Up Links */}
           <div className="mt-8 space-y-2.5 text-center text-xs font-semibold text-[#5A5146]">

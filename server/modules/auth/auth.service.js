@@ -225,6 +225,75 @@ const verifyLoginOtp = async ({ email, otp }) => {
 };
 
 /**
+ * Verify Google ID Token and authenticate or register user.
+ */
+const googleAuth = async ({ credential, role }) => {
+    if (!credential) {
+        const err = new Error("Google credential token is required");
+        err.statusCode = 400;
+        throw err;
+    }
+
+    let tokenInfo;
+    try {
+        const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
+        tokenInfo = await response.json();
+    } catch (fetchErr) {
+        console.error("Google tokeninfo fetch error:", fetchErr);
+        const err = new Error("Failed to verify Google token with Google servers");
+        err.statusCode = 401;
+        throw err;
+    }
+
+    if (tokenInfo.error || !tokenInfo.email) {
+        console.error("Google token verification failed:", tokenInfo);
+        const err = new Error(tokenInfo.error_description || "Invalid Google ID token");
+        err.statusCode = 401;
+        throw err;
+    }
+
+    const email = tokenInfo.email.toLowerCase().trim();
+    const fullName = tokenInfo.name || tokenInfo.given_name || email.split("@")[0];
+    const avatar = tokenInfo.picture || null;
+
+    let user = await userRepository.findByEmail(email);
+
+    let userRole = USER_ROLES.CUSTOMER;
+    if (role) {
+        const roleUpper = role.toUpperCase();
+        if (Object.values(USER_ROLES).includes(roleUpper)) {
+            userRole = roleUpper;
+        }
+    }
+
+    if (!user) {
+        user = await userRepository.create({
+            fullName: fullName.trim(),
+            email,
+            phone: "",
+            role: userRole,
+            isVerified: true,
+            avatar
+        });
+    } else {
+        const updateData = { isVerified: true };
+        if (!user.avatar && avatar) {
+            updateData.avatar = avatar;
+        }
+        user = await userRepository.update(user.id, updateData);
+    }
+
+    const token = generateToken({ id: user.id, role: user.role });
+
+    return {
+        success: true,
+        message: "Google authentication successful",
+        user: toSafeUser(user),
+        token
+    };
+};
+
+/**
  * Get current user profile details
  */
 const getUserProfile = async (userId) => {
@@ -306,6 +375,7 @@ module.exports = {
     verifyRegisterOtp,
     sendLoginOtp,
     verifyLoginOtp,
+    googleAuth,
     getUserProfile,
     updateUserProfile
 };
