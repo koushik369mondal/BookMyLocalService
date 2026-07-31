@@ -63,18 +63,32 @@ const googleAuth = async ({ credential, role }) => {
             });
             console.log(`[GOOGLE AUTH STEP 4 SUCCESS] User created with ID: '${user.id}'`);
         } catch (createErr) {
-            console.error("[GOOGLE AUTH STEP 4 ERROR] Account creation database exception:", createErr);
-            // Race condition check: if user was created concurrently
+            console.error("[GOOGLE AUTH STEP 4 ERROR] Initial user creation attempt failed:", createErr?.message || createErr);
+            
+            // Retry check: Verify if account was created concurrently
             user = await userRepository.findByEmail(email);
+            
             if (!user) {
-                const detailMsg = process.env.NODE_ENV === "production"
-                    ? "Account creation failed. Please try logging in."
-                    : (createErr.message || "Database failed to create user record");
-                const err = new Error(detailMsg);
-                err.statusCode = 400;
-                throw err;
+                console.log("[GOOGLE AUTH STEP 4 RETRY] Attempting fallback creation without explicit null phone...");
+                try {
+                    user = await userRepository.create({
+                        fullName: fullName.trim(),
+                        email,
+                        role: userRole,
+                        isVerified: true,
+                        avatar
+                    });
+                    console.log(`[GOOGLE AUTH STEP 4 RETRY SUCCESS] User created with ID: '${user.id}'`);
+                } catch (retryErr) {
+                    console.error("[GOOGLE AUTH STEP 4 RETRY ERROR] Fallback user creation failed:", retryErr?.message || retryErr);
+                    const userFacingMsg = retryErr?.message || createErr?.message || "Failed to create account with Google. Please try again.";
+                    const err = new Error(userFacingMsg);
+                    err.statusCode = 400;
+                    throw err;
+                }
+            } else {
+                console.log(`[GOOGLE AUTH STEP 4 RECOVERY] Existing user retrieved after concurrent creation: ID '${user.id}'`);
             }
-            console.log(`[GOOGLE AUTH STEP 4 RECOVERY] Existing user retrieved after concurrent creation: ID '${user.id}'`);
         }
     } else {
         console.log(`[GOOGLE AUTH STEP 4] Existing user found (ID: '${user.id}', Role: '${user.role}'). Linking Google profile...`);
