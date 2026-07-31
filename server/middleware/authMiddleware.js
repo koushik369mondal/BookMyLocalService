@@ -9,7 +9,8 @@ const protect = async (req, res, next) => {
         try {
             token = req.headers.authorization.split(" ")[1];
             if (!token || token === "null" || token === "undefined") {
-                return res.status(401).json({ success: false, message: "Not authorized, empty token provided" });
+                console.warn(`[AUTH 401] Empty token provided for ${req.method} ${req.originalUrl}`);
+                return res.status(401).json({ success: false, message: "Not authorized, empty token provided", reason: "EMPTY_TOKEN" });
             }
 
             const decoded = verifyToken(token);
@@ -21,8 +22,8 @@ const protect = async (req, res, next) => {
             }
 
             if (!userId || typeof userId !== "string") {
-                console.error("Auth middleware error: Malformed token payload:", decoded);
-                return res.status(401).json({ success: false, message: "Not authorized, invalid token payload" });
+                console.error(`[AUTH 401] Malformed token payload for ${req.method} ${req.originalUrl}:`, decoded);
+                return res.status(401).json({ success: false, message: "Not authorized, invalid token payload", reason: "MALFORMED_TOKEN_PAYLOAD" });
             }
 
             // Attach user details to request
@@ -32,33 +33,39 @@ const protect = async (req, res, next) => {
             });
 
             if (!req.user) {
-                console.warn(`Auth middleware warning: No user found for ID '${userId}'`);
-                return res.status(401).json({ success: false, message: "User account not found with this token" });
+                console.warn(`[AUTH 401] User account not found for ID '${userId}' during ${req.method} ${req.originalUrl}`);
+                return res.status(401).json({ success: false, message: "User account not found with this token", reason: "USER_NOT_FOUND" });
             }
 
             return next();
         } catch (error) {
-            console.error("Auth middleware verification error:", error.message);
+            console.error(`[AUTH 401] Token verification error for ${req.method} ${req.originalUrl}:`, error.message);
             if (error.name === "TokenExpiredError") {
-                return res.status(401).json({ success: false, message: "Authentication token has expired. Please log in again." });
+                return res.status(401).json({ success: false, message: "Authentication token has expired. Please log in again.", reason: "EXPIRED_TOKEN" });
             }
             if (error.name === "JsonWebTokenError") {
-                return res.status(401).json({ success: false, message: "Invalid authentication token signature." });
+                return res.status(401).json({ success: false, message: "Invalid authentication token signature.", reason: "INVALID_TOKEN" });
             }
-            return res.status(401).json({ success: false, message: "Not authorized, token verification failed", error: error.message });
+            return res.status(401).json({ success: false, message: "Not authorized, token verification failed", reason: "TOKEN_VERIFICATION_FAILED", error: error.message });
         }
     }
 
-    return res.status(401).json({ success: false, message: "Not authorized, no Bearer token provided" });
+    console.warn(`[AUTH 401] Missing Bearer token for ${req.method} ${req.originalUrl}`);
+    return res.status(401).json({ success: false, message: "Not authorized, no Bearer token provided", reason: "NO_TOKEN_PROVIDED" });
 };
 
 // Role based access middleware
 const authorize = (...roles) => {
     return (req, res, next) => {
-        if (!req.user || !roles.includes(req.user.role)) {
+        const userRole = req.user?.role?.toUpperCase();
+        const allowedRoles = roles.map(r => r.toUpperCase());
+
+        if (!req.user || !allowedRoles.includes(userRole)) {
+            console.warn(`[AUTH 403] Authorization failed for ${req.method} ${req.originalUrl}. User ID: '${req.user?.id || "unauthenticated"}', Role: '${req.user?.role || "none"}', Allowed Roles: [${roles.join(", ")}]`);
             return res.status(403).json({
                 success: false,
-                message: `User role '${req.user?.role || "none"}' is not authorized to access this resource`
+                message: `User role '${req.user?.role || "none"}' is not authorized to access this resource`,
+                reason: "INVALID_ROLE"
             });
         }
         return next();

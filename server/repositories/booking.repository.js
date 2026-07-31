@@ -2,6 +2,9 @@ const prisma = require("../config/prisma");
 
 const defaultBookingSelect = {
     id: true,
+    customerId: true,
+    providerId: true,
+    serviceId: true,
     plan: true,
     date: true,
     time: true,

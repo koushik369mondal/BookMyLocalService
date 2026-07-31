@@ -9,17 +9,25 @@ const getCheckoutDetails = async (req, res) => {
     const booking = await bookingService.getBookingById(bookingId);
 
     if (!booking) {
+      console.warn(`[CHECKOUT 404] Booking not found: '${bookingId}' requested by user '${req.user?.id}'`);
       return res.status(404).json({
         success: false,
-        message: "Booking not found."
+        message: "Booking not found.",
+        reason: "BOOKING_NOT_FOUND"
       });
     }
 
-    // Verify ownership
-    if (req.user.role !== "ADMIN" && booking.customerId !== req.user.id) {
+    // Verify ownership: allow ADMIN or matching customerId
+    const customerId = booking.customerId || booking.customer?.id;
+    const isOwner = customerId && customerId === req.user.id;
+    const isAdmin = req.user.role === "ADMIN";
+
+    if (!isAdmin && !isOwner) {
+      console.warn(`[CHECKOUT 403] Authorization denied for GET checkout details. User ID: '${req.user?.id}' (role: '${req.user?.role}'), Booking ID: '${bookingId}', Booking Customer ID: '${customerId}'`);
       return res.status(403).json({
         success: false,
-        message: "You are not authorized to access checkout for this booking."
+        message: "You are not authorized to access checkout for this booking.",
+        reason: "BOOKING_OWNERSHIP_MISMATCH"
       });
     }
 
@@ -59,16 +67,24 @@ const submitCheckout = async (req, res) => {
 
     const booking = await bookingService.getBookingById(bookingId);
     if (!booking) {
+      console.warn(`[CHECKOUT 404] Booking not found for submit: '${bookingId}' requested by user '${req.user?.id}'`);
       return res.status(404).json({
         success: false,
-        message: "Booking not found."
+        message: "Booking not found.",
+        reason: "BOOKING_NOT_FOUND"
       });
     }
 
-    if (req.user.role !== "ADMIN" && booking.customerId !== req.user.id) {
+    const customerId = booking.customerId || booking.customer?.id;
+    const isOwner = customerId && customerId === req.user.id;
+    const isAdmin = req.user.role === "ADMIN";
+
+    if (!isAdmin && !isOwner) {
+      console.warn(`[CHECKOUT 403] Authorization denied for SUBMIT checkout. User ID: '${req.user?.id}' (role: '${req.user?.role}'), Booking ID: '${bookingId}', Booking Customer ID: '${customerId}'`);
       return res.status(403).json({
         success: false,
-        message: "You are not authorized to modify this booking."
+        message: "You are not authorized to modify this booking.",
+        reason: "BOOKING_OWNERSHIP_MISMATCH"
       });
     }
 
@@ -119,16 +135,24 @@ const processPayment = async (req, res) => {
 
     const booking = await bookingService.getBookingById(bookingId);
     if (!booking) {
+      console.warn(`[PAYMENT 404] Booking not found for payment: '${bookingId}' requested by user '${req.user?.id}'`);
       return res.status(404).json({
         success: false,
-        message: "Booking not found."
+        message: "Booking not found.",
+        reason: "BOOKING_NOT_FOUND"
       });
     }
 
-    if (req.user.role !== "ADMIN" && booking.customerId !== req.user.id) {
+    const customerId = booking.customerId || booking.customer?.id;
+    const isOwner = customerId && customerId === req.user.id;
+    const isAdmin = req.user.role === "ADMIN";
+
+    if (!isAdmin && !isOwner) {
+      console.warn(`[CHECKOUT 403] Authorization denied for PROCESS payment. User ID: '${req.user?.id}' (role: '${req.user?.role}'), Booking ID: '${bookingId}', Booking Customer ID: '${customerId}'`);
       return res.status(403).json({
         success: false,
-        message: "You are not authorized to pay for this booking."
+        message: "You are not authorized to pay for this booking.",
+        reason: "BOOKING_OWNERSHIP_MISMATCH"
       });
     }
 

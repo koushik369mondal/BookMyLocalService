@@ -2,6 +2,7 @@ const prisma = require("../config/prisma");
 
 const defaultServiceSelect = {
     id: true,
+    providerId: true,
     title: true,
     slug: true,
     description: true,

@@ -71,21 +71,26 @@ const getBookingById = async (req, res) => {
     const booking = await bookingService.getBookingById(id);
 
     if (!booking) {
+      console.warn(`[BOOKING 404] Booking not found: '${id}' requested by user '${req.user?.id}'`);
       return res.status(404).json({
         success: false,
-        message: "Booking not found."
+        message: "Booking not found.",
+        reason: "BOOKING_NOT_FOUND"
       });
     }
 
-    // Verify ownership
-    if (
-      req.user.role !== "ADMIN" &&
-      booking.customerId !== req.user.id &&
-      booking.providerId !== req.user.id
-    ) {
+    const customerId = booking.customerId || booking.customer?.id;
+    const providerId = booking.providerId || booking.provider?.id;
+    const isCustomer = customerId && customerId === req.user.id;
+    const isProvider = providerId && providerId === req.user.id;
+    const isAdmin = req.user.role === "ADMIN";
+
+    if (!isAdmin && !isCustomer && !isProvider) {
+      console.warn(`[BOOKING 403] Authorization denied for GET booking. User ID: '${req.user?.id}' (role: '${req.user?.role}'), Booking ID: '${id}', Customer ID: '${customerId}', Provider ID: '${providerId}'`);
       return res.status(403).json({
         success: false,
-        message: "You are not authorized to view this booking."
+        message: "You are not authorized to view this booking.",
+        reason: "BOOKING_OWNERSHIP_MISMATCH"
       });
     }
 
@@ -112,20 +117,26 @@ const updateBooking = async (req, res) => {
     // Verify booking exists and user has authorization
     const booking = await bookingService.getBookingById(id);
     if (!booking) {
+      console.warn(`[BOOKING 404] Booking not found for update: '${id}' requested by user '${req.user?.id}'`);
       return res.status(404).json({
         success: false,
-        message: "Booking not found."
+        message: "Booking not found.",
+        reason: "BOOKING_NOT_FOUND"
       });
     }
 
-    if (
-      req.user.role !== "ADMIN" &&
-      booking.customerId !== req.user.id &&
-      booking.providerId !== req.user.id
-    ) {
+    const customerId = booking.customerId || booking.customer?.id;
+    const providerId = booking.providerId || booking.provider?.id;
+    const isCustomer = customerId && customerId === req.user.id;
+    const isProvider = providerId && providerId === req.user.id;
+    const isAdmin = req.user.role === "ADMIN";
+
+    if (!isAdmin && !isCustomer && !isProvider) {
+      console.warn(`[BOOKING 403] Authorization denied for UPDATE booking. User ID: '${req.user?.id}' (role: '${req.user?.role}'), Booking ID: '${id}'`);
       return res.status(403).json({
         success: false,
-        message: "You are not authorized to update this booking."
+        message: "You are not authorized to update this booking.",
+        reason: "BOOKING_OWNERSHIP_MISMATCH"
       });
     }
 
@@ -155,16 +166,24 @@ const deleteBooking = async (req, res) => {
     // Verify booking exists and user has authorization
     const booking = await bookingService.getBookingById(id);
     if (!booking) {
+      console.warn(`[BOOKING 404] Booking not found for delete: '${id}' requested by user '${req.user?.id}'`);
       return res.status(404).json({
         success: false,
-        message: "Booking not found."
+        message: "Booking not found.",
+        reason: "BOOKING_NOT_FOUND"
       });
     }
 
-    if (req.user.role !== "ADMIN" && booking.customerId !== req.user.id) {
+    const customerId = booking.customerId || booking.customer?.id;
+    const isCustomer = customerId && customerId === req.user.id;
+    const isAdmin = req.user.role === "ADMIN";
+
+    if (!isAdmin && !isCustomer) {
+      console.warn(`[BOOKING 403] Authorization denied for DELETE booking. User ID: '${req.user?.id}' (role: '${req.user?.role}'), Booking ID: '${id}'`);
       return res.status(403).json({
         success: false,
-        message: "You are not authorized to delete this booking."
+        message: "You are not authorized to delete this booking.",
+        reason: "BOOKING_OWNERSHIP_MISMATCH"
       });
     }
 
