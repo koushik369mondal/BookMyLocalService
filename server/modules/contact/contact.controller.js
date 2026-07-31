@@ -1,7 +1,5 @@
-const { sendContactFormEmails } = require("../../services/mailService");
-
 /**
- * @desc    Submit Contact Us message and send notification & receipt emails
+ * @desc    Submit Contact Us message
  * @route   POST /api/contact
  * @access  Public
  */
@@ -24,13 +22,8 @@ const submitContactMessage = async (req, res) => {
             });
         }
 
-        await sendContactFormEmails({
-            name: name.trim(),
-            email: email.toLowerCase().trim(),
-            phone: phone ? phone.trim() : "",
-            subject: subject.trim(),
-            message: message.trim()
-        });
+        console.log(`[Contact Form Received] From: ${name} <${email}> (${phone || 'No phone'}), Subject: ${subject}`);
+        console.log(`[Message]: ${message}`);
 
         return res.status(200).json({
             success: true,

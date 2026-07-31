@@ -1,231 +1,10 @@
 const userRepository = require("./user.repository");
-const { sendOtpEmail } = require("../../services/emailService");
-const otpService = require("./otp.service");
 const { generateToken } = require("../../utils/jwt.util");
 const { userSelect, toSafeUser } = require("../../utils/user.util");
-const { isValidEmail } = require("../../utils/validation.util");
 const { USER_ROLES } = require("../../constants/auth.constants");
 
 /**
- * Send registration OTP to email for user onboarding.
- */
-const sendRegisterOtp = async ({ fullName, email, phone, role }) => {
-    if (!fullName || !email || !phone) {
-        const err = new Error("Please enter all required fields");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const normalizedEmail = email.toLowerCase().trim();
-    const normalizedPhone = phone.trim();
-
-    if (!isValidEmail(normalizedEmail)) {
-        const err = new Error("Please provide a valid email address");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const existingEmailUser = await userRepository.findByEmail(normalizedEmail);
-    if (existingEmailUser && existingEmailUser.isVerified) {
-        const err = new Error("An account with this email already exists. Please log in.");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    if (existingEmailUser) {
-        const { isRateLimited, secondsToWait } = otpService.checkRateLimit(existingEmailUser.otpExpiresAt);
-        if (isRateLimited) {
-            const err = new Error(`Please wait ${secondsToWait} seconds before requesting a new OTP.`);
-            err.statusCode = 429;
-            throw err;
-        }
-
-        await userRepository.delete(existingEmailUser.id);
-    }
-
-    const otp = otpService.generateOtpCode();
-    const otpHash = otpService.hashOtp(otp);
-    const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
-
-    let userRole = USER_ROLES.CUSTOMER;
-    if (role) {
-        const roleUpper = role.toUpperCase();
-        if (Object.values(USER_ROLES).includes(roleUpper)) {
-            userRole = roleUpper;
-        }
-    }
-
-    await userRepository.create({
-        fullName: fullName.trim(),
-        email: normalizedEmail,
-        phone: normalizedPhone,
-        role: userRole,
-        isVerified: false,
-        otpHash,
-        otpExpiresAt,
-        otpAttempts: 0
-    });
-
-    await sendOtpEmail(normalizedEmail, otp, fullName.trim());
-
-    return { success: true, message: "OTP sent successfully" };
-};
-
-/**
- * Verify registration OTP code and complete user onboarding.
- */
-const verifyRegisterOtp = async ({ email, otp }) => {
-    if (!email || !otp) {
-        const err = new Error("Please provide email and OTP code");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const normalizedEmail = email.toLowerCase().trim();
-    const user = await userRepository.findByEmail(normalizedEmail);
-
-    if (!user || user.isVerified) {
-        const err = new Error("Registration session not found or user already verified.");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const validation = otpService.validateOtpState(user);
-    if (!validation.valid) {
-        const err = new Error(validation.reason);
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const isMatch = otpService.verifyOtpCode(otp, user.otpHash);
-    if (!isMatch) {
-        await userRepository.update(user.id, {
-            otpAttempts: user.otpAttempts + 1
-        });
-        const err = new Error("Invalid OTP. Please try again.");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const verifiedUser = await userRepository.update(user.id, {
-        isVerified: true,
-        otpHash: null,
-        otpExpiresAt: null,
-        otpAttempts: 0
-    });
-
-    const token = generateToken({ id: verifiedUser.id, role: verifiedUser.role });
-
-    return {
-        success: true,
-        message: "Account verified successfully",
-        user: toSafeUser(verifiedUser),
-        token
-    };
-};
-
-/**
- * Send login OTP to existing user's email.
- */
-const sendLoginOtp = async ({ email }) => {
-    if (!email) {
-        const err = new Error("Email address is required");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const normalizedEmail = email.toLowerCase().trim();
-
-    if (!isValidEmail(normalizedEmail)) {
-        const err = new Error("Please enter a valid email address");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const user = await userRepository.findByEmail(normalizedEmail);
-    if (!user) {
-        const err = new Error("No account found with this email address");
-        err.statusCode = 404;
-        throw err;
-    }
-
-    const { isRateLimited, secondsToWait } = otpService.checkRateLimit(user.otpExpiresAt);
-    if (isRateLimited) {
-        const err = new Error(`Please wait ${secondsToWait} seconds before requesting a new OTP.`);
-        err.statusCode = 429;
-        throw err;
-    }
-
-    const otp = otpService.generateOtpCode();
-    const otpHash = otpService.hashOtp(otp);
-    const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
-
-    await userRepository.update(user.id, {
-        otpHash,
-        otpExpiresAt,
-        otpAttempts: 0
-    });
-
-    await sendOtpEmail(normalizedEmail, otp, user.fullName);
-
-    return { success: true, message: "Login OTP sent successfully" };
-};
-
-/**
- * Verify login OTP code and issue auth token.
- */
-const verifyLoginOtp = async ({ email, otp }) => {
-    if (!email || !otp) {
-        const err = new Error("Please provide email and OTP code");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const normalizedEmail = email.toLowerCase().trim();
-    const user = await userRepository.findByEmail(normalizedEmail);
-
-    if (!user) {
-        const err = new Error("User not found");
-        err.statusCode = 404;
-        throw err;
-    }
-
-    const validation = otpService.validateOtpState(user);
-    if (!validation.valid) {
-        const err = new Error(validation.reason);
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const isMatch = otpService.verifyOtpCode(otp, user.otpHash);
-    if (!isMatch) {
-        await userRepository.update(user.id, {
-            otpAttempts: user.otpAttempts + 1
-        });
-        const err = new Error("Invalid OTP code");
-        err.statusCode = 400;
-        throw err;
-    }
-
-    const loggedInUser = await userRepository.update(user.id, {
-        isVerified: true,
-        otpHash: null,
-        otpExpiresAt: null,
-        otpAttempts: 0
-    });
-
-    const token = generateToken({ id: loggedInUser.id, role: loggedInUser.role });
-
-    return {
-        success: true,
-        message: "Login successful",
-        user: toSafeUser(loggedInUser),
-        token
-    };
-};
-
-/**
- * Verify Google ID Token and authenticate or register user.
+ * Verify Google ID Token and authenticate, link, or register user.
  */
 const googleAuth = async ({ credential, role }) => {
     if (!credential) {
@@ -267,6 +46,7 @@ const googleAuth = async ({ credential, role }) => {
     }
 
     if (!user) {
+        // Create new user using Google Profile
         user = await userRepository.create({
             fullName: fullName.trim(),
             email,
@@ -276,6 +56,7 @@ const googleAuth = async ({ credential, role }) => {
             avatar
         });
     } else {
+        // Link existing account & verify
         const updateData = { isVerified: true };
         if (!user.avatar && avatar) {
             updateData.avatar = avatar;
@@ -284,12 +65,14 @@ const googleAuth = async ({ credential, role }) => {
     }
 
     const token = generateToken({ id: user.id, role: user.role });
+    const isProfileComplete = Boolean(user.phone && user.phone.trim() !== "");
 
     return {
         success: true,
         message: "Google authentication successful",
         user: toSafeUser(user),
-        token
+        token,
+        isProfileComplete
     };
 };
 
@@ -307,7 +90,7 @@ const getUserProfile = async (userId) => {
 };
 
 /**
- * Update current user profile details
+ * Update current user profile details (for profile completion & account settings)
  */
 const updateUserProfile = async (userId, updateData) => {
     const user = await userRepository.findById(userId);
@@ -338,7 +121,7 @@ const updateUserProfile = async (userId, updateData) => {
 
     if (updateData.phone !== undefined) {
         const trimmedPhone = updateData.phone.trim();
-        if (!/^\+?1?\s*\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/.test(trimmedPhone)) {
+        if (trimmedPhone !== "" && !/^\+?1?\s*\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/.test(trimmedPhone)) {
             const err = new Error("Please enter a valid 10-digit phone number");
             err.statusCode = 400;
             throw err;
@@ -371,10 +154,6 @@ const updateUserProfile = async (userId, updateData) => {
 };
 
 module.exports = {
-    sendRegisterOtp,
-    verifyRegisterOtp,
-    sendLoginOtp,
-    verifyLoginOtp,
     googleAuth,
     getUserProfile,
     updateUserProfile

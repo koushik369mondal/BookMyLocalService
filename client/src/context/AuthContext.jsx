@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { authService } from "../services/api";
+import { authService } from "../services/authService";
 
 const AuthContext = createContext(null);
 
@@ -47,60 +47,6 @@ export const AuthProvider = ({ children }) => {
         loadUser();
     }, []);
 
-    const login = async (identifier, password) => {
-        setLoading(true);
-        try {
-            const data = await authService.login({ identifier, password });
-            if (data.success) {
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
-                setUser(data.user);
-                return data;
-            }
-            throw new Error(data.message || "Invalid credentials");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const registerSendOtp = async (userData) => {
-        setLoading(true);
-        try {
-            const data = await authService.registerSendOtp(userData);
-            return data;
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const loginSendOtp = async (email) => {
-        setLoading(true);
-        try {
-            const data = await authService.loginSendOtp(email);
-            return data;
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const verifyOtp = async (email, otp, flow) => {
-        setLoading(true);
-        try {
-            const data = flow === "register"
-                ? await authService.registerVerifyOtp(email, otp)
-                : await authService.loginVerifyOtp(email, otp);
-            if (data.success) {
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
-                setUser(data.user);
-                return data;
-            }
-            throw new Error(data.message || "OTP verification failed");
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const googleLogin = async (credential, role) => {
         setLoading(true);
         try {
@@ -117,57 +63,33 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const resendOtp = async (email, flow, registerData) => {
-        setLoading(true);
-        try {
-            const data = flow === "register"
-                ? await authService.registerSendOtp(registerData)
-                : await authService.loginSendOtp(email);
-            return data;
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const register = async (fullName, email, phone, password, role) => {
-        setLoading(true);
-        try {
-            const data = await authService.register({ fullName, email, phone, password, role });
-            if (data.success) {
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
-                setUser(data.user);
-                return data;
-            }
-            throw new Error(data.message || "Registration failed");
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         setUser(null);
     };
 
-    const switchRole = async (targetRole) => {
+    const updateProfile = async (profileData) => {
         setLoading(true);
         try {
-            const data = await authService.updateProfile({ role: targetRole });
+            const data = await authService.updateProfile(profileData);
             if (data.success) {
                 setUser(data.user);
                 localStorage.setItem("user", JSON.stringify(data.user));
                 return data;
             }
-            throw new Error(data.message || "Failed to switch role");
+            throw new Error(data.message || "Failed to update profile");
         } finally {
             setLoading(false);
         }
     };
 
+    const switchRole = async (targetRole) => {
+        return await updateProfile({ role: targetRole });
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loading, login, register, logout, reloadUser: loadUser, registerSendOtp, loginSendOtp, verifyOtp, googleLogin, resendOtp, switchRole }}>
+        <AuthContext.Provider value={{ user, loading, logout, reloadUser: loadUser, googleLogin, updateProfile, switchRole }}>
             {children}
         </AuthContext.Provider>
     );
