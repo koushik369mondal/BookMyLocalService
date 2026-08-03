@@ -343,6 +343,7 @@ class ProviderService {
                 avatar: r.customer?.avatar || "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
                 serviceName: r.service?.title || "Service",
                 rating: typeof r.rating === "number" ? r.rating : 5,
+                title: r.title || "",
                 comment: r.comment || "",
                 date: r.createdAt ? new Date(r.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0],
                 reply: r.reply || ""

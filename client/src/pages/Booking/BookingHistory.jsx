@@ -15,8 +15,10 @@ import {
   ShieldAlert,
   ArrowLeft,
   XCircle,
-  CheckCircle2
+  CheckCircle2,
+  Star
 } from "lucide-react";
+import ReviewModal from "@/components/modals/ReviewModal";
 
 export default function BookingHistory() {
   const {
@@ -27,10 +29,12 @@ export default function BookingHistory() {
     setActiveStatus,
     searchQuery,
     setSearchQuery,
-    handleCancelBooking
+    handleCancelBooking,
+    refetch
   } = useBookingHistory();
 
   const [confirmCancelId, setConfirmCancelId] = useState(null);
+  const [reviewBooking, setReviewBooking] = useState(null);
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -149,11 +153,21 @@ export default function BookingHistory() {
                       </div>
                     </div>
 
-                    <div>
+                    <div className="flex items-center gap-2">
                       {b.status === "completed" && (
-                        <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2B522B] bg-[#7DAB7D]/15 border border-[#7DAB7D]/30 px-3 py-1 rounded-xl">
-                          <CheckCircle2 className="h-3.5 w-3.5 text-[#2B522B]" /> Service Completed
-                        </span>
+                        b.review ? (
+                          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#8C4B3E] bg-[#C9A46A]/15 border border-[#C9A46A]/30 px-3 py-1 rounded-xl">
+                            <Star className="h-3.5 w-3.5 fill-[#C9A46A] text-[#C9A46A]" /> Reviewed ({b.review.rating} ★)
+                          </span>
+                        ) : (
+                          <Button
+                            size="sm"
+                            onClick={() => setReviewBooking(b)}
+                            className="h-8 bg-[#8C4B3E] hover:bg-[#723B30] text-white rounded-xl text-xs font-bold cursor-pointer flex items-center gap-1.5 px-3 shadow-xs"
+                          >
+                            <Star className="h-3.5 w-3.5 fill-white text-white" /> Write Review
+                          </Button>
+                        )
                       )}
                       {b.status !== "cancelled" && b.status !== "completed" && (
                         confirmCancelId === b.id ? (
@@ -197,6 +211,17 @@ export default function BookingHistory() {
 
         </div>
       </div>
+
+      {/* REVIEW MODAL */}
+      <ReviewModal
+        isOpen={Boolean(reviewBooking)}
+        onClose={() => setReviewBooking(null)}
+        booking={reviewBooking}
+        onSuccess={() => {
+          setReviewBooking(null);
+          refetch();
+        }}
+      />
     </MainLayout>
   );
 }

@@ -10,7 +10,7 @@ const allowedOrigins = [
     "http://localhost:5173",
     "http://localhost:3000",
     "http://127.0.0.1:5173",
-    "https://bookmylocalservice.onrender.com",
+    "https://bookmylocalservice-web.onrender.com",
     process.env.CLIENT_URL
 ].filter(Boolean);
 
@@ -41,6 +41,7 @@ app.get("/", (req, res) => {
     res.send("Local Service Finder API Running");
 });
 
+// Server entry point initialized with Prisma Client
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

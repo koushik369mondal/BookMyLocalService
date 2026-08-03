@@ -12,6 +12,7 @@ const contactRoutes = require("../modules/contact/contact.routes");
 const dashboardRoutes = require("../modules/dashboard/dashboard.routes");
 const profileRoutes = require("./profile.routes");
 const healthRoutes = require("./health.routes");
+const reviewRoutes = require("./review.routes");
 
 const { processPayment } = require("../modules/payment/payment.controller");
 const { protect } = require("../middleware/authMiddleware");
@@ -29,6 +30,7 @@ router.use("/contact", contactRoutes);
 router.use("/dashboard", dashboardRoutes);
 router.use("/profile", profileRoutes);
 router.use("/health", healthRoutes);
+router.use("/reviews", reviewRoutes);
 
 // Direct Payment endpoint
 router.post("/payment", protect, processPayment);

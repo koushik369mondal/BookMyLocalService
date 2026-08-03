@@ -43,6 +43,7 @@ import {
   ZoomIn
 } from "lucide-react";
 import { servicesService, bookingsService } from "../../services/api";
+import { reviewsService } from "@/services/reviewsService";
 import NotFound from "../NotFound/NotFound";
 
 // Helper to generate dynamic content based on category
@@ -173,40 +174,11 @@ const getProviderGallery = (category) => {
   }
 };
 
-const getProviderReviews = (id, providerName) => {
-  return [
-    {
-      id: 1,
-      name: "Marcus Aurelius",
-      avatar: null,
-      rating: 5,
-      date: "July 04, 2026",
-      comment: `Absolutely brilliant experience. ${providerName} was on-time, polite, and extremely dedicated. Will definitely hire again!`
-    },
-    {
-      id: 2,
-      name: "Sophia Martinez",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&h=80&q=80",
-      rating: 4,
-      date: "June 27, 2026",
-      comment: "Very professional job. They resolved the primary issue quickly and cleaned up after their workspace nicely."
-    },
-    {
-      id: 3,
-      name: "Julian Cole",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80",
-      rating: 5,
-      date: "June 14, 2026",
-      comment: "High level of skill and attention to detail. Provided recommendations on preventing future issues too."
-    }
-  ];
-};
-
-const buildServiceDetails = (service) => {
+const buildServiceDetails = (service, dbReviews = [], dbAvgRating, dbTotalReviews) => {
   const skillsData = getProviderSkills(service.category);
   const plans = getProviderPlans(service.category, service.price);
   const gallery = getProviderGallery(service.category);
-  const reviews = getProviderReviews(service.id, service.provider?.fullName);
+  const reviews = dbReviews;
 
   const experience = service.id.length % 3 === 0 ? "9+ Years" : (service.id.length % 2 === 0 ? "7+ Years" : "5+ Years");
 
@@ -217,8 +189,8 @@ const buildServiceDetails = (service) => {
     providerName: service.provider?.fullName || "Verified Provider",
     providerImage: service.provider?.avatar || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80",
     location: service.location,
-    rating: service.rating,
-    reviewsCount: service.reviewCount,
+    rating: dbAvgRating !== undefined ? dbAvgRating : service.rating,
+    reviewsCount: dbTotalReviews !== undefined ? dbTotalReviews : service.reviewCount,
     price: service.price,
     priceType: service.priceType,
     image: service.imageUrl,
@@ -274,7 +246,22 @@ export default function ServiceDetails() {
       try {
         const response = await servicesService.getServiceById(id);
         if (response.success && response.data) {
-          const details = buildServiceDetails(response.data);
+          let dbReviews = [];
+          let dbAvgRating;
+          let dbTotalReviews;
+
+          try {
+            const reviewsRes = await reviewsService.getServiceReviews(id);
+            if (reviewsRes.success && reviewsRes.data) {
+              dbReviews = reviewsRes.data.reviews || [];
+              dbAvgRating = reviewsRes.data.averageRating;
+              dbTotalReviews = reviewsRes.data.totalReviews;
+            }
+          } catch (rErr) {
+            console.error("Failed to load service reviews:", rErr);
+          }
+
+          const details = buildServiceDetails(response.data, dbReviews, dbAvgRating, dbTotalReviews);
           setProvider(details);
 
           // Load other services for the similar services section
@@ -792,14 +779,20 @@ export default function ServiceDetails() {
                             </div>
                           </div>
 
-                          <p className="text-slate-605 text-sm leading-relaxed mb-3">
+                          {rev.title && (
+                            <h4 className="text-xs font-extrabold text-[#1F1D1A] mb-1">{rev.title}</h4>
+                          )}
+
+                          <p className="text-[#5A5146] text-sm leading-relaxed mb-2">
                             {rev.comment}
                           </p>
 
-                          <button className="flex items-center gap-1.5 text-[#7A7266] hover:text-[#C9A46A] text-xs font-bold transition-colors">
-                            <ThumbsUp className="h-3.5 w-3.5" />
-                            Helpful (3)
-                          </button>
+                          {rev.reply && (
+                            <div className="mt-2.5 p-3 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]/80 text-xs text-[#5A5146]">
+                              <span className="font-bold text-[#8C4B3E] block mb-0.5">Response from Provider:</span>
+                              <p>{rev.reply}</p>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

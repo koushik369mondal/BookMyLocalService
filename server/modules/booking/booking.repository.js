@@ -18,7 +18,8 @@ class BookingRepository {
       include: {
         customer: { select: { id: true, fullName: true, email: true, phone: true, avatar: true } },
         provider: { select: { id: true, fullName: true, email: true, phone: true, avatar: true } },
-        service: { select: { id: true, title: true, price: true, priceType: true, category: true, imageUrl: true, description: true } }
+        service: { select: { id: true, title: true, price: true, priceType: true, category: true, imageUrl: true, description: true } },
+        review: true
       }
     });
   }
@@ -44,7 +45,8 @@ class BookingRepository {
       include: {
         customer: { select: { id: true, fullName: true, email: true, avatar: true } },
         provider: { select: { id: true, fullName: true, email: true, avatar: true } },
-        service: { select: { id: true, title: true, category: true, price: true, imageUrl: true } }
+        service: { select: { id: true, title: true, category: true, price: true, imageUrl: true } },
+        review: true
       }
     });
   }

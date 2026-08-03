@@ -281,6 +281,9 @@ export default function Reviews() {
                         </div>
                       </div>
 
+                      {rev.title && (
+                        <h5 className="text-xs font-black text-[#1F1D1A] -mb-2 px-1">{rev.title}</h5>
+                      )}
                       <p className="text-xs font-medium text-[#1F1D1A] leading-relaxed bg-white p-3 rounded-xl border border-[#E8DCC3]/60">
                         "{rev.comment}"
                       </p>
