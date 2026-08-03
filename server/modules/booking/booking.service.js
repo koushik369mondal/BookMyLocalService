@@ -63,7 +63,8 @@ class BookingService {
 
     // Determine plan price or fallback to service base price
     let basePrice = service.price;
-    const plans = getProviderPlans(service.category, service.price);
+    const categoryName = typeof service.category === "object" ? service.category?.name : service.category;
+    const plans = getProviderPlans(categoryName, service.price);
     const matchedPlan = plans.find(p => p.name.toLowerCase() === plan.toLowerCase());
     if (matchedPlan) {
       basePrice = matchedPlan.price;

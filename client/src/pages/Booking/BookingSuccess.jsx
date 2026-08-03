@@ -104,7 +104,7 @@ export default function BookingSuccess() {
   };
 
   const providerName = service?.provider?.fullName || "Verified Provider";
-  const providerImage = service?.provider?.avatar || service?.imageUrl || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80";
+  const providerImage = service?.provider?.avatar || service?.imageUrl || "";
   const category = service?.category || "Local Service";
   const serviceTitle = service?.title || "Booked Service";
   const displayPrice = !isNaN(selectedPriceParam) ? selectedPriceParam : (service?.price || 1499);

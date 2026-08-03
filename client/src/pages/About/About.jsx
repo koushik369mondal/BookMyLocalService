@@ -66,15 +66,14 @@ export default function About() {
                 </div>
               </div>
 
-              {/* Photo Column */}
+               {/* Photo Column */}
               <div className="lg:col-span-5 relative">
-                <div className="relative border border-[#5A5146]/20 rounded-2xl overflow-hidden bg-white aspect-4/3 sm:aspect-video lg:aspect-square">
-                  <img
-                    src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
-                    alt="Premium Home Interior"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                <div className="relative border border-[#5A5146]/20 rounded-2xl overflow-hidden bg-[#FAF6F0] aspect-4/3 sm:aspect-video lg:aspect-square flex flex-col items-center justify-center p-8 text-center border-[#E8DCC3]">
+                  <div className="p-4 bg-white rounded-full border border-[#E8DCC3] shadow-md mb-3 text-[#8C4B3E]">
+                    <ShieldCheck className="h-10 w-10" />
+                  </div>
+                  <h3 className="text-xl font-black text-[#1F1D1A]">Verified Marketplace</h3>
+                  <p className="text-xs text-[#5A5146] font-medium mt-1">Connecting households with background-checked local service experts</p>
                   <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-xs p-3 rounded-xl border border-[#5A5146]/20 flex items-center gap-2.5">
                     <div className="p-1.5 bg-emerald-50 rounded-lg text-emerald-600">
                       <ShieldCheck className="h-4 w-4" />
@@ -98,13 +97,12 @@ export default function About() {
 
               {/* Image Left */}
               <div className="lg:col-span-6 relative order-last lg:order-first">
-                <div className="relative border border-[#5A5146]/20 rounded-2xl overflow-hidden aspect-4/3 sm:aspect-video lg:aspect-4/3 bg-[#F0E7D5]">
-                  <img
-                    src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80"
-                    alt="Service Provider Meeting Customer"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                <div className="relative border border-[#5A5146]/20 rounded-2xl overflow-hidden aspect-4/3 sm:aspect-video lg:aspect-4/3 bg-[#F0E7D5] flex flex-col items-center justify-center p-8 text-center">
+                  <div className="p-4 bg-white rounded-full border border-[#E8DCC3] shadow-md mb-3 text-[#8C4B3E]">
+                    <Award className="h-10 w-10" />
+                  </div>
+                  <h3 className="text-xl font-black text-[#1F1D1A]">Local Service Excellence</h3>
+                  <p className="text-xs text-[#5A5146] font-medium mt-1 max-w-sm">Empowering local artisans & small businesses across India</p>
                 </div>
               </div>
 

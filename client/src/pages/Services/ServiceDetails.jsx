@@ -127,67 +127,38 @@ const getProviderPlans = (category, basePrice) => {
   }
 };
 
-const getProviderGallery = (category) => {
-  switch (category) {
-    case "Home Cleaning":
-      return [
-        { url: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80", caption: "Spotless Living Room Setup" },
-        { url: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80", caption: "Deep Kitchen Sanitization" },
-        { url: "https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=600&q=80", caption: "Polished Bathroom Counter" },
-        { url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80", caption: "Bedroom Bed Dressing" }
-      ];
-    case "Plumbing":
-      return [
-        { url: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80", caption: "Copper Pipe Soldering" },
-        { url: "https://images.unsplash.com/photo-1607472586893-edb5caba0c55?auto=format&fit=crop&w=600&q=80", caption: "Water Heater Installation" },
-        { url: "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&w=600&q=80", caption: "Drain Snaking & Cleanup" },
-        { url: "https://images.unsplash.com/photo-1542013936693-8848e574047a?auto=format&fit=crop&w=600&q=80", caption: "Leaking Faucet Replacement" }
-      ];
-    case "Electrical":
-      return [
-        { url: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80", caption: "Smart Breaker Panel Configuration" },
-        { url: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?auto=format&fit=crop&w=600&q=80", caption: "EV Charger Cable Running" },
-        { url: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=600&q=80", caption: "Industrial Power Diagnostic" },
-        { url: "https://images.unsplash.com/photo-1460518451285-cd7ba78488c7?auto=format&fit=crop&w=600&q=80", caption: "Chandelier Installation" }
-      ];
-    case "Moving & Packing":
-      return [
-        { url: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80", caption: "Cardboard Box Bubble Wrapping" },
-        { url: "https://images.unsplash.com/photo-1520038410233-7141be7e6f97?auto=format&fit=crop&w=600&q=80", caption: "Secured Transit Loading" },
-        { url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80", caption: "Warehouse Safe Storage" },
-        { url: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=600&q=80", caption: "Furniture protective blankets" }
-      ];
-    case "Lawn & Garden":
-      return [
-        { url: "https://images.unsplash.com/photo-1558905619-1715497e68c6?auto=format&fit=crop&w=600&q=80", caption: "Clipped Boxwood Hedge Setup" },
-        { url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80", caption: "Fresh Green Garden Clean" },
-        { url: "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?auto=format&fit=crop&w=600&q=80", caption: "Patio Turf Layering" },
-        { url: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=600&q=80", caption: "Yard Soil Aeration" }
-      ];
-    default:
-      return [
-        { url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80", caption: "Swedish Aroma Oil Massage" },
-        { url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80", caption: "Resistance Band Fitness Coach" },
-        { url: "https://images.unsplash.com/photo-1519823551278-64ac92834907?auto=format&fit=crop&w=600&q=80", caption: "Hot Stone Therapy Sessions" },
-        { url: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=600&q=80", caption: "Therapeutic Gym Exercise" }
-      ];
+const getProviderGallery = (service) => {
+  if (service?.imageUrl) {
+    return [{ url: service.imageUrl, caption: service.title || "Service Cover Photo" }];
   }
+  return [];
 };
 
 const buildServiceDetails = (service, dbReviews = [], dbAvgRating, dbTotalReviews) => {
-  const skillsData = getProviderSkills(service.category);
-  const plans = getProviderPlans(service.category, service.price);
-  const gallery = getProviderGallery(service.category);
-  const reviews = dbReviews;
+  const categoryName = typeof service.category === "object" ? (service.category?.name || "General") : (service.category || "General");
+  const skillsData = getProviderSkills(categoryName);
+  const plans = getProviderPlans(categoryName, service.price);
+  const gallery = getProviderGallery(service);
+  const experience = "5+ Years";
 
-  const experience = service.id.length % 3 === 0 ? "9+ Years" : (service.id.length % 2 === 0 ? "7+ Years" : "5+ Years");
+  const reviews = dbReviews.map(r => ({
+    id: r.id,
+    name: r.customerName || r.customer?.fullName || "Verified Customer",
+    avatar: r.customerAvatar || r.customer?.avatar || "",
+    rating: r.rating,
+    title: r.title || "Great Service",
+    date: r.createdAt ? new Date(r.createdAt).toISOString().split("T")[0] : "Recent",
+    comment: r.comment,
+    reply: r.reply || null
+  }));
 
   return {
     id: service.id,
-    name: service.title,
-    category: service.category,
+    title: service.title,
+    category: categoryName,
+    categoryIcon: service.category?.icon || null,
     providerName: service.provider?.fullName || "Verified Provider",
-    providerImage: service.provider?.avatar || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80",
+    providerImage: service.provider?.avatar || "",
     location: service.location,
     rating: dbAvgRating !== undefined ? dbAvgRating : service.rating,
     reviewsCount: dbTotalReviews !== undefined ? dbTotalReviews : service.reviewCount,
@@ -198,7 +169,7 @@ const buildServiceDetails = (service, dbReviews = [], dbAvgRating, dbTotalReview
     availability: service.availability,
     badge: service.badge,
     experience,
-    about: `Hi! I'm ${service.provider?.fullName || "your service provider"}, a professional specialist offering top-tier ${service.category} services. With years of hands-on experience and a reputation for client satisfaction, I work hard to deliver exceptional results tailored to your specific requirements. I am fully licensed, background checked, and dedicated to safety, promptness, and quality.`,
+    about: `Hi! I'm ${service.provider?.fullName || "your service provider"}, a professional specialist offering top-tier ${categoryName} services. With years of hands-on experience and a reputation for client satisfaction, I work hard to deliver exceptional results tailored to your specific requirements. I am fully licensed, background checked, and dedicated to safety, promptness, and quality.`,
     ...skillsData,
     gallery,
     plans,
@@ -272,7 +243,7 @@ export default function ServiceDetails() {
               name: service.title,
               category: service.category,
               providerName: service.provider?.fullName || "Verified Provider",
-              providerImage: service.provider?.avatar || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80",
+              providerImage: service.provider?.avatar || "",
               location: service.location,
               rating: service.rating,
               reviewsCount: service.reviewCount,

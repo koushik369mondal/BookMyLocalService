@@ -22,7 +22,9 @@ export function BookingSummaryCard({
         <div className="flex items-center gap-2 text-xs text-[#5A5146]">
           <span className="font-bold text-[#1F1D1A]">{service.provider?.fullName || "Verified Provider"}</span>
           <span>•</span>
-          <span className="px-2 py-0.5 rounded-full bg-[#FAF6F0] border border-[#E8DCC3] text-[10px] font-bold text-[#8C4B3E]">{service.category}</span>
+          <span className="px-2 py-0.5 rounded-full bg-[#FAF6F0] border border-[#E8DCC3] text-[10px] font-bold text-[#8C4B3E]">
+            {typeof service.category === "object" ? (service.category?.name || "Service") : (service.category || "Service")}
+          </span>
         </div>
       </div>
 

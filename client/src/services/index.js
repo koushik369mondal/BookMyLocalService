@@ -7,4 +7,5 @@ export { dashboardService } from "./dashboardService";
 export { adminService } from "./adminService";
 export { providerService } from "./providerService";
 export { reviewsService } from "./reviewsService";
+export { categoriesService } from "./categoriesService";
 export { api, API_URL, getHeaders } from "./apiClient";

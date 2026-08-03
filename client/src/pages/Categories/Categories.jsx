@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ServiceImagePlaceholder } from "@/components/ui/ServiceImagePlaceholder";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import { Button } from "@/components/ui/button";
@@ -6,14 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Paintbrush,
-  Droplet,
-  Zap,
-  Truck,
-  Flower2,
-  Heart,
   Search,
-  Briefcase,
   RefreshCw,
   Users,
   Layers,
@@ -23,46 +17,9 @@ import {
   Info
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { servicesService } from "../../services/api";
+import { categoriesService } from "@/services/categoriesService";
+import { getCategoryIconComponent } from "@/utils/categoryIconMap";
 import { fadeInUp, staggerContainer } from "@/utils/motion";
-
-const getCategoryIcon = (categoryName) => {
-  switch (categoryName) {
-    case "Home Cleaning":
-      return Paintbrush;
-    case "Plumbing":
-      return Droplet;
-    case "Electrical":
-      return Zap;
-    case "Moving & Packing":
-      return Truck;
-    case "Lawn & Garden":
-      return Flower2;
-    case "Wellness & Personal":
-      return Heart;
-    default:
-      return Briefcase;
-  }
-};
-
-const getCategoryColors = (category) => {
-  switch (category) {
-    case "Home Cleaning":
-      return "bg-pink-50 text-pink-600 border-pink-100";
-    case "Plumbing":
-      return "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10";
-    case "Electrical":
-      return "bg-amber-50 text-[#8C4B3E] border-amber-100";
-    case "Moving & Packing":
-      return "bg-emerald-50 text-emerald-600 border-emerald-100";
-    case "Lawn & Garden":
-      return "bg-lime-50 text-lime-600 border-lime-100";
-    case "Wellness & Personal":
-      return "bg-rose-50 text-rose-600 border-rose-100";
-    default:
-      return "bg-[#FAF6F0] text-[#5A5146] border-[#5A5146]/15";
-  }
-};
 
 export default function Categories() {
   const navigate = useNavigate();
@@ -75,9 +32,9 @@ export default function Categories() {
     setLoading(true);
     setError(null);
     try {
-      const response = await servicesService.getCategories();
-      if (response.success) {
-        setCategories(response.data || []);
+      const response = await categoriesService.getCategories();
+      if (response.success && response.data) {
+        setCategories(response.data);
       } else {
         throw new Error(response.message || "Failed to load categories.");
       }
@@ -186,28 +143,27 @@ export default function Categories() {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {filteredCategories.map((category) => {
-                const IconComponent = getCategoryIcon(category.name);
-                const categoryColorStyles = getCategoryColors(category.name);
+                const IconComponent = getCategoryIconComponent(category.icon);
 
                 return (
-                  <motion.div key={category.name} variants={fadeInUp}>
+                  <motion.div key={category.id || category.name} variants={fadeInUp}>
                     <Card
                       className="group overflow-hidden p-0 py-0 gap-0 hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 border border-gray-100 flex flex-col h-full bg-white rounded-2xl relative"
                     >
                       {/* Category Photo Container */}
-                      <div className="relative h-48 w-full overflow-hidden">
-                        <img
-                          src={category.imageUrl || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80"}
-                          alt={category.name}
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
-                          }}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
+                      <div className="relative h-48 w-full overflow-hidden bg-stone-100">
+                        {category.imageUrl ? (
+                          <img
+                            src={category.imageUrl}
+                            alt={category.name}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        ) : (
+                          <ServiceImagePlaceholder title={category.name} />
+                        )}
 
                         {/* Floating Category Badge Overlay */}
-                        <span className={`absolute bottom-3 right-3 text-[10px] font-extrabold px-2.5 py-1 rounded-full border shadow-xs ${categoryColorStyles}`}>
+                        <span className="absolute bottom-3 right-3 text-[10px] font-extrabold px-3 py-1 rounded-full border shadow-xs bg-white/90 text-[#8C4B3E] border-[#E8DCC3] backdrop-blur-xs">
                           {category.name}
                         </span>
                       </div>

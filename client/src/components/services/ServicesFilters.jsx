@@ -1,17 +1,9 @@
-import React from "react";
-import { Star, SlidersHorizontal } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Star, SlidersHorizontal, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-const categories = [
-  "Home Cleaning",
-  "Plumbing",
-  "Electrical",
-  "Moving & Packing",
-  "Lawn & Garden",
-  "Wellness & Personal"
-];
+import { categoriesService } from "@/services/categoriesService";
 
 export function ServicesFilters({
   selectedCategories,
@@ -28,6 +20,24 @@ export function ServicesFilters({
   setAvailability,
   onClearAll
 }) {
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const response = await categoriesService.getCategories();
+        if (response.success && response.data) {
+          setCategories(response.data);
+        }
+      } catch (err) {
+        console.error("Failed to load filter categories:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadCategories();
+  }, []);
   return (
     <div className="space-y-6 bg-white p-6 rounded-3xl border border-[#E8DCC3] shadow-sm">
       <div className="flex items-center justify-between pb-4 border-b border-[#E8DCC3]">
@@ -43,21 +53,37 @@ export function ServicesFilters({
       {/* Categories Multi-Select */}
       <div className="space-y-2.5">
         <Label className="text-xs font-bold text-[#1F1D1A]">Category</Label>
-        <div className="space-y-1.5">
-          {categories.map((cat) => {
-            const isChecked = selectedCategories.includes(cat);
-            return (
-              <label key={cat} className="flex items-center gap-2.5 text-xs text-[#5A5146] font-medium cursor-pointer hover:text-[#1F1D1A]">
-                <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={() => toggleCategory(cat)}
-                  className="rounded border-[#E8DCC3] text-[#8C4B3E] focus:ring-[#8C4B3E] h-4 w-4"
-                />
-                <span>{cat}</span>
-              </label>
-            );
-          })}
+        <div className="space-y-1.5 max-h-60 overflow-y-auto pr-1">
+          {isLoading ? (
+            <div className="flex items-center gap-2 text-xs text-[#7A7266] py-2">
+              <Loader2 className="h-3.5 w-3.5 animate-spin text-[#8C4B3E]" /> Loading categories...
+            </div>
+          ) : categories.length === 0 ? (
+            <span className="text-xs text-[#7A7266]">No categories available</span>
+          ) : (
+            categories.map((cat) => {
+              const catName = typeof cat === "string" ? cat : cat.name;
+              const isChecked = selectedCategories.includes(catName);
+              return (
+                <label key={cat.id || catName} className="flex items-center justify-between text-xs text-[#5A5146] font-medium cursor-pointer hover:text-[#1F1D1A] py-0.5">
+                  <div className="flex items-center gap-2.5 truncate">
+                    <input
+                      type="checkbox"
+                      checked={isChecked}
+                      onChange={() => toggleCategory(catName)}
+                      className="rounded border-[#E8DCC3] text-[#8C4B3E] focus:ring-[#8C4B3E] h-4 w-4 shrink-0"
+                    />
+                    <span className="truncate">{catName}</span>
+                  </div>
+                  {cat.serviceCount !== undefined && (
+                    <span className="text-[10px] font-bold text-[#7A7266] bg-[#FAF6F0] px-1.5 py-0.5 rounded-md shrink-0">
+                      {cat.serviceCount}
+                    </span>
+                  )}
+                </label>
+              );
+            })
+          )}
         </div>
       </div>
 

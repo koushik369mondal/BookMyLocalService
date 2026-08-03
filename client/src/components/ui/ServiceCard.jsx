@@ -13,12 +13,14 @@ import { prefersReducedMotion } from "@/utils/motion";
 import { UserAvatar } from "@/components/ui/avatar";
 import { formatPrice } from "@/utils/currency";
 
+import { ServiceImagePlaceholder } from "@/components/ui/ServiceImagePlaceholder";
+
 export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   if (!service) return null;
 
   const id = service.id;
   const title = service.name || service.title || "Local Service";
-  const category = service.category || "Service";
+  const category = typeof service.category === "object" ? (service.category?.name || "Service") : (service.category || "Service");
   const providerName = service.providerName || service.name || service.provider?.fullName || "Verified Provider";
   const providerAvatar = service.providerImage || service.provider?.avatar || service.image;
   const location = service.location || "Local Area";
@@ -31,7 +33,7 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
     priceType = `/${priceType}`;
   }
 
-  const image = service.image || service.imageUrl || "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80";
+  const image = service.image || service.imageUrl;
   const description = service.description || "Professional and reliable local service provider ready to assist with your needs.";
   const badge = service.badge;
 
@@ -46,11 +48,15 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
       
       {/* Image Thumbnail Header */}
       <div className="relative aspect-16/9 w-full overflow-hidden bg-[#F0E7D5] shrink-0 border-b border-[#E8DCC3]">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-103"
-        />
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-103"
+          />
+        ) : (
+          <ServiceImagePlaceholder title={title} />
+        )}
 
         {/* Primary Badge */}
         {badge && (

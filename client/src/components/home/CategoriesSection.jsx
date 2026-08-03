@@ -27,15 +27,16 @@ export function CategoriesSection({ categories = [] }) {
         </div>
 
         <motion.div variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true }} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
-          {categories.map((cat, idx) => {
-            const Icon = cat.icon || Wrench;
+          {categories.slice(0, 12).map((cat, idx) => {
+            const catName = typeof cat.name === "object" ? (cat.name?.name || "Category") : (cat.name || "Category");
+            const Icon = (typeof cat.icon === "function" || typeof cat.icon === "object") ? cat.icon : Wrench;
             return (
-              <motion.div key={cat.name || idx} variants={fadeInUp}>
-                <NavLink to={`/services?category=${encodeURIComponent(cat.name)}`} className="group flex flex-col items-center p-6 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl text-center hover:bg-[#8C4B3E] hover:border-[#8C4B3E] transition-all duration-300 shadow-sm hover:shadow-lg cursor-pointer">
+              <motion.div key={cat.id || catName || idx} variants={fadeInUp}>
+                <NavLink to={`/services?category=${encodeURIComponent(catName)}`} className="group flex flex-col items-center p-6 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl text-center hover:bg-[#8C4B3E] hover:border-[#8C4B3E] transition-all duration-300 shadow-sm hover:shadow-lg cursor-pointer">
                   <div className={`p-3.5 rounded-xl ${cat.color || "bg-amber-50 text-[#8C4B3E]"} group-hover:bg-white/20 group-hover:text-white transition-colors mb-3`}>
                     <Icon className="h-6 w-6" />
                   </div>
-                  <h3 className="text-sm font-extrabold text-[#1F1D1A] group-hover:text-white transition-colors mb-1">{cat.name}</h3>
+                  <h3 className="text-sm font-extrabold text-[#1F1D1A] group-hover:text-white transition-colors mb-1 truncate max-w-full">{catName}</h3>
                   <span className="text-[11px] font-semibold text-[#7A7266] group-hover:text-white/80 transition-colors">{cat.count}</span>
                 </NavLink>
               </motion.div>

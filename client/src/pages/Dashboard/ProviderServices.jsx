@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { formatPrice } from "@/utils/currency";
 import { useAuth } from "../../context/AuthContext";
-import { servicesService } from "../../services/api";
+import { servicesService } from "../../services/servicesService";
+import { categoriesService } from "@/services/categoriesService";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -44,7 +46,9 @@ import {
   Activity,
   Check,
   RefreshCw,
-  Info
+  Info,
+  Upload,
+  Image as ImageIcon
 } from "lucide-react";
 
 // Predefined Category List
@@ -71,18 +75,24 @@ const LOCATIONS = [
   "Jalpaiguri, WB"
 ];
 
-export default function ProviderServices() {
+function ProviderServicesContent() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   // State Management
   const [services, setServices] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [availabilityFilter, setAvailabilityFilter] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
+
+  // Cloudinary Image Upload State
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageError, setImageError] = useState(null);
 
   // Modal States
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
@@ -110,15 +120,23 @@ export default function ProviderServices() {
   const fetchServices = async () => {
     setLoading(true);
     try {
-      const response = await servicesService.getProviderServices();
-      if (response.success && Array.isArray(response.data)) {
-        setServices(response.data);
+      const [servRes, catRes] = await Promise.all([
+        servicesService.getProviderServices(),
+        categoriesService.getCategories()
+      ]);
+
+      if (servRes.success && Array.isArray(servRes.data)) {
+        setServices(servRes.data);
       } else {
         setServices([]);
       }
+
+      if (catRes.success && catRes.data) {
+        setCategories(catRes.data);
+      }
     } catch (err) {
-      console.error("Failed to fetch provider services from database:", err);
-      toast.error("Error loading services from database.");
+      console.error("Failed to fetch provider services/categories from database:", err);
+      toast.error("Error loading data from database.");
       setServices([]);
     } finally {
       setLoading(false);
@@ -131,19 +149,53 @@ export default function ProviderServices() {
     fetchServices();
   }, [user]);
 
+  // Handle Image Selection for Cloudinary Upload
+  const handleImageFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      const msg = "Only JPG, JPEG, PNG, and WebP image formats are allowed.";
+      toast.error(msg);
+      setImageError(msg);
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      const msg = "File size exceeds 5MB limit.";
+      toast.error(msg);
+      setImageError(msg);
+      return;
+    }
+
+    setImageError(null);
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   // Open Form Modal for Create
   const handleOpenCreateModal = () => {
     setEditingService(null);
+    setImageFile(null);
+    setImagePreview(null);
+    setImageError(null);
+
+    const defaultCat = categories.length > 0 ? (categories[0].id || categories[0].name) : "cat_home_cleaning";
     setFormData({
       title: "",
-      category: "Home Cleaning",
+      category: defaultCat,
       price: "",
       priceType: "/hr",
       location: "Kolkata, WB",
       availability: "today",
       status: "Active",
       badge: "",
-      imageUrl: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
+      imageUrl: "",
       description: ""
     });
     setIsFormModalOpen(true);
@@ -152,9 +204,14 @@ export default function ProviderServices() {
   // Open Form Modal for Edit
   const handleOpenEditModal = (service) => {
     setEditingService(service);
+    setImageFile(null);
+    setImagePreview(service.imageUrl || null);
+    setImageError(null);
+
+    const catVal = service.categoryId || (typeof service.category === "object" ? service.category?.id : service.category);
     setFormData({
       title: service.title,
-      category: service.category,
+      category: catVal || (categories.length > 0 ? categories[0].id : "cat_home_cleaning"),
       price: service.price ? service.price.toString() : "",
       priceType: service.priceType || "/hr",
       location: service.location || "Kolkata, WB",
@@ -167,7 +224,7 @@ export default function ProviderServices() {
     setIsFormModalOpen(true);
   };
 
-  // Save Service (Create or Update) directly to DB
+  // Save Service (Create or Update) directly to DB & Cloudinary
   const handleSaveService = async (e) => {
     e.preventDefault();
     if (!formData.title || !formData.price || !formData.description) {
@@ -175,19 +232,33 @@ export default function ProviderServices() {
       return;
     }
 
+    if (!editingService && !imageFile && !formData.imageUrl) {
+      toast.error("Please upload a cover image for your service.");
+      setImageError("Service cover image is required.");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      const payload = {
-        title: formData.title.trim(),
-        category: formData.category,
-        price: parseFloat(formData.price),
-        priceType: formData.priceType,
-        location: formData.location,
-        availability: formData.availability,
-        badge: formData.badge,
-        imageUrl: formData.imageUrl || "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
-        description: formData.description.trim()
-      };
+      const selectedCategory = formData.category || (categories.length > 0 ? (categories[0].id || categories[0].name) : "cat_home_cleaning");
+      
+      const payload = new FormData();
+      payload.append("title", formData.title.trim());
+      payload.append("categoryId", selectedCategory);
+      payload.append("category", selectedCategory);
+      payload.append("price", parseFloat(formData.price));
+      payload.append("priceType", formData.priceType || "/hr");
+      payload.append("location", formData.location || "Kolkata, WB");
+      payload.append("availability", formData.availability || "today");
+      payload.append("badge", formData.badge || "");
+      payload.append("description", formData.description.trim());
+      payload.append("status", formData.status || "Active");
+
+      if (imageFile) {
+        payload.append("image", imageFile);
+      } else if (formData.imageUrl) {
+        payload.append("imageUrl", formData.imageUrl);
+      }
 
       if (editingService) {
         // Update existing service in database
@@ -199,10 +270,10 @@ export default function ProviderServices() {
           toast.error(response.message || "Failed to update service.");
         }
       } else {
-        // Create new service in database
+        // Create new service in database & upload image to Cloudinary
         const response = await servicesService.createProviderService(payload);
         if (response.success) {
-          toast.success(`New service "${formData.title}" saved to database!`);
+          toast.success(`New service "${formData.title}" saved to database & Cloudinary!`);
           await fetchServices();
         } else {
           toast.error(response.message || "Failed to create service.");
@@ -275,30 +346,42 @@ export default function ProviderServices() {
   const filteredServices = useMemo(() => {
     return services
       .filter((s) => {
-        const matchesSearch =
-          s.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          s.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          s.description.toLowerCase().includes(searchQuery.toLowerCase());
+        const titleStr = (s.title || "").toLowerCase();
+        const catName = typeof s.category === "object" ? (s.category?.name || "") : (s.category || "");
+        const catStr = catName.toLowerCase();
+        const descStr = (s.description || "").toLowerCase();
+        const query = (searchQuery || "").toLowerCase();
 
+        const matchesSearch = !query || titleStr.includes(query) || catStr.includes(query) || descStr.includes(query);
+
+        const statusStr = (s.status || "Active").toLowerCase();
         const matchesStatus =
-          statusFilter === "all" ||
-          s.status.toLowerCase() === statusFilter.toLowerCase();
+          statusFilter === "all" || statusStr === statusFilter.toLowerCase();
 
+        const catId = s.categoryId || (typeof s.category === "object" ? s.category?.id : s.category);
         const matchesCategory =
-          categoryFilter === "all" || s.category === categoryFilter;
+          categoryFilter === "all" || catId === categoryFilter || catName === categoryFilter;
 
+        const availStr = s.availability || "today";
         const matchesAvailability =
-          availabilityFilter === "all" || s.availability === availabilityFilter;
+          availabilityFilter === "all" || availStr === availabilityFilter;
 
         return (
           matchesSearch && matchesStatus && matchesCategory && matchesAvailability
         );
       })
       .sort((a, b) => {
-        if (sortBy === "highest-rating") return b.rating - a.rating;
-        if (sortBy === "highest-price") return b.price - a.price;
-        if (sortBy === "lowest-price") return a.price - b.price;
-        if (sortBy === "most-bookings") return b.bookingsCount - a.bookingsCount;
+        const ratingA = Number(a.rating) || 5;
+        const ratingB = Number(b.rating) || 5;
+        const priceA = Number(a.price) || 0;
+        const priceB = Number(b.price) || 0;
+        const bookingsA = Number(a.bookingsCount) || 0;
+        const bookingsB = Number(b.bookingsCount) || 0;
+
+        if (sortBy === "highest-rating") return ratingB - ratingA;
+        if (sortBy === "highest-price") return priceB - priceA;
+        if (sortBy === "lowest-price") return priceA - priceB;
+        if (sortBy === "most-bookings") return bookingsB - bookingsA;
         return 0;
       });
   }, [services, searchQuery, statusFilter, categoryFilter, availabilityFilter, sortBy]);
@@ -306,12 +389,12 @@ export default function ProviderServices() {
   // Catalog KPI Summary Stats
   const catalogStats = useMemo(() => {
     const total = services.length;
-    const active = services.filter((s) => s.status === "Active").length;
-    const pausedOrDraft = services.filter((s) => s.status !== "Active").length;
-    const totalRevenue = services.reduce((acc, s) => acc + (s.revenue || 0), 0);
+    const active = services.filter((s) => (s.status || "Active") === "Active").length;
+    const pausedOrDraft = services.filter((s) => (s.status || "Active") !== "Active").length;
+    const totalRevenue = services.reduce((acc, s) => acc + (Number(s.revenue) || 0), 0);
     const avgRating =
       total > 0
-        ? (services.reduce((acc, s) => acc + s.rating, 0) / total).toFixed(2)
+        ? (services.reduce((acc, s) => acc + (Number(s.rating) || 5), 0) / total).toFixed(2)
         : "5.0";
 
     return { total, active, pausedOrDraft, totalRevenue, avgRating };
@@ -539,7 +622,7 @@ export default function ProviderServices() {
                     <div className="p-5 space-y-4">
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-wider text-[#C9A46A] block">
-                          {service.category} • {service.location}
+                          {typeof service.category === "object" ? (service.category?.name || "General") : (service.category || "General")} • {service.location}
                         </span>
                         <h3 className="font-bold text-sm text-[#1F1D1A] leading-snug mt-0.5 line-clamp-1">
                           {service.title}
@@ -575,7 +658,7 @@ export default function ProviderServices() {
                         <div className="flex items-center gap-1.5">
                           <Clock className="h-3.5 w-3.5 text-[#C9A46A]" />
                           <span className="capitalize text-[11px]">
-                            {service.availability.replace("-", " ")}
+                            {(service.availability || "available").replace("-", " ")}
                           </span>
                         </div>
                       </div>
@@ -699,11 +782,15 @@ export default function ProviderServices() {
                     className="w-full h-10 px-3 bg-white border border-[#E8DCC3] rounded-xl text-xs text-[#1F1D1A] font-medium"
                     required
                   >
-                    {CATEGORIES.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
+                    {categories.map((c) => {
+                      const name = typeof c === "string" ? c : c.name;
+                      const val = typeof c === "string" ? c : (c.id || c.name);
+                      return (
+                        <option key={c.id || name} value={val}>
+                          {name}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
 
@@ -801,18 +888,52 @@ export default function ProviderServices() {
                 </div>
               </div>
 
-              {/* Image URL */}
-              <div className="space-y-1">
-                <Label htmlFor="imageUrl" className="text-xs font-bold text-[#1F1D1A]">
-                  Image URL
+              {/* Cloudinary Image Upload Component */}
+              <div className="space-y-1.5">
+                <Label className="text-xs font-bold text-[#1F1D1A]">
+                  Service Cover Image * <span className="text-[11px] font-normal text-[#7A7266]">(JPG, PNG, WebP up to 5MB)</span>
                 </Label>
-                <Input
-                  id="imageUrl"
-                  placeholder="https://images.unsplash.com/..."
-                  value={formData.imageUrl}
-                  onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                  className="h-10 border-[#E8DCC3] bg-white rounded-xl text-xs text-[#1F1D1A]"
-                />
+
+                {imagePreview ? (
+                  <div className="relative h-44 w-full overflow-hidden rounded-2xl border border-[#E8DCC3] bg-[#FAF6F0] group shadow-2xs">
+                    <img src={imagePreview} alt="Service Cover Preview" className="h-full w-full object-cover" />
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                      <label htmlFor="service-image-input" className="cursor-pointer bg-white text-[#1F1D1A] text-xs font-extrabold px-3.5 py-2 rounded-xl shadow-md flex items-center gap-1.5 hover:bg-[#FAF6F0] transition-colors">
+                        <Upload className="h-4 w-4 text-[#8C4B3E]" /> Change Image
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => { setImageFile(null); setImagePreview(null); setFormData({ ...formData, imageUrl: "" }); }}
+                        className="cursor-pointer bg-red-600 text-white text-xs font-extrabold px-3.5 py-2 rounded-xl shadow-md flex items-center gap-1.5 hover:bg-red-700 transition-colors"
+                      >
+                        <X className="h-4 w-4" /> Remove
+                      </button>
+                    </div>
+                    <input
+                      id="service-image-input"
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      onChange={handleImageFileChange}
+                      className="hidden"
+                    />
+                  </div>
+                ) : (
+                  <label htmlFor="service-image-input" className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-[#E8DCC3] hover:border-[#8C4B3E] bg-[#FAF6F0]/60 hover:bg-[#FAF6F0] rounded-2xl cursor-pointer transition-all text-center">
+                    <div className="p-3 bg-white text-[#8C4B3E] rounded-2xl shadow-2xs border border-[#E8DCC3] mb-2">
+                      <ImageIcon className="h-6 w-6" />
+                    </div>
+                    <span className="text-xs font-bold text-[#1F1D1A]">Click to select & upload image to Cloudinary</span>
+                    <span className="text-[11px] text-[#7A7266] mt-0.5">JPG, PNG, WebP files up to 5MB</span>
+                    <input
+                      id="service-image-input"
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      onChange={handleImageFileChange}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+                {imageError && <p className="text-[11px] font-bold text-red-600 mt-1">{imageError}</p>}
               </div>
 
               {/* Description */}
@@ -881,7 +1002,9 @@ export default function ProviderServices() {
                     >
                       {viewingService.status}
                     </span>
-                    <span className="text-xs text-[#C9A46A] font-bold">{viewingService.category}</span>
+                    <span className="text-xs text-[#C9A46A] font-bold">
+                      {typeof viewingService.category === "object" ? (viewingService.category?.name || "General") : (viewingService.category || "General")}
+                    </span>
                   </div>
                   <DialogTitle className="text-base font-bold text-[#1F1D1A]">
                     {viewingService.title}
@@ -986,5 +1109,13 @@ export default function ProviderServices() {
         </Dialog>
       </div>
     </DashboardLayout>
+  );
+}
+
+export default function ProviderServices() {
+  return (
+    <ErrorBoundary>
+      <ProviderServicesContent />
+    </ErrorBoundary>
   );
 }

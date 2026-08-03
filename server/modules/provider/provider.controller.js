@@ -250,24 +250,44 @@ const getProviderServices = async (req, res) => {
 
 const createProviderService = async (req, res) => {
     try {
-        const { title, description, category, location, price, priceType, availability, badge, imageUrl } = req.body;
-        const providerId = req.user.id;
+        const { title, description, category, categoryId, location, price, priceType, availability, badge, imageUrl } = req.body;
+        const providerId = req.user?.id;
 
-        if (!title || !description || !category || !location || !price) {
+        if (!providerId) {
+            return res.status(401).json({
+                success: false,
+                message: "Authentication token missing or invalid."
+            });
+        }
+
+        let catValue = categoryId || category;
+        if (!catValue) {
+            catValue = await serviceService.resolveCategoryId(null);
+        }
+
+        const missing = [];
+        if (!title || !title.trim()) missing.push("title");
+        if (!description || !description.trim()) missing.push("description");
+        if (!location || !location.trim()) missing.push("location");
+        if (price === undefined || price === null || isNaN(parseFloat(price))) missing.push("price");
+
+        if (missing.length > 0) {
             return res.status(400).json({
                 success: false,
-                message: "Please provide all required fields: title, description, category, location, price."
+                message: `Missing or invalid required service field(s): ${missing.join(", ")}`,
+                missingFields: missing
             });
         }
 
         const newService = await serviceService.createService({
             title,
             description,
-            category,
+            categoryId: catValue,
+            category: catValue,
             providerId,
             location,
             price,
-            priceType: priceType || "fixed",
+            priceType: priceType || "/hr",
             availability: availability || "available",
             badge,
             imageUrl

@@ -6,6 +6,9 @@ class ServiceRepository {
       where,
       orderBy,
       include: {
+        category: {
+          select: { id: true, name: true, slug: true, icon: true, imageUrl: true }
+        },
         provider: {
           select: {
             id: true,
@@ -24,6 +27,9 @@ class ServiceRepository {
     return await prisma.service.findUnique({
       where: { id },
       include: {
+        category: {
+          select: { id: true, name: true, slug: true, icon: true, imageUrl: true, description: true }
+        },
         provider: {
           select: {
             id: true,
@@ -42,6 +48,9 @@ class ServiceRepository {
     return await prisma.service.findUnique({
       where: { slug },
       include: {
+        category: {
+          select: { id: true, name: true, slug: true, icon: true, imageUrl: true, description: true }
+        },
         provider: {
           select: {
             id: true,
@@ -57,20 +66,45 @@ class ServiceRepository {
   }
 
   async create(serviceData) {
-    return await prisma.service.create({
-      data: serviceData,
-      include: {
-        provider: {
-          select: {
-            id: true,
-            fullName: true,
-            email: true,
-            avatar: true,
-            isVerified: true
+    const requiredFields = ["title", "slug", "description", "categoryId", "providerId", "location", "price", "priceType", "availability"];
+    const missingFields = requiredFields.filter(field => serviceData[field] === undefined || serviceData[field] === null || serviceData[field] === "");
+
+    if (serviceData.imageUrl === undefined || serviceData.imageUrl === null) {
+      missingFields.push("imageUrl");
+    }
+
+    if (missingFields.length > 0) {
+      console.error(`❌ [ServiceRepository.create] Missing required field(s): ${missingFields.join(", ")}`);
+      throw new Error(`Missing required service field(s): ${missingFields.join(", ")}`);
+    }
+
+    try {
+      return await prisma.service.create({
+        data: serviceData,
+        include: {
+          category: {
+            select: { id: true, name: true, slug: true, icon: true, imageUrl: true }
+          },
+          provider: {
+            select: {
+              id: true,
+              fullName: true,
+              email: true,
+              avatar: true,
+              isVerified: true
+            }
           }
         }
-      }
-    });
+      });
+    } catch (error) {
+      console.error("❌ [ServiceRepository.create] Complete Prisma error details:", {
+        code: error.code,
+        meta: error.meta,
+        message: error.message,
+        stack: error.stack
+      });
+      throw error;
+    }
   }
 
   async update(id, updateData) {
@@ -78,6 +112,9 @@ class ServiceRepository {
       where: { id },
       data: updateData,
       include: {
+        category: {
+          select: { id: true, name: true, slug: true, icon: true, imageUrl: true }
+        },
         provider: {
           select: {
             id: true,

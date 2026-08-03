@@ -100,35 +100,45 @@ const getServiceBySlug = async (req, res) => {
  */
 const createService = async (req, res) => {
   try {
-    const { title, description, category, location, price, priceType, availability, badge, imageUrl } = req.body;
-    let { providerId } = req.body;
-
-    if (!title || !description || !category || !location || !price) {
-      return res.status(400).json({
+    const { title, description, category, categoryId, location, price, priceType, availability, badge, imageUrl } = req.body;
+    
+    // Always enforce providerId from authenticated user token
+    const providerId = req.user?.id;
+    if (!providerId) {
+      return res.status(401).json({
         success: false,
-        message: "Please provide all required fields: title, description, category, location, price."
+        message: "Authentication required. Provider user account ID is missing."
       });
     }
 
-    if (!providerId) {
-      providerId = req.user.id;
+    let catValue = categoryId || category;
+    if (!catValue) {
+      catValue = await serviceService.resolveCategoryId(null);
     }
 
-    if (req.user.role !== "ADMIN" && providerId !== req.user.id) {
-      return res.status(403).json({
+    const missing = [];
+    if (!title || !title.trim()) missing.push("title");
+    if (!description || !description.trim()) missing.push("description");
+    if (!location || !location.trim()) missing.push("location");
+    if (price === undefined || price === null || isNaN(parseFloat(price))) missing.push("price");
+
+    if (missing.length > 0) {
+      return res.status(400).json({
         success: false,
-        message: "You are not authorized to create a service for another provider."
+        message: `Missing or invalid required service field(s): ${missing.join(", ")}`,
+        missingFields: missing
       });
     }
 
     const newService = await serviceService.createService({
       title,
       description,
-      category,
+      categoryId: catValue,
+      category: catValue,
       providerId,
       location,
       price,
-      priceType: priceType || "fixed",
+      priceType: priceType || "/hr",
       availability: availability || "available",
       badge,
       imageUrl
@@ -141,6 +151,31 @@ const createService = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in createService controller:", error);
+
+    // Format Prisma errors clearly
+    if (error.code === "P2011" || error.code === "P2012") {
+      const field = error.meta?.constraint || error.meta?.target || "required field";
+      return res.status(400).json({
+        success: false,
+        message: `Null constraint violation on field: '${field}'. Please provide a valid value.`
+      });
+    }
+
+    if (error.code === "P2002") {
+      const target = error.meta?.target ? error.meta.target.join(", ") : "field";
+      return res.status(400).json({
+        success: false,
+        message: `A service with this ${target} already exists.`
+      });
+    }
+
+    if (error.code === "P2003") {
+      return res.status(400).json({
+        success: false,
+        message: `Foreign key constraint failed. Invalid providerId or categoryId.`
+      });
+    }
+
     return res.status(400).json({
       success: false,
       message: error.message || "Failed to create service."

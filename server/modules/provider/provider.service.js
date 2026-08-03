@@ -64,7 +64,7 @@ class ProviderService {
                 id: s.id,
                 title: s.title || "Service",
                 slug: s.slug || s.id,
-                category: s.category || "General",
+                category: typeof s.category === "object" ? s.category?.name : (s.category || "General"),
                 location: s.location || "Local Service Area",
                 price: typeof s.price === "number" ? s.price : 0,
                 priceType: s.priceType || "/service",
@@ -84,7 +84,7 @@ class ProviderService {
                 take: 5,
                 include: {
                     customer: { select: { id: true, fullName: true, email: true, phone: true, avatar: true } },
-                    service: { select: { id: true, title: true, category: true, imageUrl: true } }
+                    service: { select: { id: true, title: true, category: { select: { name: true } }, imageUrl: true } }
                 }
             });
 
@@ -99,7 +99,7 @@ class ProviderService {
                 } : { fullName: b.billingName || "Customer", email: b.billingEmail || "N/A", phone: b.billingPhone || "N/A", avatar: "" },
                 service: b.service ? {
                     title: b.service.title || "Service",
-                    category: b.service.category || "General",
+                    category: typeof b.service.category === "object" ? b.service.category?.name : (b.service.category || "General"),
                     imageUrl: b.service.imageUrl || ""
                 } : { title: "Service", category: "General", imageUrl: "" },
                 plan: b.plan || "Standard",
@@ -340,7 +340,7 @@ class ProviderService {
             const reviewsList = reviews.map(r => ({
                 id: r.id,
                 name: r.customer?.fullName || "Verified Customer",
-                avatar: r.customer?.avatar || "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
+                avatar: r.customer?.avatar || "",
                 serviceName: r.service?.title || "Service",
                 rating: typeof r.rating === "number" ? r.rating : 5,
                 title: r.title || "",

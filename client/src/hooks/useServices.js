@@ -43,9 +43,11 @@ export function useServices() {
           const mappedData = response.data.map(service => ({
             id: service.id,
             name: service.title,
-            category: service.category,
+            category: typeof service.category === "object" ? (service.category?.name || "General") : (service.category || "General"),
+            categoryId: typeof service.category === "object" ? service.category?.id : service.categoryId,
+            categorySlug: typeof service.category === "object" ? service.category?.slug : "",
             providerName: service.provider?.fullName || "Verified Provider",
-            providerImage: service.provider?.avatar || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80",
+            providerImage: service.provider?.avatar || "",
             location: service.location,
             rating: service.rating,
             reviewsCount: service.reviewCount,

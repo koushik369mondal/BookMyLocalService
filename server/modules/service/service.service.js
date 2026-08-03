@@ -11,13 +11,33 @@ const generateSlug = (title) => {
     .replace(/^-+|-+$/g, "");
 };
 
+const extractCloudinaryPublicId = (url) => {
+  if (!url || typeof url !== "string" || !url.includes("cloudinary.com")) return null;
+  try {
+    const parts = url.split("/upload/");
+    if (parts.length < 2) return null;
+    const pathAfterUpload = parts[1].replace(/^v\d+\//, "");
+    const publicIdWithExt = pathAfterUpload.split(".")[0];
+    return publicIdWithExt || null;
+  } catch (e) {
+    return null;
+  }
+};
+
 class ServiceService {
   async getAllServices(filters = {}) {
-    const { category, search, location, minPrice, maxPrice, rating, availability, sortBy } = filters;
+    const { category, categoryId, search, location, minPrice, maxPrice, rating, availability, sortBy } = filters;
     const where = {};
 
-    if (category && category !== "all") {
-      where.category = { equals: category, mode: "insensitive" };
+    const catParam = categoryId || category;
+    if (catParam && catParam !== "all") {
+      where.category = {
+        OR: [
+          { id: catParam },
+          { slug: catParam },
+          { name: { equals: catParam, mode: "insensitive" } }
+        ]
+      };
     }
 
     if (search && search.trim() !== "") {
@@ -25,8 +45,8 @@ class ServiceService {
       where.OR = [
         { title: { contains: q, mode: "insensitive" } },
         { description: { contains: q, mode: "insensitive" } },
-        { category: { contains: q, mode: "insensitive" } },
-        { location: { contains: q, mode: "insensitive" } }
+        { location: { contains: q, mode: "insensitive" } },
+        { category: { name: { contains: q, mode: "insensitive" } } }
       ];
     }
 
@@ -65,8 +85,36 @@ class ServiceService {
     return await serviceRepository.findBySlug(slug);
   }
 
+  async resolveCategoryId(categoryInput) {
+    if (categoryInput) {
+      let category = await prisma.category.findUnique({ where: { id: categoryInput } });
+      if (!category) {
+        category = await prisma.category.findUnique({ where: { slug: categoryInput } });
+      }
+      if (!category) {
+        category = await prisma.category.findFirst({
+          where: { name: { equals: categoryInput, mode: "insensitive" } }
+        });
+      }
+      if (category) return category.id;
+    }
+
+    // Fallback: Return first active category ID from database
+    const fallbackCategory = await prisma.category.findFirst({
+      where: { isActive: true },
+      orderBy: { createdAt: "asc" }
+    });
+    return fallbackCategory ? fallbackCategory.id : null;
+  }
+
   async createService(data, file) {
-    let imageUrl = data.imageUrl || "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=600";
+    if (!data.title || !data.title.trim()) throw new Error("Service title is required.");
+    if (!data.description || !data.description.trim()) throw new Error("Service description is required.");
+    if (!data.location || !data.location.trim()) throw new Error("Service location is required.");
+    if (data.price === undefined || data.price === null || isNaN(parseFloat(data.price))) throw new Error("Valid service price is required.");
+    if (!data.providerId) throw new Error("Provider ID is required.");
+
+    let imageUrl = data.imageUrl ? data.imageUrl.trim() : "";
 
     if (file) {
       const base64File = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
@@ -78,26 +126,36 @@ class ServiceService {
     }
 
     let baseSlug = generateSlug(data.title);
-    let slug = baseSlug;
+    if (!baseSlug) baseSlug = `service-${Date.now()}`;
+    let slug = data.slug ? generateSlug(data.slug) : baseSlug;
     let counter = 1;
-    while (await serviceRepository.findBySlug(slug)) {
-      slug = `${baseSlug}-${counter}`;
+    let checkSlug = slug;
+    while (await serviceRepository.findBySlug(checkSlug)) {
+      checkSlug = `${slug}-${counter}`;
       counter++;
     }
+    slug = checkSlug;
 
-    return await serviceRepository.create({
+    const categoryId = await this.resolveCategoryId(data.categoryId || data.category);
+    if (!categoryId) {
+      throw new Error("Invalid or missing service category ID.");
+    }
+
+    const serviceData = {
       title: data.title.trim(),
       slug,
       description: data.description.trim(),
-      category: data.category.trim(),
+      categoryId,
       providerId: data.providerId,
       location: data.location.trim(),
       price: parseFloat(data.price),
-      priceType: data.priceType || "fixed",
+      priceType: data.priceType || "/hr",
       availability: data.availability || "available",
       badge: data.badge ? data.badge.trim() : null,
       imageUrl
-    });
+    };
+
+    return await serviceRepository.create(serviceData);
   }
 
   async updateService(id, data, file) {
@@ -120,8 +178,14 @@ class ServiceService {
       }
       updateData.slug = slug;
     }
+
     if (data.description) updateData.description = data.description.trim();
-    if (data.category) updateData.category = data.category.trim();
+
+    if (data.categoryId || data.category) {
+      const categoryId = await this.resolveCategoryId(data.categoryId || data.category);
+      if (categoryId) updateData.categoryId = categoryId;
+    }
+
     if (data.location) updateData.location = data.location.trim();
     if (data.price) updateData.price = parseFloat(data.price);
     if (data.priceType) updateData.priceType = data.priceType;
@@ -130,6 +194,18 @@ class ServiceService {
     if (data.imageUrl) updateData.imageUrl = data.imageUrl;
 
     if (file) {
+      if (service.imageUrl) {
+        const oldPublicId = extractCloudinaryPublicId(service.imageUrl);
+        if (oldPublicId) {
+          try {
+            await cloudinary.uploader.destroy(oldPublicId);
+            console.log(`🗑️ Destroyed replaced Cloudinary image: ${oldPublicId}`);
+          } catch (e) {
+            console.warn("Failed to destroy old Cloudinary image:", e.message);
+          }
+        }
+      }
+
       const base64File = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
       const uploadResponse = await cloudinary.uploader.upload(base64File, {
         folder: "services",
@@ -142,27 +218,39 @@ class ServiceService {
   }
 
   async deleteService(id) {
+    const service = await serviceRepository.findById(id);
+    if (service && service.imageUrl) {
+      const publicId = extractCloudinaryPublicId(service.imageUrl);
+      if (publicId) {
+        try {
+          await cloudinary.uploader.destroy(publicId);
+          console.log(`🗑️ Destroyed deleted service Cloudinary image: ${publicId}`);
+        } catch (e) {
+          console.warn(`Failed to destroy Cloudinary image ${publicId}:`, e.message);
+        }
+      }
+    }
     return await serviceRepository.delete(id);
   }
 
   async getServiceCategories() {
-    const services = await prisma.service.findMany({
-      select: { category: true, imageUrl: true }
-    });
-
-    const categoryMap = {};
-    services.forEach(s => {
-      if (!categoryMap[s.category]) {
-        categoryMap[s.category] = {
-          name: s.category,
-          count: 0,
-          image: s.imageUrl
-        };
+    const categories = await prisma.category.findMany({
+      where: { isActive: true },
+      orderBy: { name: "asc" },
+      include: {
+        _count: { select: { services: true } }
       }
-      categoryMap[s.category].count += 1;
     });
 
-    return Object.values(categoryMap);
+    return categories.map(cat => ({
+      id: cat.id,
+      name: cat.name,
+      slug: cat.slug,
+      icon: cat.icon || "Briefcase",
+      image: cat.imageUrl || "",
+      description: cat.description || "",
+      count: cat._count?.services || 0
+    }));
   }
 }
 

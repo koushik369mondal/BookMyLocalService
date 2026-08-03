@@ -72,14 +72,13 @@ export function HeroSection({ user, onSearch }) {
           {/* Right Column: Visual Hero Banner */}
           <div className="lg:col-span-5 relative flex justify-center">
             <motion.div {...floatMotionProps} className="relative z-10 w-full max-w-md">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80" alt="Local Service Professional" className="w-full h-[420px] object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6 text-white space-y-1">
-                  <span className="px-3 py-1 bg-[#8C4B3E] text-white text-xs font-bold rounded-full uppercase tracking-wider">Verified Professional</span>
-                  <h3 className="text-xl font-black">Local House Cleaning Expert</h3>
-                  <p className="text-xs text-stone-200">Over 140+ 5-Star Reviews in your neighborhood</p>
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-[#FAF6F0] flex flex-col items-center justify-center p-8 h-[420px] text-center border-[#E8DCC3]">
+                <div className="p-5 bg-white rounded-full border border-[#E8DCC3] shadow-md mb-4 text-[#8C4B3E]">
+                  <Search className="h-12 w-12" />
                 </div>
+                <span className="px-3.5 py-1 bg-[#8C4B3E] text-white text-xs font-bold rounded-full uppercase tracking-wider mb-2">Verified Professionals</span>
+                <h3 className="text-2xl font-black text-[#1F1D1A]">Book Local Services</h3>
+                <p className="text-xs text-[#5A5146] font-medium mt-1 max-w-xs">Verified background-checked experts in your neighborhood ready to assist</p>
               </div>
             </motion.div>
           </div>
