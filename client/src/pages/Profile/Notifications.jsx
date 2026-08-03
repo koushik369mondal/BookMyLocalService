@@ -17,7 +17,7 @@ const mockNotifications = [
   {
     id: 2,
     title: "Payment Received",
-    description: "Successfully processed payment of $55.00 for Booking Ref: BMLS-28491.",
+    description: "Successfully processed payment of ₹55.00 for Booking Ref: BMLS-28491.",
     date: "2026-07-13 08:32 AM",
     type: "payment",
     unread: false

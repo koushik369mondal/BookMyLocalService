@@ -5,13 +5,20 @@ const bookingService = require("./booking.service");
  */
 const createBooking = async (req, res) => {
   try {
-    const { serviceId, plan, date, time, price } = req.body;
+    const { serviceId, plan, date, time } = req.body;
     const customerId = req.user.id; // logged in user is customer
 
-    if (!serviceId || !plan || !date || !time || price === undefined) {
+    const missingFields = [];
+    if (!serviceId) missingFields.push("serviceId");
+    if (!plan) missingFields.push("plan");
+    if (!date) missingFields.push("date");
+    if (!time) missingFields.push("time");
+
+    if (missingFields.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "Please provide all required fields: serviceId, plan, date, time, price."
+        message: `Missing required booking fields: ${missingFields.join(", ")}.`,
+        missingFields
       });
     }
 
@@ -20,8 +27,7 @@ const createBooking = async (req, res) => {
       serviceId,
       plan,
       date,
-      time,
-      price
+      time
     });
 
     return res.status(201).json({

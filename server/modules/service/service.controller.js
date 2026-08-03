@@ -100,13 +100,13 @@ const getServiceBySlug = async (req, res) => {
  */
 const createService = async (req, res) => {
   try {
-    const { title, description, category, location, price, priceType, availability, badge } = req.body;
+    const { title, description, category, location, price, priceType, availability, badge, imageUrl } = req.body;
     let { providerId } = req.body;
 
-    if (!title || !description || !category || !location || !price || !priceType || !availability) {
+    if (!title || !description || !category || !location || !price) {
       return res.status(400).json({
         success: false,
-        message: "Please provide all required fields: title, description, category, location, price, priceType, availability."
+        message: "Please provide all required fields: title, description, category, location, price."
       });
     }
 
@@ -121,13 +121,6 @@ const createService = async (req, res) => {
       });
     }
 
-    if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        message: "Please upload a service image."
-      });
-    }
-
     const newService = await serviceService.createService({
       title,
       description,
@@ -135,9 +128,10 @@ const createService = async (req, res) => {
       providerId,
       location,
       price,
-      priceType,
-      availability,
-      badge
+      priceType: priceType || "fixed",
+      availability: availability || "available",
+      badge,
+      imageUrl
     }, req.file);
 
     return res.status(201).json({

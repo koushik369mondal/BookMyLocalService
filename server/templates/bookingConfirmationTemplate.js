@@ -2,7 +2,9 @@
  * Generates booking confirmation email HTML template
  */
 const bookingConfirmationTemplate = ({ bookingId, customerName, serviceName, providerName, date, time, totalAmount }) => {
-    const formattedAmount = typeof totalAmount === "number" ? `$${totalAmount.toFixed(2)}` : (totalAmount || "$0.00");
+    const formattedAmount = typeof totalAmount === "number" 
+      ? `₹${totalAmount.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` 
+      : (typeof totalAmount === "string" && totalAmount ? (totalAmount.startsWith("₹") ? totalAmount : `₹${totalAmount}`) : "₹0.00");
     return `
 <!DOCTYPE html>
 <html>

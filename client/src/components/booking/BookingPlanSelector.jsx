@@ -1,5 +1,6 @@
 import React from "react";
 import { Check } from "lucide-react";
+import { formatPrice } from "@/utils/currency";
 
 export function BookingPlanSelector({ plans, activePlanIdx, onSelectPlan }) {
   if (!plans || plans.length === 0) return null;
@@ -29,7 +30,7 @@ export function BookingPlanSelector({ plans, activePlanIdx, onSelectPlan }) {
                     </span>
                   )}
                 </div>
-                <div className="text-xl font-black text-[#8C4B3E]">₹{plan.price}</div>
+                <div className="text-xl font-black text-[#8C4B3E]">{formatPrice(plan.price)}</div>
                 <p className="text-[11px] text-[#5A5146] leading-relaxed">{plan.description}</p>
               </div>
 

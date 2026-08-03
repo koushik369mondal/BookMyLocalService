@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
+import { formatPrice } from "@/utils/currency";
+import { servicesService } from "../../services/servicesService";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,68 +16,12 @@ import {
   Home, 
   ChevronRight, 
   Printer, 
-  Info
+  Info,
+  Loader2
 } from "lucide-react";
 
-// Predefined services dataset matching the rest of the application
-const initialServices = [
-  {
-    id: 1,
-    name: "Deep Home Cleaning & Sanitization",
-    category: "Home Cleaning",
-    providerName: "Sunita Rao",
-    providerImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Kolkata, WB",
-    rating: 4.9,
-    reviewsCount: 142,
-    price: 1499,
-    priceType: "/service",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
-    description: "Complete top-to-bottom cleaning of all rooms including dusting, vacuuming, kitchen sanitization, and balcony washing.",
-    availability: "today",
-    popularity: 98,
-    dateAdded: "2026-07-01",
-    badge: "Top Rated"
-  },
-  {
-    id: 2,
-    name: "Expert Plumbing & Leakage Repair",
-    category: "Plumbing",
-    providerName: "Rajesh Sharma",
-    providerImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Delhi NCR",
-    rating: 4.8,
-    reviewsCount: 98,
-    price: 499,
-    priceType: "/visit",
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
-    description: "Resolving leakages, clogged drains, tap replacements, geyser installation, and bathroom fitting repairs.",
-    availability: "this-week",
-    popularity: 85,
-    dateAdded: "2026-06-28",
-    badge: "Verified"
-  },
-  {
-    id: 3,
-    name: "Certified Home Electrical & Appliance Repair",
-    category: "Electrical",
-    providerName: "Amit Verma",
-    providerImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
-    location: "Bengaluru, KA",
-    rating: 4.9,
-    reviewsCount: 115,
-    price: 399,
-    priceType: "/visit",
-    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80",
-    description: "Short circuit fixing, MCB replacement, fan & light installation, inverter setup, and switchboard wiring.",
-    availability: "today",
-    popularity: 92,
-    dateAdded: "2026-07-05",
-    badge: "Top Rated"
-  }
-];
-
 const getArrivalWindow = (timeStr) => {
+  if (!timeStr) return "10:00 AM - 10:30 AM";
   const match = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
   if (!match) return `${timeStr} - ${timeStr}`;
   let hrs = parseInt(match[1]);
@@ -106,18 +52,37 @@ const getArrivalWindow = (timeStr) => {
 export default function BookingSuccess() {
   const [searchParams] = useSearchParams();
 
-  // Retrieve parameters dynamically
   const bookingId = searchParams.get("bookingId") || `BMLS-${Math.floor(100000 + Math.random() * 900000)}`;
-  const serviceId = parseInt(searchParams.get("serviceId")) || 1;
-  const provider = initialServices.find(s => s.id === serviceId) || initialServices[0];
-  const selectedPrice = parseFloat(searchParams.get("price")) || provider.price;
+  const serviceId = searchParams.get("serviceId");
+  const selectedPriceParam = parseFloat(searchParams.get("price"));
   const selectedDate = searchParams.get("date") || new Date().toISOString().split("T")[0];
   const selectedTime = searchParams.get("time") || "10:30 AM";
   const paymentMethod = searchParams.get("paymentMethod") || "card";
 
+  const [service, setService] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    const fetchServiceData = async () => {
+      if (!serviceId) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const response = await servicesService.getServiceById(serviceId);
+        if (response.success && response.data) {
+          setService(response.data);
+        }
+      } catch (err) {
+        console.error("Failed to load service for success page:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServiceData();
+  }, [serviceId]);
 
   const handlePrint = () => {
     window.print();
@@ -137,6 +102,12 @@ export default function BookingSuccess() {
         return "Credit/Debit Card";
     }
   };
+
+  const providerName = service?.provider?.fullName || "Verified Provider";
+  const providerImage = service?.provider?.avatar || service?.imageUrl || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80";
+  const category = service?.category || "Local Service";
+  const serviceTitle = service?.title || "Booked Service";
+  const displayPrice = !isNaN(selectedPriceParam) ? selectedPriceParam : (service?.price || 1499);
 
   return (
     <MainLayout>
@@ -182,19 +153,25 @@ export default function BookingSuccess() {
               {/* SPECIALIST SECTION */}
               <div className="space-y-3">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Service Specialist</span>
-                <div className="flex items-center gap-4 p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl print:bg-white">
-                  <Avatar className="w-14 h-14 rounded-full overflow-hidden shrink-0 border border-[#E8DCC3] shadow-2xs">
-                    <AvatarImage src={provider.providerImage} className="object-cover" />
-                    <AvatarFallback className="text-lg font-bold bg-[#F0E7D5] text-[#C9A46A]">{provider.providerName[0]}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <Badge variant="secondary" className="bg-white border-[#E8DCC3] text-[#C9A46A] font-bold rounded-lg text-[9px] uppercase py-0.5 px-2">
-                      {provider.category}
-                    </Badge>
-                    <h3 className="font-bold text-[#1F1D1A] text-base mt-1 leading-snug">{provider.providerName}</h3>
-                    <p className="text-xs text-[#7A7266] font-medium truncate max-w-xs">{provider.name}</p>
+                {loading ? (
+                  <div className="h-20 flex items-center justify-center bg-[#FAF6F0] rounded-2xl">
+                    <Loader2 className="h-5 w-5 animate-spin text-[#8C4B3E]" />
                   </div>
-                </div>
+                ) : (
+                  <div className="flex items-center gap-4 p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl print:bg-white">
+                    <Avatar className="w-14 h-14 rounded-full overflow-hidden shrink-0 border border-[#E8DCC3] shadow-2xs">
+                      <AvatarImage src={providerImage} className="object-cover" />
+                      <AvatarFallback className="text-lg font-bold bg-[#F0E7D5] text-[#C9A46A]">{providerName[0]}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <Badge variant="secondary" className="bg-white border-[#E8DCC3] text-[#C9A46A] font-bold rounded-lg text-[9px] uppercase py-0.5 px-2">
+                        {category}
+                      </Badge>
+                      <h3 className="font-bold text-[#1F1D1A] text-base mt-1 leading-snug">{providerName}</h3>
+                      <p className="text-xs text-[#7A7266] font-medium truncate max-w-xs">{serviceTitle}</p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* DATE, TIME, & ARRIVAL ESTIMATE */}
@@ -242,7 +219,7 @@ export default function BookingSuccess() {
                   <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg text-[10px] py-1 px-3 shrink-0">
                     Paid / Success
                   </Badge>
-                  <span className="text-sm font-bold text-[#1F1D1A]">₹{selectedPrice.toFixed(2)}</span>
+                  <span className="text-sm font-bold text-[#1F1D1A]">{formatPrice(displayPrice, { decimals: true })}</span>
                 </div>
               </div>
 
@@ -252,7 +229,7 @@ export default function BookingSuccess() {
                 <div className="space-y-1">
                   <h4 className="font-bold text-xs">Estimated Arrival Notification</h4>
                   <p className="text-[11px] text-[#5A5146] leading-relaxed font-medium">
-                    Specialist {provider.providerName} will arrive within the estimated window of {getArrivalWindow(selectedTime)}. Please ensure the service area is accessible.
+                    Specialist {providerName} will arrive within the estimated window of {getArrivalWindow(selectedTime)}. Please ensure the service area is accessible.
                   </p>
                 </div>
               </div>

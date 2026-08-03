@@ -1,5 +1,6 @@
 import React from "react";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import { formatPrice } from "@/utils/currency";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -99,7 +100,7 @@ export default function AdminBookings() {
                         </td>
                         <td className="py-3.5 px-4 text-[#5A5146] font-medium">{b.service}</td>
                         <td className="py-3.5 px-4 text-[#7A7266] font-medium">{b.date}</td>
-                        <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">₹{b.amount.toFixed(2)}</td>
+                        <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">{formatPrice(b.amount, { decimals: true })}</td>
                         <td className="py-3.5 px-4">{getStatusBadge(b.status)}</td>
                         <td className="py-3.5 px-4 text-right">
                           <Button size="xs" variant="ghost" className="text-[#C9A46A] hover:text-[#b89359] font-bold text-[11px]">

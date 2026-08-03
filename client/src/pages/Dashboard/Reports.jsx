@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import { formatPrice } from "@/utils/currency";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -9,26 +10,26 @@ import { Progress } from "@/components/ui/progress";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-  DollarSign, 
-  Calendar, 
-  Users, 
-  Briefcase, 
-  TrendingUp, 
-  BarChart2, 
-  PieChart, 
-  Download, 
-  Printer, 
-  Loader2, 
-  CheckCircle2, 
-  ArrowLeft, 
-  ChevronLeft, 
-  ChevronRight, 
-  ChevronDown, 
-  FileSpreadsheet, 
-  Star, 
-  MapPin, 
-  TrendingDown, 
+import {
+  DollarSign,
+  Calendar,
+  Users,
+  Briefcase,
+  TrendingUp,
+  BarChart2,
+  PieChart,
+  Download,
+  Printer,
+  Loader2,
+  CheckCircle2,
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+  FileSpreadsheet,
+  Star,
+  MapPin,
+  TrendingDown,
   Layers,
   FileText,
   AlertCircle
@@ -131,7 +132,7 @@ export default function Reports() {
   return (
     <DashboardLayout>
       <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans print:bg-white print:py-2">
-        
+
         {/* LIGHT RETRO BANNER HEADER */}
         <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A] print:hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -139,12 +140,12 @@ export default function Reports() {
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Analytical Reports & Audits</h1>
               <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Verify system transaction graphs, top performing specialists, and export records</p>
             </div>
-            
+
             {/* Quick Actions Panel */}
             <div className="flex items-center gap-2.5 flex-wrap print:hidden">
-              <Button 
+              <Button
                 onClick={handlePrint}
-                size="sm" 
+                size="sm"
                 className="bg-[#FAF6F0] hover:bg-white text-[#1F1D1A] border border-[#E8DCC3] rounded-xl text-xs font-bold px-4 h-9.5 shadow-2xs flex items-center gap-1.5 cursor-pointer"
               >
                 <Printer className="h-4 w-4 text-[#C9A46A]" /> Print Reports
@@ -161,12 +162,12 @@ export default function Reports() {
         {/* STATISTICS OVERVIEW CARDS */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            
+
             {/* Total Revenue */}
             <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Revenue</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">₹3,42,850 <span className="text-[10px] text-[#7A7266] font-medium">INR</span></span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">{formatPrice(342850)}</span>
               </div>
               <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl shrink-0">
                 <DollarSign className="h-6 w-6" />
@@ -211,7 +212,7 @@ export default function Reports() {
 
         {/* CONTAINER */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-          
+
           {successMsg && (
             <div className="flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl animate-fade-in shadow-2xs">
               <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
@@ -222,23 +223,23 @@ export default function Reports() {
           {/* FILTERING & EXPORT TOOLBAR */}
           <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-4.5 print:hidden">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              
+
               <div className="flex flex-wrap items-center gap-3">
                 <div className="flex flex-col gap-1">
                   <Label className="text-[10px] font-bold text-[#7A7266] uppercase">Date Range</Label>
                   <div className="flex items-center gap-1.5">
-                    <Input 
-                      type="date" 
-                      value={dateFrom} 
+                    <Input
+                      type="date"
+                      value={dateFrom}
                       onChange={(e) => setDateFrom(e.target.value)}
-                      className="h-9 border-[#5A5146]/20 focus-visible:ring-violet-950 text-xs rounded-xl bg-white text-[#1F1D1A] w-36" 
+                      className="h-9 border-[#5A5146]/20 focus-visible:ring-violet-950 text-xs rounded-xl bg-white text-[#1F1D1A] w-36"
                     />
                     <span className="text-xs text-stone-400">to</span>
-                    <Input 
-                      type="date" 
-                      value={dateTo} 
+                    <Input
+                      type="date"
+                      value={dateTo}
                       onChange={(e) => setDateTo(e.target.value)}
-                      className="h-9 border-[#5A5146]/20 focus-visible:ring-violet-950 text-xs rounded-xl bg-white text-[#1F1D1A] w-36" 
+                      className="h-9 border-[#5A5146]/20 focus-visible:ring-violet-950 text-xs rounded-xl bg-white text-[#1F1D1A] w-36"
                     />
                   </div>
                 </div>
@@ -262,15 +263,15 @@ export default function Reports() {
 
               {/* EXPORT BUTTONS */}
               <div className="flex items-center gap-2 pt-2 lg:pt-0 border-t lg:border-t-0 border-stone-100">
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={() => handleExport("PDF")}
                   className="bg-[#8C4B3E] hover:bg-black text-white rounded-xl h-9 text-xs font-bold flex items-center gap-1.5"
                 >
                   <FileText className="h-4 w-4" /> PDF Report
                 </Button>
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={() => handleExport("Excel")}
                   variant="outline"
                   className="border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] rounded-xl h-9 text-xs font-bold flex items-center gap-1.5"
@@ -284,7 +285,7 @@ export default function Reports() {
 
           {/* TWO COLUMN GRID LAYOUT */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
+
             {/* SWAP GRAPH ANALYSIS CHART */}
             <Card className="lg:col-span-8 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 flex flex-col justify-between">
               <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -297,27 +298,24 @@ export default function Reports() {
                   <button
                     type="button"
                     onClick={() => setMetricTab("revenue")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
-                      metricTab === "revenue" ? "bg-[#8C4B3E] text-white shadow-2xs" : "text-[#7A7266] hover:text-[#1F1D1A]"
-                    }`}
+                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${metricTab === "revenue" ? "bg-[#8C4B3E] text-white shadow-2xs" : "text-[#7A7266] hover:text-[#1F1D1A]"
+                      }`}
                   >
                     Revenue
                   </button>
                   <button
                     type="button"
                     onClick={() => setMetricTab("bookings")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
-                      metricTab === "bookings" ? "bg-[#8C4B3E] text-white shadow-2xs" : "text-[#7A7266] hover:text-[#1F1D1A]"
-                    }`}
+                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${metricTab === "bookings" ? "bg-[#8C4B3E] text-white shadow-2xs" : "text-[#7A7266] hover:text-[#1F1D1A]"
+                      }`}
                   >
                     Bookings
                   </button>
                   <button
                     type="button"
                     onClick={() => setMetricTab("growth")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
-                      metricTab === "growth" ? "bg-[#8C4B3E] text-white shadow-2xs" : "text-[#7A7266] hover:text-[#1F1D1A]"
-                    }`}
+                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${metricTab === "growth" ? "bg-[#8C4B3E] text-white shadow-2xs" : "text-[#7A7266] hover:text-[#1F1D1A]"
+                      }`}
                   >
                     Growth
                   </button>
@@ -331,7 +329,7 @@ export default function Reports() {
                   <div className="w-full overflow-x-auto">
                     <div className="min-w-[480px] h-[160px] relative">
                       <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-full overflow-visible">
-                        
+
                         <line x1="20" y1="20" x2="520" y2="20" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
                         <line x1="20" y1="65" x2="520" y2="65" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
                         <line x1="20" y1="110" x2="520" y2="110" stroke="#f1f5f9" strokeWidth="1.5" />
@@ -352,7 +350,7 @@ export default function Reports() {
                                 fill="#8C4B3E"
                                 className="hover:fill-[#1F1D1A] transition-colors cursor-pointer"
                               />
-                              <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" className="text-[9px] font-bold fill-[#1F1D1A]">{metricTab === "revenue" ? `₹${d.val}` : d.val}</text>
+                              <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" className="text-[9px] font-bold fill-[#1F1D1A]">{metricTab === "revenue" ? formatPrice(d.val) : d.val}</text>
                               <text x={x + barWidth / 2} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-medium fill-stone-400">{d.label}</text>
                             </g>
                           );
@@ -385,7 +383,7 @@ export default function Reports() {
 
           {/* TOP PROVIDERS AND MOST BOOKED SERVICES */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
+
             {/* Top performing specialists */}
             <Card className="lg:col-span-5 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
               <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Top Service Specialists</span>
@@ -409,7 +407,7 @@ export default function Reports() {
 
                     <div className="text-right space-y-1 shrink-0">
                       <span className="text-xs font-extrabold text-[#8C4B3E] block">{prov.bookings} jobs</span>
-                      <span className="text-[11px] text-emerald-600 font-black block">₹{prov.revenue.toLocaleString()}</span>
+                      <span className="text-[11px] text-emerald-600 font-black block">{formatPrice(prov.revenue)}</span>
                     </div>
                   </div>
                 ))}
@@ -419,7 +417,7 @@ export default function Reports() {
             {/* Most Booked Services listing */}
             <Card className="lg:col-span-7 border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6 space-y-4">
               <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5">Most Booked Services</span>
-              
+
               <div className="overflow-x-auto">
                 <table className="w-full text-xs text-left">
                   <thead>
@@ -435,23 +433,23 @@ export default function Reports() {
                     <tr className="hover:bg-[#FAF6F0] transition-colors">
                       <td className="py-3 px-1 font-bold text-[#1F1D1A]">Deep Home Cleaning & Sanitization</td>
                       <td className="py-3">Cleaning</td>
-                      <td className="py-3">₹1,499.00</td>
+                      <td className="py-3">{formatPrice(1499, { decimals: true })}</td>
                       <td className="py-3">700</td>
-                      <td className="py-3 text-right text-emerald-600 font-bold">₹10,49,300.00</td>
+                      <td className="py-3 text-right text-emerald-600 font-bold">{formatPrice(1049300, { decimals: true })}</td>
                     </tr>
                     <tr className="hover:bg-[#FAF6F0] transition-colors">
                       <td className="py-3 px-1 font-bold text-[#1F1D1A]">Certified Home Electrical Repair</td>
                       <td className="py-3">Electrical</td>
-                      <td className="py-3">₹399.00</td>
+                      <td className="py-3">{formatPrice(399, { decimals: true })}</td>
                       <td className="py-3">330</td>
-                      <td className="py-3 text-right text-emerald-600 font-bold">₹1,31,670.00</td>
+                      <td className="py-3 text-right text-emerald-600 font-bold">{formatPrice(131670, { decimals: true })}</td>
                     </tr>
                     <tr className="hover:bg-[#FAF6F0] transition-colors">
                       <td className="py-3 px-1 font-bold text-[#1F1D1A]">Expert Plumbing & Leakage Repair</td>
                       <td className="py-3">Plumbing</td>
-                      <td className="py-3">₹499.00</td>
+                      <td className="py-3">{formatPrice(499, { decimals: true })}</td>
                       <td className="py-3">405</td>
-                      <td className="py-3 text-right text-emerald-600 font-bold">₹2,02,095.00</td>
+                      <td className="py-3 text-right text-emerald-600 font-bold">{formatPrice(202095, { decimals: true })}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -463,7 +461,7 @@ export default function Reports() {
           {/* RECENT AUDIT TRANSACTIONS TABLE */}
           <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
             <span className="text-xs font-extrabold text-[#7A7266] uppercase tracking-wider block border-b border-stone-50 pb-2.5 mb-4">Recent Audit Transactions</span>
-            
+
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left">
                 <thead>
@@ -483,7 +481,7 @@ export default function Reports() {
                       <td className="py-3 font-bold text-[#1F1D1A]">{txn.customer}</td>
                       <td className="py-3">{txn.provider}</td>
                       <td className="py-3">{txn.date}</td>
-                      <td className="py-3 font-black text-[#1F1D1A]">₹{txn.amount.toFixed(2)}</td>
+                      <td className="py-3 font-black text-[#1F1D1A]">{formatPrice(txn.amount, { decimals: true })}</td>
                       <td className="py-3 text-right">
                         <Badge variant={txn.status === "completed" ? "success" : "warning"} className="capitalize font-bold rounded-lg text-[9px] py-0.5 px-2.5 border-0">
                           {txn.status}

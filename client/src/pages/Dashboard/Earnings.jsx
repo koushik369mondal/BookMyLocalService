@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import { formatPrice } from "@/utils/currency";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -109,7 +110,7 @@ export default function Earnings() {
     }
 
     if (amountVal > withdrawableBalance) {
-      setWithdrawError(`Transfer value exceeds your available balance of ₹${withdrawableBalance.toFixed(2)}.`);
+      setWithdrawError(`Transfer value exceeds your available balance of ${formatPrice(withdrawableBalance, { decimals: true })}.`);
       return;
     }
 
@@ -126,7 +127,7 @@ export default function Earnings() {
     };
 
     setPayouts([newPayout, ...payouts]);
-    setSuccessMsg(`Withdrawal of ₹${amountVal.toFixed(2)} authorized successfully!`);
+    setSuccessMsg(`Withdrawal of ${formatPrice(amountVal, { decimals: true })} authorized successfully!`);
     setWithdrawAmount("");
     setTimeout(() => setSuccessMsg(""), 3000);
   };
@@ -207,7 +208,7 @@ export default function Earnings() {
             <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Cleared</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">₹{(withdrawableBalance + 22300.00).toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">{formatPrice(withdrawableBalance + 22300, { decimals: true })}</span>
               </div>
               <div className="p-3 bg-[#7DAB7D]/20 text-[#2B522B] rounded-2xl shrink-0 border border-[#7DAB7D]/30">
                 <DollarSign className="h-6 w-6" />
@@ -218,7 +219,7 @@ export default function Earnings() {
             <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Cleared Balance</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">₹{withdrawableBalance.toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">{formatPrice(withdrawableBalance, { decimals: true })}</span>
               </div>
               <div className="p-3 bg-[#F0E7D5] text-[#C9A46A] rounded-2xl shrink-0 border border-[#E8DCC3]">
                 <ShieldCheck className="h-6 w-6" />
@@ -229,7 +230,7 @@ export default function Earnings() {
             <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Pending Payouts</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">₹{pendingBalance.toFixed(2)}</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">{formatPrice(pendingBalance, { decimals: true })}</span>
               </div>
               <div className="p-3 bg-[#F0E7D5] text-[#C9A46A] rounded-2xl shrink-0 border border-[#E8DCC3]">
                 <Clock className="h-6 w-6" />
@@ -282,22 +283,20 @@ export default function Earnings() {
                     <button
                       type="button"
                       onClick={() => setChartView("daily")}
-                      className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
-                        chartView === "daily"
-                          ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                          : "text-[#5A5146] hover:text-[#1F1D1A]"
-                      }`}
+                      className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${chartView === "daily"
+                        ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                        : "text-[#5A5146] hover:text-[#1F1D1A]"
+                        }`}
                     >
                       Daily
                     </button>
                     <button
                       type="button"
                       onClick={() => setChartView("monthly")}
-                      className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
-                        chartView === "monthly"
-                          ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                          : "text-[#5A5146] hover:text-[#1F1D1A]"
-                      }`}
+                      className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${chartView === "monthly"
+                        ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
+                        : "text-[#5A5146] hover:text-[#1F1D1A]"
+                        }`}
                     >
                       Monthly
                     </button>
@@ -328,7 +327,7 @@ export default function Earnings() {
                                 fill="#C9A46A"
                                 className="hover:fill-[#b89359] transition-colors cursor-pointer"
                               />
-                              <text x={x + barWidth / 2} y={y - 6} textAnchor="middle" className="text-[9px] font-bold fill-[#1F1D1A]">₹{d.amount}</text>
+                              <text x={x + barWidth / 2} y={y - 6} textAnchor="middle" className="text-[9px] font-bold fill-[#1F1D1A]">{formatPrice(d.amount)}</text>
                               <text x={x + barWidth / 2} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-medium fill-[#7A7266]">{d.label}</text>
                             </g>
                           );
@@ -408,11 +407,10 @@ export default function Earnings() {
                               <td className="py-3 font-bold text-[#1F1D1A]">{txn.customerName}</td>
                               <td className="py-3">{txn.date}</td>
                               <td className="py-3 truncate max-w-[130px]">{txn.serviceName}</td>
-                              <td className="py-3 font-bold text-[#1F1D1A]">₹{txn.amount.toFixed(2)}</td>
+                              <td className="py-3 font-bold text-[#1F1D1A]">{formatPrice(txn.amount, { decimals: true })}</td>
                               <td className="py-3 text-right">
-                                <Badge className={`rounded-lg text-[9px] font-bold px-2 py-0.5 border-0 leading-none ${
-                                  txn.status === "cleared" ? "bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30" : "bg-[#F0E7D5] text-[#C9A46A] border border-[#E8DCC3]"
-                                }`}>
+                                <Badge className={`rounded-lg text-[9px] font-bold px-2 py-0.5 border-0 leading-none ${txn.status === "cleared" ? "bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30" : "bg-[#F0E7D5] text-[#C9A46A] border border-[#E8DCC3]"
+                                  }`}>
                                   {txn.status.toUpperCase()}
                                 </Badge>
                               </td>
@@ -447,7 +445,7 @@ export default function Earnings() {
                         <span className="text-[9px] text-[#7A7266] font-medium block">{p.date}</span>
                       </div>
 
-                      <span className="font-bold text-[#1F1D1A] text-sm shrink-0">₹{p.amount.toFixed(2)}</span>
+                      <span className="font-bold text-[#1F1D1A] text-sm shrink-0">{formatPrice(p.amount, { decimals: true })}</span>
                     </div>
                   ))}
                 </div>
@@ -493,7 +491,7 @@ export default function Earnings() {
             {/* Display Withdrawable Balance */}
             <div className="p-3 bg-[#F0E7D5] border border-[#E8DCC3] rounded-xl flex justify-between items-center text-xs">
               <span className="font-bold text-[#1F1D1A]">Withdrawable Balance:</span>
-              <span className="font-bold text-[#1F1D1A] text-sm">₹{withdrawableBalance.toFixed(2)}</span>
+              <span className="font-bold text-[#1F1D1A] text-sm">{formatPrice(withdrawableBalance, { decimals: true })}</span>
             </div>
 
             <div className="space-y-1.5">

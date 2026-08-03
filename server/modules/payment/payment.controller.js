@@ -44,23 +44,35 @@ const getCheckoutDetails = async (req, res) => {
 };
 
 /**
- * Submit checkout (save billing and payment method info)
+ * Submit checkout (save billing, payment method info & finalize booking payment)
  */
 const submitCheckout = async (req, res) => {
   try {
-    const { bookingId, fullName, email, phone, street, city, state, zipCode, paymentMethod, discount } = req.body;
+    const { bookingId, fullName, email, phone, street, city, state, zipCode, paymentMethod, discount, cardNumber } = req.body;
 
-    if (!bookingId || !fullName || !email || !phone || !street || !city || !state || !zipCode || !paymentMethod) {
+    const missingFields = [];
+    if (!bookingId) missingFields.push("bookingId");
+    if (!fullName) missingFields.push("fullName");
+    if (!email) missingFields.push("email");
+    if (!phone) missingFields.push("phone");
+    if (!street) missingFields.push("street");
+    if (!city) missingFields.push("city");
+    if (!state) missingFields.push("state");
+    if (!zipCode) missingFields.push("zipCode");
+    if (!paymentMethod) missingFields.push("paymentMethod");
+
+    if (missingFields.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "Please provide all required checkout fields."
+        message: `Missing required checkout fields: ${missingFields.join(", ")}.`,
+        missingFields
       });
     }
 
     if (!/^\d{6}$/.test(zipCode)) {
       return res.status(400).json({
         success: false,
-        message: "PIN code must be 6 digits"
+        message: "PIN code must be 6 digits."
       });
     }
 
@@ -69,7 +81,7 @@ const submitCheckout = async (req, res) => {
       console.warn(`[CHECKOUT 404] Booking not found for submit: '${bookingId}' requested by user '${req.user?.id}'`);
       return res.status(404).json({
         success: false,
-        message: "Booking not found.",
+        message: "Booking not found in database.",
         reason: "BOOKING_NOT_FOUND"
       });
     }
@@ -87,6 +99,19 @@ const submitCheckout = async (req, res) => {
       });
     }
 
+    const isDeclineName = fullName && fullName.toLowerCase().includes("error");
+    const isDeclineCard = paymentMethod === "card" && cardNumber && cardNumber.replace(/\s+/g, "").includes("0000");
+
+    if (isDeclineName || isDeclineCard) {
+      return res.status(400).json({
+        success: false,
+        message: "Transaction declined. Please verify your payment credentials and try again."
+      });
+    }
+
+    const status = "upcoming";
+    const paymentStatus = paymentMethod === "cash" ? "pending" : "paid";
+
     const updateData = {
       billingName: fullName,
       billingEmail: email,
@@ -95,25 +120,32 @@ const submitCheckout = async (req, res) => {
       city,
       state,
       zipCode,
-      paymentMethod
+      paymentMethod,
+      status,
+      paymentStatus
     };
 
     if (discount !== undefined) {
-      updateData.discount = parseFloat(discount);
+      const disc = parseFloat(discount) || 0;
+      updateData.discount = disc;
+      const basePrice = booking.price || 0;
+      const platformFee = booking.platformFee || 49.00;
+      const tax = booking.tax || Math.round(basePrice * 0.18 * 100) / 100;
+      updateData.total = Math.max(0, Math.round((basePrice + platformFee + tax - disc) * 100) / 100);
     }
 
     const updatedBooking = await bookingService.updateBooking(bookingId, updateData);
 
     return res.status(200).json({
       success: true,
-      message: "Checkout details updated.",
+      message: "Payment completed successfully.",
       data: updatedBooking
     });
   } catch (error) {
     console.error("Error in submitCheckout controller:", error);
     return res.status(400).json({
       success: false,
-      message: error.message || "Failed to submit checkout."
+      message: error.message || "Failed to process checkout payment."
     });
   }
 };

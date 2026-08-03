@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import { formatPrice } from "@/utils/currency";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -225,22 +226,22 @@ export default function Payments() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-[#E8DCC3] p-5 rounded-2xl shadow-2xs">
             
             <div className="text-center space-y-1 py-1">
-              <span className="block text-2xl font-bold text-[#1F1D1A]">₹{stats.total.toLocaleString()}</span>
+              <span className="block text-2xl font-bold text-[#1F1D1A]">{formatPrice(stats.total)}</span>
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Revenue</span>
             </div>
             
             <div className="text-center space-y-1 py-1 border-l border-[#E8DCC3]">
-              <span className="block text-2xl font-bold text-[#2B522B]">₹{stats.today.toLocaleString()}</span>
+              <span className="block text-2xl font-bold text-[#2B522B]">{formatPrice(stats.today)}</span>
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Today's Revenue</span>
             </div>
 
             <div className="text-center space-y-1 py-1 border-l border-[#E8DCC3]">
-              <span className="block text-2xl font-bold text-[#C9A46A]">₹{stats.pending.toLocaleString()}</span>
+              <span className="block text-2xl font-bold text-[#C9A46A]">{formatPrice(stats.pending)}</span>
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Pending Escrow</span>
             </div>
 
             <div className="text-center space-y-1 py-1 border-l border-[#E8DCC3]">
-              <span className="block text-2xl font-bold text-[#8C4B3E]">₹{stats.refunded.toLocaleString()}</span>
+              <span className="block text-2xl font-bold text-[#8C4B3E]">{formatPrice(stats.refunded)}</span>
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Refunded Volume</span>
             </div>
 
@@ -380,7 +381,7 @@ export default function Payments() {
                                 <span className="text-[10px] text-[#7A7266] font-semibold block mt-0.5">Pro: {txn.provider}</span>
                               </td>
                               <td className="py-3 truncate max-w-[130px]">{txn.service}</td>
-                              <td className="py-3 font-black text-[#1F1D1A] text-sm">₹{txn.amount.toFixed(2)}</td>
+                              <td className="py-3 font-black text-[#1F1D1A] text-sm">{formatPrice(txn.amount, { decimals: true })}</td>
                               <td className="py-3 text-[#7A7266] font-bold">{txn.method}</td>
                               <td className="py-3">{getStatusBadge(txn.status)}</td>
                               <td className="py-3 text-right">
@@ -530,7 +531,7 @@ export default function Payments() {
               </div>
               <div className="flex justify-between pt-1">
                 <span className="text-sm font-bold text-[#1F1D1A]">Total Settlement:</span>
-                <span className="text-[#1F1D1A] text-base font-black">₹{viewingTxn.amount.toFixed(2)}</span>
+                <span className="text-[#1F1D1A] text-base font-black">{formatPrice(viewingTxn.amount, { decimals: true })}</span>
               </div>
             </div>
 
@@ -565,7 +566,7 @@ export default function Payments() {
               <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wide">Target Details</span>
               <span className="text-[#1F1D1A] block">Transaction ID: {confirmTarget.txn.id}</span>
               <span className="text-[#7A7266] block">Client: {confirmTarget.txn.customer}</span>
-              <span className="text-[#1F1D1A] block border-t border-[#5A5146]/20 pt-1.5 mt-1 text-sm font-black">Settlement: ₹{confirmTarget.txn.amount.toFixed(2)}</span>
+              <span className="text-[#1F1D1A] block border-t border-[#5A5146]/20 pt-1.5 mt-1 text-sm font-black">Settlement: {formatPrice(confirmTarget.txn.amount, { decimals: true })}</span>
             </div>
 
             <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2.5">

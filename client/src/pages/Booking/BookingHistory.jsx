@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
+import { formatPrice } from "@/utils/currency";
 import { useBookingHistory } from "@/hooks/useBookingHistory";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -130,7 +131,7 @@ export default function BookingHistory() {
                     </div>
 
                     <div className="text-right sm:text-right shrink-0">
-                      <span className="text-xl font-black text-[#8C4B3E] block">₹{b.total}</span>
+                      <span className="text-xl font-black text-[#8C4B3E] block">{formatPrice(b.total)}</span>
                       <span className="text-[10px] font-bold text-stone-400 uppercase">Package: {b.plan}</span>
                     </div>
                   </div>

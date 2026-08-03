@@ -7,12 +7,12 @@ export const checkoutService = {
     },
 
     submitCheckout: async (checkoutData) => {
-        const response = await api.post("/checkout", checkoutData);
+        const response = await api.post("/checkout/submit", checkoutData);
         return response.data;
     },
 
     processPayment: async (paymentData) => {
-        const response = await api.post("/payment", paymentData);
+        const response = await api.post("/checkout/pay", paymentData);
         return response.data;
     }
 };

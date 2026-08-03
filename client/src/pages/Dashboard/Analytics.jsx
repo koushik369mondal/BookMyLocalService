@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import { formatPrice } from "@/utils/currency";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -97,7 +98,7 @@ const activityLogs = [
   { id: 1, text: "New Customer registration: Chloe Bennett", time: "12:45 PM", type: "user" },
   { id: 2, text: "Booking transaction TXN-70492 created for Electrical Wiring", time: "11:20 AM", type: "booking" },
   { id: 3, text: "Provider Sarah Jenkins verified by administrator", time: "09:30 AM", type: "verification" },
-  { id: 4, text: "Payment of $98.00 settled successfully for Leak Repair", time: "Yesterday", type: "payment" }
+  { id: 4, text: "Payment of ₹98.00 settled successfully for Leak Repair", time: "Yesterday", type: "payment" }
 ];
 
 export default function Analytics() {
@@ -171,7 +172,7 @@ export default function Analytics() {
             <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Revenue</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">₹3,42,850</span>
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">{formatPrice(342850)}</span>
               </div>
               <div className="p-2.5 bg-[#7DAB7D]/20 text-[#2B522B] rounded-xl shrink-0 border border-[#7DAB7D]/30">
                 <DollarSign className="h-5 w-5" />

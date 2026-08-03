@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { checkoutService } from "../services/checkoutService";
+import { formatPrice } from "../utils/currency";
 
 const checkoutSchema = z.object({
   fullName: z.string().min(2, { message: "Full Name must be at least 2 characters" }),
@@ -146,11 +147,11 @@ export function useCheckoutForm() {
     if (code === "WELCOME10" || code === "LOCAL10") {
       const disc = 10.00;
       setAppliedDiscount(disc);
-      setPromoSuccessMsg(`Coupon "${code}" applied! You saved ₹${disc.toFixed(2)}.`);
+      setPromoSuccessMsg(`Coupon "${code}" applied! You saved ${formatPrice(disc, { decimals: true })}.`);
     } else if (code === "SAVE20") {
       const disc = 20.00;
       setAppliedDiscount(disc);
-      setPromoSuccessMsg(`Coupon "${code}" applied! You saved ₹${disc.toFixed(2)}.`);
+      setPromoSuccessMsg(`Coupon "${code}" applied! You saved ${formatPrice(disc, { decimals: true })}.`);
     } else {
       setPromoErrorMsg("Invalid or expired coupon code. Try WELCOME10.");
     }
@@ -177,16 +178,18 @@ export function useCheckoutForm() {
       const response = await checkoutService.submitCheckout(checkoutPayload);
       if (response.success) {
         setSubmitSuccess(true);
+        const b = response.data || booking;
         setTimeout(() => {
-          navigate(`/booking/success?bookingId=${bookingId}`);
-        }, 1500);
+          navigate(`/booking/success?bookingId=${bookingId}&serviceId=${b?.serviceId || ""}&date=${b?.date || ""}&time=${b?.time || ""}&price=${b?.total || ""}&paymentMethod=${data.paymentMethod}`);
+        }, 1200);
       } else {
         setSubmitError(response.message || "Failed to process payment. Please try again.");
         setIsSubmitting(false);
       }
     } catch (err) {
       console.error("Checkout submit error:", err);
-      setSubmitError(err.message || "Server error while processing your order.");
+      const errMsg = err.response?.data?.message || err.message || "Server error while processing your order.";
+      setSubmitError(errMsg);
       setIsSubmitting(false);
     }
   };

@@ -21,6 +21,32 @@ export const servicesService = {
         return response.data;
     },
 
+    getProviderServices: async () => {
+        const response = await api.get("/provider/services");
+        return response.data;
+    },
+
+    createProviderService: async (data) => {
+        const isFormData = data instanceof FormData;
+        const response = await api.post("/provider/services", data, {
+            headers: isFormData ? { "Content-Type": "multipart/form-data" } : {}
+        });
+        return response.data;
+    },
+
+    updateProviderService: async (id, data) => {
+        const isFormData = data instanceof FormData;
+        const response = await api.put(`/provider/services/${id}`, data, {
+            headers: isFormData ? { "Content-Type": "multipart/form-data" } : {}
+        });
+        return response.data;
+    },
+
+    deleteProviderService: async (id) => {
+        const response = await api.delete(`/provider/services/${id}`);
+        return response.data;
+    },
+
     createService: async (formData) => {
         const response = await api.post("/services", formData, {
             headers: {

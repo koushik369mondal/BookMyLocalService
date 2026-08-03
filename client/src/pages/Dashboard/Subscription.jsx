@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import { formatPrice } from "@/utils/currency";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -201,7 +202,7 @@ export default function Subscription() {
 
                 {activePlan !== "none" && (
                   <div className="flex items-center gap-4 text-xs font-semibold text-[#7A7266] pt-1">
-                    <span>Current Rate: <strong>₹{getPlanPrice(activePlan)} / mo</strong></span>
+                    <span>Current Rate: <strong>{formatPrice(getPlanPrice(activePlan))} / mo</strong></span>
                     <span>•</span>
                     <span>Next Renewal: <strong>{renewalDate}</strong></span>
                   </div>
@@ -279,7 +280,7 @@ export default function Subscription() {
                 </div>
 
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-[#1F1D1A]">₹0</span>
+                  <span className="text-3xl font-black text-[#1F1D1A]">{formatPrice(0)}</span>
                   <span className="text-xs text-[#7A7266] font-medium">/ month</span>
                 </div>
 
@@ -343,7 +344,7 @@ export default function Subscription() {
                 </div>
 
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-[#1F1D1A]">₹{getPlanPrice("pro")}</span>
+                  <span className="text-3xl font-black text-[#1F1D1A]">{formatPrice(getPlanPrice("pro"))}</span>
                   <span className="text-xs text-[#7A7266] font-medium">/ month</span>
                 </div>
 
@@ -402,7 +403,7 @@ export default function Subscription() {
                 </div>
 
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-[#1F1D1A]">₹{getPlanPrice("premium")}</span>
+                  <span className="text-3xl font-black text-[#1F1D1A]">{formatPrice(getPlanPrice("premium"))}</span>
                   <span className="text-xs text-[#7A7266] font-medium">/ month</span>
                 </div>
 
@@ -479,7 +480,7 @@ export default function Subscription() {
                       <td className="py-3 px-1 font-bold text-[#1F1D1A]">{inv.id}</td>
                       <td className="py-3">{inv.date}</td>
                       <td className="py-3 font-semibold text-[#1F1D1A]">{inv.plan}</td>
-                      <td className="py-3 font-bold text-[#1F1D1A]">₹{inv.amount.toFixed(2)}</td>
+                      <td className="py-3 font-bold text-[#1F1D1A]">{formatPrice(inv.amount, { decimals: true })}</td>
                       <td className="py-3 text-right">
                         <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg text-[9px] px-2 py-0.5">
                           PAID
@@ -547,7 +548,7 @@ export default function Subscription() {
             </div>
             <div className="flex justify-between text-sm font-black pt-2 border-t border-[#E8DCC3]">
               <span>New Rate:</span>
-              <span className="text-[#C9A46A]">₹{getPlanPrice(selectedPlanToChange)} / mo</span>
+              <span className="text-[#C9A46A]">{formatPrice(getPlanPrice(selectedPlanToChange))} / mo</span>
             </div>
           </div>
 

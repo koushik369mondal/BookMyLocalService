@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import { formatPrice } from "@/utils/currency";
 import { useAuth } from "../../context/AuthContext";
 import { servicesService } from "../../services/api";
 import { Button } from "@/components/ui/button";
@@ -70,88 +71,12 @@ const LOCATIONS = [
   "Jalpaiguri, WB"
 ];
 
-// Default Initial Mock Catalog for Provider
-const INITIAL_PROVIDER_SERVICES = [
-  {
-    id: "srv-101",
-    title: "Deep Home Cleaning & Sanitization",
-    slug: "deep-home-cleaning-service",
-    category: "Home Cleaning",
-    location: "Kolkata, WB",
-    rating: 4.9,
-    reviewCount: 142,
-    price: 1499.0,
-    priceType: "/service",
-    status: "Active",
-    bookingsCount: 48,
-    revenue: 71952.0,
-    imageUrl: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
-    description: "Complete top-to-bottom cleaning of all rooms including dusting, vacuuming, kitchen sanitization, and balcony washing.",
-    availability: "today",
-    badge: "Top Rated"
-  },
-  {
-    id: "srv-102",
-    title: "Sofa & Carpet Sanitization",
-    slug: "sofa-carpet-sanitization",
-    category: "Home Cleaning",
-    location: "Kolkata, WB",
-    rating: 4.8,
-    reviewCount: 65,
-    price: 699.0,
-    priceType: "/visit",
-    status: "Active",
-    bookingsCount: 32,
-    revenue: 22368.0,
-    imageUrl: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=600&q=80",
-    description: "Deep steam extraction and eco-friendly sanitization for living room upholstery and wool carpets.",
-    availability: "this-week",
-    badge: "Eco Friendly"
-  },
-  {
-    id: "srv-103",
-    title: "Window Washing Service",
-    slug: "window-washing-service",
-    category: "Home Cleaning",
-    location: "Delhi NCR",
-    rating: 4.7,
-    reviewCount: 29,
-    price: 499.0,
-    priceType: "/visit",
-    status: "Paused",
-    bookingsCount: 19,
-    revenue: 9481.0,
-    imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80",
-    description: "Streak-free exterior and interior window washing for residential homes and office fronts.",
-    availability: "weekend",
-    badge: ""
-  },
-  {
-    id: "srv-104",
-    title: "Post-Renovation Debris Clean",
-    slug: "post-renovation-debris-clean",
-    category: "Home Cleaning",
-    location: "Mumbai, MH",
-    rating: 5.0,
-    reviewCount: 14,
-    price: 1999.0,
-    priceType: "/service",
-    status: "Draft",
-    bookingsCount: 0,
-    revenue: 0.0,
-    imageUrl: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80",
-    description: "Heavy-duty post-construction cleaning, fine dust removal, and paint splatter cleanup.",
-    availability: "this-week",
-    badge: "New"
-  }
-];
-
 export default function ProviderServices() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   // State Management
-  const [services, setServices] = useState(INITIAL_PROVIDER_SERVICES);
+  const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -182,46 +107,27 @@ export default function ProviderServices() {
     description: ""
   });
 
+  const fetchServices = async () => {
+    setLoading(true);
+    try {
+      const response = await servicesService.getProviderServices();
+      if (response.success && Array.isArray(response.data)) {
+        setServices(response.data);
+      } else {
+        setServices([]);
+      }
+    } catch (err) {
+      console.error("Failed to fetch provider services from database:", err);
+      toast.error("Error loading services from database.");
+      setServices([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Load provider services on mount
   useEffect(() => {
     window.scrollTo(0, 0);
-    const fetchServices = async () => {
-      try {
-        const response = await servicesService.getServices();
-        if (response.success && Array.isArray(response.data)) {
-          // Filter services owned by provider if providerId matches
-          const userServices = response.data.filter(
-            (s) => s.providerId === user?.id || s.provider?.id === user?.id
-          );
-          if (userServices.length > 0) {
-            setServices(
-              userServices.map((s) => ({
-                id: s.id,
-                title: s.title,
-                slug: s.slug,
-                category: s.category || "Home Cleaning",
-                location: s.location || "Brooklyn, NY",
-                rating: s.rating || 5.0,
-                reviewCount: s.reviewCount || 0,
-                price: s.price || 35,
-                priceType: s.priceType || "/hr",
-                status: s.status || "Active",
-                bookingsCount: s.bookingsCount || Math.floor(Math.random() * 40) + 10,
-                revenue: s.revenue || (s.price || 35) * (Math.floor(Math.random() * 40) + 10),
-                imageUrl: s.imageUrl || "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
-                description: s.description || "",
-                availability: s.availability || "today",
-                badge: s.badge || ""
-              }))
-            );
-          }
-        }
-      } catch (err) {
-        console.log("Using local provider catalog state.");
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchServices();
   }, [user]);
 
@@ -249,19 +155,19 @@ export default function ProviderServices() {
     setFormData({
       title: service.title,
       category: service.category,
-      price: service.price.toString(),
-      priceType: service.priceType,
-      location: service.location,
-      availability: service.availability,
+      price: service.price ? service.price.toString() : "",
+      priceType: service.priceType || "/hr",
+      location: service.location || "Kolkata, WB",
+      availability: service.availability || "today",
       status: service.status || "Active",
       badge: service.badge || "",
-      imageUrl: service.imageUrl,
-      description: service.description
+      imageUrl: service.imageUrl || "",
+      description: service.description || ""
     });
     setIsFormModalOpen(true);
   };
 
-  // Save Service (Create or Update)
+  // Save Service (Create or Update) directly to DB
   const handleSaveService = async (e) => {
     e.preventDefault();
     if (!formData.title || !formData.price || !formData.description) {
@@ -271,95 +177,98 @@ export default function ProviderServices() {
 
     setIsSubmitting(true);
     try {
+      const payload = {
+        title: formData.title.trim(),
+        category: formData.category,
+        price: parseFloat(formData.price),
+        priceType: formData.priceType,
+        location: formData.location,
+        availability: formData.availability,
+        badge: formData.badge,
+        imageUrl: formData.imageUrl || "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
+        description: formData.description.trim()
+      };
+
       if (editingService) {
-        // Update existing service
-        const updated = services.map((s) =>
-          s.id === editingService.id
-            ? {
-                ...s,
-                title: formData.title,
-                category: formData.category,
-                price: parseFloat(formData.price),
-                priceType: formData.priceType,
-                location: formData.location,
-                availability: formData.availability,
-                status: formData.status,
-                badge: formData.badge,
-                imageUrl: formData.imageUrl || s.imageUrl,
-                description: formData.description
-              }
-            : s
-        );
-        setServices(updated);
-        toast.success(`Service "${formData.title}" updated successfully!`);
+        // Update existing service in database
+        const response = await servicesService.updateProviderService(editingService.id, payload);
+        if (response.success) {
+          toast.success(`Service "${formData.title}" updated successfully in database!`);
+          await fetchServices();
+        } else {
+          toast.error(response.message || "Failed to update service.");
+        }
       } else {
-        // Create new service
-        const newSrv = {
-          id: `srv-${Date.now()}`,
-          title: formData.title,
-          slug: formData.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-          category: formData.category,
-          location: formData.location,
-          rating: 5.0,
-          reviewCount: 0,
-          price: parseFloat(formData.price),
-          priceType: formData.priceType,
-          status: formData.status || "Active",
-          bookingsCount: 0,
-          revenue: 0.0,
-          imageUrl:
-            formData.imageUrl ||
-            "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80",
-          description: formData.description,
-          availability: formData.availability,
-          badge: formData.badge || "New"
-        };
-        setServices([newSrv, ...services]);
-        toast.success(`New service "${formData.title}" created successfully!`);
+        // Create new service in database
+        const response = await servicesService.createProviderService(payload);
+        if (response.success) {
+          toast.success(`New service "${formData.title}" saved to database!`);
+          await fetchServices();
+        } else {
+          toast.error(response.message || "Failed to create service.");
+        }
       }
       setIsFormModalOpen(false);
     } catch (err) {
-      toast.error("Failed to save service. Please try again.");
+      console.error("Save service error:", err);
+      toast.error(err.response?.data?.message || err.message || "Failed to save service to database.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   // Toggle Pause / Activate Status
-  const handleToggleStatus = (service) => {
+  const handleToggleStatus = async (service) => {
     const nextStatus = service.status === "Active" ? "Paused" : "Active";
-    const updated = services.map((s) =>
-      s.id === service.id ? { ...s, status: nextStatus } : s
-    );
-    setServices(updated);
-    toast.success(
-      `Service "${service.title}" is now ${nextStatus.toLowerCase()}.`
-    );
+    try {
+      await servicesService.updateProviderService(service.id, { status: nextStatus });
+      toast.success(`Service "${service.title}" is now ${nextStatus.toLowerCase()}.`);
+      await fetchServices();
+    } catch (err) {
+      toast.error("Failed to update status.");
+    }
   };
 
   // Duplicate Service
-  const handleDuplicateService = (service) => {
-    const dup = {
-      ...service,
-      id: `srv-${Date.now()}`,
-      title: `Copy of ${service.title}`,
-      slug: `copy-of-${service.slug}-${Date.now()}`,
-      status: "Draft",
-      bookingsCount: 0,
-      revenue: 0.0
-    };
-    setServices([dup, ...services]);
-    toast.success(`Duplicated "${service.title}" as a Draft copy.`);
+  const handleDuplicateService = async (service) => {
+    try {
+      const payload = {
+        title: `Copy of ${service.title}`,
+        category: service.category,
+        price: service.price,
+        priceType: service.priceType,
+        location: service.location,
+        availability: service.availability,
+        badge: "Draft",
+        imageUrl: service.imageUrl,
+        description: service.description
+      };
+      await servicesService.createProviderService(payload);
+      toast.success(`Duplicated "${service.title}" to database.`);
+      await fetchServices();
+    } catch (err) {
+      toast.error("Failed to duplicate service.");
+    }
   };
 
-  // Delete Service
-  const handleDeleteService = () => {
+  // Delete Service from DB
+  const handleDeleteService = async () => {
     if (!deletingService) return;
-    const updated = services.filter((s) => s.id !== deletingService.id);
-    setServices(updated);
-    toast.success(`Service "${deletingService.title}" deleted.`);
-    setIsDeleteModalOpen(false);
-    setDeletingService(null);
+    try {
+      const response = await servicesService.deleteProviderService(deletingService.id);
+      if (response.success) {
+        toast.success(`Service "${deletingService.title}" deleted from database.`);
+        await fetchServices();
+      } else {
+        toast.error(response.message || "Failed to delete service.");
+      }
+    } catch (err) {
+      console.error("Delete service error:", err);
+      toast.error("Failed to delete service from database.");
+    } finally {
+      setIsDeleteModalOpen(false);
+      setDeletingService(null);
+    }
   };
 
   // Filter & Sort Logic
@@ -461,7 +370,7 @@ export default function ProviderServices() {
             <div className="bg-[#FAF6F0] p-3.5 rounded-xl border border-[#E8DCC3] col-span-2 sm:col-span-1">
               <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A7266]">Catalog Revenue</span>
               <p className="text-lg font-black text-[#2B522B] mt-0.5">
-                ₹{catalogStats.totalRevenue.toFixed(2)}
+                {formatPrice(catalogStats.totalRevenue, { decimals: true })}
               </p>
             </div>
           </div>
@@ -622,10 +531,7 @@ export default function ProviderServices() {
 
                       {/* Price Badge Overlay */}
                       <div className="absolute bottom-3 right-3 bg-[#FAF6F0] text-[#1F1D1A] px-3 py-1 rounded-xl border border-[#E8DCC3] text-xs font-black shadow-md">
-                        ₹{service.price.toFixed(2)}{" "}
-                        <span className="text-[10px] font-normal text-[#5A5146]">
-                          {service.priceType}
-                        </span>
+                        {formatPrice(service.price, { priceType: service.priceType, decimals: true })}
                       </div>
                     </div>
 
@@ -662,7 +568,7 @@ export default function ProviderServices() {
                         <div className="flex items-center gap-1.5">
                           <DollarSign className="h-3.5 w-3.5 text-[#2B522B]" />
                           <span className="text-[#2B522B] font-bold">
-                            ₹{(service.revenue || 0).toFixed(0)} Rev
+                            {formatPrice(service.revenue || 0)} Rev
                           </span>
                         </div>
 

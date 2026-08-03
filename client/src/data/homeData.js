@@ -20,39 +20,6 @@ export const categories = [
   { name: "Wellness & Personal", icon: Heart, count: "110+ Providers", color: "bg-rose-50 text-rose-600 border-rose-100" },
 ];
 
-export const fallbackProviders = [
-  {
-    name: "Sunita Rao",
-    service: "Deep Home Cleaning",
-    rating: 4.9,
-    reviews: 142,
-    location: "Kolkata, WB",
-    price: "₹1,499",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&h=300&q=80",
-    badge: "Top Rated"
-  },
-  {
-    name: "Rajesh Sharma",
-    service: "Expert Plumbing",
-    rating: 4.8,
-    reviews: 98,
-    location: "Delhi NCR",
-    price: "₹499",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&h=300&q=80",
-    badge: "Verified"
-  },
-  {
-    name: "Amit Verma",
-    service: "Certified Electrician",
-    rating: 4.9,
-    reviews: 115,
-    location: "Bengaluru, KA",
-    price: "₹399",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&h=300&q=80",
-    badge: "Top Rated"
-  },
-];
-
 export const steps = [
   {
     step: "01",
@@ -88,7 +55,7 @@ export const features = [
     title: "Happiness Guarantee",
     description: "Not satisfied with the service? We work with you to make it right, backed by our booking support team.",
     icon: Smile,
-    color: "bg-emerald-50 text-emerald-600 border-emerald-105"
+    color: "bg-emerald-50 text-emerald-605"
   },
   {
     title: "Instant Booking",

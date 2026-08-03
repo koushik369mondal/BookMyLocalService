@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
+import { formatPrice } from "@/utils/currency";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -849,7 +850,7 @@ export default function ServiceDetails() {
                         </div>
 
                         <div className="flex items-center justify-between border-t border-stone-50 pt-2.5 mt-auto">
-                          <span className="text-xs font-bold text-[#1F1D1A]">₹{sim.price}<span className="text-[#7A7266] font-semibold text-[10px]">{sim.priceType}</span></span>
+                          <span className="text-xs font-bold text-[#1F1D1A]">{formatPrice(sim.price, { priceType: sim.priceType })}</span>
                           <NavLink to={`/services/${sim.id}`} onClick={() => window.scrollTo(0, 0)}>
                             <Button size="xs" variant="outline" className="h-7 text-[10px] font-bold border-[#5A5146]/20 hover:bg-[#FAF6F0] rounded-lg text-[#5A5146]">View Pro</Button>
                           </NavLink>
@@ -894,7 +895,7 @@ export default function ServiceDetails() {
                           <div className="space-y-3">
                             <div className="flex justify-between items-baseline">
                               <h3 className="font-extrabold text-[#1F1D1A] text-base">{plan.name}</h3>
-                              <span className="text-xl font-black text-[#1F1D1A]">₹{plan.price}<span className="text-[#7A7266] font-semibold text-xs">{provider.priceType}</span></span>
+                              <span className="text-xl font-black text-[#1F1D1A]">{formatPrice(plan.price, { priceType: provider.priceType })}</span>
                             </div>
 
                             <p className="text-[#7A7266] text-xs leading-relaxed">

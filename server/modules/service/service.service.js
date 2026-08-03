@@ -66,7 +66,7 @@ class ServiceService {
   }
 
   async createService(data, file) {
-    let imageUrl = "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=600";
+    let imageUrl = data.imageUrl || "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=600";
 
     if (file) {
       const base64File = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
@@ -127,6 +127,7 @@ class ServiceService {
     if (data.priceType) updateData.priceType = data.priceType;
     if (data.availability) updateData.availability = data.availability;
     if (data.badge !== undefined) updateData.badge = data.badge ? data.badge.trim() : null;
+    if (data.imageUrl) updateData.imageUrl = data.imageUrl;
 
     if (file) {
       const base64File = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;

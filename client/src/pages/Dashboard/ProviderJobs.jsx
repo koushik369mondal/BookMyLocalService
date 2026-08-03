@@ -1,5 +1,6 @@
 import React from "react";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import { formatPrice } from "@/utils/currency";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -84,7 +85,7 @@ export default function ProviderJobs() {
                       <div className="border-t md:border-t-0 border-[#E8DCC3] pt-4 md:pt-0 flex items-center justify-between md:justify-end gap-6 min-w-[200px]">
                         <div className="text-left md:text-right shrink-0">
                           <span className="text-[9px] font-bold text-[#7A7266] uppercase block tracking-wider">Settlement Rate</span>
-                          <span className="text-base font-bold text-[#1F1D1A]">₹{job.price.toFixed(2)}</span>
+                          <span className="text-base font-bold text-[#1F1D1A]">{formatPrice(job.price, { decimals: true })}</span>
                         </div>
                         <Button size="xs" className="bg-[#C9A46A] hover:bg-[#b89359] text-white rounded-xl h-9 px-4 text-[10px] font-bold flex items-center gap-1 shrink-0 border border-[#E8DCC3] cursor-pointer">
                           Manage Job <ArrowRight className="h-3.5 w-3.5" />

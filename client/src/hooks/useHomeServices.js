@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { servicesService } from "../services/servicesService";
-import { fallbackProviders } from "../data/homeData";
+import { formatPrice } from "@/utils/currency";
 
 export function useHomeServices() {
   const { user, loading } = useAuth();
@@ -36,25 +36,23 @@ export function useHomeServices() {
     fetchServices();
   }, []);
 
-  const displayProviders = dbServices.length > 0
-    ? dbServices.slice(0, 3).map(service => ({
-      id: service.id,
-      name: service.provider?.fullName || "Verified Provider",
-      service: service.category || service.title,
-      rating: service.rating || 5.0,
-      reviews: service.reviewCount || 0,
-      location: service.location || "Local Service Area",
-      price: `$${service.price}/${service.priceType === "hourly" ? "hr" : "fixed"}`,
-      image: service.imageUrl,
-      badge: service.badge || "Verified",
-      title: service.title,
-      slug: service.slug,
-      priceNum: service.price,
-      priceType: service.priceType,
-      category: service.category,
-      availability: service.availability
-    }))
-    : fallbackProviders;
+  const displayProviders = dbServices.slice(0, 6).map(service => ({
+    id: service.id,
+    name: service.provider?.fullName || "Verified Provider",
+    service: service.category || service.title,
+    rating: service.rating || 5.0,
+    reviews: service.reviewCount || 0,
+    location: service.location || "Local Service Area",
+    price: formatPrice(service.price, { priceType: service.priceType }),
+    image: service.imageUrl,
+    badge: service.badge || "Verified",
+    title: service.title,
+    slug: service.slug,
+    priceNum: service.price,
+    priceType: service.priceType,
+    category: service.category,
+    availability: service.availability
+  }));
 
   return {
     user,

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { prefersReducedMotion } from "@/utils/motion";
 import { UserAvatar } from "@/components/ui/avatar";
+import { formatPrice } from "@/utils/currency";
 
 export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   if (!service) return null;
@@ -110,10 +111,9 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
         <div className="border-t border-[#E8DCC3] pt-3.5 mt-auto flex items-center justify-between gap-3">
           <div className="flex flex-col">
             <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider">Price</span>
-            <div className="flex items-baseline gap-0.5">
-              <span className="text-lg font-bold text-[#1F1D1A]">₹{price}</span>
-              <span className="text-xs font-medium text-[#7A7266]">{priceType}</span>
-            </div>
+            <span className="text-lg font-bold text-[#1F1D1A]">
+              {formatPrice(price, { priceType })}
+            </span>
           </div>
 
           <NavLink to={destination} className="shrink-0">

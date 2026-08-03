@@ -2,6 +2,7 @@ import React from "react";
 import { Tag, ShieldCheck, Loader2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { formatPrice } from "@/utils/currency";
 
 export function CheckoutOrderSummary({
   booking,
@@ -60,27 +61,27 @@ export function CheckoutOrderSummary({
       <div className="space-y-2 text-xs text-[#5A5146] pt-2 border-t border-[#E8DCC3]">
         <div className="flex justify-between">
           <span>Service Price</span>
-          <strong className="text-[#1F1D1A]">₹{basePrice.toFixed(2)}</strong>
+          <strong className="text-[#1F1D1A]">{formatPrice(basePrice, { decimals: true })}</strong>
         </div>
         <div className="flex justify-between">
           <span>Platform Fee</span>
-          <strong className="text-[#1F1D1A]">₹{platformFee.toFixed(2)}</strong>
+          <strong className="text-[#1F1D1A]">{formatPrice(platformFee, { decimals: true })}</strong>
         </div>
         <div className="flex justify-between">
           <span>GST (18%)</span>
-          <strong className="text-[#1F1D1A]">₹{tax.toFixed(2)}</strong>
+          <strong className="text-[#1F1D1A]">{formatPrice(tax, { decimals: true })}</strong>
         </div>
         {appliedDiscount > 0 && (
           <div className="flex justify-between text-emerald-600">
             <span>Coupon Discount</span>
-            <strong>-₹{appliedDiscount.toFixed(2)}</strong>
+            <strong>-{formatPrice(appliedDiscount, { decimals: true })}</strong>
           </div>
         )}
       </div>
 
       <div className="flex justify-between items-center pt-3 border-t border-[#E8DCC3]">
         <span className="text-sm font-extrabold text-[#1F1D1A]">Total Due</span>
-        <span className="text-2xl font-black text-[#8C4B3E]">₹{grandTotal.toFixed(2)}</span>
+        <span className="text-2xl font-black text-[#8C4B3E]">{formatPrice(grandTotal, { decimals: true })}</span>
       </div>
 
       {/* Terms Checkbox */}
@@ -124,7 +125,7 @@ export function CheckoutOrderSummary({
           </>
         ) : (
           <>
-            Complete Payment (₹{grandTotal.toFixed(2)})
+            Complete Payment ({formatPrice(grandTotal, { decimals: true })})
             <ArrowRight className="h-4 w-4" />
           </>
         )}
