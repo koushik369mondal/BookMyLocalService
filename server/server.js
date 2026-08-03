@@ -30,8 +30,12 @@ app.use(express.json());
 // Initialize database connection
 connectDB();
 
+const { getHealthStatus } = require("./controllers/health.controller");
+
 // API Routes
 app.use("/api", apiRoutes);
+
+app.get("/health", getHealthStatus);
 
 app.get("/", (req, res) => {
     res.send("Local Service Finder API Running");
