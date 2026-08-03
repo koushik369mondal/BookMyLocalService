@@ -1,548 +1,141 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { formatPrice } from "@/utils/currency";
+import { adminService } from "@/services/adminService";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { 
-  DollarSign, 
-  Calendar, 
-  Users, 
-  Briefcase, 
-  TrendingUp, 
-  Clock, 
-  ArrowLeft, 
-  ChevronLeft, 
-  ChevronRight, 
-  ChevronDown, 
-  CheckCircle2, 
-  MapPin, 
-  Star, 
-  Share2, 
-  Download, 
-  Sparkles, 
-  Activity,
-  AlertCircle,
-  FileSpreadsheet,
-  FileText,
-  Loader2
+import {
+  DollarSign,
+  Calendar,
+  Users,
+  Briefcase,
+  TrendingUp,
+  Loader2,
+  ArrowLeft,
+  ShieldAlert
 } from "lucide-react";
 
-// Mock Analytical Charts Datasets
-const revenueData = [
-  { label: "Mon", val: 4200 },
-  { label: "Tue", val: 5600 },
-  { label: "Wed", val: 7100 },
-  { label: "Thu", val: 6800 },
-  { label: "Fri", val: 9200 },
-  { label: "Sat", val: 12400 },
-  { label: "Sun", val: 8900 }
-];
-
-const bookingsData = [
-  { label: "Mon", val: 120 },
-  { label: "Tue", val: 155 },
-  { label: "Wed", val: 210 },
-  { label: "Thu", val: 190 },
-  { label: "Fri", val: 260 },
-  { label: "Sat", val: 380 },
-  { label: "Sun", val: 290 }
-];
-
-const userGrowthData = [
-  { label: "Jan", val: 1200 },
-  { label: "Feb", val: 1600 },
-  { label: "Mar", val: 2100 },
-  { label: "Apr", val: 2800 },
-  { label: "May", val: 3500 },
-  { label: "Jun", val: 4250 }
-];
-
-const providerGrowthData = [
-  { label: "Jan", val: 150 },
-  { label: "Feb", val: 190 },
-  { label: "Mar", val: 240 },
-  { label: "Apr", val: 290 },
-  { label: "May", val: 330 },
-  { label: "Jun", val: 380 }
-];
-
-// Mock Demographics (City booking distribution)
-const demographics = [
-  { borough: "Kolkata, WB", percentage: 42, count: 772 },
-  { borough: "Delhi NCR", percentage: 28, count: 515 },
-  { borough: "Mumbai, MH", percentage: 18, count: 331 },
-  { borough: "Bengaluru, KA", percentage: 12, count: 222 }
-];
-
-// Mock Top Specialists
-const topPerformers = [
-  { id: "1", name: "Sunita Rao", service: "Deep Home Cleaning & Sanitization", rating: 4.9, bookings: 142, avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80" },
-  { id: "2", name: "Amit Verma", service: "Certified Home Electrical Repair", rating: 4.9, bookings: 115, avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80" }
-];
-
-// Mock Categories Share
-const categoryShare = [
-  { name: "Home Cleaning", share: 38 },
-  { name: "Plumbing", share: 22 },
-  { name: "Electrical", share: 18 }
-];
-
-// Mock System Activity Timeline logs
-const activityLogs = [
-  { id: 1, text: "New Customer registration: Chloe Bennett", time: "12:45 PM", type: "user" },
-  { id: 2, text: "Booking transaction TXN-70492 created for Electrical Wiring", time: "11:20 AM", type: "booking" },
-  { id: 3, text: "Provider Sarah Jenkins verified by administrator", time: "09:30 AM", type: "verification" },
-  { id: 4, text: "Payment of ₹98.00 settled successfully for Leak Repair", time: "Yesterday", type: "payment" }
-];
-
 export default function Analytics() {
-  const navigate = useNavigate();
-
-  // Filter parameters
-  const [metricTab, setMetricTab] = useState("revenue"); // "revenue", "bookings", "users", "providers"
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [locationFilter, setLocationFilter] = useState("all");
+  const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // Success message notifier
-  const [successMsg, setSuccessMsg] = useState("");
-
-  // Skeleton loader simulator
-  useEffect(() => {
+  const fetchAnalytics = async () => {
     setIsLoading(true);
-    const timer = setTimeout(() => {
+    setError("");
+    try {
+      const response = await adminService.getAnalytics();
+      if (response.success && response.data) {
+        setData(response.data);
+      } else {
+        setError(response.message || "Failed to load analytics.");
+      }
+    } catch (err) {
+      console.error("Analytics fetch error:", err);
+      setError(err.message || "Failed to load analytics from database.");
+    } finally {
       setIsLoading(false);
-    }, 600);
-
-    return () => clearTimeout(timer);
-  }, [metricTab, categoryFilter, locationFilter]);
-
-  // Export triggers
-  const handleExport = (format) => {
-    setSuccessMsg(`Simulating analytics export in ${format} format...`);
-    setTimeout(() => setSuccessMsg(""), 2500);
+    }
   };
 
-  // SVGs Chart computations
-  const chartData = metricTab === "revenue" 
-    ? revenueData 
-    : (metricTab === "bookings" ? bookingsData : (metricTab === "users" ? userGrowthData : providerGrowthData));
-  
-  const maxVal = Math.max(...chartData.map(d => d.val));
-  const chartWidth = 550;
-  const chartHeight = 140;
-  const spacing = (chartWidth - 50) / chartData.length;
-  const barWidth = 30;
+  useEffect(() => {
+    fetchAnalytics();
+  }, []);
 
   return (
     <DashboardLayout>
       <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
-        {/* LIGHT RETRO BANNER HEADER */}
-        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
+        {/* HEADER */}
+        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A] mb-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-1">
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">System Analytics</h1>
-              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Verify system transaction spline logs, category sharing indexes, and demographics</p>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Platform Analytics & Intelligence</h1>
+              <p className="text-[#5A5146] text-xs sm:text-sm mt-1 font-medium">Real-time user growth, financial metrics, and booking statistics from PostgreSQL</p>
             </div>
             
-            {/* Quick dashboard back button */}
             <Link to="/admin/dashboard">
-              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] text-white border border-[#E8DCC3] rounded-xl text-xs font-bold px-5 h-9.5 shadow-2xs flex items-center gap-1 cursor-pointer">
-                <ArrowLeft className="h-4 w-4 mr-1" />
-                Back to Dashboard
+              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] border border-[#E8DCC3] text-white font-bold text-xs rounded-xl h-9.5 px-4 cursor-pointer shadow-2xs">
+                <ArrowLeft className="h-4 w-4 mr-1" /> Dashboard
               </Button>
             </Link>
           </div>
         </section>
 
-        {/* STATISTICS OVERVIEW CARDS */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            
-            {/* Total Revenue */}
-            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Revenue</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">{formatPrice(342850)}</span>
-              </div>
-              <div className="p-2.5 bg-[#7DAB7D]/20 text-[#2B522B] rounded-xl shrink-0 border border-[#7DAB7D]/30">
-                <DollarSign className="h-5 w-5" />
-              </div>
-            </Card>
-
-            {/* Total Bookings */}
-            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Bookings</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">1,840</span>
-              </div>
-              <div className="p-2.5 bg-[#F0E7D5] text-[#C9A46A] rounded-xl shrink-0 border border-[#E8DCC3]">
-                <Activity className="h-5 w-5" />
-              </div>
-            </Card>
-
-            {/* Total Users */}
-            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Users</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">4,250</span>
-              </div>
-              <div className="p-2.5 bg-[#F0E7D5] text-[#C9A46A] rounded-xl shrink-0 border border-[#E8DCC3]">
-                <Users className="h-5 w-5" />
-              </div>
-            </Card>
-
-            {/* Total Providers */}
-            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Providers</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">380</span>
-              </div>
-              <div className="p-2.5 bg-[#F0E7D5] text-[#C9A46A] rounded-xl shrink-0 border border-[#E8DCC3]">
-                <Briefcase className="h-5 w-5" />
-              </div>
-            </Card>
-
-            {/* Growth rate */}
-            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl col-span-2 md:col-span-1">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Growth Rate</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#2B522B]">+15.4%</span>
-              </div>
-              <div className="p-2.5 bg-[#7DAB7D]/20 text-[#2B522B] rounded-xl shrink-0 border border-[#7DAB7D]/30">
-                <TrendingUp className="h-5 w-5" />
-              </div>
-            </Card>
-
-          </div>
-        </section>
-
-        {/* CONTAINER */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-          
-          {successMsg && (
-            <div className="flex items-start gap-2.5 p-3.5 bg-[#7DAB7D]/20 border border-[#7DAB7D]/40 text-[#2B522B] text-xs font-bold rounded-xl shadow-2xs">
-              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-[#2B522B]" />
-              <span>{successMsg}</span>
+        {/* CONTENT */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          {error && (
+            <div className="p-3.5 bg-[#8C4B3E]/20 border border-[#8C4B3E]/40 text-[#8C4B3E] text-xs font-bold rounded-xl flex items-center gap-2">
+              <ShieldAlert className="h-4 w-4" />
+              <span>{error}</span>
             </div>
           )}
 
-          {/* FILTERS & DOWNLOAD BUTTONS */}
-          <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-6 print:hidden">
-            
-            {/* Filters */}
-            <div className="flex flex-wrap items-center gap-4 flex-1">
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="dateFrom" className="text-[10px] font-bold text-[#7A7266] uppercase">From Date</Label>
-                <Input 
-                  id="dateFrom"
-                  type="date"
-                  value={dateFrom}
-                  onChange={(e) => setDateFrom(e.target.value)}
-                  className="h-9 border-[#E8DCC3] focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl text-xs bg-white cursor-pointer"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="dateTo" className="text-[10px] font-bold text-[#7A7266] uppercase">To Date</Label>
-                <Input 
-                  id="dateTo"
-                  type="date"
-                  value={dateTo}
-                  onChange={(e) => setDateTo(e.target.value)}
-                  className="h-9 border-[#E8DCC3] focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl text-xs bg-white cursor-pointer"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5 shrink-0">
-                <Label htmlFor="categoryFilter" className="text-[10px] font-bold text-[#7A7266] uppercase">Category</Label>
-                <div className="relative">
-                  <select
-                    id="categoryFilter"
-                    value={categoryFilter}
-                    onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-[#E8DCC3] focus:outline-none focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl bg-white text-xs font-semibold text-[#1F1D1A] cursor-pointer appearance-none shadow-2xs"
-                  >
-                    <option value="all">All Categories</option>
-                    <option value="Home Cleaning">Home Cleaning</option>
-                    <option value="Plumbing">Plumbing</option>
-                    <option value="Electrical">Electrical</option>
-                  </select>
-                  <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-1.5 shrink-0">
-                <Label htmlFor="locationFilter" className="text-[10px] font-bold text-[#7A7266] uppercase">Borough</Label>
-                <div className="relative">
-                  <select
-                    id="locationFilter"
-                    value={locationFilter}
-                    onChange={(e) => setLocationFilter(e.target.value)}
-                    className="h-9.5 pl-3 pr-8 border border-[#E8DCC3] focus:outline-none focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl bg-white text-xs font-semibold text-[#1F1D1A] cursor-pointer appearance-none shadow-2xs"
-                  >
-                    <option value="all">All Cities</option>
-                    <option value="Kolkata">Kolkata</option>
-                    <option value="Delhi NCR">Delhi NCR</option>
-                    <option value="Mumbai">Mumbai</option>
-                    <option value="Bengaluru">Bengaluru</option>
-                  </select>
-                  <ChevronDown className="h-4 w-4 opacity-60 absolute right-2.5 top-[50%] translate-y-[-50%] pointer-events-none text-[#7A7266]" />
-                </div>
-              </div>
+          {isLoading ? (
+            <div className="py-16 text-center">
+              <Loader2 className="h-8 w-8 text-[#C9A46A] animate-spin mx-auto mb-3" />
+              <p className="text-xs font-bold text-[#5A5146]">Loading analytics intelligence from database...</p>
             </div>
+          ) : (
+            <div className="space-y-8">
+              {/* OVERVIEW CARDS */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <Card className="border border-[#E8DCC3] bg-white rounded-2xl p-6 shadow-2xs">
+                  <span className="text-xs font-bold text-[#7A7266] uppercase block">Total Users</span>
+                  <span className="text-2xl sm:text-3xl font-black text-[#1F1D1A] mt-2 block">
+                    {data?.usersOverview?.totalUsers || 0}
+                  </span>
+                </Card>
 
-            {/* Exports */}
-            <div className="flex items-center gap-2 shrink-0 border-t border-[#E8DCC3] lg:border-0 pt-4 lg:pt-0">
-              <Button
-                size="sm"
-                onClick={() => handleExport("PDF")}
-                className="bg-[#C9A46A] hover:bg-[#b89359] text-white border border-[#E8DCC3] rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5 shadow-2xs cursor-pointer"
-              >
-                <FileText className="h-4 w-4" /> PDF Report
-              </Button>
-              <Button
-                size="sm"
-                onClick={() => handleExport("Excel")}
-                className="bg-[#7DAB7D]/20 text-[#2B522B] hover:bg-[#7DAB7D]/30 border border-[#7DAB7D]/40 rounded-xl text-xs h-9.5 font-bold flex items-center gap-1.5 shadow-2xs cursor-pointer"
-              >
-                <FileSpreadsheet className="h-4 w-4 text-[#2B522B]" /> Excel Sheet
-              </Button>
+                <Card className="border border-[#E8DCC3] bg-white rounded-2xl p-6 shadow-2xs">
+                  <span className="text-xs font-bold text-[#7A7266] uppercase block">Active Providers</span>
+                  <span className="text-2xl sm:text-3xl font-black text-[#1F1D1A] mt-2 block">
+                    {data?.usersOverview?.totalProviders || 0}
+                  </span>
+                </Card>
+
+                <Card className="border border-[#E8DCC3] bg-white rounded-2xl p-6 shadow-2xs">
+                  <span className="text-xs font-bold text-[#7A7266] uppercase block">Total Customers</span>
+                  <span className="text-2xl sm:text-3xl font-black text-[#1F1D1A] mt-2 block">
+                    {data?.usersOverview?.totalCustomers || 0}
+                  </span>
+                </Card>
+
+                <Card className="border border-[#E8DCC3] bg-white rounded-2xl p-6 shadow-2xs">
+                  <span className="text-xs font-bold text-[#7A7266] uppercase block">Gross Volume</span>
+                  <span className="text-2xl sm:text-3xl font-black text-[#1F1D1A] mt-2 block">
+                    {formatPrice(data?.financials?.totalRevenue || 0, { decimals: true })}
+                  </span>
+                </Card>
+              </div>
+
+              {/* BOOKINGS STATS CARD */}
+              <Card className="border border-[#E8DCC3] bg-white rounded-2xl p-6 shadow-2xs space-y-4">
+                <CardHeader className="p-0 pb-3 border-b border-[#E8DCC3]">
+                  <CardTitle className="text-base font-bold text-[#1F1D1A]">System Bookings Intelligence</CardTitle>
+                  <CardDescription className="text-xs text-[#7A7266]">Total: {data?.bookingsOverview?.totalBookings || 0} Dispatches</CardDescription>
+                </CardHeader>
+
+                <CardContent className="p-0 pt-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="p-4 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]">
+                    <span className="text-xs font-bold text-[#2B522B] uppercase block">Completed Dispatches</span>
+                    <span className="text-2xl font-black text-[#1F1D1A] mt-1 block">{data?.bookingsOverview?.completedBookings || 0}</span>
+                  </div>
+
+                  <div className="p-4 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]">
+                    <span className="text-xs font-bold text-[#C9A46A] uppercase block">Pending Dispatches</span>
+                    <span className="text-2xl font-black text-[#1F1D1A] mt-1 block">{data?.bookingsOverview?.pendingBookings || 0}</span>
+                  </div>
+
+                  <div className="p-4 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]">
+                    <span className="text-xs font-bold text-[#8C4B3E] uppercase block">Cancelled Dispatches</span>
+                    <span className="text-2xl font-black text-[#1F1D1A] mt-1 block">{data?.bookingsOverview?.cancelledBookings || 0}</span>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-
-          </Card>
-
-          {/* TWO COLUMN GRID: SWITCH CHART & CATEGORY SHARE */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
-            {/* Swappable analytics growth chart */}
-            <Card className="lg:col-span-8 border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 flex flex-col justify-between">
-              <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <CardTitle className="text-base font-bold text-[#1F1D1A]">Statistical Trends Analysis</CardTitle>
-                  <CardDescription className="text-xs text-[#7A7266]">Monitor analytical spline lines</CardDescription>
-                </div>
-                
-                {/* Switch Tabs */}
-                <div className="flex bg-[#F0E7D5]/70 border border-[#E8DCC3] p-1 rounded-xl h-9 shrink-0 overflow-x-auto max-w-full gap-1">
-                  <button
-                    type="button"
-                    onClick={() => setMetricTab("revenue")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
-                      metricTab === "revenue"
-                        ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                        : "text-[#5A5146] hover:text-[#1F1D1A]"
-                    }`}
-                  >
-                    Revenue
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setMetricTab("bookings")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
-                      metricTab === "bookings"
-                        ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                        : "text-[#5A5146] hover:text-[#1F1D1A]"
-                    }`}
-                  >
-                    Bookings
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setMetricTab("users")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
-                      metricTab === "users"
-                        ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                        : "text-[#5A5146] hover:text-[#1F1D1A]"
-                    }`}
-                  >
-                    User Growth
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setMetricTab("providers")}
-                    className={`rounded-lg text-[10px] font-bold px-3 py-1 transition-all ${
-                      metricTab === "providers"
-                        ? "bg-[#F0E7D5] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                        : "text-[#5A5146] hover:text-[#1F1D1A]"
-                    }`}
-                  >
-                    Provider Growth
-                  </button>
-                </div>
-              </CardHeader>
-
-              <CardContent className="p-0 pt-6 flex-1 flex items-center justify-center min-h-[170px]">
-                {isLoading ? (
-                  <Loader2 className="h-8 w-8 animate-spin text-[#C9A46A]" />
-                ) : (
-                  <div className="w-full overflow-x-auto">
-                    <div className="min-w-[480px] h-[160px] relative">
-                      <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="w-full h-full overflow-visible">
-                        
-                        {/* Grid lines */}
-                        <line x1="20" y1="20" x2="520" y2="20" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="3 3" />
-                        <line x1="20" y1="65" x2="520" y2="65" stroke="#E8DCC3" strokeWidth="1" strokeDasharray="3 3" />
-                        <line x1="20" y1="110" x2="520" y2="110" stroke="#E8DCC3" strokeWidth="1.5" />
-
-                        {/* Chart Render paths or bars */}
-                        {metricTab === "bookings" ? (
-                          /* Render Bars for Bookings */
-                          chartData.map((d, index) => {
-                            const x = index * spacing + 35;
-                            const barHeight = (d.val / maxVal) * (chartHeight - 45);
-                            const y = chartHeight - barHeight - 30;
-                            return (
-                              <g key={d.label}>
-                                <rect
-                                  x={x}
-                                  y={y}
-                                  width={barWidth}
-                                  height={barHeight}
-                                  rx="4"
-                                  fill="#C9A46A"
-                                  className="hover:fill-[#b89359] transition-colors cursor-pointer"
-                                />
-                                <text x={x + barWidth / 2} y={y - 8} textAnchor="middle" className="text-[9px] font-bold fill-[#1F1D1A]">{d.val}</text>
-                                <text x={x + barWidth / 2} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-medium fill-[#7A7266]">{d.label}</text>
-                              </g>
-                            );
-                          })
-                        ) : (
-                          /* Render Spline Line Graph for Revenue / Growth */
-                          <>
-                            <path
-                              d={chartData.reduce((path, d, index) => {
-                                const x = index * spacing + 40;
-                                const barHeight = (d.val / maxVal) * (chartHeight - 50);
-                                const y = chartHeight - barHeight - 30;
-                                return path + `${index === 0 ? "M" : "L"} ${x} ${y}`;
-                              }, "")}
-                              fill="none"
-                              stroke="#C9A46A"
-                              strokeWidth="3.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            
-                            {chartData.map((d, index) => {
-                              const x = index * spacing + 40;
-                              const barHeight = (d.val / maxVal) * (chartHeight - 50);
-                              const y = chartHeight - barHeight - 30;
-                              return (
-                                <g key={d.label}>
-                                  <circle cx={x} cy={y} r="5" fill="#C9A46A" stroke="#FAF6F0" strokeWidth="2" className="cursor-pointer" />
-                                  <text x={x} y={y - 10} textAnchor="middle" className="text-[9px] font-bold fill-[#1F1D1A]">
-                                    {metricTab === "revenue" ? `$${d.val}` : d.val}
-                                  </text>
-                                  <text x={x} y={chartHeight - 12} textAnchor="middle" className="text-[9px] font-medium fill-[#7A7266]">{d.label}</text>
-                                </g>
-                              );
-                            })}
-                          </>
-                        )}
-
-                      </svg>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Category breakdown Share */}
-            <Card className="lg:col-span-4 border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Category Shares</span>
-              
-              <div className="space-y-4">
-                {categoryShare.map(cat => (
-                  <div key={cat.name} className="space-y-1">
-                    <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-[#1F1D1A]">{cat.name}</span>
-                      <span className="text-[#7A7266]">{cat.share}%</span>
-                    </div>
-                    <Progress value={cat.share} className="h-2 rounded-full bg-[#FAF6F0] [&>div]:bg-[#C9A46A]" />
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-          </div>
-
-          {/* LOWER GRID: TOP PROS, DEMOGRAPHICS & TIMELINE */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
-            {/* Top performing specialists */}
-            <Card className="lg:col-span-4 border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Top Specialists</span>
-              
-              <div className="space-y-4">
-                {topPerformers.map(prov => (
-                  <div key={prov.id} className="p-3 border border-[#E8DCC3] rounded-xl bg-[#FAF6F0]/50 shadow-2xs flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <Avatar className="w-9 h-9 border border-[#E8DCC3] overflow-hidden shrink-0">
-                        <AvatarImage src={prov.avatar} className="object-cover" />
-                        <AvatarFallback className="bg-[#F0E7D5] text-[#C9A46A] font-bold">{prov.name[0]}</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <span className="block text-xs font-bold text-[#1F1D1A]">{prov.name}</span>
-                        <span className="text-[10px] text-[#5A5146] font-medium block mt-0.5">{prov.service}</span>
-                        <span className="text-[10px] text-[#C9A46A] font-bold flex items-center gap-0.5 mt-1">
-                          <Star className="h-3 w-3 fill-[#C9A46A] text-[#C9A46A]" /> {prov.rating}
-                        </span>
-                      </div>
-                    </div>
-
-                    <span className="text-xs font-bold text-[#1F1D1A] shrink-0">{prov.bookings} jobs</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            {/* Customer Demographics location distribution */}
-            <Card className="lg:col-span-4 border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Booking Demographics</span>
-              
-              <div className="space-y-4">
-                {demographics.map(cat => (
-                  <div key={cat.borough} className="space-y-1">
-                    <div className="flex justify-between items-baseline text-xs font-bold">
-                      <span className="text-[#1F1D1A]">{cat.borough}</span>
-                      <span className="text-[#7A7266] font-medium">{cat.count} jobs ({cat.percentage}%)</span>
-                    </div>
-                    <Progress value={cat.percentage} className="h-2 rounded-full bg-[#FAF6F0] [&>div]:bg-[#C9A46A]" />
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            {/* Recent activity timeline */}
-            <Card className="lg:col-span-4 border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-6 space-y-4">
-              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2.5">Activity Timeline Logs</span>
-              
-              <div className="relative pl-4 border-l border-[#E8DCC3] space-y-5 pt-1.5 ml-1 text-xs">
-                {activityLogs.map(log => (
-                  <div key={log.id} className="relative group">
-                    <span className="absolute -left-[20.5px] top-1 h-3.5 w-3.5 rounded-full border border-white bg-[#C9A46A] shrink-0"></span>
-                    <div className="space-y-0.5">
-                      <span className="text-[10px] text-[#7A7266] font-bold block">{log.time}</span>
-                      <p className="font-bold text-[#1F1D1A] leading-relaxed text-[11px]">{log.text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-          </div>
-
+          )}
         </div>
       </div>
     </DashboardLayout>

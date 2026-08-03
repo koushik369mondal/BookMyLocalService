@@ -5,26 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CreditCard, Trash2, Plus, Lock, CheckCircle2 } from "lucide-react";
 
-const mockCards = [
-  {
-    id: 1,
-    brand: "Visa",
-    last4: "4242",
-    expMonth: 12,
-    expYear: 2028,
-    isDefault: true,
-    holder: "Amanda Watson"
-  },
-  {
-    id: 2,
-    brand: "Mastercard",
-    last4: "9834",
-    expMonth: 8,
-    expYear: 2027,
-    isDefault: false,
-    holder: "Amanda Watson"
-  }
-];
+const mockCards = [];
 
 export default function PaymentMethods() {
   return (

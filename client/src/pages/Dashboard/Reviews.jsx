@@ -1,503 +1,331 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import { providerService } from "@/services/providerService";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { Card } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
 import { 
   Star, 
   MessageSquare, 
   CheckCircle2, 
   Search, 
   ArrowLeft, 
-  Edit3, 
-  Trash2, 
   CornerDownRight, 
   AlertCircle,
-  ThumbsUp,
-  ChevronDown
+  Loader2
 } from "lucide-react";
 
-// Mock Initial Reviews database
-const initialReviews = [
-  {
-    id: 1,
-    name: "Amanda Watson",
-    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
-    serviceName: "Deep Home Cleaning Service",
-    rating: 5,
-    comment: "Outstanding work by Sarah! She cleaned every nook and corner with high precision. Will definitely book again!",
-    date: "2026-07-05",
-    reply: "Thank you so much Amanda! It was a pleasure working with you. Hope to clean for you again soon!"
-  },
-  {
-    id: 2,
-    name: "Sarah Connor",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
-    serviceName: "Sofa & Carpet Sanitization",
-    rating: 4.8,
-    comment: "Punctual, professional, and had all bio-safe supplies with her. Left the sofa looking brand new.",
-    date: "2026-07-03",
-    reply: ""
-  },
-  {
-    id: 3,
-    name: "Robert Garcia",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
-    serviceName: "Window Washing Service",
-    rating: 4.0,
-    comment: "Good service, clean windows. Missed one small spot in the corner but corrected it when pointed out.",
-    date: "2026-06-25",
-    reply: ""
-  },
-  {
-    id: 4,
-    name: "Jessica Alba",
-    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&h=150&q=80",
-    serviceName: "Deep Home Cleaning Service",
-    rating: 5,
-    comment: "Highly recommend! Fast, thorough, and very courteous cleaning crew.",
-    date: "2026-06-18",
-    reply: "Appreciate the recommendation, Jessica! Glad we could help."
-  }
-];
-
 export default function Reviews() {
-  const navigate = useNavigate();
+  const [reviewsData, setReviewsData] = useState({
+    averageRating: 5.0,
+    totalReviews: 0,
+    distribution: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+    responseRate: 100,
+    recommendationRate: 100,
+    reviewsList: []
+  });
 
-  // Reviews states
-  const [reviewsList, setReviewsList] = useState(initialReviews);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
   // Search & Filter states
   const [searchQuery, setSearchQuery] = useState("");
   const [starFilter, setStarFilter] = useState("all");
-  const [sortBy, setSortBy] = useState("newest");
 
   // Dynamic replies active state maps
   const [replyInputs, setReplyInputs] = useState({});
-  const [editingReplyIds, setEditingReplyIds] = useState({});
-  const [editTexts, setEditTexts] = useState({});
+  const [submittingReplyId, setSubmittingReplyId] = useState(null);
 
-  // Skeleton loader simulator on filters
-  useEffect(() => {
+  const fetchReviews = async () => {
     setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 600);
-
-    return () => clearTimeout(timer);
-  }, [starFilter, sortBy]);
-
-  // Reply Submit handler
-  const handleAddReplySubmit = (reviewId) => {
-    const text = replyInputs[reviewId];
-    if (!text || text.trim() === "") return;
-
-    setReviewsList(prev => prev.map(r => r.id === reviewId ? { ...r, reply: text } : r));
-    setReplyInputs(prev => ({ ...prev, [reviewId]: "" }));
-  };
-
-  // Reply Edit triggers
-  const handleStartEdit = (reviewId, currentReply) => {
-    setEditingReplyIds(prev => ({ ...prev, [reviewId]: true }));
-    setEditTexts(prev => ({ ...prev, [reviewId]: currentReply }));
-  };
-
-  const handleSaveEdit = (reviewId) => {
-    const text = editTexts[reviewId];
-    if (!text || text.trim() === "") return;
-
-    setReviewsList(prev => prev.map(r => r.id === reviewId ? { ...r, reply: text } : r));
-    setEditingReplyIds(prev => ({ ...prev, [reviewId]: false }));
-  };
-
-  // Reply Delete triggers
-  const handleDeleteReply = (reviewId) => {
-    setReviewsList(prev => prev.map(r => r.id === reviewId ? { ...r, reply: "" } : r));
-  };
-
-  // Calculation for filters
-  const filteredReviews = React.useMemo(() => {
-    let result = [...reviewsList];
-
-    if (searchQuery.trim() !== "") {
-      const q = searchQuery.toLowerCase();
-      result = result.filter(r => 
-        r.name.toLowerCase().includes(q) || 
-        r.comment.toLowerCase().includes(q) ||
-        r.serviceName.toLowerCase().includes(q)
-      );
-    }
-
-    if (starFilter !== "all") {
-      const minStars = parseFloat(starFilter);
-      result = result.filter(r => r.rating >= minStars && r.rating < minStars + 1);
-    }
-
-    result.sort((a, b) => {
-      if (sortBy === "newest") {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      } else if (sortBy === "highest") {
-        return b.rating - a.rating;
+    setError("");
+    try {
+      const response = await providerService.getReviews();
+      if (response.success && response.data) {
+        setReviewsData({
+          averageRating: response.data.averageRating !== undefined ? response.data.averageRating : 5.0,
+          totalReviews: response.data.totalReviews || 0,
+          distribution: response.data.distribution || { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+          responseRate: response.data.responseRate !== undefined ? response.data.responseRate : 100,
+          recommendationRate: response.data.recommendationRate !== undefined ? response.data.recommendationRate : 100,
+          reviewsList: response.data.reviewsList || []
+        });
       } else {
-        return a.rating - b.rating;
+        setError(response.message || "Failed to load provider reviews.");
       }
-    });
+    } catch (err) {
+      console.error("Fetch reviews error:", err);
+      setError(err.message || "Failed to fetch provider reviews from database.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    return result;
-  }, [reviewsList, searchQuery, starFilter, sortBy]);
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
-  // Calculations for stats
-  const totalCount = 142;
-  const ratingAvg = 4.9;
-  const responseRate = 98;
-  const recommendRate = 100;
+  const handleAddReplySubmit = async (reviewId) => {
+    const text = replyInputs[reviewId];
+    if (!text || !text.trim()) return;
 
-  // Star rating distribution
-  const starsBreakdown = [
-    { star: 5, percentage: 92 },
-    { star: 4, percentage: 6 },
-    { star: 3, percentage: 2 },
-    { star: 2, percentage: 0 },
-    { star: 1, percentage: 0 }
-  ];
+    setSubmittingReplyId(reviewId);
+    setError("");
+    setSuccessMsg("");
+
+    try {
+      const response = await providerService.replyToReview(reviewId, text);
+      if (response.success) {
+        setSuccessMsg("Reply saved to database successfully!");
+        setReplyInputs((prev) => ({ ...prev, [reviewId]: "" }));
+        setTimeout(() => setSuccessMsg(""), 2500);
+        fetchReviews();
+      } else {
+        setError(response.message || "Failed to save review reply.");
+      }
+    } catch (err) {
+      console.error("Save reply error:", err);
+      setError(err.message || "Failed to save review reply.");
+    } finally {
+      setSubmittingReplyId(null);
+    }
+  };
+
+  const reviewsList = reviewsData.reviewsList || [];
+  const filteredReviews = reviewsList.filter((r) => {
+    if (!r) return false;
+    const name = r.name || "";
+    const comment = r.comment || "";
+    const serviceName = r.serviceName || "";
+    const matchesSearch =
+      name.toLowerCase().includes((searchQuery || "").toLowerCase()) ||
+      comment.toLowerCase().includes((searchQuery || "").toLowerCase()) ||
+      serviceName.toLowerCase().includes((searchQuery || "").toLowerCase());
+
+    const rating = typeof r.rating === "number" ? r.rating : 5;
+    const matchesStar = starFilter === "all" || Math.round(rating) === parseInt(starFilter, 10);
+    return matchesSearch && matchesStar;
+  });
+
+  const distribution = reviewsData.distribution || { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  const totalReviews = reviewsData.totalReviews || 0;
 
   return (
     <DashboardLayout>
       <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
         
-        {/* LIGHT RETRO BANNER HEADER */}
+        {/* RETRO BANNER HEADER */}
         <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1">
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Customer Feedbacks</h1>
-              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Verify ratings breakdown and reply to client testimonials</p>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Customer Ratings & Reviews</h1>
+              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Monitor customer feedback, view satisfaction metrics, and reply to client reviews</p>
             </div>
             
             <Link to="/provider/dashboard">
-              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] border border-[#E8DCC3] rounded-xl text-white text-xs font-bold px-5 h-9.5 shadow-2xs cursor-pointer">
-                <ArrowLeft className="h-4 w-4 text-white mr-1" />
-                Back to Dashboard
+              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] border border-[#E8DCC3] text-white font-bold text-xs rounded-xl h-9.5 px-4 cursor-pointer shadow-2xs">
+                <ArrowLeft className="h-4 w-4 mr-1" /> Dashboard
               </Button>
             </Link>
           </div>
         </section>
 
-        {/* STATS OVERVIEW CARDS */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+          
+          {successMsg && (
+            <div className="p-3.5 bg-[#7DAB7D]/20 border border-[#7DAB7D]/40 text-[#2B522B] text-xs font-bold rounded-xl flex items-center gap-2">
+              <CheckCircle2 className="h-4.5 w-4.5" />
+              <span>{successMsg}</span>
+            </div>
+          )}
+
+          {error && (
+            <div className="p-3.5 bg-[#8C4B3E]/20 border border-[#8C4B3E]/40 text-[#8C4B3E] text-xs font-bold rounded-xl flex items-center gap-2">
+              <AlertCircle className="h-4.5 w-4.5" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          {/* RATINGS OVERVIEW GRID */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            {/* Avg Rating */}
-            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Average Rating</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">{ratingAvg} <span className="text-xs text-[#7A7266] font-medium">/5</span></span>
+            {/* SCORE CARD */}
+            <Card className="lg:col-span-4 border border-[#E8DCC3] shadow-2xs bg-white rounded-2xl p-6 text-center space-y-4 flex flex-col justify-center">
+              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block">Average Satisfaction Rating</span>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-4xl sm:text-5xl font-black text-[#1F1D1A]">
+                  {isLoading ? <Loader2 className="h-8 w-8 animate-spin mx-auto text-[#C9A46A]" /> : reviewsData.averageRating}
+                </span>
+                <Star className="h-8 w-8 fill-[#C9A46A] text-[#C9A46A]" />
               </div>
-              <div className="p-3 bg-[#F0E7D5] text-[#C9A46A] rounded-2xl shrink-0 border border-[#E8DCC3]">
-                <Star className="h-6 w-6 fill-[#C9A46A] text-[#C9A46A]" />
-              </div>
-            </Card>
-
-            {/* Total reviews */}
-            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Total Reviews</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">{totalCount}</span>
-              </div>
-              <div className="p-3 bg-[#F0E7D5] text-[#C9A46A] rounded-2xl shrink-0 border border-[#E8DCC3]">
-                <MessageSquare className="h-6 w-6" />
-              </div>
-            </Card>
-
-            {/* Response Rate */}
-            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Response Rate</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">{responseRate}%</span>
-              </div>
-              <div className="p-3 bg-[#F0E7D5] text-[#C9A46A] rounded-2xl shrink-0 border border-[#E8DCC3]">
-                <CheckCircle2 className="h-6 w-6" />
+              <p className="text-xs text-[#5A5146] font-semibold">
+                Based on <strong>{totalReviews}</strong> customer review{totalReviews === 1 ? "" : "s"}
+              </p>
+              <div className="pt-2 border-t border-[#E8DCC3] flex justify-around text-xs font-bold text-[#1F1D1A]">
+                <div>
+                  <span className="text-[10px] font-bold text-[#7A7266] uppercase block">Response Rate</span>
+                  <span className="text-sm font-black text-[#2B522B]">{reviewsData.responseRate}%</span>
+                </div>
+                <div className="border-r border-[#E8DCC3]"></div>
+                <div>
+                  <span className="text-[10px] font-bold text-[#7A7266] uppercase block">Recommended</span>
+                  <span className="text-sm font-black text-[#2B522B]">{reviewsData.recommendationRate}%</span>
+                </div>
               </div>
             </Card>
 
-            {/* Recommended Rate */}
-            <Card className="border border-[#E8DCC3] shadow-2xs bg-white p-5 flex items-center justify-between gap-3.5 rounded-2xl">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Recommend Rate</span>
-                <span className="text-xl sm:text-2xl font-bold text-[#1F1D1A]">{recommendRate}%</span>
-              </div>
-              <div className="p-3 bg-[#7DAB7D]/20 text-[#2B522B] rounded-2xl shrink-0 border border-[#7DAB7D]/30">
-                <ThumbsUp className="h-6 w-6" />
-              </div>
+            {/* RATING BREAKDOWN BARS */}
+            <Card className="lg:col-span-8 border border-[#E8DCC3] shadow-2xs bg-white rounded-2xl p-6 space-y-3">
+              <span className="text-xs font-bold text-[#1F1D1A] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2">Rating Distribution</span>
+
+              {[5, 4, 3, 2, 1].map((stars) => {
+                const count = distribution[stars] || 0;
+                const percent = totalReviews > 0 ? Math.round((count / totalReviews) * 100) : 0;
+                return (
+                  <div key={stars} className="flex items-center gap-3 text-xs font-bold text-[#1F1D1A]">
+                    <span className="w-12 flex items-center gap-1 shrink-0">
+                      {stars} <Star className="h-3.5 w-3.5 fill-[#C9A46A] text-[#C9A46A]" />
+                    </span>
+                    <Progress value={percent} className="h-2 flex-1 bg-[#FAF6F0]" />
+                    <span className="w-12 text-right text-[11px] text-[#7A7266] shrink-0">{count} ({percent}%)</span>
+                  </div>
+                );
+              })}
             </Card>
 
           </div>
-        </section>
 
-        {/* REVIEWS GRID LAYOUT */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
-            {/* LEFT COLUMN: RATING DISTRIBUTION AND FILTERS */}
-            <div className="lg:col-span-4 space-y-6">
-              
-              {/* RATINGS DISTRIBUTION CARD */}
-              <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-5 space-y-4">
-                <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2">Rating Distribution</span>
-                
-                <div className="space-y-3">
-                  {starsBreakdown.map(item => (
-                    <div key={item.star} className="flex items-center gap-3 text-xs font-bold text-[#5A5146]">
-                      <span className="w-8 flex items-center justify-end gap-0.5 shrink-0">
-                        {item.star} <Star className="h-3.5 w-3.5 fill-[#C9A46A] text-[#C9A46A]" />
-                      </span>
-                      
-                      <Progress value={item.percentage} className="h-2 flex-1 rounded-full bg-[#F0E7D5] [&>div]:bg-[#C9A46A]" />
-                      
-                      <span className="w-10 text-right text-[#7A7266] font-medium shrink-0">
-                        {item.percentage}%
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </Card>
+          {/* REVIEWS FEED LIST */}
+          <Card className="border border-[#E8DCC3] shadow-2xs bg-white rounded-2xl p-6 space-y-6">
+            <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <CardTitle className="text-base font-bold text-[#1F1D1A]">Verified Customer Feedback</CardTitle>
+                <CardDescription className="text-xs text-[#7A7266]">Read and respond to completed service reviews</CardDescription>
+              </div>
 
-              {/* FILTERING CONTROLS */}
-              <Card className="border border-[#E8DCC3] shadow-2xs rounded-2xl bg-white p-5 space-y-4">
-                <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block mb-2 border-b border-[#E8DCC3] pb-2">Search & Filters</span>
-                
-                {/* Search */}
-                <div className="space-y-1.5">
-                  <Label htmlFor="searchQuery" className="text-[10px] font-bold text-[#7A7266]">Search reviews</Label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-[50%] translate-y-[-50%] text-[#7A7266]">
-                      <Search className="h-4 w-4" />
-                    </span>
-                    <Input
-                      id="searchQuery"
-                      placeholder="Type keyword..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-9 h-9.5 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A]"
-                    />
-                  </div>
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="relative">
+                  <Input
+                    placeholder="Search comment, service..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="h-9 w-48 pl-8 text-xs border-[#E8DCC3] focus-visible:ring-[#C9A46A] rounded-xl bg-[#FAF6F0]"
+                  />
+                  <Search className="h-3.5 w-3.5 text-[#7A7266] absolute left-2.5 top-[50%] translate-y-[-50%]" />
                 </div>
 
-                {/* Rating filter */}
-                <div className="space-y-1.5">
-                  <Label htmlFor="starFilter" className="text-[10px] font-bold text-[#7A7266]">Star Rating</Label>
-                  <div className="relative">
-                    <select
-                      id="starFilter"
-                      value={starFilter}
-                      onChange={(e) => setStarFilter(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-[#E8DCC3] focus:outline-none focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl bg-white text-xs font-bold text-[#1F1D1A] cursor-pointer appearance-none shadow-2xs"
-                    >
-                      <option value="all">All Stars</option>
-                      <option value="5">5 Stars only</option>
-                      <option value="4">4 Stars only</option>
-                      <option value="3">3 Stars only</option>
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
-                      <ChevronDown className="h-4 w-4" />
-                    </div>
-                  </div>
-                </div>
+                <select
+                  value={starFilter}
+                  onChange={(e) => setStarFilter(e.target.value)}
+                  className="h-9 text-xs font-bold border border-[#E8DCC3] rounded-xl px-3 bg-[#FAF6F0] text-[#1F1D1A] focus:outline-none cursor-pointer"
+                >
+                  <option value="all">All Stars</option>
+                  <option value="5">5 Stars</option>
+                  <option value="4">4 Stars</option>
+                  <option value="3">3 Stars</option>
+                  <option value="2">2 Stars</option>
+                  <option value="1">1 Star</option>
+                </select>
+              </div>
+            </CardHeader>
 
-                {/* Sort */}
-                <div className="space-y-1.5">
-                  <Label htmlFor="sortBy" className="text-[10px] font-bold text-[#7A7266]">Sort By</Label>
-                  <div className="relative">
-                    <select
-                      id="sortBy"
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value)}
-                      className="w-full h-9.5 pl-3 pr-8 border border-[#E8DCC3] focus:outline-none focus:ring-2 focus:ring-[#C9A46A]/20 rounded-xl bg-white text-xs font-bold text-[#1F1D1A] cursor-pointer appearance-none shadow-2xs"
-                    >
-                      <option value="newest">Newest First</option>
-                      <option value="highest">Highest Rating</option>
-                      <option value="lowest">Lowest Rating</option>
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-[#7A7266]">
-                      <ChevronDown className="h-4 w-4" />
-                    </div>
-                  </div>
-                </div>
-
-              </Card>
-
-            </div>
-
-            {/* RIGHT COLUMN: REVIEWS GRID LISTINGS */}
-            <main className="lg:col-span-8 space-y-6">
-              
+            <CardContent className="p-0 pt-2">
               {isLoading ? (
-                /* LOADING SHIMMER CARDS */
-                <div className="space-y-4">
-                  {[...Array(3)].map((_, i) => (
-                    <Card key={i} className="border border-[#E8DCC3] bg-white p-5 rounded-2xl space-y-4 animate-pulse">
-                      <div className="flex gap-3">
-                        <Skeleton className="w-10 h-10 rounded-full bg-[#E8DCC3]" />
-                        <div className="space-y-2 flex-1">
-                          <Skeleton className="h-4 bg-[#E8DCC3] w-1/4 rounded" />
-                          <Skeleton className="h-3.5 bg-[#E8DCC3] w-1/3 rounded" />
-                        </div>
-                      </div>
-                      <Skeleton className="h-10 bg-[#E8DCC3] w-full rounded-xl" />
-                    </Card>
-                  ))}
+                <div className="py-12 text-center">
+                  <Loader2 className="h-6 w-6 text-[#C9A46A] animate-spin mx-auto mb-2" />
+                  <p className="text-xs font-semibold text-[#5A5146]">Loading customer reviews from database...</p>
                 </div>
               ) : filteredReviews.length === 0 ? (
-                /* EMPTY STATE DISPLAY */
-                <div className="bg-white border border-[#E8DCC3] rounded-3xl p-12 text-center flex flex-col items-center gap-4 max-w-lg mx-auto shadow-2xs mt-4">
-                  <div className="p-4 bg-[#F0E7D5] text-[#C9A46A] rounded-full border border-[#E8DCC3]">
-                    <AlertCircle className="h-8 w-8" />
-                  </div>
-                  <h3 className="text-xl font-bold text-[#1F1D1A] mt-2">No Reviews Found</h3>
-                  <p className="text-xs text-[#7A7266] max-w-sm leading-relaxed">
-                    We couldn't find any feedback comments matching your selection criteria. Try clearing search filters.
-                  </p>
+                <div className="py-12 text-center">
+                  <MessageSquare className="h-8 w-8 text-[#7A7266] mx-auto mb-2" />
+                  <p className="text-xs font-bold text-[#1F1D1A]">No reviews available yet</p>
+                  <p className="text-[11px] text-[#7A7266] mt-1">Reviews submitted by verified customers will appear here</p>
                 </div>
               ) : (
-                /* CARDS LISTINGS GRID */
-                <div className="space-y-4">
-                  {filteredReviews.map(rev => (
-                    <Card key={rev.id} className="overflow-hidden border border-[#E8DCC3] bg-white p-5 rounded-2xl space-y-4 shadow-2xs">
-                      
-                      {/* Customer Metadata */}
-                      <div className="flex items-center justify-between flex-wrap gap-2.5">
+                <div className="space-y-6">
+                  {filteredReviews.map((rev) => (
+                    <div key={rev.id} className="p-5 border border-[#E8DCC3] rounded-2xl bg-[#FAF6F0]/40 space-y-4 shadow-2xs">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          <Avatar className="w-10 h-10 border border-[#E8DCC3] overflow-hidden shrink-0">
-                            <AvatarImage src={rev.avatar} className="object-cover" />
-                            <AvatarFallback className="bg-[#F0E7D5] text-[#C9A46A] font-bold">{rev.name[0]}</AvatarFallback>
+                          <Avatar className="h-10 w-10 border border-[#E8DCC3]">
+                            <AvatarImage src={rev.avatar} alt={rev.name} />
+                            <AvatarFallback className="bg-[#F0E7D5] text-[#1F1D1A] font-bold text-xs">
+                              {rev.name ? rev.name.slice(0, 2).toUpperCase() : "CU"}
+                            </AvatarFallback>
                           </Avatar>
                           <div>
-                            <span className="text-xs font-bold text-[#1F1D1A] block">{rev.name}</span>
-                            <span className="text-[10px] text-[#C9A46A] font-bold bg-[#FAF6F0] px-2 py-0.5 rounded border border-[#E8DCC3] uppercase tracking-wide inline-block mt-0.5">
-                              {rev.serviceName}
-                            </span>
+                            <h4 className="text-xs font-bold text-[#1F1D1A]">{rev.name}</h4>
+                            <span className="text-[10px] text-[#7A7266] font-medium block">Service: {rev.serviceName}</span>
                           </div>
                         </div>
 
-                        <div className="text-right space-y-1">
-                          <div className="flex items-center justify-end gap-0.5 text-[#C9A46A]">
-                            {[...Array(5)].map((_, idx) => {
-                              const starNum = idx + 1;
-                              const isFilled = starNum <= Math.floor(rev.rating);
-                              return (
-                                <Star 
-                                  key={idx} 
-                                  className={`h-3.5 w-3.5 ${
-                                    isFilled ? "fill-[#C9A46A] text-[#C9A46A]" : "text-[#E8DCC3]"
-                                  }`} 
-                                />
-                              );
-                            })}
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-0.5">
+                            {[...Array(5)].map((_, i) => (
+                              <Star
+                                key={i}
+                                className={`h-3.5 w-3.5 ${
+                                  i < Math.round(rev.rating || 5)
+                                    ? "fill-[#C9A46A] text-[#C9A46A]"
+                                    : "text-[#E8DCC3]"
+                                }`}
+                              />
+                            ))}
                           </div>
-                          <span className="text-[9px] text-[#7A7266] font-medium block">{rev.date}</span>
+                          <span className="text-xs font-bold text-[#7A7266]">{rev.date}</span>
                         </div>
                       </div>
 
-                      {/* Review Comment Text */}
-                      <p className="text-xs text-[#5A5146] leading-relaxed font-medium bg-[#FAF6F0] p-3 rounded-xl border border-[#E8DCC3]">
+                      <p className="text-xs font-medium text-[#1F1D1A] leading-relaxed bg-white p-3 rounded-xl border border-[#E8DCC3]/60">
                         "{rev.comment}"
                       </p>
 
-                      {/* Provider Reply block */}
+                      {/* EXISTING PROVIDER REPLY */}
                       {rev.reply ? (
-                        /* ACTIVE REPLY BOX */
-                        <div className="p-4 bg-[#F0E7D5]/60 border border-[#E8DCC3] rounded-xl space-y-2.5 relative">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-bold text-[#1F1D1A] bg-white border border-[#E8DCC3] rounded-lg py-0.5 px-2.5 uppercase flex items-center gap-1">
-                              <CornerDownRight className="h-3.5 w-3.5 text-[#C9A46A]" />
-                              Your Reply
-                            </span>
-                            
-                            <div className="flex items-center gap-1.5">
-                              <button 
-                                onClick={() => handleStartEdit(rev.id, rev.reply)}
-                                className="p-1 text-[#7A7266] hover:text-[#C9A46A] transition-colors cursor-pointer"
-                              >
-                                <Edit3 className="h-3.5 w-3.5" />
-                              </button>
-                              <button 
-                                onClick={() => handleDeleteReply(rev.id)}
-                                className="p-1 text-[#8C4B3E] hover:underline transition-colors cursor-pointer"
-                              >
-                                <Trash2 className="h-3.5 w-3.5" />
-                              </button>
-                            </div>
+                        <div className="pl-4 border-l-2 border-[#C9A46A] space-y-1 bg-[#F0E7D5]/40 p-3 rounded-r-xl">
+                          <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#C9A46A] uppercase">
+                            <CornerDownRight className="h-3 w-3" /> Provider Official Response
                           </div>
-
-                          {/* Editable reply block */}
-                          {editingReplyIds[rev.id] ? (
-                            <div className="space-y-2 pt-1">
-                              <Input
-                                value={editTexts[rev.id] || ""}
-                                onChange={(e) => setEditTexts(prev => ({ ...prev, [rev.id]: e.target.value }))}
-                                className="h-9 border-[#E8DCC3] rounded-xl text-xs bg-white text-[#1F1D1A]"
-                              />
-                              <div className="flex justify-end gap-1.5">
-                                <Button 
-                                  size="xs" 
-                                  variant="outline"
-                                  onClick={() => setEditingReplyIds(prev => ({ ...prev, [rev.id]: false }))}
-                                  className="h-7 text-[9px] font-bold border-[#E8DCC3] bg-white text-[#5A5146]"
-                                >
-                                  Cancel
-                                </Button>
-                                <Button 
-                                  size="xs"
-                                  onClick={() => handleSaveEdit(rev.id)}
-                                  className="h-7 text-[9px] font-bold bg-[#C9A46A] text-white hover:bg-[#b89359] border border-[#E8DCC3]"
-                                >
-                                  Save Reply
-                                </Button>
-                              </div>
-                            </div>
-                          ) : (
-                            <p className="text-xs text-[#1F1D1A] font-medium leading-relaxed">
-                              {rev.reply}
-                            </p>
-                          )}
+                          <p className="text-xs font-medium text-[#5A5146]">{rev.reply}</p>
                         </div>
                       ) : (
-                        /* WRITE REPLY FORM */
-                        <div className="p-3 bg-[#FAF6F0] border border-[#E8DCC3] rounded-xl space-y-2">
-                          <Label className="text-[10px] font-bold text-[#7A7266] block">No response yet. Write a reply:</Label>
-                          <div className="flex gap-2">
-                            <Input
-                              placeholder="e.g. Thanks for the feedback! Glad to assist."
-                              value={replyInputs[rev.id] || ""}
-                              onChange={(e) => setReplyInputs(prev => ({ ...prev, [rev.id]: e.target.value }))}
-                              className="h-9 border-[#E8DCC3] focus-visible:ring-2 focus-visible:ring-[#C9A46A]/20 focus-visible:border-[#C9A46A] rounded-xl text-xs bg-white text-[#1F1D1A] flex-1"
-                            />
-                            <Button
-                              onClick={() => handleAddReplySubmit(rev.id)}
-                              className="bg-[#C9A46A] hover:bg-[#b89359] text-white h-9 px-4 font-bold text-xs rounded-xl border border-[#E8DCC3] cursor-pointer"
-                            >
-                              Submit
-                            </Button>
-                          </div>
+                        /* REPLY FORM */
+                        <div className="space-y-2 pt-2">
+                          <Input
+                            placeholder="Write a public response to this review..."
+                            value={replyInputs[rev.id] || ""}
+                            onChange={(e) =>
+                              setReplyInputs((prev) => ({ ...prev, [rev.id]: e.target.value }))
+                            }
+                            className="text-xs h-9 border-[#E8DCC3] focus-visible:ring-[#C9A46A] rounded-xl bg-white"
+                          />
+                          <Button
+                            size="xs"
+                            disabled={submittingReplyId === rev.id || !(replyInputs[rev.id] || "").trim()}
+                            onClick={() => handleAddReplySubmit(rev.id)}
+                            className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-[10px] uppercase rounded-xl h-8 px-4 border border-[#E8DCC3] cursor-pointer"
+                          >
+                            {submittingReplyId === rev.id ? (
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                            ) : (
+                              "Publish Reply"
+                            )}
+                          </Button>
                         </div>
                       )}
-
-                    </Card>
+                    </div>
                   ))}
                 </div>
               )}
+            </CardContent>
+          </Card>
 
-            </main>
-
-          </div>
         </div>
-
       </div>
     </DashboardLayout>
   );

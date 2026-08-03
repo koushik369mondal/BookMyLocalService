@@ -1,8 +1,446 @@
-const dashboardRepository = require("../dashboard/dashboard.repository");
+const prisma = require("../../config/prisma");
 
 class ProviderService {
+    /**
+     * Compute Provider Dashboard KPIs dynamically from database
+     */
     async getProviderDashboardData(providerId) {
-        return await dashboardRepository.getProviderStats(providerId);
+        try {
+            if (!providerId) {
+                return {
+                    totalServices: 0,
+                    activeServices: 0,
+                    totalBookings: 0,
+                    completedJobs: 0,
+                    pendingJobs: 0,
+                    monthlyRevenue: 0,
+                    totalEarnings: 0,
+                    averageRating: 5.0,
+                    services: [],
+                    recentBookings: []
+                };
+            }
+
+            const servicesCount = await prisma.service.count({
+                where: { providerId }
+            });
+
+            const activeServicesCount = await prisma.service.count({
+                where: { providerId, availability: { not: "off" } }
+            });
+
+            const totalBookings = await prisma.booking.count({
+                where: { providerId }
+            });
+
+            const completedJobs = await prisma.booking.count({
+                where: { providerId, status: "completed" }
+            });
+
+            const pendingJobs = await prisma.booking.count({
+                where: { providerId, status: "pending" }
+            });
+
+            const earningsResult = await prisma.booking.aggregate({
+                where: { providerId, paymentStatus: "paid" },
+                _sum: { total: true }
+            });
+
+            const reviewsAgg = await prisma.review.aggregate({
+                where: { providerId },
+                _avg: { rating: true },
+                _count: { id: true }
+            });
+
+            const services = await prisma.service.findMany({
+                where: { providerId },
+                orderBy: { createdAt: "desc" },
+                include: {
+                    bookings: { select: { id: true, total: true, paymentStatus: true } }
+                }
+            });
+
+            const formattedServices = (services || []).map(s => ({
+                id: s.id,
+                title: s.title || "Service",
+                slug: s.slug || s.id,
+                category: s.category || "General",
+                location: s.location || "Local Service Area",
+                price: typeof s.price === "number" ? s.price : 0,
+                priceType: s.priceType || "/service",
+                rating: typeof s.rating === "number" ? s.rating : 5.0,
+                reviewCount: s.reviewCount || 0,
+                availability: s.availability || "available",
+                badge: s.badge || null,
+                imageUrl: s.imageUrl || "",
+                status: "Active",
+                bookingsCount: s.bookings ? s.bookings.length : 0,
+                revenue: s.bookings ? s.bookings.reduce((sum, b) => b.paymentStatus === "paid" ? sum + (b.total || 0) : sum, 0) : 0
+            }));
+
+            const recentBookings = await prisma.booking.findMany({
+                where: { providerId },
+                orderBy: { createdAt: "desc" },
+                take: 5,
+                include: {
+                    customer: { select: { id: true, fullName: true, email: true, phone: true, avatar: true } },
+                    service: { select: { id: true, title: true, category: true, imageUrl: true } }
+                }
+            });
+
+            const formattedBookings = (recentBookings || []).map(b => ({
+                id: b.id,
+                customerId: b.customerId,
+                customer: b.customer ? {
+                    fullName: b.customer.fullName || b.billingName || "Customer",
+                    email: b.customer.email || b.billingEmail || "N/A",
+                    phone: b.customer.phone || b.billingPhone || "N/A",
+                    avatar: b.customer.avatar || ""
+                } : { fullName: b.billingName || "Customer", email: b.billingEmail || "N/A", phone: b.billingPhone || "N/A", avatar: "" },
+                service: b.service ? {
+                    title: b.service.title || "Service",
+                    category: b.service.category || "General",
+                    imageUrl: b.service.imageUrl || ""
+                } : { title: "Service", category: "General", imageUrl: "" },
+                plan: b.plan || "Standard",
+                date: b.date || "",
+                time: b.time || "",
+                total: b.total || 0,
+                status: b.status || "pending",
+                paymentStatus: b.paymentStatus || "pending"
+            }));
+
+            return {
+                totalServices: servicesCount || 0,
+                activeServices: activeServicesCount || 0,
+                totalBookings: totalBookings || 0,
+                completedJobs: completedJobs || 0,
+                pendingJobs: pendingJobs || 0,
+                monthlyRevenue: earningsResult?._sum?.total || 0,
+                totalEarnings: earningsResult?._sum?.total || 0,
+                averageRating: reviewsAgg?._avg?.rating ? Math.round(reviewsAgg._avg.rating * 10) / 10 : 5.0,
+                services: formattedServices,
+                recentBookings: formattedBookings
+            };
+        } catch (err) {
+            console.error("Error in getProviderDashboardData service:", err);
+            return {
+                totalServices: 0,
+                activeServices: 0,
+                totalBookings: 0,
+                completedJobs: 0,
+                pendingJobs: 0,
+                monthlyRevenue: 0,
+                totalEarnings: 0,
+                averageRating: 5.0,
+                services: [],
+                recentBookings: []
+            };
+        }
+    }
+
+    /**
+     * Fetch assigned bookings (jobs) for provider
+     */
+    async getProviderJobs(providerId) {
+        const bookings = await prisma.booking.findMany({
+            where: { providerId },
+            orderBy: { createdAt: "desc" },
+            include: {
+                customer: { select: { id: true, fullName: true, email: true, phone: true, avatar: true, address: true, city: true } },
+                service: { select: { id: true, title: true, category: true, imageUrl: true, price: true, priceType: true } }
+            }
+        });
+
+        return bookings.map(b => ({
+            id: b.id,
+            customer: b.customer?.fullName || b.billingName || "Customer",
+            customerPhone: b.customer?.phone || b.billingPhone || "N/A",
+            customerEmail: b.customer?.email || b.billingEmail || "N/A",
+            service: b.service?.title || "Local Service",
+            serviceCategory: b.service?.category || "General",
+            date: b.date,
+            time: b.time,
+            price: b.total,
+            status: b.status,
+            paymentStatus: b.paymentStatus,
+            paymentMethod: b.paymentMethod,
+            address: b.street && b.city ? `${b.street}, ${b.city}` : (b.customer?.city || "Local Service Area")
+        }));
+    }
+
+    /**
+     * Update job status in database
+     */
+    async updateJobStatus(providerId, bookingId, status) {
+        const booking = await prisma.booking.findUnique({
+            where: { id: bookingId }
+        });
+
+        if (!booking || booking.providerId !== providerId) {
+            throw new Error("Booking not found or unauthorized.");
+        }
+
+        const updateData = { status };
+        if (status === "completed" && booking.paymentMethod === "cash") {
+            updateData.paymentStatus = "paid";
+        }
+
+        return await prisma.booking.update({
+            where: { id: bookingId },
+            data: updateData,
+            include: {
+                customer: { select: { id: true, fullName: true, email: true } },
+                service: { select: { id: true, title: true } }
+            }
+        });
+    }
+
+    /**
+     * Compute provider earnings & transaction history dynamically from database
+     */
+    async getProviderEarnings(providerId) {
+        const bookings = await prisma.booking.findMany({
+            where: { providerId },
+            orderBy: { createdAt: "desc" },
+            include: {
+                customer: { select: { id: true, fullName: true } },
+                service: { select: { id: true, title: true } }
+            }
+        });
+
+        let clearedBalance = 0;
+        let pendingBalance = 0;
+
+        const transactions = bookings.map(b => {
+            const isCleared = b.paymentStatus === "paid" || b.status === "completed";
+            if (isCleared) {
+                clearedBalance += b.total;
+            } else {
+                pendingBalance += b.total;
+            }
+
+            return {
+                id: `TXN-${b.id.slice(-6).toUpperCase()}`,
+                bookingId: b.id,
+                customerName: b.customer?.fullName || b.billingName || "Customer",
+                serviceName: b.service?.title || "Local Service",
+                date: b.date || b.createdAt.toISOString().split("T")[0],
+                amount: b.total,
+                status: isCleared ? "cleared" : "processing"
+            };
+        });
+
+        // Group daily & monthly earnings dynamically
+        const daysMap = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
+        const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        bookings.forEach(b => {
+            if (b.paymentStatus === "paid" || b.status === "completed") {
+                const dateObj = new Date(b.createdAt);
+                const dayName = dayNames[dateObj.getDay()];
+                if (daysMap[dayName] !== undefined) {
+                    daysMap[dayName] += b.total;
+                }
+            }
+        });
+
+        const dailyEarnings = Object.keys(daysMap).map(label => ({
+            label,
+            amount: Math.round(daysMap[label] * 100) / 100
+        }));
+
+        const payoutHistory = bookings
+            .filter(b => b.status === "completed" && b.paymentStatus === "paid")
+            .slice(0, 5)
+            .map((b, idx) => ({
+                id: `PAY-${b.id.slice(-6).toUpperCase()}`,
+                date: b.date || b.createdAt.toISOString().split("T")[0],
+                amount: b.total,
+                method: b.paymentMethod ? `${b.paymentMethod.toUpperCase()} Direct Settlement` : "UPI / Direct Transfer",
+                status: "success"
+            }));
+
+        return {
+            totalEarnings: Math.round(clearedBalance * 100) / 100,
+            clearedBalance: Math.round(clearedBalance * 100) / 100,
+            pendingBalance: Math.round(pendingBalance * 100) / 100,
+            transactions,
+            dailyEarnings,
+            monthlyEarnings: dailyEarnings,
+            payoutHistory
+        };
+    }
+
+    /**
+     * Fetch provider reviews & aggregate ratings
+     */
+    async getProviderReviews(providerId) {
+        try {
+            if (!providerId) {
+                return {
+                    averageRating: 5.0,
+                    totalReviews: 0,
+                    distribution: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+                    responseRate: 100,
+                    recommendationRate: 100,
+                    reviewsList: []
+                };
+            }
+
+            const providerServices = await prisma.service.findMany({
+                where: { providerId },
+                select: { id: true }
+            });
+            const serviceIds = providerServices.map(s => s.id);
+
+            const whereClause = serviceIds.length > 0 
+                ? { OR: [{ providerId }, { serviceId: { in: serviceIds } }] } 
+                : { providerId };
+
+            const reviews = await prisma.review.findMany({
+                where: whereClause,
+                orderBy: { createdAt: "desc" },
+                include: {
+                    customer: { select: { id: true, fullName: true, avatar: true } },
+                    service: { select: { id: true, title: true } }
+                }
+            });
+
+            if (!reviews || reviews.length === 0) {
+                return {
+                    averageRating: 5.0,
+                    totalReviews: 0,
+                    distribution: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+                    responseRate: 100,
+                    recommendationRate: 100,
+                    reviewsList: []
+                };
+            }
+
+            const totalReviews = reviews.length;
+            let ratingSum = 0;
+            const distribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+            let repliedCount = 0;
+            let recommendedCount = 0;
+
+            reviews.forEach(r => {
+                const rating = typeof r.rating === "number" ? r.rating : 5;
+                ratingSum += rating;
+                const star = Math.min(5, Math.max(1, Math.round(rating)));
+                if (distribution[star] !== undefined) distribution[star]++;
+                if (r.reply && r.reply.trim() !== "") repliedCount++;
+                if (rating >= 4) recommendedCount++;
+            });
+
+            const averageRating = totalReviews > 0 ? Math.round((ratingSum / totalReviews) * 10) / 10 : 5.0;
+            const responseRate = totalReviews > 0 ? Math.round((repliedCount / totalReviews) * 100) : 100;
+            const recommendationRate = totalReviews > 0 ? Math.round((recommendedCount / totalReviews) * 100) : 100;
+
+            const reviewsList = reviews.map(r => ({
+                id: r.id,
+                name: r.customer?.fullName || "Verified Customer",
+                avatar: r.customer?.avatar || "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
+                serviceName: r.service?.title || "Service",
+                rating: typeof r.rating === "number" ? r.rating : 5,
+                comment: r.comment || "",
+                date: r.createdAt ? new Date(r.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0],
+                reply: r.reply || ""
+            }));
+
+            return {
+                averageRating,
+                totalReviews,
+                distribution,
+                responseRate,
+                recommendationRate,
+                reviewsList
+            };
+        } catch (err) {
+            console.error("Error in getProviderReviews service:", err);
+            return {
+                averageRating: 5.0,
+                totalReviews: 0,
+                distribution: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+                responseRate: 100,
+                recommendationRate: 100,
+                reviewsList: []
+            };
+        }
+    }
+
+    /**
+     * Reply to a customer review in database
+     */
+    async replyToReview(providerId, reviewId, reply) {
+        const review = await prisma.review.findUnique({
+            where: { id: reviewId },
+            include: { service: { select: { providerId: true } } }
+        });
+
+        if (!review) {
+            throw new Error("Review not found.");
+        }
+
+        const isAuthorized = review.providerId === providerId || (review.service && review.service.providerId === providerId);
+
+        if (!isAuthorized) {
+            throw new Error("Unauthorized to reply to this review.");
+        }
+
+        return await prisma.review.update({
+            where: { id: reviewId },
+            data: { reply: reply.trim() }
+        });
+    }
+
+    /**
+     * Fetch provider availability schedule from database
+     */
+    async getProviderAvailability(providerId) {
+        let availability = await prisma.availability.findUnique({
+            where: { providerId }
+        });
+
+        if (!availability) {
+            const defaultSchedule = {
+                Monday: { active: true, slots: [{ id: "1", start: "09:00 AM", end: "05:00 PM" }] },
+                Tuesday: { active: true, slots: [{ id: "2", start: "09:00 AM", end: "05:00 PM" }] },
+                Wednesday: { active: true, slots: [{ id: "3", start: "09:00 AM", end: "05:00 PM" }] },
+                Thursday: { active: true, slots: [{ id: "4", start: "09:00 AM", end: "05:00 PM" }] },
+                Friday: { active: true, slots: [{ id: "5", start: "09:00 AM", end: "05:00 PM" }] },
+                Saturday: { active: false, slots: [] },
+                Sunday: { active: false, slots: [] }
+            };
+
+            availability = await prisma.availability.create({
+                data: {
+                    providerId,
+                    weeklySchedule: defaultSchedule,
+                    blockedDates: []
+                }
+            });
+        }
+
+        return availability;
+    }
+
+    /**
+     * Save provider availability schedule to database
+     */
+    async saveProviderAvailability(providerId, weeklySchedule, blockedDates) {
+        return await prisma.availability.upsert({
+            where: { providerId },
+            update: {
+                weeklySchedule,
+                blockedDates
+            },
+            create: {
+                providerId,
+                weeklySchedule,
+                blockedDates
+            }
+        });
     }
 }
 

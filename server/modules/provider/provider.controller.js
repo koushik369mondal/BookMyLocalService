@@ -19,6 +19,163 @@ const getProviderDashboard = async (req, res) => {
     }
 };
 
+const getProviderJobs = async (req, res) => {
+    try {
+        const providerId = req.user.id;
+        const jobs = await providerService.getProviderJobs(providerId);
+        return res.status(200).json({
+            success: true,
+            count: jobs.length,
+            data: jobs
+        });
+    } catch (err) {
+        console.error("Get provider jobs error:", err);
+        return res.status(500).json({
+            success: false,
+            message: err.message || "Failed to fetch provider jobs."
+        });
+    }
+};
+
+const updateJobStatus = async (req, res) => {
+    try {
+        const providerId = req.user.id;
+        const { id } = req.params;
+        const { status } = req.body;
+
+        if (!status) {
+            return res.status(400).json({
+                success: false,
+                message: "Status field is required."
+            });
+        }
+
+        const updatedJob = await providerService.updateJobStatus(providerId, id, status);
+        return res.status(200).json({
+            success: true,
+            message: `Job status updated to ${status}.`,
+            data: updatedJob
+        });
+    } catch (err) {
+        console.error("Update job status error:", err);
+        return res.status(400).json({
+            success: false,
+            message: err.message || "Failed to update job status."
+        });
+    }
+};
+
+const getProviderEarnings = async (req, res) => {
+    try {
+        const providerId = req.user.id;
+        const earningsData = await providerService.getProviderEarnings(providerId);
+        return res.status(200).json({
+            success: true,
+            data: earningsData
+        });
+    } catch (err) {
+        console.error("Get provider earnings error:", err);
+        return res.status(500).json({
+            success: false,
+            message: err.message || "Failed to fetch provider earnings."
+        });
+    }
+};
+
+const getProviderReviews = async (req, res) => {
+    try {
+        const providerId = req.user.id;
+        const reviewsData = await providerService.getProviderReviews(providerId);
+        return res.status(200).json({
+            success: true,
+            data: reviewsData
+        });
+    } catch (err) {
+        console.error("Get provider reviews error:", err);
+        return res.status(500).json({
+            success: false,
+            message: err.message || "Failed to fetch provider reviews."
+        });
+    }
+};
+
+const replyToReview = async (req, res) => {
+    try {
+        const providerId = req.user.id;
+        const { id } = req.params;
+        const { reply } = req.body;
+
+        if (!reply || !reply.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: "Reply content cannot be empty."
+            });
+        }
+
+        const updatedReview = await providerService.replyToReview(providerId, id, reply);
+        return res.status(200).json({
+            success: true,
+            message: "Reply published successfully.",
+            data: updatedReview
+        });
+    } catch (err) {
+        console.error("Reply to review error:", err);
+        return res.status(400).json({
+            success: false,
+            message: err.message || "Failed to submit review reply."
+        });
+    }
+};
+
+const getProviderAvailability = async (req, res) => {
+    try {
+        const providerId = req.user.id;
+        const availability = await providerService.getProviderAvailability(providerId);
+        return res.status(200).json({
+            success: true,
+            data: availability
+        });
+    } catch (err) {
+        console.error("Get provider availability error:", err);
+        return res.status(500).json({
+            success: false,
+            message: err.message || "Failed to fetch provider availability schedule."
+        });
+    }
+};
+
+const saveProviderAvailability = async (req, res) => {
+    try {
+        const providerId = req.user.id;
+        const { weeklySchedule, blockedDates } = req.body;
+
+        if (!weeklySchedule) {
+            return res.status(400).json({
+                success: false,
+                message: "weeklySchedule is required."
+            });
+        }
+
+        const updatedAvailability = await providerService.saveProviderAvailability(
+            providerId,
+            weeklySchedule,
+            blockedDates || []
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "Availability configurations updated successfully.",
+            data: updatedAvailability
+        });
+    } catch (err) {
+        console.error("Save provider availability error:", err);
+        return res.status(400).json({
+            success: false,
+            message: err.message || "Failed to save availability configurations."
+        });
+    }
+};
+
 /**
  * Get provider's own services from database
  */
@@ -48,7 +205,6 @@ const getProviderServices = async (req, res) => {
             }
         });
 
-        // Compute live metrics for each service
         const formatted = services.map(s => {
             const bookingsCount = s.bookings ? s.bookings.length : 0;
             const revenue = s.bookings
@@ -92,9 +248,6 @@ const getProviderServices = async (req, res) => {
     }
 };
 
-/**
- * Create a new service for logged-in provider in database
- */
 const createProviderService = async (req, res) => {
     try {
         const { title, description, category, location, price, priceType, availability, badge, imageUrl } = req.body;
@@ -134,9 +287,6 @@ const createProviderService = async (req, res) => {
     }
 };
 
-/**
- * Update provider's service in database
- */
 const updateProviderService = async (req, res) => {
     try {
         const { id } = req.params;
@@ -173,9 +323,6 @@ const updateProviderService = async (req, res) => {
     }
 };
 
-/**
- * Delete provider's service from database
- */
 const deleteProviderService = async (req, res) => {
     try {
         const { id } = req.params;
@@ -213,6 +360,13 @@ const deleteProviderService = async (req, res) => {
 
 module.exports = {
     getProviderDashboard,
+    getProviderJobs,
+    updateJobStatus,
+    getProviderEarnings,
+    getProviderReviews,
+    replyToReview,
+    getProviderAvailability,
+    saveProviderAvailability,
     getProviderServices,
     createProviderService,
     updateProviderService,

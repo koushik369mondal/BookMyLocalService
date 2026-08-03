@@ -5,32 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Bell, Check, Calendar, CreditCard, ShieldCheck, Trash2 } from "lucide-react";
 
-const mockNotifications = [
-  {
-    id: 1,
-    title: "Booking Confirmed",
-    description: "Your deep home cleaning service with Sarah Jenkins has been scheduled for July 15, 2026, at 09:30 AM.",
-    date: "2026-07-13 08:30 AM",
-    type: "booking",
-    unread: true
-  },
-  {
-    id: 2,
-    title: "Payment Received",
-    description: "Successfully processed payment of ₹55.00 for Booking Ref: BMLS-28491.",
-    date: "2026-07-13 08:32 AM",
-    type: "payment",
-    unread: false
-  },
-  {
-    id: 3,
-    title: "Security Alert",
-    description: "Your login credentials password was successfully updated.",
-    date: "2026-07-12 04:15 PM",
-    type: "security",
-    unread: false
-  }
-];
+const mockNotifications = [];
 
 export default function Notifications() {
   const getIcon = (type) => {

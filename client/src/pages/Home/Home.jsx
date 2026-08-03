@@ -10,7 +10,7 @@ import { WhyChooseUsSection } from "@/components/home/WhyChooseUsSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 
 export default function Home() {
-  const { user, loading, displayProviders } = useHomeServices();
+  const { user, loading, displayProviders, categories } = useHomeServices();
 
   if (!loading && user && (user.role === "PROVIDER" || user.role === "ADMIN")) {
     return (
@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <MainLayout>
       <HeroSection user={user} />
-      <CategoriesSection />
+      <CategoriesSection categories={categories} />
       <FeaturedProvidersSection providers={displayProviders} />
       <HowItWorksSection />
       <WhyChooseUsSection />

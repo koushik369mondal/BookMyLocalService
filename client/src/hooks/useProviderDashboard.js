@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
-import { dashboardService } from "../services/dashboardService";
+import { providerService } from "../services/providerService";
 
 export function useProviderDashboard() {
   const [stats, setStats] = useState({
-    totalJobs: 0,
+    totalServices: 0,
+    activeServices: 0,
+    totalBookings: 0,
     completedJobs: 0,
     pendingJobs: 0,
-    totalEarnings: 0
+    monthlyRevenue: 0,
+    totalEarnings: 0,
+    averageRating: 5.0
   });
   const [services, setServices] = useState([]);
   const [recentBookings, setRecentBookings] = useState([]);
@@ -17,13 +21,17 @@ export function useProviderDashboard() {
     setIsLoading(true);
     setError("");
     try {
-      const response = await dashboardService.getProviderDashboard();
+      const response = await providerService.getDashboard();
       if (response.success && response.data) {
         setStats({
-          totalJobs: response.data.totalJobs || 0,
+          totalServices: response.data.totalServices || 0,
+          activeServices: response.data.activeServices || 0,
+          totalBookings: response.data.totalBookings || 0,
           completedJobs: response.data.completedJobs || 0,
           pendingJobs: response.data.pendingJobs || 0,
-          totalEarnings: response.data.totalEarnings || 0
+          monthlyRevenue: response.data.monthlyRevenue || 0,
+          totalEarnings: response.data.totalEarnings || 0,
+          averageRating: response.data.averageRating || 5.0
         });
         setServices(response.data.services || []);
         setRecentBookings(response.data.recentBookings || []);

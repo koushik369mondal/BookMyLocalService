@@ -27,12 +27,7 @@ import {
   AlertCircle
 } from "lucide-react";
 
-// Mock Initial Payment Invoice history
-const initialInvoices = [
-  { id: "INV-90284", date: "2026-07-01", plan: "Pro Plan (Monthly)", amount: 999.00, status: "success" },
-  { id: "INV-80392", date: "2026-06-01", plan: "Pro Plan (Monthly)", amount: 999.00, status: "success" },
-  { id: "INV-70492", date: "2026-05-01", plan: "Pro Plan (Monthly)", amount: 999.00, status: "success" }
-];
+const initialInvoices = [];
 
 // Mock FAQs list
 const faqs = [

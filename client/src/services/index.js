@@ -5,4 +5,5 @@ export { checkoutService } from "./checkoutService";
 export { contactService } from "./contactService";
 export { dashboardService } from "./dashboardService";
 export { adminService } from "./adminService";
+export { providerService } from "./providerService";
 export { api, API_URL, getHeaders } from "./apiClient";

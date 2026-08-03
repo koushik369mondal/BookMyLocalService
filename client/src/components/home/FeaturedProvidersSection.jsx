@@ -1,11 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Briefcase } from "lucide-react";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { fadeInUp, staggerContainer } from "@/utils/motion";
 
-export function FeaturedProvidersSection({ providers }) {
+export function FeaturedProvidersSection({ providers = [] }) {
   return (
     <section className="py-20 bg-[#FAF6F0]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -20,13 +20,21 @@ export function FeaturedProvidersSection({ providers }) {
           </NavLink>
         </div>
 
-        <motion.div variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {providers.map((p, idx) => (
-            <motion.div key={p.id || idx} variants={fadeInUp}>
-              <ServiceCard service={p} />
-            </motion.div>
-          ))}
-        </motion.div>
+        {providers.length === 0 ? (
+          <div className="text-center py-16 bg-white rounded-3xl border border-[#E8DCC3] space-y-3">
+            <Briefcase className="h-10 w-10 text-[#7A7266] mx-auto opacity-50" />
+            <h3 className="text-sm font-bold text-[#1F1D1A]">No Featured Services Available</h3>
+            <p className="text-xs text-[#7A7266]">New service offerings will appear here as providers publish services</p>
+          </div>
+        ) : (
+          <motion.div variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {providers.map((p, idx) => (
+              <motion.div key={p.id || idx} variants={fadeInUp}>
+                <ServiceCard service={p} />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
       </div>
     </section>
   );
