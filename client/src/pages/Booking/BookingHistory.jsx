@@ -40,8 +40,9 @@ export default function BookingHistory() {
         return <Badge className="bg-[#5A95C9]/20 text-[#1E4B75] border-0 font-bold rounded-lg px-2 py-0.5 text-[10px] uppercase">Confirmed</Badge>;
       case "cancelled":
         return <Badge className="bg-rose-50 text-rose-700 border border-rose-200 font-bold rounded-lg px-2 py-0.5 text-[10px] uppercase">Cancelled</Badge>;
+      case "completed":
       default:
-        return <Badge className="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold rounded-lg px-2 py-0.5 text-[10px] uppercase">Completed</Badge>;
+        return <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg px-2 py-0.5 text-[10px] uppercase">Completed</Badge>;
     }
   };
 
@@ -149,6 +150,11 @@ export default function BookingHistory() {
                     </div>
 
                     <div>
+                      {b.status === "completed" && (
+                        <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2B522B] bg-[#7DAB7D]/15 border border-[#7DAB7D]/30 px-3 py-1 rounded-xl">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-[#2B522B]" /> Service Completed
+                        </span>
+                      )}
                       {b.status !== "cancelled" && b.status !== "completed" && (
                         confirmCancelId === b.id ? (
                           <div className="inline-flex items-center gap-2">
