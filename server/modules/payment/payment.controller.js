@@ -267,10 +267,7 @@ const createOrder = async (req, res) => {
       receipt: String(receiptId).substring(0, 40)
     };
 
-    console.log(`[DEBUG] /create-order request received from user: '${req.user?.id || "unauthenticated"}' for bookingId: '${bookingId}'`);
-    console.log(`[RAZORPAY CREATE ORDER] Creating order for Amount: ${options.amount} paise, Currency: ${options.currency}, Receipt: ${options.receipt}`);
     const order = await razorpay.orders.create(options);
-    console.log("[DEBUG] /create-order Razorpay order created successfully:", { id: order.id, amount: order.amount, key_id });
 
     return res.status(200).json({
       success: true,

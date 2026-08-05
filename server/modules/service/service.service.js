@@ -134,7 +134,10 @@ class ServiceService {
       const base64File = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
       const uploadResponse = await cloudinary.uploader.upload(base64File, {
         folder: "services",
-        resource_type: "auto"
+        resource_type: "auto",
+        transformation: [
+          { width: 1200, height: 800, crop: "limit", quality: "auto", fetch_format: "auto" }
+        ]
       });
       imageUrl = uploadResponse.secure_url;
     }
@@ -223,7 +226,10 @@ class ServiceService {
       const base64File = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
       const uploadResponse = await cloudinary.uploader.upload(base64File, {
         folder: "services",
-        resource_type: "auto"
+        resource_type: "auto",
+        transformation: [
+          { width: 1200, height: 800, crop: "limit", quality: "auto", fetch_format: "auto" }
+        ]
       });
       updateData.imageUrl = uploadResponse.secure_url;
     }

@@ -58,7 +58,10 @@ const uploadAvatar = async (req, res) => {
         
         const uploadResponse = await cloudinary.uploader.upload(base64File, {
             folder: "avatars",
-            resource_type: "auto"
+            resource_type: "auto",
+            transformation: [
+                { width: 400, height: 400, crop: "fill", gravity: "face", quality: "auto", fetch_format: "auto" }
+            ]
         });
 
         const newAvatarUrl = uploadResponse.secure_url;

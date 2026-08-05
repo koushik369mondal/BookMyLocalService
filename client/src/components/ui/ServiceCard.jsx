@@ -12,6 +12,7 @@ import {
 import { prefersReducedMotion } from "@/utils/motion";
 import { UserAvatar } from "@/components/ui/avatar";
 import { formatPrice } from "@/utils/currency";
+import { getOptimizedImageUrl } from "@/utils/imageUtils";
 import { ServiceImagePlaceholder } from "@/components/ui/ServiceImagePlaceholder";
 
 export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
@@ -21,7 +22,8 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   const title = service.title || service.name || "Local Service";
   const category = typeof service.category === "object" ? (service.category?.name || "Service") : (service.category || "Service");
   const providerName = service.providerName || service.provider?.fullName || service.provider?.name || "Verified Provider";
-  const providerAvatar = service.providerProfileImage || service.providerImage || service.provider?.profileImage || service.provider?.avatar || service.avatar || "";
+  const rawProviderAvatar = service.providerProfileImage || service.providerImage || service.provider?.profileImage || service.provider?.avatar || service.avatar || "";
+  const providerAvatar = getOptimizedImageUrl(rawProviderAvatar, { width: 100, height: 100 });
   const providerId = service.providerId || service.provider?.id;
 
   const location = service.location || "Local Area";
@@ -34,7 +36,8 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
     priceType = `/${priceType}`;
   }
 
-  const image = service.image || service.imageUrl;
+  const rawImage = service.image || service.imageUrl;
+  const image = getOptimizedImageUrl(rawImage, { width: 600, height: 350 });
   const description = service.description || "Professional and reliable local service provider ready to assist with your needs.";
   const badge = service.badge;
 

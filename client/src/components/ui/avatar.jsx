@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { cn, getUserInitials } from '@/lib/utils';
+import { getOptimizedImageUrl } from '@/utils/imageUtils';
 
 function Avatar({ className, ...props }) {
   return (
@@ -33,7 +34,8 @@ function AvatarFallback({ className, ...props }) {
 }
 
 function UserAvatar({ user, src, name, className, fallbackClassName, imageClassName }) {
-  const avatarSrc = src || user?.avatar;
+  const rawAvatarSrc = src || user?.profileImage || user?.avatar;
+  const avatarSrc = getOptimizedImageUrl(rawAvatarSrc, { width: 160, height: 160 });
   const displayName = name || user?.fullName || user?.name || "User";
   const initials = getUserInitials(displayName);
 
