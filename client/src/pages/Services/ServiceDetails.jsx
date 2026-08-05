@@ -157,8 +157,10 @@ const buildServiceDetails = (service, dbReviews = [], dbAvgRating, dbTotalReview
     title: service.title,
     category: categoryName,
     categoryIcon: service.category?.icon || null,
+    providerId: service.providerId || service.provider?.id,
     providerName: service.provider?.fullName || "Verified Provider",
-    providerImage: service.provider?.avatar || "",
+    providerImage: service.provider?.avatar || service.provider?.profileImage || "",
+    providerProfileImage: service.provider?.avatar || service.provider?.profileImage || "",
     location: service.location,
     rating: dbAvgRating !== undefined ? dbAvgRating : service.rating,
     reviewsCount: dbTotalReviews !== undefined ? dbTotalReviews : service.reviewCount,
@@ -243,7 +245,8 @@ export default function ServiceDetails() {
               name: service.title,
               category: service.category,
               providerName: service.provider?.fullName || "Verified Provider",
-              providerImage: service.provider?.avatar || "",
+              providerImage: service.provider?.avatar || service.provider?.profileImage || "",
+              providerProfileImage: service.provider?.avatar || service.provider?.profileImage || "",
               location: service.location,
               rating: service.rating,
               reviewsCount: service.reviewCount,
@@ -500,10 +503,19 @@ export default function ServiceDetails() {
 
                 {/* Profile Pic with Badge and Live Indicator */}
                 <div className="relative">
-                  <Avatar className="w-24 h-24 sm:w-28 sm:h-28 border-4 border-white/90 shadow-xl rounded-full overflow-hidden bg-white shrink-0">
-                    <AvatarImage src={provider.providerImage} className="object-cover w-full h-full" alt={provider.providerName} />
-                    <AvatarFallback className="text-xl font-bold bg-[#E8DCC3]/40 text-[#1F1D1A]">{provider.providerName[0]}</AvatarFallback>
-                  </Avatar>
+                  {provider.providerId ? (
+                    <NavLink to={`/providers/${provider.providerId}`}>
+                      <Avatar className="w-24 h-24 sm:w-28 sm:h-28 border-4 border-white/90 shadow-xl rounded-full overflow-hidden bg-white shrink-0 hover:opacity-90 transition-opacity cursor-pointer">
+                        <AvatarImage src={provider.providerImage} className="object-cover w-full h-full" alt={provider.providerName} />
+                        <AvatarFallback className="text-xl font-bold bg-[#E8DCC3]/40 text-[#1F1D1A]">{provider.providerName[0]}</AvatarFallback>
+                      </Avatar>
+                    </NavLink>
+                  ) : (
+                    <Avatar className="w-24 h-24 sm:w-28 sm:h-28 border-4 border-white/90 shadow-xl rounded-full overflow-hidden bg-white shrink-0">
+                      <AvatarImage src={provider.providerImage} className="object-cover w-full h-full" alt={provider.providerName} />
+                      <AvatarFallback className="text-xl font-bold bg-[#E8DCC3]/40 text-[#1F1D1A]">{provider.providerName[0]}</AvatarFallback>
+                    </Avatar>
+                  )}
 
                   {/* Verified Badge */}
                   <span className="absolute -bottom-1 -right-1 bg-green-500 text-white rounded-full p-1.5 shadow-md border-2 border-white" title="Verified Specialist">
@@ -513,7 +525,13 @@ export default function ServiceDetails() {
 
                 <div className="space-y-2.5">
                   <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-                    <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{provider.providerName}</h1>
+                    {provider.providerId ? (
+                      <NavLink to={`/providers/${provider.providerId}`} className="hover:text-amber-300 transition-colors">
+                        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{provider.providerName}</h1>
+                      </NavLink>
+                    ) : (
+                      <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{provider.providerName}</h1>
+                    )}
                     {provider.badge && (
                       <Badge variant="secondary" className="bg-white/15 hover:bg-white/20 border-white/10 text-white text-[10px] uppercase font-bold py-0.5 px-2">
                         {provider.badge}

@@ -34,15 +34,27 @@ class ProviderService {
             });
 
             const completedJobs = await prisma.booking.count({
-                where: { providerId, status: "completed" }
+                where: {
+                    providerId,
+                    OR: [
+                        { bookingStatus: "COMPLETED" },
+                        { status: "completed" }
+                    ]
+                }
             });
 
             const pendingJobs = await prisma.booking.count({
-                where: { providerId, status: "pending" }
+                where: {
+                    providerId,
+                    OR: [
+                        { bookingStatus: "PENDING" },
+                        { status: "pending" }
+                    ]
+                }
             });
 
             const earningsResult = await prisma.booking.aggregate({
-                where: { providerId, paymentStatus: "paid" },
+                where: { providerId, paymentStatus: "PAID" },
                 _sum: { total: true }
             });
 
@@ -56,6 +68,7 @@ class ProviderService {
                 where: { providerId },
                 orderBy: { createdAt: "desc" },
                 include: {
+                    category: { select: { name: true } },
                     bookings: { select: { id: true, total: true, paymentStatus: true } }
                 }
             });
@@ -75,7 +88,7 @@ class ProviderService {
                 imageUrl: s.imageUrl || "",
                 status: "Active",
                 bookingsCount: s.bookings ? s.bookings.length : 0,
-                revenue: s.bookings ? s.bookings.reduce((sum, b) => b.paymentStatus === "paid" ? sum + (b.total || 0) : sum, 0) : 0
+                revenue: s.bookings ? s.bookings.reduce((sum, b) => (b.paymentStatus || "").toUpperCase() === "PAID" ? sum + (b.total || 0) : sum, 0) : 0
             }));
 
             const recentBookings = await prisma.booking.findMany({
@@ -106,8 +119,8 @@ class ProviderService {
                 date: b.date || "",
                 time: b.time || "",
                 total: b.total || 0,
-                status: b.status || "pending",
-                paymentStatus: b.paymentStatus || "pending"
+                status: b.bookingStatus || b.status || "pending",
+                paymentStatus: b.paymentStatus || "PENDING"
             }));
 
             return {
@@ -148,7 +161,16 @@ class ProviderService {
             orderBy: { createdAt: "desc" },
             include: {
                 customer: { select: { id: true, fullName: true, email: true, phone: true, avatar: true, address: true, city: true } },
-                service: { select: { id: true, title: true, category: true, imageUrl: true, price: true, priceType: true } }
+                service: { 
+                    select: { 
+                        id: true, 
+                        title: true, 
+                        category: { select: { name: true } }, 
+                        imageUrl: true, 
+                        price: true, 
+                        priceType: true 
+                    } 
+                }
             }
         });
 
@@ -158,11 +180,12 @@ class ProviderService {
             customerPhone: b.customer?.phone || b.billingPhone || "N/A",
             customerEmail: b.customer?.email || b.billingEmail || "N/A",
             service: b.service?.title || "Local Service",
-            serviceCategory: b.service?.category || "General",
+            serviceCategory: typeof b.service?.category === "object" ? b.service.category?.name : (b.service?.category || "General"),
             date: b.date,
             time: b.time,
             price: b.total,
-            status: b.status,
+            status: b.bookingStatus || b.status,
+            bookingStatus: b.bookingStatus,
             paymentStatus: b.paymentStatus,
             paymentMethod: b.paymentMethod,
             address: b.street && b.city ? `${b.street}, ${b.city}` : (b.customer?.city || "Local Service Area")
@@ -181,9 +204,15 @@ class ProviderService {
             throw new Error("Booking not found or unauthorized.");
         }
 
-        const updateData = { status };
-        if (status === "completed" && booking.paymentMethod === "cash") {
-            updateData.paymentStatus = "paid";
+        const upStatus = String(status).toUpperCase();
+        const updateData = { status: status.toLowerCase() };
+        
+        if (["PENDING", "CONFIRMED", "IN_PROGRESS", "COMPLETED", "CANCELLED"].includes(upStatus)) {
+            updateData.bookingStatus = upStatus;
+        }
+
+        if (status === "completed" && (booking.paymentMethod === "CASH_ON_JOB" || booking.paymentMethod === "cash")) {
+            updateData.paymentStatus = "PAID";
         }
 
         return await prisma.booking.update({
@@ -213,7 +242,7 @@ class ProviderService {
         let pendingBalance = 0;
 
         const transactions = bookings.map(b => {
-            const isCleared = b.paymentStatus === "paid" || b.status === "completed";
+            const isCleared = (b.paymentStatus || "").toUpperCase() === "PAID" || (b.bookingStatus || b.status || "").toLowerCase() === "completed";
             if (isCleared) {
                 clearedBalance += b.total;
             } else {
@@ -236,7 +265,7 @@ class ProviderService {
         const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
         bookings.forEach(b => {
-            if (b.paymentStatus === "paid" || b.status === "completed") {
+            if ((b.paymentStatus || "").toUpperCase() === "PAID" || (b.bookingStatus || b.status || "").toLowerCase() === "completed") {
                 const dateObj = new Date(b.createdAt);
                 const dayName = dayNames[dateObj.getDay()];
                 if (daysMap[dayName] !== undefined) {
@@ -251,9 +280,9 @@ class ProviderService {
         }));
 
         const payoutHistory = bookings
-            .filter(b => b.status === "completed" && b.paymentStatus === "paid")
+            .filter(b => ((b.bookingStatus || b.status || "").toLowerCase() === "completed") && ((b.paymentStatus || "").toUpperCase() === "PAID"))
             .slice(0, 5)
-            .map((b, idx) => ({
+            .map((b) => ({
                 id: `PAY-${b.id.slice(-6).toUpperCase()}`,
                 date: b.date || b.createdAt.toISOString().split("T")[0],
                 amount: b.total,

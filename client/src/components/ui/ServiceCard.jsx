@@ -12,17 +12,18 @@ import {
 import { prefersReducedMotion } from "@/utils/motion";
 import { UserAvatar } from "@/components/ui/avatar";
 import { formatPrice } from "@/utils/currency";
-
 import { ServiceImagePlaceholder } from "@/components/ui/ServiceImagePlaceholder";
 
 export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   if (!service) return null;
 
   const id = service.id;
-  const title = service.name || service.title || "Local Service";
+  const title = service.title || service.name || "Local Service";
   const category = typeof service.category === "object" ? (service.category?.name || "Service") : (service.category || "Service");
-  const providerName = service.providerName || service.name || service.provider?.fullName || "Verified Provider";
-  const providerAvatar = service.providerImage || service.provider?.avatar || service.image;
+  const providerName = service.providerName || service.provider?.fullName || service.provider?.name || "Verified Provider";
+  const providerAvatar = service.providerProfileImage || service.providerImage || service.provider?.profileImage || service.provider?.avatar || service.avatar || "";
+  const providerId = service.providerId || service.provider?.id;
+
   const location = service.location || "Local Area";
   const rating = service.rating ? Number(service.rating).toFixed(1) : "5.0";
   const reviewsCount = service.reviewsCount || service.reviewCount || service.reviews || 0;
@@ -38,6 +39,18 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   const badge = service.badge;
 
   const destination = ctaLink || (id ? `/booking?serviceId=${id}` : "/booking");
+
+  const providerSnippet = (
+    <>
+      <UserAvatar
+        src={providerAvatar}
+        name={providerName}
+        className="h-6 w-6 rounded-full border border-[#E8DCC3] shrink-0"
+      />
+      <span className="text-xs font-bold text-[#1F1D1A] group-hover/provider:text-[#C9A46A] transition-colors truncate">{providerName}</span>
+      <ShieldCheck className="h-3.5 w-3.5 text-[#7DAB7D] shrink-0 ml-auto" title="Verified Provider" />
+    </>
+  );
 
   return (
     <motion.div 
@@ -103,15 +116,19 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
         </div>
 
         {/* Provider Profile Snippet & Verified Badge */}
-        <div className="flex items-center gap-2 pt-2.5 border-t border-[#E8DCC3] mt-1">
-          <UserAvatar
-            src={providerAvatar}
-            name={providerName}
-            className="h-6 w-6 rounded-full border border-[#E8DCC3] shrink-0"
-          />
-          <span className="text-xs font-bold text-[#1F1D1A] truncate">{providerName}</span>
-          <ShieldCheck className="h-3.5 w-3.5 text-[#7DAB7D] shrink-0 ml-auto" title="Verified Provider" />
-        </div>
+        {providerId ? (
+          <NavLink
+            to={`/providers/${providerId}`}
+            className="group/provider flex items-center gap-2 pt-2.5 border-t border-[#E8DCC3] mt-1 hover:opacity-90 transition-opacity"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {providerSnippet}
+          </NavLink>
+        ) : (
+          <div className="flex items-center gap-2 pt-2.5 border-t border-[#E8DCC3] mt-1">
+            {providerSnippet}
+          </div>
+        )}
 
         {/* Price & CTA Button Footer */}
         <div className="border-t border-[#E8DCC3] pt-3.5 mt-auto flex items-center justify-between gap-3">

@@ -37,6 +37,7 @@ import AdminSettings from "../pages/Dashboard/AdminSettings";
 import Categories from "../pages/Categories/Categories";
 import About from "../pages/About/About";
 import Contact from "../pages/Contact/Contact";
+import ProviderProfile from "../pages/Provider/ProviderProfile";
 import NotFound from "../pages/NotFound/NotFound";
 
 export default function AppRoutes() {
@@ -51,6 +52,7 @@ export default function AppRoutes() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetails />} />
+            <Route path="/providers/:providerId" element={<ProviderProfile />} />
             <Route path="/booking" element={<Booking />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/booking/success" element={<BookingSuccess />} />

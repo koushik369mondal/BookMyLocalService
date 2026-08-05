@@ -62,11 +62,17 @@ export function useHomeServices() {
 
   const displayProviders = dbServices.slice(0, 6).map((service) => {
     const catName = typeof service.category === "object" ? (service.category?.name || "General") : (service.category || "General");
+    const providerAvatar = service.provider?.avatar || service.provider?.profileImage || "";
+    const providerFullName = service.provider?.fullName || "Verified Professional";
+
     return {
       id: service.id,
-      name: service.provider?.fullName || "Verified Professional",
-      providerName: service.provider?.fullName || "Verified Professional",
-      avatar: service.provider?.avatar || "",
+      title: service.title,
+      name: service.title,
+      providerName: providerFullName,
+      avatar: providerAvatar,
+      providerImage: providerAvatar,
+      providerProfileImage: providerAvatar,
       service: catName,
       rating: service.rating || 5.0,
       reviews: service.reviewCount || 0,
@@ -74,14 +80,19 @@ export function useHomeServices() {
       location: service.location || "Local Service Area",
       price: formatPrice(service.price, { priceType: service.priceType }),
       image: service.imageUrl,
+      imageUrl: service.imageUrl,
       badge: service.badge || "Verified Pro",
       isVerified: service.provider?.isVerified ?? true,
-      title: service.title,
       slug: service.slug,
       priceNum: service.price,
       priceType: service.priceType,
       category: catName,
-      availability: service.availability
+      availability: service.availability,
+      provider: {
+        ...service.provider,
+        avatar: providerAvatar,
+        profileImage: providerAvatar
+      }
     };
   });
 

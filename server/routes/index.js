@@ -17,11 +17,14 @@ const categoryRoutes = require("../modules/category/category.routes");
 const couponRoutes = require("../modules/coupon/coupon.routes");
 
 const { processPayment, createOrder, verifyPayment } = require("../modules/payment/payment.controller");
+const { getPublicProviderProfile } = require("../modules/provider/provider.public.controller");
 const { protect } = require("../middleware/authMiddleware");
 
 // Feature Module Routers
 router.use("/auth", authRoutes);
 router.use("/customer", customerRoutes);
+router.get("/providers/:providerId", getPublicProviderProfile);
+router.get("/provider/:providerId", getPublicProviderProfile);
 router.use("/provider", providerRoutes);
 router.use("/admin", adminRoutes);
 router.use("/bookings", bookingRoutes);

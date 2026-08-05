@@ -24,6 +24,17 @@ const extractCloudinaryPublicId = (url) => {
   }
 };
 
+const formatServiceResponse = (service) => {
+  if (!service) return service;
+  if (Array.isArray(service)) {
+    return service.map(formatServiceResponse);
+  }
+  if (service.provider) {
+    service.provider.profileImage = service.provider.avatar || service.provider.profileImage || null;
+  }
+  return service;
+};
+
 class ServiceService {
   async getAllServices(filters = {}) {
     const { category, categoryId, search, location, minPrice, maxPrice, rating, availability, sortBy } = filters;
@@ -74,15 +85,18 @@ class ServiceService {
     if (sortBy === "rating_desc") orderBy = { rating: "desc" };
     if (sortBy === "popular") orderBy = { reviewCount: "desc" };
 
-    return await serviceRepository.findAll(where, orderBy);
+    const services = await serviceRepository.findAll(where, orderBy);
+    return formatServiceResponse(services);
   }
 
   async getServiceById(id) {
-    return await serviceRepository.findById(id);
+    const service = await serviceRepository.findById(id);
+    return formatServiceResponse(service);
   }
 
   async getServiceBySlug(slug) {
-    return await serviceRepository.findBySlug(slug);
+    const service = await serviceRepository.findBySlug(slug);
+    return formatServiceResponse(service);
   }
 
   async resolveCategoryId(categoryInput) {

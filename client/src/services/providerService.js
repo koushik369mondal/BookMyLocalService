@@ -64,5 +64,10 @@ export const providerService = {
     saveAvailability: async (weeklySchedule, blockedDates) => {
         const response = await api.put("/provider/availability", { weeklySchedule, blockedDates });
         return response.data;
+    },
+
+    getPublicProviderProfile: async (providerId) => {
+        const response = await api.get(`/providers/${providerId}`);
+        return response.data;
     }
 };

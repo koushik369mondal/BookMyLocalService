@@ -25,7 +25,10 @@ const userSelect = {
 const toSafeUser = (user) => {
     if (!user) return null;
     const { password, otpHash, otpExpiresAt, otpAttempts, ...safeUser } = user;
-    return safeUser;
+    return {
+        ...safeUser,
+        profileImage: safeUser.avatar || safeUser.profileImage || null
+    };
 };
 
 module.exports = {

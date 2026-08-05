@@ -95,8 +95,8 @@ export default function BookingSuccess() {
     : (typeof service?.provider === "string" ? service.provider : (service?.providerName || "Verified Provider"));
 
   const providerImage = typeof service?.provider === "object"
-    ? (service?.provider?.avatar || service?.provider?.imageUrl || service?.imageUrl || "")
-    : (service?.providerImage || service?.imageUrl || "");
+    ? (service?.provider?.profileImage || service?.provider?.avatar || service?.providerImage || "")
+    : (service?.providerImage || service?.providerProfileImage || "");
 
   const categoryName = typeof service?.category === "object"
     ? (service?.category?.name || service?.category?.title || "Local Service")

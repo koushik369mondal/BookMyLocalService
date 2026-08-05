@@ -200,7 +200,7 @@ const processPayment = async (req, res) => {
     }
 
     const status = "upcoming";
-    const paymentStatus = paymentMethod === "cash" ? "pending" : "paid";
+    const paymentStatus = (paymentMethod === "cash" || paymentMethod === "CASH_ON_JOB") ? "PENDING" : "PAID";
 
     const updatedBooking = await bookingService.updateBooking(bookingId, {
       status,

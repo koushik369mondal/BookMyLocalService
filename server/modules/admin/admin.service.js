@@ -40,19 +40,40 @@ class AdminService {
         const totalProviders = await prisma.user.count({ where: { role: "PROVIDER" } });
         const totalCustomers = await prisma.user.count({ where: { role: "CUSTOMER" } });
         const totalBookings = await prisma.booking.count();
-        const completedBookings = await prisma.booking.count({ where: { status: "completed" } });
-        const pendingBookings = await prisma.booking.count({ where: { status: "pending" } });
-        const cancelledBookings = await prisma.booking.count({ where: { status: "cancelled" } });
+        const completedBookings = await prisma.booking.count({
+            where: {
+                OR: [
+                    { bookingStatus: "COMPLETED" },
+                    { status: "completed" }
+                ]
+            }
+        });
+        const pendingBookings = await prisma.booking.count({
+            where: {
+                OR: [
+                    { bookingStatus: "PENDING" },
+                    { status: "pending" }
+                ]
+            }
+        });
+        const cancelledBookings = await prisma.booking.count({
+            where: {
+                OR: [
+                    { bookingStatus: "CANCELLED" },
+                    { status: "cancelled" }
+                ]
+            }
+        });
 
         const revenueResult = await prisma.booking.aggregate({
-            where: { paymentStatus: "paid" },
+            where: { paymentStatus: "PAID" },
             _sum: { total: true }
         });
 
         return {
             usersOverview: { totalUsers, totalProviders, totalCustomers },
             bookingsOverview: { totalBookings, completedBookings, pendingBookings, cancelledBookings },
-            financials: { totalRevenue: revenueResult._sum.total || 0 }
+            financials: { totalRevenue: revenueResult._sum ? (revenueResult._sum.total || 0) : 0 }
         };
     }
 
@@ -119,7 +140,7 @@ class AdminService {
         const where = {};
 
         if (category && category !== "all") {
-            where.category = { equals: category, mode: "insensitive" };
+            where.category = { is: { name: { equals: category, mode: "insensitive" } } };
         }
 
         if (search && search.trim() !== "") {
@@ -135,7 +156,8 @@ class AdminService {
             include: {
                 provider: {
                     select: { id: true, fullName: true, email: true, isVerified: true }
-                }
+                },
+                category: { select: { id: true, name: true, slug: true } }
             },
             orderBy: { createdAt: "desc" }
         });
@@ -149,11 +171,15 @@ class AdminService {
         const where = {};
 
         if (status && status !== "all") {
-            where.status = status;
+            const upStatus = status.toUpperCase();
+            where.OR = [
+                { bookingStatus: upStatus },
+                { status: status }
+            ];
         }
 
         if (paymentStatus && paymentStatus !== "all") {
-            where.paymentStatus = paymentStatus;
+            where.paymentStatus = paymentStatus.toUpperCase();
         }
 
         return await prisma.booking.findMany({
@@ -161,7 +187,14 @@ class AdminService {
             include: {
                 customer: { select: { id: true, fullName: true, email: true } },
                 provider: { select: { id: true, fullName: true, email: true } },
-                service: { select: { id: true, title: true, category: true, price: true } }
+                service: {
+                    select: {
+                        id: true,
+                        title: true,
+                        price: true,
+                        category: { select: { id: true, name: true, slug: true } }
+                    }
+                }
             },
             orderBy: { createdAt: "desc" }
         });
@@ -173,7 +206,7 @@ class AdminService {
     async getAllPayments() {
         return await prisma.booking.findMany({
             where: {
-                paymentStatus: { in: ["paid", "pending", "refunded"] }
+                paymentStatus: { in: ["PAID", "PENDING", "REFUNDED"] }
             },
             select: {
                 id: true,

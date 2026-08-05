@@ -23,10 +23,10 @@ class DashboardRepository {
 
     async aggregateTotalRevenue() {
         const result = await prisma.booking.aggregate({
-            where: { paymentStatus: "paid" },
+            where: { paymentStatus: "PAID" },
             _sum: { total: true }
         });
-        return result._sum.total || 0;
+        return result._sum ? (result._sum.total || 0) : 0;
     }
 
     async getRecentUsers(limit = 5) {
@@ -51,7 +51,13 @@ class DashboardRepository {
             include: {
                 customer: { select: { id: true, fullName: true, email: true, avatar: true } },
                 provider: { select: { id: true, fullName: true, email: true } },
-                service: { select: { id: true, title: true, category: true } }
+                service: {
+                    select: {
+                        id: true,
+                        title: true,
+                        category: { select: { id: true, name: true, slug: true } }
+                    }
+                }
             }
         });
     }
@@ -74,7 +80,7 @@ class DashboardRepository {
                     select: {
                         id: true,
                         title: true,
-                        category: true
+                        category: { select: { id: true, name: true, slug: true } }
                     }
                 }
             }
@@ -88,30 +94,34 @@ class DashboardRepository {
         });
 
         const completedJobs = await prisma.booking.count({
-            where: { providerId, status: "completed" }
+            where: {
+                providerId,
+                OR: [
+                    { bookingStatus: "COMPLETED" },
+                    { status: "completed" }
+                ]
+            }
         });
 
         const pendingJobs = await prisma.booking.count({
-            where: { providerId, status: "pending" }
+            where: {
+                providerId,
+                OR: [
+                    { bookingStatus: "PENDING" },
+                    { status: "pending" }
+                ]
+            }
         });
 
         const earningsResult = await prisma.booking.aggregate({
-            where: { providerId, paymentStatus: "paid" },
+            where: { providerId, paymentStatus: "PAID" },
             _sum: { total: true }
         });
 
         const services = await prisma.service.findMany({
             where: { providerId },
-            select: {
-                id: true,
-                title: true,
-                category: true,
-                price: true,
-                priceType: true,
-                rating: true,
-                reviewCount: true,
-                availability: true,
-                imageUrl: true
+            include: {
+                category: { select: { id: true, name: true, slug: true } }
             }
         });
 
@@ -121,17 +131,23 @@ class DashboardRepository {
             take: 5,
             include: {
                 customer: { select: { id: true, fullName: true, email: true, phone: true, avatar: true } },
-                service: { select: { id: true, title: true, category: true } }
+                service: {
+                    select: {
+                        id: true,
+                        title: true,
+                        category: { select: { id: true, name: true, slug: true } }
+                    }
+                }
             }
         });
 
         return {
-            totalJobs,
-            completedJobs,
-            pendingJobs,
-            totalEarnings: earningsResult._sum.total || 0,
-            services,
-            recentBookings
+            totalJobs: totalJobs || 0,
+            completedJobs: completedJobs || 0,
+            pendingJobs: pendingJobs || 0,
+            totalEarnings: earningsResult._sum ? (earningsResult._sum.total || 0) : 0,
+            services: services || [],
+            recentBookings: recentBookings || []
         };
     }
 
@@ -142,15 +158,35 @@ class DashboardRepository {
         });
 
         const completedBookings = await prisma.booking.count({
-            where: { customerId, status: "completed" }
+            where: {
+                customerId,
+                OR: [
+                    { bookingStatus: "COMPLETED" },
+                    { status: "completed" }
+                ]
+            }
         });
 
         const pendingBookings = await prisma.booking.count({
-            where: { customerId, status: "pending" }
+            where: {
+                customerId,
+                OR: [
+                    { bookingStatus: "PENDING" },
+                    { status: "pending" }
+                ]
+            }
         });
 
         const activeBookings = await prisma.booking.count({
-            where: { customerId, status: "confirmed" }
+            where: {
+                customerId,
+                OR: [
+                    { bookingStatus: "CONFIRMED" },
+                    { bookingStatus: "IN_PROGRESS" },
+                    { status: "confirmed" },
+                    { status: "upcoming" }
+                ]
+            }
         });
 
         const recentBookings = await prisma.booking.findMany({
@@ -159,16 +195,23 @@ class DashboardRepository {
             take: 5,
             include: {
                 provider: { select: { id: true, fullName: true, email: true, phone: true, avatar: true } },
-                service: { select: { id: true, title: true, category: true, imageUrl: true } }
+                service: {
+                    select: {
+                        id: true,
+                        title: true,
+                        imageUrl: true,
+                        category: { select: { id: true, name: true, slug: true } }
+                    }
+                }
             }
         });
 
         return {
-            totalBookings,
-            completedBookings,
-            pendingBookings,
-            activeBookings,
-            recentBookings
+            totalBookings: totalBookings || 0,
+            completedBookings: completedBookings || 0,
+            pendingBookings: pendingBookings || 0,
+            activeBookings: activeBookings || 0,
+            recentBookings: recentBookings || []
         };
     }
 }
