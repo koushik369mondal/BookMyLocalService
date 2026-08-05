@@ -19,6 +19,7 @@ import {
   Star
 } from "lucide-react";
 import ReviewModal from "@/components/modals/ReviewModal";
+import { BookingStatusBadge, PaymentStatusBadge, getPaymentMethodLabel } from "@/components/booking/BookingStatusBadges";
 
 export default function BookingHistory() {
   const {
@@ -35,43 +36,6 @@ export default function BookingHistory() {
 
   const [confirmCancelId, setConfirmCancelId] = useState(null);
   const [reviewBooking, setReviewBooking] = useState(null);
-
-  const getBookingStatusBadge = (b) => {
-    const s = (b.bookingStatus || b.status || "pending").toLowerCase();
-    switch (s) {
-      case "confirmed":
-      case "upcoming":
-        return <Badge className="bg-[#5A95C9]/20 text-[#1E4B75] border border-[#5A95C9]/30 font-bold rounded-lg px-2 py-0.5 text-[10px] uppercase">Confirmed</Badge>;
-      case "in_progress":
-        return <Badge className="bg-purple-50 text-purple-700 border border-purple-200 font-bold rounded-lg px-2 py-0.5 text-[10px] uppercase">In Progress</Badge>;
-      case "cancelled":
-        return <Badge className="bg-rose-50 text-rose-700 border border-rose-200 font-bold rounded-lg px-2 py-0.5 text-[10px] uppercase">Cancelled</Badge>;
-      case "completed":
-        return <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg px-2 py-0.5 text-[10px] uppercase">Completed</Badge>;
-      default:
-        return <Badge className="bg-[#C9A46A]/20 text-[#8C4B3E] border border-[#C9A46A]/30 font-bold rounded-lg px-2 py-0.5 text-[10px] uppercase">Pending</Badge>;
-    }
-  };
-
-  const getPaymentStatusBadge = (b) => {
-    const p = (b.paymentStatus || "pending").toUpperCase();
-    if (p === "PAID") {
-      return <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-950 border border-emerald-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🟢 Paid</span>;
-    }
-    if (p === "FAILED") {
-      return <span className="inline-flex items-center gap-1 bg-rose-100 text-rose-950 border border-rose-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🔴 Failed</span>;
-    }
-    if (p === "REFUNDED") {
-      return <span className="inline-flex items-center gap-1 bg-sky-100 text-sky-950 border border-sky-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🔵 Refunded</span>;
-    }
-    return <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-950 border border-amber-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🟡 Payment Pending</span>;
-  };
-
-  const getPaymentMethodLabel = (b) => {
-    const m = (b.paymentMethod || "").toUpperCase();
-    if (m === "CASH_ON_JOB" || m === "CASH") return "Cash on Service";
-    return "Online (Razorpay)";
-  };
 
   return (
     <MainLayout>
@@ -150,15 +114,12 @@ export default function BookingHistory() {
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#8C4B3E]">Booking #{b.id.substring(0, 8)}</span>
-                        {getBookingStatusBadge(b)}
-                        {getPaymentStatusBadge(b)}
-                        <span className="text-[10px] font-bold text-[#5A5146] bg-[#FAF6F0] border border-[#E8DCC3] px-2 py-0.5 rounded-lg">
-                          {getPaymentMethodLabel(b)}
-                        </span>
+                        <BookingStatusBadge status={b.bookingStatus || b.status} />
+                        <PaymentStatusBadge status={b.paymentStatus} method={b.paymentMethod} />
                       </div>
                       <h3 className="text-base font-black text-[#1F1D1A]">{b.service?.title || "Booked Service"}</h3>
                       <p className="text-xs text-[#5A5146] font-medium">
-                        Provider: <strong>{b.provider?.fullName || "Verified Provider"}</strong> ({b.provider?.phone || "N/A"})
+                        Provider: <strong>{b.provider?.fullName || "Verified Provider"}</strong> • <span className="text-[#7A7266]">{getPaymentMethodLabel(b.paymentMethod)}</span>
                       </p>
                     </div>
 

@@ -33,8 +33,8 @@ export function useBookingHistory() {
 
   const handleCancelBooking = async (id) => {
     try {
-      await bookingsService.updateBooking(id, { status: "cancelled" });
-      setBookings(prev => prev.map(b => b.id === id ? { ...b, status: "cancelled" } : b));
+      await bookingsService.updateBooking(id, { bookingStatus: "CANCELLED", status: "cancelled" });
+      setBookings(prev => prev.map(b => b.id === id ? { ...b, bookingStatus: "CANCELLED", status: "cancelled" } : b));
     } catch (err) {
       console.error("Cancel booking error:", err);
       alert(err.message || "Failed to cancel booking.");
@@ -43,7 +43,13 @@ export function useBookingHistory() {
 
   const filteredBookings = useMemo(() => {
     return bookings.filter(booking => {
-      if (activeStatus !== "all" && booking.status !== activeStatus) return false;
+      const bStatus = (booking.bookingStatus || booking.status || "pending").toLowerCase();
+      if (activeStatus !== "all") {
+        if (activeStatus === "confirmed" && bStatus !== "confirmed" && bStatus !== "upcoming") return false;
+        if (activeStatus === "completed" && bStatus !== "completed") return false;
+        if (activeStatus === "cancelled" && bStatus !== "cancelled") return false;
+        if (activeStatus === "pending" && bStatus !== "pending") return false;
+      }
 
       if (searchQuery.trim() !== "") {
         const q = searchQuery.toLowerCase().trim();

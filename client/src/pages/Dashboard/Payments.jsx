@@ -19,6 +19,7 @@ import {
   ArrowLeft, 
   Briefcase
 } from "lucide-react";
+import { PaymentStatusBadge, getPaymentMethodLabel } from "@/components/booking/BookingStatusBadges";
 
 export default function Payments() {
   const navigate = useNavigate();
@@ -174,33 +175,19 @@ export default function Payments() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#E8DCC3] bg-white">
-                      {filteredPayments.map((p) => {
-                        const pSt = (p.paymentStatus || "PENDING").toUpperCase();
-                        const pMethod = (p.paymentMethod || "").toUpperCase();
-                        const methodLabel = (pMethod === "CASH_ON_JOB" || pMethod === "CASH") ? "Cash on Service" : "Online (Razorpay)";
-
-                        return (
-                          <tr key={p.id} className="hover:bg-[#FAF6F0]/60 transition-colors">
-                            <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">#{p.id.substring(0, 8)}</td>
-                            <td className="py-3.5 px-4 font-medium">{p.customer?.fullName || "Customer"}</td>
-                            <td className="py-3.5 px-4 font-medium">{p.provider?.fullName || "Provider"}</td>
-                            <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">{p.service?.title || "Service"}</td>
-                            <td className="py-3.5 px-4 text-xs font-semibold text-[#7A7266]">{methodLabel}</td>
-                            <td className="py-3.5 px-4 text-right font-bold text-[#1F1D1A]">{formatPrice(p.total, { decimals: true })}</td>
-                            <td className="py-3.5 px-4 text-center">
-                              {pSt === "PAID" ? (
-                                <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-950 border border-emerald-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🟢 Paid</span>
-                              ) : pSt === "FAILED" ? (
-                                <span className="inline-flex items-center gap-1 bg-rose-100 text-rose-950 border border-rose-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🔴 Failed</span>
-                              ) : pSt === "REFUNDED" ? (
-                                <span className="inline-flex items-center gap-1 bg-sky-100 text-sky-950 border border-sky-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🔵 Refunded</span>
-                              ) : (
-                                <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-950 border border-amber-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🟡 Pending</span>
-                              )}
-                            </td>
-                          </tr>
-                        );
-                      })}
+                      {filteredPayments.map((p) => (
+                        <tr key={p.id} className="hover:bg-[#FAF6F0]/60 transition-colors">
+                          <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">#{p.id.substring(0, 8)}</td>
+                          <td className="py-3.5 px-4 font-medium">{p.customer?.fullName || "Customer"}</td>
+                          <td className="py-3.5 px-4 font-medium">{p.provider?.fullName || "Provider"}</td>
+                          <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">{p.service?.title || "Service"}</td>
+                          <td className="py-3.5 px-4 text-xs font-semibold text-[#7A7266]">{getPaymentMethodLabel(p.paymentMethod)}</td>
+                          <td className="py-3.5 px-4 text-right font-bold text-[#1F1D1A]">{formatPrice(p.total, { decimals: true })}</td>
+                          <td className="py-3.5 px-4 text-center">
+                            <PaymentStatusBadge status={p.paymentStatus} method={p.paymentMethod} />
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

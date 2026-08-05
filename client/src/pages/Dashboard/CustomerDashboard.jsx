@@ -9,21 +9,11 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, CheckCircle2, Clock, Activity, Loader2, ArrowRight, ShieldAlert } from "lucide-react";
+import { BookingStatusBadge, PaymentStatusBadge } from "@/components/booking/BookingStatusBadges";
 
 export default function CustomerDashboard() {
   const { user } = useAuth();
   const { stats, recentBookings, isLoading, error } = useCustomerDashboard();
-
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case "pending":
-        return <Badge className="bg-[#C9A46A] border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Pending</Badge>;
-      case "confirmed":
-        return <Badge className="bg-[#5A95C9]/20 text-[#1E4B75] border-0 font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
-      default:
-        return <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border-0 font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Completed</Badge>;
-    }
-  };
 
   return (
     <DashboardLayout>
@@ -130,9 +120,10 @@ export default function CustomerDashboard() {
                   {recentBookings.map((b) => (
                     <div key={b.id} className="p-4 bg-[#FAF6F0]/50 rounded-2xl border border-[#E8DCC3]/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="space-y-1">
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
                           <h4 className="text-xs font-black text-[#1F1D1A]">{b.service?.title || "Booked Service"}</h4>
-                          {getStatusBadge(b.status)}
+                          <BookingStatusBadge status={b.bookingStatus || b.status} />
+                          <PaymentStatusBadge status={b.paymentStatus} method={b.paymentMethod} />
                         </div>
                         <p className="text-[11px] text-[#5A5146] font-medium">
                           Provider: <strong>{b.provider?.fullName || "Verified Provider"}</strong> ({b.provider?.phone || "Contact Verified"})

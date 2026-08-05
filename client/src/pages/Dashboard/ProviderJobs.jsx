@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Briefcase, MapPin, Calendar, Clock, ArrowRight, Loader2, CheckCircle2, ShieldAlert } from "lucide-react";
+import { BookingStatusBadge, PaymentStatusBadge } from "@/components/booking/BookingStatusBadges";
 
 export default function ProviderJobs() {
   const [jobs, setJobs] = useState([]);
@@ -78,36 +79,6 @@ export default function ProviderJobs() {
     }
   };
 
-  const getBadge = (status) => {
-    switch (status) {
-      case "pending":
-        return <span className="inline-flex items-center gap-1 bg-[#C9A46A] text-[#1F1D1A] border border-[#B89359] font-black rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</span>;
-      case "confirmed":
-      case "upcoming":
-        return <span className="inline-flex items-center gap-1 bg-[#5A95C9]/20 text-[#1E4B75] border border-[#5A95C9]/40 font-extrabold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Confirmed</span>;
-      case "completed":
-        return <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-950 border border-emerald-300 font-extrabold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Completed</span>;
-      case "cancelled":
-        return <span className="inline-flex items-center gap-1 bg-rose-100 text-rose-950 border border-rose-300 font-extrabold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Cancelled</span>;
-      default:
-        return <span className="inline-flex items-center gap-1 bg-stone-200 text-stone-900 font-extrabold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">{status}</span>;
-    }
-  };
-
-  const getPaymentStatusBadge = (job) => {
-    const p = (job.paymentStatus || "pending").toUpperCase();
-    if (p === "PAID") {
-      return <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-950 border border-emerald-400 font-black rounded-lg px-2.5 py-0.5 text-[9px]">🟢 Paid</span>;
-    }
-    if (p === "FAILED") {
-      return <span className="inline-flex items-center gap-1 bg-rose-100 text-rose-950 border border-rose-400 font-black rounded-lg px-2.5 py-0.5 text-[9px]">🔴 Failed</span>;
-    }
-    if (p === "REFUNDED") {
-      return <span className="inline-flex items-center gap-1 bg-sky-100 text-sky-950 border border-sky-400 font-black rounded-lg px-2.5 py-0.5 text-[9px]">🔵 Refunded</span>;
-    }
-    return <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-950 border border-amber-400 font-black rounded-lg px-2.5 py-0.5 text-[9px]">🟡 Payment Pending</span>;
-  };
-
   return (
     <DashboardLayout>
       <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
@@ -167,8 +138,8 @@ export default function ProviderJobs() {
                           <span className="text-[10px] font-black text-[#1F1D1A] bg-[#F0E7D5] border border-[#E8DCC3] px-2 py-0.5 rounded-md uppercase tracking-wide">
                             REF ID: #{job.id.substring(0, 8)}
                           </span>
-                          {getBadge(job.status)}
-                          {getPaymentStatusBadge(job)}
+                          <BookingStatusBadge status={job.bookingStatus || job.status} />
+                          <PaymentStatusBadge status={job.paymentStatus} method={job.paymentMethod} />
                         </div>
                         <h4 className="font-extrabold text-base text-[#1F1D1A] leading-snug">{job.service}</h4>
                         <p className="text-xs font-semibold text-[#5A5146]">

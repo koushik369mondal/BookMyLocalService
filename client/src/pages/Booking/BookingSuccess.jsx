@@ -20,6 +20,8 @@ import {
   Loader2
 } from "lucide-react";
 
+import { BookingStatusBadge, PaymentStatusBadge, getPaymentMethodLabel } from "@/components/booking/BookingStatusBadges";
+
 const getArrivalWindow = (timeStr) => {
   if (!timeStr) return "10:00 AM - 10:30 AM";
   const match = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
@@ -88,12 +90,6 @@ export default function BookingSuccess() {
     window.print();
   };
 
-  const getPaymentLabel = (method) => {
-    const isCash = method === "cash" || method === "CASH_ON_JOB";
-    if (isCash) return "Cash on Service (Pay to Specialist)";
-    return "Online Payment (Razorpay)";
-  };
-
   const providerName = typeof service?.provider === "object"
     ? (service?.provider?.fullName || service?.provider?.name || "Verified Provider")
     : (typeof service?.provider === "string" ? service.provider : (service?.providerName || "Verified Provider"));
@@ -139,11 +135,12 @@ export default function BookingSuccess() {
             
             {/* Header booking ID banner */}
             <div className="bg-[#F0E7D5] text-[#1F1D1A] py-3.5 px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-[#E8DCC3]">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider">Booking Reference:</span>
                 <span className="font-bold text-xs bg-white text-[#1F1D1A] py-0.5 px-2.5 rounded-lg border border-[#E8DCC3] tracking-wider">
                   #{bookingId}
                 </span>
+                <BookingStatusBadge status="CONFIRMED" />
               </div>
               <div className="flex items-center gap-1.5 text-xs text-[#2B522B] font-bold">
                 <ShieldCheck className="h-4.5 w-4.5" />
@@ -213,21 +210,13 @@ export default function BookingSuccess() {
                   <div>
                     <span className="text-[10px] font-black text-[#8C4B3E] uppercase tracking-wider block">Payment Method</span>
                     <span className="text-sm font-extrabold text-[#1F1D1A] block mt-0.5">
-                      {getPaymentLabel(paymentMethod)}
+                      {getPaymentMethodLabel(paymentMethod)}
                     </span>
                   </div>
                 </div>
                 
                 <div className="flex items-center sm:text-right gap-3 sm:flex-col sm:gap-1">
-                  {(paymentMethod === "cash" || paymentMethod === "CASH_ON_JOB") ? (
-                    <span className="inline-flex items-center gap-1.5 bg-amber-100 text-amber-950 border border-amber-400 font-black rounded-lg text-xs py-1 px-3 shrink-0 shadow-2xs">
-                      🟡 Payment Pending
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-950 border border-emerald-400 font-black rounded-lg text-xs py-1 px-3 shrink-0 shadow-2xs">
-                      🟢 Paid / Success
-                    </span>
-                  )}
+                  <PaymentStatusBadge status={paymentMethod === "cash" || paymentMethod === "CASH_ON_JOB" ? "PENDING" : "PAID"} method={paymentMethod} />
                   <span className="text-base font-black text-[#8C4B3E]">{formatPrice(displayPrice, { decimals: true })}</span>
                 </div>
               </div>
