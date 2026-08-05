@@ -34,6 +34,7 @@ export function useManageUsers() {
   };
 
   useEffect(() => {
+    setCurrentPage(1);
     fetchUsers();
   }, [roleFilter, searchQuery]);
 

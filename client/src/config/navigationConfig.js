@@ -16,7 +16,8 @@ import {
   TrendingUp,
   Calendar,
   Edit3,
-  Layers
+  Layers,
+  Tag
 } from "lucide-react";
 
 export const customerMenu = [
@@ -46,6 +47,7 @@ export const adminMenu = [
   { label: "Providers", icon: ShieldCheck, path: "/admin/providers" },
   { label: "Bookings", icon: Calendar, path: "/admin/bookings" },
   { label: "Payments", icon: CreditCard, path: "/admin/payments" },
+  { label: "Coupons", icon: Tag, path: "/admin/coupons" },
   { label: "Reports", icon: FileText, path: "/admin/reports" },
   { label: "Analytics", icon: TrendingUp, path: "/admin/analytics" },
   { label: "Settings", icon: Settings, path: "/admin/settings" }

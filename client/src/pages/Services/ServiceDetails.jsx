@@ -345,7 +345,9 @@ export default function ServiceDetails() {
       });
 
       if (response.success && response.data) {
-        navigate(`/checkout?bookingId=${response.data.id}`);
+        const bId = response.data.id || response.data._id;
+        localStorage.setItem("lastBookingId", bId);
+        navigate(`/checkout?bookingId=${bId}`);
       } else {
         alert(response.message || "Failed to initiate booking.");
       }

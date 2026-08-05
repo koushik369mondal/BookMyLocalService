@@ -7,6 +7,7 @@ import { useAdminDashboard } from "@/hooks/useAdminDashboard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { renderRoleBadge } from "./ManageUsers";
 import {
   Users,
   Briefcase,
@@ -212,7 +213,10 @@ export default function AdminDashboard() {
                         <div key={u.id} className="flex items-center justify-between p-3 bg-[#FAF6F0]/50 rounded-xl border border-[#E8DCC3]/50">
                           <div>
                             <h4 className="text-xs font-black text-[#1F1D1A]">{u.fullName}</h4>
-                            <p className="text-[11px] text-[#7A7266]">{u.email} • <span className="font-semibold text-[#8C4B3E]">{u.role}</span></p>
+                            <div className="flex items-center gap-2 mt-0.5">
+                              <p className="text-[11px] text-[#7A7266]">{u.email}</p>
+                              {renderRoleBadge(u.role)}
+                            </div>
                           </div>
                           <span className="text-[10px] text-stone-400 font-bold">
                             {new Date(u.createdAt).toLocaleDateString()}

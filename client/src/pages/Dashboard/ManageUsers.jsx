@@ -20,6 +20,31 @@ import {
   UserCheck
 } from "lucide-react";
 
+export const renderRoleBadge = (role) => {
+  const roleUpper = String(role || "CUSTOMER").toUpperCase();
+  switch (roleUpper) {
+    case "ADMIN":
+      return (
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-rose-100 text-rose-800 border border-rose-300 shadow-2xs">
+          ADMIN
+        </span>
+      );
+    case "PROVIDER":
+      return (
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-800 border border-blue-300 shadow-2xs">
+          PROVIDER
+        </span>
+      );
+    case "CUSTOMER":
+    default:
+      return (
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-2xs">
+          CUSTOMER
+        </span>
+      );
+  }
+};
+
 export default function ManageUsers() {
   const {
     paginatedUsers,
@@ -140,9 +165,7 @@ export default function ManageUsers() {
                             <div className="text-[11px] text-[#7A7266]">{u.email}</div>
                           </td>
                           <td className="py-3.5">
-                            <Badge className="bg-[#FAF6F0] border border-[#E8DCC3] text-[#8C4B3E] text-[10px] font-bold">
-                              {u.role}
-                            </Badge>
+                            {renderRoleBadge(u.role)}
                           </td>
                           <td className="py-3.5 text-[#5A5146]">{u.phone || "N/A"}</td>
                           <td className="py-3.5">

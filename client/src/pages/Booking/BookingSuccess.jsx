@@ -103,11 +103,23 @@ export default function BookingSuccess() {
     }
   };
 
-  const providerName = service?.provider?.fullName || "Verified Provider";
-  const providerImage = service?.provider?.avatar || service?.imageUrl || "";
-  const category = service?.category || "Local Service";
-  const serviceTitle = service?.title || "Booked Service";
-  const displayPrice = !isNaN(selectedPriceParam) ? selectedPriceParam : (service?.price || 1499);
+  const providerName = typeof service?.provider === "object"
+    ? (service?.provider?.fullName || service?.provider?.name || "Verified Provider")
+    : (typeof service?.provider === "string" ? service.provider : (service?.providerName || "Verified Provider"));
+
+  const providerImage = typeof service?.provider === "object"
+    ? (service?.provider?.avatar || service?.provider?.imageUrl || service?.imageUrl || "")
+    : (service?.providerImage || service?.imageUrl || "");
+
+  const categoryName = typeof service?.category === "object"
+    ? (service?.category?.name || service?.category?.title || "Local Service")
+    : (typeof service?.category === "string" ? service.category : "Local Service");
+
+  const serviceTitle = typeof service?.title === "string"
+    ? service.title
+    : (typeof service?.name === "string" ? service.name : (typeof service?.title === "object" ? service?.title?.name || "Booked Service" : "Booked Service"));
+
+  const displayPrice = !isNaN(selectedPriceParam) ? selectedPriceParam : (typeof service?.price === "number" ? service.price : (parseFloat(service?.price) || 1499));
 
   return (
     <MainLayout>
@@ -161,11 +173,11 @@ export default function BookingSuccess() {
                   <div className="flex items-center gap-4 p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl print:bg-white">
                     <Avatar className="w-14 h-14 rounded-full overflow-hidden shrink-0 border border-[#E8DCC3] shadow-2xs">
                       <AvatarImage src={providerImage} className="object-cover" />
-                      <AvatarFallback className="text-lg font-bold bg-[#F0E7D5] text-[#C9A46A]">{providerName[0]}</AvatarFallback>
+                      <AvatarFallback className="text-lg font-bold bg-[#F0E7D5] text-[#C9A46A]">{providerName?.[0] || "V"}</AvatarFallback>
                     </Avatar>
                     <div>
                       <Badge variant="secondary" className="bg-white border-[#E8DCC3] text-[#C9A46A] font-bold rounded-lg text-[9px] uppercase py-0.5 px-2">
-                        {category}
+                        {categoryName}
                       </Badge>
                       <h3 className="font-bold text-[#1F1D1A] text-base mt-1 leading-snug">{providerName}</h3>
                       <p className="text-xs text-[#7A7266] font-medium truncate max-w-xs">{serviceTitle}</p>

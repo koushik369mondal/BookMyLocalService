@@ -8,4 +8,5 @@ export { adminService } from "./adminService";
 export { providerService } from "./providerService";
 export { reviewsService } from "./reviewsService";
 export { categoriesService } from "./categoriesService";
+export { couponService } from "./couponService";
 export { api, API_URL, getHeaders } from "./apiClient";

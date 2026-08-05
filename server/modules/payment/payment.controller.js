@@ -220,8 +220,145 @@ const processPayment = async (req, res) => {
   }
 };
 
+const crypto = require("crypto");
+const { razorpay, key_id, key_secret } = require("../../config/razorpay");
+
+/**
+ * Step 1: Create Razorpay Order
+ * Endpoint: POST /api/payment/create-order or /api/create-order
+ */
+const createOrder = async (req, res) => {
+  try {
+    let { amount, currency = "INR", receipt, bookingId } = req.body;
+
+    if (!amount && bookingId) {
+      const booking = await bookingService.getBookingById(bookingId);
+      if (booking && booking.total) {
+        amount = Math.round(booking.total * 100);
+      }
+    }
+
+    if (!amount) {
+      return res.status(400).json({
+        success: false,
+        message: "Amount is required (in paise or Rupees)."
+      });
+    }
+
+    let amountInPaise = parseInt(amount, 10);
+    if (amountInPaise < 100 && amountInPaise >= 1) {
+      amountInPaise = Math.round(amountInPaise * 100);
+    }
+
+    if (isNaN(amountInPaise) || amountInPaise < 100) {
+      return res.status(400).json({
+        success: false,
+        message: "Amount must be at least 100 paise (₹1)."
+      });
+    }
+
+    const receiptId = receipt || `rcpt_${bookingId || Date.now()}_${Math.floor(Math.random() * 1000)}`;
+
+    const options = {
+      amount: amountInPaise,
+      currency: currency.toUpperCase(),
+      receipt: String(receiptId).substring(0, 40)
+    };
+
+    console.log(`[DEBUG] /create-order request received from user: '${req.user?.id || "unauthenticated"}' for bookingId: '${bookingId}'`);
+    console.log(`[RAZORPAY CREATE ORDER] Creating order for Amount: ${options.amount} paise, Currency: ${options.currency}, Receipt: ${options.receipt}`);
+    const order = await razorpay.orders.create(options);
+    console.log("[DEBUG] /create-order Razorpay order created successfully:", { id: order.id, amount: order.amount, key_id });
+
+    return res.status(200).json({
+      success: true,
+      order_id: order.id,
+      id: order.id,
+      amount: order.amount,
+      currency: order.currency,
+      key: key_id,
+      data: {
+        order_id: order.id,
+        id: order.id,
+        amount: order.amount,
+        currency: order.currency,
+        key: key_id
+      }
+    });
+  } catch (error) {
+    console.error("[RAZORPAY CREATE ORDER ERROR]:", error);
+    const statusCode = error.statusCode || 500;
+    return res.status(statusCode).json({
+      success: false,
+      message: error.error?.description || error.description || error.message || "Failed to create Razorpay order."
+    });
+  }
+};
+
+/**
+ * Step 3: Verify Razorpay Payment Signature
+ * Endpoint: POST /api/payment/verify-payment or /api/verify-payment
+ */
+const verifyPayment = async (req, res) => {
+  try {
+    const { razorpay_payment_id, razorpay_order_id, razorpay_signature, bookingId } = req.body;
+
+    if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required verification fields: razorpay_payment_id, razorpay_order_id, and razorpay_signature are required."
+      });
+    }
+
+    console.log(`[RAZORPAY VERIFY] Verifying Payment ID: '${razorpay_payment_id}', Order ID: '${razorpay_order_id}'`);
+
+    const payload = `${razorpay_order_id}|${razorpay_payment_id}`;
+    const expectedSignature = crypto
+      .createHmac("sha256", key_secret)
+      .update(payload)
+      .digest("hex");
+
+    if (expectedSignature !== razorpay_signature) {
+      console.warn(`[RAZORPAY VERIFY FAILED] Signature mismatch for Order ID: '${razorpay_order_id}'`);
+      return res.status(400).json({
+        success: false,
+        message: "Invalid payment signature. Verification failed."
+      });
+    }
+
+    console.log(`[RAZORPAY VERIFY SUCCESS] Signature verified successfully for Order ID: '${razorpay_order_id}'`);
+
+    let updatedBooking = null;
+    if (bookingId) {
+      updatedBooking = await bookingService.updateBooking(bookingId, {
+        status: "upcoming",
+        paymentStatus: "paid",
+        paymentMethod: "razorpay"
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Payment signature verified successfully.",
+      data: {
+        payment_id: razorpay_payment_id,
+        order_id: razorpay_order_id,
+        booking: updatedBooking
+      }
+    });
+  } catch (error) {
+    console.error("[RAZORPAY VERIFY ERROR]:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to verify Razorpay payment."
+    });
+  }
+};
+
 module.exports = {
   getCheckoutDetails,
   submitCheckout,
-  processPayment
+  processPayment,
+  createOrder,
+  verifyPayment
 };

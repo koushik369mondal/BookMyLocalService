@@ -32,6 +32,7 @@ import Payments from "../pages/Dashboard/Payments";
 import Reports from "../pages/Dashboard/Reports";
 import Analytics from "../pages/Dashboard/Analytics";
 import AdminServices from "../pages/Dashboard/AdminServices";
+import ManageCoupons from "../pages/Dashboard/ManageCoupons";
 import AdminSettings from "../pages/Dashboard/AdminSettings";
 import Categories from "../pages/Categories/Categories";
 import About from "../pages/About/About";
@@ -73,6 +74,7 @@ export default function AppRoutes() {
             <Route path="/admin/providers" element={<ManageProviders />} />
             <Route path="/admin/bookings" element={<AdminBookings />} />
             <Route path="/admin/payments" element={<Payments />} />
+            <Route path="/admin/coupons" element={<ManageCoupons />} />
             <Route path="/admin/reports" element={<Reports />} />
             <Route path="/admin/analytics" element={<Analytics />} />
             <Route path="/admin/services" element={<AdminServices />} />

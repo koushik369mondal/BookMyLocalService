@@ -14,5 +14,15 @@ export const checkoutService = {
     processPayment: async (paymentData) => {
         const response = await api.post("/checkout/pay", paymentData);
         return response.data;
+    },
+
+    createRazorpayOrder: async (orderPayload) => {
+        const response = await api.post("/create-order", orderPayload);
+        return response.data;
+    },
+
+    verifyRazorpayPayment: async (verifyPayload) => {
+        const response = await api.post("/verify-payment", verifyPayload);
+        return response.data;
     }
 };

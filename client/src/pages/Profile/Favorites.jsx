@@ -46,7 +46,7 @@ export default function Favorites() {
                       <div className="space-y-1">
                         <h4 className="font-extrabold text-sm text-[#1F1D1A]">{provider.name}</h4>
                         <span className="inline-block text-[10px] font-bold text-[#1F1D1A] bg-[#8C4B3E]/5 px-2 py-0.5 rounded-lg">
-                          {provider.category}
+                          {typeof provider.category === "object" ? (provider.category?.name || "General") : (provider.category || "General")}
                         </span>
                         <div className="flex items-center gap-1.5 text-xs text-[#7A7266] font-semibold mt-1">
                           <MapPin className="h-3.5 w-3.5" />

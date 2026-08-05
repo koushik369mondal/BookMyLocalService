@@ -135,3 +135,24 @@ model Availability {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+enum DiscountType {
+  FIXED
+  PERCENTAGE
+}
+
+model Coupon {
+  id             String       @id @default(cuid())
+  code           String       @unique
+  description    String?
+  discountType   DiscountType @default(FIXED)
+  discountValue  Float
+  minOrderAmount Float        @default(0.0)
+  maxDiscount    Float?
+  usageLimit     Int?
+  usageCount     Int          @default(0)
+  expiresAt      DateTime?
+  isActive       Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}

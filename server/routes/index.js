@@ -14,8 +14,9 @@ const profileRoutes = require("./profile.routes");
 const healthRoutes = require("./health.routes");
 const reviewRoutes = require("./review.routes");
 const categoryRoutes = require("../modules/category/category.routes");
+const couponRoutes = require("../modules/coupon/coupon.routes");
 
-const { processPayment } = require("../modules/payment/payment.controller");
+const { processPayment, createOrder, verifyPayment } = require("../modules/payment/payment.controller");
 const { protect } = require("../middleware/authMiddleware");
 
 // Feature Module Routers
@@ -28,13 +29,17 @@ router.use("/checkout", paymentRoutes);
 router.use("/payment", paymentRoutes);
 router.use("/services", serviceRoutes);
 router.use("/categories", categoryRoutes);
+router.use("/coupons", couponRoutes);
+router.use("/admin/coupons", couponRoutes);
 router.use("/contact", contactRoutes);
 router.use("/dashboard", dashboardRoutes);
 router.use("/profile", profileRoutes);
 router.use("/health", healthRoutes);
 router.use("/reviews", reviewRoutes);
 
-// Direct Payment endpoint
+// Direct Payment & Razorpay endpoints
 router.post("/payment", protect, processPayment);
+router.post("/create-order", protect, createOrder);
+router.post("/verify-payment", protect, verifyPayment);
 
 module.exports = router;

@@ -181,7 +181,9 @@ export function useBookingForm() {
 
       const response = await bookingsService.createBooking(bookingPayload);
       if (response.success && response.data) {
-        navigate(`/checkout?bookingId=${response.data.id}`);
+        const bId = response.data.id || response.data._id;
+        localStorage.setItem("lastBookingId", bId);
+        navigate(`/checkout?bookingId=${bId}`);
       } else {
         alert("Failed to initialize booking. Please try again.");
       }

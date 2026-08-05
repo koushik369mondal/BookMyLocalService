@@ -222,7 +222,7 @@ export default function ProviderDashboard() {
                           <span className="text-xs font-black text-[#8C4B3E]">{formatPrice(s.price, { priceType: s.priceType })}</span>
                         </div>
                         <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white border border-[#E8DCC3] text-[#5A5146] inline-block">
-                          {s.category}
+                          {typeof s.category === "object" ? (s.category?.name || "General") : (s.category || "General")}
                         </span>
                       </div>
                     ))

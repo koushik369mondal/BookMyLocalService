@@ -16,6 +16,15 @@ const USER_ROLES = {
     ADMIN: "ADMIN"
 };
 
+const ADMIN_EMAILS = [
+    "bookmylocalservice@gmail.com"
+];
+
+const isAdminEmail = (email) => {
+    if (!email) return false;
+    return ADMIN_EMAILS.includes(String(email).toLowerCase().trim());
+};
+
 const DEFAULT_JWT_EXPIRES_IN = "30d";
 
 module.exports = {
@@ -25,5 +34,7 @@ module.exports = {
     OTP_RATE_LIMIT_MS,
     OTP_MAX_ATTEMPTS,
     USER_ROLES,
+    ADMIN_EMAILS,
+    isAdminEmail,
     DEFAULT_JWT_EXPIRES_IN
 };

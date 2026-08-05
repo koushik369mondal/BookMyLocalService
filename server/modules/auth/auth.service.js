@@ -1,7 +1,7 @@
 const userRepository = require("./user.repository");
 const { generateToken } = require("../../utils/jwt.util");
 const { userSelect, toSafeUser } = require("../../utils/user.util");
-const { USER_ROLES } = require("../../constants/auth.constants");
+const { USER_ROLES, isAdminEmail } = require("../../constants/auth.constants");
 
 /**
  * Safely create a user record with multi-strategy fallbacks for column nullability and schema differences.
@@ -124,7 +124,9 @@ const googleAuth = async ({ credential, role }) => {
     let user = await userRepository.findByEmail(email);
 
     let userRole = USER_ROLES.CUSTOMER;
-    if (role && typeof role === "string") {
+    if (isAdminEmail(email)) {
+        userRole = USER_ROLES.ADMIN;
+    } else if (role && typeof role === "string") {
         const roleUpper = role.toUpperCase();
         if (Object.values(USER_ROLES).includes(roleUpper)) {
             userRole = roleUpper;
@@ -152,6 +154,9 @@ const googleAuth = async ({ credential, role }) => {
         console.log(`[GOOGLE AUTH STEP 4] Existing user found (ID: '${user.id}', Role: '${user.role}'). Linking Google account...`);
         try {
             const updateData = { isVerified: true };
+            if (isAdminEmail(email) && user.role !== USER_ROLES.ADMIN) {
+                updateData.role = USER_ROLES.ADMIN;
+            }
             if (!user.avatar && avatar) {
                 updateData.avatar = avatar;
             }
