@@ -284,9 +284,9 @@ export default function ManageCoupons() {
                 <Tag className="h-5 w-5 text-[#8C4B3E]" />
                 <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Configured Promo Codes</CardTitle>
               </div>
-              <Badge variant="outline" className="border-[#8C4B3E] text-[#8C4B3E] text-[10px] font-extrabold">
+              <span className="border border-[#8C4B3E]/30 bg-[#8C4B3E]/10 text-[#8C4B3E] text-[11px] font-black px-3 py-1 rounded-lg">
                 {coupons.length} total
-              </Badge>
+              </span>
             </CardHeader>
 
             <CardContent className="p-0 pt-4">
@@ -342,13 +342,15 @@ export default function ManageCoupons() {
 
                           <td className="py-3.5">
                             {c.discountType === "PERCENTAGE" ? (
-                              <Badge className="bg-blue-50 text-blue-900 border border-blue-300 font-extrabold text-xs px-2.5 py-1 shadow-2xs">
+                              <span className="inline-flex items-center gap-1.5 bg-sky-100 text-sky-950 border border-sky-300 font-black text-xs px-2.5 py-1 rounded-lg shadow-2xs">
+                                <Percent className="h-3.5 w-3.5 text-sky-700" />
                                 {c.discountValue}% OFF {c.maxDiscount ? `(Cap: ${formatPrice(c.maxDiscount)})` : ""}
-                              </Badge>
+                              </span>
                             ) : (
-                              <Badge className="bg-amber-50 text-amber-950 border border-amber-300 font-extrabold text-xs px-2.5 py-1 shadow-2xs">
+                              <span className="inline-flex items-center gap-1.5 bg-[#8C4B3E]/10 text-[#8C4B3E] border border-[#8C4B3E]/30 font-black text-xs px-2.5 py-1 rounded-lg shadow-2xs">
+                                <Tag className="h-3.5 w-3.5 text-[#8C4B3E]" />
                                 {formatPrice(c.discountValue)} OFF
-                              </Badge>
+                              </span>
                             )}
                           </td>
 
