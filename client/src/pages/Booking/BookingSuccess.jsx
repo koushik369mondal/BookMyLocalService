@@ -205,14 +205,14 @@ export default function BookingSuccess() {
               </div>
 
               {/* PAYMENT STATUS WIDGET */}
-              <div className="p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 print:bg-white">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-[#F0E7D5] text-[#C9A46A] rounded-xl shrink-0 border border-[#E8DCC3]">
-                    <CreditCard className="h-4.5 w-4.5" />
+              <div className="p-5 bg-white border border-[#E8DCC3] rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-2xs print:bg-white">
+                <div className="flex items-center gap-3.5">
+                  <div className="p-2.5 bg-[#8C4B3E]/10 text-[#8C4B3E] rounded-xl shrink-0 border border-[#8C4B3E]/20">
+                    <CreditCard className="h-5 w-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Payment Details</span>
-                    <span className="text-xs font-bold text-[#1F1D1A] block mt-0.5">
+                    <span className="text-[10px] font-black text-[#8C4B3E] uppercase tracking-wider block">Payment Method</span>
+                    <span className="text-sm font-extrabold text-[#1F1D1A] block mt-0.5">
                       {getPaymentLabel(paymentMethod)}
                     </span>
                   </div>
@@ -220,15 +220,15 @@ export default function BookingSuccess() {
                 
                 <div className="flex items-center sm:text-right gap-3 sm:flex-col sm:gap-1">
                   {(paymentMethod === "cash" || paymentMethod === "CASH_ON_JOB") ? (
-                    <Badge className="bg-amber-50 text-amber-800 border border-amber-300 font-bold rounded-lg text-[10px] py-1 px-3 shrink-0">
+                    <span className="inline-flex items-center gap-1.5 bg-amber-100 text-amber-950 border border-amber-400 font-black rounded-lg text-xs py-1 px-3 shrink-0 shadow-2xs">
                       🟡 Payment Pending
-                    </Badge>
+                    </span>
                   ) : (
-                    <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg text-[10px] py-1 px-3 shrink-0">
+                    <span className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-950 border border-emerald-400 font-black rounded-lg text-xs py-1 px-3 shrink-0 shadow-2xs">
                       🟢 Paid / Success
-                    </Badge>
+                    </span>
                   )}
-                  <span className="text-sm font-bold text-[#1F1D1A]">{formatPrice(displayPrice, { decimals: true })}</span>
+                  <span className="text-base font-black text-[#8C4B3E]">{formatPrice(displayPrice, { decimals: true })}</span>
                 </div>
               </div>
 

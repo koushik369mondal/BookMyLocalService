@@ -56,15 +56,15 @@ export default function BookingHistory() {
   const getPaymentStatusBadge = (b) => {
     const p = (b.paymentStatus || "pending").toUpperCase();
     if (p === "PAID") {
-      return <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold rounded-lg px-2.5 py-0.5 text-[10px]">🟢 Paid</Badge>;
+      return <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-950 border border-emerald-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🟢 Paid</span>;
     }
     if (p === "FAILED") {
-      return <Badge className="bg-rose-50 text-rose-800 border border-rose-300 font-bold rounded-lg px-2.5 py-0.5 text-[10px]">🔴 Failed</Badge>;
+      return <span className="inline-flex items-center gap-1 bg-rose-100 text-rose-950 border border-rose-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🔴 Failed</span>;
     }
     if (p === "REFUNDED") {
-      return <Badge className="bg-sky-50 text-sky-800 border border-sky-300 font-bold rounded-lg px-2.5 py-0.5 text-[10px]">🔵 Refunded</Badge>;
+      return <span className="inline-flex items-center gap-1 bg-sky-100 text-sky-950 border border-sky-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🔵 Refunded</span>;
     }
-    return <Badge className="bg-amber-50 text-amber-800 border border-amber-300 font-bold rounded-lg px-2.5 py-0.5 text-[10px]">🟡 Payment Pending</Badge>;
+    return <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-950 border border-amber-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🟡 Payment Pending</span>;
   };
 
   const getPaymentMethodLabel = (b) => {

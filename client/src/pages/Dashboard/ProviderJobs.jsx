@@ -81,31 +81,31 @@ export default function ProviderJobs() {
   const getBadge = (status) => {
     switch (status) {
       case "pending":
-        return <Badge className="bg-[#C9A46A] text-white border-0 font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</Badge>;
+        return <span className="inline-flex items-center gap-1 bg-[#C9A46A] text-[#1F1D1A] border border-[#B89359] font-black rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Pending</span>;
       case "confirmed":
       case "upcoming":
-        return <Badge className="bg-[#5A95C9]/20 text-[#1E4B75] border border-[#5A95C9]/30 font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Confirmed</Badge>;
+        return <span className="inline-flex items-center gap-1 bg-[#5A95C9]/20 text-[#1E4B75] border border-[#5A95C9]/40 font-extrabold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Confirmed</span>;
       case "completed":
-        return <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Completed</Badge>;
+        return <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-950 border border-emerald-300 font-extrabold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Completed</span>;
       case "cancelled":
-        return <Badge className="bg-[#8C4B3E]/20 text-[#8C4B3E] border border-[#8C4B3E]/30 font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Cancelled</Badge>;
+        return <span className="inline-flex items-center gap-1 bg-rose-100 text-rose-950 border border-rose-300 font-extrabold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">Cancelled</span>;
       default:
-        return <Badge className="bg-stone-100 text-stone-700 font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">{status}</Badge>;
+        return <span className="inline-flex items-center gap-1 bg-stone-200 text-stone-900 font-extrabold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">{status}</span>;
     }
   };
 
   const getPaymentStatusBadge = (job) => {
     const p = (job.paymentStatus || "pending").toUpperCase();
     if (p === "PAID") {
-      return <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold rounded-lg px-2.5 py-0.5 text-[9px]">🟢 Paid</Badge>;
+      return <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-950 border border-emerald-400 font-black rounded-lg px-2.5 py-0.5 text-[9px]">🟢 Paid</span>;
     }
     if (p === "FAILED") {
-      return <Badge className="bg-rose-50 text-rose-800 border border-rose-300 font-bold rounded-lg px-2.5 py-0.5 text-[9px]">🔴 Failed</Badge>;
+      return <span className="inline-flex items-center gap-1 bg-rose-100 text-rose-950 border border-rose-400 font-black rounded-lg px-2.5 py-0.5 text-[9px]">🔴 Failed</span>;
     }
     if (p === "REFUNDED") {
-      return <Badge className="bg-sky-50 text-sky-800 border border-sky-300 font-bold rounded-lg px-2.5 py-0.5 text-[9px]">🔵 Refunded</Badge>;
+      return <span className="inline-flex items-center gap-1 bg-sky-100 text-sky-950 border border-sky-400 font-black rounded-lg px-2.5 py-0.5 text-[9px]">🔵 Refunded</span>;
     }
-    return <Badge className="bg-amber-50 text-amber-800 border border-amber-300 font-bold rounded-lg px-2.5 py-0.5 text-[9px]">🟡 Payment Pending</Badge>;
+    return <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-950 border border-amber-400 font-black rounded-lg px-2.5 py-0.5 text-[9px]">🟡 Payment Pending</span>;
   };
 
   return (
@@ -164,25 +164,27 @@ export default function ProviderJobs() {
                     <div key={job.id} className="border border-[#E8DCC3] p-5 rounded-2xl bg-white flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-[#C9A46A] shadow-2xs transition-all duration-300">
                       <div className="space-y-2">
                         <div className="flex items-center gap-2.5 flex-wrap">
-                          <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wide">REF ID: {job.id}</span>
+                          <span className="text-[10px] font-black text-[#1F1D1A] bg-[#F0E7D5] border border-[#E8DCC3] px-2 py-0.5 rounded-md uppercase tracking-wide">
+                            REF ID: #{job.id.substring(0, 8)}
+                          </span>
                           {getBadge(job.status)}
                           {getPaymentStatusBadge(job)}
                         </div>
-                        <h4 className="font-bold text-sm text-[#1F1D1A] leading-snug">{job.service}</h4>
-                        <p className="text-xs font-medium text-[#5A5146]">
-                          Customer: <strong>{job.customer}</strong> ({job.customerPhone})
+                        <h4 className="font-extrabold text-base text-[#1F1D1A] leading-snug">{job.service}</h4>
+                        <p className="text-xs font-semibold text-[#5A5146]">
+                          Customer: <strong className="text-[#1F1D1A] font-extrabold">{job.customer}</strong> ({job.customerPhone})
                         </p>
-                        <div className="flex flex-wrap gap-4 text-xs text-[#5A5146] font-medium">
-                          <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5 text-[#C9A46A]" /> {job.date}</span>
-                          <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-[#C9A46A]" /> {job.time}</span>
-                          <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-[#C9A46A]" /> {job.address}</span>
+                        <div className="flex flex-wrap gap-4 text-xs text-[#1F1D1A] font-bold">
+                          <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5 text-[#8C4B3E]" /> {job.date}</span>
+                          <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-[#8C4B3E]" /> {job.time}</span>
+                          <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-[#8C4B3E]" /> {job.address}</span>
                         </div>
                       </div>
 
                       <div className="border-t md:border-t-0 border-[#E8DCC3] pt-4 md:pt-0 flex items-center justify-between md:justify-end gap-6 min-w-[240px]">
                         <div className="text-left md:text-right shrink-0">
-                          <span className="text-[9px] font-bold text-[#7A7266] uppercase block tracking-wider">Settlement Rate</span>
-                          <span className="text-base font-bold text-[#1F1D1A]">{formatPrice(job.price, { decimals: true })}</span>
+                          <span className="text-[9px] font-black text-[#8C4B3E] uppercase block tracking-wider">Settlement Rate</span>
+                          <span className="text-lg font-black text-[#1F1D1A]">{formatPrice(job.price, { decimals: true })}</span>
                         </div>
 
                         <div className="flex flex-col gap-2 shrink-0">

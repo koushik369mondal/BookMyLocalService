@@ -189,13 +189,13 @@ export default function Payments() {
                             <td className="py-3.5 px-4 text-right font-bold text-[#1F1D1A]">{formatPrice(p.total, { decimals: true })}</td>
                             <td className="py-3.5 px-4 text-center">
                               {pSt === "PAID" ? (
-                                <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-300 text-[9px] font-bold">🟢 Paid</Badge>
+                                <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-950 border border-emerald-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🟢 Paid</span>
                               ) : pSt === "FAILED" ? (
-                                <Badge className="bg-rose-50 text-rose-800 border border-rose-300 text-[9px] font-bold">🔴 Failed</Badge>
+                                <span className="inline-flex items-center gap-1 bg-rose-100 text-rose-950 border border-rose-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🔴 Failed</span>
                               ) : pSt === "REFUNDED" ? (
-                                <Badge className="bg-sky-50 text-sky-800 border border-sky-300 text-[9px] font-bold">🔵 Refunded</Badge>
+                                <span className="inline-flex items-center gap-1 bg-sky-100 text-sky-950 border border-sky-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🔵 Refunded</span>
                               ) : (
-                                <Badge className="bg-amber-50 text-amber-800 border border-amber-300 text-[9px] font-bold">🟡 Pending</Badge>
+                                <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-950 border border-amber-400 font-black rounded-lg px-2.5 py-0.5 text-[10px]">🟡 Pending</span>
                               )}
                             </td>
                           </tr>

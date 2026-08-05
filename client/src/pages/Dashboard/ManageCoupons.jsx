@@ -230,7 +230,7 @@ export default function ManageCoupons() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Flat ₹ Off</span>
                 <span className="text-xl font-black text-[#1F1D1A]">{fixedCoupons}</span>
               </div>
-              <div className="p-2.5 bg-amber-50 text-[#C9A46A] rounded-xl shrink-0">
+              <div className="p-2.5 bg-amber-50 text-amber-800 border border-amber-200 rounded-xl shrink-0">
                 <DollarSign className="h-5 w-5" />
               </div>
             </Card>
@@ -240,7 +240,7 @@ export default function ManageCoupons() {
                 <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Percentage % Off</span>
                 <span className="text-xl font-black text-[#1F1D1A]">{percentageCoupons}</span>
               </div>
-              <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl shrink-0">
+              <div className="p-2.5 bg-blue-50 text-blue-800 border border-blue-200 rounded-xl shrink-0">
                 <Percent className="h-5 w-5" />
               </div>
             </Card>
@@ -272,19 +272,19 @@ export default function ManageCoupons() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search code or description..."
-                className="pl-10 h-10 border-[#E8DCC3] text-xs rounded-xl bg-[#FAF6F0]/50"
+                className="pl-10 h-10 border-[#E8DCC3] text-xs rounded-xl bg-[#FAF6F0]/50 font-medium text-[#1F1D1A]"
               />
             </div>
           </Card>
 
           {/* COUPONS TABLE */}
           <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
-            <CardHeader className="p-0 pb-4 border-b border-stone-100 flex flex-row items-center justify-between">
+            <CardHeader className="p-0 pb-4 border-b border-stone-200 flex flex-row items-center justify-between">
               <div className="flex items-center gap-2">
                 <Tag className="h-5 w-5 text-[#8C4B3E]" />
                 <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Configured Promo Codes</CardTitle>
               </div>
-              <Badge variant="outline" className="border-[#8C4B3E] text-[#8C4B3E] text-[10px] font-bold">
+              <Badge variant="outline" className="border-[#8C4B3E] text-[#8C4B3E] text-[10px] font-extrabold">
                 {coupons.length} total
               </Badge>
             </CardHeader>
@@ -304,7 +304,7 @@ export default function ManageCoupons() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
                     <thead>
-                      <tr className="border-b border-stone-100 text-[10px] uppercase font-bold text-[#7A7266]">
+                      <tr className="border-b border-stone-200 text-[10px] uppercase font-extrabold text-[#1F1D1A] tracking-wider">
                         <th className="pb-3">Coupon Code</th>
                         <th className="pb-3">Discount</th>
                         <th className="pb-3">Min Order</th>
@@ -319,7 +319,7 @@ export default function ManageCoupons() {
                         <tr key={c.id} className="hover:bg-[#FAF6F0]/50 transition-colors">
                           <td className="py-3.5">
                             <div className="flex items-center gap-2">
-                              <span className="font-black text-[#1F1D1A] tracking-wider text-xs bg-[#FAF6F0] border border-[#E8DCC3] px-2.5 py-1 rounded-lg">
+                              <span className="font-black text-[#8C4B3E] tracking-wider text-xs bg-[#F0E7D5]/70 border border-[#C9A46A]/50 px-3 py-1 rounded-xl shadow-2xs">
                                 {c.code}
                               </span>
                               <button
@@ -336,17 +336,17 @@ export default function ManageCoupons() {
                               </button>
                             </div>
                             {c.description && (
-                              <p className="text-[11px] text-[#7A7266] mt-1">{c.description}</p>
+                              <p className="text-[11px] text-[#5A5146] font-medium mt-1">{c.description}</p>
                             )}
                           </td>
 
                           <td className="py-3.5">
                             {c.discountType === "PERCENTAGE" ? (
-                              <Badge className="bg-blue-100 text-blue-800 border-blue-300 font-black text-[10px]">
+                              <Badge className="bg-blue-50 text-blue-900 border border-blue-300 font-extrabold text-xs px-2.5 py-1 shadow-2xs">
                                 {c.discountValue}% OFF {c.maxDiscount ? `(Cap: ${formatPrice(c.maxDiscount)})` : ""}
                               </Badge>
                             ) : (
-                              <Badge className="bg-amber-100 text-amber-900 border-amber-300 font-black text-[10px]">
+                              <Badge className="bg-amber-50 text-amber-950 border border-amber-300 font-extrabold text-xs px-2.5 py-1 shadow-2xs">
                                 {formatPrice(c.discountValue)} OFF
                               </Badge>
                             )}
