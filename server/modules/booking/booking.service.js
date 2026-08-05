@@ -88,8 +88,11 @@ class BookingService {
       tax,
       discount,
       total,
-      status: "pending",
-      paymentStatus: "pending"
+      bookingStatus: "PENDING",
+      serviceStatus: "NOT_STARTED",
+      paymentStatus: "PENDING",
+      paymentMethod: "ONLINE",
+      status: "pending"
     });
   }
 
@@ -102,7 +105,40 @@ class BookingService {
   }
 
   async updateBooking(id, updateData) {
-    return await bookingRepository.update(id, updateData);
+    const sanitized = { ...updateData };
+
+    if (sanitized.status) {
+      const s = String(sanitized.status).toLowerCase();
+      if (s === "upcoming" || s === "confirmed") {
+        sanitized.bookingStatus = "CONFIRMED";
+        sanitized.status = "upcoming";
+      } else if (s === "completed") {
+        sanitized.bookingStatus = "COMPLETED";
+        sanitized.serviceStatus = "COMPLETED";
+        sanitized.status = "completed";
+      } else if (s === "cancelled") {
+        sanitized.bookingStatus = "CANCELLED";
+        sanitized.status = "cancelled";
+      }
+    }
+
+    if (sanitized.paymentMethod) {
+      const pm = String(sanitized.paymentMethod).toUpperCase();
+      if (pm === "CASH" || pm === "CASH_ON_JOB") {
+        sanitized.paymentMethod = "CASH_ON_JOB";
+      } else {
+        sanitized.paymentMethod = "ONLINE";
+      }
+    }
+
+    if (sanitized.paymentStatus) {
+      const ps = String(sanitized.paymentStatus).toUpperCase();
+      if (["PENDING", "PAID", "FAILED", "REFUNDED"].includes(ps)) {
+        sanitized.paymentStatus = ps;
+      }
+    }
+
+    return await bookingRepository.update(id, sanitized);
   }
 
   async deleteBooking(id) {

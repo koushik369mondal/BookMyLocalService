@@ -149,7 +149,8 @@ export function useCheckoutForm() {
   }, [searchParams, setValue, navigate]);
 
   const handleApplyPromo = async (e) => {
-    e.preventDefault();
+    if (e && typeof e.preventDefault === "function") e.preventDefault();
+    if (e && typeof e.stopPropagation === "function") e.stopPropagation();
     setPromoErrorMsg("");
     setPromoSuccessMsg("");
 

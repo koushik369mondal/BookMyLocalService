@@ -50,9 +50,9 @@ export default function Payments() {
     fetchPayments();
   }, []);
 
-  const totalVolume = payments.reduce((sum, p) => p.paymentStatus === "paid" ? sum + (p.total || 0) : sum, 0);
-  const pendingVolume = payments.reduce((sum, p) => p.paymentStatus === "pending" ? sum + (p.total || 0) : sum, 0);
-  const refundedVolume = payments.reduce((sum, p) => p.paymentStatus === "refunded" ? sum + (p.total || 0) : sum, 0);
+  const totalVolume = payments.reduce((sum, p) => (p.paymentStatus || "").toUpperCase() === "PAID" ? sum + (p.total || 0) : sum, 0);
+  const pendingVolume = payments.reduce((sum, p) => (p.paymentStatus || "").toUpperCase() === "PENDING" ? sum + (p.total || 0) : sum, 0);
+  const refundedVolume = payments.reduce((sum, p) => (p.paymentStatus || "").toUpperCase() === "REFUNDED" ? sum + (p.total || 0) : sum, 0);
 
   const filteredPayments = payments.filter((p) => {
     const cust = p.customer?.fullName || "";
@@ -60,7 +60,8 @@ export default function Payments() {
     const serv = p.service?.title || "";
     const q = searchQuery.toLowerCase().trim();
     const matchesSearch = !q || cust.toLowerCase().includes(q) || prov.toLowerCase().includes(q) || serv.toLowerCase().includes(q) || p.id.toLowerCase().includes(q);
-    const matchesStatus = statusFilter === "all" || p.paymentStatus === statusFilter;
+    const pStatus = (p.paymentStatus || "PENDING").toUpperCase();
+    const matchesStatus = statusFilter === "all" || pStatus === statusFilter.toUpperCase();
     return matchesSearch && matchesStatus;
   });
 
@@ -138,10 +139,11 @@ export default function Payments() {
                   onChange={(e) => setStatusFilter(e.target.value)}
                   className="h-9 text-xs font-bold border border-[#E8DCC3] rounded-xl px-3 bg-[#FAF6F0] text-[#1F1D1A] focus:outline-none cursor-pointer"
                 >
-                  <option value="all">All Statuses</option>
-                  <option value="paid">Paid</option>
-                  <option value="pending">Pending</option>
-                  <option value="refunded">Refunded</option>
+                  <option value="all">All Payment Statuses</option>
+                  <option value="PENDING">🟡 Pending</option>
+                  <option value="PAID">🟢 Paid</option>
+                  <option value="FAILED">🔴 Failed</option>
+                  <option value="REFUNDED">🔵 Refunded</option>
                 </select>
               </div>
             </CardHeader>
@@ -172,25 +174,33 @@ export default function Payments() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#E8DCC3] bg-white">
-                      {filteredPayments.map((p) => (
-                        <tr key={p.id} className="hover:bg-[#FAF6F0]/60 transition-colors">
-                          <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">#{p.id.substring(0, 8)}</td>
-                          <td className="py-3.5 px-4 font-medium">{p.customer?.fullName || "Customer"}</td>
-                          <td className="py-3.5 px-4 font-medium">{p.provider?.fullName || "Provider"}</td>
-                          <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">{p.service?.title || "Service"}</td>
-                          <td className="py-3.5 px-4 uppercase font-semibold text-[#7A7266]">{p.paymentMethod || "UPI"}</td>
-                          <td className="py-3.5 px-4 text-right font-bold text-[#1F1D1A]">{formatPrice(p.total, { decimals: true })}</td>
-                          <td className="py-3.5 px-4 text-center">
-                            {p.paymentStatus === "paid" ? (
-                              <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 text-[9px] uppercase font-bold">Paid</Badge>
-                            ) : p.paymentStatus === "refunded" ? (
-                              <Badge className="bg-rose-50 text-rose-700 border border-rose-200 text-[9px] uppercase font-bold">Refunded</Badge>
-                            ) : (
-                              <Badge className="bg-[#C9A46A]/20 text-[#1F1D1A] border border-[#C9A46A]/30 text-[9px] uppercase font-bold">Pending</Badge>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
+                      {filteredPayments.map((p) => {
+                        const pSt = (p.paymentStatus || "PENDING").toUpperCase();
+                        const pMethod = (p.paymentMethod || "").toUpperCase();
+                        const methodLabel = (pMethod === "CASH_ON_JOB" || pMethod === "CASH") ? "Cash on Service" : "Online (Razorpay)";
+
+                        return (
+                          <tr key={p.id} className="hover:bg-[#FAF6F0]/60 transition-colors">
+                            <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">#{p.id.substring(0, 8)}</td>
+                            <td className="py-3.5 px-4 font-medium">{p.customer?.fullName || "Customer"}</td>
+                            <td className="py-3.5 px-4 font-medium">{p.provider?.fullName || "Provider"}</td>
+                            <td className="py-3.5 px-4 font-bold text-[#1F1D1A]">{p.service?.title || "Service"}</td>
+                            <td className="py-3.5 px-4 text-xs font-semibold text-[#7A7266]">{methodLabel}</td>
+                            <td className="py-3.5 px-4 text-right font-bold text-[#1F1D1A]">{formatPrice(p.total, { decimals: true })}</td>
+                            <td className="py-3.5 px-4 text-center">
+                              {pSt === "PAID" ? (
+                                <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-300 text-[9px] font-bold">🟢 Paid</Badge>
+                              ) : pSt === "FAILED" ? (
+                                <Badge className="bg-rose-50 text-rose-800 border border-rose-300 text-[9px] font-bold">🔴 Failed</Badge>
+                              ) : pSt === "REFUNDED" ? (
+                                <Badge className="bg-sky-50 text-sky-800 border border-sky-300 text-[9px] font-bold">🔵 Refunded</Badge>
+                              ) : (
+                                <Badge className="bg-amber-50 text-amber-800 border border-amber-300 text-[9px] font-bold">🟡 Pending</Badge>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>

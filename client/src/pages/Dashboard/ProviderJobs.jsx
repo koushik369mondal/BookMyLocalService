@@ -57,6 +57,27 @@ export default function ProviderJobs() {
     }
   };
 
+  const handleMarkAsPaid = async (id) => {
+    setUpdatingId(id);
+    setSuccessMsg("");
+    setError("");
+    try {
+      const response = await providerService.markAsPaid(id);
+      if (response.success) {
+        setSuccessMsg("Payment marked as PAID successfully.");
+        setTimeout(() => setSuccessMsg(""), 2500);
+        fetchJobs();
+      } else {
+        setError(response.message || "Failed to mark payment as paid.");
+      }
+    } catch (err) {
+      console.error("Mark as paid error:", err);
+      setError(err.message || "Failed to mark payment as paid.");
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
   const getBadge = (status) => {
     switch (status) {
       case "pending":
@@ -71,6 +92,20 @@ export default function ProviderJobs() {
       default:
         return <Badge className="bg-stone-100 text-stone-700 font-bold rounded-lg px-2.5 py-0.5 text-[9px] uppercase">{status}</Badge>;
     }
+  };
+
+  const getPaymentStatusBadge = (job) => {
+    const p = (job.paymentStatus || "pending").toUpperCase();
+    if (p === "PAID") {
+      return <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-300 font-bold rounded-lg px-2.5 py-0.5 text-[9px]">🟢 Paid</Badge>;
+    }
+    if (p === "FAILED") {
+      return <Badge className="bg-rose-50 text-rose-800 border border-rose-300 font-bold rounded-lg px-2.5 py-0.5 text-[9px]">🔴 Failed</Badge>;
+    }
+    if (p === "REFUNDED") {
+      return <Badge className="bg-sky-50 text-sky-800 border border-sky-300 font-bold rounded-lg px-2.5 py-0.5 text-[9px]">🔵 Refunded</Badge>;
+    }
+    return <Badge className="bg-amber-50 text-amber-800 border border-amber-300 font-bold rounded-lg px-2.5 py-0.5 text-[9px]">🟡 Payment Pending</Badge>;
   };
 
   return (
@@ -131,6 +166,7 @@ export default function ProviderJobs() {
                         <div className="flex items-center gap-2.5 flex-wrap">
                           <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wide">REF ID: {job.id}</span>
                           {getBadge(job.status)}
+                          {getPaymentStatusBadge(job)}
                         </div>
                         <h4 className="font-bold text-sm text-[#1F1D1A] leading-snug">{job.service}</h4>
                         <p className="text-xs font-medium text-[#5A5146]">
@@ -169,6 +205,17 @@ export default function ProviderJobs() {
                               className="bg-[#7DAB7D] hover:bg-[#689468] text-white rounded-xl h-8 px-3 text-[10px] font-bold flex items-center gap-1 cursor-pointer border border-[#E8DCC3]"
                             >
                               {updatingId === job.id ? <Loader2 className="h-3 w-3 animate-spin" /> : "Mark Completed"}
+                            </Button>
+                          )}
+
+                          {job.paymentStatus !== "PAID" && (
+                            <Button
+                              size="xs"
+                              disabled={updatingId === job.id}
+                              onClick={() => handleMarkAsPaid(job.id)}
+                              className="bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl h-8 px-3 text-[10px] font-bold flex items-center gap-1 cursor-pointer border border-emerald-800 shadow-2xs"
+                            >
+                              {updatingId === job.id ? <Loader2 className="h-3 w-3 animate-spin" /> : "💵 Mark Cash as Paid"}
                             </Button>
                           )}
 

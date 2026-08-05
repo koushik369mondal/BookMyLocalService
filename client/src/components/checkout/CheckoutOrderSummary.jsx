@@ -18,6 +18,7 @@ export function CheckoutOrderSummary({
   register,
   acceptTermsValue,
   setValue,
+  selectedPaymentMethod,
   errors
 }) {
   if (!booking) return null;
@@ -38,7 +39,7 @@ export function CheckoutOrderSummary({
       </div>
 
       {/* Promo Code Input */}
-      <form onSubmit={onApplyPromo} className="space-y-2">
+      <div className="space-y-2">
         <label className="text-xs font-bold text-[#1F1D1A] flex items-center gap-1.5">
           <Tag className="h-3.5 w-3.5 text-[#8C4B3E]" />
           Promo / Coupon Code
@@ -47,16 +48,32 @@ export function CheckoutOrderSummary({
           <Input
             value={promoInput}
             onChange={(e) => setPromoInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                e.stopPropagation();
+                onApplyPromo(e);
+              }
+            }}
             placeholder="e.g. WELCOME100"
             className="h-9 border-[#E8DCC3] text-xs rounded-xl uppercase bg-[#FAF6F0]/40"
           />
-          <Button type="submit" variant="outline" className="h-9 px-4 border-[#E8DCC3] text-xs font-bold text-[#8C4B3E] hover:bg-[#8C4B3E]/10 rounded-xl cursor-pointer">
+          <Button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onApplyPromo(e);
+            }}
+            variant="outline"
+            className="h-9 px-4 border-[#E8DCC3] text-xs font-bold text-[#8C4B3E] hover:bg-[#8C4B3E]/10 rounded-xl cursor-pointer"
+          >
             Apply
           </Button>
         </div>
         {promoSuccessMsg && <p className="text-[11px] text-emerald-600 font-bold">{promoSuccessMsg}</p>}
         {promoErrorMsg && <p className="text-[11px] text-rose-600 font-bold">{promoErrorMsg}</p>}
-      </form>
+      </div>
 
       <div className="space-y-2 text-xs text-[#5A5146] pt-2 border-t border-[#E8DCC3]">
         <div className="flex justify-between">
@@ -121,11 +138,11 @@ export function CheckoutOrderSummary({
         {isSubmitting ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin text-white" />
-            Processing Payment...
+            {selectedPaymentMethod === "cash" ? "Confirming Booking..." : "Processing Payment..."}
           </>
         ) : (
           <>
-            Complete Payment ({formatPrice(grandTotal, { decimals: true })})
+            {selectedPaymentMethod === "cash" ? "Confirm Booking (Pay on Service)" : "Complete Booking & Pay"} ({formatPrice(grandTotal, { decimals: true })})
             <ArrowRight className="h-4 w-4" />
           </>
         )}

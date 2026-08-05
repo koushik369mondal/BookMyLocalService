@@ -109,8 +109,8 @@ const submitCheckout = async (req, res) => {
       });
     }
 
-    const status = "upcoming";
-    const paymentStatus = paymentMethod === "cash" ? "pending" : "paid";
+    const isCash = paymentMethod === "cash" || paymentMethod === "CASH_ON_JOB";
+    const methodEnum = isCash ? "CASH_ON_JOB" : "ONLINE";
 
     const updateData = {
       billingName: fullName,
@@ -120,9 +120,11 @@ const submitCheckout = async (req, res) => {
       city,
       state,
       zipCode,
-      paymentMethod,
-      status,
-      paymentStatus
+      paymentMethod: methodEnum,
+      paymentStatus: "PENDING",
+      bookingStatus: "CONFIRMED",
+      serviceStatus: "NOT_STARTED",
+      status: "upcoming"
     };
 
     if (discount !== undefined) {
@@ -331,9 +333,13 @@ const verifyPayment = async (req, res) => {
     let updatedBooking = null;
     if (bookingId) {
       updatedBooking = await bookingService.updateBooking(bookingId, {
-        status: "upcoming",
-        paymentStatus: "paid",
-        paymentMethod: "razorpay"
+        bookingStatus: "CONFIRMED",
+        serviceStatus: "NOT_STARTED",
+        paymentStatus: "PAID",
+        paymentMethod: "ONLINE",
+        paymentId: razorpay_payment_id,
+        paidAt: new Date(),
+        status: "upcoming"
       });
     }
 

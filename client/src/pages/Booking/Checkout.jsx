@@ -105,6 +105,7 @@ export default function Checkout() {
                   register={register}
                   acceptTermsValue={acceptTermsValue}
                   setValue={setValue}
+                  selectedPaymentMethod={selectedPaymentMethod}
                   errors={errors}
                 />
               </div>

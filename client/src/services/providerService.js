@@ -36,6 +36,11 @@ export const providerService = {
         return response.data;
     },
 
+    markAsPaid: async (id) => {
+        const response = await api.patch(`/bookings/${id}/mark-paid`);
+        return response.data;
+    },
+
     getEarnings: async () => {
         const response = await api.get("/provider/earnings");
         return response.data;

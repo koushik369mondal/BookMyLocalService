@@ -89,18 +89,9 @@ export default function BookingSuccess() {
   };
 
   const getPaymentLabel = (method) => {
-    switch (method) {
-      case "upi":
-        return "UPI Transfer";
-      case "netbanking":
-        return "Net Banking";
-      case "wallet":
-        return "Digital Wallet";
-      case "cash":
-        return "Cash on Job";
-      default:
-        return "Credit/Debit Card";
-    }
+    const isCash = method === "cash" || method === "CASH_ON_JOB";
+    if (isCash) return "Cash on Service (Pay to Specialist)";
+    return "Online Payment (Razorpay)";
   };
 
   const providerName = typeof service?.provider === "object"
@@ -228,9 +219,15 @@ export default function BookingSuccess() {
                 </div>
                 
                 <div className="flex items-center sm:text-right gap-3 sm:flex-col sm:gap-1">
-                  <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg text-[10px] py-1 px-3 shrink-0">
-                    Paid / Success
-                  </Badge>
+                  {(paymentMethod === "cash" || paymentMethod === "CASH_ON_JOB") ? (
+                    <Badge className="bg-amber-50 text-amber-800 border border-amber-300 font-bold rounded-lg text-[10px] py-1 px-3 shrink-0">
+                      🟡 Payment Pending
+                    </Badge>
+                  ) : (
+                    <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/30 font-bold rounded-lg text-[10px] py-1 px-3 shrink-0">
+                      🟢 Paid / Success
+                    </Badge>
+                  )}
                   <span className="text-sm font-bold text-[#1F1D1A]">{formatPrice(displayPrice, { decimals: true })}</span>
                 </div>
               </div>

@@ -208,10 +208,59 @@ const deleteBooking = async (req, res) => {
   }
 };
 
+/**
+ * Provider / Admin action: Mark cash payment as collected/paid
+ */
+const markAsPaid = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const booking = await bookingService.getBookingById(id);
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found."
+      });
+    }
+
+    const providerId = booking.providerId || booking.provider?.id;
+    const isProvider = providerId && providerId === req.user.id;
+    const isAdmin = req.user.role === "ADMIN";
+
+    if (!isAdmin && !isProvider) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to mark this booking as paid."
+      });
+    }
+
+    const updatedBooking = await bookingService.updateBooking(id, {
+      paymentStatus: "PAID",
+      paidAt: new Date(),
+      collectedById: req.user.id,
+      serviceStatus: "COMPLETED",
+      bookingStatus: "COMPLETED",
+      status: "completed"
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Cash payment marked as PAID successfully.",
+      data: updatedBooking
+    });
+  } catch (error) {
+    console.error("Error in markAsPaid controller:", error);
+    return res.status(400).json({
+      success: false,
+      message: error.message || "Failed to mark booking payment as paid."
+    });
+  }
+};
+
 module.exports = {
   createBooking,
   getBookings,
   getBookingById,
   updateBooking,
-  deleteBooking
+  deleteBooking,
+  markAsPaid
 };
