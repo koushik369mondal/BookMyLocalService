@@ -23,9 +23,9 @@ const { protect } = require("../middleware/authMiddleware");
 // Feature Module Routers
 router.use("/auth", authRoutes);
 router.use("/customer", customerRoutes);
+router.use("/provider", providerRoutes);
 router.get("/providers/:providerId", getPublicProviderProfile);
 router.get("/provider/:providerId", getPublicProviderProfile);
-router.use("/provider", providerRoutes);
 router.use("/admin", adminRoutes);
 router.use("/bookings", bookingRoutes);
 router.use("/checkout", paymentRoutes);
