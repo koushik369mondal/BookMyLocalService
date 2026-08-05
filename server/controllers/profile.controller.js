@@ -2,6 +2,7 @@ const prisma = require("../config/prisma");
 const cloudinary = require("../config/cloudinary");
 const authService = require("../modules/auth/auth.service");
 const { userSelect } = require("../utils/user.util");
+const { extractCloudinaryPublicId } = require("../utils/cloudinary.util");
 
 const getProfile = async (req, res) => {
     try {
@@ -67,16 +68,14 @@ const uploadAvatar = async (req, res) => {
         const newAvatarUrl = uploadResponse.secure_url;
 
         if (req.user.avatar && req.user.avatar.includes("cloudinary.com")) {
-            try {
-                const parts = req.user.avatar.split("/upload/");
-                if (parts.length >= 2) {
-                    const pathAfterUpload = parts[1];
-                    const pathWithoutVersion = pathAfterUpload.replace(/^v\d+\//, "");
-                    const publicId = pathWithoutVersion.substring(0, pathWithoutVersion.lastIndexOf("."));
-                    await cloudinary.uploader.destroy(publicId);
+            const oldPublicId = extractCloudinaryPublicId(req.user.avatar);
+            if (oldPublicId) {
+                try {
+                    await cloudinary.uploader.destroy(oldPublicId);
+                    console.log(`🗑️ Destroyed old Cloudinary avatar asset: ${oldPublicId}`);
+                } catch (err) {
+                    console.error("Failed to delete old avatar from Cloudinary:", err);
                 }
-            } catch (err) {
-                console.error("Failed to delete old avatar from Cloudinary:", err);
             }
         }
 

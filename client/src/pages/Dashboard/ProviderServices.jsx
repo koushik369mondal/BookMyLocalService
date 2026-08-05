@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
+import { ServiceImage } from "@/components/ui/ServiceImage";
 import {
   Dialog,
   DialogContent,
@@ -585,10 +586,12 @@ function ProviderServicesContent() {
                   <div>
                     {/* Header Image with Badges */}
                     <div className="relative h-44 w-full overflow-hidden bg-[#F0E7D5]">
-                      <img
-                        src={service.imageUrl}
+                      <ServiceImage
+                        service={service}
                         alt={service.title}
                         className="w-full h-full object-cover"
+                        width={600}
+                        height={350}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
@@ -1016,10 +1019,12 @@ function ProviderServicesContent() {
 
                 <div className="space-y-4 pt-2">
                   <div className="h-40 rounded-xl overflow-hidden border border-[#E8DCC3]">
-                    <img
-                      src={viewingService.imageUrl}
+                    <ServiceImage
+                      service={viewingService}
                       alt={viewingService.title}
                       className="w-full h-full object-cover"
+                      width={600}
+                      height={350}
                     />
                   </div>
 

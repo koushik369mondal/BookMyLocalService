@@ -1,16 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { ShieldCheck, Star, User } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { ShieldCheck, Star } from "lucide-react";
+import { ProviderAvatar } from "@/components/ui/avatar";
 
 export default function ProviderSummaryCard({ provider, serviceTitle, className = "" }) {
   const name = typeof provider === "object"
     ? (provider?.fullName || provider?.name || "Assigned Specialist")
     : (typeof provider === "string" ? provider : "Assigned Specialist");
-
-  const avatar = typeof provider === "object"
-    ? (provider?.profileImage || provider?.avatar || provider?.providerImage || "")
-    : "";
 
   const providerId = typeof provider === "object"
     ? (provider?.id || provider?._id || provider?.providerId)
@@ -21,12 +17,11 @@ export default function ProviderSummaryCard({ provider, serviceTitle, className 
 
   const cardContent = (
     <div className={`flex items-center gap-3 p-3 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl hover:border-[#C9A46A] transition-colors ${className}`}>
-      <Avatar className="w-11 h-11 rounded-full border border-[#E8DCC3] shrink-0 shadow-2xs">
-        <AvatarImage src={avatar} className="object-cover" />
-        <AvatarFallback className="bg-[#F0E7D5] text-[#8C4B3E] font-bold text-xs">
-          {name?.[0] || <User className="h-4 w-4" />}
-        </AvatarFallback>
-      </Avatar>
+      <ProviderAvatar
+        provider={provider}
+        name={name}
+        className="w-11 h-11 rounded-full border border-[#E8DCC3] shrink-0 shadow-2xs"
+      />
 
       <div className="space-y-0.5 min-w-0 flex-1">
         <div className="flex items-center gap-1.5 flex-wrap">

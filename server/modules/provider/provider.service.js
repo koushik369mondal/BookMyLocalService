@@ -108,8 +108,9 @@ class ProviderService {
                     fullName: b.customer.fullName || b.billingName || "Customer",
                     email: b.customer.email || b.billingEmail || "N/A",
                     phone: b.customer.phone || b.billingPhone || "N/A",
-                    avatar: b.customer.avatar || ""
-                } : { fullName: b.billingName || "Customer", email: b.billingEmail || "N/A", phone: b.billingPhone || "N/A", avatar: "" },
+                    avatar: b.customer.avatar || "",
+                    profileImage: b.customer.avatar || ""
+                } : { fullName: b.billingName || "Customer", email: b.billingEmail || "N/A", phone: b.billingPhone || "N/A", avatar: "", profileImage: "" },
                 service: b.service ? {
                     title: b.service.title || "Service",
                     category: typeof b.service.category === "object" ? b.service.category?.name : (b.service.category || "General"),
@@ -370,6 +371,7 @@ class ProviderService {
                 id: r.id,
                 name: r.customer?.fullName || "Verified Customer",
                 avatar: r.customer?.avatar || "",
+                profileImage: r.customer?.avatar || "",
                 serviceName: r.service?.title || "Service",
                 rating: typeof r.rating === "number" ? r.rating : 5,
                 title: r.title || "",

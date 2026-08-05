@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback, ProviderAvatar } from "@/components/ui/avatar";
+import { getProviderImage, getServiceImage } from "@/utils/imageUtils";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -159,8 +160,8 @@ const buildServiceDetails = (service, dbReviews = [], dbAvgRating, dbTotalReview
     categoryIcon: service.category?.icon || null,
     providerId: service.providerId || service.provider?.id,
     providerName: service.provider?.fullName || "Verified Provider",
-    providerImage: service.provider?.avatar || service.provider?.profileImage || "",
-    providerProfileImage: service.provider?.avatar || service.provider?.profileImage || "",
+    providerImage: getProviderImage(service.provider),
+    provider: service.provider,
     location: service.location,
     rating: dbAvgRating !== undefined ? dbAvgRating : service.rating,
     reviewsCount: dbTotalReviews !== undefined ? dbTotalReviews : service.reviewCount,
@@ -245,8 +246,8 @@ export default function ServiceDetails() {
               name: service.title,
               category: service.category,
               providerName: service.provider?.fullName || "Verified Provider",
-              providerImage: service.provider?.avatar || service.provider?.profileImage || "",
-              providerProfileImage: service.provider?.avatar || service.provider?.profileImage || "",
+              providerImage: getProviderImage(service.provider),
+              provider: service.provider,
               location: service.location,
               rating: service.rating,
               reviewsCount: service.reviewCount,
@@ -755,7 +756,7 @@ export default function ServiceDetails() {
                           <div className="flex items-start justify-between flex-wrap gap-2 mb-2">
                             <div className="flex items-center gap-3">
                               <Avatar className="h-10 w-10 border border-[#5A5146]/15 bg-[#8C4B3E]/5 text-[#1F1D1A]">
-                                {rev.avatar && <AvatarImage src={rev.avatar} className="object-cover" />}
+                                {rev.avatar && <AvatarImage src={getProviderImage(rev.avatar)} className="object-cover" />}
                                 <AvatarFallback className="font-bold text-xs">{rev.name[0]}</AvatarFallback>
                               </Avatar>
                               <div>
@@ -825,10 +826,12 @@ export default function ServiceDetails() {
                             </NavLink>
                           </h3>
                           <div className="flex items-center gap-1.5 mt-1">
-                            <Avatar className="h-5 w-5 border border-[#5A5146]/15">
-                              <AvatarImage src={sim.providerImage} className="object-cover" />
-                              <AvatarFallback className="text-[10px]">{sim.providerName[0]}</AvatarFallback>
-                            </Avatar>
+                            <ProviderAvatar
+                              provider={sim.provider || { fullName: sim.providerName, profileImage: sim.providerImage }}
+                              className="h-5 w-5 border border-[#5A5146]/15"
+                              fallbackClassName="text-[10px]"
+                              size={40}
+                            />
                             <span className="text-[11px] font-bold text-[#5A5146]">{sim.providerName}</span>
                           </div>
                         </div>

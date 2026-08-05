@@ -1,4 +1,5 @@
 const prisma = require("../../config/prisma");
+const { toSafeUser } = require("../../utils/user.util");
 
 /**
  * Get public profile, stats, services, and reviews for a provider
@@ -39,6 +40,10 @@ const getPublicProviderProfile = async (req, res) => {
         message: "Service provider profile not found."
       });
     }
+
+    // Normalize provider image fields via toSafeUser
+    const safeProvider = toSafeUser(providerUser);
+    const providerImg = safeProvider.profileImage || null;
 
     // 2. Fetch all services published by this provider
     const services = await prisma.service.findMany({
@@ -105,19 +110,19 @@ const getPublicProviderProfile = async (req, res) => {
 
     // Format provider profile response
     const profileData = {
-      id: providerUser.id,
-      fullName: providerUser.fullName,
-      name: providerUser.fullName,
-      email: providerUser.email,
-      phone: providerUser.phone,
-      avatar: providerUser.avatar || null,
-      profileImage: providerUser.avatar || null,
-      isVerified: providerUser.isVerified,
-      city: providerUser.city || "Local Service Area",
-      state: providerUser.state || "",
-      address: providerUser.address || "",
-      zipCode: providerUser.zipCode || "",
-      memberSince: providerUser.createdAt,
+      id: safeProvider.id,
+      fullName: safeProvider.fullName,
+      name: safeProvider.fullName,
+      email: safeProvider.email,
+      phone: safeProvider.phone,
+      avatar: providerImg,
+      profileImage: providerImg,
+      isVerified: safeProvider.isVerified,
+      city: safeProvider.city || "Local Service Area",
+      state: safeProvider.state || "",
+      address: safeProvider.address || "",
+      zipCode: safeProvider.zipCode || "",
+      memberSince: safeProvider.createdAt,
       locationsServed,
       bio: `Professional local specialist dedicated to top-quality service delivery. Licensed, background checked, and customer satisfaction focused.`,
       stats: {
@@ -146,31 +151,31 @@ const getPublicProviderProfile = async (req, res) => {
         reviewCount: s.reviewCount,
         availability: s.availability,
         badge: s.badge,
-        image: s.imageUrl,
         imageUrl: s.imageUrl,
         providerId: s.providerId,
-        providerName: providerUser.fullName,
-        providerImage: providerUser.avatar || null,
-        providerProfileImage: providerUser.avatar || null,
         provider: {
-          id: providerUser.id,
-          fullName: providerUser.fullName,
-          avatar: providerUser.avatar || null,
-          profileImage: providerUser.avatar || null,
-          isVerified: providerUser.isVerified
+          id: safeProvider.id,
+          fullName: safeProvider.fullName,
+          avatar: providerImg,
+          profileImage: providerImg,
+          isVerified: safeProvider.isVerified
         }
       })),
-      reviews: reviews.map(r => ({
-        id: r.id,
-        rating: r.rating,
-        title: r.title || "Excellent Service",
-        comment: r.comment,
-        reply: r.reply || null,
-        createdAt: r.createdAt,
-        customerName: r.customer?.fullName || "Verified Customer",
-        customerAvatar: r.customer?.avatar || null,
-        serviceTitle: r.service?.title || "Service"
-      }))
+      reviews: reviews.map(r => {
+        const custImg = r.customer?.avatar || null;
+        return {
+          id: r.id,
+          rating: r.rating,
+          title: r.title || "Excellent Service",
+          comment: r.comment,
+          reply: r.reply || null,
+          createdAt: r.createdAt,
+          customerName: r.customer?.fullName || "Verified Customer",
+          customerAvatar: custImg,
+          customerProfileImage: custImg,
+          serviceTitle: r.service?.title || "Service"
+        };
+      })
     };
 
     return res.status(200).json({

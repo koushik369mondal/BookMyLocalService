@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { UserAvatar } from "@/components/ui/avatar";
+import { UserAvatar, ProviderAvatar } from "@/components/ui/avatar";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -192,11 +192,11 @@ export default function ProviderProfile() {
                   
                   {/* Avatar with Verification Badge */}
                   <div className="relative">
-                    <UserAvatar
-                      src={provider.profileImage || provider.avatar}
-                      name={provider.fullName}
+                    <ProviderAvatar
+                      provider={provider}
                       className="w-24 h-24 sm:w-28 sm:h-28 border-4 border-[#FAF6F0] shadow-md rounded-full overflow-hidden bg-white shrink-0"
                       fallbackClassName="bg-[#8C4B3E] text-white text-2xl font-black"
+                      size={240}
                     />
                     {provider.isVerified && (
                       <span className="absolute -bottom-1 -right-1 bg-emerald-500 text-white rounded-full p-1.5 shadow-md border-2 border-white" title="Verified Specialist">

@@ -4,9 +4,10 @@ import MainLayout from "../../layouts/MainLayout";
 import { formatPrice } from "@/utils/currency";
 import { servicesService } from "../../services/servicesService";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { ProviderAvatar } from "@/components/ui/avatar";
+import { getProviderImage } from "@/utils/imageUtils";
 import { 
   Check, 
   Calendar, 
@@ -94,9 +95,7 @@ export default function BookingSuccess() {
     ? (service?.provider?.fullName || service?.provider?.name || "Verified Provider")
     : (typeof service?.provider === "string" ? service.provider : (service?.providerName || "Verified Provider"));
 
-  const providerImage = typeof service?.provider === "object"
-    ? (service?.provider?.profileImage || service?.provider?.avatar || service?.providerImage || "")
-    : (service?.providerImage || service?.providerProfileImage || "");
+  const providerImage = getProviderImage(service?.provider || service);
 
   const categoryName = typeof service?.category === "object"
     ? (service?.category?.name || service?.category?.title || "Local Service")
@@ -159,10 +158,12 @@ export default function BookingSuccess() {
                   </div>
                 ) : (
                   <div className="flex items-center gap-4 p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl print:bg-white">
-                    <Avatar className="w-14 h-14 rounded-full overflow-hidden shrink-0 border border-[#E8DCC3] shadow-2xs">
-                      <AvatarImage src={providerImage} className="object-cover" />
-                      <AvatarFallback className="text-lg font-bold bg-[#F0E7D5] text-[#C9A46A]">{providerName?.[0] || "V"}</AvatarFallback>
-                    </Avatar>
+                    <ProviderAvatar
+                      provider={service?.provider || { fullName: providerName, profileImage: providerImage }}
+                      className="w-14 h-14 rounded-full overflow-hidden shrink-0 border border-[#E8DCC3] shadow-2xs"
+                      fallbackClassName="text-lg font-bold bg-[#F0E7D5] text-[#C9A46A]"
+                      size={120}
+                    />
                     <div>
                       <Badge variant="secondary" className="bg-white border-[#E8DCC3] text-[#C9A46A] font-bold rounded-lg text-[9px] uppercase py-0.5 px-2">
                         {categoryName}

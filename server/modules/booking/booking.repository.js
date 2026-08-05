@@ -16,8 +16,8 @@ class BookingRepository {
     return await prisma.booking.findUnique({
       where: { id },
       include: {
-        customer: { select: { id: true, fullName: true, email: true, phone: true, avatar: true } },
-        provider: { select: { id: true, fullName: true, email: true, phone: true, avatar: true } },
+        customer: { select: { id: true, fullName: true, email: true, phone: true, avatar: true, isVerified: true } },
+        provider: { select: { id: true, fullName: true, email: true, phone: true, avatar: true, isVerified: true } },
         service: { select: { id: true, title: true, price: true, priceType: true, category: { select: { id: true, name: true, slug: true, icon: true } }, imageUrl: true, description: true } },
         review: true
       }
@@ -43,8 +43,8 @@ class BookingRepository {
       where,
       orderBy: { createdAt: "desc" },
       include: {
-        customer: { select: { id: true, fullName: true, email: true, avatar: true } },
-        provider: { select: { id: true, fullName: true, email: true, avatar: true } },
+        customer: { select: { id: true, fullName: true, email: true, avatar: true, isVerified: true } },
+        provider: { select: { id: true, fullName: true, email: true, avatar: true, isVerified: true } },
         service: { select: { id: true, title: true, category: { select: { id: true, name: true, slug: true, icon: true } }, price: true, imageUrl: true } },
         review: true
       }

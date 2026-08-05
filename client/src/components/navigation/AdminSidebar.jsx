@@ -4,6 +4,7 @@ import { LogOut } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { adminMenu } from "../../config/navigationConfig";
 import { getUserInitials } from "@/lib/utils";
+import { getProviderImage } from "@/utils/imageUtils";
 
 export default function AdminSidebar({ collapsed, onNavigate }) {
   const { logout, user } = useAuth();
@@ -39,8 +40,8 @@ export default function AdminSidebar({ collapsed, onNavigate }) {
         collapsed ? "p-3 flex justify-center" : "p-3.5 flex items-center gap-3"
       }`}>
         <div className="h-9 w-9 rounded-full overflow-hidden border border-[#E8DCC3] shadow-2xs bg-[#8C4B3E] text-white flex items-center justify-center font-extrabold text-xs shrink-0">
-          {user?.avatar ? (
-            <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
+          {user?.avatar || user?.profileImage ? (
+            <img src={getProviderImage(user, { width: 80, height: 80 })} alt={user.fullName} className="h-full w-full object-cover" />
           ) : (
             <span>{initials}</span>
           )}

@@ -10,10 +10,9 @@ import {
   ArrowRight
 } from "lucide-react";
 import { prefersReducedMotion } from "@/utils/motion";
-import { UserAvatar } from "@/components/ui/avatar";
+import { ProviderAvatar } from "@/components/ui/avatar";
 import { formatPrice } from "@/utils/currency";
-import { getOptimizedImageUrl } from "@/utils/imageUtils";
-import { ServiceImagePlaceholder } from "@/components/ui/ServiceImagePlaceholder";
+import { ServiceImage } from "@/components/ui/ServiceImage";
 
 export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   if (!service) return null;
@@ -22,8 +21,6 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   const title = service.title || service.name || "Local Service";
   const category = typeof service.category === "object" ? (service.category?.name || "Service") : (service.category || "Service");
   const providerName = service.providerName || service.provider?.fullName || service.provider?.name || "Verified Provider";
-  const rawProviderAvatar = service.providerProfileImage || service.providerImage || service.provider?.profileImage || service.provider?.avatar || service.avatar || "";
-  const providerAvatar = getOptimizedImageUrl(rawProviderAvatar, { width: 100, height: 100 });
   const providerId = service.providerId || service.provider?.id;
 
   const location = service.location || "Local Area";
@@ -36,8 +33,6 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
     priceType = `/${priceType}`;
   }
 
-  const rawImage = service.image || service.imageUrl;
-  const image = getOptimizedImageUrl(rawImage, { width: 600, height: 350 });
   const description = service.description || "Professional and reliable local service provider ready to assist with your needs.";
   const badge = service.badge;
 
@@ -45,8 +40,8 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
 
   const providerSnippet = (
     <>
-      <UserAvatar
-        src={providerAvatar}
+      <ProviderAvatar
+        provider={service.provider || service}
         name={providerName}
         className="h-6 w-6 rounded-full border border-[#E8DCC3] shrink-0"
       />
@@ -64,25 +59,23 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
       
       {/* Image Thumbnail Header */}
       <div className="relative aspect-16/9 w-full overflow-hidden bg-[#F0E7D5] shrink-0 border-b border-[#E8DCC3]">
-        {image ? (
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-103"
-          />
-        ) : (
-          <ServiceImagePlaceholder title={title} />
-        )}
+        <ServiceImage
+          service={service}
+          alt={title}
+          width={600}
+          height={350}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-103"
+        />
 
         {/* Primary Badge */}
         {badge && (
-          <span className="absolute top-3 left-3 bg-[#C9A46A] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-lg border border-[#E8DCC3] uppercase tracking-wider shadow-2xs">
+          <span className="absolute top-3 left-3 z-10 bg-[#C9A46A] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-lg border border-[#E8DCC3] uppercase tracking-wider shadow-2xs">
             {badge}
           </span>
         )}
 
         {/* Category Overlay */}
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-3 right-3 z-10">
           <span className="bg-[#FAF6F0] text-[#1F1D1A] border border-[#E8DCC3] text-[10px] font-bold px-2.5 py-0.5 rounded-lg uppercase tracking-wider">
             {category}
           </span>
@@ -103,84 +96,86 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
         </p>
 
         {/* Metadata Bar (Location & Rating) */}
-        <div className="flex items-center justify-between gap-2 text-xs text-[#7A7266] mt-0.5">
-          <div className="flex items-center gap-1.5 truncate font-medium text-[#7A7266]">
-            <MapPin className="h-3.5 w-3.5 text-[#8C4B3E] shrink-0" />
+        <div className="flex items-center justify-between gap-2 text-xs border-y border-[#E8DCC3] py-2 my-0.5 font-medium text-[#7A7266]">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <MapPin className="h-3.5 w-3.5 text-[#C9A46A] shrink-0" />
             <span className="truncate">{location}</span>
           </div>
 
-          <div className="flex items-center gap-1 bg-[#F0E7D5] border border-[#E8DCC3] text-[#1F1D1A] px-2 py-0.5 rounded-md shrink-0">
+          <div className="flex items-center gap-1 shrink-0 bg-[#FAF6F0] px-2 py-0.5 rounded-md border border-[#E8DCC3]">
             <Star className="h-3.5 w-3.5 fill-[#C9A46A] text-[#C9A46A]" />
-            <span className="font-bold text-xs">{rating}</span>
+            <span className="font-bold text-[#1F1D1A]">{rating}</span>
             {reviewsCount > 0 && (
-              <span className="text-[10px] text-[#7A7266] font-medium">({reviewsCount})</span>
+              <span className="text-[11px] text-[#7A7266]">({reviewsCount})</span>
             )}
           </div>
         </div>
 
-        {/* Provider Profile Snippet & Verified Badge */}
-        {providerId ? (
-          <NavLink
-            to={`/providers/${providerId}`}
-            className="group/provider flex items-center gap-2 pt-2.5 border-t border-[#E8DCC3] mt-1 hover:opacity-90 transition-opacity"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {providerSnippet}
-          </NavLink>
-        ) : (
-          <div className="flex items-center gap-2 pt-2.5 border-t border-[#E8DCC3] mt-1">
-            {providerSnippet}
-          </div>
-        )}
+        {/* Provider Profile Info Header */}
+        <div className="pt-0.5">
+          {providerId ? (
+            <NavLink
+              to={`/providers/${providerId}`}
+              className="inline-flex items-center gap-2 max-w-full p-1.5 -ml-1.5 rounded-lg hover:bg-[#FAF6F0] transition-colors group/provider"
+              title={`View ${providerName}'s full profile`}
+            >
+              {providerSnippet}
+            </NavLink>
+          ) : (
+            <div className="flex items-center gap-2 max-w-full p-1.5 -ml-1.5">
+              {providerSnippet}
+            </div>
+          )}
+        </div>
 
-        {/* Price & CTA Button Footer */}
-        <div className="border-t border-[#E8DCC3] pt-3.5 mt-auto flex items-center justify-between gap-3">
-          <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider">Price</span>
-            <span className="text-lg font-bold text-[#1F1D1A]">
-              {formatPrice(price, { priceType })}
-            </span>
+        {/* Pricing & Call to Action Footer */}
+        <div className="flex items-center justify-between gap-3 pt-2 mt-auto border-t border-[#E8DCC3]">
+          <div>
+            <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Starts at</span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-lg font-black text-[#1F1D1A] tracking-tight">{formatPrice(price, { decimals: true })}</span>
+              <span className="text-[11px] text-[#7A7266] font-medium">{priceType}</span>
+            </div>
           </div>
 
           <NavLink to={destination} className="shrink-0">
-            <Button className="h-[38px] px-4 bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold rounded-xl text-xs border border-[#E8DCC3] shadow-2xs flex items-center gap-1.5">
-              <span>{ctaText}</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 duration-200" />
+            <Button 
+              size="sm"
+              className="bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs px-4 h-9 rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+            >
+              {ctaText}
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </NavLink>
         </div>
 
       </div>
+
     </motion.div>
   );
 }
 
 export function ServiceCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-[#E8DCC3] bg-white flex flex-col h-full shadow-2xs">
-      <Skeleton className="aspect-16/9 w-full rounded-t-2xl rounded-b-none bg-[#F0E7D5]" />
-      <div className="p-5 flex flex-col gap-3 flex-1">
-        <Skeleton className="h-5 w-3/4 rounded-md bg-[#F0E7D5]" />
-        <Skeleton className="h-4 w-full rounded-md bg-[#F0E7D5]" />
-        <Skeleton className="h-4 w-5/6 rounded-md bg-[#F0E7D5]" />
-        <div className="flex items-center justify-between gap-2 pt-1">
-          <Skeleton className="h-4 w-24 rounded-md bg-[#F0E7D5]" />
-          <Skeleton className="h-5 w-14 rounded-md bg-[#F0E7D5]" />
+    <div className="rounded-2xl border border-[#E8DCC3] bg-white overflow-hidden flex flex-col h-full shadow-2xs">
+      <Skeleton className="aspect-16/9 w-full bg-[#FAF6F0]" />
+      <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+        <div className="space-y-2">
+          <Skeleton className="h-5 w-3/4 bg-[#FAF6F0]" />
+          <Skeleton className="h-3 w-full bg-[#FAF6F0]" />
+          <Skeleton className="h-3 w-2/3 bg-[#FAF6F0]" />
         </div>
-        <div className="flex items-center gap-2 pt-2 border-t border-[#E8DCC3]">
-          <Skeleton className="h-6 w-6 rounded-full bg-[#F0E7D5]" />
-          <Skeleton className="h-4 w-28 rounded-md bg-[#F0E7D5]" />
-        </div>
-        <div className="border-t border-[#E8DCC3] pt-3.5 mt-auto flex items-center justify-between gap-3">
-          <div className="space-y-1">
-            <Skeleton className="h-3 w-10 rounded-md bg-[#F0E7D5]" />
-            <Skeleton className="h-6 w-16 rounded-md bg-[#F0E7D5]" />
+        <div className="space-y-3 pt-4 border-t border-[#E8DCC3]">
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-4 w-1/3 bg-[#FAF6F0]" />
+            <Skeleton className="h-4 w-1/4 bg-[#FAF6F0]" />
           </div>
-          <Skeleton className="h-[38px] w-24 rounded-xl bg-[#F0E7D5]" />
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-6 w-1/3 bg-[#FAF6F0]" />
+            <Skeleton className="h-9 w-24 bg-[#FAF6F0] rounded-xl" />
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
-export default ServiceCard;

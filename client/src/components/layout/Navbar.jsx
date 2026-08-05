@@ -23,6 +23,7 @@ import {
   Loader2
 } from "lucide-react";
 import { cn, getUserInitials } from "@/lib/utils";
+import { getProviderImage } from "@/utils/imageUtils";
 import { useAuth } from "../../context/AuthContext";
 
 const mockNotifications = [];
@@ -300,8 +301,8 @@ export default function Navbar() {
                   className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-[#F0E7D5] focus:outline-none transition-all duration-200 border border-transparent hover:border-[#E8DCC3] cursor-pointer"
                 >
                   <div className="h-9 w-9 lg:h-10 lg:w-10 rounded-xl overflow-hidden border border-[#E8DCC3] bg-[#F0E7D5] flex items-center justify-center font-bold text-xs lg:text-sm text-[#C9A46A] shadow-2xs shrink-0">
-                    {user.avatar ? (
-                      <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
+                    {user.avatar || user.profileImage ? (
+                      <img src={getProviderImage(user, { width: 80, height: 80 })} alt={user.fullName} className="h-full w-full object-cover" />
                     ) : (
                       getUserInitials(user.fullName)
                     )}
@@ -498,8 +499,8 @@ export default function Navbar() {
                       <>
                         <div className="flex items-center gap-3 p-3 bg-[#F0E7D5] border border-[#E8DCC3] rounded-2xl">
                           <div className="h-10 w-10 rounded-xl overflow-hidden border border-[#E8DCC3] bg-white flex items-center justify-center font-bold text-sm text-[#C9A46A] shrink-0">
-                            {user.avatar ? (
-                              <img src={user.avatar} alt={user.fullName} className="h-full w-full object-cover" />
+                            {user.avatar || user.profileImage ? (
+                              <img src={getProviderImage(user, { width: 80, height: 80 })} alt={user.fullName} className="h-full w-full object-cover" />
                             ) : (
                               getUserInitials(user.fullName)
                             )}

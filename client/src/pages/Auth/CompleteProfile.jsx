@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Logo from "@/components/ui/logo";
 import { getUserInitials } from "@/lib/utils";
+import { UserAvatar } from "@/components/ui/avatar";
 import {
   Phone,
   ArrowRight,
@@ -86,13 +87,12 @@ export default function CompleteProfile() {
 
           {/* User Info Avatar Preview */}
           <div className="flex items-center gap-3 p-3.5 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl mb-6">
-            {user?.avatar ? (
-              <img src={user.avatar} alt="Google Avatar" className="w-11 h-11 rounded-full object-cover border border-[#8C4B3E]/30" />
-            ) : (
-              <div className="w-11 h-11 rounded-full bg-[#8C4B3E] text-white font-extrabold flex items-center justify-center text-sm">
-                {getUserInitials(user?.fullName)}
-              </div>
-            )}
+            <UserAvatar
+              user={user}
+              className="w-11 h-11 border border-[#8C4B3E]/30"
+              fallbackClassName="bg-[#8C4B3E] text-white font-extrabold text-sm"
+              size={88}
+            />
             <div>
               <div className="text-xs font-extrabold text-[#1F1D1A]">{user?.fullName || "User"}</div>
               <div className="text-[11px] text-[#5A5146] font-medium">{user?.email}</div>

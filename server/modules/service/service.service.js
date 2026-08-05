@@ -1,6 +1,7 @@
 const serviceRepository = require("./service.repository");
 const prisma = require("../../config/prisma");
 const cloudinary = require("../../config/cloudinary");
+const { extractCloudinaryPublicId } = require("../../utils/cloudinary.util");
 
 const generateSlug = (title) => {
   return title
@@ -11,26 +12,22 @@ const generateSlug = (title) => {
     .replace(/^-+|-+$/g, "");
 };
 
-const extractCloudinaryPublicId = (url) => {
-  if (!url || typeof url !== "string" || !url.includes("cloudinary.com")) return null;
-  try {
-    const parts = url.split("/upload/");
-    if (parts.length < 2) return null;
-    const pathAfterUpload = parts[1].replace(/^v\d+\//, "");
-    const publicIdWithExt = pathAfterUpload.split(".")[0];
-    return publicIdWithExt || null;
-  } catch (e) {
-    return null;
-  }
-};
-
 const formatServiceResponse = (service) => {
   if (!service) return service;
   if (Array.isArray(service)) {
     return service.map(formatServiceResponse);
   }
+
+  const serviceImg = service.imageUrl || service.image || service.category?.imageUrl || "";
+  service.imageUrl = serviceImg;
+  service.image = serviceImg;
+
   if (service.provider) {
-    service.provider.profileImage = service.provider.avatar || service.provider.profileImage || null;
+    const provImg = service.provider.profileImage || service.provider.avatar || null;
+    service.provider.profileImage = provImg;
+    service.provider.avatar = provImg;
+    service.providerProfileImage = provImg;
+    service.providerImage = provImg;
   }
   return service;
 };

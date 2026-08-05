@@ -39,6 +39,7 @@ class DashboardRepository {
                 email: true,
                 role: true,
                 avatar: true,
+                isVerified: true,
                 createdAt: true
             }
         });
@@ -49,12 +50,13 @@ class DashboardRepository {
             orderBy: { createdAt: "desc" },
             take: limit,
             include: {
-                customer: { select: { id: true, fullName: true, email: true, avatar: true } },
-                provider: { select: { id: true, fullName: true, email: true } },
+                customer: { select: { id: true, fullName: true, email: true, avatar: true, isVerified: true } },
+                provider: { select: { id: true, fullName: true, email: true, avatar: true, isVerified: true } },
                 service: {
                     select: {
                         id: true,
                         title: true,
+                        imageUrl: true,
                         category: { select: { id: true, name: true, slug: true } }
                     }
                 }
@@ -130,7 +132,7 @@ class DashboardRepository {
             orderBy: { createdAt: "desc" },
             take: 5,
             include: {
-                customer: { select: { id: true, fullName: true, email: true, phone: true, avatar: true } },
+                customer: { select: { id: true, fullName: true, email: true, phone: true, avatar: true, isVerified: true } },
                 service: {
                     select: {
                         id: true,
@@ -194,7 +196,7 @@ class DashboardRepository {
             orderBy: { createdAt: "desc" },
             take: 5,
             include: {
-                provider: { select: { id: true, fullName: true, email: true, phone: true, avatar: true } },
+                provider: { select: { id: true, fullName: true, email: true, phone: true, avatar: true, isVerified: true } },
                 service: {
                     select: {
                         id: true,

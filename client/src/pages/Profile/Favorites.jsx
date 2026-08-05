@@ -1,7 +1,7 @@
 import React from "react";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ProviderAvatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Trash2, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -39,10 +39,11 @@ export default function Favorites() {
                 {mockFavorites.map((provider) => (
                   <div key={provider.id} className="border border-[#5A5146]/20 p-5 rounded-2xl bg-white relative flex flex-col justify-between hover:border-stone-300 hover:shadow-sm transition-all duration-300">
                     <div className="flex items-start gap-4">
-                      <Avatar className="w-14 h-14 border border-[#5A5146]/15 shadow-xs">
-                        <AvatarImage src={provider.avatar} className="object-cover" />
-                        <AvatarFallback>{provider.name[0]}</AvatarFallback>
-                      </Avatar>
+                      <ProviderAvatar
+                        provider={provider}
+                        className="w-14 h-14 border border-[#5A5146]/15 shadow-xs"
+                        size={120}
+                      />
                       <div className="space-y-1">
                         <h4 className="font-extrabold text-sm text-[#1F1D1A]">{provider.name}</h4>
                         <span className="inline-block text-[10px] font-bold text-[#1F1D1A] bg-[#8C4B3E]/5 px-2 py-0.5 rounded-lg">

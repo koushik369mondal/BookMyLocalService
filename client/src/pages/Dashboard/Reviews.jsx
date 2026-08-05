@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback, UserAvatar } from "@/components/ui/avatar";
 import { 
   Star, 
   MessageSquare, 
@@ -252,12 +252,12 @@ export default function Reviews() {
                     <div key={rev.id} className="p-5 border border-[#E8DCC3] rounded-2xl bg-[#FAF6F0]/40 space-y-4 shadow-2xs">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          <Avatar className="h-10 w-10 border border-[#E8DCC3]">
-                            <AvatarImage src={rev.avatar} alt={rev.name} />
-                            <AvatarFallback className="bg-[#F0E7D5] text-[#1F1D1A] font-bold text-xs">
-                              {rev.name ? rev.name.slice(0, 2).toUpperCase() : "CU"}
-                            </AvatarFallback>
-                          </Avatar>
+                          <UserAvatar
+                            user={{ fullName: rev.name, avatar: rev.avatar, profileImage: rev.profileImage }}
+                            className="h-10 w-10 border border-[#E8DCC3]"
+                            fallbackClassName="bg-[#F0E7D5] text-[#1F1D1A] font-bold text-xs"
+                            size={80}
+                          />
                           <div>
                             <h4 className="text-xs font-bold text-[#1F1D1A]">{rev.name}</h4>
                             <span className="text-[10px] text-[#7A7266] font-medium block">Service: {rev.serviceName}</span>

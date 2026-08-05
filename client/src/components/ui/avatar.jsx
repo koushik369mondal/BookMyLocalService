@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { cn, getUserInitials } from '@/lib/utils';
-import { getOptimizedImageUrl } from '@/utils/imageUtils';
+import { getOptimizedImageUrl, getProviderImage } from '@/utils/imageUtils';
+import { ProviderAvatar } from "@/components/common/ProviderAvatar";
 
 function Avatar({ className, ...props }) {
   return (
@@ -51,4 +52,4 @@ function UserAvatar({ user, src, name, className, fallbackClassName, imageClassN
   );
 }
 
-export { Avatar, AvatarImage, AvatarFallback, UserAvatar };
+export { Avatar, AvatarImage, AvatarFallback, UserAvatar, ProviderAvatar };

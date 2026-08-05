@@ -41,7 +41,6 @@ export function useServices() {
         const response = await servicesService.getServices();
         if (response.success) {
           const mappedData = response.data.map(service => {
-            const providerAvatar = service.provider?.avatar || service.provider?.profileImage || "";
             return {
               id: service.id,
               name: service.title,
@@ -50,15 +49,11 @@ export function useServices() {
               categoryId: typeof service.category === "object" ? service.category?.id : service.categoryId,
               categorySlug: typeof service.category === "object" ? service.category?.slug : "",
               providerName: service.provider?.fullName || "Verified Provider",
-              providerImage: providerAvatar,
-              providerProfileImage: providerAvatar,
-              avatar: providerAvatar,
               location: service.location,
               rating: service.rating,
               reviewsCount: service.reviewCount,
               price: service.price,
               priceType: service.priceType,
-              image: service.imageUrl,
               imageUrl: service.imageUrl,
               description: service.description,
               availability: service.availability,
@@ -66,11 +61,7 @@ export function useServices() {
               dateAdded: service.createdAt,
               badge: service.badge,
               slug: service.slug,
-              provider: {
-                ...service.provider,
-                avatar: providerAvatar,
-                profileImage: providerAvatar
-              }
+              provider: service.provider
             };
           });
           setServices(mappedData);

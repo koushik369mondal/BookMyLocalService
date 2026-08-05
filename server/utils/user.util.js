@@ -25,9 +25,11 @@ const userSelect = {
 const toSafeUser = (user) => {
     if (!user) return null;
     const { password, otpHash, otpExpiresAt, otpAttempts, ...safeUser } = user;
+    const imgUrl = safeUser.avatar || safeUser.profileImage || null;
     return {
         ...safeUser,
-        profileImage: safeUser.avatar || safeUser.profileImage || null
+        avatar: imgUrl,
+        profileImage: imgUrl
     };
 };
 
