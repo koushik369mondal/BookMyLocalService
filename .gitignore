@@ -81,3 +81,5 @@ temp/
 # Scripts folder
 backend/scripts/
 scripts/
+!server/scripts/
+

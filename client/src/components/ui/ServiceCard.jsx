@@ -12,7 +12,7 @@ import {
 import { prefersReducedMotion } from "@/utils/motion";
 import { ProviderAvatar } from "@/components/ui/avatar";
 import { formatPrice } from "@/utils/currency";
-import { ServiceImage } from "@/components/ui/ServiceImage";
+import { ServiceImage } from "@/components/common/ServiceImage";
 
 export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
   if (!service) return null;

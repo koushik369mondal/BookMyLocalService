@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { ServiceImage } from "@/components/ui/ServiceImage";
+import { ServiceImage } from "@/components/common/ServiceImage";
 import {
   Dialog,
   DialogContent,
