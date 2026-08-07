@@ -166,7 +166,7 @@ const getPublicProviderProfile = async (req, res) => {
         return {
           id: r.id,
           rating: r.rating,
-          title: r.title || "Excellent Service",
+          title: r.title || "",
           comment: r.comment,
           reply: r.reply || null,
           createdAt: r.createdAt,

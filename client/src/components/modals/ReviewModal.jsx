@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Star, Loader2, ShieldAlert } from "lucide-react";
+import { Star, Loader2, ShieldAlert, CornerDownRight } from "lucide-react";
 import { reviewsService } from "@/services/reviewsService";
 
 const ratingLabels = {
@@ -23,6 +23,9 @@ const ratingLabels = {
 };
 
 export default function ReviewModal({ isOpen, onClose, booking, onSuccess }) {
+  const existingReview = booking?.review;
+  const isEdit = Boolean(existingReview);
+
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   const [title, setTitle] = useState("");
@@ -32,13 +35,20 @@ export default function ReviewModal({ isOpen, onClose, booking, onSuccess }) {
 
   useEffect(() => {
     if (isOpen) {
-      setRating(5);
-      setHoverRating(0);
-      setTitle("");
-      setComment("");
+      if (existingReview) {
+        setRating(existingReview.rating || 5);
+        setHoverRating(0);
+        setTitle(existingReview.title || "");
+        setComment(existingReview.comment || "");
+      } else {
+        setRating(5);
+        setHoverRating(0);
+        setTitle("");
+        setComment("");
+      }
       setError("");
     }
-  }, [isOpen]);
+  }, [isOpen, existingReview]);
 
   if (!booking) return null;
 
@@ -53,22 +63,31 @@ export default function ReviewModal({ isOpen, onClose, booking, onSuccess }) {
     setError("");
 
     try {
-      const response = await reviewsService.createReview({
-        bookingId: booking.id,
-        rating,
-        title: title.trim(),
-        comment: comment.trim()
-      });
+      let response;
+      if (isEdit && existingReview?.id) {
+        response = await reviewsService.updateReview(existingReview.id, {
+          rating,
+          title: title.trim(),
+          comment: comment.trim()
+        });
+      } else {
+        response = await reviewsService.createReview({
+          bookingId: booking.id,
+          rating,
+          title: title.trim(),
+          comment: comment.trim()
+        });
+      }
 
       if (response.success) {
         if (onSuccess) onSuccess(response.data);
         onClose();
       } else {
-        setError(response.message || "Failed to submit review.");
+        setError(response.message || `Failed to ${isEdit ? "update" : "submit"} review.`);
       }
     } catch (err) {
       console.error("Submit review error:", err);
-      setError(err.message || "Failed to submit review. Please try again.");
+      setError(err.message || `Failed to ${isEdit ? "update" : "submit"} review. Please try again.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -81,10 +100,11 @@ export default function ReviewModal({ isOpen, onClose, booking, onSuccess }) {
       <DialogContent className="sm:max-w-md bg-white border border-[#E8DCC3] rounded-3xl p-6 shadow-xl font-sans">
         <DialogHeader className="space-y-1.5 text-left">
           <DialogTitle className="text-xl font-black text-[#1F1D1A]">
-            Write a Review
+            {isEdit ? "View & Edit Your Review" : "Write a Review"}
           </DialogTitle>
           <DialogDescription className="text-xs text-[#5A5146]">
-            Share your experience for <strong>{booking.service?.title || "Booked Service"}</strong> with <strong>{booking.provider?.fullName || "Provider"}</strong>.
+            {isEdit ? "Update your feedback for " : "Share your experience for "}
+            <strong>{booking.service?.title || "Booked Service"}</strong> with <strong>{booking.provider?.fullName || "Provider"}</strong>.
           </DialogDescription>
         </DialogHeader>
 
@@ -157,6 +177,16 @@ export default function ReviewModal({ isOpen, onClose, booking, onSuccess }) {
             />
           </div>
 
+          {/* PROVIDER OFFICIAL RESPONSE (If available) */}
+          {existingReview?.reply && (
+            <div className="p-3 bg-[#F0E7D5]/40 border border-[#E8DCC3] rounded-2xl space-y-1">
+              <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#C9A46A] uppercase">
+                <CornerDownRight className="h-3 w-3" /> Official Provider Response
+              </div>
+              <p className="text-xs font-medium text-[#5A5146] italic">"{existingReview.reply}"</p>
+            </div>
+          )}
+
           <DialogFooter className="gap-2 sm:gap-0 pt-2">
             <Button
               type="button"
@@ -174,10 +204,10 @@ export default function ReviewModal({ isOpen, onClose, booking, onSuccess }) {
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin" /> Submitting...
+                  <Loader2 className="h-4 w-4 animate-spin" /> {isEdit ? "Updating..." : "Submitting..."}
                 </>
               ) : (
-                "Submit Review"
+                isEdit ? "Update Review" : "Submit Review"
               )}
             </Button>
           </DialogFooter>

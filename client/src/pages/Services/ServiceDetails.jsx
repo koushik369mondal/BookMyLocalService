@@ -147,7 +147,7 @@ const buildServiceDetails = (service, dbReviews = [], dbAvgRating, dbTotalReview
     name: r.customerName || r.customer?.fullName || "Verified Customer",
     avatar: r.customerAvatar || r.customer?.avatar || "",
     rating: r.rating,
-    title: r.title || "Great Service",
+    title: r.title || "",
     date: r.createdAt ? new Date(r.createdAt).toISOString().split("T")[0] : "Recent",
     comment: r.comment,
     reply: r.reply || null

@@ -65,26 +65,3 @@ export const features = [
   }
 ];
 
-export const testimonials = [
-  {
-    quote: "BookMyLocalService has completely changed how I manage household services in Kolkata. I booked deep cleaning, and the team was punctual, thorough, and polite!",
-    author: "Ananya Sen",
-    role: "Homeowner, Kolkata",
-    avatar: "",
-    rating: 5
-  },
-  {
-    quote: "Finding an electrician in Delhi used to take hours of searching. Here, I booked an expert in 2 minutes and got our AC circuit issue fixed on the same day.",
-    author: "Rahul Chatterjee",
-    role: "Apartment Owner, Delhi NCR",
-    avatar: "",
-    rating: 5
-  },
-  {
-    quote: "As a local service provider in Bengaluru, this platform has helped me build a steady stream of satisfied local customers with transparent UPI payouts.",
-    author: "Deepak Kumar",
-    role: "Garden & Lawn Care Owner",
-    avatar: "",
-    rating: 5
-  }
-];

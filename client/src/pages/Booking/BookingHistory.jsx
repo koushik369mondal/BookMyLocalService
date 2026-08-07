@@ -253,6 +253,8 @@ export default function BookingHistory() {
                         bookingId={b.id}
                         serviceId={b.serviceId || b.service?.id}
                         providerPhone={typeof b.provider === "object" ? b.provider?.phone : null}
+                        reviewStatus={b.reviewStatus}
+                        hasReview={Boolean(b.review)}
                         onCancel={(id) => setConfirmCancelId(id)}
                         onReview={() => setReviewBooking(b)}
                         onToggleDetails={() => toggleDetails(b.id)}

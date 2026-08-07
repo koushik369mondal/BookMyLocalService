@@ -101,6 +101,11 @@ model Service {
   reviews      Review[]
 }
 
+enum ReviewStatus {
+  NOT_REVIEWED
+  REVIEWED
+}
+
 model Booking {
   id            String        @id @default(cuid())
   customerId    String
@@ -126,6 +131,8 @@ model Booking {
   paidAt        DateTime?
   collectedById String?
   collectedBy   User?         @relation("CollectedPayments", fields: [collectedById], references: [id], onDelete: SetNull)
+
+  reviewStatus  ReviewStatus  @default(NOT_REVIEWED)
 
   status        String        @default("pending")
   

@@ -17,12 +17,15 @@ export default function BookingActionButtons({
   bookingId, 
   serviceId, 
   providerPhone,
+  reviewStatus,
+  hasReview,
   onCancel, 
   onReview, 
   onToggleDetails, 
   isExpanded 
 }) {
   const s = (status || "pending").toLowerCase();
+  const isReviewed = reviewStatus === "REVIEWED" || hasReview;
 
   const handlePrintInvoice = () => {
     window.print();
@@ -124,10 +127,12 @@ export default function BookingActionButtons({
           <Button
             size="sm"
             onClick={onReview}
-            className="bg-amber-500 hover:bg-amber-600 text-white text-xs font-extrabold rounded-xl h-9 px-3.5 flex items-center gap-1.5 shadow-2xs cursor-pointer"
+            className={`${
+              isReviewed ? "bg-[#C9A46A] hover:bg-[#b89359]" : "bg-amber-500 hover:bg-amber-600"
+            } text-white text-xs font-extrabold rounded-xl h-9 px-3.5 flex items-center gap-1.5 shadow-2xs cursor-pointer`}
           >
             <Star className="h-3.5 w-3.5 fill-white text-white" />
-            Rate & Review
+            {isReviewed ? "View/Edit Review" : "Leave Review"}
           </Button>
 
           <Button
