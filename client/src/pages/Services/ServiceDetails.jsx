@@ -180,6 +180,8 @@ const buildServiceDetails = (service, dbReviews = [], dbAvgRating, dbTotalReview
   };
 };
 
+import ReviewCard from "@/components/reviews/ReviewCard";
+
 export default function ServiceDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -752,40 +754,11 @@ export default function ServiceDetails() {
                   ) : (
                     <div className="space-y-6">
                       {filteredReviews.map((rev) => (
-                        <div key={rev.id} className="border-b border-stone-50 pb-6 last:border-0 last:pb-0">
-                          <div className="flex items-start justify-between flex-wrap gap-2 mb-2">
-                            <div className="flex items-center gap-3">
-                              <Avatar className="h-10 w-10 border border-[#5A5146]/15 bg-[#8C4B3E]/5 text-[#1F1D1A]">
-                                {rev.avatar && <AvatarImage src={getProviderImage(rev.avatar)} className="object-cover" />}
-                                <AvatarFallback className="font-bold text-xs">{rev.name[0]}</AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <span className="block text-sm font-bold text-[#1F1D1A]">{rev.name}</span>
-                                <span className="text-[10px] text-[#7A7266] font-semibold">{rev.date}</span>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center gap-0.5 bg-amber-50 border border-amber-100/50 py-0.5 px-2 rounded-full">
-                              <Star className="h-3 w-3 fill-amber-400 text-[#8C4B3E]" />
-                              <span className="text-xs font-extrabold text-amber-700">{rev.rating}.0</span>
-                            </div>
-                          </div>
-
-                          {rev.title && (
-                            <h4 className="text-xs font-extrabold text-[#1F1D1A] mb-1">{rev.title}</h4>
-                          )}
-
-                          <p className="text-[#5A5146] text-sm leading-relaxed mb-2">
-                            {rev.comment}
-                          </p>
-
-                          {rev.reply && (
-                            <div className="mt-2.5 p-3 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]/80 text-xs text-[#5A5146]">
-                              <span className="font-bold text-[#8C4B3E] block mb-0.5">Response from Provider:</span>
-                              <p>{rev.reply}</p>
-                            </div>
-                          )}
-                        </div>
+                        <ReviewCard
+                          key={rev.id}
+                          review={rev}
+                          providerName={service.provider?.fullName}
+                        />
                       ))}
                     </div>
                   )}

@@ -287,7 +287,9 @@ const getServiceReviews = async (req, res) => {
       rating: r.rating,
       title: r.title || "",
       comment: r.comment || "",
-      reply: r.reply || null,
+      reply: r.providerReply || r.reply || null,
+      providerReply: r.providerReply || r.reply || null,
+      providerReplyAt: r.providerReplyAt ? new Date(r.providerReplyAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : null,
       date: r.createdAt ? new Date(r.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : new Date().toLocaleDateString()
     }));
 
@@ -331,10 +333,17 @@ const getFeaturedTestimonials = async (req, res) => {
     const testimonials = reviews.map(r => ({
       id: r.id,
       quote: r.comment,
+      title: r.title || "",
+      comment: r.comment,
       author: r.customer?.fullName || "Verified Neighbor",
+      name: r.customer?.fullName || "Verified Neighbor",
       role: r.service?.title ? `Customer (${r.service.title})` : (r.customer?.city || "Local Customer"),
       avatar: r.customer?.avatar || "",
-      rating: Math.round(r.rating)
+      rating: Math.round(r.rating),
+      providerReply: r.providerReply || r.reply || null,
+      providerReplyAt: r.providerReplyAt ? new Date(r.providerReplyAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : null,
+      reply: r.providerReply || r.reply || null,
+      date: r.createdAt ? new Date(r.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : new Date().toLocaleDateString()
     }));
 
     return res.status(200).json({
@@ -353,7 +362,7 @@ const getFeaturedTestimonials = async (req, res) => {
 /**
  * @desc    Reply to a review (Provider or Admin)
  * @route   PATCH /api/reviews/:id/reply
- * @access  Private (Provider / Admin)
+ * @access  Private (Provider/Admin)
  */
 const replyToReview = async (req, res) => {
   try {
@@ -393,7 +402,11 @@ const replyToReview = async (req, res) => {
 
     const updatedReview = await prisma.review.update({
       where: { id },
-      data: { reply: reply.trim() }
+      data: {
+        providerReply: reply.trim(),
+        providerReplyAt: new Date(),
+        reply: reply.trim()
+      }
     });
 
     return res.status(200).json({

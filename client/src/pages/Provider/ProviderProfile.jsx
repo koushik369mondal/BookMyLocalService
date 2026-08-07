@@ -41,6 +41,8 @@ import {
 import { providerService } from "@/services/providerService";
 import NotFound from "@/pages/NotFound/NotFound";
 
+import ReviewCard from "@/components/reviews/ReviewCard";
+
 export default function ProviderProfile() {
   const { providerId } = useParams();
   const navigate = useNavigate();
@@ -410,41 +412,11 @@ export default function ProviderProfile() {
                   ) : (
                     <div className="space-y-6">
                       {filteredReviews.map((rev) => (
-                        <div key={rev.id} className="border-b border-[#E8DCC3] pb-6 last:border-0 last:pb-0 space-y-2">
-                          <div className="flex items-start justify-between flex-wrap gap-2">
-                            <div className="flex items-center gap-3">
-                              <UserAvatar
-                                src={rev.customerAvatar}
-                                name={rev.customerName}
-                                className="h-10 w-10 border border-[#E8DCC3]"
-                              />
-                              <div>
-                                <span className="block text-sm font-bold text-[#1F1D1A]">{rev.customerName}</span>
-                                <span className="text-[10px] text-[#7A7266] font-semibold">{rev.serviceTitle}</span>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center gap-1 bg-[#F0E7D5] border border-[#E8DCC3] text-[#1F1D1A] px-2 py-0.5 rounded-md shrink-0">
-                              <Star className="h-3.5 w-3.5 fill-[#C9A46A] text-[#C9A46A]" />
-                              <span className="font-bold text-xs">{rev.rating}.0</span>
-                            </div>
-                          </div>
-
-                          {rev.title && (
-                            <h4 className="text-xs font-extrabold text-[#1F1D1A]">{rev.title}</h4>
-                          )}
-
-                          <p className="text-[#5A5146] text-sm leading-relaxed">
-                            {rev.comment}
-                          </p>
-
-                          {rev.reply && (
-                            <div className="mt-2.5 p-3 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3] text-xs text-[#5A5146]">
-                              <span className="font-bold text-[#8C4B3E] block mb-0.5">Response from {provider.fullName}:</span>
-                              <p>{rev.reply}</p>
-                            </div>
-                          )}
-                        </div>
+                        <ReviewCard
+                          key={rev.id}
+                          review={rev}
+                          providerName={provider.fullName}
+                        />
                       ))}
                     </div>
                   )}

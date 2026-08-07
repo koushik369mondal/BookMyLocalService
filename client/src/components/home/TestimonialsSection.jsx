@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Star, Quote, MessageSquare, Loader2 } from "lucide-react";
+import { MessageSquare, Loader2 } from "lucide-react";
 import { fadeInUp, staggerContainer } from "@/utils/motion";
 import { reviewsService } from "@/services/reviewsService";
-import { UserAvatar } from "@/components/ui/avatar";
+import ReviewCard from "@/components/reviews/ReviewCard";
 
 export function TestimonialsSection() {
   const [testimonials, setTestimonials] = useState([]);
@@ -50,29 +50,8 @@ export function TestimonialsSection() {
         ) : (
           <motion.div variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((t, idx) => (
-              <motion.div key={t.id || idx} variants={fadeInUp} className="bg-[#FAF6F0] border border-[#E8DCC3] rounded-3xl p-8 space-y-6 flex flex-col justify-between shadow-2xs">
-                <div className="space-y-4">
-                  <Quote className="h-8 w-8 text-[#8C4B3E]/30" />
-                  <div className="flex items-center gap-1">
-                    {[...Array(t.rating || 5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                  <p className="text-xs sm:text-sm text-[#5A5146] font-medium leading-relaxed italic">"{t.quote}"</p>
-                </div>
-
-                <div className="flex items-center gap-3 pt-4 border-t border-[#E8DCC3]">
-                  <UserAvatar
-                    src={t.avatar}
-                    name={t.author}
-                    className="h-10 w-10 border border-[#E8DCC3]"
-                    fallbackClassName="bg-[#8C4B3E] text-white font-bold text-xs"
-                  />
-                  <div>
-                    <h4 className="text-xs font-extrabold text-[#1F1D1A]">{t.author}</h4>
-                    <span className="text-[11px] font-semibold text-[#7A7266]">{t.role}</span>
-                  </div>
-                </div>
+              <motion.div key={t.id || idx} variants={fadeInUp}>
+                <ReviewCard variant="testimonial" review={t} />
               </motion.div>
             ))}
           </motion.div>

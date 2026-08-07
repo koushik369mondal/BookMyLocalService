@@ -19,6 +19,8 @@ import {
   Loader2
 } from "lucide-react";
 
+import ReviewCard from "@/components/reviews/ReviewCard";
+
 export default function Reviews() {
   const [reviewsData, setReviewsData] = useState({
     averageRating: 5.0,
@@ -249,79 +251,17 @@ export default function Reviews() {
               ) : (
                 <div className="space-y-6">
                   {filteredReviews.map((rev) => (
-                    <div key={rev.id} className="p-5 border border-[#E8DCC3] rounded-2xl bg-[#FAF6F0]/40 space-y-4 shadow-2xs">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div className="flex items-center gap-3">
-                          <UserAvatar
-                            user={{ fullName: rev.name, avatar: rev.avatar, profileImage: rev.profileImage }}
-                            className="h-10 w-10 border border-[#E8DCC3]"
-                            fallbackClassName="bg-[#F0E7D5] text-[#1F1D1A] font-bold text-xs"
-                            size={80}
-                          />
-                          <div>
-                            <h4 className="text-xs font-bold text-[#1F1D1A]">{rev.name}</h4>
-                            <span className="text-[10px] text-[#7A7266] font-medium block">Service: {rev.serviceName}</span>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-0.5">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`h-3.5 w-3.5 ${
-                                  i < Math.round(rev.rating || 5)
-                                    ? "fill-[#C9A46A] text-[#C9A46A]"
-                                    : "text-[#E8DCC3]"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                          <span className="text-xs font-bold text-[#7A7266]">{rev.date}</span>
-                        </div>
-                      </div>
-
-                      {rev.title && (
-                        <h5 className="text-xs font-black text-[#1F1D1A] -mb-2 px-1">{rev.title}</h5>
-                      )}
-                      <p className="text-xs font-medium text-[#1F1D1A] leading-relaxed bg-white p-3 rounded-xl border border-[#E8DCC3]/60">
-                        "{rev.comment}"
-                      </p>
-
-                      {/* EXISTING PROVIDER REPLY */}
-                      {rev.reply ? (
-                        <div className="pl-4 border-l-2 border-[#C9A46A] space-y-1 bg-[#F0E7D5]/40 p-3 rounded-r-xl">
-                          <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#C9A46A] uppercase">
-                            <CornerDownRight className="h-3 w-3" /> Provider Official Response
-                          </div>
-                          <p className="text-xs font-medium text-[#5A5146]">{rev.reply}</p>
-                        </div>
-                      ) : (
-                        /* REPLY FORM */
-                        <div className="space-y-2 pt-2">
-                          <Input
-                            placeholder="Write a public response to this review..."
-                            value={replyInputs[rev.id] || ""}
-                            onChange={(e) =>
-                              setReplyInputs((prev) => ({ ...prev, [rev.id]: e.target.value }))
-                            }
-                            className="text-xs h-9 border-[#E8DCC3] focus-visible:ring-[#C9A46A] rounded-xl bg-white"
-                          />
-                          <Button
-                            size="xs"
-                            disabled={submittingReplyId === rev.id || !(replyInputs[rev.id] || "").trim()}
-                            onClick={() => handleAddReplySubmit(rev.id)}
-                            className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-[10px] uppercase rounded-xl h-8 px-4 border border-[#E8DCC3] cursor-pointer"
-                          >
-                            {submittingReplyId === rev.id ? (
-                              <Loader2 className="h-3 w-3 animate-spin" />
-                            ) : (
-                              "Publish Reply"
-                            )}
-                          </Button>
-                        </div>
-                      )}
-                    </div>
+                    <ReviewCard
+                      key={rev.id}
+                      review={rev}
+                      allowReply={true}
+                      replyInput={replyInputs[rev.id] || ""}
+                      onReplyInputChange={(val) =>
+                        setReplyInputs((prev) => ({ ...prev, [rev.id]: val }))
+                      }
+                      onReplySubmit={handleAddReplySubmit}
+                      isSubmittingReply={submittingReplyId === rev.id}
+                    />
                   ))}
                 </div>
               )}

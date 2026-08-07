@@ -403,7 +403,8 @@ class ProviderService {
                 ratingSum += rating;
                 const star = Math.min(5, Math.max(1, Math.round(rating)));
                 if (distribution[star] !== undefined) distribution[star]++;
-                if (r.reply && r.reply.trim() !== "") repliedCount++;
+                const hasRep = (r.providerReply && r.providerReply.trim()) || (r.reply && r.reply.trim());
+                if (hasRep) repliedCount++;
                 if (rating >= 4) recommendedCount++;
             });
 
@@ -421,7 +422,9 @@ class ProviderService {
                 title: r.title || "",
                 comment: r.comment || "",
                 date: r.createdAt ? new Date(r.createdAt).toISOString().split("T")[0] : new Date().toISOString().split("T")[0],
-                reply: r.reply || ""
+                reply: r.providerReply || r.reply || "",
+                providerReply: r.providerReply || r.reply || "",
+                providerReplyAt: r.providerReplyAt ? new Date(r.providerReplyAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : null
             }));
 
             return {
@@ -466,7 +469,11 @@ class ProviderService {
 
         return await prisma.review.update({
             where: { id: reviewId },
-            data: { reply: reply.trim() }
+            data: {
+                providerReply: reply.trim(),
+                providerReplyAt: new Date(),
+                reply: reply.trim()
+            }
         });
     }
 

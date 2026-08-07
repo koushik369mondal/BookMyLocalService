@@ -168,12 +168,18 @@ const getPublicProviderProfile = async (req, res) => {
           rating: r.rating,
           title: r.title || "",
           comment: r.comment,
-          reply: r.reply || null,
+          reply: r.providerReply || r.reply || null,
+          providerReply: r.providerReply || r.reply || null,
+          providerReplyAt: r.providerReplyAt ? new Date(r.providerReplyAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : null,
           createdAt: r.createdAt,
+          date: r.createdAt ? new Date(r.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : new Date().toLocaleDateString(),
           customerName: r.customer?.fullName || "Verified Customer",
+          name: r.customer?.fullName || "Verified Customer",
           customerAvatar: custImg,
+          avatar: custImg,
           customerProfileImage: custImg,
-          serviceTitle: r.service?.title || "Service"
+          serviceTitle: r.service?.title || "Service",
+          serviceName: r.service?.title || "Service"
         };
       })
     };
