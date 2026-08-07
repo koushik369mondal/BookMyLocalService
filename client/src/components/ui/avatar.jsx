@@ -34,16 +34,27 @@ function AvatarFallback({ className, ...props }) {
   );
 }
 
-function UserAvatar({ user, src, name, className, fallbackClassName, imageClassName }) {
-  const rawAvatarSrc = src || user?.profileImage || user?.avatar;
-  const avatarSrc = getOptimizedImageUrl(rawAvatarSrc, { width: 160, height: 160 });
+function UserAvatar({ user, src, name, className, fallbackClassName, imageClassName, size = 160, ...props }) {
+  const [imgError, setImgError] = React.useState(false);
+
+  React.useEffect(() => {
+    setImgError(false);
+  }, [src, user?.avatar, user?.profileImage]);
+
+  const rawAvatarSrc = src || user?.avatar || user?.profileImage || user?.providerProfileImage;
+  const avatarSrc = imgError ? null : getOptimizedImageUrl(rawAvatarSrc, { width: size, height: size });
   const displayName = name || user?.fullName || user?.name || "User";
   const initials = getUserInitials(displayName);
 
   return (
-    <Avatar className={className}>
+    <Avatar className={className} {...props}>
       {avatarSrc ? (
-        <AvatarImage src={avatarSrc} alt={displayName} className={imageClassName} />
+        <AvatarImage
+          src={avatarSrc}
+          alt={displayName}
+          className={imageClassName}
+          onError={() => setImgError(true)}
+        />
       ) : null}
       <AvatarFallback className={fallbackClassName}>
         {initials}

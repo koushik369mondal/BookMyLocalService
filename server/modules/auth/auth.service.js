@@ -123,18 +123,37 @@ const googleAuth = async ({ credential, role }) => {
     console.log(`[GOOGLE AUTH STEP 3] Checking database for existing user with email '${email}'...`);
     let user = await userRepository.findByEmail(email);
 
-    let userRole = USER_ROLES.CUSTOMER;
-    if (isAdminEmail(email)) {
-        userRole = USER_ROLES.ADMIN;
-    } else if (role && typeof role === "string") {
-        const roleUpper = role.toUpperCase();
-        if (Object.values(USER_ROLES).includes(roleUpper)) {
-            userRole = roleUpper;
-        }
-    }
-
     if (!user) {
-        console.log(`[GOOGLE AUTH STEP 4] User not found. Creating new user (Role: ${userRole})...`);
+        // If role is explicitly provided (e.g. from register or choose-account-type), create user.
+        // If no role is provided (e.g. logging in with unregistered Google account), redirect to role selection without creating DB record.
+        const hasExplicitRole = Boolean(role && typeof role === "string" && String(role).trim().length > 0);
+
+        if (!hasExplicitRole && !isAdminEmail(email)) {
+            console.log(`[GOOGLE AUTH] Unregistered user '${email}' attempted login without role selection. Requesting role selection...`);
+            return {
+                success: true,
+                isNewUser: true,
+                requiresRoleSelection: true,
+                googleAccount: {
+                    credential,
+                    email,
+                    fullName,
+                    avatar
+                }
+            };
+        }
+
+        let userRole = USER_ROLES.CUSTOMER;
+        if (isAdminEmail(email)) {
+            userRole = USER_ROLES.ADMIN;
+        } else if (role && typeof role === "string") {
+            const roleUpper = role.toUpperCase();
+            if (Object.values(USER_ROLES).includes(roleUpper)) {
+                userRole = roleUpper;
+            }
+        }
+
+        console.log(`[GOOGLE AUTH STEP 4] Creating new user (Role: ${userRole})...`);
         try {
             user = await safeCreateUser({
                 fullName,
@@ -142,7 +161,7 @@ const googleAuth = async ({ credential, role }) => {
                 role: userRole,
                 avatar
             });
-            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] User created/retrieved with ID: '${user.id}'`);
+            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] User created with ID: '${user.id}'`);
         } catch (createErr) {
             console.error("[GOOGLE AUTH STEP 4 ERROR] User creation exception:", createErr);
             const userFacingMessage = createErr?.message || "Failed to create user account with Google. Please try logging in.";
@@ -151,17 +170,18 @@ const googleAuth = async ({ credential, role }) => {
             throw err;
         }
     } else {
-        console.log(`[GOOGLE AUTH STEP 4] Existing user found (ID: '${user.id}', Role: '${user.role}'). Linking Google account...`);
+        console.log(`[GOOGLE AUTH STEP 4] Existing user found (ID: '${user.id}', Role: '${user.role}'). Updating profile picture & verification...`);
         try {
             const updateData = { isVerified: true };
             if (isAdminEmail(email) && user.role !== USER_ROLES.ADMIN) {
                 updateData.role = USER_ROLES.ADMIN;
             }
-            if (!user.avatar && avatar) {
+            // Always sync latest Google avatar if present
+            if (avatar && user.avatar !== avatar) {
                 updateData.avatar = avatar;
             }
             user = await userRepository.update(user.id, updateData);
-            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] Existing user profile updated`);
+            console.log(`[GOOGLE AUTH STEP 4 SUCCESS] Existing user profile synced`);
         } catch (updateErr) {
             console.warn("[GOOGLE AUTH STEP 4 WARNING] Profile update warning:", updateErr);
         }

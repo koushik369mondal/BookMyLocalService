@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { cn, getUserInitials } from "@/lib/utils";
 import { getProviderImage } from "@/utils/imageUtils";
+import { UserAvatar } from "@/components/ui/avatar";
 import { useAuth } from "../../context/AuthContext";
 
 const mockNotifications = [];
@@ -300,13 +301,7 @@ export default function Navbar() {
                   onClick={() => setShowDropdown(!showDropdown)}
                   className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-[#F0E7D5] focus:outline-none transition-all duration-200 border border-transparent hover:border-[#E8DCC3] cursor-pointer"
                 >
-                  <div className="h-9 w-9 lg:h-10 lg:w-10 rounded-xl overflow-hidden border border-[#E8DCC3] bg-[#F0E7D5] flex items-center justify-center font-bold text-xs lg:text-sm text-[#C9A46A] shadow-2xs shrink-0">
-                    {user.avatar || user.profileImage ? (
-                      <img src={getProviderImage(user, { width: 80, height: 80 })} alt={user.fullName} className="h-full w-full object-cover" />
-                    ) : (
-                      getUserInitials(user.fullName)
-                    )}
-                  </div>
+                  <UserAvatar user={user} className="h-9 w-9 lg:h-10 lg:w-10 rounded-xl border border-[#E8DCC3] shadow-2xs shrink-0" />
                   <ChevronDown className="h-4 w-4 text-[#7A7266] transition-transform duration-200" />
                 </button>
 

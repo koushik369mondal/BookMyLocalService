@@ -51,10 +51,18 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         try {
             const data = await authService.googleAuth({ credential, role });
-            if (data.success) {
+            if (data.requiresRoleSelection) {
+                if (data.googleAccount) {
+                    sessionStorage.setItem("pendingGoogleAccount", JSON.stringify(data.googleAccount));
+                }
+                return data;
+            }
+
+            if (data.success && data.token) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("user", JSON.stringify(data.user));
                 setUser(data.user);
+                sessionStorage.removeItem("pendingGoogleAccount");
                 return data;
             }
             throw new Error(data.message || "Google authentication failed");

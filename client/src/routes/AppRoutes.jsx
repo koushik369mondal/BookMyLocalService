@@ -10,6 +10,7 @@ import AppLoader from "../components/ui/AppLoader";
 
 // Lazy loaded pages
 const CompleteProfile = lazy(() => import("../pages/Auth/CompleteProfile"));
+const ChooseAccountType = lazy(() => import("../pages/Auth/ChooseAccountType"));
 const Categories = lazy(() => import("../pages/Categories/Categories"));
 const About = lazy(() => import("../pages/About/About"));
 const Contact = lazy(() => import("../pages/Contact/Contact"));
@@ -50,6 +51,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/choose-account-type" element={<ChooseAccountType />} />
         <Route path="/complete-profile" element={<CompleteProfile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/categories" element={<Categories />} />

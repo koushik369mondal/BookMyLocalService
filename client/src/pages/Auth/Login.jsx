@@ -2,15 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import { useAuth } from "../../context/AuthContext";
-import { Button } from "@/components/ui/button";
 import Logo from "@/components/ui/logo";
 import {
   ShieldAlert,
   CheckCircle2,
-  Loader2,
-  Sparkles,
+  Lock,
   ShieldCheck,
-  CheckCircle
+  Zap,
+  KeyRound,
+  ArrowRight
 } from "lucide-react";
 
 export default function Login() {
@@ -29,8 +29,14 @@ export default function Login() {
     setSuccessMsg("Authenticating with Google...");
 
     try {
-      const data = await googleLogin(response.credential, "CUSTOMER");
-      setSuccessMsg("Google login successful! Redirecting...");
+      const data = await googleLogin(response.credential);
+      if (data.requiresRoleSelection) {
+        setIsSubmitting(false);
+        navigate("/choose-account-type");
+        return;
+      }
+
+      setSuccessMsg("Welcome back! Redirecting to your dashboard...");
       setIsSubmitting(false);
       setTimeout(() => {
         const userRole = data.user?.role?.toUpperCase();
@@ -89,18 +95,25 @@ export default function Login() {
     <MainLayout>
       <div className="min-h-[85vh] bg-[#FAF6F0] flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
 
-        {/* Brand Logo */}
+        {/* Brand Header */}
         <div className="mb-6 flex justify-center">
           <Logo size={42} showText={true} />
         </div>
 
-        {/* Centered Card */}
+        {/* Login Card */}
         <div className="max-w-md w-full bg-white rounded-3xl border border-[#E8DCC3] shadow-xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl">
 
-          {/* Title Header */}
-          <div className="space-y-1.5 mb-8 text-center">
-            <h1 className="text-2xl font-black text-[#1F1D1A] tracking-tight">Login to your account</h1>
-            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">Use 1-Click Google Sign-In for instant access</p>
+          {/* Minimal Welcome Header */}
+          <div className="space-y-2 mb-8 text-center">
+            <span className="inline-block px-3 py-1 bg-[#F0E7D5] border border-[#E8DCC3] text-[#8C4B3E] font-black text-[10px] uppercase tracking-widest rounded-full">
+              Welcome Back 👋
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-black text-[#1F1D1A] tracking-tight">
+              Login to Account
+            </h1>
+            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">
+              Single-click passwordless access for Clients & Specialists
+            </p>
           </div>
 
           {/* Alert Banners */}
@@ -118,42 +131,47 @@ export default function Login() {
             </div>
           )}
 
-          {/* Google Official Button */}
-          <div className="mb-8 flex flex-col items-center justify-center space-y-4">
+          {/* Google Official Button Container */}
+          <div className="mb-8 flex flex-col items-center justify-center space-y-3">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#7A7266]">
+              Sign In With Google
+            </span>
             <div ref={googleBtnRef} className="w-full flex justify-center min-h-[44px]"></div>
           </div>
 
-          {/* Trust Badges */}
-          <div className="p-4 bg-[#FAF6F0] rounded-2xl border border-[#E8DCC3]/80 space-y-2 text-xs text-[#5A5146]">
-            <div className="flex items-center gap-2 font-bold text-[#1F1D1A]">
+          {/* Security & Account Protection Highlights */}
+          <div className="p-4 bg-[#FAF6F0] rounded-2xl border border-[#E8DCC3]/80 space-y-3">
+            <div className="flex items-center gap-2 text-xs font-black text-[#1F1D1A]">
               <ShieldCheck className="h-4 w-4 text-[#8C4B3E]" />
-              Safe & Instant Authentication
+              <span>Account Security & Protection</span>
             </div>
-            <p className="text-[11px] leading-relaxed">
-              Google Sign-In provides fast, passwordless, 1-click access to your BookMyLocalService account.
-            </p>
+
+            <div className="space-y-2 text-[11px] text-[#5A5146] font-semibold">
+              <div className="flex items-center gap-2">
+                <Lock className="h-3.5 w-3.5 text-[#C9A46A] shrink-0" />
+                <span>256-Bit Encrypted Google Single Sign-On</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <KeyRound className="h-3.5 w-3.5 text-[#C9A46A] shrink-0" />
+                <span>No password storage or credential leaks</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="h-3.5 w-3.5 text-[#C9A46A] shrink-0" />
+                <span>Automatic role routing to your active dashboard</span>
+              </div>
+            </div>
           </div>
 
-          {/* Footer Links */}
-          <div className="mt-8 space-y-2.5 text-center text-xs font-semibold text-[#5A5146]">
-            <div>
-              New user?{" "}
-              <Link
-                to="/register"
-                className="text-[#8C4B3E] hover:text-[#C9A46A] transition-colors font-bold hover:underline"
-              >
-                Sign up with Google
-              </Link>
-            </div>
-            <div className="pt-2.5 border-t border-[#E8DCC3]">
-              Are you a service provider?{" "}
-              <Link
-                to="/register?role=provider"
-                className="text-[#C9A46A] hover:text-[#8C4B3E] transition-colors font-bold hover:underline"
-              >
-                Register as a Provider →
-              </Link>
-            </div>
+          {/* Footer Navigation Link */}
+          <div className="mt-8 pt-6 border-t border-[#E8DCC3] text-center text-xs font-semibold text-[#5A5146]">
+            Don't have an account yet?{" "}
+            <Link
+              to="/register"
+              className="text-[#8C4B3E] hover:text-[#C9A46A] transition-colors font-extrabold flex items-center justify-center gap-1 mt-1.5 hover:underline"
+            >
+              <span>Create an Account & Join Platform</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
 
         </div>

@@ -1,11 +1,9 @@
 import React from "react";
 import { Camera, Loader2, Sparkles, Briefcase, User } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { getProviderImage } from "@/utils/imageUtils";
+import { UserAvatar } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { getProfileCompletion } from "@/hooks/useProfile";
-import { getUserInitials } from "@/lib/utils";
 
 export function ProfileHeader({
   user,
@@ -18,20 +16,17 @@ export function ProfileHeader({
 }) {
   if (!user) return null;
   const completion = getProfileCompletion(user);
-  const initials = getUserInitials(user.fullName);
-  const userPhoto = getProviderImage(user);
 
   return (
     <div className="bg-white rounded-3xl border border-[#E8DCC3] shadow-sm p-6 sm:p-8 space-y-6">
       <div className="flex flex-col sm:flex-row items-center gap-6">
         {/* Avatar with Camera Overlay */}
         <div className="relative group">
-          <Avatar className="h-24 w-24 border-4 border-[#FAF6F0] shadow-md">
-            <AvatarImage src={userPhoto} alt={user.fullName} className="object-cover" />
-            <AvatarFallback className="bg-[#8C4B3E] text-white font-extrabold text-2xl">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar
+            user={user}
+            className="h-24 w-24 border-4 border-[#FAF6F0] shadow-md"
+            fallbackClassName="bg-[#8C4B3E] text-white font-extrabold text-2xl"
+          />
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
