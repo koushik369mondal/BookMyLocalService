@@ -55,7 +55,7 @@ export default function BookingHistory() {
   // Featured upcoming booking for top highlight card
   const upcomingBooking = filteredBookings.find(b => {
     const s = (b.bookingStatus || b.status || "").toLowerCase();
-    return s === "confirmed" || s === "upcoming";
+    return s === "confirmed" || s === "upcoming" || s === "in_progress" || s === "in_service";
   });
 
   return (
@@ -111,8 +111,9 @@ export default function BookingHistory() {
               <div className="flex bg-[#FAF6F0] border border-[#E8DCC3] p-0.5 rounded-xl h-10 overflow-x-auto w-full sm:w-auto">
                 {[
                   { id: "all", label: "All" },
-                  { id: "confirmed", label: "Upcoming" },
-                  { id: "in_progress", label: "In Progress" },
+                  { id: "pending", label: "Pending" },
+                  { id: "confirmed", label: "Confirmed" },
+                  { id: "in_progress", label: "In Service" },
                   { id: "completed", label: "Completed" },
                   { id: "cancelled", label: "Cancelled" }
                 ].map((tab) => (
@@ -208,7 +209,11 @@ export default function BookingHistory() {
                         />
 
                         {/* HORIZONTAL TIMELINE */}
-                        <BookingProgressTimeline status={bStatus} />
+                        <BookingProgressTimeline 
+                          status={bStatus} 
+                          reviewStatus={b.reviewStatus} 
+                          hasReview={Boolean(b.review)} 
+                        />
                       </div>
 
                       {/* Right Block: Payment Summary Card */}

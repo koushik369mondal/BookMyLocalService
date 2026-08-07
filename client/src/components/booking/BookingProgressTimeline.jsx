@@ -1,8 +1,9 @@
 import React from "react";
-import { CheckCircle2, Clock, PlayCircle, XCircle, ShieldCheck } from "lucide-react";
+import { CheckCircle2, Clock, PlayCircle, XCircle, ShieldCheck, Star } from "lucide-react";
 
-export default function BookingProgressTimeline({ status }) {
+export default function BookingProgressTimeline({ status, reviewStatus, hasReview }) {
   const s = (status || "pending").toLowerCase();
+  const isReviewed = reviewStatus === "REVIEWED" || Boolean(hasReview);
 
   if (s === "cancelled") {
     return (
@@ -19,16 +20,21 @@ export default function BookingProgressTimeline({ status }) {
   }
 
   const steps = [
-    { key: "booked", label: "Booked", icon: CheckCircle2 },
+    { key: "booked", label: "Pending", icon: Clock },
     { key: "confirmed", label: "Confirmed", icon: ShieldCheck },
     { key: "in_progress", label: "In Service", icon: PlayCircle },
     { key: "completed", label: "Completed", icon: CheckCircle2 },
+    { key: "reviewed", label: "Reviewed", icon: Star },
   ];
 
-  let currentStepIndex = 0; // default booked
-  if (s === "confirmed" || s === "upcoming") currentStepIndex = 1;
-  else if (s === "in_progress") currentStepIndex = 2;
-  else if (s === "completed") currentStepIndex = 3;
+  let currentStepIndex = 0; // default pending
+  if (s === "confirmed" || s === "upcoming") {
+    currentStepIndex = 1;
+  } else if (s === "in_progress" || s === "in_service") {
+    currentStepIndex = 2;
+  } else if (s === "completed") {
+    currentStepIndex = isReviewed ? 4 : 3;
+  }
 
   return (
     <div className="w-full bg-[#FAF6F0]/80 border border-[#E8DCC3]/80 rounded-2xl p-4 my-2">
@@ -57,7 +63,7 @@ export default function BookingProgressTimeline({ status }) {
                     : "bg-white text-[#7A7266] border border-[#E8DCC3]"
                 } ${isCurrent ? "ring-4 ring-[#8C4B3E]/20 scale-110" : ""}`}
               >
-                <Icon className="h-4 w-4" />
+                <Icon className={`h-4 w-4 ${isCurrent && step.key === "in_progress" ? "animate-pulse text-amber-300" : ""}`} />
               </div>
               <span
                 className={`text-[10px] mt-1.5 font-bold tracking-tight text-center ${

@@ -46,6 +46,7 @@ export function useBookingHistory() {
       const bStatus = (booking.bookingStatus || booking.status || "pending").toLowerCase();
       if (activeStatus !== "all") {
         if (activeStatus === "confirmed" && bStatus !== "confirmed" && bStatus !== "upcoming") return false;
+        if (activeStatus === "in_progress" && bStatus !== "in_progress" && bStatus !== "in_service") return false;
         if (activeStatus === "completed" && bStatus !== "completed") return false;
         if (activeStatus === "cancelled" && bStatus !== "cancelled") return false;
         if (activeStatus === "pending" && bStatus !== "pending") return false;

@@ -186,6 +186,7 @@ class DashboardRepository {
                     { bookingStatus: "CONFIRMED" },
                     { bookingStatus: "IN_PROGRESS" },
                     { status: "confirmed" },
+                    { status: "in_progress" },
                     { status: "upcoming" }
                 ]
             }

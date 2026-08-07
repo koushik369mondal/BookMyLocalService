@@ -7,6 +7,7 @@ import { useProviderDashboard } from "@/hooks/useProviderDashboard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { BookingStatusBadge } from "@/components/booking/BookingStatusBadges";
 import {
   DollarSign,
   Calendar,
@@ -25,18 +26,7 @@ export default function ProviderDashboard() {
 
   const filteredBookings = bookingFilter === "all"
     ? recentBookings
-    : recentBookings.filter(b => b.status === bookingFilter);
-
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case "pending":
-        return <Badge className="bg-[#C9A46A] border-0 text-white font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Pending</Badge>;
-      case "confirmed":
-        return <Badge className="bg-[#5A95C9]/20 text-[#1E4B75] border-0 font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Confirmed</Badge>;
-      default:
-        return <Badge className="bg-[#7DAB7D]/20 text-[#2B522B] border-0 font-bold rounded-lg px-2 py-0 text-[9px] uppercase">Completed</Badge>;
-    }
-  };
+    : recentBookings.filter(b => (b.bookingStatus || b.status || "").toLowerCase() === bookingFilter);
 
   return (
     <DashboardLayout>
@@ -45,7 +35,7 @@ export default function ProviderDashboard() {
         {/* LIGHT BANNER HEADER */}
         <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-1">
+            <div className="space-[#1F1D1A] space-y-1">
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">
                 {user?.fullName ? `Welcome back, ${user.fullName} 👋` : "Provider Dashboard 👋"}
               </h1>
@@ -130,19 +120,25 @@ export default function ProviderDashboard() {
                     <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Customer Service Requests</CardTitle>
                   </div>
 
-                  <div className="flex bg-[#FAF6F0] border border-[#E8DCC3] p-0.5 rounded-xl h-8">
-                    {["all", "pending", "confirmed", "completed"].map((tab) => (
+                  <div className="flex bg-[#FAF6F0] border border-[#E8DCC3] p-0.5 rounded-xl h-8 overflow-x-auto">
+                    {[
+                      { id: "all", label: "All" },
+                      { id: "pending", label: "Pending" },
+                      { id: "confirmed", label: "Confirmed" },
+                      { id: "in_progress", label: "In Service" },
+                      { id: "completed", label: "Completed" }
+                    ].map((tab) => (
                       <button
-                        key={tab}
+                        key={tab.id}
                         type="button"
-                        onClick={() => setBookingFilter(tab)}
-                        className={`rounded-lg text-[10px] font-bold px-2.5 py-1 uppercase transition-all cursor-pointer ${
-                          bookingFilter === tab
+                        onClick={() => setBookingFilter(tab.id)}
+                        className={`rounded-lg text-[10px] font-bold px-2.5 py-1 uppercase transition-all cursor-pointer whitespace-nowrap ${
+                          bookingFilter === tab.id
                             ? "bg-[#8C4B3E] text-white shadow-2xs"
                             : "text-[#7A7266] hover:text-[#8C4B3E]"
                         }`}
                       >
-                        {tab}
+                        {tab.label}
                       </button>
                     ))}
                   </div>
@@ -162,7 +158,7 @@ export default function ProviderDashboard() {
                           <div className="space-y-1">
                             <div className="flex items-center gap-2">
                               <h4 className="text-xs font-black text-[#1F1D1A]">{b.service?.title || "Service Job"}</h4>
-                              {getStatusBadge(b.status)}
+                              <BookingStatusBadge status={b.status} />
                             </div>
                             <p className="text-[11px] text-[#5A5146] font-medium">
                               Customer: <strong>{b.customer?.fullName || b.billingName || "Customer"}</strong> ({b.customer?.phone || b.billingPhone || "N/A"})

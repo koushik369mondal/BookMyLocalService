@@ -171,7 +171,8 @@ class ProviderService {
                         price: true, 
                         priceType: true 
                     } 
-                }
+                },
+                review: true
             }
         });
 
@@ -187,6 +188,9 @@ class ProviderService {
             price: b.total,
             status: b.bookingStatus || b.status,
             bookingStatus: b.bookingStatus,
+            serviceStatus: b.serviceStatus,
+            reviewStatus: b.reviewStatus,
+            review: b.review,
             paymentStatus: b.paymentStatus,
             paymentMethod: b.paymentMethod,
             address: b.street && b.city ? `${b.street}, ${b.city}` : (b.customer?.city || "Local Service Area")
@@ -194,9 +198,12 @@ class ProviderService {
     }
 
     /**
-     * Update job status in database
+     * Update job status in database with strict state machine validation:
+     * PENDING -> CONFIRMED / CANCELLED
+     * CONFIRMED -> IN_PROGRESS / CANCELLED
+     * IN_PROGRESS -> COMPLETED
      */
-    async updateJobStatus(providerId, bookingId, status) {
+    async updateJobStatus(providerId, bookingId, statusAction) {
         const booking = await prisma.booking.findUnique({
             where: { id: bookingId }
         });
@@ -205,15 +212,52 @@ class ProviderService {
             throw new Error("Booking not found or unauthorized.");
         }
 
-        const upStatus = String(status).toUpperCase();
-        const updateData = { status: status.toLowerCase() };
-        
-        if (["PENDING", "CONFIRMED", "IN_PROGRESS", "COMPLETED", "CANCELLED"].includes(upStatus)) {
-            updateData.bookingStatus = upStatus;
+        const currentBStatus = (booking.bookingStatus || booking.status || "PENDING").toUpperCase();
+        const actionInput = String(statusAction).toLowerCase().trim();
+
+        let targetBStatus;
+        let targetServiceStatus = booking.serviceStatus;
+
+        if (actionInput === "accept" || actionInput === "confirm" || actionInput === "confirmed") {
+            targetBStatus = "CONFIRMED";
+            targetServiceStatus = "NOT_STARTED";
+        } else if (actionInput === "reject" || actionInput === "cancel" || actionInput === "cancelled") {
+            targetBStatus = "CANCELLED";
+        } else if (actionInput === "start" || actionInput === "in_service" || actionInput === "in_progress") {
+            targetBStatus = "IN_PROGRESS";
+            targetServiceStatus = "ONGOING";
+        } else if (actionInput === "complete" || actionInput === "completed") {
+            targetBStatus = "COMPLETED";
+            targetServiceStatus = "COMPLETED";
+        } else {
+            throw new Error(`Unknown job action status '${statusAction}'. Allowed: accept, reject, start, complete.`);
         }
 
-        if (status === "completed" && (booking.paymentMethod === "CASH_ON_JOB" || booking.paymentMethod === "cash")) {
+        // Validate state transition rules
+        if (targetBStatus === "CONFIRMED" && currentBStatus !== "PENDING") {
+            throw new Error(`Cannot accept booking in '${currentBStatus}' status. Booking must be PENDING.`);
+        }
+        if (targetBStatus === "IN_PROGRESS" && currentBStatus !== "CONFIRMED") {
+            throw new Error(`Cannot start service for booking in '${currentBStatus}' status. Booking must be CONFIRMED.`);
+        }
+        if (targetBStatus === "COMPLETED" && (currentBStatus !== "IN_PROGRESS" && currentBStatus !== "CONFIRMED")) {
+            throw new Error(`Cannot complete booking in '${currentBStatus}' status. Service must be IN_PROGRESS or CONFIRMED.`);
+        }
+        if (targetBStatus === "CANCELLED" && (currentBStatus === "COMPLETED" || currentBStatus === "CANCELLED")) {
+            throw new Error(`Cannot cancel a booking that is already '${currentBStatus}'.`);
+        }
+
+        const updateData = {
+            bookingStatus: targetBStatus,
+            status: targetBStatus.toLowerCase(),
+            serviceStatus: targetServiceStatus
+        };
+
+        // If completing a cash job, auto mark payment as PAID
+        if (targetBStatus === "COMPLETED" && ((booking.paymentMethod || "").toUpperCase() === "CASH_ON_JOB" || (booking.paymentMethod || "").toLowerCase() === "cash")) {
             updateData.paymentStatus = "PAID";
+            updateData.paidAt = new Date();
+            updateData.collectedById = providerId;
         }
 
         return await prisma.booking.update({
