@@ -1,4 +1,6 @@
 const prisma = require("../config/prisma");
+const notificationService = require("../modules/notification/notification.service");
+
 
 /**
  * Recalculate and sync Service rating & reviewCount from Review table
@@ -122,6 +124,20 @@ const createReview = async (req, res) => {
 
     // Sync service rating & reviewCount
     await syncServiceRating(booking.serviceId);
+
+    // Notify Provider about new review
+    try {
+      await notificationService.createNotification({
+        userId: booking.providerId,
+        type: "REVIEW_ADDED",
+        title: "New Review Received",
+        message: `${newReview.customer?.fullName || 'A customer'} left a ${numRating}★ review for "${newReview.service?.title || 'your service'}".`,
+        referenceId: newReview.id,
+        referenceType: "REVIEW"
+      });
+    } catch (notifErr) {
+      console.error("Failed to generate review notification:", notifErr);
+    }
 
     return res.status(201).json({
       success: true,
@@ -408,6 +424,19 @@ const replyToReview = async (req, res) => {
         reply: reply.trim()
       }
     });
+
+    try {
+      await notificationService.createNotification({
+        userId: review.customerId,
+        type: "REVIEW_REPLIED",
+        title: "Provider Replied to Your Review",
+        message: `The provider replied to your review: "${reply.trim().slice(0, 60)}${reply.length > 60 ? "..." : ""}"`,
+        referenceId: review.id,
+        referenceType: "REVIEW"
+      });
+    } catch (notifErr) {
+      console.error("Failed to generate review reply notification:", notifErr);
+    }
 
     return res.status(200).json({
       success: true,

@@ -26,8 +26,8 @@ import { cn, getUserInitials } from "@/lib/utils";
 import { getProviderImage } from "@/utils/imageUtils";
 import { UserAvatar } from "@/components/ui/avatar";
 import { useAuth } from "../../context/AuthContext";
+import { useNotification } from "../../context/NotificationContext";
 
-const mockNotifications = [];
 
 export default function Navbar() {
   const { user, logout, switchRole } = useAuth();
@@ -102,10 +102,11 @@ export default function Navbar() {
     ];
   }, [user]);
 
+  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotification();
+
   // State management
   const [showDropdown, setShowDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const [notificationsList, setNotificationsList] = useState(mockNotifications);
   const [searchQuery, setSearchQuery] = useState("");
 
   const dropdownRef = useRef(null);
@@ -155,11 +156,60 @@ export default function Navbar() {
     navigate("/");
   };
 
-  const handleMarkAllRead = () => {
-    setNotificationsList(notificationsList.map(n => ({ ...n, unread: false })));
+  const getNotificationIcon = (type) => {
+    switch (type) {
+      case "BOOKING_CREATED":
+      case "BOOKING_CONFIRMED":
+        return { Icon: Calendar, color: "bg-[#5A95C9]/15 text-[#1E4B75]" };
+      case "SERVICE_STARTED":
+      case "SERVICE_COMPLETED":
+        return { Icon: CheckCircle2, color: "bg-[#7DAB7D]/15 text-[#2B522B]" };
+      case "BOOKING_CANCELLED":
+        return { Icon: Clock, color: "bg-[#8C4B3E]/15 text-[#8C4B3E]" };
+      case "PAYMENT_RECEIVED":
+        return { Icon: ShieldCheck, color: "bg-[#C9A46A]/15 text-[#C9A46A]" };
+      case "REVIEW_ADDED":
+      case "REVIEW_REPLIED":
+        return { Icon: Sparkles, color: "bg-[#C9A46A]/15 text-[#C9A46A]" };
+      default:
+        return { Icon: Bell, color: "bg-[#C9A46A]/15 text-[#C9A46A]" };
+    }
   };
 
-  const unreadCount = notificationsList.filter(n => n.unread).length;
+  const formatTimeAgo = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = Math.max(0, now - date);
+    const diffMins = Math.floor(diffMs / 60000);
+    if (diffMins < 1) return "Just now";
+    if (diffMins < 60) return `${diffMins}m ago`;
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return `${diffHours}h ago`;
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays < 7) return `${diffDays}d ago`;
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  };
+
+  const handleNotificationClick = (item) => {
+    if (!item.isRead) {
+      markAsRead(item.id);
+    }
+    setShowNotifications(false);
+
+    if (item.referenceType === "BOOKING") {
+      if (user?.role === "PROVIDER") navigate("/provider/jobs");
+      else if (user?.role === "ADMIN") navigate("/admin/bookings");
+      else navigate("/bookings");
+    } else if (item.referenceType === "REVIEW") {
+      if (user?.role === "PROVIDER") navigate("/provider/reviews");
+      else navigate("/notifications");
+    } else {
+      navigate("/notifications");
+    }
+  };
+
+
 
   return (
     <div className="sticky top-0 z-50 w-full font-sans">
@@ -243,7 +293,7 @@ export default function Navbar() {
 
                     {unreadCount > 0 && (
                       <button
-                        onClick={handleMarkAllRead}
+                        onClick={markAllAsRead}
                         className="text-[11px] text-[#8C4B3E] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
                       >
                         <Check className="h-3 w-3" /> Mark all read
@@ -252,27 +302,33 @@ export default function Navbar() {
                   </div>
 
                   <div className="max-h-80 overflow-y-auto divide-y divide-[#E8DCC3]/60">
-                    {notificationsList.length === 0 ? (
+                    {notifications.length === 0 ? (
                       <div className="p-6 text-center text-xs text-[#7A7266]">No new notifications</div>
                     ) : (
-                      notificationsList.map((item) => {
-                        const Icon = item.icon;
+                      notifications.map((item) => {
+                        const { Icon, color } = getNotificationIcon(item.type);
                         return (
                           <div
                             key={item.id}
-                            className={`p-3.5 flex items-start gap-3 transition-colors hover:bg-[#F0E7D5]/50 ${item.unread ? "bg-[#F0E7D5]/30" : ""
-                              }`}
+                            onClick={() => handleNotificationClick(item)}
+                            className={`p-3.5 flex items-start gap-3 transition-colors hover:bg-[#F0E7D5]/70 cursor-pointer ${
+                              !item.isRead ? "bg-[#F0E7D5]/40" : ""
+                            }`}
                           >
-                            <div className={`p-2 rounded-xl shrink-0 ${item.iconColor || "bg-[#C9A46A]/10 text-[#C9A46A]"}`}>
+                            <div className={`p-2 rounded-xl shrink-0 ${color}`}>
                               <Icon className="h-4 w-4" />
                             </div>
                             <div className="space-y-1 min-w-0 flex-1">
                               <div className="flex items-center justify-between gap-2">
-                                <h5 className="font-bold text-xs text-[#1F1D1A] truncate">{item.title}</h5>
-                                <span className="text-[10px] text-[#7A7266] font-medium shrink-0">{item.time}</span>
+                                <h5 className={`font-bold text-xs leading-tight truncate ${!item.isRead ? "text-[#1F1D1A]" : "text-[#5A5146]"}`}>
+                                  {item.title}
+                                </h5>
+                                <span className="text-[10px] text-[#7A7266] font-medium shrink-0">
+                                  {formatTimeAgo(item.createdAt)}
+                                </span>
                               </div>
                               <p className="text-xs text-[#5A5146] leading-snug font-normal line-clamp-2">
-                                {item.desc}
+                                {item.message}
                               </p>
                             </div>
                           </div>

@@ -35,6 +35,7 @@ export const providerMenu = [
   { label: "Availability", icon: Clock, path: "/provider/availability" },
   { label: "Earnings", icon: DollarSign, path: "/provider/earnings" },
   { label: "Reviews", icon: Star, path: "/provider/reviews" },
+  { label: "Notifications", icon: Bell, path: "/notifications" },
   { label: "Billing & Subscription", icon: CreditCard, path: "/provider/subscription" },
   { label: "Edit Provider Profile", icon: Edit3, path: "/profile" },
   { label: "Settings", icon: Settings, path: "/provider/settings" },
@@ -48,7 +49,9 @@ export const adminMenu = [
   { label: "Bookings", icon: Calendar, path: "/admin/bookings" },
   { label: "Payments", icon: CreditCard, path: "/admin/payments" },
   { label: "Coupons", icon: Tag, path: "/admin/coupons" },
+  { label: "Notifications", icon: Bell, path: "/notifications" },
   { label: "Reports", icon: FileText, path: "/admin/reports" },
   { label: "Analytics", icon: TrendingUp, path: "/admin/analytics" },
   { label: "Settings", icon: Settings, path: "/admin/settings" }
 ];
+

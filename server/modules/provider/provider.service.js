@@ -1,4 +1,6 @@
 const prisma = require("../../config/prisma");
+const notificationService = require("../notification/notification.service");
+
 
 class ProviderService {
     /**
@@ -260,7 +262,7 @@ class ProviderService {
             updateData.collectedById = providerId;
         }
 
-        return await prisma.booking.update({
+        const updatedBooking = await prisma.booking.update({
             where: { id: bookingId },
             data: updateData,
             include: {
@@ -268,6 +270,71 @@ class ProviderService {
                 service: { select: { id: true, title: true } }
             }
         });
+
+        try {
+            const serviceTitle = updatedBooking.service?.title || "Service";
+            if (targetBStatus === "CONFIRMED") {
+                await notificationService.createNotification({
+                    userId: updatedBooking.customerId,
+                    type: "BOOKING_CONFIRMED",
+                    title: "Booking Confirmed",
+                    message: `The provider has accepted and confirmed your booking for "${serviceTitle}".`,
+                    referenceId: updatedBooking.id,
+                    referenceType: "BOOKING"
+                });
+            } else if (targetBStatus === "IN_PROGRESS") {
+                await notificationService.createNotification({
+                    userId: updatedBooking.customerId,
+                    type: "SERVICE_STARTED",
+                    title: "Service Started",
+                    message: `The provider has started work on your service: "${serviceTitle}".`,
+                    referenceId: updatedBooking.id,
+                    referenceType: "BOOKING"
+                });
+            } else if (targetBStatus === "COMPLETED") {
+                await Promise.all([
+                    notificationService.createNotification({
+                        userId: updatedBooking.customerId,
+                        type: "SERVICE_COMPLETED",
+                        title: "Service Completed",
+                        message: `Your service "${serviceTitle}" has been completed. Please rate your experience!`,
+                        referenceId: updatedBooking.id,
+                        referenceType: "BOOKING"
+                    }),
+                    notificationService.createNotification({
+                        userId: providerId,
+                        type: "SERVICE_COMPLETED",
+                        title: "Job Completed",
+                        message: `Job for "${serviceTitle}" marked as completed.`,
+                        referenceId: updatedBooking.id,
+                        referenceType: "BOOKING"
+                    })
+                ]);
+            } else if (targetBStatus === "CANCELLED") {
+                await Promise.all([
+                    notificationService.createNotification({
+                        userId: updatedBooking.customerId,
+                        type: "BOOKING_CANCELLED",
+                        title: "Booking Cancelled",
+                        message: `Your booking for "${serviceTitle}" has been cancelled.`,
+                        referenceId: updatedBooking.id,
+                        referenceType: "BOOKING"
+                    }),
+                    notificationService.createNotification({
+                        userId: providerId,
+                        type: "BOOKING_CANCELLED",
+                        title: "Booking Cancelled",
+                        message: `Booking for "${serviceTitle}" was cancelled.`,
+                        referenceId: updatedBooking.id,
+                        referenceType: "BOOKING"
+                    })
+                ]);
+            }
+        } catch (notifErr) {
+            console.error("Failed to generate job status notification:", notifErr);
+        }
+
+        return updatedBooking;
     }
 
     /**
@@ -467,7 +534,7 @@ class ProviderService {
             throw new Error("Unauthorized to reply to this review.");
         }
 
-        return await prisma.review.update({
+        const updatedReview = await prisma.review.update({
             where: { id: reviewId },
             data: {
                 providerReply: reply.trim(),
@@ -475,6 +542,21 @@ class ProviderService {
                 reply: reply.trim()
             }
         });
+
+        try {
+            await notificationService.createNotification({
+                userId: review.customerId,
+                type: "REVIEW_REPLIED",
+                title: "Provider Replied to Your Review",
+                message: `The provider replied: "${reply.trim().slice(0, 60)}${reply.length > 60 ? "..." : ""}"`,
+                referenceId: review.id,
+                referenceType: "REVIEW"
+            });
+        } catch (notifErr) {
+            console.error("Failed to generate review reply notification:", notifErr);
+        }
+
+        return updatedReview;
     }
 
     /**

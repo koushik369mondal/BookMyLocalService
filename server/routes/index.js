@@ -15,6 +15,7 @@ const healthRoutes = require("./health.routes");
 const reviewRoutes = require("./review.routes");
 const categoryRoutes = require("../modules/category/category.routes");
 const couponRoutes = require("../modules/coupon/coupon.routes");
+const notificationRoutes = require("../modules/notification/notification.routes");
 
 const { processPayment, createOrder, verifyPayment } = require("../modules/payment/payment.controller");
 const { getPublicProviderProfile } = require("../modules/provider/provider.public.controller");
@@ -39,6 +40,7 @@ router.use("/dashboard", dashboardRoutes);
 router.use("/profile", profileRoutes);
 router.use("/health", healthRoutes);
 router.use("/reviews", reviewRoutes);
+router.use("/notifications", notificationRoutes);
 
 // Direct Payment & Razorpay endpoints
 router.post("/payment", protect, processPayment);

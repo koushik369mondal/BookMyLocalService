@@ -1,5 +1,6 @@
 const bookingRepository = require("./booking.repository");
 const prisma = require("../../config/prisma");
+const notificationService = require("../notification/notification.service");
 
 const getProviderPlans = (category, basePrice) => {
   const basicPrice = basePrice;
@@ -76,7 +77,7 @@ class BookingService {
     const discount = 0.0;
     const total = Math.round((basePrice + platformFee + tax - discount) * 100) / 100;
 
-    return await bookingRepository.create({
+    const newBooking = await bookingRepository.create({
       customerId,
       providerId: service.providerId,
       serviceId,
@@ -94,6 +95,32 @@ class BookingService {
       paymentMethod: "ONLINE",
       status: "pending"
     });
+
+    // Auto-create notifications for Customer and Provider asynchronously
+    try {
+      await Promise.all([
+        notificationService.createNotification({
+          userId: customerId,
+          type: "BOOKING_CREATED",
+          title: "Booking Requested",
+          message: `Your booking request for "${service.title}" on ${date} at ${time} has been placed.`,
+          referenceId: newBooking.id,
+          referenceType: "BOOKING"
+        }),
+        notificationService.createNotification({
+          userId: service.providerId,
+          type: "BOOKING_CREATED",
+          title: "New Booking Request",
+          message: `You have received a new booking request for "${service.title}" scheduled for ${date} at ${time}.`,
+          referenceId: newBooking.id,
+          referenceType: "BOOKING"
+        })
+      ]);
+    } catch (notifErr) {
+      console.error("Failed to generate booking creation notifications:", notifErr);
+    }
+
+    return newBooking;
   }
 
   async getBookingById(id) {
@@ -105,6 +132,7 @@ class BookingService {
   }
 
   async updateBooking(id, updateData) {
+    const existing = await bookingRepository.findById(id);
     const sanitized = { ...updateData };
 
     if (sanitized.status) {
@@ -138,8 +166,97 @@ class BookingService {
       }
     }
 
-    return await bookingRepository.update(id, sanitized);
+    const updated = await bookingRepository.update(id, sanitized);
+
+    // Trigger status update notifications if status changed
+    try {
+      if (existing) {
+        const oldBStatus = (existing.bookingStatus || existing.status || "").toUpperCase();
+        const newBStatus = (updated.bookingStatus || updated.status || "").toUpperCase();
+        const oldPStatus = (existing.paymentStatus || "").toUpperCase();
+        const newPStatus = (updated.paymentStatus || "").toUpperCase();
+
+        const serviceTitle = updated.service?.title || "Service";
+
+        if (oldBStatus !== newBStatus) {
+          if (newBStatus === "CONFIRMED") {
+            await notificationService.createNotification({
+              userId: updated.customerId,
+              type: "BOOKING_CONFIRMED",
+              title: "Booking Confirmed",
+              message: `Your booking for "${serviceTitle}" has been confirmed.`,
+              referenceId: updated.id,
+              referenceType: "BOOKING"
+            });
+          } else if (newBStatus === "CANCELLED") {
+            await Promise.all([
+              notificationService.createNotification({
+                userId: updated.customerId,
+                type: "BOOKING_CANCELLED",
+                title: "Booking Cancelled",
+                message: `Booking for "${serviceTitle}" has been cancelled.`,
+                referenceId: updated.id,
+                referenceType: "BOOKING"
+              }),
+              notificationService.createNotification({
+                userId: updated.providerId,
+                type: "BOOKING_CANCELLED",
+                title: "Booking Cancelled",
+                message: `Booking for "${serviceTitle}" was cancelled.`,
+                referenceId: updated.id,
+                referenceType: "BOOKING"
+              })
+            ]);
+          } else if (newBStatus === "COMPLETED") {
+            await Promise.all([
+              notificationService.createNotification({
+                userId: updated.customerId,
+                type: "SERVICE_COMPLETED",
+                title: "Service Completed",
+                message: `Your service "${serviceTitle}" has been completed. Please rate your experience!`,
+                referenceId: updated.id,
+                referenceType: "BOOKING"
+              }),
+              notificationService.createNotification({
+                userId: updated.providerId,
+                type: "SERVICE_COMPLETED",
+                title: "Job Completed",
+                message: `Job for "${serviceTitle}" marked as completed.`,
+                referenceId: updated.id,
+                referenceType: "BOOKING"
+              })
+            ]);
+          }
+        }
+
+        if (oldPStatus !== "PAID" && newPStatus === "PAID") {
+          await Promise.all([
+            notificationService.createNotification({
+              userId: updated.customerId,
+              type: "PAYMENT_RECEIVED",
+              title: "Payment Successful",
+              message: `Payment of ₹${updated.total} for "${serviceTitle}" was received successfully.`,
+              referenceId: updated.id,
+              referenceType: "BOOKING"
+            }),
+            notificationService.createNotification({
+              userId: updated.providerId,
+              type: "PAYMENT_RECEIVED",
+              title: "Payment Received",
+              message: `Payment of ₹${updated.total} received for job "${serviceTitle}".`,
+              referenceId: updated.id,
+              referenceType: "BOOKING"
+            })
+          ]);
+        }
+      }
+    } catch (notifErr) {
+      console.error("Failed to generate booking update notifications:", notifErr);
+    }
+
+    return updated;
   }
+
 
   async deleteBooking(id) {
     return await bookingRepository.delete(id);
