@@ -76,7 +76,7 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
 
         {/* Category Overlay */}
         <div className="absolute top-3 right-3 z-10">
-          <span className="bg-[#FAF6F0] text-[#1F1D1A] border border-[#E8DCC3] text-[10px] font-bold px-2.5 py-0.5 rounded-lg uppercase tracking-wider">
+          <span className="bg-[#FAF6F0] text-[#1F1D1A] border border-[#E8DCC3] text-xs font-bold px-2.5 py-1 rounded-lg">
             {category}
           </span>
         </div>
@@ -129,22 +129,21 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
         </div>
 
         {/* Pricing & Call to Action Footer */}
-        <div className="flex items-center justify-between gap-3 pt-2 mt-auto border-t border-[#E8DCC3]">
+        <div className="flex items-end justify-between gap-3 pt-2 mt-auto border-t border-[#E8DCC3]">
           <div>
-            <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Starts at</span>
+            <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block mb-0.5">Starts at</span>
             <div className="flex items-baseline gap-1">
-              <span className="text-lg font-black text-[#1F1D1A] tracking-tight">{formatPrice(price, { decimals: true })}</span>
-              <span className="text-[11px] text-[#7A7266] font-medium">{priceType}</span>
+              <span className="text-lg font-black text-[#1F1D1A] tracking-tight leading-none">{formatPrice(price, { decimals: true })}</span>
+              <span className="text-[11px] text-[#7A7266] font-medium leading-none">{priceType}</span>
             </div>
           </div>
 
           <NavLink to={destination} className="shrink-0">
             <Button 
-              size="sm"
-              className="bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs px-4 h-9 rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-sm px-5 h-11 rounded-xl shadow-xs transition-colors flex items-center gap-2 cursor-pointer"
             >
               {ctaText}
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </NavLink>
         </div>

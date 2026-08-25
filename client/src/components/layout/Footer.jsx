@@ -173,17 +173,15 @@ export default function Footer() {
           {/* Column 4: Contact & Newsletter */}
           <div className="flex flex-col gap-4">
             <h3 className="font-bold text-[#1F1D1A] text-base tracking-wide">Stay Connected</h3>
-            <p className="text-xs text-[#7A7266] font-medium">Subscribe to receive local deals and dispatch updates.</p>
-            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-2">
-              <div className="relative w-full">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="bg-[#FAF6F0] border border-[#E8DCC3] text-[#1F1D1A] placeholder:text-[#7A7266] text-xs h-10 rounded-xl focus:border-[#C9A46A]"
-                />
-              </div>
-              <Button type="submit" className="bg-[#C9A46A] hover:bg-[#b89359] text-white text-xs font-bold h-9.5 rounded-xl border border-[#E8DCC3] shadow-2xs">
-                Subscribe <Send className="h-3.5 w-3.5 ml-1" />
+            <p className="text-xs text-[#7A7266] font-medium leading-relaxed">Subscribe to receive local deals, seasonal tips, and dispatch updates.</p>
+            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-2.5 w-full">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full bg-[#FAF6F0] border border-[#E8DCC3] text-[#1F1D1A] placeholder:text-[#7A7266] text-xs h-10 rounded-xl focus:border-[#C9A46A]"
+              />
+              <Button type="submit" className="w-full bg-[#8C4B3E] hover:bg-[#783E33] text-white text-xs font-bold h-10 rounded-xl border border-[#8C4B3E] shadow-2xs cursor-pointer flex items-center justify-center gap-1.5">
+                Subscribe <Send className="h-3.5 w-3.5" />
               </Button>
             </form>
           </div>
@@ -191,7 +189,7 @@ export default function Footer() {
         </div>
 
         {/* Footer Bottom Bar */}
-        <div className="mt-12 pt-6 border-t border-[#E8DCC3] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#7A7266] gap-4 font-medium">
+        <div className="mt-12 pt-6 border-t border-[#E8DCC3] flex flex-col sm:flex-row items-center justify-between text-xs text-[#7A7266] gap-4 font-medium">
           <p>© {new Date().getFullYear()} BookMyLocalService. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-[#C9A46A] transition-colors">Privacy Policy</a>

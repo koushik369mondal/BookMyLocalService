@@ -9,12 +9,12 @@ export function FeaturedProvidersSection({ providers = [] }) {
   return (
     <section className="py-20 bg-[#FAF6F0]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-14 gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-14 gap-4">
           <div className="space-y-2">
-            <span className="text-xs font-black uppercase tracking-widest text-[#8C4B3E]">Top Rated Experts</span>
+            <span className="text-xs font-bold tracking-wider text-[#8C4B3E]">Top Rated Experts</span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#1F1D1A]">Featured Local Service Providers</h2>
           </div>
-          <NavLink to="/services" className="inline-flex items-center gap-2 text-xs font-extrabold text-[#8C4B3E] hover:text-[#783E33] transition-colors">
+          <NavLink to="/services" className="inline-flex items-center gap-2 text-sm font-extrabold text-white bg-[#8C4B3E] hover:bg-[#783E33] px-5 py-2.5 rounded-xl transition-all shadow-sm shrink-0">
             View All Services
             <ArrowRight className="h-4 w-4" />
           </NavLink>

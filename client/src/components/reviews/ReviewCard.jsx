@@ -48,7 +48,7 @@ export function ReviewCard({
             {date && <span className="text-[10px] text-[#7A7266] font-semibold">{date}</span>}
           </div>
 
-          {title && <h4 className="text-sm font-extrabold text-[#1F1D1A]">{title}</h4>}
+          {title && <h3 className="text-sm font-extrabold text-[#1F1D1A]">{title}</h3>}
           <p className="text-xs text-[#5A5146] font-medium leading-relaxed italic">"{comment}"</p>
         </div>
 

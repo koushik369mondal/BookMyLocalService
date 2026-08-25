@@ -59,10 +59,10 @@ export function HeroSection({ user, onSearch }) {
             </div>
 
             {/* Popular tags */}
-            <div className="flex flex-wrap items-center gap-2 pt-2">
-              <span className="text-xs font-bold text-[#7A7266]">Popular:</span>
+            <div className="flex flex-wrap items-center gap-2 pt-1 px-1 max-w-2xl">
+              <span className="text-xs font-bold text-[#7A7266] shrink-0">Popular:</span>
               {["Home Cleaning", "Plumbing", "Electrical", "Lawn Care"].map((tag) => (
-                <NavLink key={tag} to={`/services?category=${encodeURIComponent(tag)}`} className="text-xs font-semibold px-3 py-1 bg-white border border-[#E8DCC3] text-[#5A5146] hover:text-[#8C4B3E] hover:border-[#8C4B3E] rounded-full transition-colors">
+                <NavLink key={tag} to={`/services?category=${encodeURIComponent(tag)}`} className="text-xs font-semibold px-3 py-1 bg-white/80 border border-[#E8DCC3] text-[#5A5146] hover:text-[#8C4B3E] hover:border-[#8C4B3E] hover:bg-white rounded-full transition-all shadow-2xs">
                   {tag}
                 </NavLink>
               ))}
@@ -72,13 +72,13 @@ export function HeroSection({ user, onSearch }) {
           {/* Right Column: Visual Hero Banner */}
           <div className="lg:col-span-5 relative flex justify-center">
             <motion.div {...floatMotionProps} className="relative z-10 w-full max-w-md">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-[#FAF6F0] flex flex-col items-center justify-center p-8 h-[420px] text-center border-[#E8DCC3]">
-                <div className="p-5 bg-white rounded-full border border-[#E8DCC3] shadow-md mb-4 text-[#8C4B3E]">
-                  <Search className="h-12 w-12" />
+              <div className="relative rounded-3xl overflow-hidden shadow-sm border border-[#E8DCC3] bg-white/70 p-8 h-[380px] flex flex-col items-center justify-center text-center">
+                <div className="p-4 bg-[#FAF6F0] rounded-full border border-[#E8DCC3] mb-4 text-[#8C4B3E]">
+                  <Search className="h-10 w-10 opacity-80" />
                 </div>
-                <span className="px-3.5 py-1 bg-[#8C4B3E] text-white text-xs font-bold rounded-full uppercase tracking-wider mb-2">Verified Professionals</span>
-                <h3 className="text-2xl font-black text-[#1F1D1A]">Book Local Services</h3>
-                <p className="text-xs text-[#5A5146] font-medium mt-1 max-w-xs">Verified background-checked experts in your neighborhood ready to assist</p>
+                <span className="px-3 py-1 bg-[#8C4B3E]/10 text-[#8C4B3E] text-xs font-bold rounded-full tracking-wide mb-2">Verified Professionals</span>
+                <p className="text-sm font-bold text-[#1F1D1A]">Book Verified Local Experts</p>
+                <p className="text-xs text-[#7A7266] font-medium mt-1 max-w-xs">Background-checked pros in your neighborhood ready to assist</p>
               </div>
             </motion.div>
           </div>
