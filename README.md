@@ -1,6 +1,6 @@
 # BookMyLocalService
 
-BookMyLocalService is a full-stack local services marketplace that connects customers with trusted service providers. Users can browse services, book appointments, make secure payments, and track bookings through a modern and responsive web application.
+BookMyLocalService is a full-stack local services marketplace that connects customers with trusted service providers. Users can browse services, book appointments, make secure payments, and track bookings through a modern and responsive web application..
 
 🌐 **Live Demo:** https://bookmylocalservice-web.onrender.com/
 
