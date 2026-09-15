@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Wrench } from "lucide-react";
+import { Wrench, ArrowRight } from "lucide-react";
 import { fadeInUp, staggerContainer } from "@/utils/motion";
 
 export function CategoriesSection({ categories = [] }) {
@@ -18,15 +18,54 @@ export function CategoriesSection({ categories = [] }) {
   }
 
   return (
-    <section className="py-20 bg-white border-y border-[#E8DCC3]">
+    <section className="py-20 bg-white border-y border-[#E8DCC3] relative overflow-hidden">
+      {/* Subtle bg decoration */}
+      <div className="pointer-events-none absolute top-0 right-0 w-64 h-64 rounded-full bg-[#8C4B3E]/3 blur-3xl" />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-14">
-          <span className="text-xs font-bold tracking-wider text-[#8C4B3E]">Explore Categories</span>
-          <h2 className="text-3xl sm:text-4xl font-black text-[#1F1D1A]">Find The Right Service For Every Need</h2>
-          <p className="text-sm text-[#5A5146] font-medium">Browse verified professionals categorized by specialization</p>
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="space-y-2"
+          >
+            <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-[#8C4B3E] bg-[#8C4B3E]/8 border border-[#8C4B3E]/20 px-3.5 py-1.5 rounded-full">
+              Explore Categories
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#1F1D1A]">
+              Find The Right Service<br className="hidden sm:inline" /> For Every Need
+            </h2>
+            <p className="text-sm text-[#5A5146] font-medium">
+              Browse verified professionals categorized by specialization
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+          >
+            <NavLink
+              to="/services"
+              className="inline-flex items-center gap-2 text-sm font-extrabold text-[#8C4B3E] hover:text-white hover:bg-[#8C4B3E] border border-[#8C4B3E]/30 hover:border-[#8C4B3E] px-4 py-2 rounded-xl transition-all duration-200 shrink-0"
+            >
+              View All
+              <ArrowRight className="h-3.5 w-3.5" />
+            </NavLink>
+          </motion.div>
         </div>
 
-        <motion.div variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true }} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+        <motion.div
+          variants={staggerContainer(0.07, 0.05)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
+        >
           {categories.slice(0, 12).map((cat, idx) => {
             const catName = typeof cat.name === "object" ? (cat.name?.name || "Category") : (cat.name || "Category");
             const Icon = (typeof cat.icon === "function" || typeof cat.icon === "object") ? cat.icon : Wrench;
@@ -35,12 +74,12 @@ export function CategoriesSection({ categories = [] }) {
             if (isComingSoon) {
               return (
                 <motion.div key={cat.id || catName || idx} variants={fadeInUp}>
-                  <div className="group flex flex-col items-center p-6 bg-[#FAF6F0]/60 border border-dashed border-[#E8DCC3] rounded-2xl text-center cursor-not-allowed opacity-75 relative">
-                    <div className="p-3.5 rounded-xl bg-amber-50/50 text-[#7A7266] mb-3">
-                      <Icon className="h-6 w-6" />
+                  <div className="group flex flex-col items-center p-5 bg-[#FAF6F0]/80 border border-dashed border-[#E8DCC3] rounded-2xl text-center cursor-not-allowed opacity-60 relative">
+                    <div className="p-3 rounded-xl bg-white/60 text-[#7A7266] mb-3 border border-[#E8DCC3]">
+                      <Icon className="h-5.5 w-5.5" />
                     </div>
-                    <h3 className="text-sm font-extrabold text-[#5A5146] mb-1 line-clamp-2 leading-tight text-center max-w-full">{catName}</h3>
-                    <span className="text-[10px] font-bold text-[#8C4B3E] bg-[#8C4B3E]/10 px-2 py-0.5 rounded-md">
+                    <h3 className="text-xs font-extrabold text-[#5A5146] mb-1.5 line-clamp-2 leading-tight text-center">{catName}</h3>
+                    <span className="text-[9px] font-bold text-[#8C4B3E] bg-[#8C4B3E]/10 px-2 py-0.5 rounded-md">
                       Coming Soon
                     </span>
                   </div>
@@ -50,12 +89,15 @@ export function CategoriesSection({ categories = [] }) {
 
             return (
               <motion.div key={cat.id || catName || idx} variants={fadeInUp}>
-                <NavLink to={`/services?category=${encodeURIComponent(catName)}`} className="group flex flex-col items-center p-6 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl text-center hover:bg-[#8C4B3E] hover:border-[#8C4B3E] transition-all duration-300 shadow-sm hover:shadow-lg cursor-pointer">
-                  <div className={`p-3.5 rounded-xl ${cat.color || "bg-amber-50 text-[#8C4B3E]"} group-hover:bg-white/20 group-hover:text-white transition-colors mb-3`}>
-                    <Icon className="h-6 w-6" />
+                <NavLink
+                  to={`/services?category=${encodeURIComponent(catName)}`}
+                  className="group flex flex-col items-center p-5 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl text-center hover:bg-[#8C4B3E] hover:border-[#8C4B3E] transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+                >
+                  <div className={`p-3 rounded-xl ${cat.color || "bg-amber-50 text-[#8C4B3E]"} group-hover:bg-white/20 group-hover:text-white transition-colors mb-3 border border-transparent group-hover:border-white/20`}>
+                    <Icon className="h-5.5 w-5.5" />
                   </div>
-                  <h3 className="text-sm font-extrabold text-[#1F1D1A] group-hover:text-white transition-colors mb-1 line-clamp-2 leading-tight text-center max-w-full">{catName}</h3>
-                  <span className="text-[11px] font-semibold text-[#7A7266] group-hover:text-white/80 transition-colors">
+                  <h3 className="text-xs font-extrabold text-[#1F1D1A] group-hover:text-white transition-colors mb-1 line-clamp-2 leading-tight text-center">{catName}</h3>
+                  <span className="text-[10px] font-semibold text-[#7A7266] group-hover:text-white/70 transition-colors">
                     {cat.count}
                   </span>
                 </NavLink>
