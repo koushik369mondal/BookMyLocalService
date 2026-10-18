@@ -18,7 +18,7 @@ export function TestimonialsSection() {
           setTestimonials(response.data);
         }
       } catch (error) {
-        console.error("Failed to load testimonials from database:", error);
+        console.error("Failed to load testimonials:", error);
       } finally {
         setIsLoading(false);
       }
@@ -28,27 +28,42 @@ export function TestimonialsSection() {
   }, []);
 
   return (
-    <section className="py-20 bg-white border-t border-[#E8DCC3]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <span className="text-xs font-black uppercase tracking-widest text-[#8C4B3E]">Verified Customer Reviews</span>
-          <h2 className="text-3xl sm:text-4xl font-black text-[#1F1D1A]">Loved by Thousands of Local Neighbors</h2>
-          <p className="text-xs sm:text-sm text-[#5A5146]">Real feedback from verified platform service bookings</p>
+    <section className="py-16 sm:py-24 border-t border-border/70 relative">
+      <div className="max-w-6xl mx-auto px-6 sm:px-12">
+        {/* Section Head */}
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 space-y-2">
+          <h2 className="text-2xl sm:text-[30px] font-medium tracking-tight text-foreground">
+            Loved by neighbors
+          </h2>
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+            Real feedback from verified platform bookings,{" "}
+            <span className="highlight">reviewed by real customers</span>.
+          </p>
         </div>
 
         {isLoading ? (
-          <div className="py-12 text-center">
-            <Loader2 className="h-6 w-6 animate-spin text-[#8C4B3E] mx-auto mb-2" />
-            <p className="text-xs font-semibold text-[#5A5146]">Loading customer reviews from database...</p>
+          <div className="py-12 text-center flex flex-col items-center justify-center gap-2">
+            <Loader2 className="size-6 animate-spin text-muted-foreground" />
+            <p className="text-xs text-muted-foreground">Loading customer reviews...</p>
           </div>
         ) : testimonials.length === 0 ? (
-          <div className="py-12 text-center bg-[#FAF6F0] rounded-3xl border border-[#E8DCC3] max-w-xl mx-auto">
-            <MessageSquare className="h-8 w-8 text-[#7A7266] mx-auto mb-2" />
-            <p className="text-xs font-bold text-[#1F1D1A]">Be the first to leave a review!</p>
-            <p className="text-[11px] text-[#7A7266] mt-1">Complete a local service booking to share your experience with neighbors.</p>
+          <div className="card-chai text-center py-12 max-w-md mx-auto space-y-2 p-6">
+            <MessageSquare className="size-8 text-muted-foreground mx-auto opacity-50" />
+            <h3 className="font-display text-sm font-semibold text-foreground">
+              Be the first to leave a review
+            </h3>
+            <p className="text-xs text-muted-foreground">
+              Complete any local service booking to share your experience with neighbors.
+            </p>
           </div>
         ) : (
-          <motion.div variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <motion.div
+            variants={staggerContainer(0.08, 0)}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          >
             {testimonials.map((t, idx) => (
               <motion.div key={t.id || idx} variants={fadeInUp}>
                 <ReviewCard variant="testimonial" review={t} />

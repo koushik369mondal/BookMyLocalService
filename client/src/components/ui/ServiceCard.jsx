@@ -1,41 +1,43 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-  MapPin, 
-  Star, 
-  ShieldCheck, 
-  ArrowRight
-} from "lucide-react";
-import { prefersReducedMotion } from "@/utils/motion";
+import { MapPin, Star, ShieldCheck, ArrowRight } from "lucide-react";
 import { ProviderAvatar } from "@/components/ui/avatar";
 import { formatPrice } from "@/utils/currency";
 import { ServiceImage } from "@/components/common/ServiceImage";
 
-export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
+export function ServiceCard({ service, ctaText = "Book now", ctaLink }) {
   if (!service) return null;
 
   const id = service.id;
-  const title = service.title || service.name || "Local Service";
-  const category = typeof service.category === "object" ? (service.category?.name || "Service") : (service.category || "Service");
-  const providerName = service.providerName || service.provider?.fullName || service.provider?.name || "Verified Provider";
+  const title = service.title || service.name || "Local service";
+  const category =
+    typeof service.category === "object"
+      ? service.category?.name || "Service"
+      : service.category || "Service";
+  const providerName =
+    service.providerName ||
+    service.provider?.fullName ||
+    service.provider?.name ||
+    "Verified provider";
   const providerId = service.providerId || service.provider?.id;
 
-  const location = service.location || "Local Area";
+  const location = service.location || "Local area";
   const rating = service.rating ? Number(service.rating).toFixed(1) : "5.0";
-  const reviewsCount = service.reviewsCount || service.reviewCount || service.reviews || 0;
+  const reviewsCount =
+    service.reviewsCount || service.reviewCount || service.reviews || 0;
   const price = service.price || 0;
-  
+
   let priceType = service.priceType || "/hr";
   if (priceType && !priceType.startsWith("/")) {
     priceType = `/${priceType}`;
   }
 
-  const description = service.description || "Professional and reliable local service provider ready to assist with your needs.";
+  const description =
+    service.description ||
+    "Professional and reliable local service ready to assist.";
   const badge = service.badge;
-
   const destination = ctaLink || (id ? `/booking?serviceId=${id}` : "/booking");
 
   const providerSnippet = (
@@ -43,135 +45,138 @@ export function ServiceCard({ service, ctaText = "Book Now", ctaLink }) {
       <ProviderAvatar
         provider={service.provider || service}
         name={providerName}
-        className="h-6 w-6 rounded-full border border-[#E8DCC3] shrink-0"
+        className="size-5 rounded-full border border-border/80 shrink-0"
       />
-      <span className="text-xs font-bold text-[#1F1D1A] group-hover/provider:text-[#C9A46A] transition-colors truncate">{providerName}</span>
-      <ShieldCheck className="h-3.5 w-3.5 text-[#7DAB7D] shrink-0 ml-auto" title="Verified Provider" />
+      <span className="text-xs font-medium text-foreground group-hover/provider:text-brand transition-colors truncate">
+        {providerName}
+      </span>
+      <ShieldCheck
+        className="size-3.5 text-emerald-500 shrink-0 ml-auto"
+        title="Verified provider"
+      />
     </>
   );
 
   return (
-    <motion.div 
-      whileHover={prefersReducedMotion ? {} : { y: -3 }}
-      transition={{ duration: 0.15, ease: "easeOut" }}
-      className="group overflow-hidden rounded-2xl border border-[#E8DCC3] bg-white hover:border-[#C9A46A] transition-all duration-200 flex flex-col h-full relative shadow-2xs"
-    >
-      
-      {/* Image Thumbnail Header */}
-      <div className="relative aspect-16/9 w-full overflow-hidden bg-[#F0E7D5] shrink-0 border-b border-[#E8DCC3]">
+    <article className="card-chai group flex flex-col overflow-hidden sm:opacity-90 sm:hover:opacity-100 h-full">
+      {/* Image Thumbnail */}
+      <div className="relative aspect-video w-full overflow-hidden bg-card/60 shrink-0 border-b border-border/60">
         <ServiceImage
           service={service}
           alt={title}
           width={600}
           height={350}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-103"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
         />
 
         {/* Primary Badge */}
         {badge && (
-          <span className="absolute top-3 left-3 z-10 bg-[#C9A46A] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-lg border border-[#E8DCC3] uppercase tracking-wider shadow-2xs">
+          <span className="absolute top-2.5 left-2.5 z-10 rounded border border-border/70 bg-card/90 px-2 py-0.5 text-[11px] font-medium text-foreground backdrop-blur-md">
             {badge}
           </span>
         )}
 
         {/* Category Overlay */}
-        <div className="absolute top-3 right-3 z-10">
-          <span className="bg-[#FAF6F0] text-[#1F1D1A] border border-[#E8DCC3] text-xs font-bold px-2.5 py-1 rounded-lg">
+        <div className="absolute top-2.5 right-2.5 z-10">
+          <span className="rounded border border-border/70 bg-card/90 px-2 py-0.5 text-[11px] font-medium text-muted-foreground backdrop-blur-md">
             {category}
           </span>
         </div>
       </div>
 
       {/* Card Content Body */}
-      <div className="p-5 flex flex-col gap-3 flex-1 bg-white">
-        
+      <div className="p-4 flex flex-col gap-2.5 flex-1">
         {/* Title */}
-        <h3 className="text-base sm:text-lg font-bold text-[#1F1D1A] group-hover:text-[#C9A46A] transition-colors duration-200 line-clamp-1 leading-tight">
+        <h3 className="font-display text-base leading-snug font-semibold text-foreground group-hover:text-brand transition-colors line-clamp-1">
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-xs text-[#5A5146] line-clamp-2 leading-relaxed font-normal">
+        <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
           {description}
         </p>
 
         {/* Metadata Bar (Location & Rating) */}
-        <div className="flex items-center justify-between gap-2 text-xs border-y border-[#E8DCC3] py-2 my-0.5 font-medium text-[#7A7266]">
+        <div className="flex items-center justify-between gap-2 text-xs border-y border-border/60 py-2 my-0.5 text-muted-foreground">
           <div className="flex items-center gap-1.5 min-w-0">
-            <MapPin className="h-3.5 w-3.5 text-[#C9A46A] shrink-0" />
+            <MapPin className="size-3.5 text-muted-foreground shrink-0" />
             <span className="truncate">{location}</span>
           </div>
 
-          <div className="flex items-center gap-1 shrink-0 bg-[#FAF6F0] px-2 py-0.5 rounded-md border border-[#E8DCC3]">
-            <Star className="h-3.5 w-3.5 fill-[#C9A46A] text-[#C9A46A]" />
-            <span className="font-bold text-[#1F1D1A]">{rating}</span>
+          <div className="flex items-center gap-1 shrink-0 font-display">
+            <Star className="size-3 fill-amber-500 text-amber-500" />
+            <span className="font-semibold text-foreground text-xs">{rating}</span>
             {reviewsCount > 0 && (
-              <span className="text-[11px] text-[#7A7266]">({reviewsCount})</span>
+              <span className="text-[11px] text-muted-foreground">({reviewsCount})</span>
             )}
           </div>
         </div>
 
-        {/* Provider Profile Info Header */}
+        {/* Provider Profile Info */}
         <div className="pt-0.5">
           {providerId ? (
             <NavLink
               to={`/providers/${providerId}`}
-              className="inline-flex items-center gap-2 max-w-full p-1.5 -ml-1.5 rounded-lg hover:bg-[#FAF6F0] transition-colors group/provider"
-              title={`View ${providerName}'s full profile`}
+              className="inline-flex items-center gap-2 max-w-full rounded-md hover:bg-card/60 transition-colors group/provider p-1 -ml-1"
+              title={`View ${providerName}'s profile`}
             >
               {providerSnippet}
             </NavLink>
           ) : (
-            <div className="flex items-center gap-2 max-w-full p-1.5 -ml-1.5">
+            <div className="flex items-center gap-2 max-w-full p-1 -ml-1">
               {providerSnippet}
             </div>
           )}
         </div>
 
-        {/* Pricing & Call to Action Footer */}
-        <div className="flex items-end justify-between gap-3 pt-2 mt-auto border-t border-[#E8DCC3]">
+        {/* Pricing & Soft Button Action */}
+        <div className="flex items-end justify-between gap-3 pt-3 mt-auto border-t border-border/60">
           <div>
-            <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block mb-0.5">Starts at</span>
-            <div className="flex items-baseline gap-1">
-              <span className="text-lg font-black text-[#1F1D1A] tracking-tight leading-none">{formatPrice(price, { decimals: true })}</span>
-              <span className="text-[11px] text-[#7A7266] font-medium leading-none">{priceType}</span>
+            <span className="text-[10px] text-muted-foreground block">
+              From
+            </span>
+            <div className="flex items-baseline gap-1 font-display">
+              <span className="text-base font-semibold text-foreground tracking-tight">
+                {formatPrice(price, { decimals: true })}
+              </span>
+              <span className="text-xs text-muted-foreground">{priceType}</span>
             </div>
           </div>
 
           <NavLink to={destination} className="shrink-0">
-            <Button 
-              className="bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-sm px-5 h-11 rounded-xl shadow-xs transition-colors flex items-center gap-2 cursor-pointer"
+            <Button
+              variant="default"
+              size="sm"
+              className="font-display font-semibold text-xs h-8 px-3.5"
             >
               {ctaText}
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </NavLink>
         </div>
-
       </div>
-
-    </motion.div>
+    </article>
   );
 }
 
 export function ServiceCardSkeleton() {
   return (
-    <div className="rounded-2xl border border-[#E8DCC3] bg-white overflow-hidden flex flex-col h-full shadow-2xs">
-      <Skeleton className="aspect-16/9 w-full bg-[#FAF6F0]" />
-      <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+    <div className="card-chai overflow-hidden flex flex-col h-full">
+      <Skeleton className="aspect-video w-full bg-card/60" />
+      <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
         <div className="space-y-2">
-          <Skeleton className="h-5 w-3/4 bg-[#FAF6F0]" />
-          <Skeleton className="h-3 w-full bg-[#FAF6F0]" />
-          <Skeleton className="h-3 w-2/3 bg-[#FAF6F0]" />
+          <Skeleton className="h-4 w-3/4 bg-card/60" />
+          <Skeleton className="h-3 w-full bg-card/60" />
+          <Skeleton className="h-3 w-2/3 bg-card/60" />
         </div>
-        <div className="space-y-3 pt-4 border-t border-[#E8DCC3]">
+        <div className="space-y-3 pt-3 border-t border-border/60">
           <div className="flex items-center justify-between">
-            <Skeleton className="h-4 w-1/3 bg-[#FAF6F0]" />
-            <Skeleton className="h-4 w-1/4 bg-[#FAF6F0]" />
+            <Skeleton className="h-3 w-1/3 bg-card/60" />
+            <Skeleton className="h-3 w-1/4 bg-card/60" />
           </div>
           <div className="flex items-center justify-between">
-            <Skeleton className="h-6 w-1/3 bg-[#FAF6F0]" />
-            <Skeleton className="h-9 w-24 bg-[#FAF6F0] rounded-xl" />
+            <Skeleton className="h-5 w-1/3 bg-card/60" />
+            <Skeleton className="h-8 w-20 bg-card/60 rounded-md" />
           </div>
         </div>
       </div>

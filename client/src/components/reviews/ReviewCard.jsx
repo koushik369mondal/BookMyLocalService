@@ -3,6 +3,7 @@ import { Star, CornerDownRight, Loader2 } from "lucide-react";
 import { UserAvatar } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function ReviewCard({
   review,
@@ -13,96 +14,119 @@ export function ReviewCard({
   onReplySubmit,
   isSubmittingReply = false,
   className = "",
-  variant = "default"
+  variant = "default",
 }) {
   if (!review) return null;
 
-  const name = review.name || review.customerName || review.author || "Verified Customer";
-  const avatar = review.avatar || review.customerAvatar || review.customerProfileImage || review.profileImage || null;
+  const name =
+    review.name ||
+    review.customerName ||
+    review.author ||
+    "Verified customer";
+  const avatar =
+    review.avatar ||
+    review.customerAvatar ||
+    review.customerProfileImage ||
+    review.profileImage ||
+    null;
   const rating = typeof review.rating === "number" ? review.rating : 5;
-  const serviceTitle = review.serviceName || review.serviceTitle || review.service?.title || "";
+  const serviceTitle =
+    review.serviceName ||
+    review.serviceTitle ||
+    review.service?.title ||
+    "";
   const date = review.date || review.createdAt || "";
   const title = review.title || "";
   const comment = review.comment || review.quote || "";
 
-  const replyText = (review.providerReply && review.providerReply.trim()) || (review.reply && review.reply.trim()) || null;
+  const replyText =
+    (review.providerReply && review.providerReply.trim()) ||
+    (review.reply && review.reply.trim()) ||
+    null;
   const replyDate = review.providerReplyAt;
 
   if (variant === "testimonial") {
     return (
-      <div className={`p-6 rounded-2xl bg-white border border-[#E8DCC3] shadow-xs flex flex-col justify-between space-y-4 hover:border-[#C9A46A] transition-all duration-300 ${className}`}>
+      <article
+        className={cn(
+          "card-chai p-6 flex flex-col justify-between gap-4 sm:opacity-90 hover:opacity-100",
+          className
+        )}
+      >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`h-4 w-4 ${
+                  className={`size-3.5 ${
                     i < Math.round(rating)
-                      ? "fill-[#C9A46A] text-[#C9A46A]"
-                      : "text-[#E8DCC3]"
+                      ? "fill-amber-500 text-amber-500"
+                      : "text-border"
                   }`}
                 />
               ))}
             </div>
-            {date && <span className="text-[10px] text-[#7A7266] font-semibold">{date}</span>}
+            {date && (
+              <span className="text-[11px] text-muted-foreground font-mono">
+                {date}
+              </span>
+            )}
           </div>
 
-          {title && <h3 className="text-sm font-extrabold text-[#1F1D1A]">{title}</h3>}
-          <p className="text-xs text-[#5A5146] font-medium leading-relaxed italic">"{comment}"</p>
-        </div>
-
-        <div className="pt-3 border-t border-[#E8DCC3]/60 space-y-3">
-          <div className="flex items-center gap-3">
-            <UserAvatar
-              user={{ fullName: name, avatar }}
-              className="h-9 w-9 border border-[#E8DCC3]"
-              fallbackClassName="bg-[#F0E7D5] text-[#1F1D1A] font-bold text-xs"
-              size={60}
-            />
-            <div>
-              <span className="block text-xs font-bold text-[#1F1D1A]">{name}</span>
-              {serviceTitle && (
-                <span className="text-[10px] text-[#7A7266] font-semibold">{serviceTitle}</span>
-              )}
-            </div>
-          </div>
-
-          {/* Provider Reply block if present */}
-          {replyText && (
-            <div className="pl-3.5 border-l-2 border-[#C9A46A] bg-[#FAF6F0] p-3 rounded-r-xl space-y-1 text-xs">
-              <div className="flex items-center justify-between gap-2">
-                <span className="flex items-center gap-1 font-bold text-[#8C4B3E] text-[10px] uppercase">
-                  <CornerDownRight className="h-3 w-3 text-[#C9A46A]" />
-                  {providerName ? `Response from ${providerName}` : "Provider Response"}
-                </span>
-                {replyDate && <span className="text-[9px] text-[#7A7266]">{replyDate}</span>}
-              </div>
-              <p className="text-[11px] text-[#5A5146] font-medium leading-normal">{replyText}</p>
-            </div>
+          {title && (
+            <h3 className="font-display text-sm font-semibold text-foreground">
+              {title}
+            </h3>
           )}
+          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            "{comment}"
+          </p>
         </div>
-      </div>
+
+        <div className="pt-3 border-t border-border/60 flex items-center gap-3">
+          <UserAvatar
+            user={{ fullName: name, avatar }}
+            className="size-8 rounded-full border border-border"
+            size={60}
+          />
+          <div className="min-w-0">
+            <span className="font-display block text-xs font-semibold text-foreground truncate">
+              {name}
+            </span>
+            {serviceTitle && (
+              <span className="text-[11px] text-muted-foreground block truncate">
+                {serviceTitle}
+              </span>
+            )}
+          </div>
+        </div>
+      </article>
     );
   }
 
   return (
-    <div className={`p-5 border border-[#E8DCC3] rounded-2xl bg-[#FAF6F0]/40 space-y-4 shadow-2xs ${className}`}>
-      
+    <article
+      className={cn(
+        "card-chai p-5 space-y-3.5 sm:opacity-90 hover:opacity-100",
+        className
+      )}
+    >
       {/* Header: Customer Info & Rating */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+        <div className="flex items-center gap-2.5">
           <UserAvatar
             user={{ fullName: name, avatar }}
-            className="h-10 w-10 border border-[#E8DCC3]"
-            fallbackClassName="bg-[#F0E7D5] text-[#1F1D1A] font-bold text-xs"
+            className="size-8 rounded-full border border-border"
             size={80}
           />
           <div>
-            <h4 className="text-xs font-bold text-[#1F1D1A]">{name}</h4>
+            <h4 className="font-display text-xs font-semibold text-foreground">
+              {name}
+            </h4>
             {serviceTitle && (
-              <span className="text-[10px] text-[#7A7266] font-semibold block">
-                Service: {serviceTitle}
+              <span className="text-[11px] text-muted-foreground block">
+                {serviceTitle}
               </span>
             )}
           </div>
@@ -113,63 +137,77 @@ export function ReviewCard({
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
-                className={`h-3.5 w-3.5 ${
+                className={`size-3.5 ${
                   i < Math.round(rating)
-                    ? "fill-[#C9A46A] text-[#C9A46A]"
-                    : "text-[#E8DCC3]"
+                    ? "fill-amber-500 text-amber-500"
+                    : "text-border"
                 }`}
               />
             ))}
           </div>
-          {date && <span className="text-xs font-bold text-[#7A7266]">{date}</span>}
+          {date && (
+            <span className="text-[11px] text-muted-foreground font-mono">
+              {date}
+            </span>
+          )}
         </div>
       </div>
 
       {/* Review Content */}
-      {title && <h5 className="text-xs font-black text-[#1F1D1A] -mb-1 px-0.5">{title}</h5>}
-      <p className="text-xs font-medium text-[#1F1D1A] leading-relaxed bg-white p-3.5 rounded-xl border border-[#E8DCC3]/60">
+      {title && (
+        <h5 className="font-display text-xs font-semibold text-foreground">
+          {title}
+        </h5>
+      )}
+      <p className="text-xs text-muted-foreground leading-relaxed">
         "{comment}"
       </p>
 
-      {/* Provider Reply Block (Display only when present) */}
+      {/* Provider Reply Block */}
       {replyText ? (
-        <div className="pl-4 border-l-2 border-[#C9A46A] bg-[#F0E7D5]/40 p-3.5 rounded-r-xl space-y-1 text-xs">
+        <div className="pl-3 border-l border-border bg-card/40 p-2.5 rounded-r-md space-y-1 text-xs">
           <div className="flex items-center justify-between gap-2">
-            <span className="flex items-center gap-1.5 text-[10px] font-bold text-[#C9A46A] uppercase tracking-wider">
-              <CornerDownRight className="h-3.5 w-3.5 text-[#C9A46A]" />
-              {providerName ? `Response from ${providerName}` : "Official Provider Response"}
+            <span className="flex items-center gap-1 font-medium text-xs text-foreground">
+              <CornerDownRight className="size-3 text-muted-foreground" />
+              {providerName ? `Response from ${providerName}` : "Provider response"}
             </span>
-            {replyDate && <span className="text-[10px] font-semibold text-[#7A7266]">{replyDate}</span>}
+            {replyDate && (
+              <span className="text-[10px] text-muted-foreground font-mono">
+                {replyDate}
+              </span>
+            )}
           </div>
-          <p className="text-xs font-medium text-[#5A5146] leading-relaxed">{replyText}</p>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            {replyText}
+          </p>
         </div>
       ) : (
-        /* Optional Provider Reply Submission Form */
         allowReply && (
-          <div className="space-y-2 pt-2 border-t border-[#E8DCC3]/60">
+          <div className="space-y-2 pt-2 border-t border-border/60">
             <Input
-              placeholder="Write a public response to this review..."
+              placeholder="Write a response to this review..."
               value={replyInput}
-              onChange={(e) => onReplyInputChange && onReplyInputChange(e.target.value)}
-              className="text-xs h-9 border-[#E8DCC3] focus-visible:ring-[#C9A46A] rounded-xl bg-white"
+              onChange={(e) =>
+                onReplyInputChange && onReplyInputChange(e.target.value)
+              }
+              className="text-xs h-8.5 rounded-md bg-card/40 border-border"
             />
             <Button
               size="xs"
+              variant="default"
               disabled={isSubmittingReply || !replyInput.trim()}
               onClick={() => onReplySubmit && onReplySubmit(review.id)}
-              className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-[10px] uppercase rounded-xl h-8 px-4 border border-[#E8DCC3] cursor-pointer"
             >
               {isSubmittingReply ? (
-                <Loader2 className="h-3 w-3 animate-spin" />
+                <Loader2 className="size-3 animate-spin" />
               ) : (
-                "Publish Reply"
+                "Publish response"
               )}
             </Button>
           </div>
         )
       )}
-
-    </div>
+    </article>
   );
 }
 

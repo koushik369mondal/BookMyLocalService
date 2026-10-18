@@ -17,8 +17,8 @@ export default function Home() {
   if (!loading && user && (user.role === "PROVIDER" || user.role === "ADMIN")) {
     return (
       <MainLayout>
-        <div className="min-h-screen flex items-center justify-center bg-[#FAF6F0]">
-          <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="size-6 animate-spin text-muted-foreground" />
         </div>
       </MainLayout>
     );

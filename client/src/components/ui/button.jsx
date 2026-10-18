@@ -1,62 +1,73 @@
-import { forwardRef } from 'react';
-import { Slot } from '@radix-ui/react-slot';
-import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
+import { forwardRef } from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva } from "class-variance-authority";
+import { ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-bold transition-all duration-150 active:scale-[0.98] cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[#C9A46A]/30 focus-visible:ring-offset-1 select-none shadow-2xs",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors duration-200 active:scale-[0.99] cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 outline-none focus-visible:ring-1 focus-visible:ring-ring select-none",
   {
     variants: {
       variant: {
-        default: 'bg-[#C9A46A] text-white hover:bg-[#b89359] border border-[#E8DCC3]',
-        destructive: 'bg-[#8C4B3E] text-white hover:bg-[#7A3E32] border border-[#E8DCC3]',
-        outline: 'border border-[#E8DCC3] bg-[#FAF6F0] text-[#1F1D1A] hover:bg-[#F0E7D5]',
-        secondary: 'bg-[#F0E7D5] text-[#1F1D1A] hover:bg-[#E8DCC3] border border-[#E8DCC3]',
-        ghost: 'text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#1F1D1A] shadow-none',
-        link: 'text-[#C9A46A] underline-offset-4 hover:underline shadow-none',
-        terracotta: 'bg-[#8C4B3E] text-white hover:bg-[#7A3E32] border border-[#E8DCC3]',
+        // ChaiUI Solid: The one main action on a screen (asymmetric corners)
+        solid:
+          "btn-asym bg-neutral-900 text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-neutral-200 font-medium px-4",
+        // ChaiUI Outline: Beside the main action (mirrored asymmetric corners)
+        outline:
+          "btn-asym-mirror border border-border/80 bg-transparent text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-900/60 font-medium px-4",
+        // ChaiUI Soft / Default: Used on cards and secondary actions
+        default:
+          "rounded-md bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-4",
+        soft:
+          "rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 font-semibold px-4",
+        // Ghost & Link
+        ghost:
+          "rounded-md text-muted-foreground hover:bg-accent hover:text-foreground",
+        link:
+          "text-foreground underline-offset-4 hover:underline hover:text-brand",
+        // Destructive / Danger (for dialog confirms)
+        destructive:
+          "rounded-md bg-destructive text-white hover:bg-destructive/90 font-semibold px-4",
+        danger:
+          "rounded-md bg-destructive text-white hover:bg-destructive/90 font-semibold px-4",
       },
       size: {
-        default: 'h-10 px-4.5 py-2.5 has-[>svg]:px-3.5',
-        xs: 'h-7 rounded-lg text-xs px-2.5',
-        sm: 'h-8.5 rounded-lg text-xs px-3 has-[>svg]:px-2.5',
-        lg: 'h-11 rounded-xl px-6 text-base has-[>svg]:px-4.5',
-        icon: 'size-10 rounded-xl',
+        default: "h-9 px-4 py-2",
+        xs: "h-7 text-xs px-2.5 rounded-sm",
+        sm: "h-8 text-xs px-3 rounded-md",
+        md: "h-9 text-sm px-4 rounded-md",
+        lg: "h-10 text-base px-5",
+        icon: "size-9 rounded-md",
       },
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
+      variant: "default",
+      size: "default",
     },
   }
 );
 
-const Button = forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
-  const Comp = asChild ? Slot : 'button';
+const Button = forwardRef(
+  ({ className, variant = "default", size = "default", asChild = false, iconRight, children, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
 
-  let variantClasses = buttonVariants({ variant, size });
-
-  if (className) {
-    if (className.includes("bg-")) {
-      variantClasses = variantClasses.replace(/\bbg-\[#C9A46A\]\b/g, "");
-    }
-    if (className.includes("text-") && !className.includes("text-white")) {
-      variantClasses = variantClasses.replace(/\btext-white\b/g, "");
-    }
+    return (
+      <Comp
+        ref={ref}
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size }), className)}
+        {...props}
+      >
+        {children}
+        {variant === "solid" && iconRight === undefined && !asChild && (
+          <ArrowUpRight className="-ml-1 size-4" aria-hidden="true" />
+        )}
+        {iconRight}
+      </Comp>
+    );
   }
+);
 
-  const classes = cn(variantClasses, className);
-
-  return (
-    <Comp
-      ref={ref}
-      data-slot="button"
-      className={classes}
-      {...props}
-    />
-  );
-});
-
-Button.displayName = 'Button';
+Button.displayName = "Button";
 
 export { Button, buttonVariants };

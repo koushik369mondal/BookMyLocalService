@@ -1,34 +1,54 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Briefcase } from "lucide-react";
+import { ArrowUpRight, Briefcase } from "lucide-react";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { fadeInUp, staggerContainer } from "@/utils/motion";
 
 export function FeaturedProvidersSection({ providers = [] }) {
   return (
-    <section className="py-20 bg-[#FAF6F0]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-14 gap-4">
-          <div className="space-y-2">
-            <span className="text-xs font-bold tracking-wider text-[#8C4B3E]">Top Rated Experts</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-[#1F1D1A]">Featured Local Service Providers</h2>
+    <section className="py-16 sm:py-20 relative">
+      <div className="max-w-6xl mx-auto px-6 sm:px-12">
+        {/* Section Head */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-10 gap-4">
+          <div className="space-y-1.5">
+            <h2 className="text-2xl sm:text-[30px] font-medium tracking-tight text-foreground">
+              Featured service providers
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground">
+              Hire vetted local professionals with{" "}
+              <span className="highlight">proven community trust</span>.
+            </p>
           </div>
-          <NavLink to="/services" className="inline-flex items-center gap-2 text-sm font-extrabold text-white bg-[#8C4B3E] hover:bg-[#783E33] px-5 py-2.5 rounded-xl transition-all shadow-sm shrink-0">
-            View All Services
-            <ArrowRight className="h-4 w-4" />
+
+          <NavLink
+            to="/services"
+            className="inline-flex h-9 items-center gap-1.5 rounded-md border border-border/80 px-3.5 text-xs font-medium text-muted-foreground hover:text-brand hover:border-border transition-colors shrink-0"
+          >
+            <span>View all services</span>
+            <ArrowUpRight className="size-3.5" aria-hidden="true" />
           </NavLink>
         </div>
 
         {providers.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-3xl border border-[#E8DCC3] space-y-3">
-            <Briefcase className="h-10 w-10 text-[#7A7266] mx-auto opacity-50" />
-            <h3 className="text-sm font-bold text-[#1F1D1A]">No Featured Services Available</h3>
-            <p className="text-xs text-[#7A7266]">New service offerings will appear here as providers publish services</p>
+          <div className="card-chai text-center py-16 space-y-2.5">
+            <Briefcase className="size-8 text-muted-foreground mx-auto opacity-50" />
+            <h3 className="font-display text-sm font-semibold text-foreground">
+              No featured services available
+            </h3>
+            <p className="text-xs text-muted-foreground">
+              New service listings will appear here as providers publish offerings.
+            </p>
           </div>
         ) : (
-          <motion.div variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {providers.map((p, idx) => (
+          <motion.div
+            variants={staggerContainer(0.08, 0)}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {providers.slice(0, 6).map((p, idx) => (
               <motion.div key={p.id || idx} variants={fadeInUp}>
                 <ServiceCard service={p} />
               </motion.div>

@@ -1,15 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BookMyLocalService</title>
+  <title>BookMyLocalService - Verified Local Services at Your Doorstep</title>
+  <meta name="description" content="Discover, schedule, and book verified local service professionals with transparent rates and guaranteed satisfaction." />
+
+  <!-- Preconnect to Google Fonts for optimal loading speed -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Montserrat:wght@400..800&family=Onest:wght@400..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet" />
+
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('chaiui-theme') || 'dark';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
-<body>
+<body class="bg-background text-foreground min-h-screen antialiased selection:bg-neutral-800 selection:text-white dark:selection:bg-neutral-200 dark:selection:text-black">
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

@@ -1,5 +1,7 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { Mail, Phone, MapPin, Send, ShieldCheck, Briefcase } from "lucide-react";
+import { Send, ShieldCheck, Briefcase } from "lucide-react";
+import Logo from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "../../context/AuthContext";
@@ -13,55 +15,41 @@ export default function Footer() {
     const settingsPath = user.role === "ADMIN" ? "/admin/settings" : "/provider/settings";
 
     return (
-      <footer className="bg-[#F0E7D5] text-[#5A5146] border-t border-[#E8DCC3]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium">
-            
-            {/* Workspace Brand & Badge */}
+      <footer className="relative mt-20 px-6 font-sans sm:px-12 before:absolute before:top-0 before:left-1/2 before:h-px before:w-full before:max-w-[1440px] before:-translate-x-1/2 before:bg-amber-600 before:opacity-10 before:[mask-image:linear-gradient(90deg,transparent_0%,black_40%,black_60%,transparent_100%)] dark:before:bg-orange-300/40">
+        <div className="max-w-6xl mx-auto py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
             <div className="flex items-center gap-3">
-              <NavLink to={dashboardPath} className="flex items-center gap-2 group shrink-0">
-                <img
-                  src="/logo.png"
-                  alt="BookMyLocalService Logo"
-                  className="h-7 w-auto object-contain transition-transform group-hover:scale-105 duration-300"
-                />
-                <span className="font-bold text-base tracking-tight text-[#1F1D1A]">
-                  BookMyLocal<span className="text-[#C9A46A]">Service</span>
-                </span>
+              <NavLink to={dashboardPath}>
+                <Logo size={24} />
               </NavLink>
-              <span className="bg-[#FAF6F0] border border-[#E8DCC3] px-2.5 py-0.5 rounded-lg text-[10px] font-bold text-[#C9A46A] uppercase tracking-wider flex items-center gap-1">
+              <span className="rounded border border-border px-2 py-0.5 text-[11px] text-muted-foreground flex items-center gap-1 font-medium">
                 {user.role === "ADMIN" ? (
                   <>
-                    <ShieldCheck className="h-3 w-3 text-[#C9A46A]" /> Admin Workspace
+                    <ShieldCheck className="h-3 w-3" /> Admin workspace
                   </>
                 ) : (
                   <>
-                    <Briefcase className="h-3 w-3 text-[#C9A46A]" /> Provider Workspace
+                    <Briefcase className="h-3 w-3" /> Provider workspace
                   </>
                 )}
               </span>
             </div>
 
-            {/* Copyright Notice */}
-            <p className="text-[11px] text-[#7A7266]">
-              © {new Date().getFullYear()} BookMyLocalService Workspace Portal. All rights reserved.
+            <p className="text-[11px] text-muted-foreground">
+              © {new Date().getFullYear()} BookMyLocalService workspace. All rights reserved.
             </p>
 
-            {/* Workspace Navigation Links */}
-            <div className="flex items-center gap-5 text-xs">
-              <NavLink to={dashboardPath} className="hover:text-[#C9A46A] transition-colors font-bold">
+            <div className="flex items-center gap-5 text-xs text-muted-foreground">
+              <NavLink to={dashboardPath} className="hover:text-brand transition-colors">
                 Dashboard
               </NavLink>
-              <NavLink to={settingsPath} className="hover:text-[#C9A46A] transition-colors font-semibold">
+              <NavLink to={settingsPath} className="hover:text-brand transition-colors">
                 Settings
               </NavLink>
-              <NavLink to="/contact" className="hover:text-[#C9A46A] transition-colors font-semibold">
+              <NavLink to="/contact" className="hover:text-brand transition-colors">
                 Support
               </NavLink>
-              <a href="#" className="hover:text-[#C9A46A] transition-colors">Privacy</a>
-              <a href="#" className="hover:text-[#C9A46A] transition-colors">Terms</a>
             </div>
-
           </div>
         </div>
       </footer>
@@ -69,135 +57,141 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-[#F0E7D5] text-[#5A5146] border-t border-[#E8DCC3]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-
-        {/* Footer Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-
-          {/* Column 1: Brand Logo & Description */}
-          <div className="flex flex-col gap-4">
-            <NavLink to="/" className="flex items-center gap-2 group shrink-0">
-              <img
-                src="/logo.png"
-                alt="BookMyLocalService Logo"
-                className="h-9 w-auto object-contain transition-transform group-hover:scale-105 duration-300"
-              />
-              <span className="font-bold text-xl tracking-tight text-[#1F1D1A] group-hover:text-[#C9A46A] transition-colors">
-                BookMyLocal<span className="text-[#C9A46A]">Service</span>
-              </span>
+    <footer className="relative mt-24 px-6 font-sans sm:px-12 before:absolute before:top-0 before:left-1/2 before:h-px before:w-full before:max-w-[1440px] before:-translate-x-1/2 before:bg-amber-600 before:opacity-10 before:[mask-image:linear-gradient(90deg,transparent_0%,black_40%,black_60%,transparent_100%)] dark:before:bg-orange-300/40">
+      <div className="max-w-6xl mx-auto pt-16 pb-12">
+        {/* Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+          {/* Column 1: Brand & Tagline */}
+          <div className="flex flex-col gap-3">
+            <NavLink to="/" className="w-fit">
+              <Logo size={28} />
             </NavLink>
-            <p className="text-xs leading-relaxed text-[#5A5146] mt-2 font-medium">
-              Connecting you with top-rated local professionals for all your home, wellness, and business needs. Reliable, fast, and secure.
+            <p className="text-sm leading-relaxed text-muted-foreground mt-1">
+              Verified local service marketplace. Connecting trusted professionals with homeowners and businesses across India.
             </p>
-            <div className="flex items-center gap-3 mt-4">
-              <a href="#" aria-label="Facebook" className="p-2 bg-[#FAF6F0] hover:bg-[#C9A46A] hover:text-white rounded-lg text-[#5A5146] transition-all duration-300 hover:scale-105 border border-[#E8DCC3]">
-                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.8z" />
+            <div className="flex items-center gap-2 pt-2 text-muted-foreground">
+              <a
+                href="https://x.com/BookMyLclServic"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Twitter / X"
+                className="size-8 rounded-lg border border-border flex items-center justify-center hover:border-border/80 hover:text-foreground transition-colors"
+              >
+                <svg className="size-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
-              <a href="https://www.instagram.com/bookmylocalservice/?hl=en" aria-label="Instagram" className="p-2 bg-[#FAF6F0] hover:bg-[#C9A46A] hover:text-white rounded-lg text-[#5A5146] transition-all duration-300 hover:scale-105 border border-[#E8DCC3]">
-                <svg className="h-4 w-4 stroke-current fill-none stroke-2" viewBox="0 0 24 24">
+              <a
+                href="https://www.instagram.com/bookmylocalservice/?hl=en"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="size-8 rounded-lg border border-border flex items-center justify-center hover:border-border/80 hover:text-foreground transition-colors"
+              >
+                <svg className="size-3.5 stroke-current fill-none stroke-2" viewBox="0 0 24 24">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                 </svg>
               </a>
-              <a href="https://x.com/BookMyLclServic" aria-label="Twitter" className="p-2 bg-[#FAF6F0] hover:bg-[#C9A46A] hover:text-white rounded-lg text-[#5A5146] transition-all duration-300 hover:scale-105 border border-[#E8DCC3]">
-                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-              <a href="#" aria-label="LinkedIn" className="p-2 bg-[#FAF6F0] hover:bg-[#C9A46A] hover:text-white rounded-lg text-[#5A5146] transition-all duration-300 hover:scale-105 border border-[#E8DCC3]">
-                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                </svg>
-              </a>
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
-          <div className="flex flex-col gap-4">
-            <h3 className="font-bold text-[#1F1D1A] text-base tracking-wide">Quick Links</h3>
-            <nav className="flex flex-col gap-2.5">
-              <NavLink to="/" className="text-xs text-[#5A5146] hover:text-[#C9A46A] hover:translate-x-1 transition-all duration-300 w-fit font-medium">
+          {/* Column 2: Navigation Links */}
+          <div className="flex flex-col gap-3">
+            <h3 className="font-display text-sm font-semibold tracking-tight text-foreground">
+              Explore
+            </h3>
+            <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
+              <NavLink to="/" className="hover:text-brand transition-colors w-fit">
                 Home
               </NavLink>
-              <NavLink to="/services" className="text-xs text-[#5A5146] hover:text-[#C9A46A] hover:translate-x-1 transition-all duration-300 w-fit font-medium">
+              <NavLink to="/services" className="hover:text-brand transition-colors w-fit">
                 Services
               </NavLink>
-              <NavLink to="/categories" className="text-xs text-[#5A5146] hover:text-[#C9A46A] hover:translate-x-1 transition-all duration-300 w-fit font-medium">
+              <NavLink to="/categories" className="hover:text-brand transition-colors w-fit">
                 Categories
               </NavLink>
-              <NavLink to="/about" className="text-xs text-[#5A5146] hover:text-[#C9A46A] hover:translate-x-1 transition-all duration-300 w-fit font-medium">
-                About Us
+              <NavLink to="/about" className="hover:text-brand transition-colors w-fit">
+                About us
               </NavLink>
-              <NavLink to="/contact" className="text-xs text-[#5A5146] hover:text-[#C9A46A] hover:translate-x-1 transition-all duration-300 w-fit font-medium">
+              <NavLink to="/contact" className="hover:text-brand transition-colors w-fit">
                 Contact
               </NavLink>
             </nav>
           </div>
 
           {/* Column 3: Popular Services */}
-          <div className="flex flex-col gap-4">
-            <h3 className="font-bold text-[#1F1D1A] text-base tracking-wide">Popular Services</h3>
-            <ul className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-3">
+            <h3 className="font-display text-sm font-semibold tracking-tight text-foreground">
+              Categories
+            </h3>
+            <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
               <li>
-                <NavLink to="/services" className="text-xs text-[#5A5146] hover:text-[#C9A46A] hover:translate-x-1 transition-all duration-300 block w-fit font-medium">
-                  Home Cleaning
+                <NavLink to="/services?search=cleaning" className="hover:text-brand transition-colors w-fit">
+                  Home cleaning
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/services" className="text-xs text-[#5A5146] hover:text-[#C9A46A] hover:translate-x-1 transition-all duration-300 block w-fit font-medium">
-                  Plumbing Repairs
+                <NavLink to="/services?search=plumbing" className="hover:text-brand transition-colors w-fit">
+                  Plumbing repairs
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/services" className="text-xs text-[#5A5146] hover:text-[#C9A46A] hover:translate-x-1 transition-all duration-300 block w-fit font-medium">
-                  Electrical Services
+                <NavLink to="/services?search=electrical" className="hover:text-brand transition-colors w-fit">
+                  Electrical installations
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/services" className="text-xs text-[#5A5146] hover:text-[#C9A46A] hover:translate-x-1 transition-all duration-300 block w-fit font-medium">
-                  Moving & Packing
+                <NavLink to="/services?search=painting" className="hover:text-brand transition-colors w-fit">
+                  Painting and polish
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/services" className="text-xs text-[#5A5146] hover:text-[#C9A46A] hover:translate-x-1 transition-all duration-300 block w-fit font-medium">
-                  Lawn & Garden Care
+                <NavLink to="/services?search=ac" className="hover:text-brand transition-colors w-fit">
+                  Appliance repair
                 </NavLink>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Contact & Newsletter */}
-          <div className="flex flex-col gap-4">
-            <h3 className="font-bold text-[#1F1D1A] text-base tracking-wide">Stay Connected</h3>
-            <p className="text-xs text-[#7A7266] font-medium leading-relaxed">Subscribe to receive local deals, seasonal tips, and dispatch updates.</p>
-            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-2.5 w-full">
+          {/* Column 4: Newsletter */}
+          <div className="flex flex-col gap-3">
+            <h3 className="font-display text-sm font-semibold tracking-tight text-foreground">
+              Updates
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Receive verified service specials and seasonal maintenance guides.
+            </p>
+            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-2 pt-1">
               <Input
                 type="email"
-                placeholder="Enter your email"
-                className="w-full bg-[#FAF6F0] border border-[#E8DCC3] text-[#1F1D1A] placeholder:text-[#7A7266] text-xs h-10 rounded-xl focus:border-[#C9A46A]"
+                placeholder="Enter email address"
+                aria-label="Email address for newsletter"
+                className="bg-card/40 border border-border text-foreground text-xs h-9 rounded-md placeholder:text-muted-foreground"
               />
-              <Button type="submit" className="w-full bg-[#8C4B3E] hover:bg-[#783E33] text-white text-xs font-bold h-10 rounded-xl border border-[#8C4B3E] shadow-2xs cursor-pointer flex items-center justify-center gap-1.5">
-                Subscribe <Send className="h-3.5 w-3.5" />
+              <Button type="submit" variant="default" size="sm" className="w-full justify-center">
+                Subscribe <Send className="size-3.5" />
               </Button>
             </form>
           </div>
-
         </div>
 
         {/* Footer Bottom Bar */}
-        <div className="mt-12 pt-6 border-t border-[#E8DCC3] flex flex-col sm:flex-row items-center justify-between text-xs text-[#7A7266] gap-4 font-medium">
+        <div className="mt-14 pt-6 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-4">
           <p>© {new Date().getFullYear()} BookMyLocalService. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-[#C9A46A] transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-[#C9A46A] transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-[#C9A46A] transition-colors">Cookies Settings</a>
+            <a href="#" className="hover:text-brand transition-colors">
+              Privacy policy
+            </a>
+            <a href="#" className="hover:text-brand transition-colors">
+              Terms of service
+            </a>
+            <a href="#" className="hover:text-brand transition-colors">
+              Security
+            </a>
           </div>
         </div>
-
       </div>
     </footer>
   );
