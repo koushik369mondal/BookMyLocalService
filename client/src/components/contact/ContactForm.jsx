@@ -9,39 +9,45 @@ export function ContactForm({
   success,
   error,
   onChange,
-  onSubmit
+  onSubmit,
 }) {
   return (
-    <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-xs flex flex-col justify-between h-full">
+    <div className="lg:col-span-7 card-chai p-6 sm:p-8 flex flex-col justify-between h-full">
       <div className="flex flex-col gap-5">
-        <div className="flex items-center gap-2.5 mb-2">
-          <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
-            <MessageSquare className="h-5 w-5" />
+        <div className="flex items-center gap-2.5 mb-1">
+          <div className="size-9 rounded-lg border border-border/80 bg-card/60 flex items-center justify-center text-foreground">
+            <MessageSquare className="size-4" />
           </div>
           <div>
-            <h2 className="font-bold text-xl text-[#1F1D1A] leading-none">Send a Message</h2>
-            <p className="text-xs text-[#7A7266] mt-1">We typically reply within 2 hours during business hours</p>
+            <h2 className="font-display font-semibold text-base text-foreground leading-none">
+              Send a message
+            </h2>
+            <p className="text-xs text-muted-foreground mt-1">
+              We typically reply within 2 hours during active business hours
+            </p>
           </div>
         </div>
 
-        <form onSubmit={onSubmit} className="space-y-5">
+        <form onSubmit={onSubmit} className="space-y-4">
           {success && (
-            <div className="bg-emerald-50 border border-emerald-100 text-emerald-800 text-xs rounded-xl p-4 flex items-start gap-3">
-              <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
+            <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs p-3.5 flex items-start gap-2.5">
+              <CheckCircle2 className="size-4 shrink-0 mt-0.5" />
               <span>{success}</span>
             </div>
           )}
 
           {error && (
-            <div className="bg-rose-50 border border-rose-100 text-rose-800 text-xs rounded-xl p-4 flex items-start gap-3">
-              <AlertCircle className="h-5 w-5 text-rose-600 shrink-0 mt-0.5" />
+            <div className="rounded-lg border border-red-500/20 bg-red-500/10 text-red-600 dark:text-red-400 text-xs p-3.5 flex items-start gap-2.5">
+              <AlertCircle className="size-4 shrink-0 mt-0.5" />
               <span>{error}</span>
             </div>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label htmlFor="name" className="text-xs font-bold text-[#5A5146] uppercase tracking-wider">Full Name *</label>
+              <label htmlFor="name" className="text-xs font-medium text-foreground">
+                Full name *
+              </label>
               <Input
                 id="name"
                 name="name"
@@ -49,13 +55,15 @@ export function ContactForm({
                 placeholder="John Doe"
                 value={formData.name}
                 onChange={onChange}
-                className="h-10 border-[#5A5146]/20 focus-visible:ring-violet-950 rounded-xl text-xs bg-white text-[#1F1D1A]"
+                className="h-9 border-border bg-card/40 text-xs rounded-md"
                 required
               />
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="email" className="text-xs font-bold text-[#5A5146] uppercase tracking-wider">Email Address *</label>
+              <label htmlFor="email" className="text-xs font-medium text-foreground">
+                Email address *
+              </label>
               <Input
                 id="email"
                 name="email"
@@ -63,15 +71,17 @@ export function ContactForm({
                 placeholder="john@example.com"
                 value={formData.email}
                 onChange={onChange}
-                className="h-10 border-[#5A5146]/20 focus-visible:ring-violet-950 rounded-xl text-xs bg-white text-[#1F1D1A]"
+                className="h-9 border-border bg-card/40 text-xs rounded-md"
                 required
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label htmlFor="phone" className="text-xs font-bold text-[#5A5146] uppercase tracking-wider">Phone Number</label>
+              <label htmlFor="phone" className="text-xs font-medium text-foreground">
+                Phone number
+              </label>
               <Input
                 id="phone"
                 name="phone"
@@ -79,27 +89,31 @@ export function ContactForm({
                 placeholder="+91 98765 43210"
                 value={formData.phone}
                 onChange={onChange}
-                className="h-10 border-[#5A5146]/20 focus-visible:ring-violet-950 rounded-xl text-xs bg-white text-[#1F1D1A]"
+                className="h-9 border-border bg-card/40 text-xs rounded-md"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="subject" className="text-xs font-bold text-[#5A5146] uppercase tracking-wider">Subject *</label>
+              <label htmlFor="subject" className="text-xs font-medium text-foreground">
+                Subject *
+              </label>
               <Input
                 id="subject"
                 name="subject"
                 type="text"
-                placeholder="Booking Inquiry, Support..."
+                placeholder="Booking inquiry, service support..."
                 value={formData.subject}
                 onChange={onChange}
-                className="h-10 border-[#5A5146]/20 focus-visible:ring-violet-950 rounded-xl text-xs bg-white text-[#1F1D1A]"
+                className="h-9 border-border bg-card/40 text-xs rounded-md"
                 required
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="message" className="text-xs font-bold text-[#5A5146] uppercase tracking-wider">Message *</label>
+            <label htmlFor="message" className="text-xs font-medium text-foreground">
+              Message *
+            </label>
             <textarea
               id="message"
               name="message"
@@ -107,21 +121,27 @@ export function ContactForm({
               placeholder="Describe your question or requirement in detail..."
               value={formData.message}
               onChange={onChange}
-              className="w-full p-3 border border-[#5A5146]/20 focus:outline-none focus:ring-2 focus:ring-[#8C4B3E] rounded-xl text-xs bg-white text-[#1F1D1A]"
+              className="w-full p-3 border border-border bg-card/40 focus:outline-none focus:ring-1 focus:ring-ring rounded-md text-xs text-foreground placeholder:text-muted-foreground"
               required
-            ></textarea>
+            />
           </div>
 
-          <Button type="submit" disabled={loading} className="w-full sm:w-auto h-11 px-8 bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-md">
+          <Button
+            type="submit"
+            variant="default"
+            size="default"
+            disabled={loading}
+            className="w-full sm:w-auto h-9 px-6 font-display font-semibold text-xs"
+          >
             {loading ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin text-white" />
-                Sending Message...
+                <Loader2 className="size-3.5 animate-spin" />
+                <span>Sending...</span>
               </>
             ) : (
               <>
-                <Send className="h-4 w-4 text-white" />
-                Send Message
+                <Send className="size-3.5" />
+                <span>Send message</span>
               </>
             )}
           </Button>

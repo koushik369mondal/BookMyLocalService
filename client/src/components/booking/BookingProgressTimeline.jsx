@@ -37,15 +37,15 @@ export default function BookingProgressTimeline({ status, reviewStatus, hasRevie
   }
 
   return (
-    <div className="w-full bg-[#FAF6F0]/80 border border-[#E8DCC3]/80 rounded-2xl p-4 my-2">
+    <div className="w-full card-chai p-4 my-2">
       <div className="relative flex items-center justify-between">
         
         {/* Background Connector Bar */}
-        <div className="absolute top-1/2 left-4 right-4 -translate-y-1/2 h-1 bg-[#E8DCC3] rounded-full z-0" />
+        <div className="absolute top-1/2 left-4 right-4 -translate-y-1/2 h-0.5 bg-border/80 rounded-full z-0" />
         
         {/* Active Progress Bar */}
         <div
-          className="absolute top-1/2 left-4 -translate-y-1/2 h-1 bg-[#8C4B3E] rounded-full transition-all duration-500 z-0"
+          className="absolute top-1/2 left-4 -translate-y-1/2 h-0.5 bg-foreground rounded-full transition-all duration-500 z-0"
           style={{ width: `${(currentStepIndex / (steps.length - 1)) * 100}%` }}
         />
 
@@ -57,18 +57,18 @@ export default function BookingProgressTimeline({ status, reviewStatus, hasRevie
           return (
             <div key={step.key} className="relative z-10 flex flex-col items-center group">
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                className={`size-7 rounded-full flex items-center justify-center transition-all duration-300 ${
                   isDone
-                    ? "bg-[#8C4B3E] text-white shadow-2xs"
-                    : "bg-white text-[#7A7266] border border-[#E8DCC3]"
-                } ${isCurrent ? "ring-4 ring-[#8C4B3E]/20 scale-110" : ""}`}
+                    ? "bg-foreground text-background"
+                    : "bg-card text-muted-foreground border border-border/80"
+                } ${isCurrent ? "ring-2 ring-foreground/20 scale-105" : ""}`}
               >
-                <Icon className={`h-4 w-4 ${isCurrent && step.key === "in_progress" ? "animate-pulse text-amber-300" : ""}`} />
+                <Icon className={`size-3.5 ${isCurrent && step.key === "in_progress" ? "animate-pulse" : ""}`} />
               </div>
               <span
-                className={`text-[10px] mt-1.5 font-bold tracking-tight text-center ${
-                  isDone ? "text-[#1F1D1A]" : "text-[#7A7266]"
-                } ${isCurrent ? "text-[#8C4B3E] font-black" : ""}`}
+                className={`text-[10px] mt-1.5 font-medium tracking-tight text-center ${
+                  isDone ? "text-foreground" : "text-muted-foreground"
+                } ${isCurrent ? "font-semibold text-foreground" : ""}`}
               >
                 {step.label}
               </span>

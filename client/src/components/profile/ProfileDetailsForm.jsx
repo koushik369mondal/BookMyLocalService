@@ -14,22 +14,22 @@ export function ProfileDetailsForm({
   errorMsg
 }) {
   return (
-    <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E8DCC3] shadow-sm space-y-6">
-      <div className="flex items-center gap-2 pb-4 border-b border-[#E8DCC3]">
-        <User className="h-5 w-5 text-[#8C4B3E]" />
-        <h2 className="text-lg font-black text-[#1F1D1A]">Personal & Account Information</h2>
+    <div className="card-chai p-6 sm:p-8 space-y-6">
+      <div className="flex items-center gap-2 pb-4 border-b border-white/10">
+        <User className="h-5 w-5 text-neutral-400" />
+        <h2 className="text-lg font-bold text-white">Personal & account information</h2>
       </div>
 
       {successMsg && (
-        <div className="bg-emerald-50 border border-emerald-100 text-emerald-800 text-xs rounded-xl p-4 flex items-center gap-3">
-          <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+        <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs rounded-xl p-4 flex items-center gap-3">
+          <CheckCircle2 className="h-4 w-4 shrink-0" />
           <span>{successMsg}</span>
         </div>
       )}
 
       {errorMsg && (
-        <div className="bg-rose-50 border border-rose-100 text-rose-800 text-xs rounded-xl p-4 flex items-center gap-3">
-          <AlertCircle className="h-4 w-4 text-rose-600 shrink-0" />
+        <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-xl p-4 flex items-center gap-3">
+          <AlertCircle className="h-4 w-4 shrink-0" />
           <span>{errorMsg}</span>
         </div>
       )}
@@ -37,92 +37,108 @@ export function ProfileDetailsForm({
       <form onSubmit={onProfileSubmit} className="space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5 sm:col-span-2">
-            <Label className="text-xs font-bold text-[#1F1D1A]">Full Name *</Label>
+            <Label className="text-xs font-medium text-neutral-300">Full name *</Label>
             <Input
               placeholder="Amanda Watson"
               disabled={isSavingDetails}
-              className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${profileErrors.fullName ? "border-rose-400" : ""}`}
+              className={profileErrors.fullName ? "border-red-500/50" : ""}
               {...regProfile("fullName")}
             />
-            {profileErrors.fullName && <p className="text-[11px] text-rose-600 font-bold flex items-center gap-1"><ShieldAlert className="h-3 w-3" />{profileErrors.fullName.message}</p>}
+            {profileErrors.fullName && (
+              <p className="text-[11px] text-red-400 font-medium flex items-center gap-1">
+                <ShieldAlert className="h-3 w-3" />
+                {profileErrors.fullName.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs font-bold text-[#1F1D1A]">Email Address (Primary Login ID)</Label>
+            <Label className="text-xs font-medium text-neutral-300">Email address (primary ID)</Label>
             <Input
               disabled
               readOnly
-              className="h-10 border-[#E8DCC3] text-xs rounded-xl bg-gray-50 text-gray-500 cursor-not-allowed"
+              className="opacity-60 cursor-not-allowed bg-neutral-900/50"
               {...regProfile("email")}
             />
-            <p className="text-[10px] text-[#7A7266]">Email address is globally unique and cannot be modified.</p>
+            <p className="text-[10px] text-neutral-500">Email address is globally unique and cannot be modified.</p>
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs font-bold text-[#1F1D1A]">Phone Contact *</Label>
+            <Label className="text-xs font-medium text-neutral-300">Phone contact *</Label>
             <Input
               placeholder="123-456-7890"
               disabled={isSavingDetails}
-              className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${profileErrors.phone ? "border-rose-400" : ""}`}
+              className={profileErrors.phone ? "border-red-500/50" : ""}
               {...regProfile("phone")}
             />
-            {profileErrors.phone && <p className="text-[11px] text-rose-600 font-bold flex items-center gap-1"><ShieldAlert className="h-3 w-3" />{profileErrors.phone.message}</p>}
+            {profileErrors.phone && (
+              <p className="text-[11px] text-red-400 font-medium flex items-center gap-1">
+                <ShieldAlert className="h-3 w-3" />
+                {profileErrors.phone.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-1.5 sm:col-span-2">
-            <Label className="text-xs font-bold text-[#1F1D1A]">Default Dispatch Address</Label>
+            <Label className="text-xs font-medium text-neutral-300">Default dispatch address</Label>
             <Input
               placeholder="123 Main Street"
               disabled={isSavingDetails}
-              className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${profileErrors.address ? "border-rose-400" : ""}`}
+              className={profileErrors.address ? "border-red-500/50" : ""}
               {...regProfile("address")}
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs font-bold text-[#1F1D1A]">City</Label>
+            <Label className="text-xs font-medium text-neutral-300">City</Label>
             <Input
               placeholder="New York"
               disabled={isSavingDetails}
-              className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${profileErrors.city ? "border-rose-400" : ""}`}
+              className={profileErrors.city ? "border-red-500/50" : ""}
               {...regProfile("city")}
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs font-bold text-[#1F1D1A]">State</Label>
+            <Label className="text-xs font-medium text-neutral-300">State</Label>
             <Input
               placeholder="NY"
               disabled={isSavingDetails}
-              className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${profileErrors.state ? "border-rose-400" : ""}`}
+              className={profileErrors.state ? "border-red-500/50" : ""}
               {...regProfile("state")}
             />
           </div>
 
           <div className="space-y-1.5 sm:col-span-2">
-            <Label className="text-xs font-bold text-[#1F1D1A]">PIN Code</Label>
+            <Label className="text-xs font-medium text-neutral-300">Postal code</Label>
             <Input
-              placeholder="100001"
+              placeholder="10001"
               disabled={isSavingDetails}
-              className={`h-10 border-[#E8DCC3] text-xs rounded-xl ${profileErrors.zipCode ? "border-rose-400" : ""}`}
+              className={profileErrors.zipCode ? "border-red-500/50" : ""}
               {...regProfile("zipCode")}
             />
-            {profileErrors.zipCode && <p className="text-[11px] text-rose-600 font-bold flex items-center gap-1"><ShieldAlert className="h-3 w-3" />{profileErrors.zipCode.message}</p>}
+            {profileErrors.zipCode && (
+              <p className="text-[11px] text-red-400 font-medium flex items-center gap-1">
+                <ShieldAlert className="h-3 w-3" />
+                {profileErrors.zipCode.message}
+              </p>
+            )}
           </div>
         </div>
 
         <Button
           type="submit"
           disabled={isSavingDetails}
-          className="h-11 px-6 bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+          variant="solid"
+          className="flex items-center justify-center gap-2 cursor-pointer"
         >
           {isSavingDetails ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin text-white" />
-              Saving Profile...
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Saving profile...
             </>
           ) : (
-            "Save Profile Changes"
+            "Save profile changes"
           )}
         </Button>
       </form>

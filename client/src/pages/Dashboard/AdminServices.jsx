@@ -51,66 +51,71 @@ export default function AdminServices() {
 
   return (
     <DashboardLayout>
-      {/* BANNER HEADER */}
-      <section className="bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 relative overflow-hidden rounded-2xl mb-8">
-        <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_50%)]"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="space-y-6 text-neutral-100">
+        {/* HEADER */}
+        <section className="card-chai p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-xl sm:text-2xl font-black tracking-tight">Services Directory</h1>
-            <p className="text-[#7A7266] text-xs mt-1.5 font-medium">Database catalog of all services published across providers</p>
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">Services directory</h1>
+            <p className="text-neutral-400 text-xs sm:text-sm mt-1 font-medium">Database catalog of all services published across providers</p>
           </div>
-          <Button onClick={fetchServices} size="xs" variant="outline" className="bg-white/10 text-white hover:bg-white/20 border-white/20 rounded-xl h-8.5 text-[10px] font-bold flex items-center gap-1 shrink-0">
-            <RefreshCw className="h-3.5 w-3.5" /> Refresh Live DB
+          <Button
+            onClick={fetchServices}
+            size="sm"
+            variant="outline"
+            className="text-xs h-9 px-3 flex items-center gap-1.5 shrink-0 cursor-pointer"
+          >
+            <RefreshCw className="h-3.5 w-3.5" /> Refresh database
           </Button>
-        </div>
-      </section>
+        </section>
 
-      {/* SERVICES LIST */}
-      <div className="space-y-6">
-        <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-6">
-          <CardHeader className="p-0 pb-4 border-b border-stone-50">
-            <CardTitle className="text-base font-extrabold text-[#1F1D1A]">Active Database Services ({services.length})</CardTitle>
-            <CardDescription className="text-xs">Live service catalog synced directly with PostgreSQL Service table</CardDescription>
-          </CardHeader>
-          <CardContent className="p-0 pt-6">
+        {/* SERVICES LIST */}
+        <div className="card-chai p-6 space-y-4">
+          <div className="pb-4 border-b border-white/10 flex flex-row items-center justify-between">
+            <div>
+              <h2 className="text-base font-semibold text-white">Active services ({services.length})</h2>
+              <p className="text-xs text-neutral-400">Live service catalog synced directly with database</p>
+            </div>
+          </div>
+
+          <div>
             {loading ? (
               <div className="h-36 flex items-center justify-center">
-                <Loader2 className="h-6 w-6 animate-spin text-[#8C4B3E]" />
+                <Loader2 className="h-6 w-6 animate-spin text-neutral-400" />
               </div>
             ) : services.length === 0 ? (
               <div className="py-12 text-center space-y-3">
-                <p className="text-xs text-stone-500 font-semibold">No services found in database.</p>
+                <p className="text-xs text-neutral-400 font-medium">No services found in database.</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-xs text-left">
                   <thead>
-                    <tr className="border-b border-stone-50 text-[#7A7266] font-bold uppercase tracking-wider text-[9px] pb-2">
-                      <th className="py-2.5 px-1">ID</th>
-                      <th className="py-2.5">Service Name</th>
+                    <tr className="border-b border-white/10 text-neutral-400 font-semibold uppercase tracking-wider text-[10px] pb-2">
+                      <th className="py-2.5 px-2">ID</th>
+                      <th className="py-2.5">Service name</th>
                       <th className="py-2.5">Category</th>
                       <th className="py-2.5">Provider</th>
                       <th className="py-2.5">Rate</th>
                       <th className="py-2.5 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-stone-50 font-medium">
+                  <tbody className="divide-y divide-white/5 font-normal text-neutral-300">
                     {services.map((svc) => (
-                      <tr key={svc.id} className="hover:bg-slate-55/30 transition-colors">
-                        <td className="py-3 px-1 font-bold text-[#1F1D1A] text-[10px] truncate max-w-[90px]">{svc.id}</td>
-                        <td className="py-3 font-extrabold text-[#1F1D1A]">{svc.title}</td>
+                      <tr key={svc.id} className="hover:bg-white/[0.02] transition-colors">
+                        <td className="py-3 px-2 font-mono text-[10px] text-neutral-500 truncate max-w-[90px]">{svc.id}</td>
+                        <td className="py-3 font-semibold text-white">{svc.title}</td>
                         <td className="py-3">
-                          <span className="inline-block text-[10px] font-bold text-[#1F1D1A] bg-[#8C4B3E]/5 px-2 py-0.5 rounded-lg border border-violet-950/10">
+                          <span className="inline-block text-[10px] font-medium text-neutral-300 bg-white/5 px-2 py-0.5 rounded-lg border border-white/10">
                             {typeof svc.category === "object" ? (svc.category?.name || "General") : (svc.category || "General")}
                           </span>
                         </td>
-                        <td className="py-3 text-[#5A5146] font-semibold">{svc.provider?.fullName || "Specialist"}</td>
-                        <td className="py-3 font-bold text-[#1F1D1A]">{formatPrice(svc.price, { priceType: svc.priceType })}</td>
+                        <td className="py-3 text-neutral-300">{svc.provider?.fullName || "Specialist"}</td>
+                        <td className="py-3 font-semibold text-white">{formatPrice(svc.price, { priceType: svc.priceType })}</td>
                         <td className="py-3 text-right">
                           <div className="flex items-center justify-end gap-2">
                             <button 
                               onClick={() => handleDeleteService(svc.id, svc.title)}
-                              className="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition-colors"
+                              className="text-rose-400 hover:text-rose-300 p-1.5 rounded-lg hover:bg-rose-500/10 transition-colors cursor-pointer"
                               title="Delete service"
                             >
                               <Trash2 className="h-4 w-4" />
@@ -123,8 +128,8 @@ export default function AdminServices() {
                 </table>
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </DashboardLayout>
   );

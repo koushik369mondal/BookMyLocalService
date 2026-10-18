@@ -6,19 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback, UserAvatar } from "@/components/ui/avatar";
 import { 
   Star, 
   MessageSquare, 
   CheckCircle2, 
   Search, 
   ArrowLeft, 
-  CornerDownRight, 
   AlertCircle,
   Loader2
 } from "lucide-react";
-
 import ReviewCard from "@/components/reviews/ReviewCard";
 
 export default function Reviews() {
@@ -83,7 +79,7 @@ export default function Reviews() {
     try {
       const response = await providerService.replyToReview(reviewId, text);
       if (response.success) {
-        setSuccessMsg("Reply saved to database successfully!");
+        setSuccessMsg("Reply saved to database successfully.");
         setReplyInputs((prev) => ({ ...prev, [reviewId]: "" }));
         setTimeout(() => setSuccessMsg(""), 2500);
         fetchReviews();
@@ -119,156 +115,152 @@ export default function Reviews() {
 
   return (
     <DashboardLayout>
-      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
+      <div className="space-y-8 font-sans">
         
-        {/* RETRO BANNER HEADER */}
-        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-1">
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Customer Ratings & Reviews</h1>
-              <p className="text-[#5A5146] text-xs sm:text-sm font-medium">Monitor customer feedback, view satisfaction metrics, and reply to client reviews</p>
-            </div>
-            
-            <Link to="/provider/dashboard">
-              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] border border-[#E8DCC3] text-white font-bold text-xs rounded-xl h-9.5 px-4 cursor-pointer shadow-2xs">
-                <ArrowLeft className="h-4 w-4 mr-1" /> Dashboard
-              </Button>
-            </Link>
+        {/* HEADER */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-white/10">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">Customer ratings & reviews</h1>
+            <p className="text-neutral-400 text-xs sm:text-sm mt-1">Monitor customer feedback, view satisfaction metrics, and reply to client reviews</p>
           </div>
-        </section>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
           
-          {successMsg && (
-            <div className="p-3.5 bg-[#7DAB7D]/20 border border-[#7DAB7D]/40 text-[#2B522B] text-xs font-bold rounded-xl flex items-center gap-2">
-              <CheckCircle2 className="h-4.5 w-4.5" />
-              <span>{successMsg}</span>
+          <Link to="/provider/dashboard">
+            <Button size="sm" variant="outline" className="flex items-center gap-1.5">
+              <ArrowLeft className="h-4 w-4" /> Dashboard
+            </Button>
+          </Link>
+        </div>
+
+        {/* FEEDBACK */}
+        {successMsg && (
+          <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium rounded-xl flex items-center gap-2">
+            <CheckCircle2 className="h-4 w-4" />
+            <span>{successMsg}</span>
+          </div>
+        )}
+
+        {error && (
+          <div className="p-3.5 bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium rounded-xl flex items-center gap-2">
+            <AlertCircle className="h-4 w-4" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        {/* RATINGS OVERVIEW GRID */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          {/* SCORE CARD */}
+          <div className="lg:col-span-4 card-chai p-6 text-center space-y-4 flex flex-col justify-center">
+            <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider block">Average rating</span>
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-4xl sm:text-5xl font-bold text-white">
+                {isLoading ? <Loader2 className="h-8 w-8 animate-spin mx-auto text-neutral-400" /> : reviewsData.averageRating}
+              </span>
+              <Star className="h-8 w-8 fill-amber-400 text-amber-400" />
             </div>
-          )}
-
-          {error && (
-            <div className="p-3.5 bg-[#8C4B3E]/20 border border-[#8C4B3E]/40 text-[#8C4B3E] text-xs font-bold rounded-xl flex items-center gap-2">
-              <AlertCircle className="h-4.5 w-4.5" />
-              <span>{error}</span>
+            <p className="text-xs text-neutral-400 font-normal">
+              Based on {totalReviews} customer review{totalReviews === 1 ? "" : "s"}
+            </p>
+            <div className="pt-3 border-t border-white/10 flex justify-around text-xs text-neutral-200">
+              <div>
+                <span className="text-[10px] font-semibold text-neutral-400 uppercase block">Response rate</span>
+                <span className="text-sm font-bold text-emerald-400">{reviewsData.responseRate}%</span>
+              </div>
+              <div className="border-r border-white/10" />
+              <div>
+                <span className="text-[10px] font-semibold text-neutral-400 uppercase block">Recommended</span>
+                <span className="text-sm font-bold text-emerald-400">{reviewsData.recommendationRate}%</span>
+              </div>
             </div>
-          )}
-
-          {/* RATINGS OVERVIEW GRID */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
-            {/* SCORE CARD */}
-            <Card className="lg:col-span-4 border border-[#E8DCC3] shadow-2xs bg-white rounded-2xl p-6 text-center space-y-4 flex flex-col justify-center">
-              <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider block">Average Satisfaction Rating</span>
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-4xl sm:text-5xl font-black text-[#1F1D1A]">
-                  {isLoading ? <Loader2 className="h-8 w-8 animate-spin mx-auto text-[#C9A46A]" /> : reviewsData.averageRating}
-                </span>
-                <Star className="h-8 w-8 fill-[#C9A46A] text-[#C9A46A]" />
-              </div>
-              <p className="text-xs text-[#5A5146] font-semibold">
-                Based on <strong>{totalReviews}</strong> customer review{totalReviews === 1 ? "" : "s"}
-              </p>
-              <div className="pt-2 border-t border-[#E8DCC3] flex justify-around text-xs font-bold text-[#1F1D1A]">
-                <div>
-                  <span className="text-[10px] font-bold text-[#7A7266] uppercase block">Response Rate</span>
-                  <span className="text-sm font-black text-[#2B522B]">{reviewsData.responseRate}%</span>
-                </div>
-                <div className="border-r border-[#E8DCC3]"></div>
-                <div>
-                  <span className="text-[10px] font-bold text-[#7A7266] uppercase block">Recommended</span>
-                  <span className="text-sm font-black text-[#2B522B]">{reviewsData.recommendationRate}%</span>
-                </div>
-              </div>
-            </Card>
-
-            {/* RATING BREAKDOWN BARS */}
-            <Card className="lg:col-span-8 border border-[#E8DCC3] shadow-2xs bg-white rounded-2xl p-6 space-y-3">
-              <span className="text-xs font-bold text-[#1F1D1A] uppercase tracking-wider block border-b border-[#E8DCC3] pb-2">Rating Distribution</span>
-
-              {[5, 4, 3, 2, 1].map((stars) => {
-                const count = distribution[stars] || 0;
-                const percent = totalReviews > 0 ? Math.round((count / totalReviews) * 100) : 0;
-                return (
-                  <div key={stars} className="flex items-center gap-3 text-xs font-bold text-[#1F1D1A]">
-                    <span className="w-12 flex items-center gap-1 shrink-0">
-                      {stars} <Star className="h-3.5 w-3.5 fill-[#C9A46A] text-[#C9A46A]" />
-                    </span>
-                    <Progress value={percent} className="h-2 flex-1 bg-[#FAF6F0]" />
-                    <span className="w-12 text-right text-[11px] text-[#7A7266] shrink-0">{count} ({percent}%)</span>
-                  </div>
-                );
-              })}
-            </Card>
-
           </div>
 
-          {/* REVIEWS FEED LIST */}
-          <Card className="border border-[#E8DCC3] shadow-2xs bg-white rounded-2xl p-6 space-y-6">
-            <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
-                <CardTitle className="text-base font-bold text-[#1F1D1A]">Verified Customer Feedback</CardTitle>
-                <CardDescription className="text-xs text-[#7A7266]">Read and respond to completed service reviews</CardDescription>
-              </div>
+          {/* RATING BREAKDOWN BARS */}
+          <div className="lg:col-span-8 card-chai p-6 space-y-3">
+            <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider block border-b border-white/10 pb-2">Rating distribution</span>
 
-              <div className="flex items-center gap-3 flex-wrap">
-                <div className="relative">
-                  <Input
-                    placeholder="Search comment, service..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="h-9 w-48 pl-8 text-xs border-[#E8DCC3] focus-visible:ring-[#C9A46A] rounded-xl bg-[#FAF6F0]"
-                  />
-                  <Search className="h-3.5 w-3.5 text-[#7A7266] absolute left-2.5 top-[50%] translate-y-[-50%]" />
+            {[5, 4, 3, 2, 1].map((stars) => {
+              const count = distribution[stars] || 0;
+              const percent = totalReviews > 0 ? Math.round((count / totalReviews) * 100) : 0;
+              return (
+                <div key={stars} className="flex items-center gap-3 text-xs text-neutral-300">
+                  <span className="w-12 flex items-center gap-1 shrink-0 font-medium">
+                    {stars} <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                  </span>
+                  <Progress value={percent} className="h-2 flex-1" />
+                  <span className="w-12 text-right text-[11px] text-neutral-400 shrink-0 font-mono">{count} ({percent}%)</span>
                 </div>
-
-                <select
-                  value={starFilter}
-                  onChange={(e) => setStarFilter(e.target.value)}
-                  className="h-9 text-xs font-bold border border-[#E8DCC3] rounded-xl px-3 bg-[#FAF6F0] text-[#1F1D1A] focus:outline-none cursor-pointer"
-                >
-                  <option value="all">All Stars</option>
-                  <option value="5">5 Stars</option>
-                  <option value="4">4 Stars</option>
-                  <option value="3">3 Stars</option>
-                  <option value="2">2 Stars</option>
-                  <option value="1">1 Star</option>
-                </select>
-              </div>
-            </CardHeader>
-
-            <CardContent className="p-0 pt-2">
-              {isLoading ? (
-                <div className="py-12 text-center">
-                  <Loader2 className="h-6 w-6 text-[#C9A46A] animate-spin mx-auto mb-2" />
-                  <p className="text-xs font-semibold text-[#5A5146]">Loading customer reviews from database...</p>
-                </div>
-              ) : filteredReviews.length === 0 ? (
-                <div className="py-12 text-center">
-                  <MessageSquare className="h-8 w-8 text-[#7A7266] mx-auto mb-2" />
-                  <p className="text-xs font-bold text-[#1F1D1A]">No reviews available yet</p>
-                  <p className="text-[11px] text-[#7A7266] mt-1">Reviews submitted by verified customers will appear here</p>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  {filteredReviews.map((rev) => (
-                    <ReviewCard
-                      key={rev.id}
-                      review={rev}
-                      allowReply={true}
-                      replyInput={replyInputs[rev.id] || ""}
-                      onReplyInputChange={(val) =>
-                        setReplyInputs((prev) => ({ ...prev, [rev.id]: val }))
-                      }
-                      onReplySubmit={handleAddReplySubmit}
-                      isSubmittingReply={submittingReplyId === rev.id}
-                    />
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+              );
+            })}
+          </div>
 
         </div>
+
+        {/* REVIEWS FEED LIST */}
+        <div className="card-chai p-6 space-y-6">
+          <div className="pb-4 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h2 className="text-base font-bold text-white">Verified customer feedback</h2>
+              <p className="text-xs text-neutral-400">Read and respond to completed service reviews</p>
+            </div>
+
+            <div className="flex items-center gap-3 flex-wrap">
+              <div className="relative">
+                <Input
+                  placeholder="Search comment, service..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="h-9 w-48 pl-8 text-xs"
+                />
+                <Search className="h-3.5 w-3.5 text-neutral-400 absolute left-2.5 top-[50%] translate-y-[-50%]" />
+              </div>
+
+              <select
+                value={starFilter}
+                onChange={(e) => setStarFilter(e.target.value)}
+                className="h-9 text-xs font-medium border border-white/10 rounded-xl px-3 bg-neutral-900/60 text-white focus:outline-none cursor-pointer"
+              >
+                <option value="all" className="bg-neutral-900 text-white">All stars</option>
+                <option value="5" className="bg-neutral-900 text-white">5 stars</option>
+                <option value="4" className="bg-neutral-900 text-white">4 stars</option>
+                <option value="3" className="bg-neutral-900 text-white">3 stars</option>
+                <option value="2" className="bg-neutral-900 text-white">2 stars</option>
+                <option value="1" className="bg-neutral-900 text-white">1 star</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            {isLoading ? (
+              <div className="py-12 text-center">
+                <Loader2 className="h-6 w-6 text-neutral-400 animate-spin mx-auto mb-2" />
+                <p className="text-xs text-neutral-400">Loading customer reviews from database...</p>
+              </div>
+            ) : filteredReviews.length === 0 ? (
+              <div className="py-12 text-center">
+                <MessageSquare className="h-8 w-8 text-neutral-600 mx-auto mb-2" />
+                <p className="text-xs font-semibold text-white">No reviews available yet</p>
+                <p className="text-[11px] text-neutral-400 mt-1">Reviews submitted by verified customers will appear here</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filteredReviews.map((rev) => (
+                  <ReviewCard
+                    key={rev.id}
+                    review={rev}
+                    allowReply={true}
+                    replyInput={replyInputs[rev.id] || ""}
+                    onReplyInputChange={(val) =>
+                      setReplyInputs((prev) => ({ ...prev, [rev.id]: val }))
+                    }
+                    onReplySubmit={handleAddReplySubmit}
+                    isSubmittingReply={submittingReplyId === rev.id}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
       </div>
     </DashboardLayout>
   );

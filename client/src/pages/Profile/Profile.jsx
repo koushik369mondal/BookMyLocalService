@@ -3,7 +3,7 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import { useProfile } from "@/hooks/useProfile";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { ProfileDetailsForm } from "@/components/profile/ProfileDetailsForm";
-import { Loader2, User, MapPin, LogOut } from "lucide-react";
+import { Loader2, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Profile() {
@@ -18,9 +18,6 @@ export default function Profile() {
     isUploadingPhoto,
     isUpgradingRole,
     fileInputRef,
-    addresses,
-    isAddAddressOpen,
-    setIsAddAddressOpen,
     regProfile,
     handleProfileSubmit,
     profileErrors,
@@ -33,8 +30,8 @@ export default function Profile() {
   if (authLoading || !user) {
     return (
       <DashboardLayout>
-        <div className="min-h-[70vh] flex items-center justify-center bg-[#FAF6F0]">
-          <Loader2 className="h-8 w-8 animate-spin text-[#8C4B3E]" />
+        <div className="min-h-[70vh] flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-neutral-400" />
         </div>
       </DashboardLayout>
     );
@@ -42,8 +39,8 @@ export default function Profile() {
 
   return (
     <DashboardLayout>
-      <div className="bg-[#FAF6F0] min-h-screen py-8 font-sans text-[#1F1D1A]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-6">
+      <div className="min-h-screen py-4 font-sans text-neutral-200">
+        <div className="space-y-6">
 
           {/* Profile Header Component */}
           <ProfileHeader
@@ -57,29 +54,29 @@ export default function Profile() {
           />
 
           {/* Profile Navigation Tabs */}
-          <div className="flex items-center justify-between border-b border-[#E8DCC3] pb-3">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => setActiveTab("details")}
-                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                   activeTab === "details"
-                    ? "bg-[#8C4B3E] text-white shadow-xs"
-                    : "bg-white text-[#5A5146] hover:bg-[#FAF6F0] border border-[#E8DCC3]"
+                    ? "bg-white text-neutral-950"
+                    : "bg-white/[0.04] text-neutral-400 hover:text-white border border-white/10"
                 }`}
               >
                 <User className="h-3.5 w-3.5 inline mr-1.5" />
-                Account Details
+                Account details
               </button>
             </div>
 
             <Button
               onClick={logout}
               variant="outline"
-              className="h-9 text-xs font-extrabold text-rose-600 border-rose-200 hover:bg-rose-50 rounded-xl flex items-center gap-1.5 cursor-pointer"
+              className="h-9 text-xs font-medium text-red-400 border-red-500/20 hover:bg-red-500/10 rounded-xl flex items-center gap-1.5 cursor-pointer"
             >
               <LogOut className="h-3.5 w-3.5" />
-              Sign Out
+              Sign out
             </Button>
           </div>
 

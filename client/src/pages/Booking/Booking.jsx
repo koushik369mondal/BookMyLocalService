@@ -5,7 +5,7 @@ import { useBookingForm } from "@/hooks/useBookingForm";
 import { BookingPlanSelector } from "@/components/booking/BookingPlanSelector";
 import { BookingSchedulePicker } from "@/components/booking/BookingSchedulePicker";
 import { BookingSummaryCard } from "@/components/booking/BookingSummaryCard";
-import { Loader2, ArrowLeft, AlertCircle, User, MapPin } from "lucide-react";
+import { Loader2, ArrowLeft, AlertCircle, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 export default function Booking() {
@@ -28,14 +28,14 @@ export default function Booking() {
     selectedPlan,
     pricingBreakdown,
     handleInputChange,
-    handleBookingSubmit
+    handleBookingSubmit,
   } = useBookingForm();
 
   if (isLoading) {
     return (
       <MainLayout>
-        <div className="min-h-[70vh] flex items-center justify-center bg-[#FAF6F0]">
-          <Loader2 className="h-8 w-8 animate-spin text-[#8C4B3E]" />
+        <div className="min-h-[70vh] flex items-center justify-center">
+          <Loader2 className="size-6 animate-spin text-muted-foreground" />
         </div>
       </MainLayout>
     );
@@ -44,14 +44,21 @@ export default function Booking() {
   if (error || !service) {
     return (
       <MainLayout>
-        <div className="min-h-[70vh] bg-[#FAF6F0] py-16 px-4 flex items-center justify-center">
-          <div className="max-w-md w-full bg-white p-8 rounded-3xl border border-[#E8DCC3] shadow-md text-center space-y-4">
-            <AlertCircle className="h-10 w-10 text-rose-600 mx-auto" />
-            <h2 className="text-xl font-black text-[#1F1D1A]">Booking Error</h2>
-            <p className="text-xs text-[#5A5146] font-medium">{error || "Service details could not be loaded."}</p>
-            <Link to="/services" className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#8C4B3E] hover:underline">
-              <ArrowLeft className="h-3.5 w-3.5" />
-              Back to Services Catalog
+        <div className="min-h-[70vh] py-16 px-4 flex items-center justify-center">
+          <div className="max-w-md w-full card-chai p-8 text-center space-y-4">
+            <AlertCircle className="size-8 text-red-500 mx-auto" />
+            <h2 className="font-display font-semibold text-base text-foreground">
+              Booking error
+            </h2>
+            <p className="text-xs text-muted-foreground">
+              {error || "Service details could not be loaded."}
+            </p>
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-1.5 text-xs text-foreground hover:text-brand font-medium"
+            >
+              <ArrowLeft className="size-3.5" />
+              <span>Back to services catalog</span>
             </Link>
           </div>
         </div>
@@ -61,21 +68,21 @@ export default function Booking() {
 
   return (
     <MainLayout>
-      <div className="bg-[#FAF6F0] min-h-screen py-10 font-sans text-[#1F1D1A]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          
+      <div className="min-h-screen py-8 sm:py-12">
+        <div className="max-w-6xl mx-auto px-6 sm:px-12">
           <div className="mb-6">
-            <Link to={`/services/slug/${service.slug || ""}`} className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#8C4B3E] hover:underline">
-              <ArrowLeft className="h-3.5 w-3.5" />
-              Back to Service Details
+            <Link
+              to={`/services/slug/${service.slug || ""}`}
+              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors font-medium"
+            >
+              <ArrowLeft className="size-3.5" />
+              <span>Back to service details</span>
             </Link>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left Main Options Form */}
+            {/* Left Options Form */}
             <div className="lg:col-span-8 space-y-6">
-              
               <BookingPlanSelector
                 plans={plans}
                 activePlanIdx={activePlanIdx}
@@ -92,52 +99,63 @@ export default function Booking() {
               />
 
               {/* Customer Contact & Address Info */}
-              <div className="space-y-4 bg-white p-6 rounded-3xl border border-[#E8DCC3] shadow-sm">
-                <h3 className="text-sm font-extrabold text-[#1F1D1A] flex items-center gap-1.5">
-                  <User className="h-4 w-4 text-[#8C4B3E]" />
-                  Customer Information
+              <div className="card-chai p-6 space-y-4">
+                <h3 className="font-display font-semibold text-sm text-foreground flex items-center gap-2">
+                  <User className="size-4 text-muted-foreground" />
+                  <span>Customer details</span>
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-[#1F1D1A]">Full Name *</label>
+                    <label className="text-xs font-medium text-foreground">
+                      Full name *
+                    </label>
                     <Input
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      placeholder="Amanda Watson"
-                      className="h-10 border-[#E8DCC3] rounded-xl text-xs"
+                      placeholder="Jane Doe"
+                      className="h-9 border-border bg-card/40 rounded-md text-xs"
                     />
-                    {formErrors.fullName && <p className="text-[10px] text-rose-600 font-bold">{formErrors.fullName}</p>}
+                    {formErrors.fullName && (
+                      <p className="text-[11px] text-red-500">{formErrors.fullName}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-[#1F1D1A]">Email Address *</label>
+                    <label className="text-xs font-medium text-foreground">
+                      Email address *
+                    </label>
                     <Input
                       name="email"
                       type="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="name@example.com"
-                      className="h-10 border-[#E8DCC3] rounded-xl text-xs"
+                      placeholder="jane@example.com"
+                      className="h-9 border-border bg-card/40 rounded-md text-xs"
                     />
-                    {formErrors.email && <p className="text-[10px] text-rose-600 font-bold">{formErrors.email}</p>}
+                    {formErrors.email && (
+                      <p className="text-[11px] text-red-500">{formErrors.email}</p>
+                    )}
                   </div>
 
                   <div className="space-y-1 sm:col-span-2">
-                    <label className="text-xs font-bold text-[#1F1D1A]">Phone Number *</label>
+                    <label className="text-xs font-medium text-foreground">
+                      Phone number *
+                    </label>
                     <Input
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      placeholder="123-456-7890"
-                      className="h-10 border-[#E8DCC3] rounded-xl text-xs"
+                      placeholder="+91 98765 43210"
+                      className="h-9 border-border bg-card/40 rounded-md text-xs"
                     />
-                    {formErrors.phone && <p className="text-[10px] text-rose-600 font-bold">{formErrors.phone}</p>}
+                    {formErrors.phone && (
+                      <p className="text-[11px] text-red-500">{formErrors.phone}</p>
+                    )}
                   </div>
                 </div>
               </div>
-
             </div>
 
             {/* Right Summary Sidebar */}
@@ -152,7 +170,6 @@ export default function Booking() {
                 onSubmit={handleBookingSubmit}
               />
             </div>
-
           </div>
         </div>
       </div>

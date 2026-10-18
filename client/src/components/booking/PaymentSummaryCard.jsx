@@ -7,13 +7,13 @@ export default function PaymentSummaryCard({ total, paymentStatus, paymentMethod
   const isCash = (paymentMethod || "").toUpperCase() === "CASH_ON_JOB" || (paymentMethod || "").toUpperCase() === "CASH";
 
   return (
-    <div className={`p-3.5 bg-white border border-[#E8DCC3] rounded-2xl space-y-2 shadow-2xs ${className}`}>
-      <div className="flex items-center justify-between gap-2 border-b border-[#E8DCC3]/60 pb-2">
-        <div className="flex items-center gap-1.5 text-xs text-[#5A5146] font-semibold">
+    <div className={`card-chai p-3.5 space-y-2 ${className}`}>
+      <div className="flex items-center justify-between gap-2 border-b border-border/80 pb-2">
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
           {isCash ? (
-            <Wallet className="h-3.5 w-3.5 text-[#C9A46A] shrink-0" />
+            <Wallet className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
           ) : (
-            <CreditCard className="h-3.5 w-3.5 text-[#8C4B3E] shrink-0" />
+            <CreditCard className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
           )}
           <span>{getPaymentMethodLabel(paymentMethod)}</span>
         </div>
@@ -21,8 +21,8 @@ export default function PaymentSummaryCard({ total, paymentStatus, paymentMethod
       </div>
 
       <div className="flex items-center justify-between pt-0.5">
-        <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#7A7266]">Total Charge</span>
-        <span className="text-base font-black text-[#1F1D1A]">{formatPrice(total, { decimals: true })}</span>
+        <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">Total charge</span>
+        <span className="text-base font-mono font-medium text-foreground">{formatPrice(total, { decimals: true })}</span>
       </div>
     </div>
   );

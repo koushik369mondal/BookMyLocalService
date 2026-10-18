@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { UserAvatar, ProviderAvatar } from "@/components/ui/avatar";
+import { ProviderAvatar } from "@/components/ui/avatar";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -36,11 +36,11 @@ import {
   AlertCircle,
   ThumbsUp,
   Mail,
-  Loader2
+  Loader2,
+  ArrowUpRight
 } from "lucide-react";
 import { providerService } from "@/services/providerService";
 import NotFound from "@/pages/NotFound/NotFound";
-
 import ReviewCard from "@/components/reviews/ReviewCard";
 
 export default function ProviderProfile() {
@@ -118,19 +118,19 @@ export default function ProviderProfile() {
   if (isLoading || !provider) {
     return (
       <MainLayout>
-        <div className="bg-[#FAF6F0] min-h-screen pb-16 animate-pulse">
-          <section className="bg-[#FAF6F0] border-b border-[#E8DCC3] py-10 md:py-14">
+        <div className="min-h-screen pb-16 animate-pulse">
+          <section className="border-b border-white/5 py-10 md:py-14">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-              <div className="h-6 bg-stone-300 w-32 rounded-full mb-6"></div>
-              <div className="bg-white rounded-3xl border border-[#E8DCC3] p-8 space-y-4">
+              <Skeleton className="h-6 w-32 rounded-full mb-6" />
+              <div className="card-chai p-8 space-y-4">
                 <div className="flex flex-col sm:flex-row items-center gap-6">
-                  <div className="w-28 h-28 rounded-full bg-stone-300 shrink-0"></div>
+                  <Skeleton className="w-28 h-28 rounded-full shrink-0" />
                   <div className="space-y-3 w-full max-w-md">
-                    <div className="h-8 bg-stone-300 w-2/3 rounded-lg"></div>
-                    <div className="h-4 bg-stone-300 w-1/2 rounded-md"></div>
+                    <Skeleton className="h-8 w-2/3 rounded-lg" />
+                    <Skeleton className="h-4 w-1/2 rounded-md" />
                     <div className="flex gap-2">
-                      <div className="h-6 bg-stone-300 w-20 rounded-full"></div>
-                      <div className="h-6 bg-stone-300 w-24 rounded-full"></div>
+                      <Skeleton className="h-6 w-20 rounded-full" />
+                      <Skeleton className="h-6 w-24 rounded-full" />
                     </div>
                   </div>
                 </div>
@@ -141,11 +141,11 @@ export default function ProviderProfile() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
-                <div className="h-64 bg-white rounded-2xl border border-[#E8DCC3] p-6"></div>
-                <div className="h-64 bg-white rounded-2xl border border-[#E8DCC3] p-6"></div>
+                <Skeleton className="h-64 rounded-2xl" />
+                <Skeleton className="h-64 rounded-2xl" />
               </div>
               <div className="space-y-6">
-                <div className="h-48 bg-white rounded-2xl border border-[#E8DCC3] p-6"></div>
+                <Skeleton className="h-48 rounded-2xl" />
               </div>
             </div>
           </div>
@@ -172,22 +172,22 @@ export default function ProviderProfile() {
 
   return (
     <MainLayout>
-      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
+      <div className="min-h-screen pb-16 font-sans">
         
         {/* HERO BANNER SECTION */}
-        <section className="relative overflow-hidden bg-[#FAF6F0] border-b border-[#E8DCC3] py-8 md:py-12">
+        <section className="relative overflow-hidden border-b border-white/5 py-8 md:py-12">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             
             {/* Back Button */}
             <NavLink
               to="/services"
-              className="inline-flex items-center gap-2 text-xs font-extrabold text-[#8C4B3E] hover:text-[#783E33] transition-colors mb-6 bg-white border border-[#E8DCC3] px-3.5 py-1.5 rounded-full shadow-2xs"
+              className="inline-flex items-center gap-2 text-xs font-medium text-neutral-300 hover:text-white transition-colors mb-6 bg-white/[0.04] border border-white/10 px-3.5 py-1.5 rounded-full"
             >
-              <ChevronLeft className="h-4 w-4" /> Back to Services
+              <ChevronLeft className="h-4 w-4" /> Back to services
             </NavLink>
 
             {/* Provider Card Header */}
-            <div className="bg-white rounded-3xl border border-[#E8DCC3] p-6 sm:p-8 shadow-sm space-y-6">
+            <div className="card-chai p-6 sm:p-8 space-y-6">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 
                 <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 sm:gap-6">
@@ -196,12 +196,12 @@ export default function ProviderProfile() {
                   <div className="relative">
                     <ProviderAvatar
                       provider={provider}
-                      className="w-24 h-24 sm:w-28 sm:h-28 border-4 border-[#FAF6F0] shadow-md rounded-full overflow-hidden bg-white shrink-0"
-                      fallbackClassName="bg-[#8C4B3E] text-white text-2xl font-black"
+                      className="w-24 h-24 sm:w-28 sm:h-28 border-2 border-white/10 rounded-full overflow-hidden shrink-0"
+                      fallbackClassName="bg-neutral-800 text-neutral-100 text-2xl font-bold"
                       size={240}
                     />
                     {provider.isVerified && (
-                      <span className="absolute -bottom-1 -right-1 bg-emerald-500 text-white rounded-full p-1.5 shadow-md border-2 border-white" title="Verified Specialist">
+                      <span className="absolute -bottom-1 -right-1 bg-emerald-500/90 text-white rounded-full p-1.5 border-2 border-neutral-950" title="Verified specialist">
                         <ShieldCheck className="h-4 w-4" />
                       </span>
                     )}
@@ -209,32 +209,32 @@ export default function ProviderProfile() {
 
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-                      <h1 className="text-2xl sm:text-3xl font-black text-[#1F1D1A] tracking-tight">{provider.fullName}</h1>
+                      <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{provider.fullName}</h1>
                       {provider.isVerified && (
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#8C4B3E]/10 border border-[#8C4B3E]/20 text-[#8C4B3E] text-[10px] font-extrabold uppercase tracking-wider">
-                          Verified Pro
+                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-semibold uppercase tracking-wider">
+                          Verified pro
                         </span>
                       )}
                     </div>
 
-                    <p className="text-[#5A5146] font-medium text-xs sm:text-sm flex items-center justify-center sm:justify-start gap-1.5">
-                      <Star className="h-4 w-4 fill-[#C9A46A] text-[#C9A46A]" />
-                      <span className="font-extrabold text-[#1F1D1A]">{stats?.averageRating || 5.0}</span>
-                      <span className="text-[#7A7266]">({stats?.totalReviews || 0} reviews)</span>
-                      <span className="mx-1 font-extrabold opacity-40">•</span>
-                      <span className="text-[#5A5146] font-bold">{stats?.completedJobs || 15}+ Jobs Completed</span>
+                    <p className="text-neutral-400 font-medium text-xs sm:text-sm flex items-center justify-center sm:justify-start gap-1.5">
+                      <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                      <span className="font-bold text-white">{stats?.averageRating || 5.0}</span>
+                      <span className="text-neutral-400">({stats?.totalReviews || 0} reviews)</span>
+                      <span className="mx-1 font-bold opacity-30">•</span>
+                      <span className="text-neutral-300 font-medium">{stats?.completedJobs || 15}+ jobs completed</span>
                     </p>
 
-                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-y-1.5 gap-x-4 text-xs font-semibold text-[#7A7266] pt-1">
+                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-y-1.5 gap-x-4 text-xs text-neutral-400 pt-1">
                       <div className="flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5 text-[#8C4B3E]" />
+                        <MapPin className="h-3.5 w-3.5 text-neutral-400" />
                         <span>{locationsServed.join(", ")}</span>
                       </div>
 
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#E8DCC3] hidden md:block"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/20 hidden md:block"></span>
 
                       <div className="flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5 text-[#8C4B3E]" />
+                        <Calendar className="h-3.5 w-3.5 text-neutral-400" />
                         <span>Member since {memberSinceYear}</span>
                       </div>
                     </div>
@@ -245,19 +245,19 @@ export default function ProviderProfile() {
                 {/* Action Buttons */}
                 <div className="shrink-0 flex flex-col sm:flex-row items-center gap-3">
                   <a href="#services-grid" className="w-full sm:w-auto">
-                    <Button className="w-full h-10 px-5 bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs rounded-xl shadow-xs border border-[#8C4B3E] cursor-pointer">
-                      <Briefcase className="h-4 w-4 mr-1.5" />
-                      View Services ({services.length})
+                    <Button variant="solid" className="w-full sm:w-auto flex items-center justify-center gap-2">
+                      <Briefcase className="h-4 w-4" />
+                      View services ({services.length})
                     </Button>
                   </a>
 
                   <Button
                     onClick={() => setIsContactOpen(true)}
                     variant="outline"
-                    className="w-full sm:w-auto h-10 px-4 border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] font-extrabold text-xs rounded-xl cursor-pointer"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2"
                   >
-                    <Mail className="h-4 w-4 mr-1.5 text-[#8C4B3E]" />
-                    Contact Specialist
+                    <Mail className="h-4 w-4 text-neutral-400" />
+                    Contact specialist
                   </Button>
                 </div>
 
@@ -273,43 +273,43 @@ export default function ProviderProfile() {
           {/* STATS HIGHLIGHT BAR */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
             
-            <div className="bg-white border border-[#E8DCC3] rounded-2xl p-4 flex items-center gap-3 shadow-2xs hover:border-[#C9A46A] transition-colors">
-              <div className="p-3 bg-[#FAF6F0] text-[#8C4B3E] rounded-xl shrink-0 border border-[#E8DCC3]">
+            <div className="card-chai p-4 flex items-center gap-3">
+              <div className="p-3 bg-white/[0.04] text-neutral-200 rounded-xl shrink-0 border border-white/10">
                 <Briefcase className="h-5 w-5" />
               </div>
               <div>
-                <span className="block text-lg font-black text-[#1F1D1A]">{stats?.totalServices || services.length}</span>
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Services Offered</span>
+                <span className="block text-lg font-bold text-white">{stats?.totalServices || services.length}</span>
+                <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider block">Services offered</span>
               </div>
             </div>
 
-            <div className="bg-white border border-[#E8DCC3] rounded-2xl p-4 flex items-center gap-3 shadow-2xs hover:border-[#C9A46A] transition-colors">
-              <div className="p-3 bg-[#FAF6F0] text-[#8C4B3E] rounded-xl shrink-0 border border-[#E8DCC3]">
+            <div className="card-chai p-4 flex items-center gap-3">
+              <div className="p-3 bg-white/[0.04] text-neutral-200 rounded-xl shrink-0 border border-white/10">
                 <ThumbsUp className="h-5 w-5" />
               </div>
               <div>
-                <span className="block text-lg font-black text-[#1F1D1A]">{stats?.completedJobs || 15}+</span>
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Jobs Completed</span>
+                <span className="block text-lg font-bold text-white">{stats?.completedJobs || 15}+</span>
+                <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider block">Jobs completed</span>
               </div>
             </div>
 
-            <div className="bg-white border border-[#E8DCC3] rounded-2xl p-4 flex items-center gap-3 shadow-2xs hover:border-[#C9A46A] transition-colors">
-              <div className="p-3 bg-[#FAF6F0] text-[#C9A46A] rounded-xl shrink-0 border border-[#E8DCC3]">
-                <Star className="h-5 w-5 fill-[#C9A46A]" />
+            <div className="card-chai p-4 flex items-center gap-3">
+              <div className="p-3 bg-white/[0.04] text-amber-400 rounded-xl shrink-0 border border-white/10">
+                <Star className="h-5 w-5 fill-amber-400" />
               </div>
               <div>
-                <span className="block text-lg font-black text-[#1F1D1A]">{stats?.averageRating || 5.0} / 5.0</span>
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Avg Rating</span>
+                <span className="block text-lg font-bold text-white">{stats?.averageRating || 5.0} / 5.0</span>
+                <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider block">Avg rating</span>
               </div>
             </div>
 
-            <div className="bg-white border border-[#E8DCC3] rounded-2xl p-4 flex items-center gap-3 shadow-2xs hover:border-[#C9A46A] transition-colors">
-              <div className="p-3 bg-[#FAF6F0] text-[#8C4B3E] rounded-xl shrink-0 border border-[#E8DCC3]">
+            <div className="card-chai p-4 flex items-center gap-3">
+              <div className="p-3 bg-white/[0.04] text-neutral-200 rounded-xl shrink-0 border border-white/10">
                 <Clock className="h-5 w-5" />
               </div>
               <div>
-                <span className="block text-lg font-black text-[#1F1D1A]">{stats?.responseTime || "< 30 mins"}</span>
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Response Time</span>
+                <span className="block text-lg font-bold text-white">{stats?.responseTime || "< 30 mins"}</span>
+                <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider block">Response time</span>
               </div>
             </div>
 
@@ -324,27 +324,27 @@ export default function ProviderProfile() {
               <div id="services-grid" className="space-y-5 scroll-mt-20">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="p-2 bg-[#8C4B3E]/10 text-[#8C4B3E] rounded-xl">
+                    <div className="p-2 bg-white/[0.04] text-neutral-200 rounded-xl border border-white/10">
                       <Sparkles className="h-5 w-5" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-black text-[#1F1D1A]">Services Offered</h2>
-                      <p className="text-xs text-[#5A5146] font-medium">Select a service to view details and book instantly</p>
+                      <h2 className="text-xl font-bold text-white">Services offered</h2>
+                      <p className="text-xs text-neutral-400">Select a service to view details and book instantly</p>
                     </div>
                   </div>
-                  <Badge className="bg-white text-[#8C4B3E] border border-[#E8DCC3] font-bold text-xs px-3 py-1 shadow-2xs">
-                    {services.length} {services.length === 1 ? "Service" : "Services"}
+                  <Badge variant="outline" className="border-white/10 text-neutral-300 font-medium text-xs px-3 py-1">
+                    {services.length} {services.length === 1 ? "service" : "services"}
                   </Badge>
                 </div>
 
                 {services.length === 0 ? (
-                  <Card className="border border-[#E8DCC3] bg-white p-8 text-center rounded-2xl space-y-3">
-                    <Briefcase className="h-10 w-10 text-[#7A7266] mx-auto opacity-50" />
-                    <h3 className="text-sm font-bold text-[#1F1D1A]">No Active Services Found</h3>
-                    <p className="text-xs text-[#7A7266] max-w-sm mx-auto">
+                  <div className="card-chai p-8 text-center space-y-3">
+                    <Briefcase className="h-10 w-10 text-neutral-500 mx-auto opacity-50" />
+                    <h3 className="text-sm font-semibold text-white">No active services found</h3>
+                    <p className="text-xs text-neutral-400 max-w-sm mx-auto">
                       This provider currently has no active service listings available for booking.
                     </p>
-                  </Card>
+                  </div>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {services.map((service) => (
@@ -355,49 +355,49 @@ export default function ProviderProfile() {
               </div>
 
               {/* SECTION: CUSTOMER REVIEWS */}
-              <Card className="border border-[#E8DCC3] bg-white p-6 rounded-2xl shadow-2xs">
-                <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-row items-center justify-between flex-wrap gap-4">
+              <div className="card-chai p-6 space-y-6">
+                <div className="pb-4 border-b border-white/10 flex flex-row items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-2.5">
-                    <div className="p-2 bg-[#FAF6F0] text-[#8C4B3E] rounded-xl border border-[#E8DCC3]">
+                    <div className="p-2 bg-white/[0.04] text-neutral-200 rounded-xl border border-white/10">
                       <MessageSquare className="h-5 w-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-lg font-black text-[#1F1D1A]">Customer Ratings & Reviews</CardTitle>
-                      <CardDescription className="text-xs text-[#7A7266]">Verified client feedback for {provider.fullName}</CardDescription>
+                      <h3 className="text-lg font-bold text-white">Customer ratings & reviews</h3>
+                      <p className="text-xs text-neutral-400">Verified client feedback for {provider.fullName}</p>
                     </div>
                   </div>
 
                   {/* Filter tabs */}
                   <Tabs value={reviewsFilter} onValueChange={setReviewsFilter} className="w-auto">
-                    <TabsList className="bg-[#FAF6F0] p-1 border border-[#E8DCC3] rounded-xl h-8">
-                      <TabsTrigger value="all" className="rounded-lg text-xs font-bold py-1 px-3">All</TabsTrigger>
-                      <TabsTrigger value="5" className="rounded-lg text-xs font-bold py-1 px-3 flex items-center gap-0.5">5 <Star className="h-3 w-3 fill-[#C9A46A] text-[#C9A46A]" /></TabsTrigger>
-                      <TabsTrigger value="4" className="rounded-lg text-xs font-bold py-1 px-3 flex items-center gap-0.5">4 <Star className="h-3 w-3 fill-[#C9A46A] text-[#C9A46A]" /></TabsTrigger>
+                    <TabsList className="bg-neutral-900/60 p-1 border border-white/10 rounded-xl h-8">
+                      <TabsTrigger value="all" className="rounded-lg text-xs font-medium py-1 px-3">All</TabsTrigger>
+                      <TabsTrigger value="5" className="rounded-lg text-xs font-medium py-1 px-3 flex items-center gap-1">5 <Star className="h-3 w-3 fill-amber-400 text-amber-400" /></TabsTrigger>
+                      <TabsTrigger value="4" className="rounded-lg text-xs font-medium py-1 px-3 flex items-center gap-1">4 <Star className="h-3 w-3 fill-amber-400 text-amber-400" /></TabsTrigger>
                     </TabsList>
                   </Tabs>
-                </CardHeader>
+                </div>
 
-                <CardContent className="p-0 pt-6 space-y-6">
+                <div className="space-y-6">
                   
                   {/* Rating Breakdown */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center p-5 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center p-5 bg-white/[0.02] border border-white/10 rounded-2xl">
                     <div className="text-center space-y-1">
-                      <span className="block text-4xl font-black text-[#1F1D1A]">{stats?.averageRating || 5.0}</span>
-                      <div className="flex justify-center gap-0.5">
+                      <span className="block text-4xl font-bold text-white">{stats?.averageRating || 5.0}</span>
+                      <div className="flex justify-center gap-1">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`h-4.5 w-4.5 ${i < Math.floor(stats?.averageRating || 5) ? 'fill-[#C9A46A] text-[#C9A46A]' : 'text-stone-300'}`} />
+                          <Star key={i} className={`h-4 w-4 ${i < Math.floor(stats?.averageRating || 5) ? 'fill-amber-400 text-amber-400' : 'text-neutral-700'}`} />
                         ))}
                       </div>
-                      <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider">Overall Satisfaction</span>
+                      <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">Overall satisfaction</span>
                     </div>
 
-                    <div className="md:col-span-2 space-y-1.5">
+                    <div className="md:col-span-2 space-y-2">
                       {[5, 4, 3, 2, 1].map((stars) => (
                         <div key={stars} className="flex items-center gap-2">
-                          <span className="text-xs font-bold text-[#7A7266] w-3">{stars}</span>
-                          <Star className="h-3 w-3 fill-stone-400 text-stone-400 shrink-0" />
-                          <Progress value={ratingPercentages[stars] || 0} className="h-1.5 flex-1 bg-[#E8DCC3]" />
-                          <span className="text-xs font-semibold text-[#7A7266] w-8 text-right">{ratingPercentages[stars] || 0}%</span>
+                          <span className="text-xs font-medium text-neutral-400 w-3">{stars}</span>
+                          <Star className="h-3 w-3 fill-neutral-500 text-neutral-500 shrink-0" />
+                          <Progress value={ratingPercentages[stars] || 0} className="h-1.5 flex-1" />
+                          <span className="text-xs font-medium text-neutral-400 w-8 text-right">{ratingPercentages[stars] || 0}%</span>
                         </div>
                       ))}
                     </div>
@@ -405,12 +405,12 @@ export default function ProviderProfile() {
 
                   {/* Reviews List */}
                   {filteredReviews.length === 0 ? (
-                    <div className="text-center py-8 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]">
-                      <AlertCircle className="h-8 w-8 text-[#7A7266] mx-auto mb-2" />
-                      <p className="text-sm font-semibold text-[#7A7266]">No customer reviews recorded yet.</p>
+                    <div className="text-center py-8 bg-white/[0.02] rounded-xl border border-white/10">
+                      <AlertCircle className="h-8 w-8 text-neutral-500 mx-auto mb-2" />
+                      <p className="text-sm font-medium text-neutral-400">No customer reviews recorded yet.</p>
                     </div>
                   ) : (
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                       {filteredReviews.map((rev) => (
                         <ReviewCard
                           key={rev.id}
@@ -421,8 +421,8 @@ export default function ProviderProfile() {
                     </div>
                   )}
 
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
             </div>
 
@@ -430,63 +430,63 @@ export default function ProviderProfile() {
             <div className="space-y-6">
               
               {/* ABOUT CARD */}
-              <Card className="border border-[#E8DCC3] bg-white p-6 rounded-2xl shadow-2xs space-y-4">
-                <CardHeader className="p-0 pb-3 border-b border-[#E8DCC3] flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-[#FAF6F0] text-[#8C4B3E] rounded-xl border border-[#E8DCC3]">
+              <div className="card-chai p-6 space-y-4">
+                <div className="pb-3 border-b border-white/10 flex flex-row items-center gap-2.5">
+                  <div className="p-2 bg-white/[0.04] text-neutral-200 rounded-xl border border-white/10">
                     <ShieldCheck className="h-5 w-5" />
                   </div>
                   <div>
-                    <CardTitle className="text-base font-black text-[#1F1D1A]">About the Provider</CardTitle>
-                    <CardDescription className="text-[11px] text-[#7A7266]">Professional background</CardDescription>
+                    <h4 className="text-base font-bold text-white">About the provider</h4>
+                    <p className="text-[11px] text-neutral-400">Professional background</p>
                   </div>
-                </CardHeader>
+                </div>
                 
-                <p className="text-xs text-[#5A5146] leading-relaxed text-justify">
+                <p className="text-xs text-neutral-300 leading-relaxed text-justify">
                   {provider.bio}
                 </p>
 
-                <div className="pt-3 border-t border-[#E8DCC3] space-y-2 text-xs">
-                  <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Service Locations</span>
+                <div className="pt-3 border-t border-white/10 space-y-2 text-xs">
+                  <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider block">Service locations</span>
                   <div className="flex flex-wrap gap-1.5">
                     {locationsServed.map((loc, idx) => (
-                      <Badge key={idx} variant="secondary" className="bg-[#FAF6F0] border-[#E8DCC3] text-[#1F1D1A] font-semibold text-[11px] px-2.5 py-1 rounded-lg">
-                        <MapPin className="h-3 w-3 text-[#8C4B3E] mr-1" />
+                      <Badge key={idx} variant="outline" className="border-white/10 text-neutral-300 font-medium text-[11px] px-2.5 py-1 rounded-lg">
+                        <MapPin className="h-3 w-3 text-neutral-400 mr-1" />
                         {loc}
                       </Badge>
                     ))}
                   </div>
                 </div>
-              </Card>
+              </div>
 
               {/* TRUST SIGNALS CARD */}
-              <Card className="border border-[#E8DCC3] bg-white p-6 rounded-2xl shadow-2xs space-y-4">
-                <CardHeader className="p-0 pb-3 border-b border-[#E8DCC3] flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-[#FAF6F0] text-[#8C4B3E] rounded-xl border border-[#E8DCC3]">
+              <div className="card-chai p-6 space-y-4">
+                <div className="pb-3 border-b border-white/10 flex flex-row items-center gap-2.5">
+                  <div className="p-2 bg-white/[0.04] text-neutral-200 rounded-xl border border-white/10">
                     <Award className="h-5 w-5" />
                   </div>
                   <div>
-                    <CardTitle className="text-base font-black text-[#1F1D1A]">Verified Credentials</CardTitle>
-                    <CardDescription className="text-[11px] text-[#7A7266]">Platform verification status</CardDescription>
-                  </div>
-                </CardHeader>
-
-                <div className="space-y-2.5 text-xs">
-                  <div className="flex items-center gap-2.5 p-2.5 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                    <span className="font-semibold text-[#1F1D1A]">Government ID Verified</span>
-                  </div>
-
-                  <div className="flex items-center gap-2.5 p-2.5 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                    <span className="font-semibold text-[#1F1D1A]">Background Checked</span>
-                  </div>
-
-                  <div className="flex items-center gap-2.5 p-2.5 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                    <span className="font-semibold text-[#1F1D1A]">Satisfaction Guarantee Backed</span>
+                    <h4 className="text-base font-bold text-white">Verified credentials</h4>
+                    <p className="text-[11px] text-neutral-400">Platform verification status</p>
                   </div>
                 </div>
-              </Card>
+
+                <div className="space-y-2 text-xs">
+                  <div className="flex items-center gap-2.5 p-2.5 bg-white/[0.02] rounded-xl border border-white/5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                    <span className="font-medium text-neutral-200">Government ID verified</span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 p-2.5 bg-white/[0.02] rounded-xl border border-white/5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                    <span className="font-medium text-neutral-200">Background checked</span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 p-2.5 bg-white/[0.02] rounded-xl border border-white/5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                    <span className="font-medium text-neutral-200">Satisfaction guarantee backed</span>
+                  </div>
+                </div>
+              </div>
 
             </div>
 
@@ -496,68 +496,64 @@ export default function ProviderProfile() {
 
         {/* CONTACT PROVIDER DIALOG */}
         <Dialog open={isContactOpen} onOpenChange={setIsContactOpen}>
-          <DialogContent className="sm:max-w-md bg-white border border-[#E8DCC3] rounded-2xl p-6">
+          <DialogContent className="sm:max-w-md card-chai border-white/10 p-6">
             <DialogHeader>
-              <DialogTitle className="text-lg font-black text-[#1F1D1A]">Contact {provider.fullName}</DialogTitle>
-              <DialogDescription className="text-xs text-[#7A7266]">
+              <DialogTitle className="text-lg font-bold text-white">Contact {provider.fullName}</DialogTitle>
+              <DialogDescription className="text-xs text-neutral-400">
                 Send an inquiry directly to this specialist
               </DialogDescription>
             </DialogHeader>
 
             {contactSentSuccess ? (
               <div className="py-8 text-center space-y-3">
-                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-500/20">
                   <Check className="h-6 w-6" />
                 </div>
-                <h3 className="font-bold text-[#1F1D1A] text-sm">Message Sent Successfully!</h3>
-                <p className="text-xs text-[#7A7266]">
+                <h3 className="font-bold text-white text-sm">Message sent successfully</h3>
+                <p className="text-xs text-neutral-400">
                   {provider.fullName} has received your inquiry and will respond shortly.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleContactSubmit} className="space-y-4 pt-2">
-                <div className="space-y-1">
-                  <Label className="text-xs font-bold text-[#1F1D1A]">Your Name</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-neutral-300">Your name</Label>
                   <Input
                     required
                     placeholder="Enter your full name"
                     value={contactName}
                     onChange={(e) => setContactName(e.target.value)}
-                    className="border-[#E8DCC3] bg-[#FAF6F0] text-xs h-9"
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <Label className="text-xs font-bold text-[#1F1D1A]">Email Address</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-neutral-300">Email address</Label>
                   <Input
                     required
                     type="email"
                     placeholder="name@example.com"
                     value={contactEmail}
                     onChange={(e) => setContactEmail(e.target.value)}
-                    className="border-[#E8DCC3] bg-[#FAF6F0] text-xs h-9"
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <Label className="text-xs font-bold text-[#1F1D1A]">Subject (Optional)</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-neutral-300">Subject (optional)</Label>
                   <Input
                     placeholder="e.g. Inquiry about availability"
                     value={contactSubject}
                     onChange={(e) => setContactSubject(e.target.value)}
-                    className="border-[#E8DCC3] bg-[#FAF6F0] text-xs h-9"
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <Label className="text-xs font-bold text-[#1F1D1A]">Message</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium text-neutral-300">Message</Label>
                   <Textarea
                     required
                     rows={4}
                     placeholder="Describe your service requirements or questions..."
                     value={contactMessage}
                     onChange={(e) => setContactMessage(e.target.value)}
-                    className="border-[#E8DCC3] bg-[#FAF6F0] text-xs"
                   />
                 </div>
 
@@ -566,22 +562,26 @@ export default function ProviderProfile() {
                     type="button"
                     variant="outline"
                     onClick={() => setIsContactOpen(false)}
-                    className="border-[#E8DCC3] text-xs font-bold h-9 cursor-pointer"
+                    className="text-xs font-medium"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
                     disabled={isSendingContact}
-                    className="bg-[#8C4B3E] hover:bg-[#783E33] text-white font-bold text-xs h-9 cursor-pointer"
+                    variant="solid"
+                    className="flex items-center gap-1.5"
                   >
                     {isSendingContact ? (
                       <>
-                        <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
                         Sending...
                       </>
                     ) : (
-                      "Send Message"
+                      <>
+                        Send message
+                        <ArrowUpRight className="size-4" />
+                      </>
                     )}
                   </Button>
                 </div>

@@ -12,8 +12,8 @@ export function ProviderAvatar({
   provider,
   src,
   name,
-  className = "w-10 h-10 border border-[#E8DCC3]",
-  fallbackClassName = "bg-[#8C4B3E] text-white font-extrabold uppercase",
+  className = "w-10 h-10 border border-white/10",
+  fallbackClassName = "bg-neutral-800 text-neutral-200 font-semibold uppercase",
   imageClassName = "object-cover size-full",
   size = 160,
   ...props
@@ -43,7 +43,7 @@ export function ProviderAvatar({
       <AvatarPrimitive.Fallback
         data-slot="avatar-fallback"
         className={cn(
-          "bg-[#8C4B3E] text-white flex size-full items-center justify-center rounded-full text-xs font-extrabold uppercase select-none",
+          "bg-neutral-800 text-neutral-200 border border-white/10 flex size-full items-center justify-center rounded-full text-xs font-semibold uppercase select-none",
           fallbackClassName
         )}
       >

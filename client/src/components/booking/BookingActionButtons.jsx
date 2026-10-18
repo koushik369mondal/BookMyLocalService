@@ -32,17 +32,17 @@ export default function BookingActionButtons({
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#E8DCC3]/60">
+    <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border/80">
       
       {/* View Details Toggle */}
       <Button
         variant="outline"
         size="sm"
         onClick={onToggleDetails}
-        className="border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#5A5146] text-xs font-bold rounded-xl h-9 px-3 flex items-center gap-1.5 cursor-pointer"
+        className="text-xs h-8 px-3 flex items-center gap-1.5 cursor-pointer"
       >
-        <Eye className="h-3.5 w-3.5 text-[#8C4B3E]" />
-        {isExpanded ? "Hide Details" : "View Details"}
+        <Eye className="h-3.5 w-3.5 text-muted-foreground" />
+        {isExpanded ? "Hide details" : "View details"}
       </Button>
 
       {/* Pending status actions */}
@@ -51,10 +51,10 @@ export default function BookingActionButtons({
           variant="outline"
           size="sm"
           onClick={() => onCancel(bookingId)}
-          className="border-rose-200 bg-rose-50/50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-xl h-9 px-3 flex items-center gap-1.5 cursor-pointer"
+          className="border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs h-8 px-3 flex items-center gap-1.5 cursor-pointer"
         >
-          <XCircle className="h-3.5 w-3.5 text-rose-600" />
-          Cancel Booking
+          <XCircle className="h-3.5 w-3.5 text-rose-400" />
+          Cancel booking
         </Button>
       )}
 
@@ -63,11 +63,12 @@ export default function BookingActionButtons({
         <>
           <Button
             size="sm"
+            variant="solid"
             onClick={onToggleDetails}
-            className="bg-[#8C4B3E] hover:bg-[#723b30] text-white text-xs font-extrabold rounded-xl h-9 px-3.5 flex items-center gap-1.5 shadow-2xs cursor-pointer"
+            className="text-xs h-8 px-3.5 flex items-center gap-1.5 cursor-pointer"
           >
             <MapPin className="h-3.5 w-3.5" />
-            Track Booking
+            Track booking
           </Button>
 
           {providerPhone && (
@@ -75,10 +76,10 @@ export default function BookingActionButtons({
               <Button
                 variant="outline"
                 size="sm"
-                className="border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#5A5146] text-xs font-bold rounded-xl h-9 px-3 flex items-center gap-1.5 cursor-pointer"
+                className="text-xs h-8 px-3 flex items-center gap-1.5 cursor-pointer"
               >
-                <PhoneCall className="h-3.5 w-3.5 text-emerald-600" />
-                Contact Specialist
+                <PhoneCall className="h-3.5 w-3.5 text-emerald-400" />
+                Contact specialist
               </Button>
             </a>
           )}
@@ -87,7 +88,7 @@ export default function BookingActionButtons({
             variant="outline"
             size="sm"
             onClick={() => onCancel(bookingId)}
-            className="border-rose-200 bg-white hover:bg-rose-50 text-rose-700 text-xs font-bold rounded-xl h-9 px-3 flex items-center gap-1.5 cursor-pointer ml-auto"
+            className="border-rose-500/30 text-rose-400 hover:bg-rose-500/10 text-xs h-8 px-3 flex items-center gap-1.5 cursor-pointer ml-auto"
           >
             Cancel
           </Button>
@@ -99,11 +100,12 @@ export default function BookingActionButtons({
         <>
           <Button
             size="sm"
+            variant="solid"
             onClick={onToggleDetails}
-            className="bg-[#8C4B3E] hover:bg-[#723b30] text-white text-xs font-extrabold rounded-xl h-9 px-3.5 flex items-center gap-1.5 shadow-2xs cursor-pointer"
+            className="text-xs h-8 px-3.5 flex items-center gap-1.5 cursor-pointer"
           >
-            <MapPin className="h-3.5 w-3.5 animate-pulse text-amber-300" />
-            Track Live Specialist
+            <MapPin className="h-3.5 w-3.5 animate-pulse text-brand" />
+            Track live
           </Button>
 
           {providerPhone && (
@@ -111,10 +113,10 @@ export default function BookingActionButtons({
               <Button
                 variant="outline"
                 size="sm"
-                className="border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#5A5146] text-xs font-bold rounded-xl h-9 px-3 flex items-center gap-1.5 cursor-pointer"
+                className="text-xs h-8 px-3 flex items-center gap-1.5 cursor-pointer"
               >
-                <PhoneCall className="h-3.5 w-3.5 text-emerald-600" />
-                Call Specialist
+                <PhoneCall className="h-3.5 w-3.5 text-emerald-400" />
+                Call specialist
               </Button>
             </a>
           )}
@@ -126,22 +128,21 @@ export default function BookingActionButtons({
         <>
           <Button
             size="sm"
+            variant="default"
             onClick={onReview}
-            className={`${
-              isReviewed ? "bg-[#C9A46A] hover:bg-[#b89359]" : "bg-amber-500 hover:bg-amber-600"
-            } text-white text-xs font-extrabold rounded-xl h-9 px-3.5 flex items-center gap-1.5 shadow-2xs cursor-pointer`}
+            className="text-xs h-8 px-3.5 flex items-center gap-1.5 cursor-pointer"
           >
-            <Star className="h-3.5 w-3.5 fill-white text-white" />
-            {isReviewed ? "View/Edit Review" : "Leave Review"}
+            <Star className="h-3.5 w-3.5 fill-brand text-brand" />
+            {isReviewed ? "View or edit review" : "Leave review"}
           </Button>
 
           <Button
             variant="outline"
             size="sm"
             onClick={handlePrintInvoice}
-            className="border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#5A5146] text-xs font-bold rounded-xl h-9 px-3 flex items-center gap-1.5 cursor-pointer"
+            className="text-xs h-8 px-3 flex items-center gap-1.5 cursor-pointer"
           >
-            <Printer className="h-3.5 w-3.5 text-[#8C4B3E]" />
+            <Printer className="h-3.5 w-3.5 text-muted-foreground" />
             Invoice
           </Button>
 
@@ -149,10 +150,11 @@ export default function BookingActionButtons({
             <Link to={`/booking/${serviceId}`}>
               <Button
                 size="sm"
-                className="bg-[#8C4B3E] hover:bg-[#723b30] text-white text-xs font-bold rounded-xl h-9 px-3.5 flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                variant="solid"
+                className="text-xs h-8 px-3.5 flex items-center gap-1.5 cursor-pointer"
               >
                 <RotateCw className="h-3.5 w-3.5" />
-                Book Again
+                Book again
               </Button>
             </Link>
           )}
@@ -164,10 +166,11 @@ export default function BookingActionButtons({
         <Link to={`/booking/${serviceId}`} className="ml-auto">
           <Button
             size="sm"
-            className="bg-[#8C4B3E] hover:bg-[#723b30] text-white text-xs font-bold rounded-xl h-9 px-3.5 flex items-center gap-1.5 shadow-2xs cursor-pointer"
+            variant="solid"
+            className="text-xs h-8 px-3.5 flex items-center gap-1.5 cursor-pointer"
           >
             <RotateCw className="h-3.5 w-3.5" />
-            Book Again
+            Book again
           </Button>
         </Link>
       )}

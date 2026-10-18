@@ -411,17 +411,17 @@ export default function ServiceDetails() {
   if (isLoading || !provider) {
     return (
       <MainLayout>
-        <div className="bg-[#FAF6F0] min-h-screen pb-16 animate-pulse">
+        <div className="min-h-screen pb-16 animate-pulse">
           {/* Header Banner Skeleton */}
-          <div className="h-64 bg-[#E8DCC3] w-full relative">
+          <div className="h-56 bg-card/40 border-b border-border/80 w-full relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end pb-8">
               <div className="flex flex-col sm:flex-row items-center gap-6 w-full">
-                <div className="w-28 h-28 rounded-full bg-stone-300 border-4 border-white shadow-md shrink-0"></div>
+                <div className="size-24 rounded-full bg-muted border border-border shrink-0"></div>
                 <div className="space-y-3 w-full">
-                  <div className="h-8 bg-stone-300 w-1/3 rounded-lg"></div>
+                  <div className="h-7 bg-muted w-1/3 rounded-lg"></div>
                   <div className="flex gap-2">
-                    <div className="h-5 bg-stone-300 w-20 rounded-full"></div>
-                    <div className="h-5 bg-stone-300 w-24 rounded-full"></div>
+                    <div className="h-4 bg-muted w-20 rounded-full"></div>
+                    <div className="h-4 bg-muted w-24 rounded-full"></div>
                   </div>
                 </div>
               </div>
@@ -431,43 +431,32 @@ export default function ServiceDetails() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column Skeleton */}
-              <div className="lg:col-span-2 space-y-8">
-                <Card className="p-6">
-                  <div className="h-6 bg-[#E8DCC3] w-1/4 rounded mb-4"></div>
+              <div className="lg:col-span-2 space-y-6">
+                <div className="card-chai p-6 space-y-3">
+                  <div className="h-5 bg-muted w-1/4 rounded"></div>
                   <div className="space-y-2">
-                    <div className="h-4 bg-[#E8DCC3] w-full rounded"></div>
-                    <div className="h-4 bg-[#E8DCC3] w-full rounded"></div>
-                    <div className="h-4 bg-[#E8DCC3] w-5/6 rounded"></div>
+                    <div className="h-4 bg-muted w-full rounded"></div>
+                    <div className="h-4 bg-muted w-full rounded"></div>
+                    <div className="h-4 bg-muted w-5/6 rounded"></div>
                   </div>
-                </Card>
-                <Card className="p-6">
-                  <div className="h-6 bg-[#E8DCC3] w-1/4 rounded mb-4"></div>
+                </div>
+                <div className="card-chai p-6 space-y-3">
+                  <div className="h-5 bg-muted w-1/4 rounded"></div>
                   <div className="flex gap-2 flex-wrap">
                     {[...Array(5)].map((_, i) => (
-                      <div key={i} className="h-8 bg-[#E8DCC3] w-24 rounded-full"></div>
+                      <div key={i} className="h-7 bg-muted w-20 rounded-lg"></div>
                     ))}
                   </div>
-                </Card>
-                <Card className="p-6">
-                  <div className="h-6 bg-[#E8DCC3] w-1/4 rounded mb-4"></div>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {[...Array(4)].map((_, i) => (
-                      <div key={i} className="h-32 bg-[#E8DCC3] rounded-xl"></div>
-                    ))}
-                  </div>
-                </Card>
+                </div>
               </div>
 
               {/* Right Column Skeleton */}
               <div className="lg:col-span-1 space-y-6">
-                <Card className="p-6">
-                  <div className="h-6 bg-[#E8DCC3] w-1/2 rounded mb-6"></div>
-                  <div className="h-10 bg-[#E8DCC3] rounded-lg mb-6"></div>
-                  <div className="space-y-4">
-                    <div className="h-12 bg-[#E8DCC3] rounded-xl"></div>
-                    <div className="h-12 bg-[#E8DCC3] rounded-xl"></div>
-                  </div>
-                </Card>
+                <div className="card-chai p-6 space-y-4">
+                  <div className="h-5 bg-muted w-1/2 rounded"></div>
+                  <div className="h-9 bg-muted rounded-lg"></div>
+                  <div className="h-10 bg-muted rounded-xl"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -489,75 +478,73 @@ export default function ServiceDetails() {
 
   return (
     <MainLayout>
-      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
+      <div className="min-h-screen pb-16 font-sans text-foreground">
 
         {/* PROFILE HEADER HERO BANNER */}
-        <section className="relative overflow-hidden bg-gradient-to-r from-violet-950 via-violet-800 to-violet-950 text-white py-12 sm:py-16">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_50%)] pointer-events-none"></div>
-
+        <section className="relative overflow-hidden border-b border-border/80 bg-card/60 py-10 sm:py-14">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Back Button */}
-            <NavLink to="/services" className="inline-flex items-center gap-2 text-xs font-semibold text-[#7A7266] hover:text-white transition-colors mb-6 bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-full backdrop-blur-xs">
-              <ChevronLeft className="h-4 w-4" /> Back to Services
+            <NavLink to="/services" className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors mb-6 border border-border/80 bg-card px-3 py-1.5 rounded-full">
+              <ChevronLeft className="h-3.5 w-3.5" /> Back to services
             </NavLink>
 
             <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-6">
               <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 sm:gap-6">
 
-                {/* Profile Pic with Badge and Live Indicator */}
+                {/* Profile Pic with Badge */}
                 <div className="relative">
                   {provider.providerId ? (
                     <NavLink to={`/providers/${provider.providerId}`}>
-                      <Avatar className="w-24 h-24 sm:w-28 sm:h-28 border-4 border-white/90 shadow-xl rounded-full overflow-hidden bg-white shrink-0 hover:opacity-90 transition-opacity cursor-pointer">
+                      <Avatar className="size-24 sm:size-28 border border-border/80 shadow-sm rounded-full overflow-hidden bg-card shrink-0 hover:opacity-90 transition-opacity cursor-pointer">
                         <AvatarImage src={provider.providerImage} className="object-cover w-full h-full" alt={provider.providerName} />
-                        <AvatarFallback className="text-xl font-bold bg-[#E8DCC3]/40 text-[#1F1D1A]">{provider.providerName[0]}</AvatarFallback>
+                        <AvatarFallback className="text-xl font-medium bg-card text-foreground">{provider.providerName[0]}</AvatarFallback>
                       </Avatar>
                     </NavLink>
                   ) : (
-                    <Avatar className="w-24 h-24 sm:w-28 sm:h-28 border-4 border-white/90 shadow-xl rounded-full overflow-hidden bg-white shrink-0">
+                    <Avatar className="size-24 sm:size-28 border border-border/80 shadow-sm rounded-full overflow-hidden bg-card shrink-0">
                       <AvatarImage src={provider.providerImage} className="object-cover w-full h-full" alt={provider.providerName} />
-                      <AvatarFallback className="text-xl font-bold bg-[#E8DCC3]/40 text-[#1F1D1A]">{provider.providerName[0]}</AvatarFallback>
+                      <AvatarFallback className="text-xl font-medium bg-card text-foreground">{provider.providerName[0]}</AvatarFallback>
                     </Avatar>
                   )}
 
                   {/* Verified Badge */}
-                  <span className="absolute -bottom-1 -right-1 bg-green-500 text-white rounded-full p-1.5 shadow-md border-2 border-white" title="Verified Specialist">
-                    <ShieldCheck className="h-4 w-4" />
+                  <span className="absolute -bottom-1 -right-1 bg-emerald-500 text-white rounded-full p-1 shadow-sm border-2 border-background" title="Verified Specialist">
+                    <ShieldCheck className="h-3.5 w-3.5" />
                   </span>
                 </div>
 
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
                     {provider.providerId ? (
-                      <NavLink to={`/providers/${provider.providerId}`} className="hover:text-amber-300 transition-colors">
-                        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{provider.providerName}</h1>
+                      <NavLink to={`/providers/${provider.providerId}`} className="hover:text-brand transition-colors">
+                        <h1 className="text-2xl sm:text-3xl font-heading font-medium tracking-tight text-foreground">{provider.providerName}</h1>
                       </NavLink>
                     ) : (
-                      <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{provider.providerName}</h1>
+                      <h1 className="text-2xl sm:text-3xl font-heading font-medium tracking-tight text-foreground">{provider.providerName}</h1>
                     )}
                     {provider.badge && (
-                      <Badge variant="secondary" className="bg-white/15 hover:bg-white/20 border-white/10 text-white text-[10px] uppercase font-bold py-0.5 px-2">
+                      <span className="border border-border/80 bg-card text-muted-foreground text-[10px] font-mono uppercase px-2 py-0.5 rounded-md">
                         {provider.badge}
-                      </Badge>
+                      </span>
                     )}
                   </div>
 
-                  <p className="text-[#7A7266] font-medium text-sm sm:text-base flex items-center justify-center sm:justify-start gap-1">
-                    <Star className="h-4 w-4 fill-amber-400 text-[#8C4B3E]" />
-                    <span className="font-extrabold text-white">{provider.rating}</span>
-                    <span className="opacity-75">({totalReviews} reviews)</span>
+                  <p className="text-muted-foreground text-xs sm:text-sm flex items-center justify-center sm:justify-start gap-1.5">
+                    <Star className="h-3.5 w-3.5 fill-brand text-brand" />
+                    <span className="font-mono font-medium text-foreground">{provider.rating}</span>
+                    <span className="text-muted-foreground">({totalReviews} reviews)</span>
                   </p>
 
-                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-y-1.5 gap-x-4 text-xs font-semibold text-[#7A7266]">
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-y-1.5 gap-x-4 text-xs text-muted-foreground">
                     <div className="flex items-center gap-1">
-                      <MapPin className="h-3.5 w-3.5 opacity-80" />
+                      <MapPin className="h-3.5 w-3.5" />
                       <span>{provider.location}</span>
                     </div>
 
-                    <span className="w-1.5 h-1.5 rounded-full bg-stone-400 hidden md:block"></span>
+                    <span className="size-1 rounded-full bg-border hidden md:block"></span>
 
                     <div className="flex items-center gap-1">
-                      <Award className="h-3.5 w-3.5 opacity-80" />
+                      <Award className="h-3.5 w-3.5" />
                       <span>{provider.experience} Exp</span>
                     </div>
                   </div>
@@ -566,12 +553,13 @@ export default function ServiceDetails() {
 
               {/* Availability Indicator */}
               <div className="shrink-0 flex flex-col items-center sm:items-end gap-1">
-                <span className="text-[10px] font-bold tracking-wider text-[#7A7266] uppercase">Availability Status</span>
-                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold ${provider.availability === "today"
-                    ? "bg-emerald-500/15 border-emerald-400/30 text-emerald-300"
-                    : "bg-[#8C4B3E]/15 border-amber-400/30 text-amber-300"
-                  }`}>
-                  <span className={`w-2 h-2 rounded-full ${provider.availability === "today" ? "bg-emerald-400 animate-pulse" : "bg-[#C9A46A]"}`}></span>
+                <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">Availability</span>
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-mono ${
+                  provider.availability === "today"
+                    ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
+                    : "border-border/80 bg-card text-muted-foreground"
+                }`}>
+                  <span className={`size-1.5 rounded-full ${provider.availability === "today" ? "bg-emerald-400 animate-pulse" : "bg-muted-foreground"}`} />
                   Available {provider.availability === "today" ? "Today" : (provider.availability === "weekend" ? "This Weekend" : "This Week")}
                 </span>
               </div>
@@ -585,242 +573,213 @@ export default function ServiceDetails() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
             {/* LEFT COLUMN: ABOUT, SKILLS, GALLERY, REVIEWS */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-6">
 
-              {/* SECTION 3: ABOUT */}
-              <Card className="border border-[#5A5146]/15 shadow-2xs hover:shadow-xs transition-shadow duration-300 bg-white p-6 rounded-2xl">
-                <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
-                    <ShieldCheck className="h-5 w-5" />
+              {/* ABOUT */}
+              <div className="card-chai p-6 space-y-4">
+                <div className="flex items-center gap-3 pb-3 border-b border-border/80">
+                  <div className="p-2 rounded-xl bg-foreground/5 text-foreground border border-border/70">
+                    <ShieldCheck className="h-4 w-4" />
                   </div>
                   <div>
-                    <CardTitle className="text-lg font-extrabold text-[#1F1D1A]">About the Provider</CardTitle>
-                    <CardDescription className="text-xs">Background and professional overview</CardDescription>
+                    <h3 className="font-heading font-medium text-base text-foreground">About the provider</h3>
+                    <p className="text-xs text-muted-foreground">Background and professional overview</p>
                   </div>
-                </CardHeader>
-                <CardContent className="p-0 pt-4">
-                  <p className="text-[#5A5146] leading-relaxed text-sm text-justify">
-                    {provider.about}
-                  </p>
-                  <div className="grid grid-cols-3 gap-4 mt-6 p-4 rounded-xl bg-[#FAF6F0] border border-[#5A5146]/15 text-center">
-                    <div>
-                      <span className="block text-xl font-extrabold text-[#1F1D1A]">140+</span>
-                      <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider">Jobs Finished</span>
-                    </div>
-                    <div className="border-x border-[#5A5146]/15">
-                      <span className="block text-xl font-extrabold text-[#1F1D1A]">99%</span>
-                      <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider">Response Rate</span>
-                    </div>
-                    <div>
-                      <span className="block text-xl font-extrabold text-[#1F1D1A]">4.9/5</span>
-                      <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider">Satisfaction</span>
-                    </div>
+                </div>
+                <p className="text-muted-foreground leading-relaxed text-sm">
+                  {provider.about}
+                </p>
+                <div className="grid grid-cols-3 gap-4 pt-2 border-t border-border/70 text-center">
+                  <div>
+                    <span className="block text-xl font-mono font-medium text-foreground">140+</span>
+                    <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">Jobs finished</span>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="border-x border-border/70">
+                    <span className="block text-xl font-mono font-medium text-foreground">99%</span>
+                    <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">Response rate</span>
+                  </div>
+                  <div>
+                    <span className="block text-xl font-mono font-medium text-foreground">4.9/5</span>
+                    <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">Satisfaction</span>
+                  </div>
+                </div>
+              </div>
 
-              {/* SECTION 4: SKILLS & CERTIFICATIONS */}
-              <Card className="border border-[#5A5146]/15 shadow-2xs hover:shadow-xs transition-shadow duration-300 bg-white p-6 rounded-2xl">
-                <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl">
-                    <Award className="h-5 w-5" />
+              {/* SKILLS & CERTIFICATIONS */}
+              <div className="card-chai p-6 space-y-5">
+                <div className="flex items-center gap-3 pb-3 border-b border-border/80">
+                  <div className="p-2 rounded-xl bg-foreground/5 text-foreground border border-border/70">
+                    <Award className="h-4 w-4" />
                   </div>
                   <div>
-                    <CardTitle className="text-lg font-extrabold text-[#1F1D1A]">Skills & Credentials</CardTitle>
-                    <CardDescription className="text-xs">Verified skills, licenses, and badges</CardDescription>
+                    <h3 className="font-heading font-medium text-base text-foreground">Skills and credentials</h3>
+                    <p className="text-xs text-muted-foreground">Verified skills, licenses, and badges</p>
                   </div>
-                </CardHeader>
-                <CardContent className="p-0 pt-5 space-y-5">
-                  {/* Skills Grid */}
-                  <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#7A7266] block mb-2.5">Specialized Skills</span>
-                    <div className="flex flex-wrap gap-2">
-                      {provider.skills.map((skill, index) => (
-                        <Badge key={index} variant="secondary" className="bg-[#F0E7D5] hover:bg-[#E8DCC3] text-[#8C4B3E] font-semibold px-3 py-1 text-xs rounded-lg border-0">
-                          <Check className="h-3 w-3 text-[#1F1D1A] mr-1.5" />
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
+                </div>
 
-                  {/* Certifications List */}
-                  <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#7A7266] block mb-2.5">Verified Certifications</span>
-                    <div className="space-y-2">
-                      {provider.certifications.map((cert, index) => (
-                        <div key={index} className="flex items-center gap-2.5 text-sm text-[#5A5146] bg-[#FAF6F0] p-2.5 border border-[#5A5146]/15 rounded-xl">
-                          <CheckCircle2 className="h-4.5 w-4.5 text-emerald-500 shrink-0" />
-                          <span className="font-semibold text-[#1F1D1A]">{cert}</span>
-                          <span className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full border border-emerald-100 font-bold uppercase ml-auto">Verified</span>
-                        </div>
-                      ))}
-                    </div>
+                {/* Skills Grid */}
+                <div className="space-y-2">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground block">Specialized skills</span>
+                  <div className="flex flex-wrap gap-2">
+                    {provider.skills.map((skill, index) => (
+                      <span key={index} className="inline-flex items-center border border-border/80 bg-card/60 text-foreground px-2.5 py-1 text-xs rounded-lg">
+                        <Check className="h-3 w-3 mr-1.5 text-muted-foreground" />
+                        {skill}
+                      </span>
+                    ))}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
 
-              {/* SECTION 5: GALLERY OF PREVIOUS WORK */}
-              <Card className="border border-[#5A5146]/15 shadow-2xs hover:shadow-xs transition-shadow duration-300 bg-white p-6 rounded-2xl">
-                <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center gap-2.5">
-                  <div className="p-2 bg-pink-50 text-pink-600 rounded-xl">
-                    <ImageIcon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-lg font-extrabold text-[#1F1D1A]">Project Gallery</CardTitle>
-                    <CardDescription className="text-xs">Photos of completed jobs and projects</CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-0 pt-4">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {provider.gallery.map((photo, index) => (
-                      <div
-                        key={index}
-                        onClick={() => setZoomImage(photo)}
-                        className="group relative h-28 md:h-32 rounded-xl overflow-hidden cursor-zoom-in border border-[#5A5146]/20 bg-[#FAF6F0] shadow-2xs"
-                      >
-                        <img
-                          src={photo.url}
-                          alt={photo.caption}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-[#8C4B3E]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                          <ZoomIn className="h-6 w-6 text-white" />
-                        </div>
-                        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-1.5 text-center text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity truncate">
-                          {photo.caption}
-                        </div>
+                {/* Certifications List */}
+                <div className="space-y-2 pt-2 border-t border-border/70">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground block">Verified certifications</span>
+                  <div className="space-y-2">
+                    {provider.certifications.map((cert, index) => (
+                      <div key={index} className="flex items-center gap-2.5 text-xs text-muted-foreground bg-card/60 p-2.5 border border-border/80 rounded-xl">
+                        <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                        <span className="font-medium text-foreground">{cert}</span>
+                        <span className="text-[10px] border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full font-mono uppercase ml-auto">Verified</span>
                       </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              {/* SECTION 6: CUSTOMER REVIEWS */}
-              <Card className="border border-[#5A5146]/15 shadow-2xs hover:shadow-xs transition-shadow duration-300 bg-white p-6 rounded-2xl">
-                <CardHeader className="p-0 pb-4 border-b border-stone-50 flex flex-row items-center justify-between flex-wrap gap-4">
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-2 bg-amber-50 text-[#8C4B3E] rounded-xl">
-                      <MessageSquare className="h-5 w-5" />
+              {/* GALLERY OF PREVIOUS WORK */}
+              <div className="card-chai p-6 space-y-4">
+                <div className="flex items-center gap-3 pb-3 border-b border-border/80">
+                  <div className="p-2 rounded-xl bg-foreground/5 text-foreground border border-border/70">
+                    <ImageIcon className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <h3 className="font-heading font-medium text-base text-foreground">Project gallery</h3>
+                    <p className="text-xs text-muted-foreground">Photos of completed jobs and projects</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {provider.gallery.map((photo, index) => (
+                    <div
+                      key={index}
+                      onClick={() => setZoomImage(photo)}
+                      className="group relative h-28 md:h-32 rounded-xl overflow-hidden cursor-zoom-in border border-border/80 bg-card"
+                    >
+                      <img
+                        src={photo.url}
+                        alt={photo.caption}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <ZoomIn className="h-5 w-5 text-white" />
+                      </div>
+                      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-1.5 text-center text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity truncate">
+                        {photo.caption}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* CUSTOMER REVIEWS */}
+              <div className="card-chai p-6 space-y-6">
+                <div className="flex flex-row items-center justify-between flex-wrap gap-4 pb-4 border-b border-border/80">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-xl bg-foreground/5 text-foreground border border-border/70">
+                      <MessageSquare className="h-4 w-4" />
                     </div>
                     <div>
-                      <CardTitle className="text-lg font-extrabold text-[#1F1D1A]">Client Reviews</CardTitle>
-                      <CardDescription className="text-xs">Ratings and feedback from verified customers</CardDescription>
+                      <h3 className="font-heading font-medium text-base text-foreground">Client reviews</h3>
+                      <p className="text-xs text-muted-foreground">Ratings and feedback from verified customers</p>
                     </div>
                   </div>
 
                   {/* Filter tabs */}
                   <Tabs value={reviewsFilter} onValueChange={setReviewsFilter} className="w-auto">
-                    <TabsList className="bg-[#FAF6F0] p-1 border border-[#5A5146]/15 rounded-xl h-8">
-                      <TabsTrigger value="all" className="rounded-lg text-xs font-bold py-1 px-3">All</TabsTrigger>
-                      <TabsTrigger value="5" className="rounded-lg text-xs font-bold py-1 px-3 flex items-center gap-0.5">5 <Star className="h-3 w-3 fill-amber-400 text-[#8C4B3E]" /></TabsTrigger>
-                      <TabsTrigger value="4" className="rounded-lg text-xs font-bold py-1 px-3 flex items-center gap-0.5">4 <Star className="h-3 w-3 fill-amber-400 text-[#8C4B3E]" /></TabsTrigger>
+                    <TabsList className="bg-muted/40 p-1 border border-border/80 rounded-xl h-8">
+                      <TabsTrigger value="all" className="rounded-lg text-xs py-0.5 px-2.5">All</TabsTrigger>
+                      <TabsTrigger value="5" className="rounded-lg text-xs py-0.5 px-2.5 flex items-center gap-1">5 <Star className="h-3 w-3 fill-brand text-brand" /></TabsTrigger>
+                      <TabsTrigger value="4" className="rounded-lg text-xs py-0.5 px-2.5 flex items-center gap-1">4 <Star className="h-3 w-3 fill-brand text-brand" /></TabsTrigger>
                     </TabsList>
                   </Tabs>
-                </CardHeader>
-                <CardContent className="p-0 pt-6">
+                </div>
 
-                  {/* Reviews Summary Stats Card */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center p-5 bg-[#FAF6F0] border border-[#5A5146]/15 rounded-2xl mb-8">
-                    <div className="text-center space-y-1">
-                      <span className="block text-4xl font-black text-[#1F1D1A]">{avgRating}</span>
-                      <div className="flex justify-center gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`h-4.5 w-4.5 ${i < Math.floor(avgRating) ? 'fill-amber-400 text-[#8C4B3E]' : 'text-[#7A7266]'}`} />
-                        ))}
+                {/* Reviews Summary Stats Card */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center p-4 rounded-xl border border-border/80 bg-card/60">
+                  <div className="text-center space-y-1">
+                    <span className="block text-3xl font-mono font-medium text-foreground">{avgRating}</span>
+                    <div className="flex justify-center gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className={`h-4 w-4 ${i < Math.floor(avgRating) ? 'fill-brand text-brand' : 'text-border'}`} />
+                      ))}
+                    </div>
+                    <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">Overall rating</span>
+                  </div>
+
+                  {/* Progress bars stars breakdown */}
+                  <div className="md:col-span-2 space-y-1.5">
+                    {[5, 4, 3, 2, 1].map((stars) => (
+                      <div key={stars} className="flex items-center gap-2">
+                        <span className="text-xs font-mono text-muted-foreground w-3">{stars}</span>
+                        <Star className="h-3 w-3 fill-border text-border shrink-0" />
+                        <Progress value={ratingPercentages[stars]} className="h-1.5 flex-1 bg-muted" />
+                        <span className="text-xs font-mono text-muted-foreground w-8 text-right">{ratingPercentages[stars]}%</span>
                       </div>
-                      <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider">Overall Rating</span>
-                    </div>
-
-                    {/* Progress bars stars breakdown */}
-                    <div className="md:col-span-2 space-y-1.5">
-                      {[5, 4, 3, 2, 1].map((stars) => (
-                        <div key={stars} className="flex items-center gap-2">
-                          <span className="text-xs font-bold text-[#7A7266] w-3">{stars}</span>
-                          <Star className="h-3 w-3 fill-stone-400 text-[#7A7266] shrink-0" />
-                          <Progress value={ratingPercentages[stars]} className="h-1.5 flex-1 bg-[#E8DCC3]" />
-                          <span className="text-xs font-semibold text-[#7A7266] w-8 text-right">{ratingPercentages[stars]}%</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Reviews List */}
-                  {filteredReviews.length === 0 ? (
-                    <div className="text-center py-8 bg-[#FAF6F0] rounded-xl border border-[#5A5146]/15">
-                      <AlertCircle className="h-8 w-8 text-[#7A7266] mx-auto mb-2" />
-                      <p className="text-sm font-semibold text-[#7A7266]">No reviews found matching selection.</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-6">
-                      {filteredReviews.map((rev) => (
-                        <ReviewCard
-                          key={rev.id}
-                          review={rev}
-                          providerName={service.provider?.fullName}
-                        />
-                      ))}
-                    </div>
-                  )}
-
-                </CardContent>
-              </Card>
-
-              {/* SECTION 9: SIMILAR PROVIDERS */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
-                    <Sparkles className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-lg font-extrabold text-[#1F1D1A]">Similar Providers</h2>
-                    <p className="text-xs text-[#7A7266]">Other specialists offering {provider.category}</p>
+                    ))}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {similarProviders.map((sim) => (
-                    <Card key={sim.id} className="group overflow-hidden border border-[#5A5146]/15 hover:border-[#5A5146]/20 shadow-2xs hover:shadow-xs transition-all duration-300 hover:-translate-y-1 bg-white flex flex-col h-full rounded-xl">
+                {/* Reviews List */}
+                {filteredReviews.length === 0 ? (
+                  <div className="text-center py-8 rounded-xl border border-border/80 bg-card/40">
+                    <AlertCircle className="h-6 w-6 text-muted-foreground mx-auto mb-2" />
+                    <p className="text-xs text-muted-foreground">No reviews found matching selection.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {filteredReviews.map((rev) => (
+                      <ReviewCard
+                        key={rev.id}
+                        review={rev}
+                        providerName={provider.providerName}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
 
-                      {/* Image cover */}
-                      <div className="relative h-32 w-full overflow-hidden shrink-0">
-                        <img src={sim.image} alt={sim.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                        <span className="absolute top-2 left-2 bg-[#8C4B3E] text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
-                          {sim.rating} <Star className="h-2.5 w-2.5 fill-white text-white inline ml-0.5" />
-                        </span>
-                      </div>
+              {/* SIMILAR PROVIDERS */}
+              {similarProviders.length > 0 && (
+                <div className="space-y-4 pt-4">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-brand" />
+                    <h3 className="font-heading font-medium text-base text-foreground">Similar providers</h3>
+                  </div>
 
-                      {/* Content */}
-                      <div className="p-4 flex flex-col justify-between flex-1 gap-3">
-                        <div>
-                          <h3 className="font-bold text-[#1F1D1A] text-sm line-clamp-1 group-hover:text-[#C9A46A] transition-colors">
-                            <NavLink to={`/services/${sim.id}`} onClick={() => window.scrollTo(0, 0)}>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {similarProviders.map((sim) => (
+                      <div key={sim.id} className="card-chai p-4 rounded-xl flex flex-col justify-between hover:border-foreground/30 transition-all">
+                        <div className="space-y-2">
+                          <div className="relative h-28 w-full overflow-hidden rounded-lg border border-border/70">
+                            <img src={sim.image} alt={sim.name} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                          </div>
+                          <h4 className="font-heading font-medium text-xs text-foreground line-clamp-1">
+                            <NavLink to={`/services/${sim.id}`} onClick={() => window.scrollTo(0, 0)} className="hover:text-brand">
                               {sim.name}
                             </NavLink>
-                          </h3>
-                          <div className="flex items-center gap-1.5 mt-1">
-                            <ProviderAvatar
-                              provider={sim.provider || { fullName: sim.providerName, profileImage: sim.providerImage }}
-                              className="h-5 w-5 border border-[#5A5146]/15"
-                              fallbackClassName="text-[10px]"
-                              size={40}
-                            />
-                            <span className="text-[11px] font-bold text-[#5A5146]">{sim.providerName}</span>
-                          </div>
+                          </h4>
+                          <p className="text-[11px] text-muted-foreground">{sim.providerName}</p>
                         </div>
-
-                        <div className="flex items-center justify-between border-t border-stone-50 pt-2.5 mt-auto">
-                          <span className="text-xs font-bold text-[#1F1D1A]">{formatPrice(sim.price, { priceType: sim.priceType })}</span>
+                        <div className="flex items-center justify-between border-t border-border/70 pt-2.5 mt-3">
+                          <span className="text-xs font-mono font-medium text-foreground">{formatPrice(sim.price, { priceType: sim.priceType })}</span>
                           <NavLink to={`/services/${sim.id}`} onClick={() => window.scrollTo(0, 0)}>
-                            <Button size="xs" variant="outline" className="h-7 text-[10px] font-bold border-[#5A5146]/20 hover:bg-[#FAF6F0] rounded-lg text-[#5A5146]">View Pro</Button>
+                            <Button size="sm" variant="outline" className="h-7 text-[11px] px-2.5">View</Button>
                           </NavLink>
                         </div>
                       </div>
-
-                    </Card>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
             </div>
 
@@ -829,43 +788,43 @@ export default function ServiceDetails() {
               <div className="lg:sticky lg:top-24 space-y-6">
 
                 {/* PRICING & BOOKING WIDGET */}
-                <Card className="border border-[#5A5146]/20 shadow-md bg-white overflow-hidden rounded-2xl relative">
+                <div className="card-chai rounded-2xl overflow-hidden relative">
 
                   {/* Banner tag overlay */}
-                  <div className="bg-[#8C4B3E] text-white py-3 px-5 flex items-center justify-between shrink-0">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#7A7266]">Available Pricing</span>
-                    <span className="text-[11px] font-extrabold text-white flex items-center gap-1">
-                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 fill-emerald-400/10" /> Verified Rates
+                  <div className="bg-muted/40 py-2.5 px-5 flex items-center justify-between border-b border-border/80">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">Select plan</span>
+                    <span className="text-[11px] text-emerald-400 flex items-center gap-1 font-mono">
+                      <ShieldCheck className="h-3.5 w-3.5" /> Guaranteed rate
                     </span>
                   </div>
 
                   {/* Tabs select packages */}
                   <Tabs value={activePlanIdx.toString()} onValueChange={(val) => setActivePlanIdx(parseInt(val))} className="w-full">
-                    <div className="px-5 pt-5 pb-3">
-                      <TabsList className="grid grid-cols-3 bg-[#FAF6F0] border border-[#5A5146]/20 p-1 rounded-xl h-10 shrink-0">
-                        <TabsTrigger value="0" className="rounded-lg text-xs font-bold py-1.5">Basic</TabsTrigger>
-                        <TabsTrigger value="1" className="rounded-lg text-xs font-bold py-1.5">Standard</TabsTrigger>
-                        <TabsTrigger value="2" className="rounded-lg text-xs font-bold py-1.5">Premium</TabsTrigger>
+                    <div className="px-5 pt-4 pb-2">
+                      <TabsList className="grid grid-cols-3 bg-muted/40 border border-border/80 p-1 rounded-xl h-9">
+                        <TabsTrigger value="0" className="rounded-lg text-xs py-1">Basic</TabsTrigger>
+                        <TabsTrigger value="1" className="rounded-lg text-xs py-1">Standard</TabsTrigger>
+                        <TabsTrigger value="2" className="rounded-lg text-xs py-1">Premium</TabsTrigger>
                       </TabsList>
                     </div>
 
-                    <CardContent className="px-5 pt-0 pb-5 border-b border-[#5A5146]/15">
+                    <div className="px-5 pt-0 pb-4 border-b border-border/80">
                       {provider.plans.map((plan, index) => (
                         <TabsContent key={index} value={index.toString()} className="mt-0 focus:outline-none">
                           <div className="space-y-3">
                             <div className="flex justify-between items-baseline">
-                              <h3 className="font-extrabold text-[#1F1D1A] text-base">{plan.name}</h3>
-                              <span className="text-xl font-black text-[#1F1D1A]">{formatPrice(plan.price, { priceType: provider.priceType })}</span>
+                              <h4 className="font-heading font-medium text-foreground text-sm">{plan.name}</h4>
+                              <span className="text-xl font-mono font-medium text-foreground">{formatPrice(plan.price, { priceType: provider.priceType })}</span>
                             </div>
 
-                            <p className="text-[#7A7266] text-xs leading-relaxed">
+                            <p className="text-muted-foreground text-xs leading-relaxed">
                               {plan.description}
                             </p>
 
-                            <div className="space-y-1.5 pt-2">
+                            <div className="space-y-1.5 pt-1">
                               {plan.inclusions.map((inc, i) => (
-                                <div key={i} className="flex items-center gap-2 text-[11px] text-[#5A5146] font-medium">
-                                  <Check className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                                <div key={i} className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                                  <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
                                   <span>{inc}</span>
                                 </div>
                               ))}
@@ -873,20 +832,20 @@ export default function ServiceDetails() {
                           </div>
                         </TabsContent>
                       ))}
-                    </CardContent>
+                    </div>
                   </Tabs>
 
                   {/* CALENDAR & SCHEDULER */}
-                  <div className="p-5 border-b border-[#5A5146]/15 space-y-4">
+                  <div className="p-5 border-b border-border/80 space-y-4">
 
                     {/* Date select title */}
                     <div className="flex justify-between items-center">
-                      <span className="text-xs font-bold text-[#1F1D1A] flex items-center gap-1.5">
-                        <Calendar className="h-4 w-4 text-[#1F1D1A]" /> Select Date
+                      <span className="text-xs font-medium text-foreground flex items-center gap-1.5">
+                        <Calendar className="h-3.5 w-3.5" /> Select date
                       </span>
                       {selectedDate && (
-                        <span className="text-[11px] font-bold text-[#1F1D1A] bg-[#8C4B3E]/5 px-2.5 py-0.5 rounded-full border border-violet-950/10">
-                          Selected
+                        <span className="text-[10px] font-mono text-muted-foreground border border-border/80 bg-card px-2 py-0.5 rounded-full">
+                          {selectedDate}
                         </span>
                       )}
                     </div>
@@ -903,14 +862,15 @@ export default function ServiceDetails() {
                               setSelectedDate(d.dateStr);
                               setDateAlert(false);
                             }}
-                            className={`flex flex-col items-center justify-center p-2.5 border rounded-xl min-w-[54px] snap-center transition-all ${isSelected
-                                ? "bg-[#8C4B3E] border-violet-950 text-white shadow-md shadow-2xs"
-                                : "bg-white border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] hover:border-stone-300"
-                              }`}
+                            className={`flex flex-col items-center justify-center p-2 border rounded-xl min-w-[50px] snap-center transition-all cursor-pointer ${
+                              isSelected
+                                ? "bg-foreground text-background border-foreground font-semibold"
+                                : "bg-card border-border/80 text-muted-foreground hover:border-foreground/30 hover:text-foreground"
+                            }`}
                           >
-                            <span className="text-[9px] font-bold uppercase tracking-wider opacity-80">{d.dayName}</span>
-                            <span className="text-sm font-black mt-0.5">{d.dayNum}</span>
-                            <span className="text-[9px] font-semibold opacity-70 mt-0.5">{d.month}</span>
+                            <span className="text-[9px] uppercase font-mono tracking-wider opacity-80">{d.dayName}</span>
+                            <span className="text-sm font-mono mt-0.5">{d.dayNum}</span>
+                            <span className="text-[9px] font-mono opacity-70">{d.month}</span>
                           </button>
                         );
                       })}
@@ -918,24 +878,23 @@ export default function ServiceDetails() {
 
                     {/* Date selection warning alert */}
                     {dateAlert && (
-                      <div className="flex items-center gap-2 p-2.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs rounded-xl animate-bounce">
+                      <div className="flex items-center gap-2 p-2 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs rounded-xl">
                         <AlertCircle className="h-4 w-4 shrink-0" />
-                        <span className="font-semibold">Please select a booking date first.</span>
+                        <span>Please select a booking date first.</span>
                       </div>
                     )}
 
                     {/* Time slots scheduler select */}
                     <div className="space-y-3 pt-2">
-                      <span className="text-xs font-bold text-[#1F1D1A] flex items-center gap-1.5">
-                        <Clock className="h-4 w-4 text-[#1F1D1A]" /> Select Time Slot
+                      <span className="text-xs font-medium text-foreground flex items-center gap-1.5">
+                        <Clock className="h-3.5 w-3.5" /> Select time slot
                       </span>
 
-                      {/* Time slot grids grouped */}
-                      <div className="space-y-2.5">
+                      <div className="space-y-2">
                         {Object.entries(timeSlots).map(([groupName, slots]) => (
                           <div key={groupName} className="space-y-1">
-                            <span className="text-[10px] font-bold text-slate-405 block">{groupName}</span>
-                            <div className="grid grid-cols-3 gap-2">
+                            <span className="text-[10px] font-mono text-muted-foreground block">{groupName}</span>
+                            <div className="grid grid-cols-3 gap-1.5">
                               {slots.map((slot) => {
                                 const isSelected = selectedTimeSlot === slot;
                                 return (
@@ -946,10 +905,11 @@ export default function ServiceDetails() {
                                       setSelectedTimeSlot(slot);
                                       setTimeAlert(false);
                                     }}
-                                    className={`py-1.5 text-[11px] font-bold text-center border rounded-lg transition-all ${isSelected
-                                        ? "bg-[#8C4B3E] border-violet-950 text-white shadow-xs"
-                                        : "bg-white border-[#5A5146]/20 text-[#5A5146] hover:bg-[#FAF6F0] hover:border-stone-400"
-                                      }`}
+                                    className={`py-1 text-[11px] font-mono text-center border rounded-lg transition-all cursor-pointer ${
+                                      isSelected
+                                        ? "bg-foreground text-background border-foreground"
+                                        : "bg-card border-border/80 text-muted-foreground hover:border-foreground/30"
+                                    }`}
                                   >
                                     {slot}
                                   </button>
@@ -960,11 +920,10 @@ export default function ServiceDetails() {
                         ))}
                       </div>
 
-                      {/* Time slot warning alert */}
                       {timeAlert && (
-                        <div className="flex items-center gap-2 p-2.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs rounded-xl animate-bounce">
+                        <div className="flex items-center gap-2 p-2 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs rounded-xl">
                           <AlertCircle className="h-4 w-4 shrink-0" />
-                          <span className="font-semibold">Please select a time slot.</span>
+                          <span>Please select a time slot.</span>
                         </div>
                       )}
                     </div>
@@ -972,45 +931,46 @@ export default function ServiceDetails() {
                   </div>
 
                   {/* ACTION PANEL BUTTONS */}
-                  <div className="p-5 bg-[#FAF6F0] space-y-3 shrink-0">
+                  <div className="p-5 space-y-2.5">
                     <Button
                       onClick={handleBooking}
-                      className="w-full bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-extrabold py-5 rounded-xl flex items-center justify-center gap-2 text-sm shadow-md transition-all hover:scale-[1.01]"
+                      variant="solid"
+                      className="w-full h-11 text-xs justify-center cursor-pointer"
                     >
-                      <CalendarCheck className="h-4.5 w-4.5" />
-                      Book Appointment Now
+                      <CalendarCheck className="h-4 w-4 mr-1.5" />
+                      Book appointment now
                     </Button>
 
                     <Button
                       variant="outline"
                       onClick={() => setIsContactOpen(true)}
-                      className="w-full border-[#5A5146]/20 bg-white text-[#5A5146] hover:bg-[#F0E7D5] hover:text-[#1F1D1A] font-bold py-5 rounded-xl flex items-center justify-center gap-2 text-xs"
+                      className="w-full h-10 text-xs justify-center cursor-pointer"
                     >
-                      <Mail className="h-4 w-4 text-[#7A7266]" />
+                      <Mail className="h-3.5 w-3.5 mr-1 text-muted-foreground" />
                       Contact {provider.providerName}
                     </Button>
 
                     <div className="text-center pt-2">
-                      <span className="text-[10px] font-bold text-[#7A7266] flex items-center justify-center gap-1">
-                        <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" /> Fully Insured and Quality Guaranteed
+                      <span className="text-[10px] text-muted-foreground flex items-center justify-center gap-1">
+                        <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" /> Fully insured and quality guaranteed
                       </span>
                     </div>
                   </div>
 
-                </Card>
+                </div>
 
                 {/* HELP CARD */}
-                <Card className="border border-[#5A5146]/15 bg-white p-5 rounded-2xl flex items-start gap-3">
-                  <div className="p-2 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl shrink-0">
-                    <AlertCircle className="h-5 w-5" />
+                <div className="card-chai p-4 rounded-xl flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-card text-muted-foreground shrink-0 border border-border/70">
+                    <AlertCircle className="h-4 w-4" />
                   </div>
-                  <div className="space-y-1">
-                    <h4 className="font-bold text-[#1F1D1A] text-xs">Need custom service requirements?</h4>
-                    <p className="text-[11px] text-slate-550 leading-relaxed">
-                      Reach out to the provider via the "Contact Specialist" button. Specify your project requirements, scope, dates, and customized pricing details.
+                  <div className="space-y-0.5">
+                    <h4 className="font-heading font-medium text-foreground text-xs">Custom requirements?</h4>
+                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                      Reach out via "Contact Specialist" to specify custom project requirements, dates, or customized pricing.
                     </p>
                   </div>
-                </Card>
+                </div>
 
               </div>
             </div>
@@ -1026,7 +986,7 @@ export default function ServiceDetails() {
           <DialogContent className="max-w-3xl border-0 p-0 overflow-hidden bg-black/95">
             <div className="relative aspect-video max-h-[80vh] flex items-center justify-center">
               <img src={zoomImage.url} alt={zoomImage.caption} className="max-w-full max-h-full object-contain" />
-              <div className="absolute bottom-0 inset-x-0 bg-[#F0E7D5] text-white p-4 text-center text-sm font-semibold">
+              <div className="absolute bottom-0 inset-x-0 bg-black/80 text-white p-3 text-center text-xs font-mono">
                 {zoomImage.caption}
               </div>
             </div>
@@ -1036,103 +996,95 @@ export default function ServiceDetails() {
 
       {/* CONTACT DIALOG MODAL */}
       <Dialog open={isContactOpen} onOpenChange={setIsContactOpen}>
-        <DialogContent className="max-w-md bg-white border border-[#5A5146]/20 rounded-2xl shadow-xl p-6">
+        <DialogContent className="max-w-md card-chai p-6">
           <DialogHeader>
-            <DialogTitle className="text-lg font-extrabold text-[#1F1D1A] flex items-center gap-2">
-              <Mail className="h-5 w-5 text-[#1F1D1A]" />
-              Contact Provider
+            <DialogTitle className="text-lg font-heading font-medium text-foreground flex items-center gap-2">
+              <Mail className="h-4 w-4" />
+              Contact specialist
             </DialogTitle>
-            <DialogDescription className="text-xs text-[#7A7266] pt-0.5">
-              Send a direct inquiry message to {provider.providerName} for custom questions or quotes.
+            <DialogDescription className="text-xs text-muted-foreground pt-0.5">
+              Send an inquiry to {provider.providerName} for questions or quotes.
             </DialogDescription>
           </DialogHeader>
 
           {contactSentSuccess ? (
-            <div className="py-8 text-center space-y-3">
-              <div className="mx-auto w-12 h-12 bg-emerald-50 text-emerald-500 border border-emerald-100 flex items-center justify-center rounded-full animate-bounce shadow-xs">
-                <Check className="h-6 w-6" />
+            <div className="py-6 text-center space-y-2">
+              <div className="mx-auto size-10 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center rounded-full">
+                <Check className="h-5 w-5" />
               </div>
-              <h3 className="font-extrabold text-[#1F1D1A] text-sm">Message Sent Successfully!</h3>
-              <p className="text-xs text-[#7A7266] max-w-xs mx-auto">
-                Your direct message has been dispatched. {provider.providerName} will receive a dashboard notification and reply shortly.
+              <h3 className="font-heading font-medium text-foreground text-sm">Message sent</h3>
+              <p className="text-xs text-muted-foreground max-w-xs mx-auto">
+                Your message has been dispatched. {provider.providerName} will reply shortly.
               </p>
             </div>
           ) : (
-            <form onSubmit={handleContactSubmit} className="space-y-4 pt-3">
-              <div className="space-y-1.5">
-                <Label htmlFor="contactName" className="text-xs font-bold text-[#8C4B3E]">Your Full Name</Label>
+            <form onSubmit={handleContactSubmit} className="space-y-3.5 pt-2">
+              <div className="space-y-1">
+                <Label htmlFor="contactName" className="text-xs font-medium text-foreground">Your name</Label>
                 <Input
                   id="contactName"
                   value={contactName}
                   onChange={(e) => setContactName(e.target.value)}
                   placeholder="e.g. Amanda Cole"
-                  className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 bg-white"
+                  className="text-xs h-9"
                   required
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="contactEmail" className="text-xs font-bold text-[#8C4B3E]">Email Address</Label>
+              <div className="space-y-1">
+                <Label htmlFor="contactEmail" className="text-xs font-medium text-foreground">Email address</Label>
                 <Input
                   id="contactEmail"
                   type="email"
                   value={contactEmail}
                   onChange={(e) => setContactEmail(e.target.value)}
                   placeholder="e.g. amanda@example.com"
-                  className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 bg-white"
+                  className="text-xs h-9"
                   required
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="contactSubject" className="text-xs font-bold text-[#8C4B3E]">Subject (Optional)</Label>
+              <div className="space-y-1">
+                <Label htmlFor="contactSubject" className="text-xs font-medium text-foreground">Subject (optional)</Label>
                 <Input
                   id="contactSubject"
                   value={contactSubject}
                   onChange={(e) => setContactSubject(e.target.value)}
                   placeholder="e.g. Custom scheduling inquiry"
-                  className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 focus:ring-2 focus:ring-violet-950 focus:border-violet-950 bg-white"
+                  className="text-xs h-9"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="contactMessage" className="text-xs font-bold text-[#8C4B3E]">Inquiry Message</Label>
+              <div className="space-y-1">
+                <Label htmlFor="contactMessage" className="text-xs font-medium text-foreground">Inquiry message</Label>
                 <Textarea
                   id="contactMessage"
                   value={contactMessage}
                   onChange={(e) => setContactMessage(e.target.value)}
                   placeholder="Type details regarding the scope of work you need completed..."
                   rows={4}
-                  className="rounded-xl border-[#5A5146]/20 text-xs focus:ring-2 focus:ring-violet-950 focus:border-violet-950 bg-white"
+                  className="text-xs"
                   required
                 />
               </div>
 
-              <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2.5">
+              <DialogFooter className="pt-2 flex flex-col sm:flex-row gap-2">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setIsContactOpen(false)}
                   disabled={isSendingContact}
-                  className="rounded-xl border-[#5A5146]/20 text-xs h-9.5 w-full sm:w-auto"
+                  className="text-xs h-9 w-full sm:w-auto"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   disabled={isSendingContact}
-                  className="rounded-xl bg-[#8C4B3E] hover:bg-[#7C8A6B] text-white font-bold text-xs h-9.5 px-6 w-full sm:w-auto flex items-center justify-center gap-1.5"
+                  variant="solid"
+                  className="text-xs h-9 px-5 w-full sm:w-auto"
                 >
-                  {isSendingContact ? (
-                    <>
-                      <span className="w-3.5 h-3.5 rounded-full border-2 border-white/35 border-t-white animate-spin"></span>
-                      Sending message...
-                    </>
-                  ) : (
-                    <>
-                      Send Message
-                    </>
-                  )}
+                  {isSendingContact ? "Sending..." : "Send message"}
                 </Button>
               </DialogFooter>
             </form>

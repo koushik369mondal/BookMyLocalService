@@ -24,9 +24,9 @@ export function ServiceImage({
     : getServiceImage(src || service, { width, height, crop });
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-[#FAF6F0]">
+    <div className="relative w-full h-full overflow-hidden bg-neutral-900">
       {!isLoaded && !imgError && (
-        <div className="absolute inset-0 bg-stone-200/80 animate-pulse z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-white/5 animate-pulse z-10 pointer-events-none" />
       )}
       <img
         src={resolvedSrc}

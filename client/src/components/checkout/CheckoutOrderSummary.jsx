@@ -29,20 +29,20 @@ export function CheckoutOrderSummary({
   const grandTotal = Math.max(0, Math.round((basePrice + platformFee + tax - appliedDiscount) * 100) / 100);
 
   return (
-    <div className="bg-white p-6 rounded-3xl border border-[#E8DCC3] shadow-sm space-y-6 sticky top-24">
-      <div className="space-y-3 pb-4 border-b border-[#E8DCC3]">
-        <span className="text-[10px] font-black uppercase tracking-wider text-[#8C4B3E]">Order Summary</span>
-        <h4 className="text-lg font-black text-[#1F1D1A] leading-tight">{booking.service?.title || "Booked Service"}</h4>
-        <div className="text-xs text-[#5A5146]">
-          Package: <strong className="text-[#1F1D1A]">{booking.plan}</strong>
+    <div className="card-chai p-6 space-y-6 sticky top-24">
+      <div className="space-y-2 pb-4 border-b border-border/80">
+        <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">Order summary</span>
+        <h4 className="text-base font-heading font-medium text-foreground leading-tight">{booking.service?.title || "Booked service"}</h4>
+        <div className="text-xs text-muted-foreground">
+          Package: <strong className="text-foreground">{booking.plan}</strong>
         </div>
       </div>
 
       {/* Promo Code Input */}
       <div className="space-y-2">
-        <label className="text-xs font-bold text-[#1F1D1A] flex items-center gap-1.5">
-          <Tag className="h-3.5 w-3.5 text-[#8C4B3E]" />
-          Promo / Coupon Code
+        <label className="text-xs font-medium text-foreground flex items-center gap-1.5">
+          <Tag className="h-3.5 w-3.5 text-muted-foreground" />
+          Promo code
         </label>
         <div className="flex gap-2">
           <Input
@@ -56,7 +56,7 @@ export function CheckoutOrderSummary({
               }
             }}
             placeholder="e.g. WELCOME100"
-            className="h-9 border-[#E8DCC3] text-xs rounded-xl uppercase bg-[#FAF6F0]/40"
+            className="h-9 text-xs rounded-xl uppercase bg-card/60"
           />
           <Button
             type="button"
@@ -66,39 +66,39 @@ export function CheckoutOrderSummary({
               onApplyPromo(e);
             }}
             variant="outline"
-            className="h-9 px-4 border-[#E8DCC3] text-xs font-bold text-[#8C4B3E] hover:bg-[#8C4B3E]/10 rounded-xl cursor-pointer"
+            className="h-9 px-4 text-xs font-medium rounded-xl cursor-pointer"
           >
             Apply
           </Button>
         </div>
-        {promoSuccessMsg && <p className="text-[11px] text-emerald-600 font-bold">{promoSuccessMsg}</p>}
-        {promoErrorMsg && <p className="text-[11px] text-rose-600 font-bold">{promoErrorMsg}</p>}
+        {promoSuccessMsg && <p className="text-[11px] text-emerald-500 font-medium">{promoSuccessMsg}</p>}
+        {promoErrorMsg && <p className="text-[11px] text-rose-500 font-medium">{promoErrorMsg}</p>}
       </div>
 
-      <div className="space-y-2 text-xs text-[#5A5146] pt-2 border-t border-[#E8DCC3]">
+      <div className="space-y-2 text-xs text-muted-foreground pt-2 border-t border-border/80">
         <div className="flex justify-between">
-          <span>Service Price</span>
-          <strong className="text-[#1F1D1A]">{formatPrice(basePrice, { decimals: true })}</strong>
+          <span>Service price</span>
+          <strong className="text-foreground font-mono">{formatPrice(basePrice, { decimals: true })}</strong>
         </div>
         <div className="flex justify-between">
-          <span>Platform Fee</span>
-          <strong className="text-[#1F1D1A]">{formatPrice(platformFee, { decimals: true })}</strong>
+          <span>Platform fee</span>
+          <strong className="text-foreground font-mono">{formatPrice(platformFee, { decimals: true })}</strong>
         </div>
         <div className="flex justify-between">
           <span>GST (18%)</span>
-          <strong className="text-[#1F1D1A]">{formatPrice(tax, { decimals: true })}</strong>
+          <strong className="text-foreground font-mono">{formatPrice(tax, { decimals: true })}</strong>
         </div>
         {appliedDiscount > 0 && (
-          <div className="flex justify-between text-emerald-600">
-            <span>Coupon Discount</span>
-            <strong>-{formatPrice(appliedDiscount, { decimals: true })}</strong>
+          <div className="flex justify-between text-emerald-500">
+            <span>Coupon discount</span>
+            <strong className="font-mono">-{formatPrice(appliedDiscount, { decimals: true })}</strong>
           </div>
         )}
       </div>
 
-      <div className="flex justify-between items-center pt-3 border-t border-[#E8DCC3]">
-        <span className="text-sm font-extrabold text-[#1F1D1A]">Total Due</span>
-        <span className="text-2xl font-black text-[#8C4B3E]">{formatPrice(grandTotal, { decimals: true })}</span>
+      <div className="flex justify-between items-center pt-3 border-t border-border/80">
+        <span className="text-sm font-heading font-medium text-foreground">Total due</span>
+        <span className="text-2xl font-mono font-medium text-foreground">{formatPrice(grandTotal, { decimals: true })}</span>
       </div>
 
       {/* Terms Checkbox */}
@@ -109,48 +109,48 @@ export function CheckoutOrderSummary({
             id="acceptTerms"
             checked={acceptTermsValue}
             onChange={(e) => setValue("acceptTerms", e.target.checked)}
-            className="rounded border-[#E8DCC3] text-[#8C4B3E] focus:ring-[#8C4B3E] mt-0.5"
+            className="rounded border-border text-foreground focus:ring-ring mt-0.5"
           />
-          <label htmlFor="acceptTerms" className="text-[11px] text-[#5A5146] font-medium leading-tight cursor-pointer select-none">
+          <label htmlFor="acceptTerms" className="text-[11px] text-muted-foreground font-normal leading-tight cursor-pointer select-none">
             I agree to the Terms of Service, Cancellation Policy, and Privacy Policy.
           </label>
         </div>
-        {errors.acceptTerms && <p className="text-[11px] text-rose-600 font-bold">{errors.acceptTerms.message}</p>}
+        {errors.acceptTerms && <p className="text-[11px] text-rose-500 font-medium">{errors.acceptTerms.message}</p>}
       </div>
 
       {submitError && (
-        <div className="bg-rose-50 border border-rose-100 text-rose-700 text-xs font-bold p-3 rounded-xl">
+        <div className="bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs p-3 rounded-xl">
           {submitError}
         </div>
       )}
 
       {submitSuccess && (
-        <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold p-3 rounded-xl">
-          Payment Successful! Redirecting to confirmation page...
+        <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs p-3 rounded-xl">
+          Payment successful! Redirecting to confirmation page...
         </div>
       )}
 
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full h-12 bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md cursor-pointer"
+        variant="solid"
+        className="w-full h-11 text-xs justify-center cursor-pointer"
       >
         {isSubmitting ? (
           <>
-            <Loader2 className="h-4 w-4 animate-spin text-white" />
-            {selectedPaymentMethod === "cash" ? "Confirming Booking..." : "Processing Payment..."}
+            <Loader2 className="h-4 w-4 animate-spin mr-1.5" />
+            {selectedPaymentMethod === "cash" ? "Confirming booking..." : "Processing payment..."}
           </>
         ) : (
           <>
-            {selectedPaymentMethod === "cash" ? "Confirm Booking (Pay on Service)" : "Complete Booking & Pay"} ({formatPrice(grandTotal, { decimals: true })})
-            <ArrowRight className="h-4 w-4" />
+            {selectedPaymentMethod === "cash" ? "Confirm booking" : "Complete booking and pay"} ({formatPrice(grandTotal, { decimals: true })})
           </>
         )}
       </Button>
 
-      <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#7A7266] font-medium">
-        <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
-        <span>256-Bit SSL Encrypted Payment</span>
+      <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
+        <ShieldCheck className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+        <span>256-bit encrypted checkout</span>
       </div>
     </div>
   );

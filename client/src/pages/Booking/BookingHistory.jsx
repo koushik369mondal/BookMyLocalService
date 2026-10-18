@@ -60,29 +60,29 @@ export default function BookingHistory() {
 
   return (
     <MainLayout>
-      <div className="bg-[#FAF6F0] min-h-screen py-10 font-sans text-[#1F1D1A]">
+      <div className="min-h-screen py-10 font-sans text-foreground">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl space-y-6">
 
           {/* HEADER BAR */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <Link to="/customer/dashboard" className="inline-flex items-center gap-1 text-xs font-bold text-[#8C4B3E] hover:underline mb-1">
-                <ArrowLeft className="h-3.5 w-3.5" /> Back to Dashboard
+              <Link to="/customer/dashboard" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground mb-1">
+                <ArrowLeft className="h-3.5 w-3.5" /> Back to dashboard
               </Link>
-              <h1 className="text-2xl sm:text-3xl font-black text-[#1F1D1A]">My Service Bookings</h1>
-              <p className="text-xs text-[#5A5146] font-medium">Track specialist dispatches, service timelines, and payments</p>
+              <h1 className="text-2xl sm:text-3xl font-heading font-medium text-foreground">My service bookings</h1>
+              <p className="text-xs text-muted-foreground">Track specialist dispatches, service timelines, and payments</p>
             </div>
             
             <Link to="/services">
-              <Button size="sm" className="bg-[#8C4B3E] hover:bg-[#723B30] text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer">
-                + Book New Service
+              <Button size="sm" variant="solid" className="text-xs">
+                + Book new service
               </Button>
             </Link>
           </div>
 
           {error && (
-            <div className="flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl">
-              <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
+            <div className="flex items-start gap-2.5 p-3.5 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs rounded-xl">
+              <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-400" />
               <span>{error}</span>
             </div>
           )}
@@ -96,19 +96,19 @@ export default function BookingHistory() {
           )}
 
           {/* FILTERS & SEARCH */}
-          <Card className="border border-[#5A5146]/15 shadow-2xs rounded-2xl bg-white p-4">
+          <div className="card-chai p-3 rounded-2xl">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="relative w-full sm:w-80">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A7266]" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search service title or provider..."
-                  className="pl-10 h-10 border-[#E8DCC3] text-xs rounded-xl bg-[#FAF6F0]/50 font-medium text-[#1F1D1A]"
+                  className="pl-10 h-9 text-xs rounded-xl bg-card/60"
                 />
               </div>
 
-              <div className="flex bg-[#FAF6F0] border border-[#E8DCC3] p-0.5 rounded-xl h-10 overflow-x-auto w-full sm:w-auto">
+              <div className="flex bg-muted/40 border border-border/80 p-0.5 rounded-xl h-9 overflow-x-auto w-full sm:w-auto">
                 {[
                   { id: "all", label: "All" },
                   { id: "pending", label: "Pending" },
@@ -121,10 +121,10 @@ export default function BookingHistory() {
                     key={tab.id}
                     type="button"
                     onClick={() => setActiveStatus(tab.id)}
-                    className={`rounded-lg text-[10px] font-extrabold px-3 py-1.5 uppercase transition-all cursor-pointer whitespace-nowrap ${
+                    className={`rounded-lg text-[10px] font-mono px-3 py-1 uppercase transition-all cursor-pointer whitespace-nowrap ${
                       activeStatus === tab.id
-                        ? "bg-[#8C4B3E] text-white shadow-2xs"
-                        : "text-[#7A7266] hover:text-[#8C4B3E]"
+                        ? "bg-card text-foreground border border-border/80 shadow-2xs"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {tab.label}
@@ -132,21 +132,21 @@ export default function BookingHistory() {
                 ))}
               </div>
             </div>
-          </Card>
+          </div>
 
           {/* BOOKINGS LIST */}
-          <div className="space-y-5">
+          <div className="space-y-4">
             {isLoading ? (
-              <div className="bg-white p-12 rounded-3xl border border-[#E8DCC3] text-center">
-                <Loader2 className="h-8 w-8 animate-spin text-[#8C4B3E] mx-auto" />
+              <div className="card-chai p-12 text-center">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground mx-auto" />
               </div>
             ) : filteredBookings.length === 0 ? (
-              <div className="bg-white p-12 rounded-3xl border border-[#E8DCC3] text-center space-y-3">
-                <p className="text-sm font-bold text-[#1F1D1A]">No Bookings Found</p>
-                <p className="text-xs text-[#5A5146]">You have no bookings matching the selected filter criteria.</p>
+              <div className="card-chai p-12 text-center space-y-3">
+                <p className="text-sm font-medium text-foreground">No bookings found</p>
+                <p className="text-xs text-muted-foreground">You have no bookings matching the selected filter criteria.</p>
                 <Link to="/services">
-                  <Button size="sm" className="bg-[#8C4B3E] text-white text-xs font-bold rounded-xl mt-2 cursor-pointer">
-                    Browse Services Catalog
+                  <Button size="sm" variant="default" className="text-xs mt-2 cursor-pointer">
+                    Browse services
                   </Button>
                 </Link>
               </div>
@@ -156,35 +156,35 @@ export default function BookingHistory() {
                 const isExpanded = expandedBookingId === b.id;
 
                 return (
-                  <Card key={b.id} className="border border-[#5A5146]/15 shadow-2xs rounded-3xl bg-white p-5 sm:p-6 transition-all duration-300 hover:border-[#C9A46A]/60">
+                  <div key={b.id} className="card-chai p-5 sm:p-6 transition-all duration-300 hover:border-foreground/30">
                     
                     {/* CARD HEADER */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E8DCC3]">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-border/80">
                       <div className="space-y-1">
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-[10px] font-black uppercase tracking-wider text-[#8C4B3E] bg-[#F0E7D5] border border-[#E8DCC3] px-2 py-0.5 rounded-md">
+                          <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground border border-border/80 bg-card px-2 py-0.5 rounded-md">
                             REF #{b.id.substring(0, 8)}
                           </span>
                           <BookingStatusBadge status={bStatus} />
                         </div>
                         
-                        <h3 className="text-base sm:text-lg font-black text-[#1F1D1A] leading-snug">
-                          {b.service?.title || "Booked Service"}
+                        <h3 className="text-base font-heading font-medium text-foreground leading-snug">
+                          {b.service?.title || "Booked service"}
                         </h3>
                         
-                        {/* Schedule with 📅 Date & 🕒 Time */}
-                        <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-[#5A5146] pt-0.5">
+                        {/* Schedule with Date & Time */}
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground pt-0.5">
                           <span className="flex items-center gap-1.5">
-                            <Calendar className="h-3.5 w-3.5 text-[#8C4B3E]" />
+                            <Calendar className="h-3.5 w-3.5 text-foreground" />
                             {b.date}
                           </span>
                           <span className="flex items-center gap-1.5">
-                            <Clock className="h-3.5 w-3.5 text-[#8C4B3E]" />
+                            <Clock className="h-3.5 w-3.5 text-foreground" />
                             {b.time}
                           </span>
                           {b.plan && (
-                            <span className="flex items-center gap-1 text-[11px] text-[#7A7266] bg-[#FAF6F0] px-2 py-0.5 rounded-lg border border-[#E8DCC3]">
-                              <Package className="h-3 w-3 text-[#C9A46A]" />
+                            <span className="flex items-center gap-1 text-[11px] text-muted-foreground bg-card px-2 py-0.5 rounded-lg border border-border/80">
+                              <Package className="h-3 w-3 text-muted-foreground" />
                               {b.plan}
                             </span>
                           )}
@@ -193,8 +193,8 @@ export default function BookingHistory() {
 
                       {/* Top Right Quick Summary */}
                       <div className="text-left sm:text-right shrink-0 sm:self-start pt-2 sm:pt-0">
-                        <span className="text-xs font-bold text-[#7A7266] block">Settlement Total</span>
-                        <span className="text-xl font-black text-[#8C4B3E]">{formatPrice(b.total, { decimals: true })}</span>
+                        <span className="text-xs text-muted-foreground block font-mono">Settlement total</span>
+                        <span className="text-xl font-mono font-medium text-foreground">{formatPrice(b.total, { decimals: true })}</span>
                       </div>
                     </div>
 
@@ -229,26 +229,27 @@ export default function BookingHistory() {
 
                     {/* DYNAMIC ACTION BUTTONS RIBBON */}
                     {confirmCancelId === b.id ? (
-                      <div className="flex items-center justify-between gap-3 p-3 bg-rose-50 border border-rose-200 rounded-2xl my-2">
-                        <span className="text-xs font-bold text-rose-800">Are you sure you want to cancel this booking?</span>
+                      <div className="flex items-center justify-between gap-3 p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl my-2">
+                        <span className="text-xs font-medium text-rose-400">Are you sure you want to cancel this booking?</span>
                         <div className="flex items-center gap-2 shrink-0">
                           <Button
                             size="sm"
+                            variant="danger"
                             onClick={() => {
                               handleCancelBooking(b.id);
                               setConfirmCancelId(null);
                             }}
-                            className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold h-8 px-3 rounded-xl cursor-pointer"
+                            className="text-xs h-8 px-3 cursor-pointer"
                           >
-                            Yes, Cancel
+                            Yes, cancel
                           </Button>
                           <Button
                             size="sm"
                             variant="ghost"
                             onClick={() => setConfirmCancelId(null)}
-                            className="text-xs font-bold h-8 px-3 rounded-xl cursor-pointer text-[#5A5146]"
+                            className="text-xs h-8 px-3 cursor-pointer text-muted-foreground"
                           >
-                            Keep Booking
+                            Keep booking
                           </Button>
                         </div>
                       </div>
@@ -269,52 +270,52 @@ export default function BookingHistory() {
 
                     {/* EXPANDABLE DETAILS PANEL */}
                     {isExpanded && (
-                      <div className="mt-4 pt-4 border-t border-dashed border-[#E8DCC3] space-y-4 bg-[#FAF6F0]/40 p-4.5 rounded-2xl">
-                        <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#8C4B3E]">
-                          Detailed Service Breakdown & Audit
+                      <div className="mt-4 pt-4 border-t border-dashed border-border/80 space-y-4 bg-card/60 p-4 rounded-xl">
+                        <h4 className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                          Service details and audit
                         </h4>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                           {/* Service Location */}
-                          <div className="space-y-1 bg-white p-3 rounded-xl border border-[#E8DCC3]">
-                            <span className="text-[10px] font-bold uppercase text-[#7A7266] flex items-center gap-1">
-                              <MapPin className="h-3 w-3 text-[#8C4B3E]" /> Service Location Address
+                          <div className="space-y-1 bg-card p-3 rounded-xl border border-border/80">
+                            <span className="text-[10px] font-mono uppercase text-muted-foreground flex items-center gap-1">
+                              <MapPin className="h-3 w-3 text-muted-foreground" /> Dispatch address
                             </span>
-                            <p className="font-semibold text-[#1F1D1A] leading-relaxed">
-                              {b.address || b.userAddress || "Customer Address On File"}
+                            <p className="font-medium text-foreground leading-relaxed">
+                              {b.address || b.userAddress || "Customer address on file"}
                             </p>
                           </div>
 
                           {/* Payment Audit Info */}
-                          <div className="space-y-1 bg-white p-3 rounded-xl border border-[#E8DCC3]">
-                            <span className="text-[10px] font-bold uppercase text-[#7A7266]">Payment Transaction Info</span>
-                            <p className="font-semibold text-[#1F1D1A]">
+                          <div className="space-y-1 bg-card p-3 rounded-xl border border-border/80">
+                            <span className="text-[10px] font-mono uppercase text-muted-foreground">Transaction info</span>
+                            <p className="font-medium text-foreground">
                               Method: {getPaymentMethodLabel(b.paymentMethod)}
                             </p>
                             {b.paymentId && (
-                              <p className="text-[11px] text-[#7A7266] font-mono">Txn ID: {b.paymentId}</p>
+                              <p className="text-[11px] text-muted-foreground font-mono">Txn ID: {b.paymentId}</p>
                             )}
                           </div>
                         </div>
 
                         {/* Customer Support & Invoice note */}
-                        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 text-[11px] text-[#7A7266] border-t border-[#E8DCC3]/60">
+                        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 text-[11px] text-muted-foreground border-t border-border/70">
                           <span className="flex items-center gap-1">
-                            <HelpCircle className="h-3.5 w-3.5 text-[#C9A46A]" />
+                            <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
                             Need help with this booking? Contact Support 24/7
                           </span>
                           <button
                             type="button"
                             onClick={() => window.print()}
-                            className="font-bold text-[#8C4B3E] hover:underline cursor-pointer flex items-center gap-1"
+                            className="font-medium text-foreground hover:underline cursor-pointer flex items-center gap-1"
                           >
-                            <Printer className="h-3.5 w-3.5" /> Print Detailed Receipt
+                            <Printer className="h-3.5 w-3.5" /> Print receipt
                           </button>
                         </div>
                       </div>
                     )}
 
-                  </Card>
+                  </div>
                 );
               })
             )}

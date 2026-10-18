@@ -279,7 +279,7 @@ export function useCheckoutForm() {
           contact: data.phone || ""
         },
         theme: {
-          color: "#8C4B3E"
+          color: "#0a0a0a"
         },
         handler: async function (razorpayResponse) {
           console.log("[FRONTEND RAZORPAY SUCCESS] Received handler payload:", razorpayResponse);

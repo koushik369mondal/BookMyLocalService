@@ -10,33 +10,40 @@ export function ContactFaq() {
   };
 
   return (
-    <section className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-xs">
+    <section className="card-chai p-6 sm:p-8">
       <div className="flex items-center gap-2.5 mb-6">
-        <div className="p-2 bg-amber-50 text-[#8C4B3E] rounded-xl">
-          <Info className="h-5 w-5" />
+        <div className="size-9 rounded-lg border border-border/80 bg-card/60 flex items-center justify-center text-foreground">
+          <Info className="size-4" />
         </div>
         <div>
-          <h2 className="font-bold text-xl text-[#1F1D1A] leading-none">Frequently Asked Questions</h2>
-          <p className="text-xs text-[#7A7266] mt-1">Quick answers to common questions about our platform</p>
+          <h2 className="font-display font-semibold text-base text-foreground leading-none">
+            Frequently asked questions
+          </h2>
+          <p className="text-xs text-muted-foreground mt-1">
+            Answers to common questions about booking and provider verification
+          </p>
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         {faqs.map((faq, idx) => (
-          <div key={idx} className="border border-[#5A5146]/20 rounded-xl overflow-hidden bg-white">
+          <div
+            key={idx}
+            className="rounded-lg border border-border/70 overflow-hidden bg-card/40 transition-colors"
+          >
             <button
               onClick={() => toggleFaq(idx)}
-              className="w-full p-4 text-left flex items-center justify-between font-bold text-xs sm:text-sm text-[#1F1D1A] hover:bg-[#FAF6F0] transition-colors cursor-pointer"
+              className="w-full p-3.5 text-left flex items-center justify-between text-xs sm:text-sm font-medium text-foreground hover:bg-card/70 transition-colors cursor-pointer"
             >
               <span>{faq.q}</span>
               {openFaq === idx ? (
-                <Minus className="h-4 w-4 text-[#8C4B3E] shrink-0" />
+                <Minus className="size-3.5 text-muted-foreground shrink-0" />
               ) : (
-                <Plus className="h-4 w-4 text-[#7A7266] shrink-0" />
+                <Plus className="size-3.5 text-muted-foreground shrink-0" />
               )}
             </button>
             {openFaq === idx && (
-              <div className="px-4 pb-4 text-xs text-[#7A7266] leading-relaxed border-t border-[#5A5146]/10 pt-3">
+              <div className="px-3.5 pb-3.5 text-xs text-muted-foreground leading-relaxed border-t border-border/50 pt-2.5">
                 {faq.a}
               </div>
             )}

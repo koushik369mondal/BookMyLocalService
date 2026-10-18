@@ -49,88 +49,113 @@ export default function ProviderSidebar({ collapsed, onNavigate }) {
   const navItems = providerMenu.filter((item) => !item.isLogout);
 
   return (
-    <div className="flex flex-col h-full bg-[#F0E7D5] border-r border-[#E8DCC3] w-full select-none">
-      
+    <div className="flex flex-col h-full border-r border-border/70 bg-card/30 backdrop-blur-md w-full select-none">
       {/* Compact Header Profile Section */}
-      <div className={`border-b border-[#E8DCC3] bg-[#FAF6F0]/60 shrink-0 transition-all ${
-        collapsed ? "p-3 flex justify-center" : "p-3.5 flex items-center gap-3"
-      }`}>
-        <div className="h-9 w-9 rounded-full overflow-hidden border border-[#E8DCC3] shadow-2xs bg-[#8C4B3E] text-white flex items-center justify-center font-extrabold text-xs shrink-0">
+      <div
+        className={`border-b border-border/70 shrink-0 transition-all ${
+          collapsed ? "p-3 flex justify-center" : "p-3.5 flex items-center gap-3"
+        }`}
+      >
+        <div className="size-9 rounded-full overflow-hidden border border-border bg-neutral-800 text-neutral-200 flex items-center justify-center font-display font-semibold text-xs shrink-0">
           {user?.avatar || user?.profileImage ? (
-            <img src={getProviderImage(user, { width: 80, height: 80 })} alt={user.fullName} className="h-full w-full object-cover" />
+            <img
+              src={getProviderImage(user, { width: 80, height: 80 })}
+              alt={user.fullName}
+              className="size-full object-cover"
+            />
           ) : (
             <span>{initials}</span>
           )}
         </div>
         {!collapsed && (
           <div className="min-w-0 flex-1">
-            <h4 className="font-bold text-xs text-[#1F1D1A] leading-tight truncate">{user?.fullName || "Provider"}</h4>
-            <span className="text-[9px] text-[#C9A46A] font-extrabold uppercase tracking-wider block mt-0.5">
-              Provider Workspace
+            <h4 className="font-display font-semibold text-xs text-foreground leading-tight truncate">
+              {user?.fullName || "Provider"}
+            </h4>
+            <span className="text-[10px] text-muted-foreground font-mono block mt-0.5">
+              Provider workspace
             </span>
           </div>
         )}
       </div>
 
       {/* Navigation List */}
-      <nav className={`flex-1 py-2 space-y-1 overflow-y-auto scrollbar-none ${collapsed ? "px-2" : "px-3"}`}>
+      <nav
+        className={`flex-1 py-3 space-y-1 overflow-y-auto ${
+          collapsed ? "px-2" : "px-3"
+        }`}
+      >
         {navItems.map((item, idx) => {
           const Icon = item.icon;
           const active = isItemActive(item);
-          const destination = item.tab ? `${item.path}?tab=${item.tab}` : item.path;
+          const destination = item.tab
+            ? `${item.path}?tab=${item.tab}`
+            : item.path;
 
           return (
             <Link
               key={idx}
               to={destination}
               onClick={() => onNavigate?.()}
-              className={`flex items-center gap-2.5 text-xs font-bold py-2 rounded-xl transition-all ${
+              className={`flex items-center gap-2.5 text-xs font-medium py-2 rounded-lg transition-colors ${
                 collapsed ? "justify-center px-0" : "px-3"
               } ${
                 active
-                  ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                  : "text-[#5A5146] hover:bg-[#FAF6F0] hover:text-[#C9A46A]"
+                  ? "bg-card text-foreground font-semibold border border-border/80"
+                  : "text-muted-foreground hover:bg-card/50 hover:text-foreground"
               }`}
               title={collapsed ? item.label : undefined}
             >
-              <Icon className={`h-4 w-4 shrink-0 ${active ? "text-[#C9A46A]" : "text-[#7A7266]"}`} />
-              {!collapsed && <span className="truncate">{item.label}</span>}
+              <Icon
+                className={`size-4 shrink-0 ${
+                  active ? "text-foreground" : "text-muted-foreground"
+                }`}
+              />
+              {!collapsed && <span>{item.label}</span>}
             </Link>
           );
         })}
       </nav>
 
-      {/* Footer Quick Utility Actions */}
-      <div className={`border-t border-[#E8DCC3] py-2 shrink-0 bg-[#F0E7D5] ${collapsed ? "px-2 space-y-1" : "px-3 space-y-1"}`}>
+      {/* Footer Role Switcher and Logout */}
+      <div
+        className={`border-t border-border/70 p-2.5 space-y-1 ${
+          collapsed ? "flex flex-col items-center" : ""
+        }`}
+      >
         <button
           type="button"
           onClick={handleSwitchToCustomer}
           disabled={isSwitching}
-          className={`w-full flex items-center gap-2.5 text-xs font-bold py-2 rounded-xl text-[#C9A46A] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer ${
+          className={`w-full flex items-center gap-2.5 text-xs font-medium py-2 rounded-lg text-foreground hover:bg-card hover:text-brand transition-colors text-left cursor-pointer ${
             collapsed ? "justify-center px-0" : "px-3"
           }`}
-          title={collapsed ? "Switch to Customer Account" : undefined}
+          title={collapsed ? "Switch to customer" : undefined}
         >
           {isSwitching ? (
-            <Loader2 className="h-4 w-4 shrink-0 text-[#C9A46A] animate-spin" />
+            <Loader2 className="size-4 shrink-0 animate-spin" />
           ) : (
-            <User className="h-4 w-4 shrink-0 text-[#C9A46A]" />
+            <User className="size-4 shrink-0 text-muted-foreground" />
           )}
-          {!collapsed && <span className="truncate">{isSwitching ? "Switching..." : "Switch to Customer"}</span>}
+          {!collapsed && (
+            <span>
+              {isSwitching ? "Switching..." : "Switch to customer"}
+            </span>
+          )}
         </button>
 
         <button
+          type="button"
           onClick={handleLogout}
-          className={`w-full flex items-center gap-2.5 text-xs font-bold py-2 rounded-xl text-[#8C4B3E] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer ${
+          className={`w-full flex items-center gap-2.5 text-xs font-medium py-2 rounded-lg text-red-500 hover:bg-red-500/10 transition-colors text-left cursor-pointer ${
             collapsed ? "justify-center px-0" : "px-3"
           }`}
-          title={collapsed ? "Logout" : undefined}
+          title={collapsed ? "Log out" : undefined}
         >
-          <LogOut className="h-4 w-4 shrink-0" />
-          {!collapsed && <span className="truncate">Logout</span>}
+          <LogOut className="size-4 shrink-0" />
+          {!collapsed && <span>Log out</span>}
         </button>
       </div>
-
     </div>
   );
 }

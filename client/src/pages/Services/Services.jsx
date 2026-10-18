@@ -41,7 +41,7 @@ export default function Services() {
     currentPage,
     setCurrentPage,
     totalPages,
-    clearAllFilters
+    clearAllFilters,
   } = useServices();
 
   return (
@@ -54,10 +54,9 @@ export default function Services() {
         onSearchSubmit={handleHeroSearchSubmit}
       />
 
-      <div className="py-12 bg-[#FAF6F0] min-h-screen">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className="py-10 sm:py-14 min-h-screen">
+        <div className="max-w-6xl mx-auto px-6 sm:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
             {/* Left Sidebar Filters */}
             <div className="lg:col-span-3">
               <ServicesFilters
@@ -79,23 +78,39 @@ export default function Services() {
 
             {/* Main Content Grid & Pagination */}
             <div className="lg:col-span-9 space-y-6">
-              <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-[#E8DCC3]">
-                <span className="text-xs font-bold text-[#5A5146]">
-                  Showing <strong className="text-[#1F1D1A]">{paginatedServices.length}</strong> results
+              {/* Toolbar */}
+              <div className="card-chai p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <span className="text-muted-foreground">
+                  Showing{" "}
+                  <strong className="text-foreground font-mono">
+                    {paginatedServices.length}
+                  </strong>{" "}
+                  services
                 </span>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-[#7A7266]">Sort By:</span>
+                  <span className="text-muted-foreground">Sort by:</span>
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="text-xs font-extrabold text-[#1F1D1A] bg-[#FAF6F0] border border-[#E8DCC3] rounded-xl px-3 py-1.5 focus:outline-none cursor-pointer"
+                    aria-label="Sort services"
+                    className="text-xs font-medium text-foreground bg-card/60 border border-border/80 rounded-md px-2.5 py-1.5 focus:outline-none cursor-pointer"
                   >
-                    <option value="popularity">Most Popular</option>
-                    <option value="rating">Highest Rated</option>
-                    <option value="price-asc">Price: Low to High</option>
-                    <option value="price-desc">Price: High to Low</option>
-                    <option value="newest">Newest First</option>
+                    <option value="popularity" className="bg-card text-foreground">
+                      Most popular
+                    </option>
+                    <option value="rating" className="bg-card text-foreground">
+                      Highest rated
+                    </option>
+                    <option value="price-asc" className="bg-card text-foreground">
+                      Price: low to high
+                    </option>
+                    <option value="price-desc" className="bg-card text-foreground">
+                      Price: high to low
+                    </option>
+                    <option value="newest" className="bg-card text-foreground">
+                      Newest first
+                    </option>
                   </select>
                 </div>
               </div>
@@ -113,7 +128,6 @@ export default function Services() {
                 onPageChange={(page) => setCurrentPage(page)}
               />
             </div>
-
           </div>
         </div>
       </div>

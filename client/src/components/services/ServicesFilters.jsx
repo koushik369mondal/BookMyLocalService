@@ -18,7 +18,7 @@ export function ServicesFilters({
   setMinRating,
   availability,
   setAvailability,
-  onClearAll
+  onClearAll,
 }) {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,45 +38,57 @@ export function ServicesFilters({
     };
     loadCategories();
   }, []);
+
   return (
-    <div className="space-y-6 bg-white p-6 rounded-3xl border border-[#E8DCC3] shadow-sm">
-      <div className="flex items-center justify-between pb-4 border-b border-[#E8DCC3]">
-        <h3 className="text-sm font-extrabold text-[#1F1D1A] flex items-center gap-2">
-          <SlidersHorizontal className="h-4 w-4 text-[#8C4B3E]" />
-          Filter Services
+    <div className="card-chai p-5 space-y-6">
+      <div className="flex items-center justify-between pb-3 border-b border-border/70">
+        <h3 className="font-display text-sm font-semibold text-foreground flex items-center gap-2">
+          <SlidersHorizontal className="size-3.5 text-muted-foreground" />
+          <span>Filters</span>
         </h3>
-        <Button variant="ghost" onClick={onClearAll} className="h-8 text-[11px] font-bold text-[#8C4B3E] hover:text-[#783E33] hover:bg-[#8C4B3E]/5 px-2">
-          Clear All
-        </Button>
+        <button
+          type="button"
+          onClick={onClearAll}
+          className="text-xs text-muted-foreground hover:text-brand transition-colors cursor-pointer font-medium"
+        >
+          Clear all
+        </button>
       </div>
 
       {/* Categories Multi-Select */}
       <div className="space-y-2.5">
-        <Label className="text-xs font-bold text-[#1F1D1A]">Category</Label>
+        <Label className="text-xs font-semibold text-foreground">
+          Categories
+        </Label>
         <div className="space-y-1.5 max-h-60 overflow-y-auto pr-1">
           {isLoading ? (
-            <div className="flex items-center gap-2 text-xs text-[#7A7266] py-2">
-              <Loader2 className="h-3.5 w-3.5 animate-spin text-[#8C4B3E]" /> Loading categories...
+            <div className="flex items-center gap-2 text-xs text-muted-foreground py-2">
+              <Loader2 className="size-3.5 animate-spin" /> Loading categories...
             </div>
           ) : categories.length === 0 ? (
-            <span className="text-xs text-[#7A7266]">No categories available</span>
+            <span className="text-xs text-muted-foreground">
+              No categories available
+            </span>
           ) : (
             categories.map((cat) => {
               const catName = typeof cat === "string" ? cat : cat.name;
               const isChecked = selectedCategories.includes(catName);
               return (
-                <label key={cat.id || catName} className="flex items-center justify-between text-xs text-[#5A5146] font-medium cursor-pointer hover:text-[#1F1D1A] py-0.5">
+                <label
+                  key={cat.id || catName}
+                  className="flex items-center justify-between text-xs text-muted-foreground hover:text-foreground cursor-pointer py-1 select-none"
+                >
                   <div className="flex items-center gap-2.5 truncate">
                     <input
                       type="checkbox"
                       checked={isChecked}
                       onChange={() => toggleCategory(catName)}
-                      className="rounded border-[#E8DCC3] text-[#8C4B3E] focus:ring-[#8C4B3E] h-4 w-4 shrink-0"
+                      className="rounded border-border text-foreground focus:ring-0 size-3.5 accent-neutral-800 dark:accent-neutral-200"
                     />
                     <span className="truncate">{catName}</span>
                   </div>
                   {cat.serviceCount !== undefined && (
-                    <span className="text-[10px] font-bold text-[#7A7266] bg-[#FAF6F0] px-1.5 py-0.5 rounded-md shrink-0">
+                    <span className="text-[10px] font-mono text-muted-foreground">
                       {cat.serviceCount}
                     </span>
                   )}
@@ -88,23 +100,28 @@ export function ServicesFilters({
       </div>
 
       {/* Price Filter */}
-      <div className="space-y-2.5 pt-4 border-t border-[#E8DCC3]">
-        <Label className="text-xs font-bold text-[#1F1D1A]">Price Range (₹ INR)</Label>
+      <div className="space-y-2.5 pt-4 border-t border-border/70">
+        <Label className="text-xs font-semibold text-foreground">
+          Price range (₹ INR)
+        </Label>
         <div className="space-y-1.5">
           {[
-            { id: "all", label: "All Prices" },
+            { id: "all", label: "All prices" },
             { id: "under-50", label: "Under ₹500" },
-            { id: "50-100", label: "₹500 - ₹1,500" },
-            { id: "100-plus", label: "₹1,500+" },
-            { id: "custom", label: "Custom Range" }
+            { id: "50-100", label: "₹500 to ₹1,500" },
+            { id: "100-plus", label: "₹1,500 and above" },
+            { id: "custom", label: "Custom range" },
           ].map((option) => (
-            <label key={option.id} className="flex items-center gap-2.5 text-xs text-[#5A5146] font-medium cursor-pointer hover:text-[#1F1D1A]">
+            <label
+              key={option.id}
+              className="flex items-center gap-2.5 text-xs text-muted-foreground hover:text-foreground cursor-pointer py-0.5 select-none"
+            >
               <input
                 type="radio"
                 name="priceRange"
                 checked={priceRange === option.id}
                 onChange={() => setPriceRange(option.id)}
-                className="text-[#8C4B3E] focus:ring-[#8C4B3E] h-4 w-4"
+                className="text-foreground focus:ring-0 size-3.5 accent-neutral-800 dark:accent-neutral-200"
               />
               <span>{option.label}</span>
             </label>
@@ -118,37 +135,39 @@ export function ServicesFilters({
               placeholder="Min ₹"
               value={customMinPrice}
               onChange={(e) => setCustomMinPrice(e.target.value)}
-              className="h-8 text-xs border-[#E8DCC3] rounded-lg"
+              className="h-8 text-xs bg-card/40 border-border rounded-md"
             />
-            <span className="text-xs text-[#7A7266]">-</span>
+            <span className="text-xs text-muted-foreground">to</span>
             <Input
               type="number"
               placeholder="Max ₹"
               value={customMaxPrice}
               onChange={(e) => setCustomMaxPrice(e.target.value)}
-              className="h-8 text-xs border-[#E8DCC3] rounded-lg"
+              className="h-8 text-xs bg-card/40 border-border rounded-md"
             />
           </div>
         )}
       </div>
 
       {/* Rating Filter */}
-      <div className="space-y-2.5 pt-4 border-t border-[#E8DCC3]">
-        <Label className="text-xs font-bold text-[#1F1D1A]">Minimum Rating</Label>
-        <div className="flex items-center gap-1">
+      <div className="space-y-2.5 pt-4 border-t border-border/70">
+        <Label className="text-xs font-semibold text-foreground">
+          Minimum rating
+        </Label>
+        <div className="flex items-center gap-1.5">
           {[0, 3, 4, 4.5].map((r) => (
             <button
               key={r}
               type="button"
               onClick={() => setMinRating(r)}
-              className={`flex-1 h-8 rounded-lg text-[11px] font-extrabold flex items-center justify-center gap-1 border transition-all cursor-pointer ${
+              className={`flex-1 h-8 rounded-md text-xs font-medium flex items-center justify-center gap-1 border transition-colors cursor-pointer ${
                 minRating === r
-                  ? "bg-[#8C4B3E] text-white border-[#8C4B3E]"
-                  : "bg-[#FAF6F0] text-[#5A5146] border-[#E8DCC3] hover:border-[#8C4B3E]"
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-card/40 text-muted-foreground border-border hover:text-foreground hover:bg-card"
               }`}
             >
-              {r === 0 ? "Any" : `${r}+ `}
-              {r > 0 && <Star className="h-3 w-3 fill-current" />}
+              {r === 0 ? "Any" : `${r}+`}
+              {r > 0 && <Star className="size-3 fill-amber-500 text-amber-500" />}
             </button>
           ))}
         </div>

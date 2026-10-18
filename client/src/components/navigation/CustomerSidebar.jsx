@@ -48,28 +48,46 @@ export default function CustomerSidebar({ collapsed, onNavigate }) {
   const initials = getUserInitials(user?.fullName);
 
   return (
-    <div className="flex flex-col h-full bg-[#F0E7D5] border-r border-[#E8DCC3] w-full">
+    <div className="flex flex-col h-full border-r border-border/70 bg-card/30 backdrop-blur-md w-full">
       {/* Header Profile Section */}
-      <div className={`p-4 border-b border-[#E8DCC3] flex flex-col items-center text-center transition-all shrink-0 ${collapsed ? "py-6 px-2" : "p-6"}`}>
-        <div className={`rounded-full overflow-hidden border border-[#E8DCC3] shadow-2xs bg-[#8C4B3E] text-white flex items-center justify-center font-bold transition-all ${
-          collapsed ? "h-10 w-10 mb-0 text-sm" : "h-14 w-14 mb-3 text-lg"
-        }`}>
+      <div
+        className={`border-b border-border/70 flex flex-col items-center text-center transition-all shrink-0 ${
+          collapsed ? "py-5 px-2" : "p-5"
+        }`}
+      >
+        <div
+          className={`rounded-full overflow-hidden border border-border bg-neutral-800 text-neutral-200 flex items-center justify-center font-display font-semibold transition-all ${
+            collapsed ? "size-9 mb-0 text-xs" : "size-12 mb-2.5 text-base"
+          }`}
+        >
           {user?.avatar || user?.profileImage ? (
-            <img src={getProviderImage(user, { width: 120, height: 120 })} alt={user.fullName} className="h-full w-full object-cover" />
+            <img
+              src={getProviderImage(user, { width: 120, height: 120 })}
+              alt={user.fullName}
+              className="size-full object-cover"
+            />
           ) : (
             <span>{initials}</span>
           )}
         </div>
         {!collapsed && (
           <>
-            <h4 className="font-bold text-sm text-[#1F1D1A] leading-tight mt-1 truncate max-w-full">{user?.fullName}</h4>
-            <span className="text-[10px] text-[#7A7266] font-bold uppercase tracking-wider mt-1">Customer Profile</span>
+            <h4 className="font-display font-semibold text-xs text-foreground leading-tight truncate max-w-full">
+              {user?.fullName}
+            </h4>
+            <span className="text-[10px] text-muted-foreground font-mono mt-0.5">
+              Customer account
+            </span>
           </>
         )}
       </div>
 
       {/* Navigation List */}
-      <nav className={`flex-1 py-4 space-y-1.5 overflow-y-auto transition-all ${collapsed ? "px-2" : "px-4"}`}>
+      <nav
+        className={`flex-1 py-3 space-y-1 overflow-y-auto ${
+          collapsed ? "px-2" : "px-3"
+        }`}
+      >
         {customerMenu.map((item, idx) => {
           const Icon = item.icon;
           const active = isItemActive(item);
@@ -81,50 +99,60 @@ export default function CustomerSidebar({ collapsed, onNavigate }) {
                   type="button"
                   onClick={handleSwitchToProvider}
                   disabled={isSwitching}
-                  className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#C9A46A] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer border-t border-[#E8DCC3]/60 ${
-                    collapsed ? "justify-center px-0" : "px-4"
+                  className={`w-full flex items-center gap-2.5 text-xs font-medium py-2 rounded-lg text-foreground hover:bg-card hover:text-brand transition-colors text-left cursor-pointer border-t border-border/60 mt-2 pt-2.5 ${
+                    collapsed ? "justify-center px-0" : "px-3"
                   }`}
-                  title={collapsed ? "Switch to Provider Account" : undefined}
+                  title={collapsed ? "Switch to provider" : undefined}
                 >
                   {isSwitching ? (
-                    <Loader2 className="h-4.5 w-4.5 shrink-0 text-[#C9A46A] animate-spin" />
+                    <Loader2 className="size-4 shrink-0 animate-spin" />
                   ) : (
-                    <Briefcase className="h-4.5 w-4.5 shrink-0 text-[#C9A46A]" />
+                    <Briefcase className="size-4 shrink-0 text-muted-foreground" />
                   )}
-                  {!collapsed && <span>{isSwitching ? "Switching..." : "Switch to Provider"}</span>}
+                  {!collapsed && (
+                    <span>
+                      {isSwitching ? "Switching..." : "Switch to provider"}
+                    </span>
+                  )}
                 </button>
 
                 <button
                   onClick={handleLogout}
-                  className={`w-full flex items-center gap-3 text-xs font-bold py-3 rounded-xl text-[#8C4B3E] hover:bg-[#FAF6F0] transition-all text-left cursor-pointer ${
-                    collapsed ? "justify-center px-0" : "px-4"
+                  className={`w-full flex items-center gap-2.5 text-xs font-medium py-2 rounded-lg text-red-500 hover:bg-red-500/10 transition-colors text-left cursor-pointer ${
+                    collapsed ? "justify-center px-0" : "px-3"
                   }`}
                   title={collapsed ? item.label : undefined}
                 >
-                  <Icon className="h-4.5 w-4.5 shrink-0" />
+                  <Icon className="size-4 shrink-0" />
                   {!collapsed && <span>{item.label}</span>}
                 </button>
               </React.Fragment>
             );
           }
 
-          const destination = item.tab ? `${item.path}?tab=${item.tab}` : item.path;
+          const destination = item.tab
+            ? `${item.path}?tab=${item.tab}`
+            : item.path;
 
           return (
             <Link
               key={idx}
               to={destination}
               onClick={() => onNavigate?.()}
-              className={`flex items-center gap-3 text-xs font-bold py-3 rounded-xl transition-all ${
-                collapsed ? "justify-center px-0" : "px-4"
+              className={`flex items-center gap-2.5 text-xs font-medium py-2 rounded-lg transition-colors ${
+                collapsed ? "justify-center px-0" : "px-3"
               } ${
                 active
-                  ? "bg-[#FAF6F0] text-[#C9A46A] shadow-2xs border border-[#E8DCC3]"
-                  : "text-[#5A5146] hover:bg-[#FAF6F0] hover:text-[#C9A46A]"
+                  ? "bg-card text-foreground font-semibold border border-border/80"
+                  : "text-muted-foreground hover:bg-card/50 hover:text-foreground"
               }`}
               title={collapsed ? item.label : undefined}
             >
-              <Icon className={`h-4.5 w-4.5 shrink-0 ${active ? "text-[#C9A46A]" : "text-[#7A7266]"}`} />
+              <Icon
+                className={`size-4 shrink-0 ${
+                  active ? "text-foreground" : "text-muted-foreground"
+                }`}
+              />
               {!collapsed && <span>{item.label}</span>}
             </Link>
           );

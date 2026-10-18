@@ -32,8 +32,8 @@ export default function Checkout() {
   if (isLoading) {
     return (
       <MainLayout>
-        <div className="min-h-[70vh] flex items-center justify-center bg-[#FAF6F0]">
-          <Loader2 className="h-8 w-8 animate-spin text-[#8C4B3E]" />
+        <div className="min-h-[70vh] flex items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
         </div>
       </MainLayout>
     );
@@ -42,14 +42,14 @@ export default function Checkout() {
   if (error || !booking) {
     return (
       <MainLayout>
-        <div className="min-h-[70vh] bg-[#FAF6F0] py-16 px-4 flex items-center justify-center">
-          <div className="max-w-md w-full bg-white p-8 rounded-3xl border border-[#E8DCC3] shadow-md text-center space-y-4">
-            <AlertCircle className="h-10 w-10 text-rose-600 mx-auto" />
-            <h2 className="text-xl font-black text-[#1F1D1A]">Checkout Error</h2>
-            <p className="text-xs text-[#5A5146] font-medium">{error || "Checkout session details could not be loaded."}</p>
-            <Link to="/services" className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#8C4B3E] hover:underline">
+        <div className="min-h-[70vh] py-16 px-4 flex items-center justify-center">
+          <div className="max-w-md w-full card-chai p-8 text-center space-y-4">
+            <AlertCircle className="h-10 w-10 text-rose-500 mx-auto" />
+            <h2 className="text-xl font-heading font-medium text-foreground">Checkout error</h2>
+            <p className="text-xs text-muted-foreground">{error || "Checkout session details could not be loaded."}</p>
+            <Link to="/services" className="inline-flex items-center gap-1.5 text-xs font-medium text-foreground hover:text-brand underline">
               <ArrowLeft className="h-3.5 w-3.5" />
-              Back to Services Catalog
+              Back to services
             </Link>
           </div>
         </div>
@@ -59,13 +59,13 @@ export default function Checkout() {
 
   return (
     <MainLayout>
-      <div className="bg-[#FAF6F0] min-h-screen py-10 font-sans text-[#1F1D1A]">
+      <div className="min-h-screen py-10 font-sans text-foreground">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           
           <div className="mb-6">
-            <Link to={`/booking?serviceId=${booking.serviceId}`} className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#8C4B3E] hover:underline">
+            <Link to={`/booking?serviceId=${booking.serviceId}`} className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground">
               <ArrowLeft className="h-3.5 w-3.5" />
-              Back to Booking Options
+              Back to booking options
             </Link>
           </div>
 

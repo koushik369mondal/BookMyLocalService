@@ -1,10 +1,11 @@
 import React from "react";
-import { Search, MapPin, ArrowRight } from "lucide-react";
+import { Search, MapPin, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import AnimatedBadge from "@/components/ui/AnimatedBadge";
 
 const locations = [
-  "All Locations",
+  "All locations",
   "Kolkata, WB",
   "Delhi NCR",
   "Mumbai, MH",
@@ -14,7 +15,7 @@ const locations = [
   "Pune, MH",
   "Jaipur, RJ",
   "Siliguri, WB",
-  "Jalpaiguri, WB"
+  "Jalpaiguri, WB",
 ];
 
 export function ServicesHero({
@@ -22,55 +23,71 @@ export function ServicesHero({
   setHeroSearch,
   heroLocation,
   setHeroLocation,
-  onSearchSubmit
+  onSearchSubmit,
 }) {
   return (
-    <section className="relative overflow-hidden bg-[#FAF6F0] border-b border-[#E8DCC3] py-10 md:py-14">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <section className="relative pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-border/70">
+      <div className="max-w-6xl mx-auto px-6 sm:px-12">
         <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#8C4B3E]/10 border border-[#8C4B3E]/20 text-[#8C4B3E] text-xs font-semibold">
-            <span className="flex h-2 w-2 rounded-full bg-[#8C4B3E] animate-pulse"></span>
-            Verified Indian Local Service Directory
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1F1D1A] tracking-tight">
-            Explore Verified <span className="text-[#8C4B3E]">Indian Professionals</span>
+          <AnimatedBadge>
+            <span className="size-1.5 rounded-full bg-emerald-500" />
+            <span>Verified service directory</span>
+          </AnimatedBadge>
+
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
+            Explore verified local professionals
           </h1>
-          <p className="text-xs sm:text-sm text-[#5A5146] font-medium leading-relaxed">
-            Browse top-rated electricians, plumbers, home cleaners, painters, and AC technicians in your city. Read authentic reviews and book instantly.
+
+          <p className="text-base text-muted-foreground leading-relaxed">
+            Browse top-rated electricians, plumbers, home cleaners, and appliance technicians with{" "}
+            <span className="highlight">guaranteed upfront pricing</span>.
           </p>
 
-          <form onSubmit={onSearchSubmit} className="bg-white p-2 rounded-2xl border border-[#E8DCC3] shadow-md flex flex-col sm:flex-row items-center gap-2 pt-2 sm:pt-2">
-            <div className="relative flex-1 w-full">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A7266]" />
+          <form
+            onSubmit={onSearchSubmit}
+            className="card-chai p-2 flex flex-col sm:flex-row items-stretch gap-2 mt-4 max-w-2xl"
+          >
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
               <Input
                 type="text"
                 value={heroSearch}
                 onChange={(e) => setHeroSearch(e.target.value)}
                 placeholder="Search service title or provider..."
-                className="pl-10 h-10 border-0 bg-transparent text-xs focus-visible:ring-0 placeholder:text-[#7A7266]"
+                aria-label="Search service title or provider"
+                className="pl-9 h-10 border-0 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus-visible:ring-0 shadow-none"
               />
             </div>
 
-            <div className="h-6 w-[1px] bg-[#E8DCC3] hidden sm:block"></div>
+            <div className="hidden sm:block w-px bg-border/80 my-1.5" />
 
             <div className="relative w-full sm:w-48">
-              <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#7A7266]" />
+              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
               <select
                 value={heroLocation}
                 onChange={(e) => setHeroLocation(e.target.value)}
-                className="w-full pl-10 pr-3 h-10 border-0 bg-transparent text-xs font-semibold text-[#1F1D1A] focus:outline-none cursor-pointer"
+                aria-label="Filter by location"
+                className="w-full pl-9 pr-4 h-10 border-0 bg-transparent text-xs font-medium text-foreground focus:outline-none cursor-pointer"
               >
                 {locations.map((loc) => (
-                  <option key={loc} value={loc === "All Locations" ? "all" : loc}>
+                  <option
+                    key={loc}
+                    value={loc === "All locations" ? "all" : loc}
+                    className="bg-card text-foreground"
+                  >
                     {loc}
                   </option>
                 ))}
               </select>
             </div>
 
-            <Button type="submit" className="w-full sm:w-auto h-10 px-5 bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-1.5 cursor-pointer shadow-sm">
+            <Button
+              type="submit"
+              variant="default"
+              size="default"
+              className="h-10 px-5 shrink-0"
+            >
               Search
-              <ArrowRight className="h-3.5 w-3.5" />
             </Button>
           </form>
         </div>

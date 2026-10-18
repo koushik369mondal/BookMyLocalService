@@ -16,23 +16,23 @@ export function ServicesGrid({ isLoading, error, services, onClearAll }) {
 
   if (error) {
     return (
-      <div className="bg-rose-50 border border-rose-100 rounded-3xl p-8 text-center space-y-3">
-        <ShieldAlert className="h-10 w-10 text-rose-600 mx-auto" />
-        <h3 className="text-base font-extrabold text-rose-900">Error Loading Services</h3>
-        <p className="text-xs text-rose-700 font-medium">{error}</p>
+      <div className="card-chai border-rose-500/20 bg-rose-500/5 p-8 text-center space-y-3">
+        <ShieldAlert className="h-10 w-10 text-rose-400 mx-auto" />
+        <h3 className="text-base font-semibold text-rose-300">Error loading services</h3>
+        <p className="text-xs text-rose-400/80 font-medium">{error}</p>
       </div>
     );
   }
 
   if (services.length === 0) {
     return (
-      <div className="bg-white border border-[#E8DCC3] rounded-3xl p-12 text-center space-y-4">
-        <h3 className="text-lg font-black text-[#1F1D1A]">No Matching Services Found</h3>
-        <p className="text-xs text-[#5A5146] font-medium max-w-md mx-auto">
+      <div className="card-chai p-12 text-center space-y-4">
+        <h3 className="text-lg font-semibold text-white">No matching services found</h3>
+        <p className="text-xs text-neutral-400 font-medium max-w-md mx-auto">
           We couldn't find any professionals matching your selected criteria. Try resetting filters or expanding your search location.
         </p>
-        <Button onClick={onClearAll} className="h-10 px-5 bg-[#8C4B3E] hover:bg-[#783E33] text-white font-extrabold text-xs rounded-xl cursor-pointer">
-          Reset Filters
+        <Button onClick={onClearAll} variant="solid" className="h-10 px-5 text-xs font-medium cursor-pointer">
+          Reset filters
         </Button>
       </div>
     );

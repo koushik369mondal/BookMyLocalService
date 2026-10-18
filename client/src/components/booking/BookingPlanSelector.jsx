@@ -6,38 +6,49 @@ export function BookingPlanSelector({ plans, activePlanIdx, onSelectPlan }) {
   if (!plans || plans.length === 0) return null;
 
   return (
-    <div className="space-y-4 bg-white p-6 rounded-3xl border border-[#E8DCC3] shadow-sm">
-      <h3 className="text-sm font-extrabold text-[#1F1D1A]">Select Your Service Package</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="card-chai p-6 space-y-4">
+      <h3 className="font-display font-semibold text-sm text-foreground">
+        Select service package
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
         {plans.map((plan, idx) => {
           const isSelected = activePlanIdx === idx;
           return (
             <div
               key={idx}
               onClick={() => onSelectPlan(idx)}
-              className={`p-5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+              className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between gap-3 ${
                 isSelected
-                  ? "bg-[#FAF6F0] border-[#8C4B3E] shadow-sm"
-                  : "bg-white border-[#E8DCC3] hover:border-[#8C4B3E]/50"
+                  ? "bg-card border-border ring-1 ring-border shadow-none"
+                  : "bg-card/40 border-border/70 hover:border-border"
               }`}
             >
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-black text-[#1F1D1A] uppercase tracking-wider">{plan.name}</span>
+                  <span className="font-display font-semibold text-xs text-foreground">
+                    {plan.name}
+                  </span>
                   {isSelected && (
-                    <span className="h-5 w-5 rounded-full bg-[#8C4B3E] text-white flex items-center justify-center">
-                      <Check className="h-3 w-3" />
+                    <span className="size-4 rounded-full bg-foreground text-background flex items-center justify-center">
+                      <Check className="size-2.5 stroke-[3]" />
                     </span>
                   )}
                 </div>
-                <div className="text-xl font-black text-[#8C4B3E]">{formatPrice(plan.price)}</div>
-                <p className="text-[11px] text-[#5A5146] leading-relaxed">{plan.description}</p>
+                <div className="font-display font-semibold text-base text-foreground">
+                  {formatPrice(plan.price)}
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {plan.description}
+                </p>
               </div>
 
-              <div className="pt-3 mt-3 border-t border-[#E8DCC3] space-y-1">
-                {plan.inclusions.map((inc, i) => (
-                  <div key={i} className="flex items-center gap-1.5 text-[10px] text-[#5A5146] font-medium">
-                    <Check className="h-3 w-3 text-emerald-600 shrink-0" />
+              <div className="pt-2.5 border-t border-border/60 space-y-1">
+                {plan.inclusions?.map((inc, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-1.5 text-[11px] text-muted-foreground"
+                  >
+                    <Check className="size-3 text-emerald-500 shrink-0" />
                     <span>{inc}</span>
                   </div>
                 ))}

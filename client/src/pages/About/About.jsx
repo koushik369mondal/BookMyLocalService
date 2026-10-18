@@ -3,265 +3,170 @@ import { NavLink } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import {
-  Star,
-  Sparkles,
   ShieldCheck,
-  DollarSign,
-  Clock,
-  Users,
-  ArrowRight,
   Award,
-  Eye,
+  Users,
+  Clock,
   Heart,
-  Search,
-  CheckCircle2,
-  Lock,
-  HelpCircle,
   TrendingUp,
-  Sliders,
-  Shield,
-  ThumbsUp,
-  Sparkle
+  CheckCircle2,
 } from "lucide-react";
+import AnimatedBadge from "@/components/ui/AnimatedBadge";
+
+const VALUES = [
+  {
+    icon: ShieldCheck,
+    title: "Verified trust",
+    description: "Every professional is identity-checked and skills-tested before taking bookings.",
+  },
+  {
+    icon: Award,
+    title: "Quality guaranteed",
+    description: "If a job is not completed to satisfaction, we will rebook or refund without hassle.",
+  },
+  {
+    icon: Users,
+    title: "Empowering specialists",
+    description: "We provide skilled independent workers with fair access, transparent tools, and prompt payouts.",
+  },
+  {
+    icon: Clock,
+    title: "Respect for your time",
+    description: "Direct dispatch updates, real-time arrival estimates, and quick customer support.",
+  },
+  {
+    icon: Heart,
+    title: "Community first",
+    description: "Connecting local households with neighborhood experts to build lasting community bonds.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Transparent pricing",
+    description: "Clear hourly rates and fixed estimates with zero hidden service charges.",
+  },
+];
 
 export default function About() {
   const { user } = useAuth();
+
   return (
     <MainLayout>
-      <div className="bg-[#FAF6F0] min-h-screen font-sans antialiased text-[#1F1D1A]">
-
-        {/* PAGE HEADER */}
-        <section className="relative overflow-hidden py-14 lg:py-18 bg-white border-b border-[#5A5146]/20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="min-h-screen">
+        {/* Header */}
+        <section className="pt-10 pb-16 sm:pt-16 sm:pb-20 border-b border-border/70">
+          <div className="max-w-6xl mx-auto px-6 sm:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-
-              {/* Text column */}
+              {/* Text Column */}
               <div className="lg:col-span-7 flex flex-col items-start text-left gap-5">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#1F1D1A] leading-tight">
-                  About <span className="text-[#C9A46A]">BookMyLocalService</span>
+                <AnimatedBadge>
+                  <span className="size-1.5 rounded-full bg-emerald-500" />
+                  <span>About BookMyLocalService</span>
+                </AnimatedBadge>
+
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-foreground leading-[1.12]">
+                  Connecting communities with verified local trades
                 </h1>
 
-                <p className="text-base sm:text-lg font-bold text-[#1F1D1A] border-l-4 border-amber-500 pl-4 leading-relaxed">
-                  Connecting People With Trusted Local Professionals
+                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
+                  BookMyLocalService is a neighborhood marketplace helping homeowners discover, compare, and book verified service providers with{" "}
+                  <span className="highlight">guaranteed satisfaction</span>.
                 </p>
 
-                <p className="text-sm sm:text-base text-[#5A5146] leading-relaxed max-w-xl">
-                  BookMyLocalService is a neighborhood marketplace designed to help customers easily discover, compare, and instantly book verified local service providers. At the same time, we empower independent skilled professionals by providing them the tools and visibility they need to grow their businesses.
-                </p>
-
-                <div className="flex flex-wrap gap-4 pt-1 w-full sm:w-auto">
-                  <NavLink to="/services" className="w-full sm:w-auto">
-                    <Button className="w-full sm:w-auto h-11 bg-[#8C4B3E] hover:bg-[#7A3E32] text-white rounded-xl px-7 font-bold transition-all flex items-center justify-center gap-2">
-                      Browse Services
-                      <ArrowRight className="h-4 w-4" />
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <NavLink to="/services">
+                    <Button variant="solid" size="lg">
+                      Explore services
                     </Button>
                   </NavLink>
-                  <NavLink to={user?.role === 'ADMIN' ? '/admin/dashboard' : '/provider/dashboard'} className="w-full sm:w-auto">
-                    <Button variant="outline" className="w-full sm:w-auto h-11 border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#1F1D1A] rounded-xl px-7 font-bold transition-all cursor-pointer">
-                      {user?.role === 'PROVIDER' ? 'Provider Dashboard' : (user?.role === 'ADMIN' ? 'Admin Dashboard' : 'Become a Provider')}
+                  <NavLink
+                    to={
+                      user?.role === "ADMIN"
+                        ? "/admin/dashboard"
+                        : user?.role === "PROVIDER"
+                        ? "/provider/dashboard"
+                        : "/register"
+                    }
+                  >
+                    <Button variant="outline" size="lg">
+                      {user?.role === "PROVIDER"
+                        ? "Provider dashboard"
+                        : user?.role === "ADMIN"
+                        ? "Admin dashboard"
+                        : "Become a provider"}
                     </Button>
                   </NavLink>
                 </div>
               </div>
 
-               {/* Photo Column */}
-              <div className="lg:col-span-5 relative">
-                <div className="relative border border-[#5A5146]/20 rounded-2xl overflow-hidden bg-[#FAF6F0] aspect-4/3 sm:aspect-video lg:aspect-square flex flex-col items-center justify-center p-8 text-center border-[#E8DCC3]">
-                  <div className="p-4 bg-white rounded-full border border-[#E8DCC3] shadow-md mb-3 text-[#8C4B3E]">
-                    <ShieldCheck className="h-10 w-10" />
-                  </div>
-                  <h3 className="text-xl font-black text-[#1F1D1A]">Verified Marketplace</h3>
-                  <p className="text-xs text-[#5A5146] font-medium mt-1">Connecting households with background-checked local service experts</p>
-                  <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-xs p-3 rounded-xl border border-[#5A5146]/20 flex items-center gap-2.5">
-                    <div className="p-1.5 bg-emerald-50 rounded-lg text-emerald-600">
-                      <ShieldCheck className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <span className="block text-[9px] text-[#7A7266] font-bold uppercase tracking-wider">Background Checks</span>
-                      <span className="text-xs font-extrabold text-[#1F1D1A]">100% Verified Pros</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        {/* OUR STORY */}
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-              {/* Image Left */}
-              <div className="lg:col-span-6 relative order-last lg:order-first">
-                <div className="relative border border-[#5A5146]/20 rounded-2xl overflow-hidden aspect-4/3 sm:aspect-video lg:aspect-4/3 bg-[#F0E7D5] flex flex-col items-center justify-center p-8 text-center">
-                  <div className="p-4 bg-white rounded-full border border-[#E8DCC3] shadow-md mb-3 text-[#8C4B3E]">
-                    <Award className="h-10 w-10" />
-                  </div>
-                  <h3 className="text-xl font-black text-[#1F1D1A]">Local Service Excellence</h3>
-                  <p className="text-xs text-[#5A5146] font-medium mt-1 max-w-sm">Empowering local artisans & small businesses across India</p>
-                </div>
-              </div>
-
-              {/* Story Right */}
-              <div className="lg:col-span-6 flex flex-col gap-5">
-                <div className="space-y-1.5">
-                  <span className="text-xs font-bold text-[#C9A46A] uppercase tracking-widest">Platform Genesis</span>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1F1D1A] tracking-tight">Our Story</h2>
-                </div>
-                <p className="text-sm text-[#5A5146] leading-relaxed">
-                  BookMyLocalService was born out of a simple, everyday struggle: finding reliable, skilled professionals to get work done around the house. Standard directories were flooded with outdated contact details, fake ratings, and pricing ambiguity. We saw an opportunity to bring order to this unstructured marketplace.
-                </p>
-                <p className="text-sm text-[#5A5146] leading-relaxed">
-                  By building a robust infrastructure grounded in strict identity verification, transparency, and consumer protection, we created a destination where customers can browse, review, and book confidently. Today, we're proud to serve thousands of families across the country while providing verified specialists with a steady source of income.
-                </p>
-                <div className="grid grid-cols-2 gap-6 pt-4 border-t border-[#5A5146]/15">
-                  <div>
-                    <h4 className="font-extrabold text-[#1F1D1A] text-base">Direct Bookings</h4>
-                    <p className="text-xs text-[#7A7266] mt-1 leading-relaxed">Direct connection with verified local pros</p>
+              {/* Central Focal Card */}
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="card-chai p-8 text-center flex flex-col items-center gap-4 max-w-sm w-full">
+                  <div className="size-14 rounded-xl border border-border/80 bg-card/60 flex items-center justify-center text-foreground">
+                    <ShieldCheck className="size-7 text-emerald-500" />
                   </div>
                   <div>
-                    <h4 className="font-extrabold text-[#1F1D1A] text-base">Clear Pricing</h4>
-                    <p className="text-xs text-[#7A7266] mt-1 leading-relaxed">Upfront flat rates or hourly costs</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        {/* MISSION, VISION, VALUES */}
-        <section className="py-16 bg-[#FAF6F0] border-t border-[#5A5146]/20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-12 flex flex-col gap-2">
-              <span className="text-xs font-bold text-[#C9A46A] uppercase tracking-widest">Purpose Driven</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1F1D1A] tracking-tight">Our Foundation</h2>
-              <p className="text-xs sm:text-sm text-[#7A7266]">The core values and goals that guide our marketplace operations daily.</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Mission Card */}
-              <Card className="border border-[#5A5146]/20 bg-white rounded-2xl p-6 flex flex-col justify-between h-full">
-                <div className="space-y-3">
-                  <div className="p-2.5 bg-[#8C4B3E]/5 text-[#1F1D1A] rounded-xl border border-violet-950/10 w-fit">
-                    <Award className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-lg font-bold text-[#1F1D1A]">Our Mission</h3>
-                  <p className="text-xs sm:text-sm text-[#7A7266] leading-relaxed">
-                    To deliver reliable, high-quality local services to our customers' doorsteps with absolute transparency, safety, and booking convenience.
-                  </p>
-                </div>
-              </Card>
-
-              {/* Vision Card */}
-              <Card className="border border-[#5A5146]/20 bg-white rounded-2xl p-6 flex flex-col justify-between h-full">
-                <div className="space-y-3">
-                  <div className="p-2.5 bg-[#C9A46A]/20 text-[#C9A46A] rounded-xl border border-amber-500/20 w-fit">
-                    <Eye className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-lg font-bold text-[#1F1D1A]">Our Vision</h3>
-                  <p className="text-xs sm:text-sm text-[#7A7266] leading-relaxed">
-                    To become a trusted, secure, and customer-focused local services marketplace for households and commercial businesses.
-                  </p>
-                </div>
-              </Card>
-
-              {/* Values Card */}
-              <Card className="border border-[#5A5146]/20 bg-white rounded-2xl p-6 flex flex-col justify-between h-full">
-                <div className="space-y-3">
-                  <div className="p-2.5 bg-rose-50 text-rose-600 rounded-xl border border-rose-100 w-fit">
-                    <Heart className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-lg font-bold text-[#1F1D1A]">Our Core Values</h3>
-                  <ul className="space-y-1.5 text-xs sm:text-sm text-[#7A7266]">
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-                      <strong>Trust:</strong> Verified provider background checks.
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-                      <strong>Quality:</strong> Audited rating standards.
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-                      <strong>Transparency:</strong> Upfront clear rates.
-                    </li>
-                  </ul>
-                </div>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* WHY CHOOSE US */}
-        <section className="py-16 bg-white border-t border-[#5A5146]/20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-12 flex flex-col gap-2">
-              <span className="text-xs font-bold text-[#C9A46A] uppercase tracking-widest">Features</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1F1D1A] tracking-tight">Why Choose BookMyLocalService</h2>
-              <p className="text-xs sm:text-sm text-[#7A7266]">We make booking quality home and personal services safe, secure, and hassle-free.</p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                { title: "Verified Professionals", description: "Every service provider is background-checked and identity-verified to ensure absolute safety and quality.", icon: ShieldCheck, color: "bg-[#8C4B3E]/5 text-[#1F1D1A] border-violet-950/10" },
-                { title: "Secure Bookings", description: "Easily schedule, coordinate, and pay for all services directly through our secure platform.", icon: Lock, color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
-                { title: "Transparent Pricing", description: "No hidden charges or surprise costs. See clear hourly or flat rates up front before you book.", icon: DollarSign, color: "bg-amber-50 text-[#8C4B3E] border-amber-100" },
-                { title: "Fast Service", description: "Book instant same-day service or schedule weeks ahead. We respect your busy schedule.", icon: Clock, color: "bg-pink-50 text-pink-600 border-pink-100" },
-                { title: "Ratings & Reviews", description: "Read verified feedback from genuine customers to hire the right provider for your project.", icon: Star, color: "bg-rose-50 text-rose-600 border-rose-100" },
-                { title: "24/7 Support", description: "Our dedicated support team is available round the clock to help resolve any booking queries.", icon: HelpCircle, color: "bg-sky-50 text-sky-600 border-sky-100" }
-              ].map((feature, idx) => {
-                const IconComp = feature.icon;
-                return (
-                  <div key={idx} className="flex flex-col gap-3 p-5 rounded-2xl border border-[#5A5146]/20 bg-white">
-                    <div className={`p-2.5 rounded-xl border self-start ${feature.color}`}>
-                      <IconComp className="h-4.5 w-4.5" />
-                    </div>
-                    <h3 className="font-bold text-base text-[#1F1D1A]">{feature.title}</h3>
-                    <p className="text-xs text-[#7A7266] leading-relaxed">
-                      {feature.description}
+                    <h3 className="font-display font-semibold text-base text-foreground">
+                      Verified marketplace
+                    </h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                      Identity-verified technicians across 25+ Indian cities
                     </p>
+                  </div>
+                  <div className="w-full pt-3 border-t border-border/60 flex flex-col gap-2 text-left text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />
+                      <span>Background and police clearance</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />
+                      <span>Upfront pricing before arrival</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Core Values Section */}
+        <section className="py-16 sm:py-20">
+          <div className="max-w-6xl mx-auto px-6 sm:px-12">
+            <div className="max-w-2xl mb-12 space-y-2">
+              <h2 className="text-2xl sm:text-[30px] font-medium tracking-tight text-foreground">
+                Our core principles
+              </h2>
+              <p className="text-sm sm:text-base text-muted-foreground">
+                The values guiding how we serve households and{" "}
+                <span className="highlight">independent professionals</span>.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {VALUES.map((val, idx) => {
+                const Icon = val.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="card-chai p-6 flex flex-col gap-3 sm:opacity-90 hover:opacity-100 transition-all group"
+                  >
+                    <div className="size-10 rounded-lg border border-border/80 bg-card/60 flex items-center justify-center text-foreground group-hover:text-brand transition-colors">
+                      <Icon className="size-5" />
+                    </div>
+                    <div className="space-y-1">
+                      <h3 className="font-display font-semibold text-sm text-foreground">
+                        {val.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                        {val.description}
+                      </p>
+                    </div>
                   </div>
                 );
               })}
             </div>
           </div>
         </section>
-
-        {/* HOW IT WORKS */}
-        <section className="py-16 bg-[#FAF6F0] border-t border-[#5A5146]/20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-14 flex flex-col gap-2">
-              <span className="text-xs font-bold text-[#C9A46A] uppercase tracking-widest">Process Flow</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1F1D1A] tracking-tight">How It Works</h2>
-              <p className="text-xs sm:text-sm text-[#7A7266]">Book local experts in 4 simple steps.</p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { step: "01", title: "Search Service", desc: "Select from cleaning, plumbing, electrical, lawn care, and more." },
-                { step: "02", title: "Compare Providers", desc: "Browse portfolios, transparent pricing, ratings, and customer feedback." },
-                { step: "03", title: "Book Online", desc: "Choose a convenient schedule, provide job details, and book securely." },
-                { step: "04", title: "Get Work Done", desc: "Your pro arrives fully equipped to complete the job to your standards." }
-              ].map((item, idx) => (
-                <div key={idx} className="bg-white border border-[#5A5146]/20 p-5 rounded-2xl flex flex-col gap-3 text-center items-center">
-                  <div className="w-10 h-10 rounded-full bg-[#8C4B3E] text-white flex items-center justify-center font-black text-xs">
-                    {item.step}
-                  </div>
-                  <h3 className="font-bold text-sm text-[#1F1D1A]">{item.title}</h3>
-                  <p className="text-xs text-[#7A7266] leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
       </div>
     </MainLayout>
   );

@@ -6,6 +6,7 @@ import CustomerSidebar from "../components/navigation/CustomerSidebar";
 import ProviderSidebar from "../components/navigation/ProviderSidebar";
 import AdminSidebar from "../components/navigation/AdminSidebar";
 import { Menu, X, PanelLeftClose, PanelLeft, Loader2 } from "lucide-react";
+import Logo from "../components/ui/logo";
 
 export default function DashboardLayout({ children }) {
   const { user, loading } = useAuth();
@@ -16,8 +17,8 @@ export default function DashboardLayout({ children }) {
   if (loading) {
     return (
       <MainLayout>
-        <div className="min-h-screen flex items-center justify-center bg-[#FAF6F0]">
-          <Loader2 className="h-8 w-8 animate-spin text-[#1F1D1A]" />
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="size-6 animate-spin text-muted-foreground" />
         </div>
       </MainLayout>
     );
@@ -27,7 +28,6 @@ export default function DashboardLayout({ children }) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  // Render correct sidebar based on role
   const renderSidebar = (collapsed = false, onNavigate) => {
     switch (user.role) {
       case "ADMIN":
@@ -41,11 +41,10 @@ export default function DashboardLayout({ children }) {
 
   return (
     <MainLayout>
-      <div className="flex min-h-[calc(100vh-4rem)] bg-[#FAF6F0] font-sans relative">
-        
+      <div className="flex min-h-[calc(100vh-5rem)] font-sans relative">
         {/* Desktop Sidebar (Sticky under main navbar) */}
-        <aside 
-          className={`hidden md:flex flex-col sticky top-16 h-[calc(100vh-4rem)] transition-all duration-300 shrink-0 z-35 ${
+        <aside
+          className={`hidden md:flex flex-col sticky top-16 h-[calc(100vh-4rem)] transition-all duration-300 shrink-0 z-30 ${
             isCollapsed ? "w-20" : "w-64 lg:w-72"
           }`}
         >
@@ -55,13 +54,14 @@ export default function DashboardLayout({ children }) {
             {/* Collapse toggle button */}
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="absolute -right-3.5 top-20 bg-[#FAF6F0] border border-[#E8DCC3] text-[#5A5146] hover:text-[#C9A46A] hover:bg-[#F0E7D5] shadow-2xs h-7 w-7 rounded-full flex items-center justify-center z-40 transition-colors cursor-pointer"
-              title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+              className="absolute -right-3.5 top-16 size-7 rounded-full border border-border bg-card text-muted-foreground hover:text-foreground flex items-center justify-center z-40 transition-colors cursor-pointer"
+              title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+              aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
               {isCollapsed ? (
-                <PanelLeft className="h-4 w-4" />
+                <PanelLeft className="size-3.5" />
               ) : (
-                <PanelLeftClose className="h-4 w-4" />
+                <PanelLeftClose className="size-3.5" />
               )}
             </button>
           </div>
@@ -69,62 +69,58 @@ export default function DashboardLayout({ children }) {
 
         {/* Mobile Drawer Backdrop Overlay */}
         {isMobileOpen && (
-          <div 
-            className="fixed inset-0 z-45 bg-[#1F1D1A]/50 backdrop-blur-xs md:hidden"
+          <div
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
             onClick={() => setIsMobileOpen(false)}
           />
         )}
 
         {/* Mobile Drawer Panel */}
-        <aside 
-          className={`fixed inset-y-0 left-0 z-50 w-[85vw] max-w-[320px] h-full h-screen bg-[#F0E7D5] border-r border-[#E8DCC3] transform transition-transform duration-300 md:hidden flex flex-col overflow-hidden shadow-2xl ${
+        <aside
+          className={`fixed inset-y-0 left-0 z-50 w-[85vw] max-w-[300px] h-full bg-background/95 backdrop-blur-xl border-r border-border transform transition-transform duration-300 md:hidden flex flex-col overflow-hidden ${
             isMobileOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           {/* Drawer Header with Close Button */}
-          <div className="flex items-center justify-between px-4 py-3.5 border-b border-[#E8DCC3] shrink-0 bg-[#F0E7D5]">
-            <div className="flex items-center gap-2">
-              <img src="/logo.png" alt="BookMyLocalService Logo" className="h-7 w-auto object-contain" />
-              <span className="font-bold text-xs text-[#1F1D1A]">BookMyLocal<span className="text-[#C9A46A]">Service</span></span>
-            </div>
+          <div className="flex items-center justify-between px-5 py-4 border-b border-border shrink-0">
+            <Logo size={24} />
             <button
               onClick={() => setIsMobileOpen(false)}
-              className="p-1.5 text-[#5A5146] hover:text-[#1F1D1A] hover:bg-[#FAF6F0] rounded-xl transition-colors cursor-pointer"
-              title="Close Menu"
+              className="p-1.5 text-muted-foreground hover:text-foreground rounded-md transition-colors cursor-pointer"
+              title="Close menu"
+              aria-label="Close menu"
             >
-              <X className="h-5 w-5" />
+              <X className="size-4" />
             </button>
           </div>
 
           {/* Scrollable Content inside Drawer */}
-          <div className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="flex-1 overflow-y-auto">
             {renderSidebar(false, () => setIsMobileOpen(false))}
           </div>
         </aside>
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-w-0 min-h-full pb-16">
-          
           {/* Mobile Navigation Header Bar */}
-          <div className="md:hidden flex items-center bg-[#F0E7D5] border-b border-[#E8DCC3] px-4 py-3 sticky top-16 z-30 justify-between">
+          <div className="md:hidden flex items-center border-b border-border/70 bg-card/40 backdrop-blur-md px-4 py-3 sticky top-16 z-20 justify-between">
             <button
               onClick={() => setIsMobileOpen(true)}
-              className="p-1.5 text-[#5A5146] hover:text-[#C9A46A] hover:bg-[#FAF6F0] rounded-lg flex items-center gap-1.5 font-bold text-xs cursor-pointer"
+              className="text-xs font-medium text-muted-foreground hover:text-foreground flex items-center gap-2 cursor-pointer"
             >
-              <Menu className="h-5 w-5 text-[#1F1D1A]" />
-              <span>Dashboard Menu</span>
+              <Menu className="size-4 text-foreground" />
+              <span>Dashboard menu</span>
             </button>
 
-            <span className="text-[10px] font-bold uppercase text-[#C9A46A] bg-[#FAF6F0] border border-[#E8DCC3] px-2.5 py-0.5 rounded-lg">
-              {user.role}
+            <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground border border-border/80 px-2 py-0.5 rounded">
+              {user.role?.toLowerCase()}
             </span>
           </div>
 
-          <div className="flex-1 px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex-1 px-4 sm:px-6 lg:px-8 py-8 max-w-6xl w-full mx-auto">
             {children}
           </div>
         </div>
-
       </div>
     </MainLayout>
   );

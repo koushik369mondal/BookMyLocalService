@@ -45,19 +45,19 @@ export default function Analytics() {
 
   return (
     <DashboardLayout>
-      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
+      <div className="bg-[#0a0a0a] min-h-screen pb-16 font-sans text-neutral-100">
         
         {/* HEADER */}
-        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A] mb-8">
+        <section className="bg-neutral-900/40 border-b border-white/10 py-8 mb-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">Platform Analytics & Intelligence</h1>
-              <p className="text-[#5A5146] text-xs sm:text-sm mt-1 font-medium">Real-time user growth, financial metrics, and booking statistics from PostgreSQL</p>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">Platform analytics and intelligence</h1>
+              <p className="text-neutral-400 text-xs sm:text-sm mt-1 font-medium">Real-time user growth, financial metrics, and booking statistics from database</p>
             </div>
             
             <Link to="/admin/dashboard">
-              <Button size="sm" className="bg-[#C9A46A] hover:bg-[#b89359] border border-[#E8DCC3] text-white font-bold text-xs rounded-xl h-9.5 px-4 cursor-pointer shadow-2xs">
-                <ArrowLeft className="h-4 w-4 mr-1" /> Dashboard
+              <Button size="sm" variant="outline" className="text-xs h-9.5 px-4 cursor-pointer">
+                <ArrowLeft className="h-4 w-4 mr-1.5" /> Dashboard
               </Button>
             </Link>
           </div>
@@ -66,74 +66,74 @@ export default function Analytics() {
         {/* CONTENT */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           {error && (
-            <div className="p-3.5 bg-[#8C4B3E]/20 border border-[#8C4B3E]/40 text-[#8C4B3E] text-xs font-bold rounded-xl flex items-center gap-2">
-              <ShieldAlert className="h-4 w-4" />
+            <div className="p-3.5 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-medium rounded-xl flex items-center gap-2">
+              <ShieldAlert className="h-4 w-4 shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
           {isLoading ? (
             <div className="py-16 text-center">
-              <Loader2 className="h-8 w-8 text-[#C9A46A] animate-spin mx-auto mb-3" />
-              <p className="text-xs font-bold text-[#5A5146]">Loading analytics intelligence from database...</p>
+              <Loader2 className="h-8 w-8 text-neutral-400 animate-spin mx-auto mb-3" />
+              <p className="text-xs font-medium text-neutral-400">Loading analytics intelligence from database...</p>
             </div>
           ) : (
             <div className="space-y-8">
               {/* OVERVIEW CARDS */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <Card className="border border-[#E8DCC3] bg-white rounded-2xl p-6 shadow-2xs">
-                  <span className="text-xs font-bold text-[#7A7266] uppercase block">Total Users</span>
-                  <span className="text-2xl sm:text-3xl font-black text-[#1F1D1A] mt-2 block">
+                <div className="card-chai p-6">
+                  <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider block">Total users</span>
+                  <span className="text-2xl sm:text-3xl font-bold text-white mt-2 block">
                     {data?.usersOverview?.totalUsers || 0}
                   </span>
-                </Card>
+                </div>
 
-                <Card className="border border-[#E8DCC3] bg-white rounded-2xl p-6 shadow-2xs">
-                  <span className="text-xs font-bold text-[#7A7266] uppercase block">Active Providers</span>
-                  <span className="text-2xl sm:text-3xl font-black text-[#1F1D1A] mt-2 block">
+                <div className="card-chai p-6">
+                  <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider block">Active providers</span>
+                  <span className="text-2xl sm:text-3xl font-bold text-white mt-2 block">
                     {data?.usersOverview?.totalProviders || 0}
                   </span>
-                </Card>
+                </div>
 
-                <Card className="border border-[#E8DCC3] bg-white rounded-2xl p-6 shadow-2xs">
-                  <span className="text-xs font-bold text-[#7A7266] uppercase block">Total Customers</span>
-                  <span className="text-2xl sm:text-3xl font-black text-[#1F1D1A] mt-2 block">
+                <div className="card-chai p-6">
+                  <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider block">Total customers</span>
+                  <span className="text-2xl sm:text-3xl font-bold text-white mt-2 block">
                     {data?.usersOverview?.totalCustomers || 0}
                   </span>
-                </Card>
+                </div>
 
-                <Card className="border border-[#E8DCC3] bg-white rounded-2xl p-6 shadow-2xs">
-                  <span className="text-xs font-bold text-[#7A7266] uppercase block">Gross Volume</span>
-                  <span className="text-2xl sm:text-3xl font-black text-[#1F1D1A] mt-2 block">
+                <div className="card-chai p-6">
+                  <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider block">Gross volume</span>
+                  <span className="text-2xl sm:text-3xl font-bold text-white mt-2 block">
                     {formatPrice(data?.financials?.totalRevenue || 0, { decimals: true })}
                   </span>
-                </Card>
+                </div>
               </div>
 
               {/* BOOKINGS STATS CARD */}
-              <Card className="border border-[#E8DCC3] bg-white rounded-2xl p-6 shadow-2xs space-y-4">
-                <CardHeader className="p-0 pb-3 border-b border-[#E8DCC3]">
-                  <CardTitle className="text-base font-bold text-[#1F1D1A]">System Bookings Intelligence</CardTitle>
-                  <CardDescription className="text-xs text-[#7A7266]">Total: {data?.bookingsOverview?.totalBookings || 0} Dispatches</CardDescription>
-                </CardHeader>
+              <div className="card-chai p-6 space-y-4">
+                <div className="pb-3 border-b border-white/10">
+                  <h2 className="text-base font-semibold text-white">System bookings intelligence</h2>
+                  <p className="text-xs text-neutral-400">Total: {data?.bookingsOverview?.totalBookings || 0} dispatches</p>
+                </div>
 
-                <CardContent className="p-0 pt-2 grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="p-4 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]">
-                    <span className="text-xs font-bold text-[#2B522B] uppercase block">Completed Dispatches</span>
-                    <span className="text-2xl font-black text-[#1F1D1A] mt-1 block">{data?.bookingsOverview?.completedBookings || 0}</span>
+                <div className="pt-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="p-4 bg-white/[0.03] rounded-xl border border-white/10">
+                    <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider block">Completed dispatches</span>
+                    <span className="text-2xl font-bold text-white mt-1 block">{data?.bookingsOverview?.completedBookings || 0}</span>
                   </div>
 
-                  <div className="p-4 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]">
-                    <span className="text-xs font-bold text-[#C9A46A] uppercase block">Pending Dispatches</span>
-                    <span className="text-2xl font-black text-[#1F1D1A] mt-1 block">{data?.bookingsOverview?.pendingBookings || 0}</span>
+                  <div className="p-4 bg-white/[0.03] rounded-xl border border-white/10">
+                    <span className="text-xs font-semibold text-amber-400 uppercase tracking-wider block">Pending dispatches</span>
+                    <span className="text-2xl font-bold text-white mt-1 block">{data?.bookingsOverview?.pendingBookings || 0}</span>
                   </div>
 
-                  <div className="p-4 bg-[#FAF6F0] rounded-xl border border-[#E8DCC3]">
-                    <span className="text-xs font-bold text-[#8C4B3E] uppercase block">Cancelled Dispatches</span>
-                    <span className="text-2xl font-black text-[#1F1D1A] mt-1 block">{data?.bookingsOverview?.cancelledBookings || 0}</span>
+                  <div className="p-4 bg-white/[0.03] rounded-xl border border-white/10">
+                    <span className="text-xs font-semibold text-rose-400 uppercase tracking-wider block">Cancelled dispatches</span>
+                    <span className="text-2xl font-bold text-white mt-1 block">{data?.bookingsOverview?.cancelledBookings || 0}</span>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           )}
         </div>

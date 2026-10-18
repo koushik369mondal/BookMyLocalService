@@ -4,6 +4,8 @@ import { contactService } from "../../services/api";
 import { ContactInfoCards } from "@/components/contact/ContactInfoCards";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ContactFaq } from "@/components/contact/ContactFaq";
+import { MapPin, Clock, Phone, Mail } from "lucide-react";
+import AnimatedBadge from "@/components/ui/AnimatedBadge";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -11,7 +13,7 @@ export default function Contact() {
     email: "",
     phone: "",
     subject: "",
-    message: ""
+    message: "",
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
@@ -26,19 +28,32 @@ export default function Contact() {
     setError(null);
     setSuccess(null);
 
-    if (!formData.name.trim() || !formData.email.trim() || !formData.subject.trim() || !formData.message.trim()) {
-      setError("Please fill in all required fields (Name, Email, Subject, and Message).");
+    if (
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.subject.trim() ||
+      !formData.message.trim()
+    ) {
+      setError(
+        "Please fill in all required fields (Name, Email, Subject, and Message)."
+      );
       return;
     }
 
     setLoading(true);
     try {
       const res = await contactService.sendMessage(formData);
-      setSuccess(res.message || "Thank you! Your message has been sent successfully. Check your email for a confirmation receipt.");
+      setSuccess(
+        res.message ||
+          "Thank you! Your message has been sent successfully. Check your email for a confirmation receipt."
+      );
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
     } catch (err) {
       console.error("Contact Form Submit Error:", err);
-      setError(err.message || "Failed to send message. Please check your details and try again.");
+      setError(
+        err.message ||
+          "Failed to send message. Please check your details and try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -46,24 +61,30 @@ export default function Contact() {
 
   return (
     <MainLayout>
-      <div className="bg-[#FAF6F0] min-h-screen font-sans antialiased text-[#1F1D1A]">
-        {/* PAGE HEADER */}
-        <section className="py-12 bg-white border-b border-[#5A5146]/20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-3">
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#1F1D1A] leading-tight">
-              Get in <span className="text-[#C9A46A]">Touch</span>
+      <div className="min-h-screen">
+        {/* Page Header */}
+        <section className="pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-border/70">
+          <div className="max-w-6xl mx-auto px-6 sm:px-12 text-center flex flex-col items-center gap-3">
+            <AnimatedBadge>
+              <span className="size-1.5 rounded-full bg-emerald-500" />
+              <span>Dedicated customer support</span>
+            </AnimatedBadge>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-foreground leading-tight">
+              Get in touch
             </h1>
-            <p className="text-xs sm:text-sm text-[#7A7266] max-w-xl leading-relaxed">
-              Have questions about booking a service, provider registration, or need assistance? Drop us a message, and our team will get back to you.
+            <p className="text-base text-muted-foreground max-w-xl leading-relaxed">
+              Have questions about booking a service, provider onboarding, or account settings? We're here with{" "}
+              <span className="highlight">rapid neighborly assistance</span>.
             </p>
           </div>
         </section>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-          {/* CONTACT INFO GRID */}
+        <div className="max-w-6xl mx-auto px-6 sm:px-12 py-10 space-y-12">
+          {/* Contact Info Cards */}
           <ContactInfoCards />
 
-          {/* TWO-COLUMN FORM & MAP */}
+          {/* Form & Map */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             <ContactForm
               formData={formData}
@@ -74,26 +95,45 @@ export default function Contact() {
               onSubmit={handleFormSubmit}
             />
 
-            {/* Map Column */}
-            <div className="lg:col-span-5 bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-xs flex flex-col justify-between h-full">
-              <div className="space-y-4 flex-1 flex flex-col">
-                <h3 className="font-bold text-lg text-[#1F1D1A]">Our Office Location</h3>
-                <div className="w-full flex-1 min-h-[300px] rounded-xl overflow-hidden border border-[#5A5146]/20 relative">
-                  <iframe
-                    title="Office Location Map"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.5620677583626!2d77.36214581508218!3d28.612911982424915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce566270d49cf%3A0x6b772c5780d6f4!2sSector%2062%2C%20Noida%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1625555555555!5m2!1sen!2sin"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0, minHeight: "300px" }}
-                    allowFullScreen=""
-                    loading="lazy"
-                  ></iframe>
+            {/* Office Location & Info */}
+            <div className="lg:col-span-5 card-chai p-6 sm:p-8 flex flex-col justify-between h-full">
+              <div className="space-y-4">
+                <h3 className="font-display font-semibold text-base text-foreground">
+                  Headquarters location
+                </h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  BookMyLocalService Network Operations. Managing dispatch nodes across major Indian metropolises.
+                </p>
+
+                <div className="space-y-3 pt-2 text-xs text-muted-foreground">
+                  <div className="flex items-start gap-2.5">
+                    <MapPin className="size-4 text-muted-foreground shrink-0 mt-0.5" />
+                    <span>Sector V, Salt Lake, Kolkata, West Bengal 700091</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Phone className="size-4 text-muted-foreground shrink-0" />
+                    <span>+91 (800) 234-5678 (Toll Free)</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Mail className="size-4 text-muted-foreground shrink-0" />
+                    <span>support@bookmylocalservice.in</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Clock className="size-4 text-muted-foreground shrink-0" />
+                    <span>Monday to Saturday: 8:00 AM to 8:00 PM IST</span>
+                  </div>
                 </div>
+              </div>
+
+              <div className="pt-6 border-t border-border/60 mt-6">
+                <p className="text-[11px] text-muted-foreground">
+                  Need emergency home dispatch? Emergency electrical and plumbing support is available 24/7.
+                </p>
               </div>
             </div>
           </section>
 
-          {/* FAQS */}
+          {/* FAQ */}
           <ContactFaq />
         </div>
       </div>

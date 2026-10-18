@@ -18,13 +18,13 @@ export default function AdminSettings() {
 
   return (
     <DashboardLayout>
-      <div className="bg-[#FAF6F0] min-h-screen pb-16 font-sans">
+      <div className="bg-[#0a0a0a] min-h-screen pb-16 font-sans text-neutral-100">
         
-        {/* LIGHT RETRO BANNER HEADER */}
-        <section className="bg-[#F0E7D5] border-b border-[#E8DCC3] py-8 text-[#1F1D1A] mb-8">
+        {/* HEADER */}
+        <section className="bg-neutral-900/40 border-b border-white/10 py-8 mb-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F1D1A]">System Settings</h1>
-            <p className="text-[#5A5146] text-xs sm:text-sm mt-1 font-medium">Configure global platform attributes, registration policies, and maintenance states</p>
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">System settings</h1>
+            <p className="text-neutral-400 text-xs sm:text-sm mt-1 font-medium">Configure global platform attributes, registration policies, and maintenance states</p>
           </div>
         </section>
 
@@ -32,83 +32,81 @@ export default function AdminSettings() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
           {successMsg && (
-            <div className="flex items-start gap-2.5 p-3.5 bg-[#7DAB7D]/20 border border-[#7DAB7D]/40 text-[#2B522B] text-xs font-bold rounded-xl shadow-2xs">
-              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-[#2B522B]" />
+            <div className="flex items-start gap-2.5 p-3.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium rounded-xl">
+              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-400" />
               <span>{successMsg}</span>
             </div>
           )}
 
-          <Card className="border border-[#E8DCC3] rounded-2xl bg-white p-6 shadow-2xs">
-            <CardHeader className="p-0 pb-4 border-b border-[#E8DCC3] flex flex-row items-center gap-3">
-              <div className="p-2.5 bg-[#F0E7D5] text-[#C9A46A] rounded-xl border border-[#E8DCC3]">
+          <div className="card-chai p-6 space-y-6">
+            <div className="pb-4 border-b border-white/10 flex flex-row items-center gap-3">
+              <div className="p-2.5 bg-white/5 text-neutral-300 rounded-xl border border-white/10">
                 <Settings className="h-5 w-5" />
               </div>
               <div>
-                <CardTitle className="text-base font-bold text-[#1F1D1A]">Admin Control Panel</CardTitle>
-                <CardDescription className="text-xs text-[#7A7266]">Adjust global operations switches</CardDescription>
+                <h2 className="text-base font-semibold text-white">Admin control panel</h2>
+                <p className="text-xs text-neutral-400">Adjust global operations switches</p>
               </div>
-            </CardHeader>
+            </div>
 
-            <CardContent className="p-0 pt-6 space-y-6">
+            <div className="space-y-6">
               
               {/* SECURITY & ACCESS CONTROL */}
               <div className="space-y-4">
-                <span className="text-[10px] font-bold uppercase text-[#7A7266] tracking-wider block">Security & Access Control</span>
+                <span className="text-[10px] font-semibold uppercase text-neutral-400 tracking-wider block">Security and access control</span>
                 
-                <div className="flex items-center justify-between border border-[#E8DCC3] p-4.5 rounded-2xl bg-white shadow-2xs">
+                <div className="flex items-center justify-between border border-white/10 p-4.5 rounded-2xl bg-white/[0.03]">
                   <div>
-                    <span className="text-xs font-bold text-[#1F1D1A] block">Require Provider Verification</span>
-                    <span className="text-[10px] text-[#5A5146] leading-relaxed font-medium">Force newly registered providers to be manually approved by admin before accepting bookings</span>
+                    <span className="text-xs font-semibold text-white block">Require provider verification</span>
+                    <span className="text-[10px] text-neutral-400 leading-relaxed font-normal">Force newly registered providers to be manually approved by admin before accepting bookings</span>
                   </div>
                   <Switch 
                     checked={requireVerification} 
                     onCheckedChange={setRequireVerification} 
-                    className="data-[state=checked]:bg-[#C9A46A]"
                   />
                 </div>
 
-                <div className="flex items-center justify-between border border-[#E8DCC3] p-4.5 rounded-2xl bg-white shadow-2xs">
+                <div className="flex items-center justify-between border border-white/10 p-4.5 rounded-2xl bg-white/[0.03]">
                   <div>
-                    <span className="text-xs font-bold text-[#1F1D1A] block">Enable Public Registrations</span>
-                    <span className="text-[10px] text-[#5A5146] leading-relaxed font-medium">Allow new customer and provider sign-ups from the registration routes</span>
+                    <span className="text-xs font-semibold text-white block">Enable public registrations</span>
+                    <span className="text-[10px] text-neutral-400 leading-relaxed font-normal">Allow new customer and provider sign-ups from the registration routes</span>
                   </div>
                   <Switch 
                     checked={allowRegistration} 
                     onCheckedChange={setAllowRegistration} 
-                    className="data-[state=checked]:bg-[#C9A46A]"
                   />
                 </div>
               </div>
 
               {/* SYSTEM STATUS */}
-              <div className="space-y-4 border-t border-[#E8DCC3] pt-6">
-                <span className="text-[10px] font-bold uppercase text-[#7A7266] tracking-wider block">System Status</span>
+              <div className="space-y-4 border-t border-white/10 pt-6">
+                <span className="text-[10px] font-semibold uppercase text-neutral-400 tracking-wider block">System status</span>
                 
-                <div className="flex items-center justify-between border border-[#E8DCC3] p-4.5 rounded-2xl bg-white shadow-2xs">
+                <div className="flex items-center justify-between border border-white/10 p-4.5 rounded-2xl bg-white/[0.03]">
                   <div>
-                    <span className="text-xs font-bold text-[#8C4B3E] block">Platform Maintenance Mode</span>
-                    <span className="text-[10px] text-[#5A5146] leading-relaxed font-medium">Offline client-facing routes for general system updates, displaying maintenance landing page</span>
+                    <span className="text-xs font-semibold text-rose-400 block">Platform maintenance mode</span>
+                    <span className="text-[10px] text-neutral-400 leading-relaxed font-normal">Offline client-facing routes for general system updates, displaying maintenance landing page</span>
                   </div>
                   <Switch 
                     checked={maintenanceMode} 
                     onCheckedChange={setMaintenanceMode} 
-                    className="data-[state=checked]:bg-[#8C4B3E]"
                   />
                 </div>
               </div>
 
               {/* SAVE BUTTON */}
-              <div className="pt-2 border-t border-[#E8DCC3] flex justify-end">
+              <div className="pt-2 border-t border-white/10 flex justify-end">
                 <Button 
                   onClick={handleSave}
-                  className="bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold text-xs h-10 px-6 rounded-xl shadow-2xs border border-[#E8DCC3] flex items-center justify-center gap-1.5 cursor-pointer"
+                  variant="solid"
+                  className="text-xs h-10 px-6 cursor-pointer flex items-center justify-center gap-1.5"
                 >
-                  <Save className="h-4 w-4" /> Save System Settings
+                  <Save className="h-4 w-4" /> Save system settings
                 </Button>
               </div>
 
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
     </DashboardLayout>

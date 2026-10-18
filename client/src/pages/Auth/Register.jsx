@@ -13,11 +13,8 @@ import {
   Zap,
   Star,
   Check,
-  ArrowRight,
-  FileText,
-  UserCheck,
-  Award
 } from "lucide-react";
+import AnimatedBadge from "@/components/ui/AnimatedBadge";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -42,7 +39,11 @@ export default function Register() {
     if (!response.credential) return;
     setIsSubmitting(true);
     setErrorMsg("");
-    setSuccessMsg(`Registering as ${selectedRole === "provider" ? "Service Provider" : "Customer"}...`);
+    setSuccessMsg(
+      `Registering as ${
+        selectedRole === "provider" ? "service provider" : "customer"
+      }...`
+    );
 
     try {
       const data = await googleLogin(response.credential, selectedRole);
@@ -52,7 +53,7 @@ export default function Register() {
         return;
       }
 
-      setSuccessMsg("Registration successful! Redirecting...");
+      setSuccessMsg("Registration successful. Redirecting...");
       setIsSubmitting(false);
       setTimeout(() => {
         const userRole = data.user?.role?.toUpperCase();
@@ -65,7 +66,7 @@ export default function Register() {
         } else {
           navigate("/customer/dashboard");
         }
-      }, 1000);
+      }, 800);
     } catch (err) {
       console.error("Google Auth error:", err);
       setErrorMsg(err.message || "Failed to register with Google.");
@@ -74,13 +75,15 @@ export default function Register() {
   };
 
   useEffect(() => {
-    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "1059298384612-7g8dpchm16n2fts4oel7nd5l10h32drv.apps.googleusercontent.com";
+    const clientId =
+      import.meta.env.VITE_GOOGLE_CLIENT_ID ||
+      "1059298384612-7g8dpchm16n2fts4oel7nd5l10h32drv.apps.googleusercontent.com";
 
     const initGsi = () => {
       if (window.google?.accounts?.id) {
         window.google.accounts.id.initialize({
           client_id: clientId,
-          callback: handleGoogleCallback
+          callback: handleGoogleCallback,
         });
         if (googleBtnRef.current) {
           window.google.accounts.id.renderButton(googleBtnRef.current, {
@@ -88,7 +91,7 @@ export default function Register() {
             size: "large",
             width: "100%",
             text: "signup_with",
-            shape: "pill"
+            shape: "rectangular",
           });
         }
       }
@@ -109,179 +112,153 @@ export default function Register() {
 
   return (
     <MainLayout>
-      <div className="min-h-[90vh] bg-[#FAF6F0] flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
-
-        {/* Brand Header */}
+      <div className="min-h-[85vh] flex flex-col items-center justify-center py-12 px-4 sm:px-6">
         <div className="mb-6 flex justify-center">
-          <Logo size={42} showText={true} />
+          <Logo size={36} showText={true} />
         </div>
 
-        {/* Main Form Container Card */}
-        <div className="max-w-2xl w-full bg-white rounded-3xl border border-[#E8DCC3] shadow-xl p-6 sm:p-10 transition-all duration-300 hover:shadow-2xl">
-
-          {/* Header Title */}
-          <div className="space-y-2 mb-8 text-center">
-            <span className="inline-block px-3 py-1 bg-[#F0E7D5] border border-[#E8DCC3] text-[#8C4B3E] font-black text-[10px] uppercase tracking-widest rounded-full">
-              Join BookMyLocalService 🚀
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-[#1F1D1A] tracking-tight">
-              Create Your Account
+        {/* Form Container Card */}
+        <div className="max-w-xl w-full card-chai p-6 sm:p-10 space-y-6">
+          <div className="space-y-2 text-center">
+            <h1 className="text-2xl sm:text-3xl font-medium tracking-tight text-foreground">
+              Create your account
             </h1>
-            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">
-              Select your role and authenticate with Google in seconds
+            <p className="text-xs sm:text-sm text-muted-foreground">
+              Select your account type and continue with{" "}
+              <span className="highlight">instant Google authentication</span>.
             </p>
           </div>
 
-          {/* Error and Success Alerts */}
           {errorMsg && (
-            <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl">
-              <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
+            <div className="flex items-start gap-2.5 p-3.5 rounded-lg border border-red-500/20 bg-red-500/10 text-red-600 dark:text-red-400 text-xs">
+              <ShieldAlert className="size-4 shrink-0 mt-0.5" />
               <span>{errorMsg}</span>
             </div>
           )}
 
           {successMsg && (
-            <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl">
-              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
+            <div className="flex items-start gap-2.5 p-3.5 rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs">
+              <CheckCircle2 className="size-4 shrink-0 mt-0.5" />
               <span>{successMsg}</span>
             </div>
           )}
 
-          {/* STEP 1: PREMIUM ROLE SELECTION CARDS */}
-          <div className="mb-8 space-y-3">
-            <label className="text-xs font-extrabold uppercase tracking-wider text-[#1F1D1A] block">
-              1. Choose Account Type:
+          {/* Account Type Selection */}
+          <div className="space-y-2.5">
+            <label className="text-xs font-semibold text-foreground block">
+              1. Choose account type:
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              
-              {/* Customer Role Card */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {/* Customer */}
               <div
                 onClick={() => setSelectedRole("customer")}
-                className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer relative flex flex-col justify-between space-y-3 ${
+                className={`p-4 rounded-xl border transition-all cursor-pointer relative flex flex-col justify-between gap-3 ${
                   selectedRole === "customer"
-                    ? "bg-[#FAF6F0] border-[#8C4B3E] ring-2 ring-[#8C4B3E]/20 shadow-md scale-[1.01]"
-                    : "bg-white border-[#E8DCC3] hover:border-[#C9A46A] hover:bg-[#FAF6F0]/50"
+                    ? "bg-card border-border ring-1 ring-border shadow-none"
+                    : "bg-card/40 border-border/70 hover:border-border"
                 }`}
               >
                 <div className="flex items-start justify-between">
-                  <div className={`p-3 rounded-xl ${selectedRole === "customer" ? "bg-[#8C4B3E] text-white" : "bg-[#F0E7D5] text-[#8C4B3E]"}`}>
-                    <User className="h-5 w-5" />
+                  <div className="size-9 rounded-lg border border-border bg-card flex items-center justify-center text-foreground">
+                    <User className="size-4" />
                   </div>
-                  <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${selectedRole === "customer" ? "bg-[#8C4B3E] border-[#8C4B3E] text-white" : "border-[#E8DCC3]"}`}>
-                    {selectedRole === "customer" && <Check className="h-3 w-3 stroke-[3]" />}
+                  <div
+                    className={`size-4 rounded-full border flex items-center justify-center ${
+                      selectedRole === "customer"
+                        ? "bg-foreground border-foreground text-background"
+                        : "border-border"
+                    }`}
+                  >
+                    {selectedRole === "customer" && (
+                      <Check className="size-2.5 stroke-[3]" />
+                    )}
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-sm text-[#1F1D1A]">Customer / Client</h3>
-                  <p className="text-[11px] text-[#5A5146] font-medium leading-relaxed mt-1">
-                    Book verified local specialists, track live service dispatch, and submit reviews.
+                  <h3 className="font-display text-sm font-semibold text-foreground">
+                    Customer
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                    Book verified local specialists and manage home bookings.
                   </p>
                 </div>
               </div>
 
-              {/* Provider Role Card */}
+              {/* Provider */}
               <div
                 onClick={() => setSelectedRole("provider")}
-                className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer relative flex flex-col justify-between space-y-3 ${
+                className={`p-4 rounded-xl border transition-all cursor-pointer relative flex flex-col justify-between gap-3 ${
                   selectedRole === "provider"
-                    ? "bg-[#FAF6F0] border-[#8C4B3E] ring-2 ring-[#8C4B3E]/20 shadow-md scale-[1.01]"
-                    : "bg-white border-[#E8DCC3] hover:border-[#C9A46A] hover:bg-[#FAF6F0]/50"
+                    ? "bg-card border-border ring-1 ring-border shadow-none"
+                    : "bg-card/40 border-border/70 hover:border-border"
                 }`}
               >
                 <div className="flex items-start justify-between">
-                  <div className={`p-3 rounded-xl ${selectedRole === "provider" ? "bg-[#8C4B3E] text-white" : "bg-[#F0E7D5] text-[#8C4B3E]"}`}>
-                    <Briefcase className="h-5 w-5" />
+                  <div className="size-9 rounded-lg border border-border bg-card flex items-center justify-center text-foreground">
+                    <Briefcase className="size-4" />
                   </div>
-                  <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${selectedRole === "provider" ? "bg-[#8C4B3E] border-[#8C4B3E] text-white" : "border-[#E8DCC3]"}`}>
-                    {selectedRole === "provider" && <Check className="h-3 w-3 stroke-[3]" />}
+                  <div
+                    className={`size-4 rounded-full border flex items-center justify-center ${
+                      selectedRole === "provider"
+                        ? "bg-foreground border-foreground text-background"
+                        : "border-border"
+                    }`}
+                  >
+                    {selectedRole === "provider" && (
+                      <Check className="size-2.5 stroke-[3]" />
+                    )}
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-sm text-[#1F1D1A]">Service Provider</h3>
-                  <p className="text-[11px] text-[#5A5146] font-medium leading-relaxed mt-1">
-                    Offer professional services, manage job requests, and grow your local business.
+                  <h3 className="font-display text-sm font-semibold text-foreground">
+                    Service provider
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                    Offer services, receive job dispatches, and receive payouts.
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
 
-          {/* PROVIDER ONBOARDING PIPELINE NOTE (Displayed only when Provider is selected) */}
-          {selectedRole === "provider" && (
-            <div className="mb-8 p-4 bg-[#F0E7D5]/70 border border-[#E8DCC3] rounded-2xl space-y-3">
-              <div className="flex items-center gap-2 text-xs font-black text-[#1F1D1A]">
-                <Award className="h-4 w-4 text-[#8C4B3E]" />
-                <span>Provider Verification & Onboarding Journey</span>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] text-[#1F1D1A] font-extrabold text-center">
-                <div className="p-2 bg-white rounded-xl border border-[#E8DCC3] flex flex-col items-center justify-center gap-1">
-                  <UserCheck className="h-3.5 w-3.5 text-[#8C4B3E]" />
-                  <span>1. Profile Setup</span>
-                </div>
-                <div className="p-2 bg-white rounded-xl border border-[#E8DCC3] flex flex-col items-center justify-center gap-1">
-                  <FileText className="h-3.5 w-3.5 text-[#C9A46A]" />
-                  <span>2. KYC Details</span>
-                </div>
-                <div className="p-2 bg-white rounded-xl border border-[#E8DCC3] flex flex-col items-center justify-center gap-1">
-                  <ShieldCheck className="h-3.5 w-3.5 text-[#8C4B3E]" />
-                  <span>3. Admin Review</span>
-                </div>
-                <div className="p-2 bg-white rounded-xl border border-[#E8DCC3] flex flex-col items-center justify-center gap-1">
-                  <Zap className="h-3.5 w-3.5 text-emerald-600" />
-                  <span>4. Accept Jobs</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* STEP 2: DYNAMIC GOOGLE AUTH BUTTON */}
-          <div className="mb-8 flex flex-col items-center justify-center space-y-3 p-4 bg-[#FAF6F0]/60 rounded-2xl border border-[#E8DCC3]/80">
-            <span className="text-xs font-black uppercase tracking-wider text-[#8C4B3E] flex items-center gap-1.5">
-              <span>2. Continue as {selectedRole === "provider" ? "Service Provider" : "Customer"}</span>
+          {/* Google Button */}
+          <div className="space-y-3 pt-2">
+            <span className="text-xs font-semibold text-foreground block">
+              2. Continue with Google:
             </span>
-            <div ref={googleBtnRef} className="w-full flex justify-center min-h-[44px]"></div>
+            <div
+              ref={googleBtnRef}
+              className="w-full flex justify-center min-h-[44px]"
+            />
           </div>
 
-          {/* PLATFORM BENEFITS GRID */}
-          <div className="p-4 bg-[#FAF6F0] rounded-2xl border border-[#E8DCC3]/80 space-y-3">
-            <span className="text-[10px] font-black uppercase tracking-widest text-[#7A7266] block">
-              Why Join BookMyLocalService
-            </span>
-
-            <div className="grid grid-cols-2 gap-3 text-xs text-[#5A5146] font-semibold">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-[#8C4B3E] shrink-0" />
-                <span>Verified Providers</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CreditCard className="h-4 w-4 text-[#8C4B3E] shrink-0" />
-                <span>Secure Payments</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-[#8C4B3E] shrink-0" />
-                <span>Easy 1-Click Booking</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Star className="h-4 w-4 text-[#8C4B3E] shrink-0" />
-                <span>100% Database Reviews</span>
-              </div>
+          {/* Benefits */}
+          <div className="pt-4 border-t border-border/60 grid grid-cols-2 gap-2.5 text-xs text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="size-3.5 text-emerald-500 shrink-0" />
+              <span>Verified directory</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CreditCard className="size-3.5 text-muted-foreground shrink-0" />
+              <span>Secure payments</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Zap className="size-3.5 text-amber-500 shrink-0" />
+              <span>Instant confirmation</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Star className="size-3.5 text-amber-500 shrink-0" />
+              <span>Genuine ratings</span>
             </div>
           </div>
 
-          {/* Footer Link */}
-          <div className="mt-8 pt-6 border-t border-[#E8DCC3] text-center text-xs font-semibold text-[#5A5146]">
+          {/* Footer */}
+          <div className="pt-4 border-t border-border/60 text-center text-xs text-muted-foreground">
             Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-[#8C4B3E] hover:text-[#C9A46A] transition-colors font-extrabold flex items-center justify-center gap-1 mt-1.5 hover:underline"
-            >
-              <span>Log in with Google Account</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+            <Link to="/login" className="text-foreground hover:text-brand font-medium">
+              Sign in
             </Link>
           </div>
-
         </div>
       </div>
     </MainLayout>

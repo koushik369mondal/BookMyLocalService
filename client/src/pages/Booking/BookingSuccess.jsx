@@ -109,67 +109,66 @@ export default function BookingSuccess() {
 
   return (
     <MainLayout>
-      <div className="bg-[#FAF6F0] min-h-screen py-16 px-4 sm:px-6 lg:px-8 font-sans print:bg-white print:py-4">
+      <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 font-sans print:py-4">
         <div className="max-w-2xl mx-auto space-y-8">
           
           {/* CONFIRMATION HERO BLOCK */}
-          <div className="text-center space-y-4 print:space-y-2">
-            <div className="w-16 h-16 bg-[#7DAB7D]/20 text-[#2B522B] border border-[#7DAB7D]/40 rounded-full flex items-center justify-center mx-auto shadow-2xs print:w-12 print:h-12">
-              <Check className="h-8 w-8 print:h-6 print:w-6" />
+          <div className="text-center space-y-3 print:space-y-2">
+            <div className="size-14 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto">
+              <Check className="size-7" />
             </div>
             
             <div className="space-y-1.5">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#2B522B] bg-[#7DAB7D]/20 border border-[#7DAB7D]/30 rounded-full px-3 py-1">
-                Booking Completed
+              <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 rounded-full px-3 py-1">
+                Booking completed
               </span>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#1F1D1A] tracking-tight pt-1">Appointment Confirmed!</h1>
-              <p className="text-xs sm:text-sm text-[#7A7266] font-medium max-w-md mx-auto leading-relaxed">
-                Thank you for scheduling with BookMyLocalService. Your appointment has been registered and scheduled with the specialist.
+              <h1 className="text-2xl sm:text-3xl font-heading font-medium text-foreground tracking-tight pt-1">Appointment confirmed</h1>
+              <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
+                Thank you for scheduling with BookMyLocalService. Your appointment has been registered with the specialist.
               </p>
             </div>
           </div>
 
           {/* MAIN CONFIRMATION CARD */}
-          <Card className="border border-[#E8DCC3] shadow-2xs bg-white rounded-2xl overflow-hidden print:border-[#E8DCC3] print:shadow-none">
+          <div className="card-chai rounded-2xl overflow-hidden print:shadow-none">
             
             {/* Header booking ID banner */}
-            <div className="bg-[#F0E7D5] text-[#1F1D1A] py-3.5 px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-[#E8DCC3]">
+            <div className="bg-muted/40 py-3.5 px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-border/80">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-bold text-[#7A7266] uppercase tracking-wider">Booking Reference:</span>
-                <span className="font-bold text-xs bg-white text-[#1F1D1A] py-0.5 px-2.5 rounded-lg border border-[#E8DCC3] tracking-wider">
+                <span className="text-xs text-muted-foreground uppercase tracking-wider font-mono">Reference:</span>
+                <span className="font-mono text-xs bg-card text-foreground py-0.5 px-2.5 rounded-lg border border-border/80">
                   #{bookingId}
                 </span>
                 <BookingStatusBadge status="CONFIRMED" />
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-[#2B522B] font-bold">
-                <ShieldCheck className="h-4.5 w-4.5" />
-                Secured Appointment
+              <div className="flex items-center gap-1.5 text-xs text-emerald-500 font-medium">
+                <ShieldCheck className="h-4 w-4" />
+                Secured appointment
               </div>
             </div>
 
-            <CardContent className="p-6 space-y-6">
+            <div className="p-6 space-y-6">
               
               {/* SPECIALIST SECTION */}
-              <div className="space-y-3">
-                <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Service Specialist</span>
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider block">Service specialist</span>
                 {loading ? (
-                  <div className="h-20 flex items-center justify-center bg-[#FAF6F0] rounded-2xl">
-                    <Loader2 className="h-5 w-5 animate-spin text-[#8C4B3E]" />
+                  <div className="h-20 flex items-center justify-center bg-card/60 rounded-xl border border-border/80">
+                    <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
                   </div>
                 ) : (
-                  <div className="flex items-center gap-4 p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl print:bg-white">
+                  <div className="flex items-center gap-4 p-4 bg-card/60 border border-border/80 rounded-xl">
                     <ProviderAvatar
                       provider={service?.provider || { fullName: providerName, profileImage: providerImage }}
-                      className="w-14 h-14 rounded-full overflow-hidden shrink-0 border border-[#E8DCC3] shadow-2xs"
-                      fallbackClassName="text-lg font-bold bg-[#F0E7D5] text-[#C9A46A]"
+                      className="size-12 rounded-full overflow-hidden shrink-0 border border-border/80"
                       size={120}
                     />
                     <div>
-                      <Badge variant="secondary" className="bg-white border-[#E8DCC3] text-[#C9A46A] font-bold rounded-lg text-[9px] uppercase py-0.5 px-2">
+                      <span className="text-[10px] font-mono text-muted-foreground uppercase border border-border/70 bg-card px-2 py-0.5 rounded-md">
                         {categoryName}
-                      </Badge>
-                      <h3 className="font-bold text-[#1F1D1A] text-base mt-1 leading-snug">{providerName}</h3>
-                      <p className="text-xs text-[#7A7266] font-medium truncate max-w-xs">{serviceTitle}</p>
+                      </span>
+                      <h3 className="font-heading font-medium text-foreground text-sm mt-1 leading-snug">{providerName}</h3>
+                      <p className="text-xs text-muted-foreground truncate max-w-xs">{serviceTitle}</p>
                     </div>
                   </div>
                 )}
@@ -179,38 +178,38 @@ export default function BookingSuccess() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
                 {/* Date */}
-                <div className="flex items-start gap-3 p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl print:bg-white">
-                  <div className="p-2 bg-[#F0E7D5] text-[#C9A46A] rounded-xl shrink-0 mt-0.5 border border-[#E8DCC3]">
-                    <Calendar className="h-4.5 w-4.5" />
+                <div className="flex items-start gap-3 p-4 bg-card/60 border border-border/80 rounded-xl">
+                  <div className="p-2 bg-card rounded-lg shrink-0 mt-0.5 border border-border/70 text-foreground">
+                    <Calendar className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Date</span>
-                    <span className="text-sm font-bold text-[#1F1D1A] block mt-0.5">{selectedDate}</span>
+                    <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider block">Date</span>
+                    <span className="text-sm font-medium text-foreground block mt-0.5">{selectedDate}</span>
                   </div>
                 </div>
 
                 {/* Time */}
-                <div className="flex items-start gap-3 p-4 bg-[#FAF6F0] border border-[#E8DCC3] rounded-2xl print:bg-white">
-                  <div className="p-2 bg-[#F0E7D5] text-[#C9A46A] rounded-xl shrink-0 mt-0.5 border border-[#E8DCC3]">
-                    <Clock className="h-4.5 w-4.5" />
+                <div className="flex items-start gap-3 p-4 bg-card/60 border border-border/80 rounded-xl">
+                  <div className="p-2 bg-card rounded-lg shrink-0 mt-0.5 border border-border/70 text-foreground">
+                    <Clock className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-[#7A7266] uppercase tracking-wider block">Arrival Window</span>
-                    <span className="text-sm font-bold text-[#1F1D1A] block mt-0.5">{getArrivalWindow(selectedTime)}</span>
+                    <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider block">Arrival window</span>
+                    <span className="text-sm font-medium text-foreground block mt-0.5">{getArrivalWindow(selectedTime)}</span>
                   </div>
                 </div>
 
               </div>
 
               {/* PAYMENT STATUS WIDGET */}
-              <div className="p-5 bg-white border border-[#E8DCC3] rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-2xs print:bg-white">
-                <div className="flex items-center gap-3.5">
-                  <div className="p-2.5 bg-[#8C4B3E]/10 text-[#8C4B3E] rounded-xl shrink-0 border border-[#8C4B3E]/20">
-                    <CreditCard className="h-5 w-5" />
+              <div className="p-4 bg-card/60 border border-border/80 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 bg-card rounded-lg shrink-0 border border-border/70 text-foreground">
+                    <CreditCard className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-black text-[#8C4B3E] uppercase tracking-wider block">Payment Method</span>
-                    <span className="text-sm font-extrabold text-[#1F1D1A] block mt-0.5">
+                    <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider block">Payment method</span>
+                    <span className="text-xs font-medium text-foreground block mt-0.5">
                       {getPaymentMethodLabel(paymentMethod)}
                     </span>
                   </div>
@@ -218,55 +217,54 @@ export default function BookingSuccess() {
                 
                 <div className="flex items-center sm:text-right gap-3 sm:flex-col sm:gap-1">
                   <PaymentStatusBadge status={paymentMethod === "cash" || paymentMethod === "CASH_ON_JOB" ? "PENDING" : "PAID"} method={paymentMethod} />
-                  <span className="text-base font-black text-[#8C4B3E]">{formatPrice(displayPrice, { decimals: true })}</span>
+                  <span className="text-sm font-mono font-medium text-foreground">{formatPrice(displayPrice, { decimals: true })}</span>
                 </div>
               </div>
 
               {/* ARRIVAL NOTICE INFORMATION */}
-              <div className="p-4.5 bg-[#F0E7D5]/60 border border-[#E8DCC3] text-[#1F1D1A] rounded-2xl flex items-start gap-3 print:hidden">
-                <Info className="h-5 w-5 text-[#C9A46A] shrink-0 mt-0.5" />
+              <div className="p-4 bg-muted/30 border border-border/80 text-foreground rounded-xl flex items-start gap-3 print:hidden">
+                <Info className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
                 <div className="space-y-1">
-                  <h4 className="font-bold text-xs">Estimated Arrival Notification</h4>
-                  <p className="text-[11px] text-[#5A5146] leading-relaxed font-medium">
+                  <h4 className="font-heading font-medium text-xs">Estimated arrival notification</h4>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">
                     Specialist {providerName} will arrive within the estimated window of {getArrivalWindow(selectedTime)}. Please ensure the service area is accessible.
                   </p>
                 </div>
               </div>
 
               {/* NOTIFICATION NOTE */}
-              <p className="text-[11px] text-[#7A7266] text-center font-medium pt-2 border-t border-[#E8DCC3]">
-                📬 A confirmation email invoice and SMS alert has been dispatched to your registered contact credentials.
+              <p className="text-[11px] text-muted-foreground text-center pt-2 border-t border-border/80">
+                A confirmation email invoice and SMS alert has been dispatched to your registered contact credentials.
               </p>
 
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* ACTION BUTTON PANEL */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 print:hidden">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 print:hidden">
             
             {/* Back Home */}
             <Link to="/" className="w-full sm:w-auto order-3 sm:order-1">
-              <Button variant="outline" className="w-full border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#5A5146] font-bold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5">
+              <Button variant="outline" className="w-full h-10 text-xs rounded-xl flex items-center justify-center gap-1.5">
                 <Home className="h-4 w-4" />
-                Return to Home
+                Return to home
               </Button>
             </Link>
 
             {/* Dashboard / print actions */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto order-1 sm:order-2">
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto order-1 sm:order-2">
               <Button 
                 onClick={handlePrint}
                 variant="outline" 
-                className="w-full sm:w-auto border-[#E8DCC3] bg-white hover:bg-[#FAF6F0] text-[#5A5146] font-bold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5"
+                className="w-full sm:w-auto h-10 text-xs rounded-xl flex items-center justify-center gap-1.5"
               >
                 <Printer className="h-4 w-4" />
-                Print Invoice
+                Print invoice
               </Button>
               
               <Link to="/customer/dashboard" className="w-full sm:w-auto">
-                <Button className="w-full bg-[#C9A46A] hover:bg-[#b89359] text-white font-bold h-11 text-xs rounded-xl flex items-center justify-center gap-1.5 shadow-2xs border border-[#E8DCC3]">
-                  View Bookings Dashboard
-                  <ChevronRight className="h-4 w-4 text-white" />
+                <Button variant="solid" className="w-full h-10 text-xs rounded-xl flex items-center justify-center gap-1.5">
+                  View bookings
                 </Button>
               </Link>
             </div>

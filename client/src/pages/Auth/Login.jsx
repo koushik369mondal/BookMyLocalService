@@ -3,15 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import { useAuth } from "../../context/AuthContext";
 import Logo from "@/components/ui/logo";
-import {
-  ShieldAlert,
-  CheckCircle2,
-  Lock,
-  ShieldCheck,
-  Zap,
-  KeyRound,
-  ArrowRight
-} from "lucide-react";
+import { ShieldAlert, CheckCircle2, ShieldCheck } from "lucide-react";
+import AnimatedBadge from "@/components/ui/AnimatedBadge";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -36,7 +29,7 @@ export default function Login() {
         return;
       }
 
-      setSuccessMsg("Welcome back! Redirecting to your dashboard...");
+      setSuccessMsg("Welcome back. Redirecting to your dashboard...");
       setIsSubmitting(false);
       setTimeout(() => {
         const userRole = data.user?.role?.toUpperCase();
@@ -49,7 +42,7 @@ export default function Login() {
         } else {
           navigate("/customer/dashboard");
         }
-      }, 1000);
+      }, 800);
     } catch (err) {
       console.error("Google login error:", err);
       setErrorMsg(err.message || "Failed to authenticate with Google.");
@@ -58,13 +51,15 @@ export default function Login() {
   };
 
   useEffect(() => {
-    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "1059298384612-7g8dpchm16n2fts4oel7nd5l10h32drv.apps.googleusercontent.com";
+    const clientId =
+      import.meta.env.VITE_GOOGLE_CLIENT_ID ||
+      "1059298384612-7g8dpchm16n2fts4oel7nd5l10h32drv.apps.googleusercontent.com";
 
     const initGsi = () => {
       if (window.google?.accounts?.id) {
         window.google.accounts.id.initialize({
           client_id: clientId,
-          callback: handleGoogleCallback
+          callback: handleGoogleCallback,
         });
         if (googleBtnRef.current) {
           window.google.accounts.id.renderButton(googleBtnRef.current, {
@@ -72,7 +67,7 @@ export default function Login() {
             size: "large",
             width: "100%",
             text: "signin_with",
-            shape: "pill"
+            shape: "rectangular",
           });
         }
       }
@@ -93,89 +88,65 @@ export default function Login() {
 
   return (
     <MainLayout>
-      <div className="min-h-[85vh] bg-[#FAF6F0] flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
-
-        {/* Brand Header */}
+      <div className="min-h-[80vh] flex flex-col items-center justify-center py-12 px-4 sm:px-6">
         <div className="mb-6 flex justify-center">
-          <Logo size={42} showText={true} />
+          <Logo size={36} showText={true} />
         </div>
 
         {/* Login Card */}
-        <div className="max-w-md w-full bg-white rounded-3xl border border-[#E8DCC3] shadow-xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl">
-
-          {/* Minimal Welcome Header */}
-          <div className="space-y-2 mb-8 text-center">
-            <span className="inline-block px-3 py-1 bg-[#F0E7D5] border border-[#E8DCC3] text-[#8C4B3E] font-black text-[10px] uppercase tracking-widest rounded-full">
-              Welcome Back 👋
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-[#1F1D1A] tracking-tight">
-              Login to Account
+        <div className="max-w-md w-full card-chai p-8 sm:p-10 space-y-6">
+          <div className="space-y-2 text-center">
+            <h1 className="text-2xl sm:text-3xl font-medium tracking-tight text-foreground">
+              Sign in to your account
             </h1>
-            <p className="text-xs sm:text-sm text-[#5A5146] font-medium">
-              Single-click passwordless access for Clients & Specialists
+            <p className="text-xs sm:text-sm text-muted-foreground">
+              Single-click passwordless access for{" "}
+              <span className="highlight">clients and specialists</span>.
             </p>
           </div>
 
           {/* Alert Banners */}
           {errorMsg && (
-            <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 text-xs font-semibold rounded-xl">
-              <ShieldAlert className="h-4.5 w-4.5 shrink-0 mt-0.5 text-rose-600" />
+            <div className="flex items-start gap-2.5 p-3.5 rounded-lg border border-red-500/20 bg-red-500/10 text-red-600 dark:text-red-400 text-xs">
+              <ShieldAlert className="size-4 shrink-0 mt-0.5" />
               <span>{errorMsg}</span>
             </div>
           )}
 
           {successMsg && (
-            <div className="mb-6 flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-semibold rounded-xl">
-              <CheckCircle2 className="h-4.5 w-4.5 shrink-0 mt-0.5 text-emerald-600" />
+            <div className="flex items-start gap-2.5 p-3.5 rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs">
+              <CheckCircle2 className="size-4 shrink-0 mt-0.5" />
               <span>{successMsg}</span>
             </div>
           )}
 
           {/* Google Official Button Container */}
-          <div className="mb-8 flex flex-col items-center justify-center space-y-3">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#7A7266]">
-              Sign In With Google
-            </span>
-            <div ref={googleBtnRef} className="w-full flex justify-center min-h-[44px]"></div>
+          <div className="space-y-3 pt-2">
+            <div
+              ref={googleBtnRef}
+              className="w-full flex justify-center min-h-[44px]"
+            />
           </div>
 
-          {/* Security & Account Protection Highlights */}
-          <div className="p-4 bg-[#FAF6F0] rounded-2xl border border-[#E8DCC3]/80 space-y-3">
-            <div className="flex items-center gap-2 text-xs font-black text-[#1F1D1A]">
-              <ShieldCheck className="h-4 w-4 text-[#8C4B3E]" />
-              <span>Account Security & Protection</span>
+          {/* Security note */}
+          <div className="pt-4 border-t border-border/60 space-y-2 text-xs text-muted-foreground">
+            <div className="flex items-center gap-2 text-foreground font-medium">
+              <ShieldCheck className="size-4 text-emerald-500" />
+              <span>Account protection</span>
             </div>
-
-            <div className="space-y-2 text-[11px] text-[#5A5146] font-semibold">
-              <div className="flex items-center gap-2">
-                <Lock className="h-3.5 w-3.5 text-[#C9A46A] shrink-0" />
-                <span>256-Bit Encrypted Google Single Sign-On</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <KeyRound className="h-3.5 w-3.5 text-[#C9A46A] shrink-0" />
-                <span>No password storage or credential leaks</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap className="h-3.5 w-3.5 text-[#C9A46A] shrink-0" />
-                <span>Automatic role routing to your active dashboard</span>
-              </div>
-            </div>
+            <p className="text-[11px] leading-relaxed">
+              Google OAuth verified session. Zero passwords stored on servers.
+            </p>
           </div>
 
-          {/* Footer Navigation Link */}
-          <div className="mt-8 pt-6 border-t border-[#E8DCC3] text-center text-xs font-semibold text-[#5A5146]">
+          {/* Footer Navigation */}
+          <div className="pt-4 border-t border-border/60 text-center text-xs text-muted-foreground">
             Don't have an account yet?{" "}
-            <Link
-              to="/register"
-              className="text-[#8C4B3E] hover:text-[#C9A46A] transition-colors font-extrabold flex items-center justify-center gap-1 mt-1.5 hover:underline"
-            >
-              <span>Create an Account & Join Platform</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+            <Link to="/register" className="text-foreground hover:text-brand font-medium">
+              Create an account
             </Link>
           </div>
-
         </div>
-
       </div>
     </MainLayout>
   );
