@@ -217,7 +217,7 @@ export default function Navbar() {
           : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-5">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 py-4 flex items-center justify-between gap-5">
         {/* Brand / Logo */}
         <NavLink to={logoLink} className="flex items-center gap-3 shrink-0">
           <Logo size={28} />

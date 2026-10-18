@@ -55,7 +55,7 @@ export default function About() {
       <div className="min-h-screen">
         {/* Header */}
         <section className="pt-10 pb-16 sm:pt-16 sm:pb-20 border-b border-border/70">
-          <div className="max-w-6xl mx-auto px-6 sm:px-12">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
               {/* Text Column */}
               <div className="lg:col-span-7 flex flex-col items-start text-left gap-5">
@@ -131,7 +131,7 @@ export default function About() {
 
         {/* Core Values Section */}
         <section className="py-16 sm:py-20">
-          <div className="max-w-6xl mx-auto px-6 sm:px-12">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
             <div className="max-w-2xl mb-12 space-y-2">
               <h2 className="text-2xl sm:text-[30px] font-medium tracking-tight text-foreground">
                 Our core principles

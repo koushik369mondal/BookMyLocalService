@@ -34,7 +34,7 @@ export default function ManageProviders() {
         
         {/* HEADER */}
         <section className="bg-neutral-900/40 border-b border-white/10 py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-1">
               <Link to="/admin/dashboard" className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-400 hover:text-orange-400 transition-colors mb-1">
                 <ArrowLeft className="h-3.5 w-3.5" /> Back to admin dashboard
@@ -49,7 +49,7 @@ export default function ManageProviders() {
           </div>
         </section>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 py-10 space-y-6">
           
           {successMsg && (
             <div className="flex items-start gap-2.5 p-3.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium rounded-xl">

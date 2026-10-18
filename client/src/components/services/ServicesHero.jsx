@@ -27,7 +27,7 @@ export function ServicesHero({
 }) {
   return (
     <section className="relative pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-border/70">
-      <div className="max-w-6xl mx-auto px-6 sm:px-12">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
         <div className="max-w-3xl space-y-4">
           <AnimatedBadge>
             <span className="size-1.5 rounded-full bg-emerald-500" />

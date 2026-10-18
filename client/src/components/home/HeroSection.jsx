@@ -44,7 +44,7 @@ export function HeroSection({ user }) {
 
   return (
     <section className="relative pt-8 pb-16 sm:pt-14 sm:pb-24">
-      <div className="max-w-6xl mx-auto px-6 sm:px-12">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column: Focused Copy & Search */}
           <motion.div

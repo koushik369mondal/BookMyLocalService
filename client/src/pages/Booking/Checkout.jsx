@@ -60,7 +60,7 @@ export default function Checkout() {
   return (
     <MainLayout>
       <div className="min-h-screen py-10 font-sans text-foreground">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
           
           <div className="mb-6">
             <Link to={`/booking?serviceId=${booking.serviceId}`} className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground">

@@ -5,6 +5,7 @@ import { servicesService } from "../services/servicesService";
 import { categoriesService } from "../services/categoriesService";
 import { getCategoryIconComponent } from "@/utils/categoryIconMap";
 import { formatPrice } from "@/utils/currency";
+import { categories as defaultCategories } from "@/data/homeData";
 
 export function useHomeServices() {
   const { user, loading } = useAuth();
@@ -92,6 +93,6 @@ export function useHomeServices() {
     loading,
     isLoading,
     displayProviders,
-    categories: dbCategories
+    categories: dbCategories.length > 0 ? dbCategories : defaultCategories
   };
 }

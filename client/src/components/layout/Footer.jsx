@@ -15,8 +15,8 @@ export default function Footer() {
     const settingsPath = user.role === "ADMIN" ? "/admin/settings" : "/provider/settings";
 
     return (
-      <footer className="relative mt-20 px-6 font-sans sm:px-12 before:absolute before:top-0 before:left-1/2 before:h-px before:w-full before:max-w-[1440px] before:-translate-x-1/2 before:bg-amber-600 before:opacity-10 before:[mask-image:linear-gradient(90deg,transparent_0%,black_40%,black_60%,transparent_100%)] dark:before:bg-orange-300/40">
-        <div className="max-w-6xl mx-auto py-8">
+      <footer className="relative mt-20 px-6 font-sans sm:px-12 before:absolute before:top-0 before:left-1/2 before:h-px before:w-full before:max-w-[1536px] before:-translate-x-1/2 before:bg-amber-600 before:opacity-10 before:[mask-image:linear-gradient(90deg,transparent_0%,black_40%,black_60%,transparent_100%)] dark:before:bg-orange-300/40">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
             <div className="flex items-center gap-3">
               <NavLink to={dashboardPath}>
@@ -57,8 +57,8 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative mt-24 px-6 font-sans sm:px-12 before:absolute before:top-0 before:left-1/2 before:h-px before:w-full before:max-w-[1440px] before:-translate-x-1/2 before:bg-amber-600 before:opacity-10 before:[mask-image:linear-gradient(90deg,transparent_0%,black_40%,black_60%,transparent_100%)] dark:before:bg-orange-300/40">
-      <div className="max-w-6xl mx-auto pt-16 pb-12">
+    <footer className="relative mt-24 px-6 font-sans sm:px-12 before:absolute before:top-0 before:left-1/2 before:h-px before:w-full before:max-w-[1536px] before:-translate-x-1/2 before:bg-amber-600 before:opacity-10 before:[mask-image:linear-gradient(90deg,transparent_0%,black_40%,black_60%,transparent_100%)] dark:before:bg-orange-300/40">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 pt-16 pb-12">
         {/* Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Column 1: Brand & Tagline */}

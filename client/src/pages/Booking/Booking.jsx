@@ -69,7 +69,7 @@ export default function Booking() {
   return (
     <MainLayout>
       <div className="min-h-screen py-8 sm:py-12">
-        <div className="max-w-6xl mx-auto px-6 sm:px-12">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
           <div className="mb-6">
             <Link
               to={`/services/slug/${service.slug || ""}`}

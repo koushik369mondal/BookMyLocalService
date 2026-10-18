@@ -22,14 +22,14 @@ export default function AdminSettings() {
         
         {/* HEADER */}
         <section className="bg-neutral-900/40 border-b border-white/10 py-8 mb-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">System settings</h1>
             <p className="text-neutral-400 text-xs sm:text-sm mt-1 font-medium">Configure global platform attributes, registration policies, and maintenance states</p>
           </div>
         </section>
 
         {/* SETTINGS CONTENT */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 space-y-6">
 
           {successMsg && (
             <div className="flex items-start gap-2.5 p-3.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium rounded-xl">

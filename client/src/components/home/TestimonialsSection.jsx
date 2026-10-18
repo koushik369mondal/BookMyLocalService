@@ -29,7 +29,7 @@ export function TestimonialsSection() {
 
   return (
     <section className="py-16 sm:py-24 border-t border-border/70 relative">
-      <div className="max-w-6xl mx-auto px-6 sm:px-12">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Section Head */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 space-y-2">
           <h2 className="text-2xl sm:text-[30px] font-medium tracking-tight text-foreground">

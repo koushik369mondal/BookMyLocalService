@@ -117,7 +117,7 @@ export default function DashboardLayout({ children }) {
             </span>
           </div>
 
-          <div className="flex-1 px-4 sm:px-6 lg:px-8 py-8 max-w-6xl w-full mx-auto">
+          <div className="flex-1 px-4 sm:px-8 lg:px-12 py-8 w-full max-w-[1536px] mx-auto">
             {children}
           </div>
         </div>

@@ -120,7 +120,7 @@ export default function ProviderProfile() {
       <MainLayout>
         <div className="min-h-screen pb-16 animate-pulse">
           <section className="border-b border-white/5 py-10 md:py-14">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
               <Skeleton className="h-6 w-32 rounded-full mb-6" />
               <div className="card-chai p-8 space-y-4">
                 <div className="flex flex-col sm:flex-row items-center gap-6">
@@ -138,7 +138,7 @@ export default function ProviderProfile() {
             </div>
           </section>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 py-10">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
                 <Skeleton className="h-64 rounded-2xl" />
@@ -176,7 +176,7 @@ export default function ProviderProfile() {
         
         {/* HERO BANNER SECTION */}
         <section className="relative overflow-hidden border-b border-white/5 py-8 md:py-12">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
             
             {/* Back Button */}
             <NavLink
@@ -268,7 +268,7 @@ export default function ProviderProfile() {
         </section>
 
         {/* PAGE CONTENT CONTAINER */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 py-10">
           
           {/* STATS HIGHLIGHT BAR */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">

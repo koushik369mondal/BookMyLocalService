@@ -13,7 +13,7 @@ const STATS = [
 export function StatsSection() {
   return (
     <section className="py-12 border-y border-border/70 relative">
-      <div className="max-w-6xl mx-auto px-6 sm:px-12">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
         <motion.div
           variants={staggerContainer(0.08, 0)}
           initial="hidden"

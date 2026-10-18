@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button";
 export function CTASection() {
   return (
     <section className="py-20 sm:py-28 relative">
-      <div className="max-w-4xl mx-auto px-6 sm:px-12 text-center">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="card-chai p-8 sm:p-14 flex flex-col items-center gap-6"
+          className="card-chai p-8 sm:p-14 w-full flex flex-col items-center gap-6"
         >
           <div className="space-y-3 max-w-2xl">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-foreground leading-tight">

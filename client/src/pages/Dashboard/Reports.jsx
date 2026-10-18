@@ -57,7 +57,7 @@ export default function Reports() {
         
         {/* HEADER */}
         <section className="bg-neutral-900/40 border-b border-white/10 py-8 mb-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">System performance and reports</h1>
               <p className="text-neutral-400 text-xs sm:text-sm mt-1 font-medium">Real-time analytical insights and revenue distribution audit from database</p>
@@ -82,7 +82,7 @@ export default function Reports() {
           </div>
         </section>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 space-y-8">
           {successMsg && (
             <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium rounded-xl flex items-center gap-2">
               <CheckCircle2 className="h-4.5 w-4.5 shrink-0" />

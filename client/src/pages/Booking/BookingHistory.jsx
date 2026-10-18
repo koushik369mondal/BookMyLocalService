@@ -61,7 +61,7 @@ export default function BookingHistory() {
   return (
     <MainLayout>
       <div className="min-h-screen py-10 font-sans text-foreground">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl space-y-6">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 space-y-6">
 
           {/* HEADER BAR */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

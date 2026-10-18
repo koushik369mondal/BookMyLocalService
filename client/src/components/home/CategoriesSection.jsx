@@ -11,7 +11,7 @@ export function CategoriesSection({ categories = [] }) {
 
   return (
     <section className="py-16 sm:py-20 relative">
-      <div className="max-w-6xl mx-auto px-6 sm:px-12">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Section Head */}
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-10 gap-4">
           <div className="space-y-1.5">

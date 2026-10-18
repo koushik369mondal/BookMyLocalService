@@ -55,7 +55,7 @@ export default function Services() {
       />
 
       <div className="py-10 sm:py-14 min-h-screen">
-        <div className="max-w-6xl mx-auto px-6 sm:px-12">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Left Sidebar Filters */}
             <div className="lg:col-span-3">

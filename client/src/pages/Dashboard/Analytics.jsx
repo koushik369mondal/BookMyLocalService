@@ -49,7 +49,7 @@ export default function Analytics() {
         
         {/* HEADER */}
         <section className="bg-neutral-900/40 border-b border-white/10 py-8 mb-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">Platform analytics and intelligence</h1>
               <p className="text-neutral-400 text-xs sm:text-sm mt-1 font-medium">Real-time user growth, financial metrics, and booking statistics from database</p>
@@ -64,7 +64,7 @@ export default function Analytics() {
         </section>
 
         {/* CONTENT */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 space-y-8">
           {error && (
             <div className="p-3.5 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-medium rounded-xl flex items-center gap-2">
               <ShieldAlert className="h-4 w-4 shrink-0" />

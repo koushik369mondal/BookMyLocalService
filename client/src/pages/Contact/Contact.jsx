@@ -64,7 +64,7 @@ export default function Contact() {
       <div className="min-h-screen">
         {/* Page Header */}
         <section className="pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-border/70">
-          <div className="max-w-6xl mx-auto px-6 sm:px-12 text-center flex flex-col items-center gap-3">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 text-center flex flex-col items-center gap-3">
             <AnimatedBadge>
               <span className="size-1.5 rounded-full bg-emerald-500" />
               <span>Dedicated customer support</span>
@@ -80,7 +80,7 @@ export default function Contact() {
           </div>
         </section>
 
-        <div className="max-w-6xl mx-auto px-6 sm:px-12 py-10 space-y-12">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 py-10 space-y-12">
           {/* Contact Info Cards */}
           <ContactInfoCards />
 

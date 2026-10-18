@@ -63,7 +63,7 @@ export default function Categories() {
       <div className="min-h-screen">
         {/* Page Header */}
         <section className="pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-border/70">
-          <div className="max-w-6xl mx-auto px-6 sm:px-12 text-center flex flex-col items-center gap-4">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 text-center flex flex-col items-center gap-4">
             <AnimatedBadge>
               <span className="size-1.5 rounded-full bg-emerald-500" />
               <span>Full service taxonomy</span>
@@ -93,7 +93,7 @@ export default function Categories() {
         </section>
 
         {/* Categories Grid Container */}
-        <div className="max-w-6xl mx-auto px-6 sm:px-12 py-10 sm:py-14">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-14">
           {/* Loading Skeleton */}
           {loading && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

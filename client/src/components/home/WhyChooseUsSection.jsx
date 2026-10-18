@@ -52,7 +52,7 @@ const FEATURES = [
 export function WhyChooseUsSection() {
   return (
     <section className="py-16 sm:py-24 relative">
-      <div className="max-w-6xl mx-auto px-6 sm:px-12">
+      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Section Head */}
         <div className="max-w-2xl mb-12 space-y-2">
           <h2 className="text-2xl sm:text-[30px] font-medium tracking-tight text-foreground">
@@ -70,7 +70,7 @@ export function WhyChooseUsSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
         >
           {FEATURES.map((feat, idx) => {
             const Icon = feat.icon;

@@ -414,7 +414,7 @@ export default function ServiceDetails() {
         <div className="min-h-screen pb-16 animate-pulse">
           {/* Header Banner Skeleton */}
           <div className="h-56 bg-card/40 border-b border-border/80 w-full relative">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end pb-8">
+            <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 h-full flex items-end pb-8">
               <div className="flex flex-col sm:flex-row items-center gap-6 w-full">
                 <div className="size-24 rounded-full bg-muted border border-border shrink-0"></div>
                 <div className="space-y-3 w-full">
@@ -428,7 +428,7 @@ export default function ServiceDetails() {
             </div>
           </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 py-10">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column Skeleton */}
               <div className="lg:col-span-2 space-y-6">
@@ -482,7 +482,7 @@ export default function ServiceDetails() {
 
         {/* PROFILE HEADER HERO BANNER */}
         <section className="relative overflow-hidden border-b border-border/80 bg-card/60 py-10 sm:py-14">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
             {/* Back Button */}
             <NavLink to="/services" className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors mb-6 border border-border/80 bg-card px-3 py-1.5 rounded-full">
               <ChevronLeft className="h-3.5 w-3.5" /> Back to services
@@ -569,7 +569,7 @@ export default function ServiceDetails() {
         </section>
 
         {/* PAGE GRID CONTENT */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-8 lg:px-12 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
             {/* LEFT COLUMN: ABOUT, SKILLS, GALLERY, REVIEWS */}
